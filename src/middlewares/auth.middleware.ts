@@ -18,7 +18,7 @@ export const authenticateJWT = (req: AuthenticatedRequest, res: Response, next: 
   if (authHeader) {
     const token = authHeader.split(" ")[1];
 
-    jwt.verify(token, JWT_SECRET, (err, user) => {
+    jwt.verify(token, JWT_SECRET, (err: jwt.VerifyErrors | null, user: jwt.JwtPayload | string | undefined) => {
       if (err) {
         return res.status(403).json({ message: "Invalid or expired token" });
       }
