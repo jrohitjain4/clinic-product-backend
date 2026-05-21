@@ -4,7 +4,7 @@ services:
     name: clinic-saas-api
     runtime: node
     rootDir: backend
-    buildCommand: npm install && npm run build:render
+    buildCommand: npm install --ignore-scripts && chmod +x node_modules/.bin/prisma && npm run build:render
     startCommand: npm start
     envVars:
       - key: NODE_ENV
