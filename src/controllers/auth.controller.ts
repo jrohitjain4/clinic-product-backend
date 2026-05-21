@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { PrismaClient, Role } from "@prisma/client";
+import { PrismaClient, Role, ClinicStatus } from "@prisma/client";
 import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
 import { AuthenticatedRequest } from "../middlewares/auth.middleware";
@@ -27,19 +27,137 @@ export const getClinics = async (req: Request, res: Response) => {
   }
 };
 
+// Get all active subscription packages
+export const getPackages = async (req: Request, res: Response) => {
+  try {
+    const packages = await prisma.subscriptionPackage.findMany({
+      where: { isActive: true },
+    });
+    return res.json(packages);
+  } catch (error) {
+    console.error("Get packages error:", error);
+    return res.status(500).json({ message: "Internal server error fetching packages" });
+  }
+};
+
+// Step 2: Register Draft (Personal + Business info)
+export const registerDraft = async (req: Request, res: Response) => {
+  try {
+    const { email, password, fullName, role, clinicInfo, dob, age, gender } = req.body;
+
+    if (!email || !password || !fullName || !role || !clinicInfo) {
+      return res.status(400).json({ message: "Essential fields are missing" });
+    }
+
+    const existingUser = await prisma.user.findUnique({ where: { email } });
+    if (existingUser) {
+      return res.status(400).json({ message: "A user with this email already exists" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const { name, address, gstNo } = clinicInfo;
+    const subdomain = name.toLowerCase().replace(/[^a-z0-9]/g, '-') + '-' + Math.floor(Math.random() * 1000);
+
+    const newClinic = await prisma.clinic.create({
+      data: {
+        name,
+        subdomain,
+        gstNo,
+        address,
+        status: "IN_PROGRESS",
+      }
+    });
+
+    const newUser = await prisma.user.create({
+      data: {
+        email,
+        passwordHash: hashedPassword,
+        fullName,
+        dob: dob ? new Date(dob) : null,
+        age: age ? parseInt(age.toString()) : null,
+        gender,
+        role: role as Role,
+        clinicId: newClinic.id,
+      }
+    });
+
+    return res.status(201).json({
+      message: "Draft created",
+      userId: newUser.id
+    });
+  } catch (error) {
+    console.error("Draft registration error:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+// Step 3: Complete Registration (Select Plan)
+export const completeRegistration = async (req: Request, res: Response) => {
+  try {
+    const { userId, packageId } = req.body;
+
+    if (!userId || !packageId) {
+      return res.status(400).json({ message: "UserId and PackageId are required" });
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      include: { clinic: true }
+    });
+
+    if (!user || !user.clinicId) {
+      return res.status(404).json({ message: "Draft user or clinic not found" });
+    }
+
+    const pkg = await prisma.subscriptionPackage.findUnique({ where: { id: packageId } });
+    if (!pkg) {
+      return res.status(404).json({ message: "Package not found" });
+    }
+
+    const now = new Date();
+    const packageExpiresAt = new Date(now.getTime() + pkg.durationInDays * 24 * 60 * 60 * 1000);
+    const status = pkg.price === 0 ? "TRIAL" : "UPGRADED";
+
+    await prisma.clinic.update({
+      where: { id: user.clinicId },
+      data: {
+        packageId,
+        packageStartsAt: now,
+        packageExpiresAt,
+        status: status as ClinicStatus
+      }
+    });
+
+    const token = jwt.sign(
+      { id: user.id, email: user.email, role: user.role, clinicId: user.clinicId },
+      JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    return res.json({
+      message: "Registration completed!",
+      token,
+      user: {
+        id: user.id,
+        email: user.email,
+        fullName: user.fullName,
+        role: user.role,
+        clinic: { ...user.clinic, status, packageId }
+      },
+    });
+  } catch (error) {
+    console.error("Complete registration error:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 // Register a new user and potential clinic tenant
 export const register = async (req: Request, res: Response) => {
   try {
-    const { email, password, fullName, role, clinicId } = req.body;
+    const { email, password, fullName, role, clinicId, clinicInfo, packageId, dob, age, gender } = req.body;
 
     if (!email || !password || !fullName || !role) {
       return res.status(400).json({ message: "All basic fields (email, password, fullName, role) are required" });
-    }
-
-    if (role === Role.ADMIN || role === Role.SUPER_ADMIN) {
-      return res.status(403).json({
-        message: "Admin accounts are created by the system only. Please register as Doctor, Patient, or Porter.",
-      });
     }
 
     // Check if user already exists
@@ -49,15 +167,54 @@ export const register = async (req: Request, res: Response) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const assignedClinicId = clinicId;
+    let assignedClinicId = clinicId;
 
-    if (!clinicId) {
-      return res.status(400).json({ message: "Clinic selection is required" });
-    }
+    // Handle new Clinic creation for ADMIN/DOCTOR (3-step flow)
+    if ((role === Role.ADMIN || role === Role.DOCTOR) && clinicInfo) {
+      const { name, address, gstNo } = clinicInfo;
 
-    const clinicExists = await prisma.clinic.findUnique({ where: { id: clinicId } });
-    if (!clinicExists) {
-      return res.status(404).json({ message: "The selected clinic does not exist" });
+      if (!name) {
+        return res.status(400).json({ message: "Clinic name is required for registration" });
+      }
+
+      // Auto-generate subdomain from name
+      const subdomain = name.toLowerCase().replace(/[^a-z0-9]/g, '-') + '-' + Math.floor(Math.random() * 1000);
+
+      // Determine initial status
+      let status = "IN_PROGRESS";
+      let packageExpiresAt = null;
+
+      if (packageId) {
+        const pkg = await prisma.subscriptionPackage.findUnique({ where: { id: packageId } });
+        if (pkg) {
+          const now = new Date();
+          packageExpiresAt = new Date(now.getTime() + pkg.durationInDays * 24 * 60 * 60 * 1000);
+          status = pkg.price === 0 ? "TRIAL" : "UPGRADED";
+        }
+      }
+
+      const newClinic = await prisma.clinic.create({
+        data: {
+          name,
+          subdomain,
+          gstNo,
+          address,
+          status: status as any,
+          packageId,
+          packageStartsAt: packageId ? new Date() : null,
+          packageExpiresAt,
+        }
+      });
+      assignedClinicId = newClinic.id;
+    } else if (role !== Role.SUPER_ADMIN) {
+      // Joining existing clinic
+      if (!clinicId) {
+        return res.status(400).json({ message: "Clinic selection is required" });
+      }
+      const clinicExists = await prisma.clinic.findUnique({ where: { id: clinicId } });
+      if (!clinicExists) {
+        return res.status(404).json({ message: "The selected clinic does not exist" });
+      }
     }
 
     // Create User
@@ -66,11 +223,16 @@ export const register = async (req: Request, res: Response) => {
         email,
         passwordHash: hashedPassword,
         fullName,
+        dob: dob ? new Date(dob) : null,
+        age: age ? parseInt(age.toString()) : null,
+        gender,
         role: role as Role,
         clinicId: role === Role.SUPER_ADMIN ? null : assignedClinicId,
       },
       include: {
-        clinic: true,
+        clinic: {
+          include: { package: true }
+        },
       },
     });
 

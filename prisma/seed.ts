@@ -9,6 +9,7 @@ async function main() {
   // Clear existing database records
   await prisma.user.deleteMany({});
   await prisma.clinic.deleteMany({});
+  await prisma.subscriptionPackage.deleteMany({});
 
   // Hash passwords
   const superAdminPasswordHash = await bcrypt.hash("superadmin123", 10);
@@ -28,6 +29,46 @@ async function main() {
   });
   console.log(`Created Super Admin: ${superAdmin.email}`);
 
+  // 1a. Create default Subscription Packages
+  const freeTrialPackage = await prisma.subscriptionPackage.create({
+    data: {
+      name: "3 Days Free Trial",
+      price: 0,
+      durationInDays: 3,
+      maxDoctors: 5,
+      maxPatients: 50,
+      maxAppointments: 100,
+      isActive: true,
+    },
+  });
+  console.log(`Created Package: ${freeTrialPackage.name}`);
+
+  const standardPackage = await prisma.subscriptionPackage.create({
+    data: {
+      name: "Standard Plan (Monthly)",
+      price: 49.99,
+      durationInDays: 30,
+      maxDoctors: 10,
+      maxPatients: 500,
+      maxAppointments: 1000,
+      isActive: true,
+    },
+  });
+  console.log(`Created Package: ${standardPackage.name}`);
+
+  const proPackage = await prisma.subscriptionPackage.create({
+    data: {
+      name: "Professional Plan (Yearly)",
+      price: 499.00,
+      durationInDays: 365,
+      maxDoctors: 50,
+      maxPatients: 5000,
+      maxAppointments: 10000,
+      isActive: true,
+    },
+  });
+  console.log(`Created Package: ${proPackage.name}`);
+
   // 2. Create a default Clinic (Tenant)
   const preclinicCenter = await prisma.clinic.create({
     data: {
@@ -35,6 +76,9 @@ async function main() {
       subdomain: "preclinic",
       address: "123 Healthcare Boulevard, Medical District",
       phone: "+1 (555) 019-2834",
+      packageId: freeTrialPackage.id,
+      packageStartsAt: new Date(),
+      packageExpiresAt: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // 3 days from now
     },
   });
   console.log(`Created Tenant Clinic: ${preclinicCenter.name} (${preclinicCenter.subdomain})`);

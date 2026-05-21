@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth.routes";
+import packageRoutes from "./routes/package.routes";
+import tenantRoutes from "./routes/tenant.routes";
 
 // Load environment variables
 dotenv.config();
@@ -31,6 +33,8 @@ app.use(express.json());
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/packages", packageRoutes);
+app.use("/api/tenants", tenantRoutes);
 
 // Root Check
 app.get("/", (req, res) => {
