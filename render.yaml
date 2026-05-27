@@ -1,25 +1,16 @@
-# Optional: Render Blueprint — or configure manually in Render Dashboard
 services:
   - type: web
     name: clinic-saas-api
     runtime: node
-    rootDir: backend
-    buildCommand: npm install --ignore-scripts && chmod +x node_modules/.bin/prisma && npm run build:render
+    buildCommand: npm install && npm run build:render
     startCommand: npm start
     envVars:
       - key: NODE_ENV
         value: production
       - key: DATABASE_URL
-        fromDatabase:
-          name: clinic-saas-db
-          property: connectionString
+        sync: false
       - key: JWT_SECRET
         generateValue: true
       - key: FRONTEND_URL
         sync: false
 
-databases:
-  - name: clinic-saas-db
-    plan: free
-    databaseName: clinic_saas
-    user: clinic_saas
