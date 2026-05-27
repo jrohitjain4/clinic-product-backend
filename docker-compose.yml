@@ -1,0 +1,29 @@
+# Local PostgreSQL for development when Render DB is unreachable/sleeping.
+# Usage:
+#   docker compose up -d
+#   Set DATABASE_URL in .env to:
+#   postgresql://clinic:clinic123@localhost:5432/clinic_saas_db?schema=public
+#   npx prisma migrate deploy
+#   npm run dev
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: preclinic-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: clinic
+      POSTGRES_PASSWORD: clinic123
+      POSTGRES_DB: clinic_saas_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - preclinic_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U clinic -d clinic_saas_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  preclinic_pgdata:
