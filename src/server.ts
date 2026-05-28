@@ -22,6 +22,9 @@ import expenseCategoryRoutes from "./routes/expenseCategory.routes";
 import leaveTypeRoutes from "./routes/leaveType.routes";
 import leaveRoutes from "./routes/leave.routes";
 import attendanceRoutes from "./routes/attendance.routes";
+import prescriptionRoutes from "./routes/prescription.routes";
+import clinicRoleRoutes from "./routes/clinicRole.routes";
+import invoiceRoutes from "./routes/invoiceRoutes";
 // Load environment variables
 dotenv.config();
 
@@ -69,7 +72,10 @@ app.use("/api/expense-categories", expenseCategoryRoutes);
 app.use("/api/leave-types", leaveTypeRoutes);
 app.use("/api/leaves", leaveRoutes);
 app.use("/api/attendance", attendanceRoutes);
+app.use("/api/prescriptions", prescriptionRoutes);
+app.use("/api/clinic-roles", clinicRoleRoutes);
 app.use("/api/uploads", uploadRoutes);
+app.use("/api/invoices", invoiceRoutes);
 
 // Root Check
 app.get("/", (req, res) => {

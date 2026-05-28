@@ -1,6 +1,7 @@
 import { Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import { AuthenticatedRequest } from "../middlewares/auth.middleware";
+import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
@@ -122,34 +123,92 @@ export const createStaff = async (req: AuthenticatedRequest, res: Response) => {
       resolvedDepartmentId = desig?.departmentId ?? null;
     }
 
-    const staff = await prisma.staff.create({
-      data: {
-        staffCode,
-        fullName: fullName.trim(),
-        role: role.trim(),
-        designationId: designationId || null,
-        departmentId: resolvedDepartmentId,
-        profileImage: profileImage || null,
-        phone: phone || null,
-        email: email || null,
-        dob: dob ? new Date(dob) : null,
-        gender: gender || null,
-        bloodGroup: bloodGroup || null,
-        address1: address1 || null,
-        address2: address2 || null,
-        country: country || null,
-        state: state || null,
-        city: city || null,
-        pincode: pincode || null,
-        dateOfJoining: dateOfJoining ? new Date(dateOfJoining) : new Date(),
-        status: status || "Active",
-        clinicId,
-      },
-      include: {
-        designation: { select: { id: true, name: true } },
-        department: { select: { id: true, name: true } },
-      },
-    });
+    // Create staff AND user via transaction if email is provided, so they can login.
+    let staff;
+
+    if (email) {
+      const existingUser = await prisma.user.findUnique({ where: { email } });
+      if (existingUser) {
+        return res.status(400).json({ message: "A user with this email already exists" });
+      }
+
+      const passwordHash = await bcrypt.hash("staff123", 10);
+
+      const result = await prisma.$transaction(async (tx) => {
+        const createdStaff = await tx.staff.create({
+          data: {
+            staffCode,
+            fullName: fullName.trim(),
+            role: role.trim(),
+            designationId: designationId || null,
+            departmentId: resolvedDepartmentId,
+            profileImage: profileImage || null,
+            phone: phone || null,
+            email: email,
+            dob: dob ? new Date(dob) : null,
+            gender: gender || null,
+            bloodGroup: bloodGroup || null,
+            address1: address1 || null,
+            address2: address2 || null,
+            country: country || null,
+            state: state || null,
+            city: city || null,
+            pincode: pincode || null,
+            dateOfJoining: dateOfJoining ? new Date(dateOfJoining) : new Date(),
+            status: status || "Active",
+            clinicId,
+          },
+          include: {
+            designation: { select: { id: true, name: true } },
+            department: { select: { id: true, name: true } },
+          },
+        });
+
+        await tx.user.create({
+          data: {
+            email,
+            passwordHash,
+            fullName: fullName.trim(),
+            role: "STAFF" as any, // TypeScript might lag behind generated Prisma Client
+            clinicId,
+            dob: dob ? new Date(dob) : null,
+            gender: gender || null,
+          }
+        });
+
+        return createdStaff;
+      });
+      staff = result;
+    } else {
+      staff = await prisma.staff.create({
+        data: {
+          staffCode,
+          fullName: fullName.trim(),
+          role: role.trim(),
+          designationId: designationId || null,
+          departmentId: resolvedDepartmentId,
+          profileImage: profileImage || null,
+          phone: phone || null,
+          email: email || null,
+          dob: dob ? new Date(dob) : null,
+          gender: gender || null,
+          bloodGroup: bloodGroup || null,
+          address1: address1 || null,
+          address2: address2 || null,
+          country: country || null,
+          state: state || null,
+          city: city || null,
+          pincode: pincode || null,
+          dateOfJoining: dateOfJoining ? new Date(dateOfJoining) : new Date(),
+          status: status || "Active",
+          clinicId,
+        },
+        include: {
+          designation: { select: { id: true, name: true } },
+          department: { select: { id: true, name: true } },
+        },
+      });
+    }
 
     res.status(201).json({ ...staff, statusLabel: mapStatusLabel(staff.status) });
   } catch (err: unknown) {

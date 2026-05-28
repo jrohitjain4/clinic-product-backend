@@ -285,6 +285,21 @@ export const login = async (req: Request, res: Response) => {
       return res.status(401).json({ message: "Invalid password credentials" });
     }
 
+    let permissions: any = null;
+    if ((user.role as any) === "STAFF") {
+      const staff = await prisma.staff.findFirst({
+        where: { email, clinicId: user.clinicId || undefined }
+      });
+      if (staff?.role) {
+        const clinicRole = await (prisma as any).clinicRole.findFirst({
+          where: { name: staff.role, clinicId: user.clinicId || undefined }
+        });
+        if (clinicRole) {
+          permissions = clinicRole.permissions;
+        }
+      }
+    }
+
     // Generate JWT
     const token = jwt.sign(
       { id: user.id, email: user.email, role: user.role, clinicId: user.clinicId },
@@ -300,7 +315,9 @@ export const login = async (req: Request, res: Response) => {
         email: user.email,
         fullName: user.fullName,
         role: user.role,
+        clinicId: user.clinicId,
         clinic: user.clinic,
+        permissions
       },
     });
   } catch (error) {
@@ -325,12 +342,28 @@ export const getMe = async (req: AuthenticatedRequest, res: Response) => {
       return res.status(404).json({ message: "User not found" });
     }
 
+    let permissions: any = null;
+    if ((user.role as any) === "STAFF") {
+      const staff = await prisma.staff.findFirst({
+        where: { email: user.email, clinicId: user.clinicId || undefined }
+      });
+      if (staff?.role) {
+        const clinicRole = await (prisma as any).clinicRole.findFirst({
+          where: { name: staff.role, clinicId: user.clinicId || undefined }
+        });
+        if (clinicRole) {
+          permissions = clinicRole.permissions;
+        }
+      }
+    }
+
     return res.json({
       id: user.id,
       email: user.email,
       fullName: user.fullName,
       role: user.role,
       clinic: user.clinic,
+      permissions
     });
   } catch (error) {
     console.error("GetMe error:", error);
