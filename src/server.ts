@@ -25,6 +25,8 @@ import attendanceRoutes from "./routes/attendance.routes";
 import prescriptionRoutes from "./routes/prescription.routes";
 import clinicRoleRoutes from "./routes/clinicRole.routes";
 import invoiceRoutes from "./routes/invoiceRoutes";
+import dashboardRoutes from "./routes/dashboardRoutes";
+import superadminRoutes from "./routes/superadminRoutes";
 // Load environment variables
 dotenv.config();
 
@@ -76,6 +78,8 @@ app.use("/api/prescriptions", prescriptionRoutes);
 app.use("/api/clinic-roles", clinicRoleRoutes);
 app.use("/api/uploads", uploadRoutes);
 app.use("/api/invoices", invoiceRoutes);
+app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/superadmin", superadminRoutes);
 
 // Root Check
 app.get("/", (req, res) => {
