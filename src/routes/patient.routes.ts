@@ -1,5 +1,7 @@
 import { Router } from "express";
 import { authenticateJWT } from "../middlewares/auth.middleware";
+import { validate } from "../middlewares/validate.middleware";
+import { patientValidation } from "../validations/patient.validation";
 import {
   getPatients,
   getPatientById,
@@ -14,7 +16,7 @@ router.use(authenticateJWT);
 
 router.get("/", getPatients);
 router.get("/:id", getPatientById);
-router.post("/", createPatient);
+router.post("/", validate(patientValidation.create), createPatient);
 router.put("/:id", updatePatient);
 router.delete("/:id", deletePatient);
 

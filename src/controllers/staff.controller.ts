@@ -1,9 +1,8 @@
 import { Response } from "express";
-import { PrismaClient } from "@prisma/client";
 import { AuthenticatedRequest } from "../middlewares/auth.middleware";
+import prisma from "../lib/prisma";
 import bcrypt from "bcryptjs";
 
-const prisma = new PrismaClient();
 
 const mapStatusLabel = (status: string) =>
   status === "Active" ? "Available" : "Unavailable";

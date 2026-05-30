@@ -1,14 +1,14 @@
 import { Response } from "express";
-import { PrismaClient } from "@prisma/client";
 import { AuthenticatedRequest } from "../middlewares/auth.middleware";
 import bcrypt from "bcryptjs";
-
-const prisma = new PrismaClient();
+import { randomBytes } from "crypto";
+import prisma from "../lib/prisma";
 
 // GET /api/doctors
 export const getDoctors = async (req: AuthenticatedRequest, res: Response) => {
     try {
-        const clinicId = req.user?.clinicId;
+        const queryClinicId = req.query.clinicId as string;
+        const clinicId = queryClinicId || req.user?.clinicId;
         if (!clinicId) return res.status(403).json({ message: "No clinic associated" });
 
         const doctors = await prisma.doctor.findMany({
@@ -95,7 +95,8 @@ export const createDoctor = async (req: AuthenticatedRequest, res: Response) => 
         const existingUser = await prisma.user.findUnique({ where: { email } });
         if (existingUser) return res.status(400).json({ message: "Email is already registered" });
 
-        const passwordHash = await bcrypt.hash("doctor123", 10);
+        const temporaryPassword = req.body.password || "doctor123";
+        const passwordHash = await bcrypt.hash(temporaryPassword, 10);
 
         const doctor = await prisma.$transaction(async (tx) => {
             const newDoctor = await tx.doctor.create({

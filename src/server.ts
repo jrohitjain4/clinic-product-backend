@@ -1,7 +1,8 @@
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
+import rateLimit from "express-rate-limit";
 import authRoutes from "./routes/auth.routes";
 import packageRoutes from "./routes/package.routes";
 import tenantRoutes from "./routes/tenant.routes";
@@ -15,6 +16,7 @@ import uploadRoutes from "./routes/upload.routes";
 import healthRoutes from "./routes/health.routes";
 import serviceRoutes from "./routes/service.routes";
 import specializationRoutes from "./routes/specialization.routes";
+import productRoutes from "./routes/product.routes";
 import holidayRoutes from "./routes/holiday.routes";
 import payrollRoutes from "./routes/payroll.routes";
 import expenseRoutes from "./routes/expense.routes";
@@ -24,9 +26,9 @@ import leaveRoutes from "./routes/leave.routes";
 import attendanceRoutes from "./routes/attendance.routes";
 import prescriptionRoutes from "./routes/prescription.routes";
 import clinicRoleRoutes from "./routes/clinicRole.routes";
-import invoiceRoutes from "./routes/invoiceRoutes";
-import dashboardRoutes from "./routes/dashboardRoutes";
-import superadminRoutes from "./routes/superadminRoutes";
+import invoiceRoutes from "./routes/invoice.routes";
+import dashboardRoutes from "./routes/dashboard.routes";
+import superadminRoutes from "./routes/superadmin.routes";
 // Load environment variables
 dotenv.config();
 
@@ -54,9 +56,18 @@ app.use(
 app.use(express.json());
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
+// Rate limiting on auth routes (20 requests per 15 minutes)
+const authRateLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { message: "Too many requests, please try again later." },
+});
+
 // Routes
 app.use("/api/health", healthRoutes);
-app.use("/api/auth", authRoutes);
+app.use("/api/auth", authRateLimiter, authRoutes);
 app.use("/api/packages", packageRoutes);
 app.use("/api/tenants", tenantRoutes);
 app.use("/api/departments", departmentRoutes);
@@ -66,6 +77,7 @@ app.use("/api/staffs", staffRoutes);
 app.use("/api/patients", patientRoutes);
 app.use("/api/appointments", appointmentRoutes);
 app.use("/api/services", serviceRoutes);
+app.use("/api/products", productRoutes);
 app.use("/api/specializations", specializationRoutes);
 app.use("/api/holidays", holidayRoutes);
 app.use("/api/payroll", payrollRoutes);
@@ -91,4 +103,11 @@ app.listen(PORT, () => {
   console.log(`===============================================`);
   console.log(`🚀 Server running on: http://localhost:${PORT}`);
   console.log(`===============================================`);
+});
+
+// Global Error Handler — must be last middleware
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
+  console.error("[Unhandled Error]", err.stack || err.message);
+  res.status(500).json({ message: err.message || "Internal Server Error" });
 });

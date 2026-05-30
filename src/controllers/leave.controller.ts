@@ -1,8 +1,7 @@
 import { Response } from "express";
-import { PrismaClient } from "@prisma/client";
 import { AuthenticatedRequest } from "../middlewares/auth.middleware";
+import prisma from "../lib/prisma";
 
-const prisma = new PrismaClient() as any;
 
 // POST /api/leaves/apply — Doctor applies for leave
 export const applyLeave = async (req: AuthenticatedRequest, res: Response) => {

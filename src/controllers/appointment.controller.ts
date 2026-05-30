@@ -1,8 +1,6 @@
 import { Response } from "express";
-import { PrismaClient } from "@prisma/client";
 import { AuthenticatedRequest } from "../middlewares/auth.middleware";
-
-const prisma = new PrismaClient();
+import prisma from "../lib/prisma";
 
 const VALID_STATUSES = [
   "Checked Out",
@@ -128,6 +126,7 @@ export const getAppointments = async (req: AuthenticatedRequest, res: Response) 
       req.query;
 
     let finalDoctorId = doctorId && typeof doctorId === "string" ? doctorId : undefined;
+    let finalPatientId = patientId && typeof patientId === "string" ? patientId : undefined;
 
     // Doctor isolation
     if (req.user?.role === "DOCTOR" && req.user?.email) {
@@ -138,6 +137,18 @@ export const getAppointments = async (req: AuthenticatedRequest, res: Response) 
         finalDoctorId = loggedInDoctor.id;
       } else {
         // If doctor record is somehow missing, return empty
+        return res.json([]);
+      }
+    }
+
+    // Patient isolation
+    if (req.user?.role === "PATIENT" && req.user?.email) {
+      const loggedInPatient = await prisma.patient.findFirst({
+        where: { email: req.user.email, clinicId },
+      });
+      if (loggedInPatient) {
+        finalPatientId = loggedInPatient.id;
+      } else {
         return res.json([]);
       }
     }
@@ -155,7 +166,7 @@ export const getAppointments = async (req: AuthenticatedRequest, res: Response) 
         clinicId,
         ...(status && typeof status === "string" ? { status } : {}),
         ...(finalDoctorId ? { doctorId: finalDoctorId } : {}),
-        ...(patientId && typeof patientId === "string" ? { patientId } : {}),
+        ...(finalPatientId ? { patientId: finalPatientId } : {}),
         ...(mode && typeof mode === "string" ? { mode } : {}),
         ...(Object.keys(scheduledFilter).length
           ? { scheduledAt: scheduledFilter }
@@ -194,6 +205,7 @@ export const getAppointmentsCalendar = async (
     if (!clinicId) return res.status(403).json({ message: "No clinic associated" });
 
     let finalDoctorId: string | undefined;
+    let finalPatientId: string | undefined;
 
     if (req.user?.role === "DOCTOR" && req.user?.email) {
       const loggedInDoctor = await prisma.doctor.findFirst({
@@ -201,6 +213,17 @@ export const getAppointmentsCalendar = async (
       });
       if (loggedInDoctor) {
         finalDoctorId = loggedInDoctor.id;
+      } else {
+        return res.json([]);
+      }
+    }
+
+    if (req.user?.role === "PATIENT" && req.user?.email) {
+      const loggedInPatient = await prisma.patient.findFirst({
+        where: { email: req.user.email, clinicId },
+      });
+      if (loggedInPatient) {
+        finalPatientId = loggedInPatient.id;
       } else {
         return res.json([]);
       }
@@ -217,6 +240,7 @@ export const getAppointmentsCalendar = async (
         clinicId,
         scheduledAt: { gte: from, lte: to },
         ...(finalDoctorId ? { doctorId: finalDoctorId } : {}),
+        ...(finalPatientId ? { patientId: finalPatientId } : {}),
       },
       include: appointmentIncludes,
       orderBy: { scheduledAt: "asc" },

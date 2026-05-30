@@ -1,8 +1,6 @@
 import { Response } from 'express';
-import { PrismaClient } from '@prisma/client';
 import { AuthenticatedRequest } from '../../middlewares/auth.middleware';
-
-const prisma = new PrismaClient();
+import prisma from '../../lib/prisma';
 
 export const getSuperAdminAnalytics = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
     try {

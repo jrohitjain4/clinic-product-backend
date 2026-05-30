@@ -1,5 +1,6 @@
 import { Response } from "express";
 import { AuthenticatedRequest } from "../middlewares/auth.middleware";
+import prisma from "../lib/prisma";
 
 export const uploadDoctorProfile = async (
   req: AuthenticatedRequest,

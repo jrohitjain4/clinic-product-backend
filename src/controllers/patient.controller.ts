@@ -1,8 +1,10 @@
 import { Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import { AuthenticatedRequest } from "../middlewares/auth.middleware";
+import bcrypt from "bcryptjs";
+import { randomBytes } from "crypto";
 
-const prisma = new PrismaClient();
+import prisma from "../lib/prisma";
 
 const mapStatusLabel = (status: string) =>
   status === "Active" ? "Available" : "Unavailable";
@@ -123,14 +125,14 @@ export const getPatients = async (req: AuthenticatedRequest, res: Response) => {
           : {}),
         ...(search && typeof search === "string"
           ? {
-              OR: [
-                { firstName: { contains: search, mode: "insensitive" } },
-                { lastName: { contains: search, mode: "insensitive" } },
-                { email: { contains: search, mode: "insensitive" } },
-                { phone: { contains: search, mode: "insensitive" } },
-                { patientCode: { contains: search, mode: "insensitive" } },
-              ],
-            }
+            OR: [
+              { firstName: { contains: search, mode: "insensitive" } },
+              { lastName: { contains: search, mode: "insensitive" } },
+              { email: { contains: search, mode: "insensitive" } },
+              { phone: { contains: search, mode: "insensitive" } },
+              { patientCode: { contains: search, mode: "insensitive" } },
+            ],
+          }
           : {}),
       },
       include: doctorInclude,
@@ -222,8 +224,9 @@ export const createPatient = async (req: AuthenticatedRequest, res: Response) =>
       }
     }
 
+    // Fetch current count safely — use UUID suffix to prevent code collision on race condition
     const count = await prisma.patient.count({ where: { clinicId } });
-    const patientCode = `PT${String(count + 1).padStart(3, "0")}`;
+    const patientCode = `PT${String(count + 1).padStart(4, "0")}-${randomBytes(2).toString("hex").toUpperCase()}`;
 
     const patient = await prisma.patient.create({
       data: {
@@ -249,6 +252,23 @@ export const createPatient = async (req: AuthenticatedRequest, res: Response) =>
       },
       include: doctorInclude,
     });
+
+    if (email) {
+      const existingUser = await prisma.user.findUnique({ where: { email: email.toLowerCase() } });
+      if (!existingUser) {
+        const temporaryPassword = req.body.password || "patient123";
+        const passwordHash = await bcrypt.hash(temporaryPassword, 10);
+        await prisma.user.create({
+          data: {
+            email: email.toLowerCase(),
+            passwordHash,
+            fullName: `${firstName.trim()} ${lastName.trim()}`,
+            role: "PATIENT",
+            clinicId,
+          }
+        });
+      }
+    }
 
     res.status(201).json(enrichPatient(patient));
   } catch (err: unknown) {

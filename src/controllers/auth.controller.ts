@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
-import { PrismaClient, Role, ClinicStatus } from "@prisma/client";
+import { Role, ClinicStatus } from "@prisma/client";
 import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
 import { AuthenticatedRequest } from "../middlewares/auth.middleware";
+import prisma from "../lib/prisma";
 
-const prisma = new PrismaClient();
-const JWT_SECRET = process.env.JWT_SECRET || "clinic_management_saas_jwt_secret_key_987654321!";
+const JWT_SECRET = process.env.JWT_SECRET!; // Validated at startup in auth.middleware.ts
 
 // Get all clinics (used during registration dropdown for doctors/patients/porters)
 export const getClinics = async (req: Request, res: Response) => {
@@ -199,7 +199,7 @@ export const register = async (req: Request, res: Response) => {
           subdomain,
           gstNo,
           address,
-          status: status as any,
+          status: (status || "IN_PROGRESS") as ClinicStatus,
           packageId,
           packageStartsAt: packageId ? new Date() : null,
           packageExpiresAt,
@@ -291,7 +291,7 @@ export const login = async (req: Request, res: Response) => {
         where: { email, clinicId: user.clinicId || undefined }
       });
       if (staff?.role) {
-        const clinicRole = await (prisma as any).clinicRole.findFirst({
+        const clinicRole = await prisma.clinicRole.findFirst({
           where: { name: staff.role, clinicId: user.clinicId || undefined }
         });
         if (clinicRole) {
@@ -348,7 +348,7 @@ export const getMe = async (req: AuthenticatedRequest, res: Response) => {
         where: { email: user.email, clinicId: user.clinicId || undefined }
       });
       if (staff?.role) {
-        const clinicRole = await (prisma as any).clinicRole.findFirst({
+        const clinicRole = await prisma.clinicRole.findFirst({
           where: { name: staff.role, clinicId: user.clinicId || undefined }
         });
         if (clinicRole) {

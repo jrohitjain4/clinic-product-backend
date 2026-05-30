@@ -1,18 +1,33 @@
 import { Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
+import prisma from "../lib/prisma";
 
-const prisma = new PrismaClient();
 
 // Get all prescriptions
 export const getPrescriptions = async (req: Request, res: Response) => {
     try {
-        const clinicId = (req as any).user?.clinicId;
+        const user = (req as any).user;
+        const clinicId = user?.clinicId;
         if (!clinicId) {
             return res.status(403).json({ message: "Clinic ID is required" });
         }
 
+        let patientIdFilter: string | undefined = undefined;
+        if (user.role === 'PATIENT' && user.email) {
+            const loggedInPatient = await prisma.patient.findFirst({
+                where: { email: user.email, clinicId },
+            });
+            if (loggedInPatient) {
+                patientIdFilter = loggedInPatient.id;
+            } else {
+                return res.json([]);
+            }
+        }
+
         const prescriptions = await prisma.prescription.findMany({
-            where: { clinicId },
+            where: {
+                clinicId,
+                ...(patientIdFilter ? { patientId: patientIdFilter } : {})
+            },
             include: {
                 patient: true,
                 doctor: {
@@ -100,8 +115,25 @@ export const getPrescriptionById = async (req: Request, res: Response) => {
             return res.status(403).json({ message: "Clinic ID is required" });
         }
 
+        const user = (req as any).user;
+        let patientIdFilter: string | undefined = undefined;
+        if (user.role === 'PATIENT' && user.email) {
+            const loggedInPatient = await prisma.patient.findFirst({
+                where: { email: user.email, clinicId },
+            });
+            if (loggedInPatient) {
+                patientIdFilter = loggedInPatient.id;
+            } else {
+                return res.status(404).json({ message: "Patient not found" });
+            }
+        }
+
         const prescription = await prisma.prescription.findFirst({
-            where: { id, clinicId },
+            where: {
+                id,
+                clinicId,
+                ...(patientIdFilter ? { patientId: patientIdFilter } : {})
+            },
             include: {
                 patient: true,
                 doctor: {

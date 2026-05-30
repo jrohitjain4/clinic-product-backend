@@ -1,8 +1,7 @@
 import { Response } from "express";
-import { PrismaClient } from "@prisma/client";
 import { AuthenticatedRequest } from "../middlewares/auth.middleware";
+import prisma from "../lib/prisma";
 
-const prisma = new PrismaClient();
 
 // GET /api/expense-categories
 export const getExpenseCategories = async (req: AuthenticatedRequest, res: Response) => {
