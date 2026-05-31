@@ -22,17 +22,21 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getMe = exports.login = exports.register = exports.completeRegistration = exports.registerDraft = exports.getPackages = exports.getClinics = void 0;
+exports.getMe = exports.login = exports.register = exports.completeRegistration = exports.registerDraft = exports.upgradePlan = exports.getPackages = exports.getClinics = void 0;
 const client_1 = require("@prisma/client");
 const bcrypt = __importStar(require("bcryptjs"));
 const jwt = __importStar(require("jsonwebtoken"));
-const prisma = new client_1.PrismaClient();
-const JWT_SECRET = process.env.JWT_SECRET || "clinic_management_saas_jwt_secret_key_987654321!";
+const prisma_1 = __importDefault(require("../lib/prisma"));
+const notification_controller_1 = require("./notification.controller");
+const JWT_SECRET = process.env.JWT_SECRET; // Validated at startup in auth.middleware.ts
 // Get all clinics (used during registration dropdown for doctors/patients/porters)
 const getClinics = async (req, res) => {
     try {
-        const clinics = await prisma.clinic.findMany({
+        const clinics = await prisma_1.default.clinic.findMany({
             select: {
                 id: true,
                 name: true,
@@ -53,7 +57,7 @@ exports.getClinics = getClinics;
 // Get all active subscription packages
 const getPackages = async (req, res) => {
     try {
-        const packages = await prisma.subscriptionPackage.findMany({
+        const packages = await prisma_1.default.subscriptionPackage.findMany({
             where: { isActive: true },
         });
         return res.json(packages);
@@ -64,6 +68,57 @@ const getPackages = async (req, res) => {
     }
 };
 exports.getPackages = getPackages;
+// Upgrade / activate a plan for an existing clinic (post-trial)
+const upgradePlan = async (req, res) => {
+    try {
+        if (!req.user)
+            return res.status(401).json({ message: "Unauthorized" });
+        const { packageId } = req.body;
+        if (!packageId)
+            return res.status(400).json({ message: "packageId is required" });
+        const user = await prisma_1.default.user.findUnique({
+            where: { id: req.user.id },
+            include: { clinic: true },
+        });
+        if (!user || !user.clinicId) {
+            return res.status(404).json({ message: "Clinic not found for this user" });
+        }
+        const pkg = await prisma_1.default.subscriptionPackage.findUnique({ where: { id: packageId } });
+        if (!pkg)
+            return res.status(404).json({ message: "Package not found" });
+        const now = new Date();
+        const packageExpiresAt = new Date(now.getTime() + pkg.durationInDays * 24 * 60 * 60 * 1000);
+        const status = pkg.price === 0 ? "TRIAL" : "UPGRADED";
+        const updatedClinic = await prisma_1.default.clinic.update({
+            where: { id: user.clinicId },
+            data: {
+                packageId,
+                packageStartsAt: now,
+                packageExpiresAt,
+                status: status,
+            },
+        });
+        // 🔔 Notify super admin
+        try {
+            await (0, notification_controller_1.createSuperAdminNotification)({
+                type: "CLINIC_REGISTERED",
+                title: "Clinic Plan Upgraded",
+                message: `${user.clinic?.name || "A clinic"} has upgraded to ${pkg.name} (₹${pkg.price.toLocaleString("en-IN")}).`,
+                link: "/super-admin/tenants",
+            });
+        }
+        catch (_) { /* non-blocking */ }
+        return res.json({
+            message: "Plan activated successfully!",
+            clinic: updatedClinic,
+        });
+    }
+    catch (error) {
+        console.error("Upgrade plan error:", error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+};
+exports.upgradePlan = upgradePlan;
 // Step 2: Register Draft (Personal + Business info)
 const registerDraft = async (req, res) => {
     try {
@@ -71,14 +126,14 @@ const registerDraft = async (req, res) => {
         if (!email || !password || !fullName || !role || !clinicInfo) {
             return res.status(400).json({ message: "Essential fields are missing" });
         }
-        const existingUser = await prisma.user.findUnique({ where: { email } });
+        const existingUser = await prisma_1.default.user.findUnique({ where: { email } });
         if (existingUser) {
             return res.status(400).json({ message: "A user with this email already exists" });
         }
         const hashedPassword = await bcrypt.hash(password, 10);
         const { name, address, gstNo } = clinicInfo;
         const subdomain = name.toLowerCase().replace(/[^a-z0-9]/g, '-') + '-' + Math.floor(Math.random() * 1000);
-        const newClinic = await prisma.clinic.create({
+        const newClinic = await prisma_1.default.clinic.create({
             data: {
                 name,
                 subdomain,
@@ -87,7 +142,7 @@ const registerDraft = async (req, res) => {
                 status: "IN_PROGRESS",
             }
         });
-        const newUser = await prisma.user.create({
+        const newUser = await prisma_1.default.user.create({
             data: {
                 email,
                 passwordHash: hashedPassword,
@@ -117,21 +172,21 @@ const completeRegistration = async (req, res) => {
         if (!userId || !packageId) {
             return res.status(400).json({ message: "UserId and PackageId are required" });
         }
-        const user = await prisma.user.findUnique({
+        const user = await prisma_1.default.user.findUnique({
             where: { id: userId },
             include: { clinic: true }
         });
         if (!user || !user.clinicId) {
             return res.status(404).json({ message: "Draft user or clinic not found" });
         }
-        const pkg = await prisma.subscriptionPackage.findUnique({ where: { id: packageId } });
+        const pkg = await prisma_1.default.subscriptionPackage.findUnique({ where: { id: packageId } });
         if (!pkg) {
             return res.status(404).json({ message: "Package not found" });
         }
         const now = new Date();
         const packageExpiresAt = new Date(now.getTime() + pkg.durationInDays * 24 * 60 * 60 * 1000);
         const status = pkg.price === 0 ? "TRIAL" : "UPGRADED";
-        await prisma.clinic.update({
+        await prisma_1.default.clinic.update({
             where: { id: user.clinicId },
             data: {
                 packageId,
@@ -141,6 +196,16 @@ const completeRegistration = async (req, res) => {
             }
         });
         const token = jwt.sign({ id: user.id, email: user.email, role: user.role, clinicId: user.clinicId }, JWT_SECRET, { expiresIn: "7d" });
+        // 🔔 Notify super admin about new clinic
+        try {
+            await (0, notification_controller_1.createSuperAdminNotification)({
+                type: "CLINIC_REGISTERED",
+                title: "New Clinic Registered",
+                message: `${user.clinic?.name ?? "A new clinic"} has registered with the "${pkg?.name ?? "Free Trial"}" plan (${status}).`,
+                link: "/super-admin/tenants",
+            });
+        }
+        catch (_) { /* non-blocking */ }
         return res.json({
             message: "Registration completed!",
             token,
@@ -167,7 +232,7 @@ const register = async (req, res) => {
             return res.status(400).json({ message: "All basic fields (email, password, fullName, role) are required" });
         }
         // Check if user already exists
-        const existingUser = await prisma.user.findUnique({ where: { email } });
+        const existingUser = await prisma_1.default.user.findUnique({ where: { email } });
         if (existingUser) {
             return res.status(400).json({ message: "A user with this email address already exists" });
         }
@@ -185,20 +250,20 @@ const register = async (req, res) => {
             let status = "IN_PROGRESS";
             let packageExpiresAt = null;
             if (packageId) {
-                const pkg = await prisma.subscriptionPackage.findUnique({ where: { id: packageId } });
+                const pkg = await prisma_1.default.subscriptionPackage.findUnique({ where: { id: packageId } });
                 if (pkg) {
                     const now = new Date();
                     packageExpiresAt = new Date(now.getTime() + pkg.durationInDays * 24 * 60 * 60 * 1000);
                     status = pkg.price === 0 ? "TRIAL" : "UPGRADED";
                 }
             }
-            const newClinic = await prisma.clinic.create({
+            const newClinic = await prisma_1.default.clinic.create({
                 data: {
                     name,
                     subdomain,
                     gstNo,
                     address,
-                    status: status,
+                    status: (status || "IN_PROGRESS"),
                     packageId,
                     packageStartsAt: packageId ? new Date() : null,
                     packageExpiresAt,
@@ -211,13 +276,13 @@ const register = async (req, res) => {
             if (!clinicId) {
                 return res.status(400).json({ message: "Clinic selection is required" });
             }
-            const clinicExists = await prisma.clinic.findUnique({ where: { id: clinicId } });
+            const clinicExists = await prisma_1.default.clinic.findUnique({ where: { id: clinicId } });
             if (!clinicExists) {
                 return res.status(404).json({ message: "The selected clinic does not exist" });
             }
         }
         // Create User
-        const newUser = await prisma.user.create({
+        const newUser = await prisma_1.default.user.create({
             data: {
                 email,
                 passwordHash: hashedPassword,
@@ -262,7 +327,7 @@ const login = async (req, res) => {
             return res.status(400).json({ message: "Email and password are required" });
         }
         // Find user
-        const user = await prisma.user.findUnique({
+        const user = await prisma_1.default.user.findUnique({
             where: { email },
             include: { clinic: true },
         });
@@ -274,6 +339,20 @@ const login = async (req, res) => {
         if (!isPasswordValid) {
             return res.status(401).json({ message: "Invalid password credentials" });
         }
+        let permissions = null;
+        if (user.role === "STAFF") {
+            const staff = await prisma_1.default.staff.findFirst({
+                where: { email, clinicId: user.clinicId || undefined }
+            });
+            if (staff?.role) {
+                const clinicRole = await prisma_1.default.clinicRole.findFirst({
+                    where: { name: staff.role, clinicId: user.clinicId || undefined }
+                });
+                if (clinicRole) {
+                    permissions = clinicRole.permissions;
+                }
+            }
+        }
         // Generate JWT
         const token = jwt.sign({ id: user.id, email: user.email, role: user.role, clinicId: user.clinicId }, JWT_SECRET, { expiresIn: "7d" });
         return res.json({
@@ -284,7 +363,9 @@ const login = async (req, res) => {
                 email: user.email,
                 fullName: user.fullName,
                 role: user.role,
+                clinicId: user.clinicId,
                 clinic: user.clinic,
+                permissions
             },
         });
     }
@@ -300,12 +381,26 @@ const getMe = async (req, res) => {
         if (!req.user) {
             return res.status(401).json({ message: "Unauthorized" });
         }
-        const user = await prisma.user.findUnique({
+        const user = await prisma_1.default.user.findUnique({
             where: { id: req.user.id },
             include: { clinic: true },
         });
         if (!user) {
             return res.status(404).json({ message: "User not found" });
+        }
+        let permissions = null;
+        if (user.role === "STAFF") {
+            const staff = await prisma_1.default.staff.findFirst({
+                where: { email: user.email, clinicId: user.clinicId || undefined }
+            });
+            if (staff?.role) {
+                const clinicRole = await prisma_1.default.clinicRole.findFirst({
+                    where: { name: staff.role, clinicId: user.clinicId || undefined }
+                });
+                if (clinicRole) {
+                    permissions = clinicRole.permissions;
+                }
+            }
         }
         return res.json({
             id: user.id,
@@ -313,6 +408,7 @@ const getMe = async (req, res) => {
             fullName: user.fullName,
             role: user.role,
             clinic: user.clinic,
+            permissions
         });
     }
     catch (error) {

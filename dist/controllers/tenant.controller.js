@@ -1,11 +1,13 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateTenantStatus = exports.getTenants = void 0;
-const client_1 = require("@prisma/client");
-const prisma = new client_1.PrismaClient();
+const prisma_1 = __importDefault(require("../lib/prisma"));
 const getTenants = async (req, res) => {
     try {
-        const tenants = await prisma.clinic.findMany({
+        const tenants = await prisma_1.default.clinic.findMany({
             include: {
                 package: true,
                 users: {
@@ -55,7 +57,7 @@ const updateTenantStatus = async (req, res) => {
     try {
         const { id } = req.params;
         const { status } = req.body;
-        const updated = await prisma.clinic.update({
+        const updated = await prisma_1.default.clinic.update({
             where: { id },
             data: { status }
         });

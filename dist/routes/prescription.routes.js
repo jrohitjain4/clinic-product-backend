@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const prescription_controller_1 = require("../controllers/prescription.controller");
+const auth_middleware_1 = require("../middlewares/auth.middleware");
+const router = (0, express_1.Router)();
+router.use(auth_middleware_1.authenticateJWT);
+router.get("/", prescription_controller_1.getPrescriptions);
+router.post("/", prescription_controller_1.createPrescription);
+router.get("/:id", prescription_controller_1.getPrescriptionById);
+router.put("/:id", prescription_controller_1.updatePrescription);
+router.delete("/:id", prescription_controller_1.deletePrescription);
+exports.default = router;

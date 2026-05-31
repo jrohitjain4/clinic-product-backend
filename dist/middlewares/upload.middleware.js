@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.staffProfileUpload = exports.doctorProfileUpload = void 0;
+exports.patientProfileUpload = exports.staffProfileUpload = exports.doctorProfileUpload = void 0;
 const multer_1 = __importDefault(require("multer"));
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
@@ -23,6 +23,7 @@ const createImageStorage = (folder, prefix) => {
 };
 const doctorStorage = createImageStorage("doctors", "doctor");
 const staffStorage = createImageStorage("staffs", "staff");
+const patientStorage = createImageStorage("patients", "patient");
 const fileFilter = (_req, file, cb) => {
     if (file.mimetype.startsWith("image/")) {
         cb(null, true);
@@ -38,6 +39,11 @@ exports.doctorProfileUpload = (0, multer_1.default)({
 });
 exports.staffProfileUpload = (0, multer_1.default)({
     storage: staffStorage,
+    fileFilter,
+    limits: { fileSize: 5 * 1024 * 1024 },
+});
+exports.patientProfileUpload = (0, multer_1.default)({
+    storage: patientStorage,
     fileFilter,
     limits: { fileSize: 5 * 1024 * 1024 },
 });

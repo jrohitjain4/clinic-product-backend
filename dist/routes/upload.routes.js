@@ -26,4 +26,14 @@ router.post("/staff-profile", (req, res) => {
         return (0, upload_controller_1.uploadStaffProfile)(req, res);
     });
 });
+router.post("/patient-profile", (req, res) => {
+    upload_middleware_1.patientProfileUpload.single("profileImage")(req, res, (err) => {
+        if (err) {
+            return res.status(400).json({
+                message: err instanceof Error ? err.message : "Upload failed",
+            });
+        }
+        return (0, upload_controller_1.uploadPatientProfile)(req, res);
+    });
+});
 exports.default = router;

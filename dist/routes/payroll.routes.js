@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const payroll_controller_1 = require("../controllers/payroll.controller");
+const auth_middleware_1 = require("../middlewares/auth.middleware");
+const router = (0, express_1.Router)();
+router.use(auth_middleware_1.authenticateJWT);
+router.get("/", payroll_controller_1.getPayrolls);
+router.post("/", payroll_controller_1.createPayroll);
+router.put("/:id", payroll_controller_1.updatePayroll);
+router.delete("/:id", payroll_controller_1.deletePayroll);
+exports.default = router;

@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const holiday_controller_1 = require("../controllers/holiday.controller");
+const auth_middleware_1 = require("../middlewares/auth.middleware");
+const router = (0, express_1.Router)();
+router.use(auth_middleware_1.authenticateJWT);
+router.get("/", holiday_controller_1.getHolidays);
+router.post("/", holiday_controller_1.createHoliday);
+router.put("/:id", holiday_controller_1.updateHoliday);
+router.delete("/:id", holiday_controller_1.deleteHoliday);
+exports.default = router;

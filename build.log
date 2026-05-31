@@ -1,0 +1,50 @@
+src/controllers/package.controller.ts(9,25): error TS2554: Expected 0 arguments, but got 1.
+src/controllers/package.controller.ts(11,20): error TS2349: This expression is not callable.
+  Type 'Number' has no call signatures.
+src/controllers/package.controller.ts(17,17): error TS2339: Property 'name' does not exist on type 'ReadableStream<any> | null'.
+src/controllers/package.controller.ts(17,23): error TS2339: Property 'price' does not exist on type 'ReadableStream<any> | null'.
+src/controllers/package.controller.ts(17,30): error TS2339: Property 'durationInDays' does not exist on type 'ReadableStream<any> | null'.
+src/controllers/package.controller.ts(17,46): error TS2339: Property 'maxDoctors' does not exist on type 'ReadableStream<any> | null'.
+src/controllers/package.controller.ts(17,58): error TS2339: Property 'maxPatients' does not exist on type 'ReadableStream<any> | null'.
+src/controllers/package.controller.ts(17,71): error TS2339: Property 'maxAppointments' does not exist on type 'ReadableStream<any> | null'.
+src/controllers/package.controller.ts(31,20): error TS2349: This expression is not callable.
+  Type 'Number' has no call signatures.
+src/controllers/package.controller.ts(34,20): error TS2349: This expression is not callable.
+  Type 'Number' has no call signatures.
+src/controllers/package.controller.ts(40,28): error TS2339: Property 'params' does not exist on type 'Request'.
+src/controllers/package.controller.ts(41,17): error TS2339: Property 'name' does not exist on type 'ReadableStream<any> | null'.
+src/controllers/package.controller.ts(41,23): error TS2339: Property 'price' does not exist on type 'ReadableStream<any> | null'.
+src/controllers/package.controller.ts(41,30): error TS2339: Property 'durationInDays' does not exist on type 'ReadableStream<any> | null'.
+src/controllers/package.controller.ts(41,46): error TS2339: Property 'maxDoctors' does not exist on type 'ReadableStream<any> | null'.
+src/controllers/package.controller.ts(41,58): error TS2339: Property 'maxPatients' does not exist on type 'ReadableStream<any> | null'.
+src/controllers/package.controller.ts(41,71): error TS2339: Property 'maxAppointments' does not exist on type 'ReadableStream<any> | null'.
+src/controllers/package.controller.ts(41,88): error TS2339: Property 'isActive' does not exist on type 'ReadableStream<any> | null'.
+src/controllers/package.controller.ts(56,25): error TS2554: Expected 0 arguments, but got 1.
+src/controllers/package.controller.ts(58,20): error TS2349: This expression is not callable.
+  Type 'Number' has no call signatures.
+src/controllers/package.controller.ts(64,28): error TS2339: Property 'params' does not exist on type 'Request'.
+src/controllers/package.controller.ts(66,25): error TS2554: Expected 0 arguments, but got 1.
+src/controllers/package.controller.ts(68,20): error TS2349: This expression is not callable.
+  Type 'Number' has no call signatures.
+src/routes/package.routes.ts(8,17): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response) => Promise<any>' is not assignable to parameter of type 'Application<Record<string, any>>'.
+      Type '(req: Request, res: Response) => Promise<any>' is missing the following properties from type 'Application<Record<string, any>>': init, defaultConfiguration, engine, set, and 63 more.
+src/routes/package.routes.ts(11,35): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response) => Promise<any>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response) => Promise<any>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Types of parameters 'req' and 'req' are incompatible.
+          Type 'Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>' is missing the following properties from type 'Request': cache, credentials, destination, integrity, and 14 more.
+src/routes/package.routes.ts(12,37): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response) => Promise<any>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response) => Promise<any>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Types of parameters 'req' and 'req' are incompatible.
+          Type 'Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>' is not assignable to type 'Request'.
+src/routes/package.routes.ts(13,40): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response) => Promise<any>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response) => Promise<any>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Types of parameters 'req' and 'req' are incompatible.
+          Type 'Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>' is not assignable to type 'Request'.

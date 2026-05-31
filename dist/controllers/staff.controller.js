@@ -1,8 +1,11 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteStaff = exports.updateStaff = exports.createStaff = exports.getStaffById = exports.getStaffs = void 0;
-const client_1 = require("@prisma/client");
-const prisma = new client_1.PrismaClient();
+const prisma_1 = __importDefault(require("../lib/prisma"));
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const mapStatusLabel = (status) => status === "Active" ? "Available" : "Unavailable";
 // GET /api/staffs
 const getStaffs = async (req, res) => {
@@ -11,7 +14,7 @@ const getStaffs = async (req, res) => {
         if (!clinicId)
             return res.status(403).json({ message: "No clinic associated" });
         const { designationId, role, status } = req.query;
-        const staffs = await prisma.staff.findMany({
+        const staffs = await prisma_1.default.staff.findMany({
             where: {
                 clinicId,
                 ...(designationId && typeof designationId === "string"
@@ -33,7 +36,14 @@ const getStaffs = async (req, res) => {
     }
     catch (err) {
         const message = err instanceof Error ? err.message : "Server error";
-        res.status(500).json({ message });
+        const isDbDown = message.includes("Can't reach database server") ||
+            message.includes("Connection timed out") ||
+            message.includes("ECONNREFUSED");
+        res.status(isDbDown ? 503 : 500).json({
+            message: isDbDown
+                ? "Database is unreachable. Resume Render Postgres or use local Docker (backend/docker-compose.yml)."
+                : message,
+        });
     }
 };
 exports.getStaffs = getStaffs;
@@ -42,7 +52,7 @@ const getStaffById = async (req, res) => {
     try {
         const clinicId = req.user?.clinicId;
         const { id } = req.params;
-        const staff = await prisma.staff.findFirst({
+        const staff = await prisma_1.default.staff.findFirst({
             where: { id, clinicId: clinicId },
             include: {
                 designation: { select: { id: true, name: true } },
@@ -55,7 +65,10 @@ const getStaffById = async (req, res) => {
     }
     catch (err) {
         const message = err instanceof Error ? err.message : "Server error";
-        res.status(500).json({ message });
+        const isDbDown = message.includes("Can't reach database server");
+        res.status(isDbDown ? 503 : 500).json({
+            message: isDbDown ? "Database is unreachable." : message,
+        });
     }
 };
 exports.getStaffById = getStaffById;
@@ -72,44 +85,98 @@ const createStaff = async (req, res) => {
         if (!role?.trim()) {
             return res.status(400).json({ message: "Role is required" });
         }
-        const count = await prisma.staff.count({ where: { clinicId } });
+        const count = await prisma_1.default.staff.count({ where: { clinicId } });
         const staffCode = `STF${String(count + 1).padStart(3, "0")}`;
         let resolvedDepartmentId = departmentId || null;
         if (!resolvedDepartmentId && designationId) {
-            const desig = await prisma.designation.findFirst({
+            const desig = await prisma_1.default.designation.findFirst({
                 where: { id: designationId, clinicId },
                 select: { departmentId: true },
             });
             resolvedDepartmentId = desig?.departmentId ?? null;
         }
-        const staff = await prisma.staff.create({
-            data: {
-                staffCode,
-                fullName: fullName.trim(),
-                role: role.trim(),
-                designationId: designationId || null,
-                departmentId: resolvedDepartmentId,
-                profileImage: profileImage || null,
-                phone: phone || null,
-                email: email || null,
-                dob: dob ? new Date(dob) : null,
-                gender: gender || null,
-                bloodGroup: bloodGroup || null,
-                address1: address1 || null,
-                address2: address2 || null,
-                country: country || null,
-                state: state || null,
-                city: city || null,
-                pincode: pincode || null,
-                dateOfJoining: dateOfJoining ? new Date(dateOfJoining) : new Date(),
-                status: status || "Active",
-                clinicId,
-            },
-            include: {
-                designation: { select: { id: true, name: true } },
-                department: { select: { id: true, name: true } },
-            },
-        });
+        // Create staff AND user via transaction if email is provided, so they can login.
+        let staff;
+        if (email) {
+            const existingUser = await prisma_1.default.user.findUnique({ where: { email } });
+            if (existingUser) {
+                return res.status(400).json({ message: "A user with this email already exists" });
+            }
+            const passwordHash = await bcryptjs_1.default.hash("staff123", 10);
+            const result = await prisma_1.default.$transaction(async (tx) => {
+                const createdStaff = await tx.staff.create({
+                    data: {
+                        staffCode,
+                        fullName: fullName.trim(),
+                        role: role.trim(),
+                        designationId: designationId || null,
+                        departmentId: resolvedDepartmentId,
+                        profileImage: profileImage || null,
+                        phone: phone || null,
+                        email: email,
+                        dob: dob ? new Date(dob) : null,
+                        gender: gender || null,
+                        bloodGroup: bloodGroup || null,
+                        address1: address1 || null,
+                        address2: address2 || null,
+                        country: country || null,
+                        state: state || null,
+                        city: city || null,
+                        pincode: pincode || null,
+                        dateOfJoining: dateOfJoining ? new Date(dateOfJoining) : new Date(),
+                        status: status || "Active",
+                        clinicId,
+                    },
+                    include: {
+                        designation: { select: { id: true, name: true } },
+                        department: { select: { id: true, name: true } },
+                    },
+                });
+                await tx.user.create({
+                    data: {
+                        email,
+                        passwordHash,
+                        fullName: fullName.trim(),
+                        role: "STAFF", // TypeScript might lag behind generated Prisma Client
+                        clinicId,
+                        dob: dob ? new Date(dob) : null,
+                        gender: gender || null,
+                    }
+                });
+                return createdStaff;
+            });
+            staff = result;
+        }
+        else {
+            staff = await prisma_1.default.staff.create({
+                data: {
+                    staffCode,
+                    fullName: fullName.trim(),
+                    role: role.trim(),
+                    designationId: designationId || null,
+                    departmentId: resolvedDepartmentId,
+                    profileImage: profileImage || null,
+                    phone: phone || null,
+                    email: email || null,
+                    dob: dob ? new Date(dob) : null,
+                    gender: gender || null,
+                    bloodGroup: bloodGroup || null,
+                    address1: address1 || null,
+                    address2: address2 || null,
+                    country: country || null,
+                    state: state || null,
+                    city: city || null,
+                    pincode: pincode || null,
+                    dateOfJoining: dateOfJoining ? new Date(dateOfJoining) : new Date(),
+                    status: status || "Active",
+                    clinicId,
+                },
+                include: {
+                    designation: { select: { id: true, name: true } },
+                    department: { select: { id: true, name: true } },
+                },
+            });
+        }
         res.status(201).json({ ...staff, statusLabel: mapStatusLabel(staff.status) });
     }
     catch (err) {
@@ -123,20 +190,20 @@ const updateStaff = async (req, res) => {
     try {
         const clinicId = req.user?.clinicId;
         const { id } = req.params;
-        const existing = await prisma.staff.findFirst({ where: { id, clinicId: clinicId } });
+        const existing = await prisma_1.default.staff.findFirst({ where: { id, clinicId: clinicId } });
         if (!existing)
             return res.status(404).json({ message: "Staff not found" });
         const { fullName, role, designationId, departmentId, profileImage, phone, email, dob, gender, bloodGroup, address1, address2, country, state, city, pincode, dateOfJoining, status, } = req.body;
         let resolvedDepartmentId = departmentId !== undefined ? departmentId || null : existing.departmentId;
         const desigId = designationId !== undefined ? designationId : existing.designationId;
         if (desigId && departmentId === undefined) {
-            const desig = await prisma.designation.findFirst({
+            const desig = await prisma_1.default.designation.findFirst({
                 where: { id: desigId, clinicId: clinicId },
                 select: { departmentId: true },
             });
             resolvedDepartmentId = desig?.departmentId ?? resolvedDepartmentId;
         }
-        const updated = await prisma.staff.update({
+        const updated = await prisma_1.default.staff.update({
             where: { id },
             data: {
                 fullName: fullName ?? existing.fullName,
@@ -176,10 +243,10 @@ const deleteStaff = async (req, res) => {
     try {
         const clinicId = req.user?.clinicId;
         const { id } = req.params;
-        const existing = await prisma.staff.findFirst({ where: { id, clinicId: clinicId } });
+        const existing = await prisma_1.default.staff.findFirst({ where: { id, clinicId: clinicId } });
         if (!existing)
             return res.status(404).json({ message: "Staff not found" });
-        await prisma.staff.delete({ where: { id } });
+        await prisma_1.default.staff.delete({ where: { id } });
         res.json({ message: "Staff deleted successfully" });
     }
     catch (err) {

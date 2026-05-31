@@ -1,11 +1,13 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deletePackage = exports.updatePackage = exports.createPackage = exports.getPackages = void 0;
-const client_1 = require("@prisma/client");
-const prisma = new client_1.PrismaClient();
+const prisma_1 = __importDefault(require("../lib/prisma"));
 const getPackages = async (req, res) => {
     try {
-        const packages = await prisma.subscriptionPackage.findMany({
+        const packages = await prisma_1.default.subscriptionPackage.findMany({
             orderBy: { createdAt: 'desc' }
         });
         return res.json(packages);
@@ -18,7 +20,7 @@ exports.getPackages = getPackages;
 const createPackage = async (req, res) => {
     try {
         const { name, price, durationInDays, maxDoctors, maxPatients, maxAppointments } = req.body;
-        const newPackage = await prisma.subscriptionPackage.create({
+        const newPackage = await prisma_1.default.subscriptionPackage.create({
             data: {
                 name,
                 price: parseFloat(price),
@@ -41,7 +43,7 @@ const updatePackage = async (req, res) => {
     try {
         const { id } = req.params;
         const { name, price, durationInDays, maxDoctors, maxPatients, maxAppointments, isActive } = req.body;
-        const updated = await prisma.subscriptionPackage.update({
+        const updated = await prisma_1.default.subscriptionPackage.update({
             where: { id },
             data: {
                 name,
@@ -63,7 +65,7 @@ exports.updatePackage = updatePackage;
 const deletePackage = async (req, res) => {
     try {
         const { id } = req.params;
-        await prisma.subscriptionPackage.delete({ where: { id } });
+        await prisma_1.default.subscriptionPackage.delete({ where: { id } });
         return res.json({ message: "Package deleted successfully" });
     }
     catch (error) {
