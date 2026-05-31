@@ -3,8 +3,8 @@ import { PrismaClient } from "@prisma/client";
 import { AuthenticatedRequest } from "../middlewares/auth.middleware";
 import bcrypt from "bcryptjs";
 import { randomBytes } from "crypto";
-
 import prisma from "../lib/prisma";
+import { createNotificationInternal } from "./notification.controller";
 
 const mapStatusLabel = (status: string) =>
   status === "Active" ? "Available" : "Unavailable";
@@ -271,6 +271,18 @@ export const createPatient = async (req: AuthenticatedRequest, res: Response) =>
     }
 
     res.status(201).json(enrichPatient(patient));
+
+    // 🔔 Notify admin: new patient registered
+    try {
+      await createNotificationInternal({
+        clinicId,
+        type: "PATIENT_ADDED",
+        title: "New Patient Registered",
+        message: `${firstName.trim()} ${lastName.trim()} (${patientCode}) has been registered${doctor ? ` under Dr. ${doctor.fullName}` : ""}.`,
+        targetRole: "ALL",
+        link: "/patients/patient-list",
+      });
+    } catch (_) { /* non-blocking */ }
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Server error";
     res.status(500).json({ message });
@@ -392,6 +404,19 @@ export const deletePatient = async (req: AuthenticatedRequest, res: Response) =>
     if (!existing) return res.status(404).json({ message: "Patient not found" });
 
     await prisma.patient.delete({ where: { id } });
+
+    // 🔔 Notify on patient removal
+    try {
+      await createNotificationInternal({
+        clinicId: clinicId!,
+        type: "PATIENT_ADDED",
+        title: "Patient Record Removed",
+        message: `Patient ${existing.firstName} ${existing.lastName} (${existing.patientCode}) has been removed.`,
+        targetRole: "ADMIN",
+        link: "/patients/patient-list",
+      });
+    } catch (_) { /* non-blocking */ }
+
     res.json({ message: "Patient deleted successfully" });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Server error";

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { register, login, getMe, getClinics, getPackages, registerDraft, completeRegistration } from "../controllers/auth.controller";
+import { register, login, getMe, getClinics, getPackages, registerDraft, completeRegistration, upgradePlan } from "../controllers/auth.controller";
 import { authenticateJWT } from "../middlewares/auth.middleware";
 import { validate } from "../middlewares/validate.middleware";
 import { authValidation } from "../validations/auth.validation";
@@ -13,5 +13,6 @@ router.post("/register-draft", validate(authValidation.register), registerDraft)
 router.post("/complete-registration", completeRegistration);
 router.post("/login", validate(authValidation.login), login);
 router.get("/me", authenticateJWT, getMe);
+router.post("/upgrade-plan", authenticateJWT, upgradePlan);
 
 export default router;

@@ -4,6 +4,7 @@ import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
 import { AuthenticatedRequest } from "../middlewares/auth.middleware";
 import prisma from "../lib/prisma";
+import { createSuperAdminNotification } from "./notification.controller";
 
 const JWT_SECRET = process.env.JWT_SECRET!; // Validated at startup in auth.middleware.ts
 
@@ -37,6 +38,60 @@ export const getPackages = async (req: Request, res: Response) => {
   } catch (error) {
     console.error("Get packages error:", error);
     return res.status(500).json({ message: "Internal server error fetching packages" });
+  }
+};
+
+// Upgrade / activate a plan for an existing clinic (post-trial)
+export const upgradePlan = async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    if (!req.user) return res.status(401).json({ message: "Unauthorized" });
+
+    const { packageId } = req.body;
+    if (!packageId) return res.status(400).json({ message: "packageId is required" });
+
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.id },
+      include: { clinic: true },
+    });
+
+    if (!user || !user.clinicId) {
+      return res.status(404).json({ message: "Clinic not found for this user" });
+    }
+
+    const pkg = await prisma.subscriptionPackage.findUnique({ where: { id: packageId } });
+    if (!pkg) return res.status(404).json({ message: "Package not found" });
+
+    const now = new Date();
+    const packageExpiresAt = new Date(now.getTime() + pkg.durationInDays * 24 * 60 * 60 * 1000);
+    const status = pkg.price === 0 ? "TRIAL" : "UPGRADED";
+
+    const updatedClinic = await prisma.clinic.update({
+      where: { id: user.clinicId },
+      data: {
+        packageId,
+        packageStartsAt: now,
+        packageExpiresAt,
+        status: status as any,
+      },
+    });
+
+    // 🔔 Notify super admin
+    try {
+      await createSuperAdminNotification({
+        type: "CLINIC_REGISTERED",
+        title: "Clinic Plan Upgraded",
+        message: `${user.clinic?.name || "A clinic"} has upgraded to ${pkg.name} (₹${pkg.price.toLocaleString("en-IN")}).`,
+        link: "/super-admin/tenants",
+      });
+    } catch (_) { /* non-blocking */ }
+
+    return res.json({
+      message: "Plan activated successfully!",
+      clinic: updatedClinic,
+    });
+  } catch (error) {
+    console.error("Upgrade plan error:", error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 
@@ -134,6 +189,16 @@ export const completeRegistration = async (req: Request, res: Response) => {
       { expiresIn: "7d" }
     );
 
+    // 🔔 Notify super admin about new clinic
+    try {
+      await createSuperAdminNotification({
+        type: "CLINIC_REGISTERED",
+        title: "New Clinic Registered",
+        message: `${user.clinic?.name ?? "A new clinic"} has registered with the "${pkg?.name ?? "Free Trial"}" plan (${status}).`,
+        link: "/super-admin/tenants",
+      });
+    } catch (_) { /* non-blocking */ }
+
     return res.json({
       message: "Registration completed!",
       token,
@@ -150,6 +215,8 @@ export const completeRegistration = async (req: Request, res: Response) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+
+
 
 // Register a new user and potential clinic tenant
 export const register = async (req: Request, res: Response) => {

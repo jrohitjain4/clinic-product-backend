@@ -1,6 +1,7 @@
 import { Response } from "express";
 import { AuthenticatedRequest } from "../middlewares/auth.middleware";
 import prisma from "../lib/prisma";
+import { createNotificationInternal } from "./notification.controller";
 
 const VALID_STATUSES = [
   "Checked Out",
@@ -363,6 +364,17 @@ export const createAppointment = async (req: AuthenticatedRequest, res: Response
 
     await maybeUpdatePatientLastVisit(patientId, resolvedStatus, scheduled);
 
+    // 🔔 Trigger notification
+    const patientName = `${patient.firstName} ${patient.lastName}`.trim();
+    await createNotificationInternal({
+      clinicId,
+      type: "APPOINTMENT",
+      title: "New Appointment Scheduled",
+      message: `Appointment ${appointmentCode} for ${patientName} with Dr. ${doctor.fullName} on ${formatDateTimeLabel(scheduled)}.`,
+      targetRole: "ALL",
+      link: `/appointments`,
+    });
+
     res.status(201).json(enrichAppointment(appointment));
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Server error";
@@ -446,6 +458,24 @@ export const updateAppointment = async (req: AuthenticatedRequest, res: Response
       resolvedStatus,
       scheduled
     );
+
+    // 🔔 Notify on status changes
+    const statusMessages: Record<string, string> = {
+      "Checked In": `Patient ${updated.patient.firstName} ${updated.patient.lastName} has checked in (Appt: ${updated.appointmentCode}).`,
+      "Checked Out": `Patient ${updated.patient.firstName} ${updated.patient.lastName} has checked out (Appt: ${updated.appointmentCode}).`,
+      "Cancelled": `Appointment ${updated.appointmentCode} for ${updated.patient.firstName} ${updated.patient.lastName} has been cancelled.`,
+      "Confirmed": `Appointment ${updated.appointmentCode} for ${updated.patient.firstName} ${updated.patient.lastName} is confirmed.`,
+    };
+    if (status && statusMessages[resolvedStatus] && resolvedStatus !== existing.status) {
+      await createNotificationInternal({
+        clinicId: clinicId!,
+        type: "APPOINTMENT",
+        title: `Appointment ${resolvedStatus}`,
+        message: statusMessages[resolvedStatus],
+        targetRole: "ALL",
+        link: `/appointments`,
+      });
+    }
 
     res.json(enrichAppointment(updated));
   } catch (err: unknown) {

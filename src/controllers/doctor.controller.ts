@@ -3,6 +3,7 @@ import { AuthenticatedRequest } from "../middlewares/auth.middleware";
 import bcrypt from "bcryptjs";
 import { randomBytes } from "crypto";
 import prisma from "../lib/prisma";
+import { createNotificationInternal } from "./notification.controller";
 
 // GET /api/doctors
 export const getDoctors = async (req: AuthenticatedRequest, res: Response) => {
@@ -157,6 +158,18 @@ export const createDoctor = async (req: AuthenticatedRequest, res: Response) => 
         });
 
         res.status(201).json(doctor);
+
+        // 🔔 Notify admin: new doctor added
+        try {
+            await createNotificationInternal({
+                clinicId,
+                type: "DOCTOR_ADDED",
+                title: "New Doctor Added",
+                message: `Dr. ${fullName} has been added to the clinic${email ? ` (${email})` : ""}.`,
+                targetRole: "ADMIN",
+                link: "/doctors/doctor-list",
+            });
+        } catch (_) { /* non-blocking */ }
     } catch (err: any) {
         res.status(500).json({ message: err.message });
     }
@@ -243,6 +256,19 @@ export const deleteDoctor = async (req: AuthenticatedRequest, res: Response) => 
         if (!existing) return res.status(404).json({ message: "Doctor not found" });
 
         await prisma.doctor.delete({ where: { id } });
+
+        // 🔔 Notify on doctor removal
+        try {
+            await createNotificationInternal({
+                clinicId: clinicId!,
+                type: "DOCTOR_ADDED",
+                title: "Doctor Removed",
+                message: `Dr. ${existing.fullName} has been removed from the clinic.`,
+                targetRole: "ADMIN",
+                link: "/doctors/doctor-list",
+            });
+        } catch (_) { /* non-blocking */ }
+
         res.json({ message: "Doctor deleted successfully" });
     } catch (err: any) {
         res.status(500).json({ message: err.message });
