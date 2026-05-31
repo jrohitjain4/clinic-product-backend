@@ -131,12 +131,10 @@ export const createSuperAdminNotification = async (data: {
     try {
         await (prisma as any).notification.create({
             data: {
-                clinicId: null,
                 type: data.type,
                 title: data.title,
                 message: data.message,
                 targetRole: "SUPER_ADMIN",
-                targetUserId: null,
                 link: data.link ?? null,
                 isRead: false,
             },
