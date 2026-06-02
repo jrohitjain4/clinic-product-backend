@@ -111,12 +111,10 @@ export const registerDraft = async (req: Request, res: Response) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const { name, address, gstNo } = clinicInfo;
-    const subdomain = name.toLowerCase().replace(/[^a-z0-9]/g, '-') + '-' + Math.floor(Math.random() * 1000);
 
     const newClinic = await prisma.clinic.create({
       data: {
         name,
-        subdomain,
         gstNo,
         address,
         status: "IN_PROGRESS",
@@ -244,9 +242,6 @@ export const register = async (req: Request, res: Response) => {
         return res.status(400).json({ message: "Clinic name is required for registration" });
       }
 
-      // Auto-generate subdomain from name
-      const subdomain = name.toLowerCase().replace(/[^a-z0-9]/g, '-') + '-' + Math.floor(Math.random() * 1000);
-
       // Determine initial status
       let status = "IN_PROGRESS";
       let packageExpiresAt = null;
@@ -263,7 +258,6 @@ export const register = async (req: Request, res: Response) => {
       const newClinic = await prisma.clinic.create({
         data: {
           name,
-          subdomain,
           gstNo,
           address,
           status: (status || "IN_PROGRESS") as ClinicStatus,

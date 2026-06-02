@@ -30,6 +30,8 @@ import invoiceRoutes from "./routes/invoice.routes";
 import dashboardRoutes from "./routes/dashboard.routes";
 import superadminRoutes from "./routes/superadmin.routes";
 import notificationRoutes from "./routes/notification.routes";
+import settingsRoutes from "./routes/settings.routes";
+import landingRoutes from "./routes/landing.routes";
 // Load environment variables
 dotenv.config();
 
@@ -54,7 +56,8 @@ app.use(
     credentials: true,
   })
 );
-app.use(express.json());
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 // Rate limiting on auth routes (20 requests per 15 minutes)
@@ -94,6 +97,8 @@ app.use("/api/invoices", invoiceRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/superadmin", superadminRoutes);
 app.use("/api/notifications", notificationRoutes);
+app.use("/api/settings", settingsRoutes);
+app.use("/api/landing", landingRoutes);
 
 // Root Check
 app.get("/", (req, res) => {

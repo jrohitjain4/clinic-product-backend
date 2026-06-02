@@ -62,6 +62,32 @@ model Clinic {
   invoiceItems          InvoiceItem[]
   products              Product[]
   notifications         Notification[]
+  landingPage           LandingPage?
+}
+
+model LandingPage {
+  id             String   @id @default(uuid())
+  clinicId       String   @unique
+  clinic         Clinic   @relation(fields: [clinicId], references: [id])
+  tagline        String?
+  whatsapp       String?
+  email          String?
+  facebook       String?
+  instagram      String?
+  about          String?
+  established    Int?
+  patientsServed String?
+  experience     Int?
+  mapUrl         String?
+  directionsUrl  String?
+  reviews        Json?    @default("[]")
+  gallery        Json?    @default("[]")
+  services       Json?    @default("[]")
+  logo           String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([clinicId])
 }
 
 model SubscriptionPackage {
@@ -555,4 +581,12 @@ model Notification {
   @@index([clinicId])
   @@index([targetUserId])
   @@index([isRead])
+}
+
+model SystemSetting {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  value     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
