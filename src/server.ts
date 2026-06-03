@@ -39,7 +39,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:5173")
+const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:5173,https://docyori.com,https://api.docyori.com")
   .split(",")
   .map((o) => o.trim())
   .filter(Boolean);
@@ -48,13 +48,27 @@ const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:5173")
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+
+      const isAllowed = allowedOrigins.some(allowed => {
+        if (allowed.includes('*')) {
+          const pattern = new RegExp('^' + allowed.replace(/\*/g, '.*') + '$');
+          return pattern.test(origin);
+        }
+        return allowed === origin;
+      });
+
+      if (isAllowed || origin.endsWith('.docyori.com') || origin === 'https://docyori.com') {
         callback(null, true);
       } else {
+        console.log("CORS Blocked for origin:", origin);
         callback(null, false);
       }
     },
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
   })
 );
 app.use(express.json({ limit: "50mb" }));
