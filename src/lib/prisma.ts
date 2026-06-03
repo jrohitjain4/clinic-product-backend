@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "../../prisma/generated/client";
 
 // Singleton Prisma Client — prevents multiple DB connection pools
 // This is the ONE AND ONLY place PrismaClient is instantiated in this project.
