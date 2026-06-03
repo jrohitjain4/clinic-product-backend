@@ -89,7 +89,7 @@ export const deleteSpecialization = async (req: AuthenticatedRequest, res: Respo
         const existing = await prisma.specialization.findFirst({ where: { id, clinicId: clinicId! } });
         if (!existing) return res.status(404).json({ message: "Specialization not found" });
 
-        const linkedDoctors = await prisma.doctor.count({ where: { specializationId: id } });
+        const linkedDoctors = await prisma.doctor.count({ where: { specializations: { some: { id } } } });
         if (linkedDoctors > 0) {
             return res.status(400).json({ message: `Cannot delete: ${linkedDoctors} doctor(s) are linked to this specialization` });
         }
