@@ -9,6 +9,7 @@ const VALID_STATUSES = [
   "Cancelled",
   "Schedule",
   "Confirmed",
+  "Follow-up",
 ];
 
 const formatDateTimeLabel = (date: Date) => {
@@ -342,7 +343,32 @@ export const createAppointment = async (req: AuthenticatedRequest, res: Response
     }
 
     const resolvedMode = mode || modeFromAppointmentType(appointmentType);
-    const resolvedStatus = normalizeStatus(status);
+    let resolvedStatus = normalizeStatus(status);
+
+    // ── Self-correct: Check for Follow-up status ──────────────────
+    if (resolvedStatus === "Schedule" || resolvedStatus === "Confirmed") {
+      if (doctor.followUpEnabled && doctor.followUpValidityDays) {
+        const lastAppt = await prisma.appointment.findFirst({
+          where: {
+            patientId,
+            doctorId,
+            clinicId,
+            status: "Checked Out",
+            scheduledAt: { lt: scheduled },
+          },
+          orderBy: { scheduledAt: "desc" },
+        });
+
+        if (lastAppt) {
+          const diffDays =
+            (scheduled.getTime() - lastAppt.scheduledAt.getTime()) /
+            (1000 * 60 * 60 * 24);
+          if (diffDays <= doctor.followUpValidityDays) {
+            resolvedStatus = "Follow-up";
+          }
+        }
+      }
+    }
 
     const appointment = await prisma.appointment.create({
       data: {
@@ -500,5 +526,64 @@ export const deleteAppointment = async (req: AuthenticatedRequest, res: Response
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Server error";
     res.status(500).json({ message });
+  }
+};
+
+// GET /api/appointments/check-followup?patientId=X&doctorId=Y
+export const checkFollowupStatus = async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const clinicId = req.user?.clinicId;
+    const { patientId, doctorId, date } = req.query;
+
+    if (!patientId || !doctorId) {
+      return res.json({ isFollowup: false });
+    }
+
+    const doctor = await prisma.doctor.findUnique({
+      where: { id: doctorId as string },
+    });
+
+    if (!doctor) {
+      return res.json({ isFollowup: false, reason: "Doctor not found" });
+    }
+
+    if (!doctor.followUpEnabled || !doctor.followUpValidityDays) {
+      return res.json({ isFollowup: false, reason: "Follow-up disabled for this doctor" });
+    }
+
+    const scheduledDate = date ? new Date(date as string) : new Date();
+
+    // Find the latest completed appointment BEFORE this date
+    const lastAppt = await prisma.appointment.findFirst({
+      where: {
+        patientId: patientId as string,
+        doctorId: doctorId as string,
+        clinicId: clinicId!,
+        status: "Checked Out",
+        scheduledAt: { lt: scheduledDate },
+      },
+      orderBy: { scheduledAt: "desc" },
+    });
+
+    if (lastAppt) {
+      const diffMs = scheduledDate.getTime() - lastAppt.scheduledAt.getTime();
+      const diffDays = diffMs / (1000 * 60 * 60 * 24);
+
+      console.log(`Checking follow-up: diffDays=${diffDays}, validity=${doctor.followUpValidityDays}`);
+
+      if (diffDays >= 0 && diffDays <= doctor.followUpValidityDays) {
+        return res.json({
+          isFollowup: true,
+          lastApptId: lastAppt.id,
+          diffDays,
+          validity: doctor.followUpValidityDays
+        });
+      }
+    }
+
+    res.json({ isFollowup: false, reason: "No qualifying past appointment found" });
+  } catch (err: any) {
+    console.error("checkFollowupStatus error:", err);
+    res.status(500).json({ message: err.message });
   }
 };

@@ -15,7 +15,7 @@ export const getClinics = async (req: Request, res: Response) => {
       select: {
         id: true,
         name: true,
-        subdomain: true,
+        username: true,
       },
       orderBy: {
         name: "asc",
@@ -97,50 +97,104 @@ export const upgradePlan = async (req: AuthenticatedRequest, res: Response) => {
 
 // Step 2: Register Draft (Personal + Business info)
 export const registerDraft = async (req: Request, res: Response) => {
+  console.log("REGISTER DRAFT BODY:", req.body);
   try {
-    const { email, password, fullName, role, clinicInfo, dob, age, gender } = req.body;
+    const {
+      ownerName,
+      email,
+      phone,
+      whatsappNumber,
+      password,
+      clinicName,
+      addressLine1,
+      addressLine2,
+      district,
+      city,
+      state,
+      country,
+      pincode,
+      doctorCount: doctorCountRaw,
+      username // Clinic username
+    } = req.body;
 
-    if (!email || !password || !fullName || !role || !clinicInfo) {
-      return res.status(400).json({ message: "Essential fields are missing" });
+    const doctorCount = doctorCountRaw ? parseInt(doctorCountRaw.toString(), 10) : undefined;
+
+    if (!email || !password || !ownerName || !phone || !clinicName || !username) {
+      return res.status(400).json({ message: "Essential fields (Email, Password, Name, Phone, Clinic Name, Username) are missing" });
     }
 
-    const existingUser = await prisma.user.findUnique({ where: { email } });
+    // Check if user or clinic with this info already exists
+    const existingUser = await prisma.user.findFirst({
+      where: {
+        OR: [
+          { email },
+          { phone },
+          { username }
+        ]
+      }
+    });
+
     if (existingUser) {
-      return res.status(400).json({ message: "A user with this email already exists" });
+      return res.status(400).json({ message: "A user with this Email, Phone, or Username already exists" });
+    }
+
+    const existingClinic = await prisma.clinic.findUnique({
+      where: { username }
+    });
+
+    if (existingClinic) {
+      return res.status(400).json({ message: "This Clinic Username is already taken" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const { name, address, gstNo } = clinicInfo;
 
-    const newClinic = await prisma.clinic.create({
-      data: {
-        name,
-        gstNo,
-        address,
-        status: "IN_PROGRESS",
-      }
-    });
+    const result = await prisma.$transaction(async (tx) => {
+      const clinic = await tx.clinic.create({
+        data: {
+          name: clinicName,
+          username,
+          ownerName,
+          ownerEmail: email,
+          phone,
+          whatsappNumber,
+          addressLine1,
+          addressLine2,
+          district,
+          city,
+          state,
+          country,
+          pincode,
+          doctorCount: doctorCount || null,
+          status: "IN_PROGRESS",
+        }
+      });
 
-    const newUser = await prisma.user.create({
-      data: {
-        email,
-        passwordHash: hashedPassword,
-        fullName,
-        dob: dob ? new Date(dob) : null,
-        age: age ? parseInt(age.toString()) : null,
-        gender,
-        role: role as Role,
-        clinicId: newClinic.id,
-      }
+      const user = await tx.user.create({
+        data: {
+          email,
+          phone,
+          username, // Matching clinic username for administrative login
+          passwordHash: hashedPassword,
+          fullName: ownerName,
+          role: "ADMIN",
+          clinicId: clinic.id,
+        }
+      });
+
+      return { user, clinic };
     });
 
     return res.status(201).json({
-      message: "Draft created",
-      userId: newUser.id
+      message: "Draft created successfully",
+      userId: result.user.id
     });
-  } catch (error) {
-    console.error("Draft registration error:", error);
-    return res.status(500).json({ message: "Internal server error" });
+  } catch (error: any) {
+    console.error("Register draft error detail:", error);
+    return res.status(400).json({
+      message: error.message || "Failed to create registration draft",
+      error: error.message,
+      detail: error.code === 'P2002' ? "A clinic or user with these details already exists." : undefined
+    });
   }
 };
 
@@ -177,7 +231,8 @@ export const completeRegistration = async (req: Request, res: Response) => {
         packageId,
         packageStartsAt: now,
         packageExpiresAt,
-        status: status as ClinicStatus
+        status: status as ClinicStatus,
+        isTrialUsed: pkg.price === 0 ? true : (user.clinic?.isTrialUsed || false)
       }
     });
 
@@ -219,7 +274,7 @@ export const completeRegistration = async (req: Request, res: Response) => {
 // Register a new user and potential clinic tenant
 export const register = async (req: Request, res: Response) => {
   try {
-    const { email, password, fullName, role, clinicId, clinicInfo, packageId, dob, age, gender } = req.body;
+    const { email, username: userLevelUsername, password, fullName, role, clinicId, clinicInfo, packageId, dob, age, gender } = req.body;
 
     if (!email || !password || !fullName || !role) {
       return res.status(400).json({ message: "All basic fields (email, password, fullName, role) are required" });
@@ -255,11 +310,12 @@ export const register = async (req: Request, res: Response) => {
         }
       }
 
+      const username = clinicInfo.username || userLevelUsername || `${name.toLowerCase().replace(/\s+/g, '_')}_${Date.now()}`;
       const newClinic = await prisma.clinic.create({
         data: {
           name,
-          gstNo,
-          address,
+          username,
+          addressLine1: address,
           status: (status || "IN_PROGRESS") as ClinicStatus,
           packageId,
           packageStartsAt: packageId ? new Date() : null,
@@ -324,20 +380,26 @@ export const register = async (req: Request, res: Response) => {
 // Login user
 export const login = async (req: Request, res: Response) => {
   try {
-    const { email, password } = req.body;
+    const { identifier, password } = req.body; // identifier can be email, phone, or username
 
-    if (!email || !password) {
-      return res.status(400).json({ message: "Email and password are required" });
+    if (!identifier || !password) {
+      return res.status(400).json({ message: "Identifier and password are required" });
     }
 
-    // Find user
-    const user = await prisma.user.findUnique({
-      where: { email },
+    // Find user by email, phone, or username
+    const user = await prisma.user.findFirst({
+      where: {
+        OR: [
+          { email: identifier },
+          { phone: identifier },
+          { username: identifier }
+        ]
+      },
       include: { clinic: true },
     });
 
     if (!user) {
-      return res.status(401).json({ message: "Invalid email credentials" });
+      return res.status(401).json({ message: "Invalid credentials" });
     }
 
     // Validate password
@@ -349,7 +411,7 @@ export const login = async (req: Request, res: Response) => {
     let permissions: any = null;
     if ((user.role as any) === "STAFF") {
       const staff = await prisma.staff.findFirst({
-        where: { email, clinicId: user.clinicId || undefined }
+        where: { email: user.email, clinicId: user.clinicId || undefined }
       });
       if (staff?.role) {
         const clinicRole = await prisma.clinicRole.findFirst({

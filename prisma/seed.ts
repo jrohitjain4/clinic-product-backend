@@ -8,11 +8,29 @@ async function main() {
 
   // Clear in FK-safe order
   await prisma.appointment.deleteMany({});
+  await prisma.leave.deleteMany({});
+  await prisma.leaveType.deleteMany({});
+  await prisma.attendance.deleteMany({});
+  await prisma.payroll.deleteMany({});
+  await prisma.notification.deleteMany({});
+  await prisma.expense.deleteMany({});
+  await prisma.expenseCategory.deleteMany({});
+  await prisma.invoiceItem.deleteMany({});
+  await prisma.invoice.deleteMany({});
+  await prisma.prescriptionMedicine.deleteMany({});
+  await prisma.prescription.deleteMany({});
+  await prisma.service.deleteMany({});
+  await prisma.product.deleteMany({});
+  await prisma.holiday.deleteMany({});
+
   await prisma.patient.deleteMany({});
   await prisma.staff.deleteMany({});
+  await prisma.doctor.updateMany({ data: { departmentId: null, designationId: null } });
   await prisma.doctor.deleteMany({});
+  await prisma.specialization.deleteMany({});
   await prisma.designation.deleteMany({});
   await prisma.department.deleteMany({});
+  await prisma.clinicRole.deleteMany({});
   await prisma.user.deleteMany({});
   await prisma.clinic.deleteMany({});
   await prisma.subscriptionPackage.deleteMany({});
@@ -228,6 +246,13 @@ async function main() {
     },
   });
 
+  const generalMedSpec = await prisma.specialization.create({
+    data: { name: "General Medicine", clinicId: clinic.id, status: "Active" }
+  });
+  const heartSurgerySpec = await prisma.specialization.create({
+    data: { name: "Heart Surgery", clinicId: clinic.id, status: "Active" }
+  });
+
   const defaultSchedule = {
     Monday: [{ session: "Morning", from: "09:00:00", to: "13:00:00" }],
     Tuesday: [{ session: "Morning", from: "09:00:00", to: "13:00:00" }],
@@ -255,6 +280,14 @@ async function main() {
       status: "Active",
       clinicId: clinic.id,
       schedules: defaultSchedule,
+      maritalStatus: "Married",
+      qualification: "MBBS, MD Cardiology",
+      followUpEnabled: true,
+      followUpValidityDays: 14,
+      freeFollowUpLimit: 2,
+      specializations: {
+        connect: [{ id: heartSurgerySpec.id }]
+      }
     },
   });
 
@@ -276,6 +309,14 @@ async function main() {
       status: "Active",
       clinicId: clinic.id,
       schedules: defaultSchedule,
+      maritalStatus: "Single",
+      qualification: "MBBS, DNB",
+      followUpEnabled: true,
+      followUpValidityDays: 10,
+      freeFollowUpLimit: 1,
+      specializations: {
+        connect: [{ id: generalMedSpec.id }]
+      }
     },
   });
 

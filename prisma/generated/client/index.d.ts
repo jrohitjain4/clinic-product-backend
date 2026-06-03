@@ -3609,12 +3609,14 @@ export namespace Prisma {
    */
 
   export type DoctorCountOutputType = {
+    specializations: number
     patients: number
     appointments: number
     prescriptions: number
   }
 
   export type DoctorCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    specializations?: boolean | DoctorCountOutputTypeCountSpecializationsArgs
     patients?: boolean | DoctorCountOutputTypeCountPatientsArgs
     appointments?: boolean | DoctorCountOutputTypeCountAppointmentsArgs
     prescriptions?: boolean | DoctorCountOutputTypeCountPrescriptionsArgs
@@ -3629,6 +3631,13 @@ export namespace Prisma {
      * Select specific fields to fetch from the DoctorCountOutputType
      */
     select?: DoctorCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * DoctorCountOutputType without action
+   */
+  export type DoctorCountOutputTypeCountSpecializationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SpecializationWhereInput
   }
 
   /**
@@ -3867,21 +3876,41 @@ export namespace Prisma {
 
   export type AggregateClinic = {
     _count: ClinicCountAggregateOutputType | null
+    _avg: ClinicAvgAggregateOutputType | null
+    _sum: ClinicSumAggregateOutputType | null
     _min: ClinicMinAggregateOutputType | null
     _max: ClinicMaxAggregateOutputType | null
+  }
+
+  export type ClinicAvgAggregateOutputType = {
+    doctorCount: number | null
+  }
+
+  export type ClinicSumAggregateOutputType = {
+    doctorCount: number | null
   }
 
   export type ClinicMinAggregateOutputType = {
     id: string | null
     name: string | null
-    subdomain: string | null
-    gstNo: string | null
-    address: string | null
+    username: string | null
+    ownerName: string | null
+    ownerEmail: string | null
+    whatsappNumber: string | null
     phone: string | null
+    addressLine1: string | null
+    addressLine2: string | null
+    district: string | null
+    city: string | null
+    state: string | null
+    country: string | null
+    pincode: string | null
+    doctorCount: number | null
     status: $Enums.ClinicStatus | null
     packageId: string | null
     packageStartsAt: Date | null
     packageExpiresAt: Date | null
+    isTrialUsed: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -3889,14 +3918,24 @@ export namespace Prisma {
   export type ClinicMaxAggregateOutputType = {
     id: string | null
     name: string | null
-    subdomain: string | null
-    gstNo: string | null
-    address: string | null
+    username: string | null
+    ownerName: string | null
+    ownerEmail: string | null
+    whatsappNumber: string | null
     phone: string | null
+    addressLine1: string | null
+    addressLine2: string | null
+    district: string | null
+    city: string | null
+    state: string | null
+    country: string | null
+    pincode: string | null
+    doctorCount: number | null
     status: $Enums.ClinicStatus | null
     packageId: string | null
     packageStartsAt: Date | null
     packageExpiresAt: Date | null
+    isTrialUsed: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -3904,31 +3943,59 @@ export namespace Prisma {
   export type ClinicCountAggregateOutputType = {
     id: number
     name: number
-    subdomain: number
-    gstNo: number
-    address: number
+    username: number
+    ownerName: number
+    ownerEmail: number
+    whatsappNumber: number
     phone: number
+    addressLine1: number
+    addressLine2: number
+    district: number
+    city: number
+    state: number
+    country: number
+    pincode: number
+    doctorCount: number
     status: number
     packageId: number
     packageStartsAt: number
     packageExpiresAt: number
+    isTrialUsed: number
     createdAt: number
     updatedAt: number
     _all: number
   }
 
 
+  export type ClinicAvgAggregateInputType = {
+    doctorCount?: true
+  }
+
+  export type ClinicSumAggregateInputType = {
+    doctorCount?: true
+  }
+
   export type ClinicMinAggregateInputType = {
     id?: true
     name?: true
-    subdomain?: true
-    gstNo?: true
-    address?: true
+    username?: true
+    ownerName?: true
+    ownerEmail?: true
+    whatsappNumber?: true
     phone?: true
+    addressLine1?: true
+    addressLine2?: true
+    district?: true
+    city?: true
+    state?: true
+    country?: true
+    pincode?: true
+    doctorCount?: true
     status?: true
     packageId?: true
     packageStartsAt?: true
     packageExpiresAt?: true
+    isTrialUsed?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -3936,14 +4003,24 @@ export namespace Prisma {
   export type ClinicMaxAggregateInputType = {
     id?: true
     name?: true
-    subdomain?: true
-    gstNo?: true
-    address?: true
+    username?: true
+    ownerName?: true
+    ownerEmail?: true
+    whatsappNumber?: true
     phone?: true
+    addressLine1?: true
+    addressLine2?: true
+    district?: true
+    city?: true
+    state?: true
+    country?: true
+    pincode?: true
+    doctorCount?: true
     status?: true
     packageId?: true
     packageStartsAt?: true
     packageExpiresAt?: true
+    isTrialUsed?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -3951,14 +4028,24 @@ export namespace Prisma {
   export type ClinicCountAggregateInputType = {
     id?: true
     name?: true
-    subdomain?: true
-    gstNo?: true
-    address?: true
+    username?: true
+    ownerName?: true
+    ownerEmail?: true
+    whatsappNumber?: true
     phone?: true
+    addressLine1?: true
+    addressLine2?: true
+    district?: true
+    city?: true
+    state?: true
+    country?: true
+    pincode?: true
+    doctorCount?: true
     status?: true
     packageId?: true
     packageStartsAt?: true
     packageExpiresAt?: true
+    isTrialUsed?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -4002,6 +4089,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: ClinicAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ClinicSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: ClinicMinAggregateInputType
@@ -4032,6 +4131,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: ClinicCountAggregateInputType | true
+    _avg?: ClinicAvgAggregateInputType
+    _sum?: ClinicSumAggregateInputType
     _min?: ClinicMinAggregateInputType
     _max?: ClinicMaxAggregateInputType
   }
@@ -4039,17 +4140,29 @@ export namespace Prisma {
   export type ClinicGroupByOutputType = {
     id: string
     name: string
-    subdomain: string | null
-    gstNo: string | null
-    address: string | null
+    username: string | null
+    ownerName: string | null
+    ownerEmail: string | null
+    whatsappNumber: string | null
     phone: string | null
+    addressLine1: string | null
+    addressLine2: string | null
+    district: string | null
+    city: string | null
+    state: string | null
+    country: string | null
+    pincode: string | null
+    doctorCount: number | null
     status: $Enums.ClinicStatus
     packageId: string | null
     packageStartsAt: Date | null
     packageExpiresAt: Date | null
+    isTrialUsed: boolean
     createdAt: Date
     updatedAt: Date
     _count: ClinicCountAggregateOutputType | null
+    _avg: ClinicAvgAggregateOutputType | null
+    _sum: ClinicSumAggregateOutputType | null
     _min: ClinicMinAggregateOutputType | null
     _max: ClinicMaxAggregateOutputType | null
   }
@@ -4071,14 +4184,24 @@ export namespace Prisma {
   export type ClinicSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    subdomain?: boolean
-    gstNo?: boolean
-    address?: boolean
+    username?: boolean
+    ownerName?: boolean
+    ownerEmail?: boolean
+    whatsappNumber?: boolean
     phone?: boolean
+    addressLine1?: boolean
+    addressLine2?: boolean
+    district?: boolean
+    city?: boolean
+    state?: boolean
+    country?: boolean
+    pincode?: boolean
+    doctorCount?: boolean
     status?: boolean
     packageId?: boolean
     packageStartsAt?: boolean
     packageExpiresAt?: boolean
+    isTrialUsed?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     package?: boolean | Clinic$packageArgs<ExtArgs>
@@ -4112,14 +4235,24 @@ export namespace Prisma {
   export type ClinicSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    subdomain?: boolean
-    gstNo?: boolean
-    address?: boolean
+    username?: boolean
+    ownerName?: boolean
+    ownerEmail?: boolean
+    whatsappNumber?: boolean
     phone?: boolean
+    addressLine1?: boolean
+    addressLine2?: boolean
+    district?: boolean
+    city?: boolean
+    state?: boolean
+    country?: boolean
+    pincode?: boolean
+    doctorCount?: boolean
     status?: boolean
     packageId?: boolean
     packageStartsAt?: boolean
     packageExpiresAt?: boolean
+    isTrialUsed?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     package?: boolean | Clinic$packageArgs<ExtArgs>
@@ -4128,14 +4261,24 @@ export namespace Prisma {
   export type ClinicSelectScalar = {
     id?: boolean
     name?: boolean
-    subdomain?: boolean
-    gstNo?: boolean
-    address?: boolean
+    username?: boolean
+    ownerName?: boolean
+    ownerEmail?: boolean
+    whatsappNumber?: boolean
     phone?: boolean
+    addressLine1?: boolean
+    addressLine2?: boolean
+    district?: boolean
+    city?: boolean
+    state?: boolean
+    country?: boolean
+    pincode?: boolean
+    doctorCount?: boolean
     status?: boolean
     packageId?: boolean
     packageStartsAt?: boolean
     packageExpiresAt?: boolean
+    isTrialUsed?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
@@ -4204,14 +4347,24 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
-      subdomain: string | null
-      gstNo: string | null
-      address: string | null
+      username: string | null
+      ownerName: string | null
+      ownerEmail: string | null
+      whatsappNumber: string | null
       phone: string | null
+      addressLine1: string | null
+      addressLine2: string | null
+      district: string | null
+      city: string | null
+      state: string | null
+      country: string | null
+      pincode: string | null
+      doctorCount: number | null
       status: $Enums.ClinicStatus
       packageId: string | null
       packageStartsAt: Date | null
       packageExpiresAt: Date | null
+      isTrialUsed: boolean
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["clinic"]>
@@ -4634,14 +4787,24 @@ export namespace Prisma {
   interface ClinicFieldRefs {
     readonly id: FieldRef<"Clinic", 'String'>
     readonly name: FieldRef<"Clinic", 'String'>
-    readonly subdomain: FieldRef<"Clinic", 'String'>
-    readonly gstNo: FieldRef<"Clinic", 'String'>
-    readonly address: FieldRef<"Clinic", 'String'>
+    readonly username: FieldRef<"Clinic", 'String'>
+    readonly ownerName: FieldRef<"Clinic", 'String'>
+    readonly ownerEmail: FieldRef<"Clinic", 'String'>
+    readonly whatsappNumber: FieldRef<"Clinic", 'String'>
     readonly phone: FieldRef<"Clinic", 'String'>
+    readonly addressLine1: FieldRef<"Clinic", 'String'>
+    readonly addressLine2: FieldRef<"Clinic", 'String'>
+    readonly district: FieldRef<"Clinic", 'String'>
+    readonly city: FieldRef<"Clinic", 'String'>
+    readonly state: FieldRef<"Clinic", 'String'>
+    readonly country: FieldRef<"Clinic", 'String'>
+    readonly pincode: FieldRef<"Clinic", 'String'>
+    readonly doctorCount: FieldRef<"Clinic", 'Int'>
     readonly status: FieldRef<"Clinic", 'ClinicStatus'>
     readonly packageId: FieldRef<"Clinic", 'String'>
     readonly packageStartsAt: FieldRef<"Clinic", 'DateTime'>
     readonly packageExpiresAt: FieldRef<"Clinic", 'DateTime'>
+    readonly isTrialUsed: FieldRef<"Clinic", 'Boolean'>
     readonly createdAt: FieldRef<"Clinic", 'DateTime'>
     readonly updatedAt: FieldRef<"Clinic", 'DateTime'>
   }
@@ -7674,6 +7837,8 @@ export namespace Prisma {
   export type UserMinAggregateOutputType = {
     id: string | null
     email: string | null
+    username: string | null
+    phone: string | null
     passwordHash: string | null
     fullName: string | null
     dob: Date | null
@@ -7688,6 +7853,8 @@ export namespace Prisma {
   export type UserMaxAggregateOutputType = {
     id: string | null
     email: string | null
+    username: string | null
+    phone: string | null
     passwordHash: string | null
     fullName: string | null
     dob: Date | null
@@ -7702,6 +7869,8 @@ export namespace Prisma {
   export type UserCountAggregateOutputType = {
     id: number
     email: number
+    username: number
+    phone: number
     passwordHash: number
     fullName: number
     dob: number
@@ -7726,6 +7895,8 @@ export namespace Prisma {
   export type UserMinAggregateInputType = {
     id?: true
     email?: true
+    username?: true
+    phone?: true
     passwordHash?: true
     fullName?: true
     dob?: true
@@ -7740,6 +7911,8 @@ export namespace Prisma {
   export type UserMaxAggregateInputType = {
     id?: true
     email?: true
+    username?: true
+    phone?: true
     passwordHash?: true
     fullName?: true
     dob?: true
@@ -7754,6 +7927,8 @@ export namespace Prisma {
   export type UserCountAggregateInputType = {
     id?: true
     email?: true
+    username?: true
+    phone?: true
     passwordHash?: true
     fullName?: true
     dob?: true
@@ -7855,6 +8030,8 @@ export namespace Prisma {
   export type UserGroupByOutputType = {
     id: string
     email: string
+    username: string | null
+    phone: string | null
     passwordHash: string
     fullName: string
     dob: Date | null
@@ -7888,6 +8065,8 @@ export namespace Prisma {
   export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     email?: boolean
+    username?: boolean
+    phone?: boolean
     passwordHash?: boolean
     fullName?: boolean
     dob?: boolean
@@ -7903,6 +8082,8 @@ export namespace Prisma {
   export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     email?: boolean
+    username?: boolean
+    phone?: boolean
     passwordHash?: boolean
     fullName?: boolean
     dob?: boolean
@@ -7918,6 +8099,8 @@ export namespace Prisma {
   export type UserSelectScalar = {
     id?: boolean
     email?: boolean
+    username?: boolean
+    phone?: boolean
     passwordHash?: boolean
     fullName?: boolean
     dob?: boolean
@@ -7944,6 +8127,8 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       email: string
+      username: string | null
+      phone: string | null
       passwordHash: string
       fullName: string
       dob: Date | null
@@ -8349,6 +8534,8 @@ export namespace Prisma {
   interface UserFieldRefs {
     readonly id: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
+    readonly username: FieldRef<"User", 'String'>
+    readonly phone: FieldRef<"User", 'String'>
     readonly passwordHash: FieldRef<"User", 'String'>
     readonly fullName: FieldRef<"User", 'String'>
     readonly dob: FieldRef<"User", 'DateTime'>
@@ -12095,6 +12282,8 @@ export namespace Prisma {
     appointmentDuration: number | null
     consultationCharge: number | null
     maxBookingsPerSlot: number | null
+    followUpValidityDays: number | null
+    freeFollowUpLimit: number | null
   }
 
   export type DoctorSumAggregateOutputType = {
@@ -12103,6 +12292,8 @@ export namespace Prisma {
     appointmentDuration: number | null
     consultationCharge: number | null
     maxBookingsPerSlot: number | null
+    followUpValidityDays: number | null
+    freeFollowUpLimit: number | null
   }
 
   export type DoctorMinAggregateOutputType = {
@@ -12133,8 +12324,17 @@ export namespace Prisma {
     displayOnBookingPage: boolean | null
     status: string | null
     departmentId: string | null
+    maritalStatus: string | null
+    qualification: string | null
+    signatureImage: string | null
+    medicalRegCertificate: string | null
+    qualificationCertificate: string | null
+    aadhaarCard: string | null
+    panCard: string | null
+    followUpEnabled: boolean | null
+    followUpValidityDays: number | null
+    freeFollowUpLimit: number | null
     designationId: string | null
-    specializationId: string | null
     clinicId: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -12168,8 +12368,17 @@ export namespace Prisma {
     displayOnBookingPage: boolean | null
     status: string | null
     departmentId: string | null
+    maritalStatus: string | null
+    qualification: string | null
+    signatureImage: string | null
+    medicalRegCertificate: string | null
+    qualificationCertificate: string | null
+    aadhaarCard: string | null
+    panCard: string | null
+    followUpEnabled: boolean | null
+    followUpValidityDays: number | null
+    freeFollowUpLimit: number | null
     designationId: string | null
-    specializationId: string | null
     clinicId: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -12208,8 +12417,17 @@ export namespace Prisma {
     schedules: number
     status: number
     departmentId: number
+    maritalStatus: number
+    qualification: number
+    signatureImage: number
+    medicalRegCertificate: number
+    qualificationCertificate: number
+    aadhaarCard: number
+    panCard: number
+    followUpEnabled: number
+    followUpValidityDays: number
+    freeFollowUpLimit: number
     designationId: number
-    specializationId: number
     clinicId: number
     createdAt: number
     updatedAt: number
@@ -12223,6 +12441,8 @@ export namespace Prisma {
     appointmentDuration?: true
     consultationCharge?: true
     maxBookingsPerSlot?: true
+    followUpValidityDays?: true
+    freeFollowUpLimit?: true
   }
 
   export type DoctorSumAggregateInputType = {
@@ -12231,6 +12451,8 @@ export namespace Prisma {
     appointmentDuration?: true
     consultationCharge?: true
     maxBookingsPerSlot?: true
+    followUpValidityDays?: true
+    freeFollowUpLimit?: true
   }
 
   export type DoctorMinAggregateInputType = {
@@ -12261,8 +12483,17 @@ export namespace Prisma {
     displayOnBookingPage?: true
     status?: true
     departmentId?: true
+    maritalStatus?: true
+    qualification?: true
+    signatureImage?: true
+    medicalRegCertificate?: true
+    qualificationCertificate?: true
+    aadhaarCard?: true
+    panCard?: true
+    followUpEnabled?: true
+    followUpValidityDays?: true
+    freeFollowUpLimit?: true
     designationId?: true
-    specializationId?: true
     clinicId?: true
     createdAt?: true
     updatedAt?: true
@@ -12296,8 +12527,17 @@ export namespace Prisma {
     displayOnBookingPage?: true
     status?: true
     departmentId?: true
+    maritalStatus?: true
+    qualification?: true
+    signatureImage?: true
+    medicalRegCertificate?: true
+    qualificationCertificate?: true
+    aadhaarCard?: true
+    panCard?: true
+    followUpEnabled?: true
+    followUpValidityDays?: true
+    freeFollowUpLimit?: true
     designationId?: true
-    specializationId?: true
     clinicId?: true
     createdAt?: true
     updatedAt?: true
@@ -12336,8 +12576,17 @@ export namespace Prisma {
     schedules?: true
     status?: true
     departmentId?: true
+    maritalStatus?: true
+    qualification?: true
+    signatureImage?: true
+    medicalRegCertificate?: true
+    qualificationCertificate?: true
+    aadhaarCard?: true
+    panCard?: true
+    followUpEnabled?: true
+    followUpValidityDays?: true
+    freeFollowUpLimit?: true
     designationId?: true
-    specializationId?: true
     clinicId?: true
     createdAt?: true
     updatedAt?: true
@@ -12463,8 +12712,17 @@ export namespace Prisma {
     schedules: JsonValue | null
     status: string
     departmentId: string | null
+    maritalStatus: string | null
+    qualification: string | null
+    signatureImage: string | null
+    medicalRegCertificate: string | null
+    qualificationCertificate: string | null
+    aadhaarCard: string | null
+    panCard: string | null
+    followUpEnabled: boolean
+    followUpValidityDays: number | null
+    freeFollowUpLimit: number | null
     designationId: string | null
-    specializationId: string | null
     clinicId: string
     createdAt: Date
     updatedAt: Date
@@ -12522,14 +12780,23 @@ export namespace Prisma {
     schedules?: boolean
     status?: boolean
     departmentId?: boolean
+    maritalStatus?: boolean
+    qualification?: boolean
+    signatureImage?: boolean
+    medicalRegCertificate?: boolean
+    qualificationCertificate?: boolean
+    aadhaarCard?: boolean
+    panCard?: boolean
+    followUpEnabled?: boolean
+    followUpValidityDays?: boolean
+    freeFollowUpLimit?: boolean
     designationId?: boolean
-    specializationId?: boolean
     clinicId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     department?: boolean | Doctor$departmentArgs<ExtArgs>
     designation?: boolean | Doctor$designationArgs<ExtArgs>
-    specialization?: boolean | Doctor$specializationArgs<ExtArgs>
+    specializations?: boolean | Doctor$specializationsArgs<ExtArgs>
     clinic?: boolean | ClinicDefaultArgs<ExtArgs>
     patients?: boolean | Doctor$patientsArgs<ExtArgs>
     appointments?: boolean | Doctor$appointmentsArgs<ExtArgs>
@@ -12570,14 +12837,22 @@ export namespace Prisma {
     schedules?: boolean
     status?: boolean
     departmentId?: boolean
+    maritalStatus?: boolean
+    qualification?: boolean
+    signatureImage?: boolean
+    medicalRegCertificate?: boolean
+    qualificationCertificate?: boolean
+    aadhaarCard?: boolean
+    panCard?: boolean
+    followUpEnabled?: boolean
+    followUpValidityDays?: boolean
+    freeFollowUpLimit?: boolean
     designationId?: boolean
-    specializationId?: boolean
     clinicId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     department?: boolean | Doctor$departmentArgs<ExtArgs>
     designation?: boolean | Doctor$designationArgs<ExtArgs>
-    specialization?: boolean | Doctor$specializationArgs<ExtArgs>
     clinic?: boolean | ClinicDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["doctor"]>
 
@@ -12614,8 +12889,17 @@ export namespace Prisma {
     schedules?: boolean
     status?: boolean
     departmentId?: boolean
+    maritalStatus?: boolean
+    qualification?: boolean
+    signatureImage?: boolean
+    medicalRegCertificate?: boolean
+    qualificationCertificate?: boolean
+    aadhaarCard?: boolean
+    panCard?: boolean
+    followUpEnabled?: boolean
+    followUpValidityDays?: boolean
+    freeFollowUpLimit?: boolean
     designationId?: boolean
-    specializationId?: boolean
     clinicId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -12624,7 +12908,7 @@ export namespace Prisma {
   export type DoctorInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     department?: boolean | Doctor$departmentArgs<ExtArgs>
     designation?: boolean | Doctor$designationArgs<ExtArgs>
-    specialization?: boolean | Doctor$specializationArgs<ExtArgs>
+    specializations?: boolean | Doctor$specializationsArgs<ExtArgs>
     clinic?: boolean | ClinicDefaultArgs<ExtArgs>
     patients?: boolean | Doctor$patientsArgs<ExtArgs>
     appointments?: boolean | Doctor$appointmentsArgs<ExtArgs>
@@ -12634,7 +12918,6 @@ export namespace Prisma {
   export type DoctorIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     department?: boolean | Doctor$departmentArgs<ExtArgs>
     designation?: boolean | Doctor$designationArgs<ExtArgs>
-    specialization?: boolean | Doctor$specializationArgs<ExtArgs>
     clinic?: boolean | ClinicDefaultArgs<ExtArgs>
   }
 
@@ -12643,7 +12926,7 @@ export namespace Prisma {
     objects: {
       department: Prisma.$DepartmentPayload<ExtArgs> | null
       designation: Prisma.$DesignationPayload<ExtArgs> | null
-      specialization: Prisma.$SpecializationPayload<ExtArgs> | null
+      specializations: Prisma.$SpecializationPayload<ExtArgs>[]
       clinic: Prisma.$ClinicPayload<ExtArgs>
       patients: Prisma.$PatientPayload<ExtArgs>[]
       appointments: Prisma.$AppointmentPayload<ExtArgs>[]
@@ -12682,8 +12965,17 @@ export namespace Prisma {
       schedules: Prisma.JsonValue | null
       status: string
       departmentId: string | null
+      maritalStatus: string | null
+      qualification: string | null
+      signatureImage: string | null
+      medicalRegCertificate: string | null
+      qualificationCertificate: string | null
+      aadhaarCard: string | null
+      panCard: string | null
+      followUpEnabled: boolean
+      followUpValidityDays: number | null
+      freeFollowUpLimit: number | null
       designationId: string | null
-      specializationId: string | null
       clinicId: string
       createdAt: Date
       updatedAt: Date
@@ -13053,7 +13345,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     department<T extends Doctor$departmentArgs<ExtArgs> = {}>(args?: Subset<T, Doctor$departmentArgs<ExtArgs>>): Prisma__DepartmentClient<$Result.GetResult<Prisma.$DepartmentPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     designation<T extends Doctor$designationArgs<ExtArgs> = {}>(args?: Subset<T, Doctor$designationArgs<ExtArgs>>): Prisma__DesignationClient<$Result.GetResult<Prisma.$DesignationPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
-    specialization<T extends Doctor$specializationArgs<ExtArgs> = {}>(args?: Subset<T, Doctor$specializationArgs<ExtArgs>>): Prisma__SpecializationClient<$Result.GetResult<Prisma.$SpecializationPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    specializations<T extends Doctor$specializationsArgs<ExtArgs> = {}>(args?: Subset<T, Doctor$specializationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SpecializationPayload<ExtArgs>, T, "findMany"> | Null>
     clinic<T extends ClinicDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClinicDefaultArgs<ExtArgs>>): Prisma__ClinicClient<$Result.GetResult<Prisma.$ClinicPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     patients<T extends Doctor$patientsArgs<ExtArgs> = {}>(args?: Subset<T, Doctor$patientsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PatientPayload<ExtArgs>, T, "findMany"> | Null>
     appointments<T extends Doctor$appointmentsArgs<ExtArgs> = {}>(args?: Subset<T, Doctor$appointmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppointmentPayload<ExtArgs>, T, "findMany"> | Null>
@@ -13119,8 +13411,17 @@ export namespace Prisma {
     readonly schedules: FieldRef<"Doctor", 'Json'>
     readonly status: FieldRef<"Doctor", 'String'>
     readonly departmentId: FieldRef<"Doctor", 'String'>
+    readonly maritalStatus: FieldRef<"Doctor", 'String'>
+    readonly qualification: FieldRef<"Doctor", 'String'>
+    readonly signatureImage: FieldRef<"Doctor", 'String'>
+    readonly medicalRegCertificate: FieldRef<"Doctor", 'String'>
+    readonly qualificationCertificate: FieldRef<"Doctor", 'String'>
+    readonly aadhaarCard: FieldRef<"Doctor", 'String'>
+    readonly panCard: FieldRef<"Doctor", 'String'>
+    readonly followUpEnabled: FieldRef<"Doctor", 'Boolean'>
+    readonly followUpValidityDays: FieldRef<"Doctor", 'Int'>
+    readonly freeFollowUpLimit: FieldRef<"Doctor", 'Int'>
     readonly designationId: FieldRef<"Doctor", 'String'>
-    readonly specializationId: FieldRef<"Doctor", 'String'>
     readonly clinicId: FieldRef<"Doctor", 'String'>
     readonly createdAt: FieldRef<"Doctor", 'DateTime'>
     readonly updatedAt: FieldRef<"Doctor", 'DateTime'>
@@ -13472,9 +13773,9 @@ export namespace Prisma {
   }
 
   /**
-   * Doctor.specialization
+   * Doctor.specializations
    */
-  export type Doctor$specializationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Doctor$specializationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Specialization
      */
@@ -13484,6 +13785,11 @@ export namespace Prisma {
      */
     include?: SpecializationInclude<ExtArgs> | null
     where?: SpecializationWhereInput
+    orderBy?: SpecializationOrderByWithRelationInput | SpecializationOrderByWithRelationInput[]
+    cursor?: SpecializationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SpecializationScalarFieldEnum | SpecializationScalarFieldEnum[]
   }
 
   /**
@@ -34242,14 +34548,24 @@ export namespace Prisma {
   export const ClinicScalarFieldEnum: {
     id: 'id',
     name: 'name',
-    subdomain: 'subdomain',
-    gstNo: 'gstNo',
-    address: 'address',
+    username: 'username',
+    ownerName: 'ownerName',
+    ownerEmail: 'ownerEmail',
+    whatsappNumber: 'whatsappNumber',
     phone: 'phone',
+    addressLine1: 'addressLine1',
+    addressLine2: 'addressLine2',
+    district: 'district',
+    city: 'city',
+    state: 'state',
+    country: 'country',
+    pincode: 'pincode',
+    doctorCount: 'doctorCount',
     status: 'status',
     packageId: 'packageId',
     packageStartsAt: 'packageStartsAt',
     packageExpiresAt: 'packageExpiresAt',
+    isTrialUsed: 'isTrialUsed',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -34301,6 +34617,8 @@ export namespace Prisma {
   export const UserScalarFieldEnum: {
     id: 'id',
     email: 'email',
+    username: 'username',
+    phone: 'phone',
     passwordHash: 'passwordHash',
     fullName: 'fullName',
     dob: 'dob',
@@ -34405,8 +34723,17 @@ export namespace Prisma {
     schedules: 'schedules',
     status: 'status',
     departmentId: 'departmentId',
+    maritalStatus: 'maritalStatus',
+    qualification: 'qualification',
+    signatureImage: 'signatureImage',
+    medicalRegCertificate: 'medicalRegCertificate',
+    qualificationCertificate: 'qualificationCertificate',
+    aadhaarCard: 'aadhaarCard',
+    panCard: 'panCard',
+    followUpEnabled: 'followUpEnabled',
+    followUpValidityDays: 'followUpValidityDays',
+    freeFollowUpLimit: 'freeFollowUpLimit',
     designationId: 'designationId',
-    specializationId: 'specializationId',
     clinicId: 'clinicId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -34820,6 +35147,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Int'
+   */
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int[]'
+   */
+  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
    * Reference to a field of type 'ClinicStatus'
    */
   export type EnumClinicStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ClinicStatus'>
@@ -34848,16 +35189,9 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Int'
+   * Reference to a field of type 'Boolean'
    */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-  /**
-   * Reference to a field of type 'Int[]'
-   */
-  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -34879,13 +35213,6 @@ export namespace Prisma {
    * Reference to a field of type 'Float[]'
    */
   export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -34912,14 +35239,24 @@ export namespace Prisma {
     NOT?: ClinicWhereInput | ClinicWhereInput[]
     id?: StringFilter<"Clinic"> | string
     name?: StringFilter<"Clinic"> | string
-    subdomain?: StringNullableFilter<"Clinic"> | string | null
-    gstNo?: StringNullableFilter<"Clinic"> | string | null
-    address?: StringNullableFilter<"Clinic"> | string | null
+    username?: StringNullableFilter<"Clinic"> | string | null
+    ownerName?: StringNullableFilter<"Clinic"> | string | null
+    ownerEmail?: StringNullableFilter<"Clinic"> | string | null
+    whatsappNumber?: StringNullableFilter<"Clinic"> | string | null
     phone?: StringNullableFilter<"Clinic"> | string | null
+    addressLine1?: StringNullableFilter<"Clinic"> | string | null
+    addressLine2?: StringNullableFilter<"Clinic"> | string | null
+    district?: StringNullableFilter<"Clinic"> | string | null
+    city?: StringNullableFilter<"Clinic"> | string | null
+    state?: StringNullableFilter<"Clinic"> | string | null
+    country?: StringNullableFilter<"Clinic"> | string | null
+    pincode?: StringNullableFilter<"Clinic"> | string | null
+    doctorCount?: IntNullableFilter<"Clinic"> | number | null
     status?: EnumClinicStatusFilter<"Clinic"> | $Enums.ClinicStatus
     packageId?: StringNullableFilter<"Clinic"> | string | null
     packageStartsAt?: DateTimeNullableFilter<"Clinic"> | Date | string | null
     packageExpiresAt?: DateTimeNullableFilter<"Clinic"> | Date | string | null
+    isTrialUsed?: BoolFilter<"Clinic"> | boolean
     createdAt?: DateTimeFilter<"Clinic"> | Date | string
     updatedAt?: DateTimeFilter<"Clinic"> | Date | string
     package?: XOR<SubscriptionPackageNullableRelationFilter, SubscriptionPackageWhereInput> | null
@@ -34952,14 +35289,24 @@ export namespace Prisma {
   export type ClinicOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
-    subdomain?: SortOrderInput | SortOrder
-    gstNo?: SortOrderInput | SortOrder
-    address?: SortOrderInput | SortOrder
+    username?: SortOrderInput | SortOrder
+    ownerName?: SortOrderInput | SortOrder
+    ownerEmail?: SortOrderInput | SortOrder
+    whatsappNumber?: SortOrderInput | SortOrder
     phone?: SortOrderInput | SortOrder
+    addressLine1?: SortOrderInput | SortOrder
+    addressLine2?: SortOrderInput | SortOrder
+    district?: SortOrderInput | SortOrder
+    city?: SortOrderInput | SortOrder
+    state?: SortOrderInput | SortOrder
+    country?: SortOrderInput | SortOrder
+    pincode?: SortOrderInput | SortOrder
+    doctorCount?: SortOrderInput | SortOrder
     status?: SortOrder
     packageId?: SortOrderInput | SortOrder
     packageStartsAt?: SortOrderInput | SortOrder
     packageExpiresAt?: SortOrderInput | SortOrder
+    isTrialUsed?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     package?: SubscriptionPackageOrderByWithRelationInput
@@ -34991,18 +35338,28 @@ export namespace Prisma {
 
   export type ClinicWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    subdomain?: string
+    username?: string
     AND?: ClinicWhereInput | ClinicWhereInput[]
     OR?: ClinicWhereInput[]
     NOT?: ClinicWhereInput | ClinicWhereInput[]
     name?: StringFilter<"Clinic"> | string
-    gstNo?: StringNullableFilter<"Clinic"> | string | null
-    address?: StringNullableFilter<"Clinic"> | string | null
+    ownerName?: StringNullableFilter<"Clinic"> | string | null
+    ownerEmail?: StringNullableFilter<"Clinic"> | string | null
+    whatsappNumber?: StringNullableFilter<"Clinic"> | string | null
     phone?: StringNullableFilter<"Clinic"> | string | null
+    addressLine1?: StringNullableFilter<"Clinic"> | string | null
+    addressLine2?: StringNullableFilter<"Clinic"> | string | null
+    district?: StringNullableFilter<"Clinic"> | string | null
+    city?: StringNullableFilter<"Clinic"> | string | null
+    state?: StringNullableFilter<"Clinic"> | string | null
+    country?: StringNullableFilter<"Clinic"> | string | null
+    pincode?: StringNullableFilter<"Clinic"> | string | null
+    doctorCount?: IntNullableFilter<"Clinic"> | number | null
     status?: EnumClinicStatusFilter<"Clinic"> | $Enums.ClinicStatus
     packageId?: StringNullableFilter<"Clinic"> | string | null
     packageStartsAt?: DateTimeNullableFilter<"Clinic"> | Date | string | null
     packageExpiresAt?: DateTimeNullableFilter<"Clinic"> | Date | string | null
+    isTrialUsed?: BoolFilter<"Clinic"> | boolean
     createdAt?: DateTimeFilter<"Clinic"> | Date | string
     updatedAt?: DateTimeFilter<"Clinic"> | Date | string
     package?: XOR<SubscriptionPackageNullableRelationFilter, SubscriptionPackageWhereInput> | null
@@ -35030,24 +35387,36 @@ export namespace Prisma {
     products?: ProductListRelationFilter
     notifications?: NotificationListRelationFilter
     landingPage?: XOR<LandingPageNullableRelationFilter, LandingPageWhereInput> | null
-  }, "id" | "subdomain">
+  }, "id" | "username">
 
   export type ClinicOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
-    subdomain?: SortOrderInput | SortOrder
-    gstNo?: SortOrderInput | SortOrder
-    address?: SortOrderInput | SortOrder
+    username?: SortOrderInput | SortOrder
+    ownerName?: SortOrderInput | SortOrder
+    ownerEmail?: SortOrderInput | SortOrder
+    whatsappNumber?: SortOrderInput | SortOrder
     phone?: SortOrderInput | SortOrder
+    addressLine1?: SortOrderInput | SortOrder
+    addressLine2?: SortOrderInput | SortOrder
+    district?: SortOrderInput | SortOrder
+    city?: SortOrderInput | SortOrder
+    state?: SortOrderInput | SortOrder
+    country?: SortOrderInput | SortOrder
+    pincode?: SortOrderInput | SortOrder
+    doctorCount?: SortOrderInput | SortOrder
     status?: SortOrder
     packageId?: SortOrderInput | SortOrder
     packageStartsAt?: SortOrderInput | SortOrder
     packageExpiresAt?: SortOrderInput | SortOrder
+    isTrialUsed?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ClinicCountOrderByAggregateInput
+    _avg?: ClinicAvgOrderByAggregateInput
     _max?: ClinicMaxOrderByAggregateInput
     _min?: ClinicMinOrderByAggregateInput
+    _sum?: ClinicSumOrderByAggregateInput
   }
 
   export type ClinicScalarWhereWithAggregatesInput = {
@@ -35056,14 +35425,24 @@ export namespace Prisma {
     NOT?: ClinicScalarWhereWithAggregatesInput | ClinicScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Clinic"> | string
     name?: StringWithAggregatesFilter<"Clinic"> | string
-    subdomain?: StringNullableWithAggregatesFilter<"Clinic"> | string | null
-    gstNo?: StringNullableWithAggregatesFilter<"Clinic"> | string | null
-    address?: StringNullableWithAggregatesFilter<"Clinic"> | string | null
+    username?: StringNullableWithAggregatesFilter<"Clinic"> | string | null
+    ownerName?: StringNullableWithAggregatesFilter<"Clinic"> | string | null
+    ownerEmail?: StringNullableWithAggregatesFilter<"Clinic"> | string | null
+    whatsappNumber?: StringNullableWithAggregatesFilter<"Clinic"> | string | null
     phone?: StringNullableWithAggregatesFilter<"Clinic"> | string | null
+    addressLine1?: StringNullableWithAggregatesFilter<"Clinic"> | string | null
+    addressLine2?: StringNullableWithAggregatesFilter<"Clinic"> | string | null
+    district?: StringNullableWithAggregatesFilter<"Clinic"> | string | null
+    city?: StringNullableWithAggregatesFilter<"Clinic"> | string | null
+    state?: StringNullableWithAggregatesFilter<"Clinic"> | string | null
+    country?: StringNullableWithAggregatesFilter<"Clinic"> | string | null
+    pincode?: StringNullableWithAggregatesFilter<"Clinic"> | string | null
+    doctorCount?: IntNullableWithAggregatesFilter<"Clinic"> | number | null
     status?: EnumClinicStatusWithAggregatesFilter<"Clinic"> | $Enums.ClinicStatus
     packageId?: StringNullableWithAggregatesFilter<"Clinic"> | string | null
     packageStartsAt?: DateTimeNullableWithAggregatesFilter<"Clinic"> | Date | string | null
     packageExpiresAt?: DateTimeNullableWithAggregatesFilter<"Clinic"> | Date | string | null
+    isTrialUsed?: BoolWithAggregatesFilter<"Clinic"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Clinic"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Clinic"> | Date | string
   }
@@ -35283,6 +35662,8 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     id?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
+    username?: StringNullableFilter<"User"> | string | null
+    phone?: StringNullableFilter<"User"> | string | null
     passwordHash?: StringFilter<"User"> | string
     fullName?: StringFilter<"User"> | string
     dob?: DateTimeNullableFilter<"User"> | Date | string | null
@@ -35298,6 +35679,8 @@ export namespace Prisma {
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
     email?: SortOrder
+    username?: SortOrderInput | SortOrder
+    phone?: SortOrderInput | SortOrder
     passwordHash?: SortOrder
     fullName?: SortOrder
     dob?: SortOrderInput | SortOrder
@@ -35313,6 +35696,8 @@ export namespace Prisma {
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     email?: string
+    username?: string
+    phone?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
@@ -35326,11 +35711,13 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     clinic?: XOR<ClinicNullableRelationFilter, ClinicWhereInput> | null
-  }, "id" | "email">
+  }, "id" | "email" | "username" | "phone">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
     email?: SortOrder
+    username?: SortOrderInput | SortOrder
+    phone?: SortOrderInput | SortOrder
     passwordHash?: SortOrder
     fullName?: SortOrder
     dob?: SortOrderInput | SortOrder
@@ -35353,6 +35740,8 @@ export namespace Prisma {
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
+    username?: StringNullableWithAggregatesFilter<"User"> | string | null
+    phone?: StringNullableWithAggregatesFilter<"User"> | string | null
     passwordHash?: StringWithAggregatesFilter<"User"> | string
     fullName?: StringWithAggregatesFilter<"User"> | string
     dob?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
@@ -35721,14 +36110,23 @@ export namespace Prisma {
     schedules?: JsonNullableFilter<"Doctor">
     status?: StringFilter<"Doctor"> | string
     departmentId?: StringNullableFilter<"Doctor"> | string | null
+    maritalStatus?: StringNullableFilter<"Doctor"> | string | null
+    qualification?: StringNullableFilter<"Doctor"> | string | null
+    signatureImage?: StringNullableFilter<"Doctor"> | string | null
+    medicalRegCertificate?: StringNullableFilter<"Doctor"> | string | null
+    qualificationCertificate?: StringNullableFilter<"Doctor"> | string | null
+    aadhaarCard?: StringNullableFilter<"Doctor"> | string | null
+    panCard?: StringNullableFilter<"Doctor"> | string | null
+    followUpEnabled?: BoolFilter<"Doctor"> | boolean
+    followUpValidityDays?: IntNullableFilter<"Doctor"> | number | null
+    freeFollowUpLimit?: IntNullableFilter<"Doctor"> | number | null
     designationId?: StringNullableFilter<"Doctor"> | string | null
-    specializationId?: StringNullableFilter<"Doctor"> | string | null
     clinicId?: StringFilter<"Doctor"> | string
     createdAt?: DateTimeFilter<"Doctor"> | Date | string
     updatedAt?: DateTimeFilter<"Doctor"> | Date | string
     department?: XOR<DepartmentNullableRelationFilter, DepartmentWhereInput> | null
     designation?: XOR<DesignationNullableRelationFilter, DesignationWhereInput> | null
-    specialization?: XOR<SpecializationNullableRelationFilter, SpecializationWhereInput> | null
+    specializations?: SpecializationListRelationFilter
     clinic?: XOR<ClinicRelationFilter, ClinicWhereInput>
     patients?: PatientListRelationFilter
     appointments?: AppointmentListRelationFilter
@@ -35768,14 +36166,23 @@ export namespace Prisma {
     schedules?: SortOrderInput | SortOrder
     status?: SortOrder
     departmentId?: SortOrderInput | SortOrder
+    maritalStatus?: SortOrderInput | SortOrder
+    qualification?: SortOrderInput | SortOrder
+    signatureImage?: SortOrderInput | SortOrder
+    medicalRegCertificate?: SortOrderInput | SortOrder
+    qualificationCertificate?: SortOrderInput | SortOrder
+    aadhaarCard?: SortOrderInput | SortOrder
+    panCard?: SortOrderInput | SortOrder
+    followUpEnabled?: SortOrder
+    followUpValidityDays?: SortOrderInput | SortOrder
+    freeFollowUpLimit?: SortOrderInput | SortOrder
     designationId?: SortOrderInput | SortOrder
-    specializationId?: SortOrderInput | SortOrder
     clinicId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     department?: DepartmentOrderByWithRelationInput
     designation?: DesignationOrderByWithRelationInput
-    specialization?: SpecializationOrderByWithRelationInput
+    specializations?: SpecializationOrderByRelationAggregateInput
     clinic?: ClinicOrderByWithRelationInput
     patients?: PatientOrderByRelationAggregateInput
     appointments?: AppointmentOrderByRelationAggregateInput
@@ -35818,14 +36225,23 @@ export namespace Prisma {
     schedules?: JsonNullableFilter<"Doctor">
     status?: StringFilter<"Doctor"> | string
     departmentId?: StringNullableFilter<"Doctor"> | string | null
+    maritalStatus?: StringNullableFilter<"Doctor"> | string | null
+    qualification?: StringNullableFilter<"Doctor"> | string | null
+    signatureImage?: StringNullableFilter<"Doctor"> | string | null
+    medicalRegCertificate?: StringNullableFilter<"Doctor"> | string | null
+    qualificationCertificate?: StringNullableFilter<"Doctor"> | string | null
+    aadhaarCard?: StringNullableFilter<"Doctor"> | string | null
+    panCard?: StringNullableFilter<"Doctor"> | string | null
+    followUpEnabled?: BoolFilter<"Doctor"> | boolean
+    followUpValidityDays?: IntNullableFilter<"Doctor"> | number | null
+    freeFollowUpLimit?: IntNullableFilter<"Doctor"> | number | null
     designationId?: StringNullableFilter<"Doctor"> | string | null
-    specializationId?: StringNullableFilter<"Doctor"> | string | null
     clinicId?: StringFilter<"Doctor"> | string
     createdAt?: DateTimeFilter<"Doctor"> | Date | string
     updatedAt?: DateTimeFilter<"Doctor"> | Date | string
     department?: XOR<DepartmentNullableRelationFilter, DepartmentWhereInput> | null
     designation?: XOR<DesignationNullableRelationFilter, DesignationWhereInput> | null
-    specialization?: XOR<SpecializationNullableRelationFilter, SpecializationWhereInput> | null
+    specializations?: SpecializationListRelationFilter
     clinic?: XOR<ClinicRelationFilter, ClinicWhereInput>
     patients?: PatientListRelationFilter
     appointments?: AppointmentListRelationFilter
@@ -35865,8 +36281,17 @@ export namespace Prisma {
     schedules?: SortOrderInput | SortOrder
     status?: SortOrder
     departmentId?: SortOrderInput | SortOrder
+    maritalStatus?: SortOrderInput | SortOrder
+    qualification?: SortOrderInput | SortOrder
+    signatureImage?: SortOrderInput | SortOrder
+    medicalRegCertificate?: SortOrderInput | SortOrder
+    qualificationCertificate?: SortOrderInput | SortOrder
+    aadhaarCard?: SortOrderInput | SortOrder
+    panCard?: SortOrderInput | SortOrder
+    followUpEnabled?: SortOrder
+    followUpValidityDays?: SortOrderInput | SortOrder
+    freeFollowUpLimit?: SortOrderInput | SortOrder
     designationId?: SortOrderInput | SortOrder
-    specializationId?: SortOrderInput | SortOrder
     clinicId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -35913,8 +36338,17 @@ export namespace Prisma {
     schedules?: JsonNullableWithAggregatesFilter<"Doctor">
     status?: StringWithAggregatesFilter<"Doctor"> | string
     departmentId?: StringNullableWithAggregatesFilter<"Doctor"> | string | null
+    maritalStatus?: StringNullableWithAggregatesFilter<"Doctor"> | string | null
+    qualification?: StringNullableWithAggregatesFilter<"Doctor"> | string | null
+    signatureImage?: StringNullableWithAggregatesFilter<"Doctor"> | string | null
+    medicalRegCertificate?: StringNullableWithAggregatesFilter<"Doctor"> | string | null
+    qualificationCertificate?: StringNullableWithAggregatesFilter<"Doctor"> | string | null
+    aadhaarCard?: StringNullableWithAggregatesFilter<"Doctor"> | string | null
+    panCard?: StringNullableWithAggregatesFilter<"Doctor"> | string | null
+    followUpEnabled?: BoolWithAggregatesFilter<"Doctor"> | boolean
+    followUpValidityDays?: IntNullableWithAggregatesFilter<"Doctor"> | number | null
+    freeFollowUpLimit?: IntNullableWithAggregatesFilter<"Doctor"> | number | null
     designationId?: StringNullableWithAggregatesFilter<"Doctor"> | string | null
-    specializationId?: StringNullableWithAggregatesFilter<"Doctor"> | string | null
     clinicId?: StringWithAggregatesFilter<"Doctor"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Doctor"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Doctor"> | Date | string
@@ -37685,13 +38119,23 @@ export namespace Prisma {
   export type ClinicCreateInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     package?: SubscriptionPackageCreateNestedOneWithoutClinicsInput
@@ -37724,14 +38168,24 @@ export namespace Prisma {
   export type ClinicUncheckedCreateInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     users?: UserUncheckedCreateNestedManyWithoutClinicInput
@@ -37763,13 +38217,23 @@ export namespace Prisma {
   export type ClinicUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     package?: SubscriptionPackageUpdateOneWithoutClinicsNestedInput
@@ -37802,14 +38266,24 @@ export namespace Prisma {
   export type ClinicUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     users?: UserUncheckedUpdateManyWithoutClinicNestedInput
@@ -37841,14 +38315,24 @@ export namespace Prisma {
   export type ClinicCreateManyInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -37856,13 +38340,23 @@ export namespace Prisma {
   export type ClinicUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -37870,14 +38364,24 @@ export namespace Prisma {
   export type ClinicUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -38133,6 +38637,8 @@ export namespace Prisma {
   export type UserCreateInput = {
     id?: string
     email: string
+    username?: string | null
+    phone?: string | null
     passwordHash: string
     fullName: string
     dob?: Date | string | null
@@ -38147,6 +38653,8 @@ export namespace Prisma {
   export type UserUncheckedCreateInput = {
     id?: string
     email: string
+    username?: string | null
+    phone?: string | null
     passwordHash: string
     fullName: string
     dob?: Date | string | null
@@ -38161,6 +38669,8 @@ export namespace Prisma {
   export type UserUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: StringFieldUpdateOperationsInput | string
     fullName?: StringFieldUpdateOperationsInput | string
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -38175,6 +38685,8 @@ export namespace Prisma {
   export type UserUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: StringFieldUpdateOperationsInput | string
     fullName?: StringFieldUpdateOperationsInput | string
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -38189,6 +38701,8 @@ export namespace Prisma {
   export type UserCreateManyInput = {
     id?: string
     email: string
+    username?: string | null
+    phone?: string | null
     passwordHash: string
     fullName: string
     dob?: Date | string | null
@@ -38203,6 +38717,8 @@ export namespace Prisma {
   export type UserUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: StringFieldUpdateOperationsInput | string
     fullName?: StringFieldUpdateOperationsInput | string
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -38216,6 +38732,8 @@ export namespace Prisma {
   export type UserUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: StringFieldUpdateOperationsInput | string
     fullName?: StringFieldUpdateOperationsInput | string
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -38625,11 +39143,21 @@ export namespace Prisma {
     certifications?: NullableJsonNullValueInput | InputJsonValue
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: string
+    maritalStatus?: string | null
+    qualification?: string | null
+    signatureImage?: string | null
+    medicalRegCertificate?: string | null
+    qualificationCertificate?: string | null
+    aadhaarCard?: string | null
+    panCard?: string | null
+    followUpEnabled?: boolean
+    followUpValidityDays?: number | null
+    freeFollowUpLimit?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     department?: DepartmentCreateNestedOneWithoutDoctorsInput
     designation?: DesignationCreateNestedOneWithoutDoctorsInput
-    specialization?: SpecializationCreateNestedOneWithoutDoctorsInput
+    specializations?: SpecializationCreateNestedManyWithoutDoctorsInput
     clinic: ClinicCreateNestedOneWithoutDoctorsInput
     patients?: PatientCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentCreateNestedManyWithoutDoctorInput
@@ -38669,11 +39197,21 @@ export namespace Prisma {
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     departmentId?: string | null
+    maritalStatus?: string | null
+    qualification?: string | null
+    signatureImage?: string | null
+    medicalRegCertificate?: string | null
+    qualificationCertificate?: string | null
+    aadhaarCard?: string | null
+    panCard?: string | null
+    followUpEnabled?: boolean
+    followUpValidityDays?: number | null
+    freeFollowUpLimit?: number | null
     designationId?: string | null
-    specializationId?: string | null
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    specializations?: SpecializationUncheckedCreateNestedManyWithoutDoctorsInput
     patients?: PatientUncheckedCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentUncheckedCreateNestedManyWithoutDoctorInput
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutDoctorInput
@@ -38711,11 +39249,21 @@ export namespace Prisma {
     certifications?: NullableJsonNullValueInput | InputJsonValue
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    qualification?: NullableStringFieldUpdateOperationsInput | string | null
+    signatureImage?: NullableStringFieldUpdateOperationsInput | string | null
+    medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    panCard?: NullableStringFieldUpdateOperationsInput | string | null
+    followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
+    followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
+    freeFollowUpLimit?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     department?: DepartmentUpdateOneWithoutDoctorsNestedInput
     designation?: DesignationUpdateOneWithoutDoctorsNestedInput
-    specialization?: SpecializationUpdateOneWithoutDoctorsNestedInput
+    specializations?: SpecializationUpdateManyWithoutDoctorsNestedInput
     clinic?: ClinicUpdateOneRequiredWithoutDoctorsNestedInput
     patients?: PatientUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUpdateManyWithoutDoctorNestedInput
@@ -38755,11 +39303,21 @@ export namespace Prisma {
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     departmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    qualification?: NullableStringFieldUpdateOperationsInput | string | null
+    signatureImage?: NullableStringFieldUpdateOperationsInput | string | null
+    medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    panCard?: NullableStringFieldUpdateOperationsInput | string | null
+    followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
+    followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
+    freeFollowUpLimit?: NullableIntFieldUpdateOperationsInput | number | null
     designationId?: NullableStringFieldUpdateOperationsInput | string | null
-    specializationId?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    specializations?: SpecializationUncheckedUpdateManyWithoutDoctorsNestedInput
     patients?: PatientUncheckedUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUncheckedUpdateManyWithoutDoctorNestedInput
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutDoctorNestedInput
@@ -38798,8 +39356,17 @@ export namespace Prisma {
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     departmentId?: string | null
+    maritalStatus?: string | null
+    qualification?: string | null
+    signatureImage?: string | null
+    medicalRegCertificate?: string | null
+    qualificationCertificate?: string | null
+    aadhaarCard?: string | null
+    panCard?: string | null
+    followUpEnabled?: boolean
+    followUpValidityDays?: number | null
+    freeFollowUpLimit?: number | null
     designationId?: string | null
-    specializationId?: string | null
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -38837,6 +39404,16 @@ export namespace Prisma {
     certifications?: NullableJsonNullValueInput | InputJsonValue
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    qualification?: NullableStringFieldUpdateOperationsInput | string | null
+    signatureImage?: NullableStringFieldUpdateOperationsInput | string | null
+    medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    panCard?: NullableStringFieldUpdateOperationsInput | string | null
+    followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
+    followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
+    freeFollowUpLimit?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -38874,8 +39451,17 @@ export namespace Prisma {
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     departmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    qualification?: NullableStringFieldUpdateOperationsInput | string | null
+    signatureImage?: NullableStringFieldUpdateOperationsInput | string | null
+    medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    panCard?: NullableStringFieldUpdateOperationsInput | string | null
+    followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
+    followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
+    freeFollowUpLimit?: NullableIntFieldUpdateOperationsInput | number | null
     designationId?: NullableStringFieldUpdateOperationsInput | string | null
-    specializationId?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -39287,7 +39873,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     clinic: ClinicCreateNestedOneWithoutSpecializationsInput
-    doctors?: DoctorCreateNestedManyWithoutSpecializationInput
+    doctors?: DoctorCreateNestedManyWithoutSpecializationsInput
   }
 
   export type SpecializationUncheckedCreateInput = {
@@ -39299,7 +39885,7 @@ export namespace Prisma {
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    doctors?: DoctorUncheckedCreateNestedManyWithoutSpecializationInput
+    doctors?: DoctorUncheckedCreateNestedManyWithoutSpecializationsInput
   }
 
   export type SpecializationUpdateInput = {
@@ -39311,7 +39897,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     clinic?: ClinicUpdateOneRequiredWithoutSpecializationsNestedInput
-    doctors?: DoctorUpdateManyWithoutSpecializationNestedInput
+    doctors?: DoctorUpdateManyWithoutSpecializationsNestedInput
   }
 
   export type SpecializationUncheckedUpdateInput = {
@@ -39323,7 +39909,7 @@ export namespace Prisma {
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    doctors?: DoctorUncheckedUpdateManyWithoutSpecializationNestedInput
+    doctors?: DoctorUncheckedUpdateManyWithoutSpecializationsNestedInput
   }
 
   export type SpecializationCreateManyInput = {
@@ -40850,6 +41436,17 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type EnumClinicStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.ClinicStatus | EnumClinicStatusFieldRefInput<$PrismaModel>
     in?: $Enums.ClinicStatus[] | ListEnumClinicStatusFieldRefInput<$PrismaModel>
@@ -40866,6 +41463,11 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type DateTimeFilter<$PrismaModel = never> = {
@@ -41127,29 +41729,53 @@ export namespace Prisma {
   export type ClinicCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    subdomain?: SortOrder
-    gstNo?: SortOrder
-    address?: SortOrder
+    username?: SortOrder
+    ownerName?: SortOrder
+    ownerEmail?: SortOrder
+    whatsappNumber?: SortOrder
     phone?: SortOrder
+    addressLine1?: SortOrder
+    addressLine2?: SortOrder
+    district?: SortOrder
+    city?: SortOrder
+    state?: SortOrder
+    country?: SortOrder
+    pincode?: SortOrder
+    doctorCount?: SortOrder
     status?: SortOrder
     packageId?: SortOrder
     packageStartsAt?: SortOrder
     packageExpiresAt?: SortOrder
+    isTrialUsed?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type ClinicAvgOrderByAggregateInput = {
+    doctorCount?: SortOrder
   }
 
   export type ClinicMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    subdomain?: SortOrder
-    gstNo?: SortOrder
-    address?: SortOrder
+    username?: SortOrder
+    ownerName?: SortOrder
+    ownerEmail?: SortOrder
+    whatsappNumber?: SortOrder
     phone?: SortOrder
+    addressLine1?: SortOrder
+    addressLine2?: SortOrder
+    district?: SortOrder
+    city?: SortOrder
+    state?: SortOrder
+    country?: SortOrder
+    pincode?: SortOrder
+    doctorCount?: SortOrder
     status?: SortOrder
     packageId?: SortOrder
     packageStartsAt?: SortOrder
     packageExpiresAt?: SortOrder
+    isTrialUsed?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -41157,16 +41783,30 @@ export namespace Prisma {
   export type ClinicMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    subdomain?: SortOrder
-    gstNo?: SortOrder
-    address?: SortOrder
+    username?: SortOrder
+    ownerName?: SortOrder
+    ownerEmail?: SortOrder
+    whatsappNumber?: SortOrder
     phone?: SortOrder
+    addressLine1?: SortOrder
+    addressLine2?: SortOrder
+    district?: SortOrder
+    city?: SortOrder
+    state?: SortOrder
+    country?: SortOrder
+    pincode?: SortOrder
+    doctorCount?: SortOrder
     status?: SortOrder
     packageId?: SortOrder
     packageStartsAt?: SortOrder
     packageExpiresAt?: SortOrder
+    isTrialUsed?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type ClinicSumOrderByAggregateInput = {
+    doctorCount?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -41205,6 +41845,22 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
   export type EnumClinicStatusWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.ClinicStatus | EnumClinicStatusFieldRefInput<$PrismaModel>
     in?: $Enums.ClinicStatus[] | ListEnumClinicStatusFieldRefInput<$PrismaModel>
@@ -41229,6 +41885,14 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -41241,17 +41905,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
-  export type IntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
   export type JsonNullableFilter<$PrismaModel = never> = 
     | PatchUndefined<
@@ -41350,22 +42003,6 @@ export namespace Prisma {
     established?: SortOrder
     experience?: SortOrder
   }
-
-  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
-  }
   export type JsonNullableWithAggregatesFilter<$PrismaModel = never> = 
     | PatchUndefined<
         Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
@@ -41412,11 +42049,6 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntFilter<$PrismaModel> | number
-  }
-
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type ClinicListRelationFilter = {
@@ -41516,14 +42148,6 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
-  }
-
   export type EnumRoleFilter<$PrismaModel = never> = {
     equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
     in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
@@ -41539,6 +42163,8 @@ export namespace Prisma {
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
+    username?: SortOrder
+    phone?: SortOrder
     passwordHash?: SortOrder
     fullName?: SortOrder
     dob?: SortOrder
@@ -41557,6 +42183,8 @@ export namespace Prisma {
   export type UserMaxOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
+    username?: SortOrder
+    phone?: SortOrder
     passwordHash?: SortOrder
     fullName?: SortOrder
     dob?: SortOrder
@@ -41571,6 +42199,8 @@ export namespace Prisma {
   export type UserMinOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
+    username?: SortOrder
+    phone?: SortOrder
     passwordHash?: SortOrder
     fullName?: SortOrder
     dob?: SortOrder
@@ -41769,11 +42399,6 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
-  export type SpecializationNullableRelationFilter = {
-    is?: SpecializationWhereInput | null
-    isNot?: SpecializationWhereInput | null
-  }
-
   export type DoctorCountOrderByAggregateInput = {
     id?: SortOrder
     fullName?: SortOrder
@@ -41807,8 +42432,17 @@ export namespace Prisma {
     schedules?: SortOrder
     status?: SortOrder
     departmentId?: SortOrder
+    maritalStatus?: SortOrder
+    qualification?: SortOrder
+    signatureImage?: SortOrder
+    medicalRegCertificate?: SortOrder
+    qualificationCertificate?: SortOrder
+    aadhaarCard?: SortOrder
+    panCard?: SortOrder
+    followUpEnabled?: SortOrder
+    followUpValidityDays?: SortOrder
+    freeFollowUpLimit?: SortOrder
     designationId?: SortOrder
-    specializationId?: SortOrder
     clinicId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -41820,6 +42454,8 @@ export namespace Prisma {
     appointmentDuration?: SortOrder
     consultationCharge?: SortOrder
     maxBookingsPerSlot?: SortOrder
+    followUpValidityDays?: SortOrder
+    freeFollowUpLimit?: SortOrder
   }
 
   export type DoctorMaxOrderByAggregateInput = {
@@ -41850,8 +42486,17 @@ export namespace Prisma {
     displayOnBookingPage?: SortOrder
     status?: SortOrder
     departmentId?: SortOrder
+    maritalStatus?: SortOrder
+    qualification?: SortOrder
+    signatureImage?: SortOrder
+    medicalRegCertificate?: SortOrder
+    qualificationCertificate?: SortOrder
+    aadhaarCard?: SortOrder
+    panCard?: SortOrder
+    followUpEnabled?: SortOrder
+    followUpValidityDays?: SortOrder
+    freeFollowUpLimit?: SortOrder
     designationId?: SortOrder
-    specializationId?: SortOrder
     clinicId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -41885,8 +42530,17 @@ export namespace Prisma {
     displayOnBookingPage?: SortOrder
     status?: SortOrder
     departmentId?: SortOrder
+    maritalStatus?: SortOrder
+    qualification?: SortOrder
+    signatureImage?: SortOrder
+    medicalRegCertificate?: SortOrder
+    qualificationCertificate?: SortOrder
+    aadhaarCard?: SortOrder
+    panCard?: SortOrder
+    followUpEnabled?: SortOrder
+    followUpValidityDays?: SortOrder
+    freeFollowUpLimit?: SortOrder
     designationId?: SortOrder
-    specializationId?: SortOrder
     clinicId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -41898,6 +42552,8 @@ export namespace Prisma {
     appointmentDuration?: SortOrder
     consultationCharge?: SortOrder
     maxBookingsPerSlot?: SortOrder
+    followUpValidityDays?: SortOrder
+    freeFollowUpLimit?: SortOrder
   }
 
   export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -43288,12 +43944,24 @@ export namespace Prisma {
     set?: string | null
   }
 
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type EnumClinicStatusFieldUpdateOperationsInput = {
     set?: $Enums.ClinicStatus
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -43980,14 +44648,6 @@ export namespace Prisma {
     connect?: ClinicWhereUniqueInput
   }
 
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
   export type ClinicUpdateOneRequiredWithoutLandingPageNestedInput = {
     create?: XOR<ClinicCreateWithoutLandingPageInput, ClinicUncheckedCreateWithoutLandingPageInput>
     connectOrCreate?: ClinicCreateOrConnectWithoutLandingPageInput
@@ -44024,10 +44684,6 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
-  }
-
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
   }
 
   export type ClinicUpdateManyWithoutPackageNestedInput = {
@@ -44562,10 +45218,10 @@ export namespace Prisma {
     connect?: DesignationWhereUniqueInput
   }
 
-  export type SpecializationCreateNestedOneWithoutDoctorsInput = {
-    create?: XOR<SpecializationCreateWithoutDoctorsInput, SpecializationUncheckedCreateWithoutDoctorsInput>
-    connectOrCreate?: SpecializationCreateOrConnectWithoutDoctorsInput
-    connect?: SpecializationWhereUniqueInput
+  export type SpecializationCreateNestedManyWithoutDoctorsInput = {
+    create?: XOR<SpecializationCreateWithoutDoctorsInput, SpecializationUncheckedCreateWithoutDoctorsInput> | SpecializationCreateWithoutDoctorsInput[] | SpecializationUncheckedCreateWithoutDoctorsInput[]
+    connectOrCreate?: SpecializationCreateOrConnectWithoutDoctorsInput | SpecializationCreateOrConnectWithoutDoctorsInput[]
+    connect?: SpecializationWhereUniqueInput | SpecializationWhereUniqueInput[]
   }
 
   export type ClinicCreateNestedOneWithoutDoctorsInput = {
@@ -44593,6 +45249,12 @@ export namespace Prisma {
     connectOrCreate?: PrescriptionCreateOrConnectWithoutDoctorInput | PrescriptionCreateOrConnectWithoutDoctorInput[]
     createMany?: PrescriptionCreateManyDoctorInputEnvelope
     connect?: PrescriptionWhereUniqueInput | PrescriptionWhereUniqueInput[]
+  }
+
+  export type SpecializationUncheckedCreateNestedManyWithoutDoctorsInput = {
+    create?: XOR<SpecializationCreateWithoutDoctorsInput, SpecializationUncheckedCreateWithoutDoctorsInput> | SpecializationCreateWithoutDoctorsInput[] | SpecializationUncheckedCreateWithoutDoctorsInput[]
+    connectOrCreate?: SpecializationCreateOrConnectWithoutDoctorsInput | SpecializationCreateOrConnectWithoutDoctorsInput[]
+    connect?: SpecializationWhereUniqueInput | SpecializationWhereUniqueInput[]
   }
 
   export type PatientUncheckedCreateNestedManyWithoutPrimaryDoctorInput = {
@@ -44649,14 +45311,17 @@ export namespace Prisma {
     update?: XOR<XOR<DesignationUpdateToOneWithWhereWithoutDoctorsInput, DesignationUpdateWithoutDoctorsInput>, DesignationUncheckedUpdateWithoutDoctorsInput>
   }
 
-  export type SpecializationUpdateOneWithoutDoctorsNestedInput = {
-    create?: XOR<SpecializationCreateWithoutDoctorsInput, SpecializationUncheckedCreateWithoutDoctorsInput>
-    connectOrCreate?: SpecializationCreateOrConnectWithoutDoctorsInput
-    upsert?: SpecializationUpsertWithoutDoctorsInput
-    disconnect?: SpecializationWhereInput | boolean
-    delete?: SpecializationWhereInput | boolean
-    connect?: SpecializationWhereUniqueInput
-    update?: XOR<XOR<SpecializationUpdateToOneWithWhereWithoutDoctorsInput, SpecializationUpdateWithoutDoctorsInput>, SpecializationUncheckedUpdateWithoutDoctorsInput>
+  export type SpecializationUpdateManyWithoutDoctorsNestedInput = {
+    create?: XOR<SpecializationCreateWithoutDoctorsInput, SpecializationUncheckedCreateWithoutDoctorsInput> | SpecializationCreateWithoutDoctorsInput[] | SpecializationUncheckedCreateWithoutDoctorsInput[]
+    connectOrCreate?: SpecializationCreateOrConnectWithoutDoctorsInput | SpecializationCreateOrConnectWithoutDoctorsInput[]
+    upsert?: SpecializationUpsertWithWhereUniqueWithoutDoctorsInput | SpecializationUpsertWithWhereUniqueWithoutDoctorsInput[]
+    set?: SpecializationWhereUniqueInput | SpecializationWhereUniqueInput[]
+    disconnect?: SpecializationWhereUniqueInput | SpecializationWhereUniqueInput[]
+    delete?: SpecializationWhereUniqueInput | SpecializationWhereUniqueInput[]
+    connect?: SpecializationWhereUniqueInput | SpecializationWhereUniqueInput[]
+    update?: SpecializationUpdateWithWhereUniqueWithoutDoctorsInput | SpecializationUpdateWithWhereUniqueWithoutDoctorsInput[]
+    updateMany?: SpecializationUpdateManyWithWhereWithoutDoctorsInput | SpecializationUpdateManyWithWhereWithoutDoctorsInput[]
+    deleteMany?: SpecializationScalarWhereInput | SpecializationScalarWhereInput[]
   }
 
   export type ClinicUpdateOneRequiredWithoutDoctorsNestedInput = {
@@ -44707,6 +45372,19 @@ export namespace Prisma {
     update?: PrescriptionUpdateWithWhereUniqueWithoutDoctorInput | PrescriptionUpdateWithWhereUniqueWithoutDoctorInput[]
     updateMany?: PrescriptionUpdateManyWithWhereWithoutDoctorInput | PrescriptionUpdateManyWithWhereWithoutDoctorInput[]
     deleteMany?: PrescriptionScalarWhereInput | PrescriptionScalarWhereInput[]
+  }
+
+  export type SpecializationUncheckedUpdateManyWithoutDoctorsNestedInput = {
+    create?: XOR<SpecializationCreateWithoutDoctorsInput, SpecializationUncheckedCreateWithoutDoctorsInput> | SpecializationCreateWithoutDoctorsInput[] | SpecializationUncheckedCreateWithoutDoctorsInput[]
+    connectOrCreate?: SpecializationCreateOrConnectWithoutDoctorsInput | SpecializationCreateOrConnectWithoutDoctorsInput[]
+    upsert?: SpecializationUpsertWithWhereUniqueWithoutDoctorsInput | SpecializationUpsertWithWhereUniqueWithoutDoctorsInput[]
+    set?: SpecializationWhereUniqueInput | SpecializationWhereUniqueInput[]
+    disconnect?: SpecializationWhereUniqueInput | SpecializationWhereUniqueInput[]
+    delete?: SpecializationWhereUniqueInput | SpecializationWhereUniqueInput[]
+    connect?: SpecializationWhereUniqueInput | SpecializationWhereUniqueInput[]
+    update?: SpecializationUpdateWithWhereUniqueWithoutDoctorsInput | SpecializationUpdateWithWhereUniqueWithoutDoctorsInput[]
+    updateMany?: SpecializationUpdateManyWithWhereWithoutDoctorsInput | SpecializationUpdateManyWithWhereWithoutDoctorsInput[]
+    deleteMany?: SpecializationScalarWhereInput | SpecializationScalarWhereInput[]
   }
 
   export type PatientUncheckedUpdateManyWithoutPrimaryDoctorNestedInput = {
@@ -45083,17 +45761,15 @@ export namespace Prisma {
     connect?: ClinicWhereUniqueInput
   }
 
-  export type DoctorCreateNestedManyWithoutSpecializationInput = {
-    create?: XOR<DoctorCreateWithoutSpecializationInput, DoctorUncheckedCreateWithoutSpecializationInput> | DoctorCreateWithoutSpecializationInput[] | DoctorUncheckedCreateWithoutSpecializationInput[]
-    connectOrCreate?: DoctorCreateOrConnectWithoutSpecializationInput | DoctorCreateOrConnectWithoutSpecializationInput[]
-    createMany?: DoctorCreateManySpecializationInputEnvelope
+  export type DoctorCreateNestedManyWithoutSpecializationsInput = {
+    create?: XOR<DoctorCreateWithoutSpecializationsInput, DoctorUncheckedCreateWithoutSpecializationsInput> | DoctorCreateWithoutSpecializationsInput[] | DoctorUncheckedCreateWithoutSpecializationsInput[]
+    connectOrCreate?: DoctorCreateOrConnectWithoutSpecializationsInput | DoctorCreateOrConnectWithoutSpecializationsInput[]
     connect?: DoctorWhereUniqueInput | DoctorWhereUniqueInput[]
   }
 
-  export type DoctorUncheckedCreateNestedManyWithoutSpecializationInput = {
-    create?: XOR<DoctorCreateWithoutSpecializationInput, DoctorUncheckedCreateWithoutSpecializationInput> | DoctorCreateWithoutSpecializationInput[] | DoctorUncheckedCreateWithoutSpecializationInput[]
-    connectOrCreate?: DoctorCreateOrConnectWithoutSpecializationInput | DoctorCreateOrConnectWithoutSpecializationInput[]
-    createMany?: DoctorCreateManySpecializationInputEnvelope
+  export type DoctorUncheckedCreateNestedManyWithoutSpecializationsInput = {
+    create?: XOR<DoctorCreateWithoutSpecializationsInput, DoctorUncheckedCreateWithoutSpecializationsInput> | DoctorCreateWithoutSpecializationsInput[] | DoctorUncheckedCreateWithoutSpecializationsInput[]
+    connectOrCreate?: DoctorCreateOrConnectWithoutSpecializationsInput | DoctorCreateOrConnectWithoutSpecializationsInput[]
     connect?: DoctorWhereUniqueInput | DoctorWhereUniqueInput[]
   }
 
@@ -45105,31 +45781,29 @@ export namespace Prisma {
     update?: XOR<XOR<ClinicUpdateToOneWithWhereWithoutSpecializationsInput, ClinicUpdateWithoutSpecializationsInput>, ClinicUncheckedUpdateWithoutSpecializationsInput>
   }
 
-  export type DoctorUpdateManyWithoutSpecializationNestedInput = {
-    create?: XOR<DoctorCreateWithoutSpecializationInput, DoctorUncheckedCreateWithoutSpecializationInput> | DoctorCreateWithoutSpecializationInput[] | DoctorUncheckedCreateWithoutSpecializationInput[]
-    connectOrCreate?: DoctorCreateOrConnectWithoutSpecializationInput | DoctorCreateOrConnectWithoutSpecializationInput[]
-    upsert?: DoctorUpsertWithWhereUniqueWithoutSpecializationInput | DoctorUpsertWithWhereUniqueWithoutSpecializationInput[]
-    createMany?: DoctorCreateManySpecializationInputEnvelope
+  export type DoctorUpdateManyWithoutSpecializationsNestedInput = {
+    create?: XOR<DoctorCreateWithoutSpecializationsInput, DoctorUncheckedCreateWithoutSpecializationsInput> | DoctorCreateWithoutSpecializationsInput[] | DoctorUncheckedCreateWithoutSpecializationsInput[]
+    connectOrCreate?: DoctorCreateOrConnectWithoutSpecializationsInput | DoctorCreateOrConnectWithoutSpecializationsInput[]
+    upsert?: DoctorUpsertWithWhereUniqueWithoutSpecializationsInput | DoctorUpsertWithWhereUniqueWithoutSpecializationsInput[]
     set?: DoctorWhereUniqueInput | DoctorWhereUniqueInput[]
     disconnect?: DoctorWhereUniqueInput | DoctorWhereUniqueInput[]
     delete?: DoctorWhereUniqueInput | DoctorWhereUniqueInput[]
     connect?: DoctorWhereUniqueInput | DoctorWhereUniqueInput[]
-    update?: DoctorUpdateWithWhereUniqueWithoutSpecializationInput | DoctorUpdateWithWhereUniqueWithoutSpecializationInput[]
-    updateMany?: DoctorUpdateManyWithWhereWithoutSpecializationInput | DoctorUpdateManyWithWhereWithoutSpecializationInput[]
+    update?: DoctorUpdateWithWhereUniqueWithoutSpecializationsInput | DoctorUpdateWithWhereUniqueWithoutSpecializationsInput[]
+    updateMany?: DoctorUpdateManyWithWhereWithoutSpecializationsInput | DoctorUpdateManyWithWhereWithoutSpecializationsInput[]
     deleteMany?: DoctorScalarWhereInput | DoctorScalarWhereInput[]
   }
 
-  export type DoctorUncheckedUpdateManyWithoutSpecializationNestedInput = {
-    create?: XOR<DoctorCreateWithoutSpecializationInput, DoctorUncheckedCreateWithoutSpecializationInput> | DoctorCreateWithoutSpecializationInput[] | DoctorUncheckedCreateWithoutSpecializationInput[]
-    connectOrCreate?: DoctorCreateOrConnectWithoutSpecializationInput | DoctorCreateOrConnectWithoutSpecializationInput[]
-    upsert?: DoctorUpsertWithWhereUniqueWithoutSpecializationInput | DoctorUpsertWithWhereUniqueWithoutSpecializationInput[]
-    createMany?: DoctorCreateManySpecializationInputEnvelope
+  export type DoctorUncheckedUpdateManyWithoutSpecializationsNestedInput = {
+    create?: XOR<DoctorCreateWithoutSpecializationsInput, DoctorUncheckedCreateWithoutSpecializationsInput> | DoctorCreateWithoutSpecializationsInput[] | DoctorUncheckedCreateWithoutSpecializationsInput[]
+    connectOrCreate?: DoctorCreateOrConnectWithoutSpecializationsInput | DoctorCreateOrConnectWithoutSpecializationsInput[]
+    upsert?: DoctorUpsertWithWhereUniqueWithoutSpecializationsInput | DoctorUpsertWithWhereUniqueWithoutSpecializationsInput[]
     set?: DoctorWhereUniqueInput | DoctorWhereUniqueInput[]
     disconnect?: DoctorWhereUniqueInput | DoctorWhereUniqueInput[]
     delete?: DoctorWhereUniqueInput | DoctorWhereUniqueInput[]
     connect?: DoctorWhereUniqueInput | DoctorWhereUniqueInput[]
-    update?: DoctorUpdateWithWhereUniqueWithoutSpecializationInput | DoctorUpdateWithWhereUniqueWithoutSpecializationInput[]
-    updateMany?: DoctorUpdateManyWithWhereWithoutSpecializationInput | DoctorUpdateManyWithWhereWithoutSpecializationInput[]
+    update?: DoctorUpdateWithWhereUniqueWithoutSpecializationsInput | DoctorUpdateWithWhereUniqueWithoutSpecializationsInput[]
+    updateMany?: DoctorUpdateManyWithWhereWithoutSpecializationsInput | DoctorUpdateManyWithWhereWithoutSpecializationsInput[]
     deleteMany?: DoctorScalarWhereInput | DoctorScalarWhereInput[]
   }
 
@@ -45575,6 +46249,17 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedEnumClinicStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.ClinicStatus | EnumClinicStatusFieldRefInput<$PrismaModel>
     in?: $Enums.ClinicStatus[] | ListEnumClinicStatusFieldRefInput<$PrismaModel>
@@ -45591,6 +46276,11 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -45649,7 +46339,7 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
     notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -45657,7 +46347,23 @@ export namespace Prisma {
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedEnumClinicStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -45684,6 +46390,14 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -45696,33 +46410,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
-  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
   export type NestedJsonNullableFilter<$PrismaModel = never> = 
     | PatchUndefined<
@@ -45758,11 +46445,6 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
   export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[] | ListFloatFieldRefInput<$PrismaModel>
@@ -45793,14 +46475,6 @@ export namespace Prisma {
     _sum?: NestedIntFilter<$PrismaModel>
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedEnumRoleFilter<$PrismaModel = never> = {
@@ -45892,6 +46566,8 @@ export namespace Prisma {
   export type UserCreateWithoutClinicInput = {
     id?: string
     email: string
+    username?: string | null
+    phone?: string | null
     passwordHash: string
     fullName: string
     dob?: Date | string | null
@@ -45905,6 +46581,8 @@ export namespace Prisma {
   export type UserUncheckedCreateWithoutClinicInput = {
     id?: string
     email: string
+    username?: string | null
+    phone?: string | null
     passwordHash: string
     fullName: string
     dob?: Date | string | null
@@ -46033,11 +46711,21 @@ export namespace Prisma {
     certifications?: NullableJsonNullValueInput | InputJsonValue
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: string
+    maritalStatus?: string | null
+    qualification?: string | null
+    signatureImage?: string | null
+    medicalRegCertificate?: string | null
+    qualificationCertificate?: string | null
+    aadhaarCard?: string | null
+    panCard?: string | null
+    followUpEnabled?: boolean
+    followUpValidityDays?: number | null
+    freeFollowUpLimit?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     department?: DepartmentCreateNestedOneWithoutDoctorsInput
     designation?: DesignationCreateNestedOneWithoutDoctorsInput
-    specialization?: SpecializationCreateNestedOneWithoutDoctorsInput
+    specializations?: SpecializationCreateNestedManyWithoutDoctorsInput
     patients?: PatientCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentCreateNestedManyWithoutDoctorInput
     prescriptions?: PrescriptionCreateNestedManyWithoutDoctorInput
@@ -46076,10 +46764,20 @@ export namespace Prisma {
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     departmentId?: string | null
+    maritalStatus?: string | null
+    qualification?: string | null
+    signatureImage?: string | null
+    medicalRegCertificate?: string | null
+    qualificationCertificate?: string | null
+    aadhaarCard?: string | null
+    panCard?: string | null
+    followUpEnabled?: boolean
+    followUpValidityDays?: number | null
+    freeFollowUpLimit?: number | null
     designationId?: string | null
-    specializationId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    specializations?: SpecializationUncheckedCreateNestedManyWithoutDoctorsInput
     patients?: PatientUncheckedCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentUncheckedCreateNestedManyWithoutDoctorInput
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutDoctorInput
@@ -46309,7 +47007,7 @@ export namespace Prisma {
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    doctors?: DoctorCreateNestedManyWithoutSpecializationInput
+    doctors?: DoctorCreateNestedManyWithoutSpecializationsInput
   }
 
   export type SpecializationUncheckedCreateWithoutClinicInput = {
@@ -46320,7 +47018,7 @@ export namespace Prisma {
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    doctors?: DoctorUncheckedCreateNestedManyWithoutSpecializationInput
+    doctors?: DoctorUncheckedCreateNestedManyWithoutSpecializationsInput
   }
 
   export type SpecializationCreateOrConnectWithoutClinicInput = {
@@ -46937,6 +47635,8 @@ export namespace Prisma {
     NOT?: UserScalarWhereInput | UserScalarWhereInput[]
     id?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
+    username?: StringNullableFilter<"User"> | string | null
+    phone?: StringNullableFilter<"User"> | string | null
     passwordHash?: StringFilter<"User"> | string
     fullName?: StringFilter<"User"> | string
     dob?: DateTimeNullableFilter<"User"> | Date | string | null
@@ -47060,8 +47760,17 @@ export namespace Prisma {
     schedules?: JsonNullableFilter<"Doctor">
     status?: StringFilter<"Doctor"> | string
     departmentId?: StringNullableFilter<"Doctor"> | string | null
+    maritalStatus?: StringNullableFilter<"Doctor"> | string | null
+    qualification?: StringNullableFilter<"Doctor"> | string | null
+    signatureImage?: StringNullableFilter<"Doctor"> | string | null
+    medicalRegCertificate?: StringNullableFilter<"Doctor"> | string | null
+    qualificationCertificate?: StringNullableFilter<"Doctor"> | string | null
+    aadhaarCard?: StringNullableFilter<"Doctor"> | string | null
+    panCard?: StringNullableFilter<"Doctor"> | string | null
+    followUpEnabled?: BoolFilter<"Doctor"> | boolean
+    followUpValidityDays?: IntNullableFilter<"Doctor"> | number | null
+    freeFollowUpLimit?: IntNullableFilter<"Doctor"> | number | null
     designationId?: StringNullableFilter<"Doctor"> | string | null
-    specializationId?: StringNullableFilter<"Doctor"> | string | null
     clinicId?: StringFilter<"Doctor"> | string
     createdAt?: DateTimeFilter<"Doctor"> | Date | string
     updatedAt?: DateTimeFilter<"Doctor"> | Date | string
@@ -47767,13 +48476,23 @@ export namespace Prisma {
   export type ClinicCreateWithoutLandingPageInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     package?: SubscriptionPackageCreateNestedOneWithoutClinicsInput
@@ -47805,14 +48524,24 @@ export namespace Prisma {
   export type ClinicUncheckedCreateWithoutLandingPageInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     users?: UserUncheckedCreateNestedManyWithoutClinicInput
@@ -47859,13 +48588,23 @@ export namespace Prisma {
   export type ClinicUpdateWithoutLandingPageInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     package?: SubscriptionPackageUpdateOneWithoutClinicsNestedInput
@@ -47897,14 +48636,24 @@ export namespace Prisma {
   export type ClinicUncheckedUpdateWithoutLandingPageInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     users?: UserUncheckedUpdateManyWithoutClinicNestedInput
@@ -47935,13 +48684,23 @@ export namespace Prisma {
   export type ClinicCreateWithoutPackageInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     users?: UserCreateNestedManyWithoutClinicInput
@@ -47973,13 +48732,23 @@ export namespace Prisma {
   export type ClinicUncheckedCreateWithoutPackageInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     users?: UserUncheckedCreateNestedManyWithoutClinicInput
@@ -48040,14 +48809,24 @@ export namespace Prisma {
     NOT?: ClinicScalarWhereInput | ClinicScalarWhereInput[]
     id?: StringFilter<"Clinic"> | string
     name?: StringFilter<"Clinic"> | string
-    subdomain?: StringNullableFilter<"Clinic"> | string | null
-    gstNo?: StringNullableFilter<"Clinic"> | string | null
-    address?: StringNullableFilter<"Clinic"> | string | null
+    username?: StringNullableFilter<"Clinic"> | string | null
+    ownerName?: StringNullableFilter<"Clinic"> | string | null
+    ownerEmail?: StringNullableFilter<"Clinic"> | string | null
+    whatsappNumber?: StringNullableFilter<"Clinic"> | string | null
     phone?: StringNullableFilter<"Clinic"> | string | null
+    addressLine1?: StringNullableFilter<"Clinic"> | string | null
+    addressLine2?: StringNullableFilter<"Clinic"> | string | null
+    district?: StringNullableFilter<"Clinic"> | string | null
+    city?: StringNullableFilter<"Clinic"> | string | null
+    state?: StringNullableFilter<"Clinic"> | string | null
+    country?: StringNullableFilter<"Clinic"> | string | null
+    pincode?: StringNullableFilter<"Clinic"> | string | null
+    doctorCount?: IntNullableFilter<"Clinic"> | number | null
     status?: EnumClinicStatusFilter<"Clinic"> | $Enums.ClinicStatus
     packageId?: StringNullableFilter<"Clinic"> | string | null
     packageStartsAt?: DateTimeNullableFilter<"Clinic"> | Date | string | null
     packageExpiresAt?: DateTimeNullableFilter<"Clinic"> | Date | string | null
+    isTrialUsed?: BoolFilter<"Clinic"> | boolean
     createdAt?: DateTimeFilter<"Clinic"> | Date | string
     updatedAt?: DateTimeFilter<"Clinic"> | Date | string
   }
@@ -48055,13 +48834,23 @@ export namespace Prisma {
   export type ClinicCreateWithoutUsersInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     package?: SubscriptionPackageCreateNestedOneWithoutClinicsInput
@@ -48093,14 +48882,24 @@ export namespace Prisma {
   export type ClinicUncheckedCreateWithoutUsersInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     departments?: DepartmentUncheckedCreateNestedManyWithoutClinicInput
@@ -48147,13 +48946,23 @@ export namespace Prisma {
   export type ClinicUpdateWithoutUsersInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     package?: SubscriptionPackageUpdateOneWithoutClinicsNestedInput
@@ -48185,14 +48994,24 @@ export namespace Prisma {
   export type ClinicUncheckedUpdateWithoutUsersInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     departments?: DepartmentUncheckedUpdateManyWithoutClinicNestedInput
@@ -48223,13 +49042,23 @@ export namespace Prisma {
   export type ClinicCreateWithoutDepartmentsInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     package?: SubscriptionPackageCreateNestedOneWithoutClinicsInput
@@ -48261,14 +49090,24 @@ export namespace Prisma {
   export type ClinicUncheckedCreateWithoutDepartmentsInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     users?: UserUncheckedCreateNestedManyWithoutClinicInput
@@ -48369,10 +49208,20 @@ export namespace Prisma {
     certifications?: NullableJsonNullValueInput | InputJsonValue
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: string
+    maritalStatus?: string | null
+    qualification?: string | null
+    signatureImage?: string | null
+    medicalRegCertificate?: string | null
+    qualificationCertificate?: string | null
+    aadhaarCard?: string | null
+    panCard?: string | null
+    followUpEnabled?: boolean
+    followUpValidityDays?: number | null
+    freeFollowUpLimit?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     designation?: DesignationCreateNestedOneWithoutDoctorsInput
-    specialization?: SpecializationCreateNestedOneWithoutDoctorsInput
+    specializations?: SpecializationCreateNestedManyWithoutDoctorsInput
     clinic: ClinicCreateNestedOneWithoutDoctorsInput
     patients?: PatientCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentCreateNestedManyWithoutDoctorInput
@@ -48411,11 +49260,21 @@ export namespace Prisma {
     certifications?: NullableJsonNullValueInput | InputJsonValue
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: string
+    maritalStatus?: string | null
+    qualification?: string | null
+    signatureImage?: string | null
+    medicalRegCertificate?: string | null
+    qualificationCertificate?: string | null
+    aadhaarCard?: string | null
+    panCard?: string | null
+    followUpEnabled?: boolean
+    followUpValidityDays?: number | null
+    freeFollowUpLimit?: number | null
     designationId?: string | null
-    specializationId?: string | null
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    specializations?: SpecializationUncheckedCreateNestedManyWithoutDoctorsInput
     patients?: PatientUncheckedCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentUncheckedCreateNestedManyWithoutDoctorInput
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutDoctorInput
@@ -48627,13 +49486,23 @@ export namespace Prisma {
   export type ClinicUpdateWithoutDepartmentsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     package?: SubscriptionPackageUpdateOneWithoutClinicsNestedInput
@@ -48665,14 +49534,24 @@ export namespace Prisma {
   export type ClinicUncheckedUpdateWithoutDepartmentsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     users?: UserUncheckedUpdateManyWithoutClinicNestedInput
@@ -48799,13 +49678,23 @@ export namespace Prisma {
   export type ClinicCreateWithoutDesignationsInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     package?: SubscriptionPackageCreateNestedOneWithoutClinicsInput
@@ -48837,14 +49726,24 @@ export namespace Prisma {
   export type ClinicUncheckedCreateWithoutDesignationsInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     users?: UserUncheckedCreateNestedManyWithoutClinicInput
@@ -48944,10 +49843,20 @@ export namespace Prisma {
     certifications?: NullableJsonNullValueInput | InputJsonValue
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: string
+    maritalStatus?: string | null
+    qualification?: string | null
+    signatureImage?: string | null
+    medicalRegCertificate?: string | null
+    qualificationCertificate?: string | null
+    aadhaarCard?: string | null
+    panCard?: string | null
+    followUpEnabled?: boolean
+    followUpValidityDays?: number | null
+    freeFollowUpLimit?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     department?: DepartmentCreateNestedOneWithoutDoctorsInput
-    specialization?: SpecializationCreateNestedOneWithoutDoctorsInput
+    specializations?: SpecializationCreateNestedManyWithoutDoctorsInput
     clinic: ClinicCreateNestedOneWithoutDoctorsInput
     patients?: PatientCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentCreateNestedManyWithoutDoctorInput
@@ -48987,10 +49896,20 @@ export namespace Prisma {
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     departmentId?: string | null
-    specializationId?: string | null
+    maritalStatus?: string | null
+    qualification?: string | null
+    signatureImage?: string | null
+    medicalRegCertificate?: string | null
+    qualificationCertificate?: string | null
+    aadhaarCard?: string | null
+    panCard?: string | null
+    followUpEnabled?: boolean
+    followUpValidityDays?: number | null
+    freeFollowUpLimit?: number | null
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    specializations?: SpecializationUncheckedCreateNestedManyWithoutDoctorsInput
     patients?: PatientUncheckedCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentUncheckedCreateNestedManyWithoutDoctorInput
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutDoctorInput
@@ -49082,13 +50001,23 @@ export namespace Prisma {
   export type ClinicUpdateWithoutDesignationsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     package?: SubscriptionPackageUpdateOneWithoutClinicsNestedInput
@@ -49120,14 +50049,24 @@ export namespace Prisma {
   export type ClinicUncheckedUpdateWithoutDesignationsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     users?: UserUncheckedUpdateManyWithoutClinicNestedInput
@@ -49297,13 +50236,23 @@ export namespace Prisma {
   export type ClinicCreateWithoutStaffsInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     package?: SubscriptionPackageCreateNestedOneWithoutClinicsInput
@@ -49335,14 +50284,24 @@ export namespace Prisma {
   export type ClinicUncheckedCreateWithoutStaffsInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     users?: UserUncheckedCreateNestedManyWithoutClinicInput
@@ -49519,13 +50478,23 @@ export namespace Prisma {
   export type ClinicUpdateWithoutStaffsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     package?: SubscriptionPackageUpdateOneWithoutClinicsNestedInput
@@ -49557,14 +50526,24 @@ export namespace Prisma {
   export type ClinicUncheckedUpdateWithoutStaffsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     users?: UserUncheckedUpdateManyWithoutClinicNestedInput
@@ -49704,13 +50683,23 @@ export namespace Prisma {
   export type ClinicCreateWithoutDoctorsInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     package?: SubscriptionPackageCreateNestedOneWithoutClinicsInput
@@ -49742,14 +50731,24 @@ export namespace Prisma {
   export type ClinicUncheckedCreateWithoutDoctorsInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     users?: UserUncheckedCreateNestedManyWithoutClinicInput
@@ -50014,37 +51013,20 @@ export namespace Prisma {
     staffs?: StaffUncheckedUpdateManyWithoutDesignationNestedInput
   }
 
-  export type SpecializationUpsertWithoutDoctorsInput = {
+  export type SpecializationUpsertWithWhereUniqueWithoutDoctorsInput = {
+    where: SpecializationWhereUniqueInput
     update: XOR<SpecializationUpdateWithoutDoctorsInput, SpecializationUncheckedUpdateWithoutDoctorsInput>
     create: XOR<SpecializationCreateWithoutDoctorsInput, SpecializationUncheckedCreateWithoutDoctorsInput>
-    where?: SpecializationWhereInput
   }
 
-  export type SpecializationUpdateToOneWithWhereWithoutDoctorsInput = {
-    where?: SpecializationWhereInput
+  export type SpecializationUpdateWithWhereUniqueWithoutDoctorsInput = {
+    where: SpecializationWhereUniqueInput
     data: XOR<SpecializationUpdateWithoutDoctorsInput, SpecializationUncheckedUpdateWithoutDoctorsInput>
   }
 
-  export type SpecializationUpdateWithoutDoctorsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    clinic?: ClinicUpdateOneRequiredWithoutSpecializationsNestedInput
-  }
-
-  export type SpecializationUncheckedUpdateWithoutDoctorsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    clinicId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type SpecializationUpdateManyWithWhereWithoutDoctorsInput = {
+    where: SpecializationScalarWhereInput
+    data: XOR<SpecializationUpdateManyMutationInput, SpecializationUncheckedUpdateManyWithoutDoctorsInput>
   }
 
   export type ClinicUpsertWithoutDoctorsInput = {
@@ -50061,13 +51043,23 @@ export namespace Prisma {
   export type ClinicUpdateWithoutDoctorsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     package?: SubscriptionPackageUpdateOneWithoutClinicsNestedInput
@@ -50099,14 +51091,24 @@ export namespace Prisma {
   export type ClinicUncheckedUpdateWithoutDoctorsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     users?: UserUncheckedUpdateManyWithoutClinicNestedInput
@@ -50214,11 +51216,21 @@ export namespace Prisma {
     certifications?: NullableJsonNullValueInput | InputJsonValue
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: string
+    maritalStatus?: string | null
+    qualification?: string | null
+    signatureImage?: string | null
+    medicalRegCertificate?: string | null
+    qualificationCertificate?: string | null
+    aadhaarCard?: string | null
+    panCard?: string | null
+    followUpEnabled?: boolean
+    followUpValidityDays?: number | null
+    freeFollowUpLimit?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     department?: DepartmentCreateNestedOneWithoutDoctorsInput
     designation?: DesignationCreateNestedOneWithoutDoctorsInput
-    specialization?: SpecializationCreateNestedOneWithoutDoctorsInput
+    specializations?: SpecializationCreateNestedManyWithoutDoctorsInput
     clinic: ClinicCreateNestedOneWithoutDoctorsInput
     appointments?: AppointmentCreateNestedManyWithoutDoctorInput
     prescriptions?: PrescriptionCreateNestedManyWithoutDoctorInput
@@ -50257,11 +51269,21 @@ export namespace Prisma {
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     departmentId?: string | null
+    maritalStatus?: string | null
+    qualification?: string | null
+    signatureImage?: string | null
+    medicalRegCertificate?: string | null
+    qualificationCertificate?: string | null
+    aadhaarCard?: string | null
+    panCard?: string | null
+    followUpEnabled?: boolean
+    followUpValidityDays?: number | null
+    freeFollowUpLimit?: number | null
     designationId?: string | null
-    specializationId?: string | null
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    specializations?: SpecializationUncheckedCreateNestedManyWithoutDoctorsInput
     appointments?: AppointmentUncheckedCreateNestedManyWithoutDoctorInput
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutDoctorInput
   }
@@ -50274,13 +51296,23 @@ export namespace Prisma {
   export type ClinicCreateWithoutPatientsInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     package?: SubscriptionPackageCreateNestedOneWithoutClinicsInput
@@ -50312,14 +51344,24 @@ export namespace Prisma {
   export type ClinicUncheckedCreateWithoutPatientsInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     users?: UserUncheckedCreateNestedManyWithoutClinicInput
@@ -50529,11 +51571,21 @@ export namespace Prisma {
     certifications?: NullableJsonNullValueInput | InputJsonValue
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    qualification?: NullableStringFieldUpdateOperationsInput | string | null
+    signatureImage?: NullableStringFieldUpdateOperationsInput | string | null
+    medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    panCard?: NullableStringFieldUpdateOperationsInput | string | null
+    followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
+    followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
+    freeFollowUpLimit?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     department?: DepartmentUpdateOneWithoutDoctorsNestedInput
     designation?: DesignationUpdateOneWithoutDoctorsNestedInput
-    specialization?: SpecializationUpdateOneWithoutDoctorsNestedInput
+    specializations?: SpecializationUpdateManyWithoutDoctorsNestedInput
     clinic?: ClinicUpdateOneRequiredWithoutDoctorsNestedInput
     appointments?: AppointmentUpdateManyWithoutDoctorNestedInput
     prescriptions?: PrescriptionUpdateManyWithoutDoctorNestedInput
@@ -50572,11 +51624,21 @@ export namespace Prisma {
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     departmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    qualification?: NullableStringFieldUpdateOperationsInput | string | null
+    signatureImage?: NullableStringFieldUpdateOperationsInput | string | null
+    medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    panCard?: NullableStringFieldUpdateOperationsInput | string | null
+    followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
+    followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
+    freeFollowUpLimit?: NullableIntFieldUpdateOperationsInput | number | null
     designationId?: NullableStringFieldUpdateOperationsInput | string | null
-    specializationId?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    specializations?: SpecializationUncheckedUpdateManyWithoutDoctorsNestedInput
     appointments?: AppointmentUncheckedUpdateManyWithoutDoctorNestedInput
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutDoctorNestedInput
   }
@@ -50595,13 +51657,23 @@ export namespace Prisma {
   export type ClinicUpdateWithoutPatientsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     package?: SubscriptionPackageUpdateOneWithoutClinicsNestedInput
@@ -50633,14 +51705,24 @@ export namespace Prisma {
   export type ClinicUncheckedUpdateWithoutPatientsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     users?: UserUncheckedUpdateManyWithoutClinicNestedInput
@@ -50809,11 +51891,21 @@ export namespace Prisma {
     certifications?: NullableJsonNullValueInput | InputJsonValue
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: string
+    maritalStatus?: string | null
+    qualification?: string | null
+    signatureImage?: string | null
+    medicalRegCertificate?: string | null
+    qualificationCertificate?: string | null
+    aadhaarCard?: string | null
+    panCard?: string | null
+    followUpEnabled?: boolean
+    followUpValidityDays?: number | null
+    freeFollowUpLimit?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     department?: DepartmentCreateNestedOneWithoutDoctorsInput
     designation?: DesignationCreateNestedOneWithoutDoctorsInput
-    specialization?: SpecializationCreateNestedOneWithoutDoctorsInput
+    specializations?: SpecializationCreateNestedManyWithoutDoctorsInput
     clinic: ClinicCreateNestedOneWithoutDoctorsInput
     patients?: PatientCreateNestedManyWithoutPrimaryDoctorInput
     prescriptions?: PrescriptionCreateNestedManyWithoutDoctorInput
@@ -50852,11 +51944,21 @@ export namespace Prisma {
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     departmentId?: string | null
+    maritalStatus?: string | null
+    qualification?: string | null
+    signatureImage?: string | null
+    medicalRegCertificate?: string | null
+    qualificationCertificate?: string | null
+    aadhaarCard?: string | null
+    panCard?: string | null
+    followUpEnabled?: boolean
+    followUpValidityDays?: number | null
+    freeFollowUpLimit?: number | null
     designationId?: string | null
-    specializationId?: string | null
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    specializations?: SpecializationUncheckedCreateNestedManyWithoutDoctorsInput
     patients?: PatientUncheckedCreateNestedManyWithoutPrimaryDoctorInput
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutDoctorInput
   }
@@ -50904,13 +52006,23 @@ export namespace Prisma {
   export type ClinicCreateWithoutAppointmentsInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     package?: SubscriptionPackageCreateNestedOneWithoutClinicsInput
@@ -50942,14 +52054,24 @@ export namespace Prisma {
   export type ClinicUncheckedCreateWithoutAppointmentsInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     users?: UserUncheckedCreateNestedManyWithoutClinicInput
@@ -51134,11 +52256,21 @@ export namespace Prisma {
     certifications?: NullableJsonNullValueInput | InputJsonValue
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    qualification?: NullableStringFieldUpdateOperationsInput | string | null
+    signatureImage?: NullableStringFieldUpdateOperationsInput | string | null
+    medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    panCard?: NullableStringFieldUpdateOperationsInput | string | null
+    followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
+    followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
+    freeFollowUpLimit?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     department?: DepartmentUpdateOneWithoutDoctorsNestedInput
     designation?: DesignationUpdateOneWithoutDoctorsNestedInput
-    specialization?: SpecializationUpdateOneWithoutDoctorsNestedInput
+    specializations?: SpecializationUpdateManyWithoutDoctorsNestedInput
     clinic?: ClinicUpdateOneRequiredWithoutDoctorsNestedInput
     patients?: PatientUpdateManyWithoutPrimaryDoctorNestedInput
     prescriptions?: PrescriptionUpdateManyWithoutDoctorNestedInput
@@ -51177,11 +52309,21 @@ export namespace Prisma {
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     departmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    qualification?: NullableStringFieldUpdateOperationsInput | string | null
+    signatureImage?: NullableStringFieldUpdateOperationsInput | string | null
+    medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    panCard?: NullableStringFieldUpdateOperationsInput | string | null
+    followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
+    followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
+    freeFollowUpLimit?: NullableIntFieldUpdateOperationsInput | number | null
     designationId?: NullableStringFieldUpdateOperationsInput | string | null
-    specializationId?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    specializations?: SpecializationUncheckedUpdateManyWithoutDoctorsNestedInput
     patients?: PatientUncheckedUpdateManyWithoutPrimaryDoctorNestedInput
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutDoctorNestedInput
   }
@@ -51241,13 +52383,23 @@ export namespace Prisma {
   export type ClinicUpdateWithoutAppointmentsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     package?: SubscriptionPackageUpdateOneWithoutClinicsNestedInput
@@ -51279,14 +52431,24 @@ export namespace Prisma {
   export type ClinicUncheckedUpdateWithoutAppointmentsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     users?: UserUncheckedUpdateManyWithoutClinicNestedInput
@@ -51368,13 +52530,23 @@ export namespace Prisma {
   export type ClinicCreateWithoutServicesInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     package?: SubscriptionPackageCreateNestedOneWithoutClinicsInput
@@ -51406,14 +52578,24 @@ export namespace Prisma {
   export type ClinicUncheckedCreateWithoutServicesInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     users?: UserUncheckedCreateNestedManyWithoutClinicInput
@@ -51535,13 +52717,23 @@ export namespace Prisma {
   export type ClinicUpdateWithoutServicesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     package?: SubscriptionPackageUpdateOneWithoutClinicsNestedInput
@@ -51573,14 +52765,24 @@ export namespace Prisma {
   export type ClinicUncheckedUpdateWithoutServicesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     users?: UserUncheckedUpdateManyWithoutClinicNestedInput
@@ -51627,13 +52829,23 @@ export namespace Prisma {
   export type ClinicCreateWithoutSpecializationsInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     package?: SubscriptionPackageCreateNestedOneWithoutClinicsInput
@@ -51665,14 +52877,24 @@ export namespace Prisma {
   export type ClinicUncheckedCreateWithoutSpecializationsInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     users?: UserUncheckedCreateNestedManyWithoutClinicInput
@@ -51705,7 +52927,7 @@ export namespace Prisma {
     create: XOR<ClinicCreateWithoutSpecializationsInput, ClinicUncheckedCreateWithoutSpecializationsInput>
   }
 
-  export type DoctorCreateWithoutSpecializationInput = {
+  export type DoctorCreateWithoutSpecializationsInput = {
     id?: string
     fullName: string
     username?: string | null
@@ -51737,6 +52959,16 @@ export namespace Prisma {
     certifications?: NullableJsonNullValueInput | InputJsonValue
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: string
+    maritalStatus?: string | null
+    qualification?: string | null
+    signatureImage?: string | null
+    medicalRegCertificate?: string | null
+    qualificationCertificate?: string | null
+    aadhaarCard?: string | null
+    panCard?: string | null
+    followUpEnabled?: boolean
+    followUpValidityDays?: number | null
+    freeFollowUpLimit?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     department?: DepartmentCreateNestedOneWithoutDoctorsInput
@@ -51747,7 +52979,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionCreateNestedManyWithoutDoctorInput
   }
 
-  export type DoctorUncheckedCreateWithoutSpecializationInput = {
+  export type DoctorUncheckedCreateWithoutSpecializationsInput = {
     id?: string
     fullName: string
     username?: string | null
@@ -51780,6 +53012,16 @@ export namespace Prisma {
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     departmentId?: string | null
+    maritalStatus?: string | null
+    qualification?: string | null
+    signatureImage?: string | null
+    medicalRegCertificate?: string | null
+    qualificationCertificate?: string | null
+    aadhaarCard?: string | null
+    panCard?: string | null
+    followUpEnabled?: boolean
+    followUpValidityDays?: number | null
+    freeFollowUpLimit?: number | null
     designationId?: string | null
     clinicId: string
     createdAt?: Date | string
@@ -51789,14 +53031,9 @@ export namespace Prisma {
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutDoctorInput
   }
 
-  export type DoctorCreateOrConnectWithoutSpecializationInput = {
+  export type DoctorCreateOrConnectWithoutSpecializationsInput = {
     where: DoctorWhereUniqueInput
-    create: XOR<DoctorCreateWithoutSpecializationInput, DoctorUncheckedCreateWithoutSpecializationInput>
-  }
-
-  export type DoctorCreateManySpecializationInputEnvelope = {
-    data: DoctorCreateManySpecializationInput | DoctorCreateManySpecializationInput[]
-    skipDuplicates?: boolean
+    create: XOR<DoctorCreateWithoutSpecializationsInput, DoctorUncheckedCreateWithoutSpecializationsInput>
   }
 
   export type ClinicUpsertWithoutSpecializationsInput = {
@@ -51813,13 +53050,23 @@ export namespace Prisma {
   export type ClinicUpdateWithoutSpecializationsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     package?: SubscriptionPackageUpdateOneWithoutClinicsNestedInput
@@ -51851,14 +53098,24 @@ export namespace Prisma {
   export type ClinicUncheckedUpdateWithoutSpecializationsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     users?: UserUncheckedUpdateManyWithoutClinicNestedInput
@@ -51886,32 +53143,42 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
   }
 
-  export type DoctorUpsertWithWhereUniqueWithoutSpecializationInput = {
+  export type DoctorUpsertWithWhereUniqueWithoutSpecializationsInput = {
     where: DoctorWhereUniqueInput
-    update: XOR<DoctorUpdateWithoutSpecializationInput, DoctorUncheckedUpdateWithoutSpecializationInput>
-    create: XOR<DoctorCreateWithoutSpecializationInput, DoctorUncheckedCreateWithoutSpecializationInput>
+    update: XOR<DoctorUpdateWithoutSpecializationsInput, DoctorUncheckedUpdateWithoutSpecializationsInput>
+    create: XOR<DoctorCreateWithoutSpecializationsInput, DoctorUncheckedCreateWithoutSpecializationsInput>
   }
 
-  export type DoctorUpdateWithWhereUniqueWithoutSpecializationInput = {
+  export type DoctorUpdateWithWhereUniqueWithoutSpecializationsInput = {
     where: DoctorWhereUniqueInput
-    data: XOR<DoctorUpdateWithoutSpecializationInput, DoctorUncheckedUpdateWithoutSpecializationInput>
+    data: XOR<DoctorUpdateWithoutSpecializationsInput, DoctorUncheckedUpdateWithoutSpecializationsInput>
   }
 
-  export type DoctorUpdateManyWithWhereWithoutSpecializationInput = {
+  export type DoctorUpdateManyWithWhereWithoutSpecializationsInput = {
     where: DoctorScalarWhereInput
-    data: XOR<DoctorUpdateManyMutationInput, DoctorUncheckedUpdateManyWithoutSpecializationInput>
+    data: XOR<DoctorUpdateManyMutationInput, DoctorUncheckedUpdateManyWithoutSpecializationsInput>
   }
 
   export type ClinicCreateWithoutHolidaysInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     package?: SubscriptionPackageCreateNestedOneWithoutClinicsInput
@@ -51943,14 +53210,24 @@ export namespace Prisma {
   export type ClinicUncheckedCreateWithoutHolidaysInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     users?: UserUncheckedCreateNestedManyWithoutClinicInput
@@ -51997,13 +53274,23 @@ export namespace Prisma {
   export type ClinicUpdateWithoutHolidaysInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     package?: SubscriptionPackageUpdateOneWithoutClinicsNestedInput
@@ -52035,14 +53322,24 @@ export namespace Prisma {
   export type ClinicUncheckedUpdateWithoutHolidaysInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     users?: UserUncheckedUpdateManyWithoutClinicNestedInput
@@ -52130,13 +53427,23 @@ export namespace Prisma {
   export type ClinicCreateWithoutPayrollsInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     package?: SubscriptionPackageCreateNestedOneWithoutClinicsInput
@@ -52168,14 +53475,24 @@ export namespace Prisma {
   export type ClinicUncheckedCreateWithoutPayrollsInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     users?: UserUncheckedCreateNestedManyWithoutClinicInput
@@ -52285,13 +53602,23 @@ export namespace Prisma {
   export type ClinicUpdateWithoutPayrollsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     package?: SubscriptionPackageUpdateOneWithoutClinicsNestedInput
@@ -52323,14 +53650,24 @@ export namespace Prisma {
   export type ClinicUncheckedUpdateWithoutPayrollsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     users?: UserUncheckedUpdateManyWithoutClinicNestedInput
@@ -52361,13 +53698,23 @@ export namespace Prisma {
   export type ClinicCreateWithoutExpensesInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     package?: SubscriptionPackageCreateNestedOneWithoutClinicsInput
@@ -52399,14 +53746,24 @@ export namespace Prisma {
   export type ClinicUncheckedCreateWithoutExpensesInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     users?: UserUncheckedCreateNestedManyWithoutClinicInput
@@ -52453,13 +53810,23 @@ export namespace Prisma {
   export type ClinicUpdateWithoutExpensesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     package?: SubscriptionPackageUpdateOneWithoutClinicsNestedInput
@@ -52491,14 +53858,24 @@ export namespace Prisma {
   export type ClinicUncheckedUpdateWithoutExpensesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     users?: UserUncheckedUpdateManyWithoutClinicNestedInput
@@ -52529,13 +53906,23 @@ export namespace Prisma {
   export type ClinicCreateWithoutExpenseCategoriesInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     package?: SubscriptionPackageCreateNestedOneWithoutClinicsInput
@@ -52567,14 +53954,24 @@ export namespace Prisma {
   export type ClinicUncheckedCreateWithoutExpenseCategoriesInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     users?: UserUncheckedCreateNestedManyWithoutClinicInput
@@ -52621,13 +54018,23 @@ export namespace Prisma {
   export type ClinicUpdateWithoutExpenseCategoriesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     package?: SubscriptionPackageUpdateOneWithoutClinicsNestedInput
@@ -52659,14 +54066,24 @@ export namespace Prisma {
   export type ClinicUncheckedUpdateWithoutExpenseCategoriesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     users?: UserUncheckedUpdateManyWithoutClinicNestedInput
@@ -52697,13 +54114,23 @@ export namespace Prisma {
   export type ClinicCreateWithoutClinicRolesInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     package?: SubscriptionPackageCreateNestedOneWithoutClinicsInput
@@ -52735,14 +54162,24 @@ export namespace Prisma {
   export type ClinicUncheckedCreateWithoutClinicRolesInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     users?: UserUncheckedCreateNestedManyWithoutClinicInput
@@ -52789,13 +54226,23 @@ export namespace Prisma {
   export type ClinicUpdateWithoutClinicRolesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     package?: SubscriptionPackageUpdateOneWithoutClinicsNestedInput
@@ -52827,14 +54274,24 @@ export namespace Prisma {
   export type ClinicUncheckedUpdateWithoutClinicRolesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     users?: UserUncheckedUpdateManyWithoutClinicNestedInput
@@ -52865,13 +54322,23 @@ export namespace Prisma {
   export type ClinicCreateWithoutAttendancesInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     package?: SubscriptionPackageCreateNestedOneWithoutClinicsInput
@@ -52903,14 +54370,24 @@ export namespace Prisma {
   export type ClinicUncheckedCreateWithoutAttendancesInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     users?: UserUncheckedCreateNestedManyWithoutClinicInput
@@ -52957,13 +54434,23 @@ export namespace Prisma {
   export type ClinicUpdateWithoutAttendancesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     package?: SubscriptionPackageUpdateOneWithoutClinicsNestedInput
@@ -52995,14 +54482,24 @@ export namespace Prisma {
   export type ClinicUncheckedUpdateWithoutAttendancesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     users?: UserUncheckedUpdateManyWithoutClinicNestedInput
@@ -53033,13 +54530,23 @@ export namespace Prisma {
   export type ClinicCreateWithoutLeaveTypesInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     package?: SubscriptionPackageCreateNestedOneWithoutClinicsInput
@@ -53071,14 +54578,24 @@ export namespace Prisma {
   export type ClinicUncheckedCreateWithoutLeaveTypesInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     users?: UserUncheckedCreateNestedManyWithoutClinicInput
@@ -53125,13 +54642,23 @@ export namespace Prisma {
   export type ClinicUpdateWithoutLeaveTypesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     package?: SubscriptionPackageUpdateOneWithoutClinicsNestedInput
@@ -53163,14 +54690,24 @@ export namespace Prisma {
   export type ClinicUncheckedUpdateWithoutLeaveTypesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     users?: UserUncheckedUpdateManyWithoutClinicNestedInput
@@ -53201,13 +54738,23 @@ export namespace Prisma {
   export type ClinicCreateWithoutLeavesInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     package?: SubscriptionPackageCreateNestedOneWithoutClinicsInput
@@ -53239,14 +54786,24 @@ export namespace Prisma {
   export type ClinicUncheckedCreateWithoutLeavesInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     users?: UserUncheckedCreateNestedManyWithoutClinicInput
@@ -53293,13 +54850,23 @@ export namespace Prisma {
   export type ClinicUpdateWithoutLeavesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     package?: SubscriptionPackageUpdateOneWithoutClinicsNestedInput
@@ -53331,14 +54898,24 @@ export namespace Prisma {
   export type ClinicUncheckedUpdateWithoutLeavesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     users?: UserUncheckedUpdateManyWithoutClinicNestedInput
@@ -53459,11 +55036,21 @@ export namespace Prisma {
     certifications?: NullableJsonNullValueInput | InputJsonValue
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: string
+    maritalStatus?: string | null
+    qualification?: string | null
+    signatureImage?: string | null
+    medicalRegCertificate?: string | null
+    qualificationCertificate?: string | null
+    aadhaarCard?: string | null
+    panCard?: string | null
+    followUpEnabled?: boolean
+    followUpValidityDays?: number | null
+    freeFollowUpLimit?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     department?: DepartmentCreateNestedOneWithoutDoctorsInput
     designation?: DesignationCreateNestedOneWithoutDoctorsInput
-    specialization?: SpecializationCreateNestedOneWithoutDoctorsInput
+    specializations?: SpecializationCreateNestedManyWithoutDoctorsInput
     clinic: ClinicCreateNestedOneWithoutDoctorsInput
     patients?: PatientCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentCreateNestedManyWithoutDoctorInput
@@ -53502,11 +55089,21 @@ export namespace Prisma {
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     departmentId?: string | null
+    maritalStatus?: string | null
+    qualification?: string | null
+    signatureImage?: string | null
+    medicalRegCertificate?: string | null
+    qualificationCertificate?: string | null
+    aadhaarCard?: string | null
+    panCard?: string | null
+    followUpEnabled?: boolean
+    followUpValidityDays?: number | null
+    freeFollowUpLimit?: number | null
     designationId?: string | null
-    specializationId?: string | null
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    specializations?: SpecializationUncheckedCreateNestedManyWithoutDoctorsInput
     patients?: PatientUncheckedCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentUncheckedCreateNestedManyWithoutDoctorInput
   }
@@ -53595,13 +55192,23 @@ export namespace Prisma {
   export type ClinicCreateWithoutPrescriptionsInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     package?: SubscriptionPackageCreateNestedOneWithoutClinicsInput
@@ -53633,14 +55240,24 @@ export namespace Prisma {
   export type ClinicUncheckedCreateWithoutPrescriptionsInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     users?: UserUncheckedCreateNestedManyWithoutClinicInput
@@ -53817,11 +55434,21 @@ export namespace Prisma {
     certifications?: NullableJsonNullValueInput | InputJsonValue
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    qualification?: NullableStringFieldUpdateOperationsInput | string | null
+    signatureImage?: NullableStringFieldUpdateOperationsInput | string | null
+    medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    panCard?: NullableStringFieldUpdateOperationsInput | string | null
+    followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
+    followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
+    freeFollowUpLimit?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     department?: DepartmentUpdateOneWithoutDoctorsNestedInput
     designation?: DesignationUpdateOneWithoutDoctorsNestedInput
-    specialization?: SpecializationUpdateOneWithoutDoctorsNestedInput
+    specializations?: SpecializationUpdateManyWithoutDoctorsNestedInput
     clinic?: ClinicUpdateOneRequiredWithoutDoctorsNestedInput
     patients?: PatientUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUpdateManyWithoutDoctorNestedInput
@@ -53860,11 +55487,21 @@ export namespace Prisma {
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     departmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    qualification?: NullableStringFieldUpdateOperationsInput | string | null
+    signatureImage?: NullableStringFieldUpdateOperationsInput | string | null
+    medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    panCard?: NullableStringFieldUpdateOperationsInput | string | null
+    followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
+    followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
+    freeFollowUpLimit?: NullableIntFieldUpdateOperationsInput | number | null
     designationId?: NullableStringFieldUpdateOperationsInput | string | null
-    specializationId?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    specializations?: SpecializationUncheckedUpdateManyWithoutDoctorsNestedInput
     patients?: PatientUncheckedUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUncheckedUpdateManyWithoutDoctorNestedInput
   }
@@ -53971,13 +55608,23 @@ export namespace Prisma {
   export type ClinicUpdateWithoutPrescriptionsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     package?: SubscriptionPackageUpdateOneWithoutClinicsNestedInput
@@ -54009,14 +55656,24 @@ export namespace Prisma {
   export type ClinicUncheckedUpdateWithoutPrescriptionsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     users?: UserUncheckedUpdateManyWithoutClinicNestedInput
@@ -54100,13 +55757,23 @@ export namespace Prisma {
   export type ClinicCreateWithoutPrescriptionMedicinesInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     package?: SubscriptionPackageCreateNestedOneWithoutClinicsInput
@@ -54138,14 +55805,24 @@ export namespace Prisma {
   export type ClinicUncheckedCreateWithoutPrescriptionMedicinesInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     users?: UserUncheckedCreateNestedManyWithoutClinicInput
@@ -54235,13 +55912,23 @@ export namespace Prisma {
   export type ClinicUpdateWithoutPrescriptionMedicinesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     package?: SubscriptionPackageUpdateOneWithoutClinicsNestedInput
@@ -54273,14 +55960,24 @@ export namespace Prisma {
   export type ClinicUncheckedUpdateWithoutPrescriptionMedicinesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     users?: UserUncheckedUpdateManyWithoutClinicNestedInput
@@ -54372,13 +56069,23 @@ export namespace Prisma {
   export type ClinicCreateWithoutInvoicesInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     package?: SubscriptionPackageCreateNestedOneWithoutClinicsInput
@@ -54410,14 +56117,24 @@ export namespace Prisma {
   export type ClinicUncheckedCreateWithoutInvoicesInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     users?: UserUncheckedCreateNestedManyWithoutClinicInput
@@ -54565,13 +56282,23 @@ export namespace Prisma {
   export type ClinicUpdateWithoutInvoicesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     package?: SubscriptionPackageUpdateOneWithoutClinicsNestedInput
@@ -54603,14 +56330,24 @@ export namespace Prisma {
   export type ClinicUncheckedUpdateWithoutInvoicesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     users?: UserUncheckedUpdateManyWithoutClinicNestedInput
@@ -54725,13 +56462,23 @@ export namespace Prisma {
   export type ClinicCreateWithoutInvoiceItemsInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     package?: SubscriptionPackageCreateNestedOneWithoutClinicsInput
@@ -54763,14 +56510,24 @@ export namespace Prisma {
   export type ClinicUncheckedCreateWithoutInvoiceItemsInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     users?: UserUncheckedCreateNestedManyWithoutClinicInput
@@ -54897,13 +56654,23 @@ export namespace Prisma {
   export type ClinicUpdateWithoutInvoiceItemsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     package?: SubscriptionPackageUpdateOneWithoutClinicsNestedInput
@@ -54935,14 +56702,24 @@ export namespace Prisma {
   export type ClinicUncheckedUpdateWithoutInvoiceItemsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     users?: UserUncheckedUpdateManyWithoutClinicNestedInput
@@ -54973,13 +56750,23 @@ export namespace Prisma {
   export type ClinicCreateWithoutProductsInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     package?: SubscriptionPackageCreateNestedOneWithoutClinicsInput
@@ -55011,14 +56798,24 @@ export namespace Prisma {
   export type ClinicUncheckedCreateWithoutProductsInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     users?: UserUncheckedCreateNestedManyWithoutClinicInput
@@ -55065,13 +56862,23 @@ export namespace Prisma {
   export type ClinicUpdateWithoutProductsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     package?: SubscriptionPackageUpdateOneWithoutClinicsNestedInput
@@ -55103,14 +56910,24 @@ export namespace Prisma {
   export type ClinicUncheckedUpdateWithoutProductsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     users?: UserUncheckedUpdateManyWithoutClinicNestedInput
@@ -55141,13 +56958,23 @@ export namespace Prisma {
   export type ClinicCreateWithoutNotificationsInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     package?: SubscriptionPackageCreateNestedOneWithoutClinicsInput
@@ -55179,14 +57006,24 @@ export namespace Prisma {
   export type ClinicUncheckedCreateWithoutNotificationsInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     users?: UserUncheckedCreateNestedManyWithoutClinicInput
@@ -55233,13 +57070,23 @@ export namespace Prisma {
   export type ClinicUpdateWithoutNotificationsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     package?: SubscriptionPackageUpdateOneWithoutClinicsNestedInput
@@ -55271,14 +57118,24 @@ export namespace Prisma {
   export type ClinicUncheckedUpdateWithoutNotificationsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     users?: UserUncheckedUpdateManyWithoutClinicNestedInput
@@ -55309,6 +57166,8 @@ export namespace Prisma {
   export type UserCreateManyClinicInput = {
     id?: string
     email: string
+    username?: string | null
+    phone?: string | null
     passwordHash: string
     fullName: string
     dob?: Date | string | null
@@ -55372,8 +57231,17 @@ export namespace Prisma {
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     departmentId?: string | null
+    maritalStatus?: string | null
+    qualification?: string | null
+    signatureImage?: string | null
+    medicalRegCertificate?: string | null
+    qualificationCertificate?: string | null
+    aadhaarCard?: string | null
+    panCard?: string | null
+    followUpEnabled?: boolean
+    followUpValidityDays?: number | null
+    freeFollowUpLimit?: number | null
     designationId?: string | null
-    specializationId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -55645,6 +57513,8 @@ export namespace Prisma {
   export type UserUpdateWithoutClinicInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: StringFieldUpdateOperationsInput | string
     fullName?: StringFieldUpdateOperationsInput | string
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -55658,6 +57528,8 @@ export namespace Prisma {
   export type UserUncheckedUpdateWithoutClinicInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: StringFieldUpdateOperationsInput | string
     fullName?: StringFieldUpdateOperationsInput | string
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -55671,6 +57543,8 @@ export namespace Prisma {
   export type UserUncheckedUpdateManyWithoutClinicInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: StringFieldUpdateOperationsInput | string
     fullName?: StringFieldUpdateOperationsInput | string
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -55789,11 +57663,21 @@ export namespace Prisma {
     certifications?: NullableJsonNullValueInput | InputJsonValue
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    qualification?: NullableStringFieldUpdateOperationsInput | string | null
+    signatureImage?: NullableStringFieldUpdateOperationsInput | string | null
+    medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    panCard?: NullableStringFieldUpdateOperationsInput | string | null
+    followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
+    followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
+    freeFollowUpLimit?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     department?: DepartmentUpdateOneWithoutDoctorsNestedInput
     designation?: DesignationUpdateOneWithoutDoctorsNestedInput
-    specialization?: SpecializationUpdateOneWithoutDoctorsNestedInput
+    specializations?: SpecializationUpdateManyWithoutDoctorsNestedInput
     patients?: PatientUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUpdateManyWithoutDoctorNestedInput
     prescriptions?: PrescriptionUpdateManyWithoutDoctorNestedInput
@@ -55832,10 +57716,20 @@ export namespace Prisma {
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     departmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    qualification?: NullableStringFieldUpdateOperationsInput | string | null
+    signatureImage?: NullableStringFieldUpdateOperationsInput | string | null
+    medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    panCard?: NullableStringFieldUpdateOperationsInput | string | null
+    followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
+    followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
+    freeFollowUpLimit?: NullableIntFieldUpdateOperationsInput | number | null
     designationId?: NullableStringFieldUpdateOperationsInput | string | null
-    specializationId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    specializations?: SpecializationUncheckedUpdateManyWithoutDoctorsNestedInput
     patients?: PatientUncheckedUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUncheckedUpdateManyWithoutDoctorNestedInput
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutDoctorNestedInput
@@ -55874,8 +57768,17 @@ export namespace Prisma {
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     departmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    qualification?: NullableStringFieldUpdateOperationsInput | string | null
+    signatureImage?: NullableStringFieldUpdateOperationsInput | string | null
+    medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    panCard?: NullableStringFieldUpdateOperationsInput | string | null
+    followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
+    followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
+    freeFollowUpLimit?: NullableIntFieldUpdateOperationsInput | number | null
     designationId?: NullableStringFieldUpdateOperationsInput | string | null
-    specializationId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -56131,7 +58034,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    doctors?: DoctorUpdateManyWithoutSpecializationNestedInput
+    doctors?: DoctorUpdateManyWithoutSpecializationsNestedInput
   }
 
   export type SpecializationUncheckedUpdateWithoutClinicInput = {
@@ -56142,7 +58045,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    doctors?: DoctorUncheckedUpdateManyWithoutSpecializationNestedInput
+    doctors?: DoctorUncheckedUpdateManyWithoutSpecializationsNestedInput
   }
 
   export type SpecializationUncheckedUpdateManyWithoutClinicInput = {
@@ -56693,13 +58596,23 @@ export namespace Prisma {
   export type ClinicCreateManyPackageInput = {
     id?: string
     name: string
-    subdomain?: string | null
-    gstNo?: string | null
-    address?: string | null
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
     phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -56707,13 +58620,23 @@ export namespace Prisma {
   export type ClinicUpdateWithoutPackageInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     users?: UserUpdateManyWithoutClinicNestedInput
@@ -56745,13 +58668,23 @@ export namespace Prisma {
   export type ClinicUncheckedUpdateWithoutPackageInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     users?: UserUncheckedUpdateManyWithoutClinicNestedInput
@@ -56783,13 +58716,23 @@ export namespace Prisma {
   export type ClinicUncheckedUpdateManyWithoutPackageInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    gstNo?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -56837,8 +58780,17 @@ export namespace Prisma {
     certifications?: NullableJsonNullValueInput | InputJsonValue
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: string
+    maritalStatus?: string | null
+    qualification?: string | null
+    signatureImage?: string | null
+    medicalRegCertificate?: string | null
+    qualificationCertificate?: string | null
+    aadhaarCard?: string | null
+    panCard?: string | null
+    followUpEnabled?: boolean
+    followUpValidityDays?: number | null
+    freeFollowUpLimit?: number | null
     designationId?: string | null
-    specializationId?: string | null
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -56980,10 +58932,20 @@ export namespace Prisma {
     certifications?: NullableJsonNullValueInput | InputJsonValue
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    qualification?: NullableStringFieldUpdateOperationsInput | string | null
+    signatureImage?: NullableStringFieldUpdateOperationsInput | string | null
+    medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    panCard?: NullableStringFieldUpdateOperationsInput | string | null
+    followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
+    followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
+    freeFollowUpLimit?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     designation?: DesignationUpdateOneWithoutDoctorsNestedInput
-    specialization?: SpecializationUpdateOneWithoutDoctorsNestedInput
+    specializations?: SpecializationUpdateManyWithoutDoctorsNestedInput
     clinic?: ClinicUpdateOneRequiredWithoutDoctorsNestedInput
     patients?: PatientUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUpdateManyWithoutDoctorNestedInput
@@ -57022,11 +58984,21 @@ export namespace Prisma {
     certifications?: NullableJsonNullValueInput | InputJsonValue
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    qualification?: NullableStringFieldUpdateOperationsInput | string | null
+    signatureImage?: NullableStringFieldUpdateOperationsInput | string | null
+    medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    panCard?: NullableStringFieldUpdateOperationsInput | string | null
+    followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
+    followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
+    freeFollowUpLimit?: NullableIntFieldUpdateOperationsInput | number | null
     designationId?: NullableStringFieldUpdateOperationsInput | string | null
-    specializationId?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    specializations?: SpecializationUncheckedUpdateManyWithoutDoctorsNestedInput
     patients?: PatientUncheckedUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUncheckedUpdateManyWithoutDoctorNestedInput
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutDoctorNestedInput
@@ -57064,8 +59036,17 @@ export namespace Prisma {
     certifications?: NullableJsonNullValueInput | InputJsonValue
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    qualification?: NullableStringFieldUpdateOperationsInput | string | null
+    signatureImage?: NullableStringFieldUpdateOperationsInput | string | null
+    medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    panCard?: NullableStringFieldUpdateOperationsInput | string | null
+    followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
+    followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
+    freeFollowUpLimit?: NullableIntFieldUpdateOperationsInput | number | null
     designationId?: NullableStringFieldUpdateOperationsInput | string | null
-    specializationId?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57313,7 +59294,16 @@ export namespace Prisma {
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     departmentId?: string | null
-    specializationId?: string | null
+    maritalStatus?: string | null
+    qualification?: string | null
+    signatureImage?: string | null
+    medicalRegCertificate?: string | null
+    qualificationCertificate?: string | null
+    aadhaarCard?: string | null
+    panCard?: string | null
+    followUpEnabled?: boolean
+    followUpValidityDays?: number | null
+    freeFollowUpLimit?: number | null
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -57376,10 +59366,20 @@ export namespace Prisma {
     certifications?: NullableJsonNullValueInput | InputJsonValue
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    qualification?: NullableStringFieldUpdateOperationsInput | string | null
+    signatureImage?: NullableStringFieldUpdateOperationsInput | string | null
+    medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    panCard?: NullableStringFieldUpdateOperationsInput | string | null
+    followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
+    followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
+    freeFollowUpLimit?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     department?: DepartmentUpdateOneWithoutDoctorsNestedInput
-    specialization?: SpecializationUpdateOneWithoutDoctorsNestedInput
+    specializations?: SpecializationUpdateManyWithoutDoctorsNestedInput
     clinic?: ClinicUpdateOneRequiredWithoutDoctorsNestedInput
     patients?: PatientUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUpdateManyWithoutDoctorNestedInput
@@ -57419,10 +59419,20 @@ export namespace Prisma {
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     departmentId?: NullableStringFieldUpdateOperationsInput | string | null
-    specializationId?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    qualification?: NullableStringFieldUpdateOperationsInput | string | null
+    signatureImage?: NullableStringFieldUpdateOperationsInput | string | null
+    medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    panCard?: NullableStringFieldUpdateOperationsInput | string | null
+    followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
+    followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
+    freeFollowUpLimit?: NullableIntFieldUpdateOperationsInput | number | null
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    specializations?: SpecializationUncheckedUpdateManyWithoutDoctorsNestedInput
     patients?: PatientUncheckedUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUncheckedUpdateManyWithoutDoctorNestedInput
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutDoctorNestedInput
@@ -57461,7 +59471,16 @@ export namespace Prisma {
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     departmentId?: NullableStringFieldUpdateOperationsInput | string | null
-    specializationId?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    qualification?: NullableStringFieldUpdateOperationsInput | string | null
+    signatureImage?: NullableStringFieldUpdateOperationsInput | string | null
+    medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    panCard?: NullableStringFieldUpdateOperationsInput | string | null
+    followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
+    followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
+    freeFollowUpLimit?: NullableIntFieldUpdateOperationsInput | number | null
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57683,6 +59702,39 @@ export namespace Prisma {
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type SpecializationUpdateWithoutDoctorsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    clinic?: ClinicUpdateOneRequiredWithoutSpecializationsNestedInput
+  }
+
+  export type SpecializationUncheckedUpdateWithoutDoctorsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SpecializationUncheckedUpdateManyWithoutDoctorsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PatientUpdateWithoutPrimaryDoctorInput = {
@@ -58178,46 +60230,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type DoctorCreateManySpecializationInput = {
-    id?: string
-    fullName: string
-    username?: string | null
-    phone?: string | null
-    email?: string | null
-    dob?: Date | string | null
-    yearOfExperience?: number | null
-    medicalLicenseNumber?: string | null
-    languagesSpoken?: DoctorCreatelanguagesSpokenInput | string[]
-    bloodGroup?: string | null
-    gender?: string | null
-    bio?: string | null
-    featureOnWebsite?: boolean
-    profileImage?: string | null
-    address1?: string | null
-    address2?: string | null
-    country?: string | null
-    city?: string | null
-    state?: string | null
-    pincode?: string | null
-    appointmentType?: string | null
-    acceptBookingsInAdvance?: number | null
-    appointmentDuration?: number | null
-    consultationCharge?: number | null
-    maxBookingsPerSlot?: number | null
-    displayOnBookingPage?: boolean
-    educations?: NullableJsonNullValueInput | InputJsonValue
-    awards?: NullableJsonNullValueInput | InputJsonValue
-    certifications?: NullableJsonNullValueInput | InputJsonValue
-    schedules?: NullableJsonNullValueInput | InputJsonValue
-    status?: string
-    departmentId?: string | null
-    designationId?: string | null
-    clinicId: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type DoctorUpdateWithoutSpecializationInput = {
+  export type DoctorUpdateWithoutSpecializationsInput = {
     id?: StringFieldUpdateOperationsInput | string
     fullName?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
@@ -58249,6 +60262,16 @@ export namespace Prisma {
     certifications?: NullableJsonNullValueInput | InputJsonValue
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    qualification?: NullableStringFieldUpdateOperationsInput | string | null
+    signatureImage?: NullableStringFieldUpdateOperationsInput | string | null
+    medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    panCard?: NullableStringFieldUpdateOperationsInput | string | null
+    followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
+    followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
+    freeFollowUpLimit?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     department?: DepartmentUpdateOneWithoutDoctorsNestedInput
@@ -58259,7 +60282,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionUpdateManyWithoutDoctorNestedInput
   }
 
-  export type DoctorUncheckedUpdateWithoutSpecializationInput = {
+  export type DoctorUncheckedUpdateWithoutSpecializationsInput = {
     id?: StringFieldUpdateOperationsInput | string
     fullName?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
@@ -58292,6 +60315,16 @@ export namespace Prisma {
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     departmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    qualification?: NullableStringFieldUpdateOperationsInput | string | null
+    signatureImage?: NullableStringFieldUpdateOperationsInput | string | null
+    medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    panCard?: NullableStringFieldUpdateOperationsInput | string | null
+    followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
+    followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
+    freeFollowUpLimit?: NullableIntFieldUpdateOperationsInput | number | null
     designationId?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -58301,7 +60334,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutDoctorNestedInput
   }
 
-  export type DoctorUncheckedUpdateManyWithoutSpecializationInput = {
+  export type DoctorUncheckedUpdateManyWithoutSpecializationsInput = {
     id?: StringFieldUpdateOperationsInput | string
     fullName?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
@@ -58334,6 +60367,16 @@ export namespace Prisma {
     schedules?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     departmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    qualification?: NullableStringFieldUpdateOperationsInput | string | null
+    signatureImage?: NullableStringFieldUpdateOperationsInput | string | null
+    medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    panCard?: NullableStringFieldUpdateOperationsInput | string | null
+    followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
+    followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
+    freeFollowUpLimit?: NullableIntFieldUpdateOperationsInput | number | null
     designationId?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

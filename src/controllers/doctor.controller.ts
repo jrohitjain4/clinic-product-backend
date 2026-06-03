@@ -39,6 +39,7 @@ export const getDoctorById = async (req: AuthenticatedRequest, res: Response) =>
                 department: { select: { id: true, name: true } },
                 designation: { select: { id: true, name: true } },
                 clinic: { select: { id: true, name: true } },
+                specializations: { select: { id: true, name: true } },
             },
         });
 
@@ -64,14 +65,21 @@ export const createDoctor = async (req: AuthenticatedRequest, res: Response) => 
             yearOfExperience,
             departmentId,
             designationId,
-            specializationId,
+            specializations, // Array of specialization IDs
             medicalLicenseNumber,
+            maritalStatus,
+            qualification,
             languagesSpoken,
             bloodGroup,
             gender,
             bio,
             featureOnWebsite,
             profileImage,
+            signatureImage,
+            medicalRegCertificate,
+            qualificationCertificate,
+            aadhaarCard,
+            panCard,
             address1,
             address2,
             country,
@@ -84,6 +92,9 @@ export const createDoctor = async (req: AuthenticatedRequest, res: Response) => 
             consultationCharge,
             maxBookingsPerSlot,
             displayOnBookingPage,
+            followUpEnabled,
+            followUpValidityDays,
+            freeFollowUpLimit,
             educations,
             awards,
             certifications,
@@ -110,14 +121,23 @@ export const createDoctor = async (req: AuthenticatedRequest, res: Response) => 
                     yearOfExperience: yearOfExperience ? parseInt(yearOfExperience) : null,
                     departmentId: departmentId || null,
                     designationId: designationId || null,
-                    specializationId: specializationId || null,
+                    specializations: specializations && specializations.length > 0 ? {
+                        connect: specializations.map((id: string) => ({ id }))
+                    } : undefined,
                     medicalLicenseNumber: medicalLicenseNumber || null,
+                    maritalStatus: maritalStatus || null,
+                    qualification: qualification || null,
                     languagesSpoken: languagesSpoken || [],
                     bloodGroup: bloodGroup || null,
                     gender: gender || null,
                     bio: bio || null,
                     featureOnWebsite: featureOnWebsite === true || featureOnWebsite === "true",
                     profileImage: profileImage || null,
+                    signatureImage: signatureImage || null,
+                    medicalRegCertificate: medicalRegCertificate || null,
+                    qualificationCertificate: qualificationCertificate || null,
+                    aadhaarCard: aadhaarCard || null,
+                    panCard: panCard || null,
                     address1: address1 || null,
                     address2: address2 || null,
                     country: country || null,
@@ -130,6 +150,9 @@ export const createDoctor = async (req: AuthenticatedRequest, res: Response) => 
                     consultationCharge: consultationCharge ? parseFloat(consultationCharge) : null,
                     maxBookingsPerSlot: maxBookingsPerSlot ? parseInt(maxBookingsPerSlot) : null,
                     displayOnBookingPage: displayOnBookingPage === true || displayOnBookingPage === "true",
+                    followUpEnabled: followUpEnabled === true || followUpEnabled === "true",
+                    followUpValidityDays: followUpValidityDays ? parseInt(followUpValidityDays) : null,
+                    freeFollowUpLimit: freeFollowUpLimit ? parseInt(freeFollowUpLimit) : null,
                     educations: educations || null,
                     awards: awards || null,
                     certifications: certifications || null,
@@ -140,7 +163,7 @@ export const createDoctor = async (req: AuthenticatedRequest, res: Response) => 
                 include: {
                     department: { select: { id: true, name: true } },
                     designation: { select: { id: true, name: true } },
-                    specialization: { select: { id: true, name: true } },
+                    specializations: { select: { id: true, name: true } },
                 },
             });
 
@@ -186,11 +209,14 @@ export const updateDoctor = async (req: AuthenticatedRequest, res: Response) => 
 
         const {
             fullName, username, phone, email, dob, yearOfExperience,
-            departmentId, designationId, specializationId, medicalLicenseNumber, languagesSpoken,
-            bloodGroup, gender, bio, featureOnWebsite, profileImage,
+            departmentId, designationId, specializations, medicalLicenseNumber, languagesSpoken,
+            maritalStatus, qualification,
+            bloodGroup, gender, bio, featureOnWebsite,
+            profileImage, signatureImage, medicalRegCertificate, qualificationCertificate, aadhaarCard, panCard,
             address1, address2, country, city, state, pincode,
             appointmentType, acceptBookingsInAdvance, appointmentDuration,
             consultationCharge, maxBookingsPerSlot, displayOnBookingPage,
+            followUpEnabled, followUpValidityDays, freeFollowUpLimit,
             educations, awards, certifications, schedules, status,
         } = req.body;
 
@@ -205,8 +231,13 @@ export const updateDoctor = async (req: AuthenticatedRequest, res: Response) => 
                 yearOfExperience: yearOfExperience ? parseInt(yearOfExperience) : existing.yearOfExperience,
                 departmentId: departmentId !== undefined ? (departmentId || null) : existing.departmentId,
                 designationId: designationId !== undefined ? (designationId || null) : existing.designationId,
-                specializationId: specializationId !== undefined ? (specializationId || null) : existing.specializationId,
+                specializations: specializations ? {
+                    set: [], // clears existing
+                    connect: specializations.map((id: string) => ({ id }))
+                } : undefined,
                 medicalLicenseNumber: medicalLicenseNumber !== undefined ? (medicalLicenseNumber || null) : existing.medicalLicenseNumber,
+                maritalStatus: maritalStatus !== undefined ? (maritalStatus || null) : existing.maritalStatus,
+                qualification: qualification !== undefined ? (qualification || null) : existing.qualification,
                 languagesSpoken: languagesSpoken ?? existing.languagesSpoken,
                 bloodGroup: bloodGroup !== undefined ? (bloodGroup || null) : existing.bloodGroup,
                 gender: gender !== undefined ? (gender || null) : existing.gender,
@@ -215,6 +246,11 @@ export const updateDoctor = async (req: AuthenticatedRequest, res: Response) => 
                     ? featureOnWebsite === true || featureOnWebsite === "true"
                     : existing.featureOnWebsite,
                 profileImage: profileImage !== undefined ? (profileImage || null) : existing.profileImage,
+                signatureImage: signatureImage !== undefined ? (signatureImage || null) : existing.signatureImage,
+                medicalRegCertificate: medicalRegCertificate !== undefined ? (medicalRegCertificate || null) : existing.medicalRegCertificate,
+                qualificationCertificate: qualificationCertificate !== undefined ? (qualificationCertificate || null) : existing.qualificationCertificate,
+                aadhaarCard: aadhaarCard !== undefined ? (aadhaarCard || null) : existing.aadhaarCard,
+                panCard: panCard !== undefined ? (panCard || null) : existing.panCard,
                 address1: address1 || null,
                 address2: address2 || null,
                 country: country || null,
@@ -227,6 +263,11 @@ export const updateDoctor = async (req: AuthenticatedRequest, res: Response) => 
                 consultationCharge: consultationCharge ? parseFloat(consultationCharge) : null,
                 maxBookingsPerSlot: maxBookingsPerSlot ? parseInt(maxBookingsPerSlot) : null,
                 displayOnBookingPage: displayOnBookingPage === true || displayOnBookingPage === "true",
+                followUpEnabled: followUpEnabled !== undefined
+                    ? followUpEnabled === true || followUpEnabled === "true"
+                    : existing.followUpEnabled,
+                followUpValidityDays: followUpValidityDays ? parseInt(followUpValidityDays) : existing.followUpValidityDays,
+                freeFollowUpLimit: freeFollowUpLimit !== undefined ? (freeFollowUpLimit === "" ? null : parseInt(freeFollowUpLimit)) : existing.freeFollowUpLimit,
                 educations: educations || null,
                 awards: awards || null,
                 certifications: certifications || null,
@@ -236,7 +277,7 @@ export const updateDoctor = async (req: AuthenticatedRequest, res: Response) => 
             include: {
                 department: { select: { id: true, name: true } },
                 designation: { select: { id: true, name: true } },
-                specialization: { select: { id: true, name: true } },
+                specializations: { select: { id: true, name: true } },
             },
         });
 

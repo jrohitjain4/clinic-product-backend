@@ -5,15 +5,15 @@ import { createNotificationInternal } from "./notification.controller";
 /* ─── GET /api/landing/:clinicId  (public, no auth) ─── */
 export const getClinicLandingPage = async (req: Request, res: Response) => {
     try {
-        const { clinicId } = req.params;
+        const { clinicId, username } = req.params;
 
-        const clinic = await prisma.clinic.findUnique({
-            where: { id: clinicId },
+        const clinic = await prisma.clinic.findFirst({
+            where: username ? { username } : { id: clinicId },
             include: {
                 landingPage: true,
                 doctors: {
                     where: { status: "Active" },
-                    include: { specialization: true, designation: true },
+                    include: { specializations: true, designation: true },
                     orderBy: { createdAt: "asc" },
                 },
                 services: {
@@ -35,7 +35,7 @@ export const getClinicLandingPage = async (req: Request, res: Response) => {
             id: d.id,
             name: d.fullName,
             qualification: d.designation?.name || "",
-            specialization: d.specialization?.name || "",
+            specialization: d.specializations[0]?.name || "",
             experience: d.yearOfExperience || 0,
             fee: d.consultationCharge || 0,
             days: d.schedules
@@ -83,8 +83,8 @@ export const getClinicLandingPage = async (req: Request, res: Response) => {
             phone: clinic.phone || "",
             whatsapp: lp?.whatsapp || clinic.phone || "",
             email: lp?.email || "",
-            address: clinic.address || "",
-            city: "",
+            address: `${clinic.addressLine1 || ""} ${clinic.addressLine2 || ""}`.trim(),
+            city: clinic.city || "",
             mapUrl: lp?.mapUrl || "",
             directionsUrl: lp?.directionsUrl || "",
             about: lp?.about || "",

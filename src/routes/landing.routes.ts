@@ -4,11 +4,12 @@ import { authenticateJWT as authenticate } from "../middlewares/auth.middleware"
 
 const router = Router();
 
-// Public route - no auth needed
+// Public routes - no auth needed
 router.get("/:clinicId", getClinicLandingPage);
+router.get("/u/:username", getClinicLandingPage); // Same controller can handle both if updated or make separate
 
-// Public booking - no auth needed
-router.post("/:clinicId/book", bookPublicAppointment);
+// Public booking
+router.post("/id/:clinicId/book", bookPublicAppointment);
 
 // Protected route - clinic owner saves their landing page settings
 router.put("/:clinicId", authenticate, upsertLandingPage);
