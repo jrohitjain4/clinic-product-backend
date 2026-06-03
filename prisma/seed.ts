@@ -1,28 +1,30 @@
-import { PrismaClient, Role, ClinicStatus } from "@prisma/client";
+import { PrismaClient, Role, ClinicStatus } from "./generated/client";
 import * as bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log("Starting database seeding (local)...");
+  console.log("🚀 Starting database seeding (Full Realistic Data)...");
 
-  // Clear in FK-safe order
+  // 1. CLEAR DATABASE (in safe foreign key order)
+  await prisma.demoBooking.deleteMany({});
+  await prisma.systemSetting.deleteMany({});
+  await prisma.notification.deleteMany({});
+  await prisma.invoiceItem.deleteMany({});
+  await prisma.invoice.deleteMany({});
+  await prisma.prescriptionMedicine.deleteMany({});
+  await prisma.prescription.deleteMany({});
   await prisma.appointment.deleteMany({});
   await prisma.leave.deleteMany({});
   await prisma.leaveType.deleteMany({});
   await prisma.attendance.deleteMany({});
   await prisma.payroll.deleteMany({});
-  await prisma.notification.deleteMany({});
   await prisma.expense.deleteMany({});
   await prisma.expenseCategory.deleteMany({});
-  await prisma.invoiceItem.deleteMany({});
-  await prisma.invoice.deleteMany({});
-  await prisma.prescriptionMedicine.deleteMany({});
-  await prisma.prescription.deleteMany({});
   await prisma.service.deleteMany({});
   await prisma.product.deleteMany({});
   await prisma.holiday.deleteMany({});
-
+  await prisma.landingPage.deleteMany({});
   await prisma.patient.deleteMany({});
   await prisma.staff.deleteMany({});
   await prisma.doctor.updateMany({ data: { departmentId: null, designationId: null } });
@@ -37,537 +39,339 @@ async function main() {
 
   const hash = (pw: string) => bcrypt.hash(pw, 10);
 
-  const [
-    superAdminPasswordHash,
-    ownerPasswordHash,
-    adminPasswordHash,
-    doctorPasswordHash,
-    patientPasswordHash,
-    porterPasswordHash,
-  ] = await Promise.all([
-    hash("superadmin123"),
-    hash("owner123"),
-    hash("admin123"),
-    hash("doctor123"),
-    hash("patient123"),
-    hash("porter123"),
-  ]);
+  // Generate generic password for all test accounts
+  const defaultPasswordStr = "Password@123";
+  const defaultPassword = await hash(defaultPasswordStr);
 
-  // Packages
+  // 2. SUBSCRIPTION PACKAGES
   const freeTrialPackage = await prisma.subscriptionPackage.create({
     data: {
-      name: "3 Days Free Trial",
+      name: "14 Days Free Trial",
       price: 0,
-      durationInDays: 3,
-      maxDoctors: 10,
-      maxPatients: 100,
-      maxAppointments: 200,
-      isActive: true,
-    },
-  });
-
-  await prisma.subscriptionPackage.create({
-    data: {
-      name: "Standard Plan (Monthly)",
-      price: 49.99,
-      durationInDays: 30,
-      maxDoctors: 10,
+      durationInDays: 14,
+      maxDoctors: 5,
       maxPatients: 500,
       maxAppointments: 1000,
       isActive: true,
     },
   });
 
-  const trialEnds = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000);
-
-  // Clinic on free trial
-  const clinic = await prisma.clinic.create({
+  const premiumPackage = await prisma.subscriptionPackage.create({
     data: {
-      name: "Preclinic Medical Center",
-      subdomain: "preclinic",
-      address: "123 Healthcare Boulevard, Medical District",
-      phone: "+1 (555) 019-2834",
-      status: ClinicStatus.TRIAL,
-      packageId: freeTrialPackage.id,
-      packageStartsAt: new Date(),
-      packageExpiresAt: trialEnds,
+      name: "Premium Plan (Annually)",
+      price: 199.99,
+      durationInDays: 365,
+      maxDoctors: 50,
+      maxPatients: 10000,
+      maxAppointments: 50000,
+      isActive: true,
     },
   });
-  console.log(`Clinic: ${clinic.name} | status=TRIAL | trial until ${trialEnds.toISOString()}`);
 
-  // Users
+  // 3. SUPER ADMIN
   await prisma.user.create({
     data: {
-      email: "superadmin@clinic.com",
-      fullName: "Global Super Admin",
-      passwordHash: superAdminPasswordHash,
+      email: "superadmin@docyori.com",
+      username: "globaladmin",
+      fullName: "DocYori Administrator",
+      phone: "1111111111",
+      passwordHash: defaultPassword,
       role: Role.SUPER_ADMIN,
     },
   });
 
+  // 4. CLINIC SETUP
+  const trialEnds = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000);
+  const clinic = await prisma.clinic.create({
+    data: {
+      name: "Apollo Multispeciality Clinic",
+      username: "apollo",
+      ownerName: "Dr. Mukesh Ambani",
+      ownerEmail: "owner@docyori.com",
+      whatsappNumber: "9876543210",
+      phone: "9876543210",
+      addressLine1: "Bandra Kurla Complex",
+      addressLine2: "Beside Jio World",
+      district: "Mumbai",
+      city: "Mumbai",
+      state: "Maharashtra",
+      country: "India",
+      pincode: "400051",
+      doctorCount: 15,
+      status: ClinicStatus.UPGRADED,
+      packageId: premiumPackage.id,
+      packageStartsAt: new Date(),
+      packageExpiresAt: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
+      isTrialUsed: true,
+    },
+  });
+
+  // 5. CLINIC OWNER / ADMIN
   const owner = await prisma.user.create({
     data: {
-      email: "owner@clinic.com",
-      fullName: "Rohit Jain (Clinic Owner)",
-      passwordHash: ownerPasswordHash,
-      role: Role.ADMIN,
-      clinicId: clinic.id,
-    },
-  });
-  console.log(`Clinic Owner: ${owner.email} / owner123`);
-
-  await prisma.user.create({
-    data: {
-      email: "admin@clinic.com",
-      fullName: "Preclinic Administrator",
-      passwordHash: adminPasswordHash,
+      email: "owner@docyori.com",
+      username: "apollo_owner",
+      fullName: "Dr. Mukesh Ambani",
+      phone: "9876543210",
+      passwordHash: defaultPassword,
       role: Role.ADMIN,
       clinicId: clinic.id,
     },
   });
 
-  await prisma.user.create({
-    data: {
-      email: "doctor@clinic.com",
-      fullName: "Dr. Sarah Connor",
-      passwordHash: doctorPasswordHash,
-      role: Role.DOCTOR,
-      clinicId: clinic.id,
-    },
+  // 6. CLINIC DEPARTMENTS
+  const deptCardio = await prisma.department.create({
+    data: { name: "Cardiology", description: "Heart Care Unit", clinicId: clinic.id },
+  });
+  const deptOrtho = await prisma.department.create({
+    data: { name: "Orthopedics", description: "Joint & Bone Care", clinicId: clinic.id },
+  });
+  const deptNeuro = await prisma.department.create({
+    data: { name: "Neurology", description: "Brain & Nerves", clinicId: clinic.id },
   });
 
-  await prisma.user.create({
-    data: {
-      email: "patient@clinic.com",
-      fullName: "John Doe",
-      passwordHash: patientPasswordHash,
-      role: Role.PATIENT,
-      clinicId: clinic.id,
-    },
+  // 7. CLINIC DESIGNATIONS
+  const desigHeadCardio = await prisma.designation.create({
+    data: { name: "Head of Cardiology", type: "Doctor", departmentId: deptCardio.id, clinicId: clinic.id },
+  });
+  const desigSeniorOrtho = await prisma.designation.create({
+    data: { name: "Senior Orthopedic Surgeon", type: "Doctor", departmentId: deptOrtho.id, clinicId: clinic.id },
   });
 
-  await prisma.user.create({
-    data: {
-      email: "porter@clinic.com",
-      fullName: "James Porter",
-      passwordHash: porterPasswordHash,
-      role: Role.PORTER,
-      clinicId: clinic.id,
-    },
+  // 8. SPECIALIZATIONS
+  const specHeart = await prisma.specialization.create({
+    data: { name: "Heart Surgery", clinicId: clinic.id },
+  });
+  const specBone = await prisma.specialization.create({
+    data: { name: "Knee Replacement", clinicId: clinic.id },
+  });
+  const specNeuro = await prisma.specialization.create({
+    data: { name: "Brain Specialist", clinicId: clinic.id },
   });
 
-  // Departments
-  const nursingDept = await prisma.department.create({
-    data: {
-      name: "Nursing",
-      description: "Nursing & patient care",
-      clinicId: clinic.id,
-      status: "Active",
-    },
-  });
-
-  const cardiologyDept = await prisma.department.create({
-    data: {
-      name: "Cardiology",
-      description: "Heart care unit",
-      clinicId: clinic.id,
-      status: "Active",
-    },
-  });
-
-  const orthopedicsDept = await prisma.department.create({
-    data: {
-      name: "Orthopedics",
-      description: "Bone and joint care",
-      clinicId: clinic.id,
-      status: "Active",
-    },
-  });
-
-  // Designations — Doctor
-  const seniorDoctorDesig = await prisma.designation.create({
-    data: {
-      name: "Senior Doctor",
-      type: "Doctor",
-      departmentId: nursingDept.id,
-      clinicId: clinic.id,
-      status: "Active",
-    },
-  });
-
-  const cardiologistDesig = await prisma.designation.create({
-    data: {
-      name: "Cardiologist",
-      type: "Doctor",
-      departmentId: cardiologyDept.id,
-      clinicId: clinic.id,
-      status: "Active",
-    },
-  });
-
-  const orthopedicDesig = await prisma.designation.create({
-    data: {
-      name: "Orthopedic Surgeon",
-      type: "Doctor",
-      departmentId: orthopedicsDept.id,
-      clinicId: clinic.id,
-      status: "Active",
-    },
-  });
-
-  // Designations — Staff
-  const frontOfficerDesig = await prisma.designation.create({
-    data: {
-      name: "Front Officer",
-      type: "Staff",
-      departmentId: nursingDept.id,
-      clinicId: clinic.id,
-      status: "Active",
-    },
-  });
-
-  const adminOfficerDesig = await prisma.designation.create({
-    data: {
-      name: "Admin Officer",
-      type: "Staff",
-      departmentId: nursingDept.id,
-      clinicId: clinic.id,
-      status: "Active",
-    },
-  });
-
-  const nurseDesig = await prisma.designation.create({
-    data: {
-      name: "Staff Nurse",
-      type: "Staff",
-      departmentId: nursingDept.id,
-      clinicId: clinic.id,
-      status: "Active",
-    },
-  });
-
-  const generalMedSpec = await prisma.specialization.create({
-    data: { name: "General Medicine", clinicId: clinic.id, status: "Active" }
-  });
-  const heartSurgerySpec = await prisma.specialization.create({
-    data: { name: "Heart Surgery", clinicId: clinic.id, status: "Active" }
-  });
-
+  // 9. DOCTOR PROFILES & USERS
   const defaultSchedule = {
-    Monday: [{ session: "Morning", from: "09:00:00", to: "13:00:00" }],
+    Monday: [{ session: "Morning", from: "09:00:00", to: "13:00:00" }, { session: "Evening", from: "16:00:00", to: "20:00:00" }],
     Tuesday: [{ session: "Morning", from: "09:00:00", to: "13:00:00" }],
     Wednesday: [{ session: "Morning", from: "09:00:00", to: "13:00:00" }],
     Thursday: [{ session: "Morning", from: "09:00:00", to: "13:00:00" }],
     Friday: [{ session: "Morning", from: "09:00:00", to: "13:00:00" }],
   };
 
-  // Doctor profiles (clinic module)
-  await prisma.doctor.create({
+  const doctorAuth1 = await prisma.user.create({
+    data: {
+      email: "doctor@docyori.com",
+      username: "dr_sarah",
+      fullName: "Dr. Sarah Connor",
+      phone: "9123456781",
+      passwordHash: defaultPassword,
+      role: Role.DOCTOR,
+      clinicId: clinic.id,
+    },
+  });
+
+  const doctor1 = await prisma.doctor.create({
     data: {
       fullName: "Dr. Sarah Connor",
-      email: "doctor@clinic.com",
-      phone: "+1 54546 45648",
-      departmentId: cardiologyDept.id,
-      designationId: cardiologistDesig.id,
-      medicalLicenseNumber: "ML-100001",
-      yearOfExperience: 12,
-      consultationCharge: 499,
-      appointmentDuration: 30,
-      languagesSpoken: ["English"],
+      email: "doctor@docyori.com",
+      username: "dr_sarah",
+      phone: "9123456781",
+      departmentId: deptCardio.id,
+      designationId: desigHeadCardio.id,
+      medicalLicenseNumber: "MED-IN-100456",
+      yearOfExperience: 15,
+      consultationCharge: 1200,
+      appointmentDuration: 20,
+      languagesSpoken: ["English", "Hindi"],
       bloodGroup: "O+",
       gender: "Female",
-      bio: "Experienced cardiologist.",
+      bio: "Awarded top cardiologist in Mumbai. Specializes in advanced heart surgeries and pediatric cardiology.",
       status: "Active",
       clinicId: clinic.id,
       schedules: defaultSchedule,
       maritalStatus: "Married",
-      qualification: "MBBS, MD Cardiology",
-      followUpEnabled: true,
-      followUpValidityDays: 14,
-      freeFollowUpLimit: 2,
-      specializations: {
-        connect: [{ id: heartSurgerySpec.id }]
-      }
-    },
-  });
-
-  await prisma.doctor.create({
-    data: {
-      fullName: "Dr. Rohit Jain",
-      email: "rohit.doctor@clinic.com",
-      phone: "+1 41245 54132",
-      departmentId: nursingDept.id,
-      designationId: seniorDoctorDesig.id,
-      medicalLicenseNumber: "ML-100002",
-      yearOfExperience: 8,
-      consultationCharge: 500,
-      appointmentDuration: 30,
-      languagesSpoken: ["English", "Hindi"],
-      bloodGroup: "B+",
-      gender: "Male",
-      bio: "General physician.",
-      status: "Active",
-      clinicId: clinic.id,
-      schedules: defaultSchedule,
-      maritalStatus: "Single",
-      qualification: "MBBS, DNB",
+      qualification: "MBBS, MD Cardiology (AIIMS)",
       followUpEnabled: true,
       followUpValidityDays: 10,
       freeFollowUpLimit: 1,
       specializations: {
-        connect: [{ id: generalMedSpec.id }]
+        connect: [{ id: specHeart.id }]
       }
     },
   });
 
-  await prisma.doctor.create({
+  const doctorAuth2 = await prisma.user.create({
     data: {
-      fullName: "Dr. Adam Milne",
-      email: "adam@clinic.com",
-      phone: "+1 54554 54789",
-      departmentId: orthopedicsDept.id,
-      designationId: orthopedicDesig.id,
-      medicalLicenseNumber: "ML-100003",
-      yearOfExperience: 15,
-      consultationCharge: 450,
+      email: "rohit.dr@docyori.com",
+      username: "dr_rohit",
+      fullName: "Dr. Rohit Jain",
+      phone: "9123456782",
+      passwordHash: defaultPassword,
+      role: Role.DOCTOR,
+      clinicId: clinic.id,
+    },
+  });
+
+  const doctor2 = await prisma.doctor.create({
+    data: {
+      fullName: "Dr. Rohit Jain",
+      email: "rohit.dr@docyori.com",
+      username: "dr_rohit",
+      phone: "9123456782",
+      departmentId: deptOrtho.id,
+      designationId: desigSeniorOrtho.id,
+      medicalLicenseNumber: "MED-IN-934522",
+      yearOfExperience: 10,
+      consultationCharge: 800,
       appointmentDuration: 30,
-      status: "Active",
-      clinicId: clinic.id,
-    },
-  });
-
-  console.log("Created 3 doctors");
-
-  // HRM Staff records
-  await prisma.staff.create({
-    data: {
-      staffCode: "STF001",
-      fullName: "James Porter",
-      role: "Reception",
-      designationId: frontOfficerDesig.id,
-      departmentId: nursingDept.id,
-      email: "porter@clinic.com",
-      phone: "+1 54546 45648",
-      gender: "Male",
-      bloodGroup: "A+",
-      status: "Active",
-      clinicId: clinic.id,
-      dateOfJoining: new Date(),
-    },
-  });
-
-  await prisma.staff.create({
-    data: {
-      staffCode: "STF002",
-      fullName: "Priya Sharma",
-      role: "Nurse",
-      designationId: nurseDesig.id,
-      departmentId: nursingDept.id,
-      email: "priya@clinic.com",
-      phone: "+1 41245 54132",
-      gender: "Female",
-      bloodGroup: "O+",
-      status: "Active",
-      clinicId: clinic.id,
-      dateOfJoining: new Date(),
-    },
-  });
-
-  await prisma.staff.create({
-    data: {
-      staffCode: "STF003",
-      fullName: "Rohit Admin",
-      role: "Front Desk",
-      designationId: adminOfficerDesig.id,
-      departmentId: nursingDept.id,
-      email: "staff.admin@clinic.com",
-      phone: "+1 43554 54985",
-      gender: "Male",
-      status: "Active",
-      clinicId: clinic.id,
-      dateOfJoining: new Date(),
-    },
-  });
-
-  console.log("Created 3 staff members");
-
-  const doctors = await prisma.doctor.findMany({
-    where: { clinicId: clinic.id },
-    orderBy: { createdAt: "asc" },
-  });
-  const [doc1, doc2, doc3] = doctors;
-
-  const patientSeed = [
-    {
-      patientCode: "PT001",
-      firstName: "Alberto",
-      lastName: "Ripley",
-      email: "alberto@example.com",
-      phone: "+1 41245 54132",
-      gender: "Male",
-      bloodGroup: "O+",
-      status: "Active",
-      city: "Miami",
-      state: "Florida",
-      country: "USA",
-      address1: "4150 Hiney Road",
-      pincode: "33101",
-      lastVisitedAt: new Date("2025-04-30"),
-      primaryDoctorId: doc1?.id,
-    },
-    {
-      patientCode: "PT002",
-      firstName: "Susan",
-      lastName: "Babin",
-      email: "susan@example.com",
-      phone: "+1 54554 54789",
-      gender: "Female",
-      bloodGroup: "A+",
-      status: "Inactive",
-      city: "Austin",
-      state: "Texas",
-      country: "USA",
-      address1: "12 Oak Street",
-      pincode: "73301",
-      lastVisitedAt: new Date("2025-04-15"),
-      primaryDoctorId: doc2?.id ?? doc1?.id,
-    },
-    {
-      patientCode: "PT003",
-      firstName: "Carol",
-      lastName: "Lam",
-      email: "carol@example.com",
-      phone: "+1 43554 54985",
-      gender: "Female",
+      languagesSpoken: ["English", "Hindi", "Gujarati"],
       bloodGroup: "B+",
-      status: "Active",
-      city: "Seattle",
-      state: "Washington",
-      country: "USA",
-      address1: "88 Pine Ave",
-      pincode: "98101",
-      lastVisitedAt: new Date("2025-04-02"),
-      primaryDoctorId: doc3?.id ?? doc1?.id,
-    },
-    {
-      patientCode: "PT004",
-      firstName: "Bernard",
-      lastName: "Griffith",
-      email: "bernard@example.com",
-      phone: "+1 45214 98741",
       gender: "Male",
-      bloodGroup: "AB+",
+      bio: "Specialist in Knee Replacement and Sports injuries.",
       status: "Active",
-      city: "Boston",
-      state: "Massachusetts",
-      country: "USA",
-      address1: "5 Harbor View",
-      pincode: "02108",
-      lastVisitedAt: new Date("2025-02-01"),
-      primaryDoctorId: doc1?.id,
+      clinicId: clinic.id,
+      schedules: defaultSchedule,
+      qualification: "MBBS, MS Orthopedics",
+      specializations: {
+        connect: [{ id: specBone.id }]
+      }
     },
-  ];
-
-  for (const p of patientSeed) {
-    if (!p.primaryDoctorId) continue;
-    await prisma.patient.create({
-      data: {
-        ...p,
-        dob: new Date("1998-06-15"),
-        clinicId: clinic.id,
-      },
-    });
-  }
-
-  console.log(`Created ${patientSeed.length} patients`);
-
-  const patients = await prisma.patient.findMany({
-    where: { clinicId: clinic.id },
-    orderBy: { createdAt: "asc" },
   });
 
-  const appointmentSeed = [
-    {
-      appointmentCode: "AP001",
-      patientId: patients[0]?.id,
-      doctorId: doc1?.id,
-      departmentId: cardiologyDept.id,
-      scheduledAt: new Date("2025-04-30T09:30:00"),
+  // 10. PATIENT PROFILES & USERS
+  const patientAuth1 = await prisma.user.create({
+    data: {
+      email: "patient@docyori.com",
+      username: "john_doe",
+      fullName: "John Doe",
+      phone: "9871234560",
+      passwordHash: defaultPassword,
+      role: Role.PATIENT,
+      clinicId: clinic.id,
+    },
+  });
+
+  const patient1 = await prisma.patient.create({
+    data: {
+      patientCode: "PT-10001",
+      firstName: "John",
+      lastName: "Doe",
+      email: "patient@docyori.com",
+      phone: "9871234560",
+      gender: "Male",
+      bloodGroup: "O+",
+      dob: new Date("1995-08-15"),
+      address1: "Andheri West, Mumbai",
+      city: "Mumbai",
+      state: "Maharashtra",
+      country: "India",
+      pincode: "400053",
+      primaryDoctorId: doctor1.id,
+      clinicId: clinic.id,
+      vitals: { height: "175cm", weight: "70kg", bp: "120/80" },
+      lastVisitedAt: new Date(),
+    },
+  });
+
+  const patient2 = await prisma.patient.create({
+    data: {
+      patientCode: "PT-10002",
+      firstName: "Alia",
+      lastName: "Bhatt",
+      email: "alia@docyori.com",
+      phone: "8887776665",
+      gender: "Female",
+      bloodGroup: "A+",
+      dob: new Date("1992-03-10"),
+      address1: "Juhu, Mumbai",
+      city: "Mumbai",
+      state: "Maharashtra",
+      country: "India",
+      primaryDoctorId: doctor2.id,
+      clinicId: clinic.id,
+    },
+  });
+
+  // 11. APPOINTMENTS
+  await prisma.appointment.create({
+    data: {
+      appointmentCode: "AP-5001",
+      patientId: patient1.id,
+      doctorId: doctor1.id,
+      departmentId: deptCardio.id,
+      scheduledAt: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // Next 2 days
       mode: "In-person",
       appointmentType: "Offline Consultation",
-      status: "Checked Out",
-      reason: "Routine follow-up",
-      location: "Miami, USA",
-    },
-    {
-      appointmentCode: "AP002",
-      patientId: patients[1]?.id,
-      doctorId: doc2?.id ?? doc1?.id,
-      departmentId: orthopedicsDept.id,
-      scheduledAt: new Date("2025-04-15T11:20:00"),
-      mode: "Online",
-      appointmentType: "Online Consultation",
-      status: "Checked In",
-      reason: "Knee pain consultation",
-      location: "Austin, USA",
-    },
-    {
-      appointmentCode: "AP003",
-      patientId: patients[2]?.id,
-      doctorId: doc3?.id ?? doc1?.id,
-      departmentId: nursingDept.id,
-      scheduledAt: new Date("2025-04-02T08:15:00"),
-      mode: "In-person",
-      appointmentType: "Offline Consultation",
-      status: "Cancelled",
-      reason: "Patient rescheduled",
-      location: "Seattle, USA",
-    },
-    {
-      appointmentCode: "AP004",
-      patientId: patients[0]?.id,
-      doctorId: doc1?.id,
-      departmentId: cardiologyDept.id,
-      scheduledAt: new Date("2025-05-20T14:00:00"),
-      mode: "Online",
-      appointmentType: "Online Consultation",
       status: "Confirmed",
-      reason: "ECG review",
-      location: "Miami, USA",
+      reason: "High Blood Pressure issues",
+      location: "Clinic Branch 1",
+      clinicId: clinic.id,
     },
-    {
-      appointmentCode: "AP005",
-      patientId: patients[3]?.id,
-      doctorId: doc1?.id,
-      departmentId: cardiologyDept.id,
-      scheduledAt: new Date("2025-05-25T10:00:00"),
-      mode: "In-person",
-      appointmentType: "Offline Consultation",
-      status: "Schedule",
-      reason: "Initial consultation",
-      location: "Boston, USA",
+  });
+
+  await prisma.appointment.create({
+    data: {
+      appointmentCode: "AP-5002",
+      patientId: patient2.id,
+      doctorId: doctor2.id,
+      departmentId: deptOrtho.id,
+      scheduledAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), // Yesterday
+      mode: "Online",
+      appointmentType: "Video Consultation",
+      status: "Completed",
+      reason: "Knee ache",
+      clinicId: clinic.id,
     },
-  ];
+  });
 
-  let apCount = 0;
-  for (const a of appointmentSeed) {
-    if (!a.patientId || !a.doctorId) continue;
-    await prisma.appointment.create({
-      data: { ...a, clinicId: clinic.id },
-    });
-    apCount++;
-  }
-  console.log(`Created ${apCount} appointments`);
+  // 12. SERVICES & INVOICES
+  const consultationService = await prisma.service.create({
+    data: {
+      serviceName: "Standard Consultation",
+      price: 500,
+      departmentId: deptCardio.id,
+      clinicId: clinic.id,
+    },
+  });
 
-  console.log("\n========== SEED COMPLETE ==========");
-  console.log("Login (use clinic owner for full access):");
-  console.log("  Clinic Owner: owner@clinic.com     | owner123");
-  console.log("  Admin:        admin@clinic.com     | admin123");
-  console.log("  Doctor:       doctor@clinic.com    | doctor123");
-  console.log("  Patient:      patient@clinic.com   | patient123");
-  console.log("  Porter:       porter@clinic.com    | porter123");
-  console.log("  Super Admin:  superadmin@clinic.com | superadmin123");
-  console.log("==================================\n");
+  const invoice = await prisma.invoice.create({
+    data: {
+      invoiceCode: "INV-2026-001",
+      patientId: patient2.id,
+      invoiceDate: new Date(),
+      dueDate: new Date(),
+      tax: 50,
+      discount: 0,
+      subTotal: 500,
+      totalAmount: 550,
+      paymentMethod: "Credit Card",
+      paymentStatus: "Paid",
+      clinicId: clinic.id,
+    },
+  });
+
+  await prisma.invoiceItem.create({
+    data: {
+      invoiceId: invoice.id,
+      serviceId: consultationService.id,
+      description: "Standard Consultation - Dr. Rohit Jain",
+      quantity: 1,
+      unitCost: 500,
+      amount: 500,
+      clinicId: clinic.id,
+    },
+  });
+
+  console.log("✅ Seed completed successfully!");
+  console.log("-----------------------------------------");
+  console.log("🔑 LOGIN CREDENTIALS");
+  console.log("All accounts share the SAME password => Password@123");
+  console.log("");
+  console.log("- Super Admin: superadmin@docyori.com");
+  console.log("- Clinic Admin: owner@docyori.com");
+  console.log("- Doctor: doctor@docyori.com");
+  console.log("- Patient: patient@docyori.com");
+  console.log("-----------------------------------------");
 }
 
 main()
