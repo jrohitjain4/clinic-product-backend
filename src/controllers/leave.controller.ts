@@ -11,7 +11,7 @@ export const applyLeave = async (req: AuthenticatedRequest, res: Response) => {
         const role = req.user?.role;
         if (!clinicId || !userEmail) return res.status(403).json({ message: "Unauthorized" });
 
-        const { leaveTypeId, leaveTypeName, startDate, endDate, days, reason } = req.body;
+        const { leaveTypeId, leaveTypeName, startDate, endDate, days, reason, subject, isPaid, evidenceFiles } = req.body;
         if (!leaveTypeId || !startDate || !endDate) {
             return res.status(400).json({ message: "leaveTypeId, startDate, endDate required" });
         }
@@ -24,7 +24,7 @@ export const applyLeave = async (req: AuthenticatedRequest, res: Response) => {
             const doctor = await prisma.doctor.findFirst({
                 where: { email: userEmail, clinicId }
             });
-            if (!doctor) return res.status(404).json({ message: "Doctor profile not found for this account. Please ensure the doctor record email matches your login email." });
+            if (!doctor) return res.status(404).json({ message: "Doctor profile not found for this account." });
             employeeId = doctor.id;
             employeeType = "DOCTOR";
         } else {
@@ -44,6 +44,9 @@ export const applyLeave = async (req: AuthenticatedRequest, res: Response) => {
                 employeeType,
                 leaveTypeId,
                 leaveTypeName: leaveTypeName || "",
+                subject: subject || null,
+                isPaid: isPaid === true || isPaid === "true",
+                evidenceFiles: evidenceFiles || [],
                 startDate: new Date(startDate),
                 endDate: new Date(endDate),
                 days: days || 1,
@@ -56,7 +59,6 @@ export const applyLeave = async (req: AuthenticatedRequest, res: Response) => {
         res.status(500).json({ message: err.message });
     }
 };
-
 
 // GET /api/leaves — Doctor gets own leaves, Admin gets all
 export const getLeaves = async (req: AuthenticatedRequest, res: Response) => {

@@ -18,8 +18,10 @@ export const getDepartments = async (req: AuthenticatedRequest, res: Response) =
 
         const result = departments.map((d) => ({
             id: d.id,
+            departmentCode: d.departmentCode,
             name: d.name,
             description: d.description,
+            iconUrl: d.iconUrl,
             status: d.status,
             noOfDesignations: d._count.designations,
             createdAt: d.createdAt,
@@ -38,11 +40,14 @@ export const createDepartment = async (req: AuthenticatedRequest, res: Response)
         const clinicId = req.user?.clinicId;
         if (!clinicId) return res.status(403).json({ message: "No clinic associated" });
 
-        const { name, description } = req.body;
+        const { name, description, iconUrl } = req.body;
         if (!name) return res.status(400).json({ message: "Department name is required" });
 
+        const count = await prisma.department.count({ where: { clinicId } });
+        const departmentCode = `DPT-${String(count + 1).padStart(2, "0")}`;
+
         const dept = await prisma.department.create({
-            data: { name, description, clinicId, status: "Active" },
+            data: { departmentCode, name, description, iconUrl, clinicId, status: "Active" },
         });
 
         res.status(201).json(dept);
@@ -56,14 +61,14 @@ export const updateDepartment = async (req: AuthenticatedRequest, res: Response)
     try {
         const clinicId = req.user?.clinicId;
         const { id } = req.params;
-        const { name, description, status } = req.body;
+        const { name, description, iconUrl, status } = req.body;
 
         const existing = await prisma.department.findFirst({ where: { id, clinicId: clinicId! } });
         if (!existing) return res.status(404).json({ message: "Department not found" });
 
         const updated = await prisma.department.update({
             where: { id },
-            data: { name, description, status },
+            data: { name, description, iconUrl, status },
         });
 
         res.json(updated);

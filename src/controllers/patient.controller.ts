@@ -9,6 +9,8 @@ import { createNotificationInternal } from "./notification.controller";
 const mapStatusLabel = (status: string) =>
   status === "Active" ? "Available" : "Unavailable";
 
+import { sendEmail } from "../utils/email";
+
 const normalizeStatus = (status?: string) => {
   if (!status) return "Active";
   if (status === "Unavailable" || status === "Inactive") return "Inactive";
@@ -176,13 +178,23 @@ export const createPatient = async (req: AuthenticatedRequest, res: Response) =>
 
     const {
       firstName,
+      middleName,
       lastName,
       profileImage,
       phone,
+      alternateMobile,
       email,
       dob,
       gender,
       bloodGroup,
+      maritalStatus,
+      occupation,
+      aadhaarNumber,
+      passportNumber,
+      referredBy,
+      emergencyContactName,
+      emergencyContactRelation,
+      emergencyContactPhone,
       status,
       address1,
       address2,
@@ -211,6 +223,23 @@ export const createPatient = async (req: AuthenticatedRequest, res: Response) =>
       return res.status(400).json({ message: "Invalid primary doctor" });
     }
 
+    // 🔴 P0 Duplicate Patient Detection
+    if (phone || email) {
+      const duplicateWhere: any[] = [];
+      if (phone) duplicateWhere.push({ phone });
+      if (email) duplicateWhere.push({ email: email.toLowerCase() });
+
+      const existingDuplicate = await prisma.patient.findFirst({
+        where: {
+          clinicId,
+          OR: duplicateWhere
+        }
+      });
+      if (existingDuplicate) {
+        return res.status(400).json({ message: "A patient with this phone number or email already exists." });
+      }
+    }
+
     const clinic = await prisma.clinic.findUnique({
       where: { id: clinicId },
       include: { package: true },
@@ -224,21 +253,31 @@ export const createPatient = async (req: AuthenticatedRequest, res: Response) =>
       }
     }
 
-    // Fetch current count safely — use UUID suffix to prevent code collision on race condition
+    // Fix Patient Code format to PAT000001
     const count = await prisma.patient.count({ where: { clinicId } });
-    const patientCode = `PT${String(count + 1).padStart(4, "0")}-${randomBytes(2).toString("hex").toUpperCase()}`;
+    const patientCode = `PAT${String(count + 1).padStart(6, "0")}`;
 
     const patient = await prisma.patient.create({
       data: {
         patientCode,
         firstName: firstName.trim(),
+        middleName: middleName ? middleName.trim() : null,
         lastName: lastName.trim(),
         profileImage: profileImage || null,
         phone: phone || null,
-        email: email || null,
+        alternateMobile: alternateMobile || null,
+        email: email ? email.toLowerCase() : null,
         dob: dob ? new Date(dob) : null,
         gender: gender && gender !== "Select" ? gender : null,
         bloodGroup: bloodGroup && bloodGroup !== "Select" ? bloodGroup : null,
+        maritalStatus: maritalStatus && maritalStatus !== "Select" ? maritalStatus : null,
+        occupation: occupation || null,
+        aadhaarNumber: aadhaarNumber || null,
+        passportNumber: passportNumber || null,
+        referredBy: referredBy || null,
+        emergencyContactName: emergencyContactName || null,
+        emergencyContactRelation: emergencyContactRelation || null,
+        emergencyContactPhone: emergencyContactPhone || null,
         status: normalizeStatus(status),
         address1: address1 || null,
         address2: address2 || null,
@@ -253,14 +292,30 @@ export const createPatient = async (req: AuthenticatedRequest, res: Response) =>
       include: doctorInclude,
     });
 
-    if (email) {
-      const existingUser = await prisma.user.findUnique({ where: { email: email.toLowerCase() } });
+    // Create User mapping using Phone and/or Email
+    const loginIdentifier = phone || email;
+    let generatedPassword = req.body.password || randomBytes(4).toString("hex");
+
+    if (loginIdentifier) {
+      // Check if user account already exists (by email/phone)
+      const userCondition: any[] = [];
+      if (email) userCondition.push({ email: email.toLowerCase() });
+      if (phone) userCondition.push({ phone });
+
+      const existingUser = await prisma.user.findFirst({
+        where: { OR: userCondition }
+      });
+
       if (!existingUser) {
-        const temporaryPassword = req.body.password || "patient123";
-        const passwordHash = await bcrypt.hash(temporaryPassword, 10);
+        // Fallback email if only phone is provided
+        const userEmail = email ? email.toLowerCase() : `pt_${phone}@docyori.local`;
+        const passwordHash = await bcrypt.hash(generatedPassword, 10);
+
         await prisma.user.create({
           data: {
-            email: email.toLowerCase(),
+            email: userEmail,
+            phone: phone || null,
+            username: phone || null,
             passwordHash,
             fullName: `${firstName.trim()} ${lastName.trim()}`,
             role: "PATIENT",
@@ -268,6 +323,43 @@ export const createPatient = async (req: AuthenticatedRequest, res: Response) =>
           }
         });
       }
+    }
+
+    // 🔴 P0 Email Notification with valid credentials
+    if (email) {
+      const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "http://localhost:5173";
+      const loginUrl = `${frontendLink}/login`;
+
+      const emailBody = `
+         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333; line-height: 1.6;">
+           <h2 style="color: #2c3e50;">Welcome to Docyori!</h2>
+           <p>Dear <strong>${firstName.trim()}</strong>,</p>
+           <p>You have been registered successfully as a patient with our clinic. Your Patient ID is <b style="color: #0d6efd;">${patientCode}</b>.</p>
+           
+           <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin: 20px 0; border-left: 4px solid #0d6efd;">
+             <p style="margin-top: 0;"><strong>Your Login Credentials:</strong></p>
+             <ul style="margin-bottom: 0;">
+               <li>Username: <strong>${phone || email}</strong></li>
+               <li>Password: <strong>${generatedPassword}</strong></li>
+             </ul>
+           </div>
+           
+           <p style="color: #dc3545; font-size: 14px; font-weight: bold;">
+             ⚠️ Please Note: The password provided above is a temporary password. We strongly recommend changing it immediately after your first login for security reasons.
+           </p>
+           
+           <div style="text-align: center; margin: 30px 0;">
+             <a href="${loginUrl}" style="background-color: #0d6efd; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">
+               Click here to Login
+             </a>
+           </div>
+           
+           <hr style="border: none; border-top: 1px solid #eee; margin: 25px 0;" />
+           <p style="font-size: 13px; color: #6c757d; margin: 0;">Please log in to the patient portal to view your appointments, prescriptions, and records.</p>
+           <p style="font-size: 13px; color: #6c757d; margin: 5px 0 0 0;">Regards,<br/><strong>The Clinic Team</strong></p>
+         </div>
+       `;
+      await sendEmail(email.toLowerCase(), "Welcome to our Clinic - Your Login Details", emailBody);
     }
 
     res.status(201).json(enrichPatient(patient));

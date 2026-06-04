@@ -8904,8 +8904,10 @@ export namespace Prisma {
 
   export type DepartmentMinAggregateOutputType = {
     id: string | null
+    departmentCode: string | null
     name: string | null
     description: string | null
+    iconUrl: string | null
     status: string | null
     clinicId: string | null
     createdAt: Date | null
@@ -8914,8 +8916,10 @@ export namespace Prisma {
 
   export type DepartmentMaxAggregateOutputType = {
     id: string | null
+    departmentCode: string | null
     name: string | null
     description: string | null
+    iconUrl: string | null
     status: string | null
     clinicId: string | null
     createdAt: Date | null
@@ -8924,8 +8928,10 @@ export namespace Prisma {
 
   export type DepartmentCountAggregateOutputType = {
     id: number
+    departmentCode: number
     name: number
     description: number
+    iconUrl: number
     status: number
     clinicId: number
     createdAt: number
@@ -8936,8 +8942,10 @@ export namespace Prisma {
 
   export type DepartmentMinAggregateInputType = {
     id?: true
+    departmentCode?: true
     name?: true
     description?: true
+    iconUrl?: true
     status?: true
     clinicId?: true
     createdAt?: true
@@ -8946,8 +8954,10 @@ export namespace Prisma {
 
   export type DepartmentMaxAggregateInputType = {
     id?: true
+    departmentCode?: true
     name?: true
     description?: true
+    iconUrl?: true
     status?: true
     clinicId?: true
     createdAt?: true
@@ -8956,8 +8966,10 @@ export namespace Prisma {
 
   export type DepartmentCountAggregateInputType = {
     id?: true
+    departmentCode?: true
     name?: true
     description?: true
+    iconUrl?: true
     status?: true
     clinicId?: true
     createdAt?: true
@@ -9039,8 +9051,10 @@ export namespace Prisma {
 
   export type DepartmentGroupByOutputType = {
     id: string
+    departmentCode: string | null
     name: string
     description: string | null
+    iconUrl: string | null
     status: string
     clinicId: string
     createdAt: Date
@@ -9066,8 +9080,10 @@ export namespace Prisma {
 
   export type DepartmentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    departmentCode?: boolean
     name?: boolean
     description?: boolean
+    iconUrl?: boolean
     status?: boolean
     clinicId?: boolean
     createdAt?: boolean
@@ -9084,8 +9100,10 @@ export namespace Prisma {
 
   export type DepartmentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    departmentCode?: boolean
     name?: boolean
     description?: boolean
+    iconUrl?: boolean
     status?: boolean
     clinicId?: boolean
     createdAt?: boolean
@@ -9095,8 +9113,10 @@ export namespace Prisma {
 
   export type DepartmentSelectScalar = {
     id?: boolean
+    departmentCode?: boolean
     name?: boolean
     description?: boolean
+    iconUrl?: boolean
     status?: boolean
     clinicId?: boolean
     createdAt?: boolean
@@ -9130,8 +9150,10 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      departmentCode: string | null
       name: string
       description: string | null
+      iconUrl: string | null
       status: string
       clinicId: string
       createdAt: Date
@@ -9537,8 +9559,10 @@ export namespace Prisma {
    */ 
   interface DepartmentFieldRefs {
     readonly id: FieldRef<"Department", 'String'>
+    readonly departmentCode: FieldRef<"Department", 'String'>
     readonly name: FieldRef<"Department", 'String'>
     readonly description: FieldRef<"Department", 'String'>
+    readonly iconUrl: FieldRef<"Department", 'String'>
     readonly status: FieldRef<"Department", 'String'>
     readonly clinicId: FieldRef<"Department", 'String'>
     readonly createdAt: FieldRef<"Department", 'DateTime'>
@@ -12298,9 +12322,11 @@ export namespace Prisma {
 
   export type DoctorMinAggregateOutputType = {
     id: string | null
+    doctorCode: string | null
     fullName: string | null
     username: string | null
     phone: string | null
+    alternateMobile: string | null
     email: string | null
     dob: Date | null
     yearOfExperience: number | null
@@ -12342,9 +12368,11 @@ export namespace Prisma {
 
   export type DoctorMaxAggregateOutputType = {
     id: string | null
+    doctorCode: string | null
     fullName: string | null
     username: string | null
     phone: string | null
+    alternateMobile: string | null
     email: string | null
     dob: Date | null
     yearOfExperience: number | null
@@ -12386,9 +12414,11 @@ export namespace Prisma {
 
   export type DoctorCountAggregateOutputType = {
     id: number
+    doctorCode: number
     fullName: number
     username: number
     phone: number
+    alternateMobile: number
     email: number
     dob: number
     yearOfExperience: number
@@ -12457,9 +12487,11 @@ export namespace Prisma {
 
   export type DoctorMinAggregateInputType = {
     id?: true
+    doctorCode?: true
     fullName?: true
     username?: true
     phone?: true
+    alternateMobile?: true
     email?: true
     dob?: true
     yearOfExperience?: true
@@ -12501,9 +12533,11 @@ export namespace Prisma {
 
   export type DoctorMaxAggregateInputType = {
     id?: true
+    doctorCode?: true
     fullName?: true
     username?: true
     phone?: true
+    alternateMobile?: true
     email?: true
     dob?: true
     yearOfExperience?: true
@@ -12545,9 +12579,11 @@ export namespace Prisma {
 
   export type DoctorCountAggregateInputType = {
     id?: true
+    doctorCode?: true
     fullName?: true
     username?: true
     phone?: true
+    alternateMobile?: true
     email?: true
     dob?: true
     yearOfExperience?: true
@@ -12681,9 +12717,11 @@ export namespace Prisma {
 
   export type DoctorGroupByOutputType = {
     id: string
+    doctorCode: string | null
     fullName: string
     username: string | null
     phone: string | null
+    alternateMobile: string | null
     email: string | null
     dob: Date | null
     yearOfExperience: number | null
@@ -12749,9 +12787,11 @@ export namespace Prisma {
 
   export type DoctorSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    doctorCode?: boolean
     fullName?: boolean
     username?: boolean
     phone?: boolean
+    alternateMobile?: boolean
     email?: boolean
     dob?: boolean
     yearOfExperience?: boolean
@@ -12806,9 +12846,11 @@ export namespace Prisma {
 
   export type DoctorSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    doctorCode?: boolean
     fullName?: boolean
     username?: boolean
     phone?: boolean
+    alternateMobile?: boolean
     email?: boolean
     dob?: boolean
     yearOfExperience?: boolean
@@ -12858,9 +12900,11 @@ export namespace Prisma {
 
   export type DoctorSelectScalar = {
     id?: boolean
+    doctorCode?: boolean
     fullName?: boolean
     username?: boolean
     phone?: boolean
+    alternateMobile?: boolean
     email?: boolean
     dob?: boolean
     yearOfExperience?: boolean
@@ -12934,9 +12978,11 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      doctorCode: string | null
       fullName: string
       username: string | null
       phone: string | null
+      alternateMobile: string | null
       email: string | null
       dob: Date | null
       yearOfExperience: number | null
@@ -13380,9 +13426,11 @@ export namespace Prisma {
    */ 
   interface DoctorFieldRefs {
     readonly id: FieldRef<"Doctor", 'String'>
+    readonly doctorCode: FieldRef<"Doctor", 'String'>
     readonly fullName: FieldRef<"Doctor", 'String'>
     readonly username: FieldRef<"Doctor", 'String'>
     readonly phone: FieldRef<"Doctor", 'String'>
+    readonly alternateMobile: FieldRef<"Doctor", 'String'>
     readonly email: FieldRef<"Doctor", 'String'>
     readonly dob: FieldRef<"Doctor", 'DateTime'>
     readonly yearOfExperience: FieldRef<"Doctor", 'Int'>
@@ -13881,13 +13929,23 @@ export namespace Prisma {
     id: string | null
     patientCode: string | null
     firstName: string | null
+    middleName: string | null
     lastName: string | null
     profileImage: string | null
     phone: string | null
+    alternateMobile: string | null
     email: string | null
     dob: Date | null
     gender: string | null
     bloodGroup: string | null
+    maritalStatus: string | null
+    occupation: string | null
+    aadhaarNumber: string | null
+    passportNumber: string | null
+    referredBy: string | null
+    emergencyContactName: string | null
+    emergencyContactRelation: string | null
+    emergencyContactPhone: string | null
     status: string | null
     address1: string | null
     address2: string | null
@@ -13906,13 +13964,23 @@ export namespace Prisma {
     id: string | null
     patientCode: string | null
     firstName: string | null
+    middleName: string | null
     lastName: string | null
     profileImage: string | null
     phone: string | null
+    alternateMobile: string | null
     email: string | null
     dob: Date | null
     gender: string | null
     bloodGroup: string | null
+    maritalStatus: string | null
+    occupation: string | null
+    aadhaarNumber: string | null
+    passportNumber: string | null
+    referredBy: string | null
+    emergencyContactName: string | null
+    emergencyContactRelation: string | null
+    emergencyContactPhone: string | null
     status: string | null
     address1: string | null
     address2: string | null
@@ -13931,13 +13999,23 @@ export namespace Prisma {
     id: number
     patientCode: number
     firstName: number
+    middleName: number
     lastName: number
     profileImage: number
     phone: number
+    alternateMobile: number
     email: number
     dob: number
     gender: number
     bloodGroup: number
+    maritalStatus: number
+    occupation: number
+    aadhaarNumber: number
+    passportNumber: number
+    referredBy: number
+    emergencyContactName: number
+    emergencyContactRelation: number
+    emergencyContactPhone: number
     status: number
     address1: number
     address2: number
@@ -13959,13 +14037,23 @@ export namespace Prisma {
     id?: true
     patientCode?: true
     firstName?: true
+    middleName?: true
     lastName?: true
     profileImage?: true
     phone?: true
+    alternateMobile?: true
     email?: true
     dob?: true
     gender?: true
     bloodGroup?: true
+    maritalStatus?: true
+    occupation?: true
+    aadhaarNumber?: true
+    passportNumber?: true
+    referredBy?: true
+    emergencyContactName?: true
+    emergencyContactRelation?: true
+    emergencyContactPhone?: true
     status?: true
     address1?: true
     address2?: true
@@ -13984,13 +14072,23 @@ export namespace Prisma {
     id?: true
     patientCode?: true
     firstName?: true
+    middleName?: true
     lastName?: true
     profileImage?: true
     phone?: true
+    alternateMobile?: true
     email?: true
     dob?: true
     gender?: true
     bloodGroup?: true
+    maritalStatus?: true
+    occupation?: true
+    aadhaarNumber?: true
+    passportNumber?: true
+    referredBy?: true
+    emergencyContactName?: true
+    emergencyContactRelation?: true
+    emergencyContactPhone?: true
     status?: true
     address1?: true
     address2?: true
@@ -14009,13 +14107,23 @@ export namespace Prisma {
     id?: true
     patientCode?: true
     firstName?: true
+    middleName?: true
     lastName?: true
     profileImage?: true
     phone?: true
+    alternateMobile?: true
     email?: true
     dob?: true
     gender?: true
     bloodGroup?: true
+    maritalStatus?: true
+    occupation?: true
+    aadhaarNumber?: true
+    passportNumber?: true
+    referredBy?: true
+    emergencyContactName?: true
+    emergencyContactRelation?: true
+    emergencyContactPhone?: true
     status?: true
     address1?: true
     address2?: true
@@ -14108,13 +14216,23 @@ export namespace Prisma {
     id: string
     patientCode: string | null
     firstName: string
+    middleName: string | null
     lastName: string
     profileImage: string | null
     phone: string | null
+    alternateMobile: string | null
     email: string | null
     dob: Date | null
     gender: string | null
     bloodGroup: string | null
+    maritalStatus: string | null
+    occupation: string | null
+    aadhaarNumber: string | null
+    passportNumber: string | null
+    referredBy: string | null
+    emergencyContactName: string | null
+    emergencyContactRelation: string | null
+    emergencyContactPhone: string | null
     status: string
     address1: string | null
     address2: string | null
@@ -14151,13 +14269,23 @@ export namespace Prisma {
     id?: boolean
     patientCode?: boolean
     firstName?: boolean
+    middleName?: boolean
     lastName?: boolean
     profileImage?: boolean
     phone?: boolean
+    alternateMobile?: boolean
     email?: boolean
     dob?: boolean
     gender?: boolean
     bloodGroup?: boolean
+    maritalStatus?: boolean
+    occupation?: boolean
+    aadhaarNumber?: boolean
+    passportNumber?: boolean
+    referredBy?: boolean
+    emergencyContactName?: boolean
+    emergencyContactRelation?: boolean
+    emergencyContactPhone?: boolean
     status?: boolean
     address1?: boolean
     address2?: boolean
@@ -14183,13 +14311,23 @@ export namespace Prisma {
     id?: boolean
     patientCode?: boolean
     firstName?: boolean
+    middleName?: boolean
     lastName?: boolean
     profileImage?: boolean
     phone?: boolean
+    alternateMobile?: boolean
     email?: boolean
     dob?: boolean
     gender?: boolean
     bloodGroup?: boolean
+    maritalStatus?: boolean
+    occupation?: boolean
+    aadhaarNumber?: boolean
+    passportNumber?: boolean
+    referredBy?: boolean
+    emergencyContactName?: boolean
+    emergencyContactRelation?: boolean
+    emergencyContactPhone?: boolean
     status?: boolean
     address1?: boolean
     address2?: boolean
@@ -14211,13 +14349,23 @@ export namespace Prisma {
     id?: boolean
     patientCode?: boolean
     firstName?: boolean
+    middleName?: boolean
     lastName?: boolean
     profileImage?: boolean
     phone?: boolean
+    alternateMobile?: boolean
     email?: boolean
     dob?: boolean
     gender?: boolean
     bloodGroup?: boolean
+    maritalStatus?: boolean
+    occupation?: boolean
+    aadhaarNumber?: boolean
+    passportNumber?: boolean
+    referredBy?: boolean
+    emergencyContactName?: boolean
+    emergencyContactRelation?: boolean
+    emergencyContactPhone?: boolean
     status?: boolean
     address1?: boolean
     address2?: boolean
@@ -14259,13 +14407,23 @@ export namespace Prisma {
       id: string
       patientCode: string | null
       firstName: string
+      middleName: string | null
       lastName: string
       profileImage: string | null
       phone: string | null
+      alternateMobile: string | null
       email: string | null
       dob: Date | null
       gender: string | null
       bloodGroup: string | null
+      maritalStatus: string | null
+      occupation: string | null
+      aadhaarNumber: string | null
+      passportNumber: string | null
+      referredBy: string | null
+      emergencyContactName: string | null
+      emergencyContactRelation: string | null
+      emergencyContactPhone: string | null
       status: string
       address1: string | null
       address2: string | null
@@ -14680,13 +14838,23 @@ export namespace Prisma {
     readonly id: FieldRef<"Patient", 'String'>
     readonly patientCode: FieldRef<"Patient", 'String'>
     readonly firstName: FieldRef<"Patient", 'String'>
+    readonly middleName: FieldRef<"Patient", 'String'>
     readonly lastName: FieldRef<"Patient", 'String'>
     readonly profileImage: FieldRef<"Patient", 'String'>
     readonly phone: FieldRef<"Patient", 'String'>
+    readonly alternateMobile: FieldRef<"Patient", 'String'>
     readonly email: FieldRef<"Patient", 'String'>
     readonly dob: FieldRef<"Patient", 'DateTime'>
     readonly gender: FieldRef<"Patient", 'String'>
     readonly bloodGroup: FieldRef<"Patient", 'String'>
+    readonly maritalStatus: FieldRef<"Patient", 'String'>
+    readonly occupation: FieldRef<"Patient", 'String'>
+    readonly aadhaarNumber: FieldRef<"Patient", 'String'>
+    readonly passportNumber: FieldRef<"Patient", 'String'>
+    readonly referredBy: FieldRef<"Patient", 'String'>
+    readonly emergencyContactName: FieldRef<"Patient", 'String'>
+    readonly emergencyContactRelation: FieldRef<"Patient", 'String'>
+    readonly emergencyContactPhone: FieldRef<"Patient", 'String'>
     readonly status: FieldRef<"Patient", 'String'>
     readonly address1: FieldRef<"Patient", 'String'>
     readonly address2: FieldRef<"Patient", 'String'>
@@ -25355,6 +25523,8 @@ export namespace Prisma {
     employeeType: string | null
     leaveTypeId: string | null
     leaveTypeName: string | null
+    subject: string | null
+    isPaid: boolean | null
     startDate: Date | null
     endDate: Date | null
     days: number | null
@@ -25372,6 +25542,8 @@ export namespace Prisma {
     employeeType: string | null
     leaveTypeId: string | null
     leaveTypeName: string | null
+    subject: string | null
+    isPaid: boolean | null
     startDate: Date | null
     endDate: Date | null
     days: number | null
@@ -25389,6 +25561,9 @@ export namespace Prisma {
     employeeType: number
     leaveTypeId: number
     leaveTypeName: number
+    subject: number
+    evidenceFiles: number
+    isPaid: number
     startDate: number
     endDate: number
     days: number
@@ -25416,6 +25591,8 @@ export namespace Prisma {
     employeeType?: true
     leaveTypeId?: true
     leaveTypeName?: true
+    subject?: true
+    isPaid?: true
     startDate?: true
     endDate?: true
     days?: true
@@ -25433,6 +25610,8 @@ export namespace Prisma {
     employeeType?: true
     leaveTypeId?: true
     leaveTypeName?: true
+    subject?: true
+    isPaid?: true
     startDate?: true
     endDate?: true
     days?: true
@@ -25450,6 +25629,9 @@ export namespace Prisma {
     employeeType?: true
     leaveTypeId?: true
     leaveTypeName?: true
+    subject?: true
+    evidenceFiles?: true
+    isPaid?: true
     startDate?: true
     endDate?: true
     days?: true
@@ -25554,6 +25736,9 @@ export namespace Prisma {
     employeeType: string
     leaveTypeId: string
     leaveTypeName: string
+    subject: string | null
+    evidenceFiles: JsonValue | null
+    isPaid: boolean
     startDate: Date
     endDate: Date
     days: number
@@ -25590,6 +25775,9 @@ export namespace Prisma {
     employeeType?: boolean
     leaveTypeId?: boolean
     leaveTypeName?: boolean
+    subject?: boolean
+    evidenceFiles?: boolean
+    isPaid?: boolean
     startDate?: boolean
     endDate?: boolean
     days?: boolean
@@ -25608,6 +25796,9 @@ export namespace Prisma {
     employeeType?: boolean
     leaveTypeId?: boolean
     leaveTypeName?: boolean
+    subject?: boolean
+    evidenceFiles?: boolean
+    isPaid?: boolean
     startDate?: boolean
     endDate?: boolean
     days?: boolean
@@ -25626,6 +25817,9 @@ export namespace Prisma {
     employeeType?: boolean
     leaveTypeId?: boolean
     leaveTypeName?: boolean
+    subject?: boolean
+    evidenceFiles?: boolean
+    isPaid?: boolean
     startDate?: boolean
     endDate?: boolean
     days?: boolean
@@ -25655,6 +25849,9 @@ export namespace Prisma {
       employeeType: string
       leaveTypeId: string
       leaveTypeName: string
+      subject: string | null
+      evidenceFiles: Prisma.JsonValue | null
+      isPaid: boolean
       startDate: Date
       endDate: Date
       days: number
@@ -26063,6 +26260,9 @@ export namespace Prisma {
     readonly employeeType: FieldRef<"Leave", 'String'>
     readonly leaveTypeId: FieldRef<"Leave", 'String'>
     readonly leaveTypeName: FieldRef<"Leave", 'String'>
+    readonly subject: FieldRef<"Leave", 'String'>
+    readonly evidenceFiles: FieldRef<"Leave", 'Json'>
+    readonly isPaid: FieldRef<"Leave", 'Boolean'>
     readonly startDate: FieldRef<"Leave", 'DateTime'>
     readonly endDate: FieldRef<"Leave", 'DateTime'>
     readonly days: FieldRef<"Leave", 'Int'>
@@ -34635,8 +34835,10 @@ export namespace Prisma {
 
   export const DepartmentScalarFieldEnum: {
     id: 'id',
+    departmentCode: 'departmentCode',
     name: 'name',
     description: 'description',
+    iconUrl: 'iconUrl',
     status: 'status',
     clinicId: 'clinicId',
     createdAt: 'createdAt',
@@ -34692,9 +34894,11 @@ export namespace Prisma {
 
   export const DoctorScalarFieldEnum: {
     id: 'id',
+    doctorCode: 'doctorCode',
     fullName: 'fullName',
     username: 'username',
     phone: 'phone',
+    alternateMobile: 'alternateMobile',
     email: 'email',
     dob: 'dob',
     yearOfExperience: 'yearOfExperience',
@@ -34746,13 +34950,23 @@ export namespace Prisma {
     id: 'id',
     patientCode: 'patientCode',
     firstName: 'firstName',
+    middleName: 'middleName',
     lastName: 'lastName',
     profileImage: 'profileImage',
     phone: 'phone',
+    alternateMobile: 'alternateMobile',
     email: 'email',
     dob: 'dob',
     gender: 'gender',
     bloodGroup: 'bloodGroup',
+    maritalStatus: 'maritalStatus',
+    occupation: 'occupation',
+    aadhaarNumber: 'aadhaarNumber',
+    passportNumber: 'passportNumber',
+    referredBy: 'referredBy',
+    emergencyContactName: 'emergencyContactName',
+    emergencyContactRelation: 'emergencyContactRelation',
+    emergencyContactPhone: 'emergencyContactPhone',
     status: 'status',
     address1: 'address1',
     address2: 'address2',
@@ -34937,6 +35151,9 @@ export namespace Prisma {
     employeeType: 'employeeType',
     leaveTypeId: 'leaveTypeId',
     leaveTypeName: 'leaveTypeName',
+    subject: 'subject',
+    evidenceFiles: 'evidenceFiles',
+    isPaid: 'isPaid',
     startDate: 'startDate',
     endDate: 'endDate',
     days: 'days',
@@ -35758,8 +35975,10 @@ export namespace Prisma {
     OR?: DepartmentWhereInput[]
     NOT?: DepartmentWhereInput | DepartmentWhereInput[]
     id?: StringFilter<"Department"> | string
+    departmentCode?: StringNullableFilter<"Department"> | string | null
     name?: StringFilter<"Department"> | string
     description?: StringNullableFilter<"Department"> | string | null
+    iconUrl?: StringNullableFilter<"Department"> | string | null
     status?: StringFilter<"Department"> | string
     clinicId?: StringFilter<"Department"> | string
     createdAt?: DateTimeFilter<"Department"> | Date | string
@@ -35775,8 +35994,10 @@ export namespace Prisma {
 
   export type DepartmentOrderByWithRelationInput = {
     id?: SortOrder
+    departmentCode?: SortOrderInput | SortOrder
     name?: SortOrder
     description?: SortOrderInput | SortOrder
+    iconUrl?: SortOrderInput | SortOrder
     status?: SortOrder
     clinicId?: SortOrder
     createdAt?: SortOrder
@@ -35795,8 +36016,10 @@ export namespace Prisma {
     AND?: DepartmentWhereInput | DepartmentWhereInput[]
     OR?: DepartmentWhereInput[]
     NOT?: DepartmentWhereInput | DepartmentWhereInput[]
+    departmentCode?: StringNullableFilter<"Department"> | string | null
     name?: StringFilter<"Department"> | string
     description?: StringNullableFilter<"Department"> | string | null
+    iconUrl?: StringNullableFilter<"Department"> | string | null
     status?: StringFilter<"Department"> | string
     clinicId?: StringFilter<"Department"> | string
     createdAt?: DateTimeFilter<"Department"> | Date | string
@@ -35812,8 +36035,10 @@ export namespace Prisma {
 
   export type DepartmentOrderByWithAggregationInput = {
     id?: SortOrder
+    departmentCode?: SortOrderInput | SortOrder
     name?: SortOrder
     description?: SortOrderInput | SortOrder
+    iconUrl?: SortOrderInput | SortOrder
     status?: SortOrder
     clinicId?: SortOrder
     createdAt?: SortOrder
@@ -35828,8 +36053,10 @@ export namespace Prisma {
     OR?: DepartmentScalarWhereWithAggregatesInput[]
     NOT?: DepartmentScalarWhereWithAggregatesInput | DepartmentScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Department"> | string
+    departmentCode?: StringNullableWithAggregatesFilter<"Department"> | string | null
     name?: StringWithAggregatesFilter<"Department"> | string
     description?: StringNullableWithAggregatesFilter<"Department"> | string | null
+    iconUrl?: StringNullableWithAggregatesFilter<"Department"> | string | null
     status?: StringWithAggregatesFilter<"Department"> | string
     clinicId?: StringWithAggregatesFilter<"Department"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Department"> | Date | string
@@ -36079,9 +36306,11 @@ export namespace Prisma {
     OR?: DoctorWhereInput[]
     NOT?: DoctorWhereInput | DoctorWhereInput[]
     id?: StringFilter<"Doctor"> | string
+    doctorCode?: StringNullableFilter<"Doctor"> | string | null
     fullName?: StringFilter<"Doctor"> | string
     username?: StringNullableFilter<"Doctor"> | string | null
     phone?: StringNullableFilter<"Doctor"> | string | null
+    alternateMobile?: StringNullableFilter<"Doctor"> | string | null
     email?: StringNullableFilter<"Doctor"> | string | null
     dob?: DateTimeNullableFilter<"Doctor"> | Date | string | null
     yearOfExperience?: IntNullableFilter<"Doctor"> | number | null
@@ -36135,9 +36364,11 @@ export namespace Prisma {
 
   export type DoctorOrderByWithRelationInput = {
     id?: SortOrder
+    doctorCode?: SortOrderInput | SortOrder
     fullName?: SortOrder
     username?: SortOrderInput | SortOrder
     phone?: SortOrderInput | SortOrder
+    alternateMobile?: SortOrderInput | SortOrder
     email?: SortOrderInput | SortOrder
     dob?: SortOrderInput | SortOrder
     yearOfExperience?: SortOrderInput | SortOrder
@@ -36194,9 +36425,11 @@ export namespace Prisma {
     AND?: DoctorWhereInput | DoctorWhereInput[]
     OR?: DoctorWhereInput[]
     NOT?: DoctorWhereInput | DoctorWhereInput[]
+    doctorCode?: StringNullableFilter<"Doctor"> | string | null
     fullName?: StringFilter<"Doctor"> | string
     username?: StringNullableFilter<"Doctor"> | string | null
     phone?: StringNullableFilter<"Doctor"> | string | null
+    alternateMobile?: StringNullableFilter<"Doctor"> | string | null
     email?: StringNullableFilter<"Doctor"> | string | null
     dob?: DateTimeNullableFilter<"Doctor"> | Date | string | null
     yearOfExperience?: IntNullableFilter<"Doctor"> | number | null
@@ -36250,9 +36483,11 @@ export namespace Prisma {
 
   export type DoctorOrderByWithAggregationInput = {
     id?: SortOrder
+    doctorCode?: SortOrderInput | SortOrder
     fullName?: SortOrder
     username?: SortOrderInput | SortOrder
     phone?: SortOrderInput | SortOrder
+    alternateMobile?: SortOrderInput | SortOrder
     email?: SortOrderInput | SortOrder
     dob?: SortOrderInput | SortOrder
     yearOfExperience?: SortOrderInput | SortOrder
@@ -36307,9 +36542,11 @@ export namespace Prisma {
     OR?: DoctorScalarWhereWithAggregatesInput[]
     NOT?: DoctorScalarWhereWithAggregatesInput | DoctorScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Doctor"> | string
+    doctorCode?: StringNullableWithAggregatesFilter<"Doctor"> | string | null
     fullName?: StringWithAggregatesFilter<"Doctor"> | string
     username?: StringNullableWithAggregatesFilter<"Doctor"> | string | null
     phone?: StringNullableWithAggregatesFilter<"Doctor"> | string | null
+    alternateMobile?: StringNullableWithAggregatesFilter<"Doctor"> | string | null
     email?: StringNullableWithAggregatesFilter<"Doctor"> | string | null
     dob?: DateTimeNullableWithAggregatesFilter<"Doctor"> | Date | string | null
     yearOfExperience?: IntNullableWithAggregatesFilter<"Doctor"> | number | null
@@ -36361,13 +36598,23 @@ export namespace Prisma {
     id?: StringFilter<"Patient"> | string
     patientCode?: StringNullableFilter<"Patient"> | string | null
     firstName?: StringFilter<"Patient"> | string
+    middleName?: StringNullableFilter<"Patient"> | string | null
     lastName?: StringFilter<"Patient"> | string
     profileImage?: StringNullableFilter<"Patient"> | string | null
     phone?: StringNullableFilter<"Patient"> | string | null
+    alternateMobile?: StringNullableFilter<"Patient"> | string | null
     email?: StringNullableFilter<"Patient"> | string | null
     dob?: DateTimeNullableFilter<"Patient"> | Date | string | null
     gender?: StringNullableFilter<"Patient"> | string | null
     bloodGroup?: StringNullableFilter<"Patient"> | string | null
+    maritalStatus?: StringNullableFilter<"Patient"> | string | null
+    occupation?: StringNullableFilter<"Patient"> | string | null
+    aadhaarNumber?: StringNullableFilter<"Patient"> | string | null
+    passportNumber?: StringNullableFilter<"Patient"> | string | null
+    referredBy?: StringNullableFilter<"Patient"> | string | null
+    emergencyContactName?: StringNullableFilter<"Patient"> | string | null
+    emergencyContactRelation?: StringNullableFilter<"Patient"> | string | null
+    emergencyContactPhone?: StringNullableFilter<"Patient"> | string | null
     status?: StringFilter<"Patient"> | string
     address1?: StringNullableFilter<"Patient"> | string | null
     address2?: StringNullableFilter<"Patient"> | string | null
@@ -36392,13 +36639,23 @@ export namespace Prisma {
     id?: SortOrder
     patientCode?: SortOrderInput | SortOrder
     firstName?: SortOrder
+    middleName?: SortOrderInput | SortOrder
     lastName?: SortOrder
     profileImage?: SortOrderInput | SortOrder
     phone?: SortOrderInput | SortOrder
+    alternateMobile?: SortOrderInput | SortOrder
     email?: SortOrderInput | SortOrder
     dob?: SortOrderInput | SortOrder
     gender?: SortOrderInput | SortOrder
     bloodGroup?: SortOrderInput | SortOrder
+    maritalStatus?: SortOrderInput | SortOrder
+    occupation?: SortOrderInput | SortOrder
+    aadhaarNumber?: SortOrderInput | SortOrder
+    passportNumber?: SortOrderInput | SortOrder
+    referredBy?: SortOrderInput | SortOrder
+    emergencyContactName?: SortOrderInput | SortOrder
+    emergencyContactRelation?: SortOrderInput | SortOrder
+    emergencyContactPhone?: SortOrderInput | SortOrder
     status?: SortOrder
     address1?: SortOrderInput | SortOrder
     address2?: SortOrderInput | SortOrder
@@ -36426,13 +36683,23 @@ export namespace Prisma {
     NOT?: PatientWhereInput | PatientWhereInput[]
     patientCode?: StringNullableFilter<"Patient"> | string | null
     firstName?: StringFilter<"Patient"> | string
+    middleName?: StringNullableFilter<"Patient"> | string | null
     lastName?: StringFilter<"Patient"> | string
     profileImage?: StringNullableFilter<"Patient"> | string | null
     phone?: StringNullableFilter<"Patient"> | string | null
+    alternateMobile?: StringNullableFilter<"Patient"> | string | null
     email?: StringNullableFilter<"Patient"> | string | null
     dob?: DateTimeNullableFilter<"Patient"> | Date | string | null
     gender?: StringNullableFilter<"Patient"> | string | null
     bloodGroup?: StringNullableFilter<"Patient"> | string | null
+    maritalStatus?: StringNullableFilter<"Patient"> | string | null
+    occupation?: StringNullableFilter<"Patient"> | string | null
+    aadhaarNumber?: StringNullableFilter<"Patient"> | string | null
+    passportNumber?: StringNullableFilter<"Patient"> | string | null
+    referredBy?: StringNullableFilter<"Patient"> | string | null
+    emergencyContactName?: StringNullableFilter<"Patient"> | string | null
+    emergencyContactRelation?: StringNullableFilter<"Patient"> | string | null
+    emergencyContactPhone?: StringNullableFilter<"Patient"> | string | null
     status?: StringFilter<"Patient"> | string
     address1?: StringNullableFilter<"Patient"> | string | null
     address2?: StringNullableFilter<"Patient"> | string | null
@@ -36457,13 +36724,23 @@ export namespace Prisma {
     id?: SortOrder
     patientCode?: SortOrderInput | SortOrder
     firstName?: SortOrder
+    middleName?: SortOrderInput | SortOrder
     lastName?: SortOrder
     profileImage?: SortOrderInput | SortOrder
     phone?: SortOrderInput | SortOrder
+    alternateMobile?: SortOrderInput | SortOrder
     email?: SortOrderInput | SortOrder
     dob?: SortOrderInput | SortOrder
     gender?: SortOrderInput | SortOrder
     bloodGroup?: SortOrderInput | SortOrder
+    maritalStatus?: SortOrderInput | SortOrder
+    occupation?: SortOrderInput | SortOrder
+    aadhaarNumber?: SortOrderInput | SortOrder
+    passportNumber?: SortOrderInput | SortOrder
+    referredBy?: SortOrderInput | SortOrder
+    emergencyContactName?: SortOrderInput | SortOrder
+    emergencyContactRelation?: SortOrderInput | SortOrder
+    emergencyContactPhone?: SortOrderInput | SortOrder
     status?: SortOrder
     address1?: SortOrderInput | SortOrder
     address2?: SortOrderInput | SortOrder
@@ -36489,13 +36766,23 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Patient"> | string
     patientCode?: StringNullableWithAggregatesFilter<"Patient"> | string | null
     firstName?: StringWithAggregatesFilter<"Patient"> | string
+    middleName?: StringNullableWithAggregatesFilter<"Patient"> | string | null
     lastName?: StringWithAggregatesFilter<"Patient"> | string
     profileImage?: StringNullableWithAggregatesFilter<"Patient"> | string | null
     phone?: StringNullableWithAggregatesFilter<"Patient"> | string | null
+    alternateMobile?: StringNullableWithAggregatesFilter<"Patient"> | string | null
     email?: StringNullableWithAggregatesFilter<"Patient"> | string | null
     dob?: DateTimeNullableWithAggregatesFilter<"Patient"> | Date | string | null
     gender?: StringNullableWithAggregatesFilter<"Patient"> | string | null
     bloodGroup?: StringNullableWithAggregatesFilter<"Patient"> | string | null
+    maritalStatus?: StringNullableWithAggregatesFilter<"Patient"> | string | null
+    occupation?: StringNullableWithAggregatesFilter<"Patient"> | string | null
+    aadhaarNumber?: StringNullableWithAggregatesFilter<"Patient"> | string | null
+    passportNumber?: StringNullableWithAggregatesFilter<"Patient"> | string | null
+    referredBy?: StringNullableWithAggregatesFilter<"Patient"> | string | null
+    emergencyContactName?: StringNullableWithAggregatesFilter<"Patient"> | string | null
+    emergencyContactRelation?: StringNullableWithAggregatesFilter<"Patient"> | string | null
+    emergencyContactPhone?: StringNullableWithAggregatesFilter<"Patient"> | string | null
     status?: StringWithAggregatesFilter<"Patient"> | string
     address1?: StringNullableWithAggregatesFilter<"Patient"> | string | null
     address2?: StringNullableWithAggregatesFilter<"Patient"> | string | null
@@ -37349,6 +37636,9 @@ export namespace Prisma {
     employeeType?: StringFilter<"Leave"> | string
     leaveTypeId?: StringFilter<"Leave"> | string
     leaveTypeName?: StringFilter<"Leave"> | string
+    subject?: StringNullableFilter<"Leave"> | string | null
+    evidenceFiles?: JsonNullableFilter<"Leave">
+    isPaid?: BoolFilter<"Leave"> | boolean
     startDate?: DateTimeFilter<"Leave"> | Date | string
     endDate?: DateTimeFilter<"Leave"> | Date | string
     days?: IntFilter<"Leave"> | number
@@ -37367,6 +37657,9 @@ export namespace Prisma {
     employeeType?: SortOrder
     leaveTypeId?: SortOrder
     leaveTypeName?: SortOrder
+    subject?: SortOrderInput | SortOrder
+    evidenceFiles?: SortOrderInput | SortOrder
+    isPaid?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
     days?: SortOrder
@@ -37388,6 +37681,9 @@ export namespace Prisma {
     employeeType?: StringFilter<"Leave"> | string
     leaveTypeId?: StringFilter<"Leave"> | string
     leaveTypeName?: StringFilter<"Leave"> | string
+    subject?: StringNullableFilter<"Leave"> | string | null
+    evidenceFiles?: JsonNullableFilter<"Leave">
+    isPaid?: BoolFilter<"Leave"> | boolean
     startDate?: DateTimeFilter<"Leave"> | Date | string
     endDate?: DateTimeFilter<"Leave"> | Date | string
     days?: IntFilter<"Leave"> | number
@@ -37406,6 +37702,9 @@ export namespace Prisma {
     employeeType?: SortOrder
     leaveTypeId?: SortOrder
     leaveTypeName?: SortOrder
+    subject?: SortOrderInput | SortOrder
+    evidenceFiles?: SortOrderInput | SortOrder
+    isPaid?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
     days?: SortOrder
@@ -37431,6 +37730,9 @@ export namespace Prisma {
     employeeType?: StringWithAggregatesFilter<"Leave"> | string
     leaveTypeId?: StringWithAggregatesFilter<"Leave"> | string
     leaveTypeName?: StringWithAggregatesFilter<"Leave"> | string
+    subject?: StringNullableWithAggregatesFilter<"Leave"> | string | null
+    evidenceFiles?: JsonNullableWithAggregatesFilter<"Leave">
+    isPaid?: BoolWithAggregatesFilter<"Leave"> | boolean
     startDate?: DateTimeWithAggregatesFilter<"Leave"> | Date | string
     endDate?: DateTimeWithAggregatesFilter<"Leave"> | Date | string
     days?: IntWithAggregatesFilter<"Leave"> | number
@@ -38747,8 +39049,10 @@ export namespace Prisma {
 
   export type DepartmentCreateInput = {
     id?: string
+    departmentCode?: string | null
     name: string
     description?: string | null
+    iconUrl?: string | null
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -38763,8 +39067,10 @@ export namespace Prisma {
 
   export type DepartmentUncheckedCreateInput = {
     id?: string
+    departmentCode?: string | null
     name: string
     description?: string | null
+    iconUrl?: string | null
     status?: string
     clinicId: string
     createdAt?: Date | string
@@ -38779,8 +39085,10 @@ export namespace Prisma {
 
   export type DepartmentUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    iconUrl?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -38795,8 +39103,10 @@ export namespace Prisma {
 
   export type DepartmentUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    iconUrl?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -38811,8 +39121,10 @@ export namespace Prisma {
 
   export type DepartmentCreateManyInput = {
     id?: string
+    departmentCode?: string | null
     name: string
     description?: string | null
+    iconUrl?: string | null
     status?: string
     clinicId: string
     createdAt?: Date | string
@@ -38821,8 +39133,10 @@ export namespace Prisma {
 
   export type DepartmentUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    iconUrl?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -38830,8 +39144,10 @@ export namespace Prisma {
 
   export type DepartmentUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    iconUrl?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -39113,9 +39429,11 @@ export namespace Prisma {
 
   export type DoctorCreateInput = {
     id?: string
+    doctorCode?: string | null
     fullName: string
     username?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     yearOfExperience?: number | null
@@ -39166,9 +39484,11 @@ export namespace Prisma {
 
   export type DoctorUncheckedCreateInput = {
     id?: string
+    doctorCode?: string | null
     fullName: string
     username?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     yearOfExperience?: number | null
@@ -39219,9 +39539,11 @@ export namespace Prisma {
 
   export type DoctorUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    doctorCode?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     yearOfExperience?: NullableIntFieldUpdateOperationsInput | number | null
@@ -39272,9 +39594,11 @@ export namespace Prisma {
 
   export type DoctorUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    doctorCode?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     yearOfExperience?: NullableIntFieldUpdateOperationsInput | number | null
@@ -39325,9 +39649,11 @@ export namespace Prisma {
 
   export type DoctorCreateManyInput = {
     id?: string
+    doctorCode?: string | null
     fullName: string
     username?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     yearOfExperience?: number | null
@@ -39374,9 +39700,11 @@ export namespace Prisma {
 
   export type DoctorUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    doctorCode?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     yearOfExperience?: NullableIntFieldUpdateOperationsInput | number | null
@@ -39420,9 +39748,11 @@ export namespace Prisma {
 
   export type DoctorUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    doctorCode?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     yearOfExperience?: NullableIntFieldUpdateOperationsInput | number | null
@@ -39471,13 +39801,23 @@ export namespace Prisma {
     id?: string
     patientCode?: string | null
     firstName: string
+    middleName?: string | null
     lastName: string
     profileImage?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     gender?: string | null
     bloodGroup?: string | null
+    maritalStatus?: string | null
+    occupation?: string | null
+    aadhaarNumber?: string | null
+    passportNumber?: string | null
+    referredBy?: string | null
+    emergencyContactName?: string | null
+    emergencyContactRelation?: string | null
+    emergencyContactPhone?: string | null
     status?: string
     address1?: string | null
     address2?: string | null
@@ -39500,13 +39840,23 @@ export namespace Prisma {
     id?: string
     patientCode?: string | null
     firstName: string
+    middleName?: string | null
     lastName: string
     profileImage?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     gender?: string | null
     bloodGroup?: string | null
+    maritalStatus?: string | null
+    occupation?: string | null
+    aadhaarNumber?: string | null
+    passportNumber?: string | null
+    referredBy?: string | null
+    emergencyContactName?: string | null
+    emergencyContactRelation?: string | null
+    emergencyContactPhone?: string | null
     status?: string
     address1?: string | null
     address2?: string | null
@@ -39529,13 +39879,23 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     patientCode?: NullableStringFieldUpdateOperationsInput | string | null
     firstName?: StringFieldUpdateOperationsInput | string
+    middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    passportNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactRelation?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactPhone?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39558,13 +39918,23 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     patientCode?: NullableStringFieldUpdateOperationsInput | string | null
     firstName?: StringFieldUpdateOperationsInput | string
+    middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    passportNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactRelation?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactPhone?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39587,13 +39957,23 @@ export namespace Prisma {
     id?: string
     patientCode?: string | null
     firstName: string
+    middleName?: string | null
     lastName: string
     profileImage?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     gender?: string | null
     bloodGroup?: string | null
+    maritalStatus?: string | null
+    occupation?: string | null
+    aadhaarNumber?: string | null
+    passportNumber?: string | null
+    referredBy?: string | null
+    emergencyContactName?: string | null
+    emergencyContactRelation?: string | null
+    emergencyContactPhone?: string | null
     status?: string
     address1?: string | null
     address2?: string | null
@@ -39613,13 +39993,23 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     patientCode?: NullableStringFieldUpdateOperationsInput | string | null
     firstName?: StringFieldUpdateOperationsInput | string
+    middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    passportNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactRelation?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactPhone?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39637,13 +40027,23 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     patientCode?: NullableStringFieldUpdateOperationsInput | string | null
     firstName?: StringFieldUpdateOperationsInput | string
+    middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    passportNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactRelation?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactPhone?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40565,6 +40965,9 @@ export namespace Prisma {
     employeeType: string
     leaveTypeId: string
     leaveTypeName: string
+    subject?: string | null
+    evidenceFiles?: NullableJsonNullValueInput | InputJsonValue
+    isPaid?: boolean
     startDate: Date | string
     endDate: Date | string
     days?: number
@@ -40583,6 +40986,9 @@ export namespace Prisma {
     employeeType: string
     leaveTypeId: string
     leaveTypeName: string
+    subject?: string | null
+    evidenceFiles?: NullableJsonNullValueInput | InputJsonValue
+    isPaid?: boolean
     startDate: Date | string
     endDate: Date | string
     days?: number
@@ -40599,6 +41005,9 @@ export namespace Prisma {
     employeeType?: StringFieldUpdateOperationsInput | string
     leaveTypeId?: StringFieldUpdateOperationsInput | string
     leaveTypeName?: StringFieldUpdateOperationsInput | string
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenceFiles?: NullableJsonNullValueInput | InputJsonValue
+    isPaid?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     days?: IntFieldUpdateOperationsInput | number
@@ -40617,6 +41026,9 @@ export namespace Prisma {
     employeeType?: StringFieldUpdateOperationsInput | string
     leaveTypeId?: StringFieldUpdateOperationsInput | string
     leaveTypeName?: StringFieldUpdateOperationsInput | string
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenceFiles?: NullableJsonNullValueInput | InputJsonValue
+    isPaid?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     days?: IntFieldUpdateOperationsInput | number
@@ -40634,6 +41046,9 @@ export namespace Prisma {
     employeeType: string
     leaveTypeId: string
     leaveTypeName: string
+    subject?: string | null
+    evidenceFiles?: NullableJsonNullValueInput | InputJsonValue
+    isPaid?: boolean
     startDate: Date | string
     endDate: Date | string
     days?: number
@@ -40650,6 +41065,9 @@ export namespace Prisma {
     employeeType?: StringFieldUpdateOperationsInput | string
     leaveTypeId?: StringFieldUpdateOperationsInput | string
     leaveTypeName?: StringFieldUpdateOperationsInput | string
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenceFiles?: NullableJsonNullValueInput | InputJsonValue
+    isPaid?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     days?: IntFieldUpdateOperationsInput | number
@@ -40667,6 +41085,9 @@ export namespace Prisma {
     employeeType?: StringFieldUpdateOperationsInput | string
     leaveTypeId?: StringFieldUpdateOperationsInput | string
     leaveTypeName?: StringFieldUpdateOperationsInput | string
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenceFiles?: NullableJsonNullValueInput | InputJsonValue
+    isPaid?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     days?: IntFieldUpdateOperationsInput | number
@@ -42228,8 +42649,10 @@ export namespace Prisma {
 
   export type DepartmentCountOrderByAggregateInput = {
     id?: SortOrder
+    departmentCode?: SortOrder
     name?: SortOrder
     description?: SortOrder
+    iconUrl?: SortOrder
     status?: SortOrder
     clinicId?: SortOrder
     createdAt?: SortOrder
@@ -42238,8 +42661,10 @@ export namespace Prisma {
 
   export type DepartmentMaxOrderByAggregateInput = {
     id?: SortOrder
+    departmentCode?: SortOrder
     name?: SortOrder
     description?: SortOrder
+    iconUrl?: SortOrder
     status?: SortOrder
     clinicId?: SortOrder
     createdAt?: SortOrder
@@ -42248,8 +42673,10 @@ export namespace Prisma {
 
   export type DepartmentMinOrderByAggregateInput = {
     id?: SortOrder
+    departmentCode?: SortOrder
     name?: SortOrder
     description?: SortOrder
+    iconUrl?: SortOrder
     status?: SortOrder
     clinicId?: SortOrder
     createdAt?: SortOrder
@@ -42401,9 +42828,11 @@ export namespace Prisma {
 
   export type DoctorCountOrderByAggregateInput = {
     id?: SortOrder
+    doctorCode?: SortOrder
     fullName?: SortOrder
     username?: SortOrder
     phone?: SortOrder
+    alternateMobile?: SortOrder
     email?: SortOrder
     dob?: SortOrder
     yearOfExperience?: SortOrder
@@ -42460,9 +42889,11 @@ export namespace Prisma {
 
   export type DoctorMaxOrderByAggregateInput = {
     id?: SortOrder
+    doctorCode?: SortOrder
     fullName?: SortOrder
     username?: SortOrder
     phone?: SortOrder
+    alternateMobile?: SortOrder
     email?: SortOrder
     dob?: SortOrder
     yearOfExperience?: SortOrder
@@ -42504,9 +42935,11 @@ export namespace Prisma {
 
   export type DoctorMinOrderByAggregateInput = {
     id?: SortOrder
+    doctorCode?: SortOrder
     fullName?: SortOrder
     username?: SortOrder
     phone?: SortOrder
+    alternateMobile?: SortOrder
     email?: SortOrder
     dob?: SortOrder
     yearOfExperience?: SortOrder
@@ -42581,13 +43014,23 @@ export namespace Prisma {
     id?: SortOrder
     patientCode?: SortOrder
     firstName?: SortOrder
+    middleName?: SortOrder
     lastName?: SortOrder
     profileImage?: SortOrder
     phone?: SortOrder
+    alternateMobile?: SortOrder
     email?: SortOrder
     dob?: SortOrder
     gender?: SortOrder
     bloodGroup?: SortOrder
+    maritalStatus?: SortOrder
+    occupation?: SortOrder
+    aadhaarNumber?: SortOrder
+    passportNumber?: SortOrder
+    referredBy?: SortOrder
+    emergencyContactName?: SortOrder
+    emergencyContactRelation?: SortOrder
+    emergencyContactPhone?: SortOrder
     status?: SortOrder
     address1?: SortOrder
     address2?: SortOrder
@@ -42607,13 +43050,23 @@ export namespace Prisma {
     id?: SortOrder
     patientCode?: SortOrder
     firstName?: SortOrder
+    middleName?: SortOrder
     lastName?: SortOrder
     profileImage?: SortOrder
     phone?: SortOrder
+    alternateMobile?: SortOrder
     email?: SortOrder
     dob?: SortOrder
     gender?: SortOrder
     bloodGroup?: SortOrder
+    maritalStatus?: SortOrder
+    occupation?: SortOrder
+    aadhaarNumber?: SortOrder
+    passportNumber?: SortOrder
+    referredBy?: SortOrder
+    emergencyContactName?: SortOrder
+    emergencyContactRelation?: SortOrder
+    emergencyContactPhone?: SortOrder
     status?: SortOrder
     address1?: SortOrder
     address2?: SortOrder
@@ -42632,13 +43085,23 @@ export namespace Prisma {
     id?: SortOrder
     patientCode?: SortOrder
     firstName?: SortOrder
+    middleName?: SortOrder
     lastName?: SortOrder
     profileImage?: SortOrder
     phone?: SortOrder
+    alternateMobile?: SortOrder
     email?: SortOrder
     dob?: SortOrder
     gender?: SortOrder
     bloodGroup?: SortOrder
+    maritalStatus?: SortOrder
+    occupation?: SortOrder
+    aadhaarNumber?: SortOrder
+    passportNumber?: SortOrder
+    referredBy?: SortOrder
+    emergencyContactName?: SortOrder
+    emergencyContactRelation?: SortOrder
+    emergencyContactPhone?: SortOrder
     status?: SortOrder
     address1?: SortOrder
     address2?: SortOrder
@@ -43175,6 +43638,9 @@ export namespace Prisma {
     employeeType?: SortOrder
     leaveTypeId?: SortOrder
     leaveTypeName?: SortOrder
+    subject?: SortOrder
+    evidenceFiles?: SortOrder
+    isPaid?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
     days?: SortOrder
@@ -43196,6 +43662,8 @@ export namespace Prisma {
     employeeType?: SortOrder
     leaveTypeId?: SortOrder
     leaveTypeName?: SortOrder
+    subject?: SortOrder
+    isPaid?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
     days?: SortOrder
@@ -43213,6 +43681,8 @@ export namespace Prisma {
     employeeType?: SortOrder
     leaveTypeId?: SortOrder
     leaveTypeName?: SortOrder
+    subject?: SortOrder
+    isPaid?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
     days?: SortOrder
@@ -46605,8 +47075,10 @@ export namespace Prisma {
 
   export type DepartmentCreateWithoutClinicInput = {
     id?: string
+    departmentCode?: string | null
     name: string
     description?: string | null
+    iconUrl?: string | null
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -46620,8 +47092,10 @@ export namespace Prisma {
 
   export type DepartmentUncheckedCreateWithoutClinicInput = {
     id?: string
+    departmentCode?: string | null
     name: string
     description?: string | null
+    iconUrl?: string | null
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -46681,9 +47155,11 @@ export namespace Prisma {
 
   export type DoctorCreateWithoutClinicInput = {
     id?: string
+    doctorCode?: string | null
     fullName: string
     username?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     yearOfExperience?: number | null
@@ -46733,9 +47209,11 @@ export namespace Prisma {
 
   export type DoctorUncheckedCreateWithoutClinicInput = {
     id?: string
+    doctorCode?: string | null
     fullName: string
     username?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     yearOfExperience?: number | null
@@ -46859,13 +47337,23 @@ export namespace Prisma {
     id?: string
     patientCode?: string | null
     firstName: string
+    middleName?: string | null
     lastName: string
     profileImage?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     gender?: string | null
     bloodGroup?: string | null
+    maritalStatus?: string | null
+    occupation?: string | null
+    aadhaarNumber?: string | null
+    passportNumber?: string | null
+    referredBy?: string | null
+    emergencyContactName?: string | null
+    emergencyContactRelation?: string | null
+    emergencyContactPhone?: string | null
     status?: string
     address1?: string | null
     address2?: string | null
@@ -46887,13 +47375,23 @@ export namespace Prisma {
     id?: string
     patientCode?: string | null
     firstName: string
+    middleName?: string | null
     lastName: string
     profileImage?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     gender?: string | null
     bloodGroup?: string | null
+    maritalStatus?: string | null
+    occupation?: string | null
+    aadhaarNumber?: string | null
+    passportNumber?: string | null
+    referredBy?: string | null
+    emergencyContactName?: string | null
+    emergencyContactRelation?: string | null
+    emergencyContactPhone?: string | null
     status?: string
     address1?: string | null
     address2?: string | null
@@ -47243,6 +47741,9 @@ export namespace Prisma {
     employeeType: string
     leaveTypeId: string
     leaveTypeName: string
+    subject?: string | null
+    evidenceFiles?: NullableJsonNullValueInput | InputJsonValue
+    isPaid?: boolean
     startDate: Date | string
     endDate: Date | string
     days?: number
@@ -47259,6 +47760,9 @@ export namespace Prisma {
     employeeType: string
     leaveTypeId: string
     leaveTypeName: string
+    subject?: string | null
+    evidenceFiles?: NullableJsonNullValueInput | InputJsonValue
+    isPaid?: boolean
     startDate: Date | string
     endDate: Date | string
     days?: number
@@ -47669,8 +48173,10 @@ export namespace Prisma {
     OR?: DepartmentScalarWhereInput[]
     NOT?: DepartmentScalarWhereInput | DepartmentScalarWhereInput[]
     id?: StringFilter<"Department"> | string
+    departmentCode?: StringNullableFilter<"Department"> | string | null
     name?: StringFilter<"Department"> | string
     description?: StringNullableFilter<"Department"> | string | null
+    iconUrl?: StringNullableFilter<"Department"> | string | null
     status?: StringFilter<"Department"> | string
     clinicId?: StringFilter<"Department"> | string
     createdAt?: DateTimeFilter<"Department"> | Date | string
@@ -47729,9 +48235,11 @@ export namespace Prisma {
     OR?: DoctorScalarWhereInput[]
     NOT?: DoctorScalarWhereInput | DoctorScalarWhereInput[]
     id?: StringFilter<"Doctor"> | string
+    doctorCode?: StringNullableFilter<"Doctor"> | string | null
     fullName?: StringFilter<"Doctor"> | string
     username?: StringNullableFilter<"Doctor"> | string | null
     phone?: StringNullableFilter<"Doctor"> | string | null
+    alternateMobile?: StringNullableFilter<"Doctor"> | string | null
     email?: StringNullableFilter<"Doctor"> | string | null
     dob?: DateTimeNullableFilter<"Doctor"> | Date | string | null
     yearOfExperience?: IntNullableFilter<"Doctor"> | number | null
@@ -47844,13 +48352,23 @@ export namespace Prisma {
     id?: StringFilter<"Patient"> | string
     patientCode?: StringNullableFilter<"Patient"> | string | null
     firstName?: StringFilter<"Patient"> | string
+    middleName?: StringNullableFilter<"Patient"> | string | null
     lastName?: StringFilter<"Patient"> | string
     profileImage?: StringNullableFilter<"Patient"> | string | null
     phone?: StringNullableFilter<"Patient"> | string | null
+    alternateMobile?: StringNullableFilter<"Patient"> | string | null
     email?: StringNullableFilter<"Patient"> | string | null
     dob?: DateTimeNullableFilter<"Patient"> | Date | string | null
     gender?: StringNullableFilter<"Patient"> | string | null
     bloodGroup?: StringNullableFilter<"Patient"> | string | null
+    maritalStatus?: StringNullableFilter<"Patient"> | string | null
+    occupation?: StringNullableFilter<"Patient"> | string | null
+    aadhaarNumber?: StringNullableFilter<"Patient"> | string | null
+    passportNumber?: StringNullableFilter<"Patient"> | string | null
+    referredBy?: StringNullableFilter<"Patient"> | string | null
+    emergencyContactName?: StringNullableFilter<"Patient"> | string | null
+    emergencyContactRelation?: StringNullableFilter<"Patient"> | string | null
+    emergencyContactPhone?: StringNullableFilter<"Patient"> | string | null
     status?: StringFilter<"Patient"> | string
     address1?: StringNullableFilter<"Patient"> | string | null
     address2?: StringNullableFilter<"Patient"> | string | null
@@ -48182,6 +48700,9 @@ export namespace Prisma {
     employeeType?: StringFilter<"Leave"> | string
     leaveTypeId?: StringFilter<"Leave"> | string
     leaveTypeName?: StringFilter<"Leave"> | string
+    subject?: StringNullableFilter<"Leave"> | string | null
+    evidenceFiles?: JsonNullableFilter<"Leave">
+    isPaid?: BoolFilter<"Leave"> | boolean
     startDate?: DateTimeFilter<"Leave"> | Date | string
     endDate?: DateTimeFilter<"Leave"> | Date | string
     days?: IntFilter<"Leave"> | number
@@ -49178,9 +49699,11 @@ export namespace Prisma {
 
   export type DoctorCreateWithoutDepartmentInput = {
     id?: string
+    doctorCode?: string | null
     fullName: string
     username?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     yearOfExperience?: number | null
@@ -49230,9 +49753,11 @@ export namespace Prisma {
 
   export type DoctorUncheckedCreateWithoutDepartmentInput = {
     id?: string
+    doctorCode?: string | null
     fullName: string
     username?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     yearOfExperience?: number | null
@@ -49778,8 +50303,10 @@ export namespace Prisma {
 
   export type DepartmentCreateWithoutDesignationsInput = {
     id?: string
+    departmentCode?: string | null
     name: string
     description?: string | null
+    iconUrl?: string | null
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -49793,8 +50320,10 @@ export namespace Prisma {
 
   export type DepartmentUncheckedCreateWithoutDesignationsInput = {
     id?: string
+    departmentCode?: string | null
     name: string
     description?: string | null
+    iconUrl?: string | null
     status?: string
     clinicId: string
     createdAt?: Date | string
@@ -49813,9 +50342,11 @@ export namespace Prisma {
 
   export type DoctorCreateWithoutDesignationInput = {
     id?: string
+    doctorCode?: string | null
     fullName: string
     username?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     yearOfExperience?: number | null
@@ -49865,9 +50396,11 @@ export namespace Prisma {
 
   export type DoctorUncheckedCreateWithoutDesignationInput = {
     id?: string
+    doctorCode?: string | null
     fullName: string
     username?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     yearOfExperience?: number | null
@@ -50107,8 +50640,10 @@ export namespace Prisma {
 
   export type DepartmentUpdateWithoutDesignationsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    iconUrl?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -50122,8 +50657,10 @@ export namespace Prisma {
 
   export type DepartmentUncheckedUpdateWithoutDesignationsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    iconUrl?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -50200,8 +50737,10 @@ export namespace Prisma {
 
   export type DepartmentCreateWithoutStaffsInput = {
     id?: string
+    departmentCode?: string | null
     name: string
     description?: string | null
+    iconUrl?: string | null
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -50215,8 +50754,10 @@ export namespace Prisma {
 
   export type DepartmentUncheckedCreateWithoutStaffsInput = {
     id?: string
+    departmentCode?: string | null
     name: string
     description?: string | null
+    iconUrl?: string | null
     status?: string
     clinicId: string
     createdAt?: Date | string
@@ -50436,8 +50977,10 @@ export namespace Prisma {
 
   export type DepartmentUpdateWithoutStaffsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    iconUrl?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -50451,8 +50994,10 @@ export namespace Prisma {
 
   export type DepartmentUncheckedUpdateWithoutStaffsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    iconUrl?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -50589,8 +51134,10 @@ export namespace Prisma {
 
   export type DepartmentCreateWithoutDoctorsInput = {
     id?: string
+    departmentCode?: string | null
     name: string
     description?: string | null
+    iconUrl?: string | null
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -50604,8 +51151,10 @@ export namespace Prisma {
 
   export type DepartmentUncheckedCreateWithoutDoctorsInput = {
     id?: string
+    departmentCode?: string | null
     name: string
     description?: string | null
+    iconUrl?: string | null
     status?: string
     clinicId: string
     createdAt?: Date | string
@@ -50785,13 +51334,23 @@ export namespace Prisma {
     id?: string
     patientCode?: string | null
     firstName: string
+    middleName?: string | null
     lastName: string
     profileImage?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     gender?: string | null
     bloodGroup?: string | null
+    maritalStatus?: string | null
+    occupation?: string | null
+    aadhaarNumber?: string | null
+    passportNumber?: string | null
+    referredBy?: string | null
+    emergencyContactName?: string | null
+    emergencyContactRelation?: string | null
+    emergencyContactPhone?: string | null
     status?: string
     address1?: string | null
     address2?: string | null
@@ -50813,13 +51372,23 @@ export namespace Prisma {
     id?: string
     patientCode?: string | null
     firstName: string
+    middleName?: string | null
     lastName: string
     profileImage?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     gender?: string | null
     bloodGroup?: string | null
+    maritalStatus?: string | null
+    occupation?: string | null
+    aadhaarNumber?: string | null
+    passportNumber?: string | null
+    referredBy?: string | null
+    emergencyContactName?: string | null
+    emergencyContactRelation?: string | null
+    emergencyContactPhone?: string | null
     status?: string
     address1?: string | null
     address2?: string | null
@@ -50948,8 +51517,10 @@ export namespace Prisma {
 
   export type DepartmentUpdateWithoutDoctorsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    iconUrl?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -50963,8 +51534,10 @@ export namespace Prisma {
 
   export type DepartmentUncheckedUpdateWithoutDoctorsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    iconUrl?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -51186,9 +51759,11 @@ export namespace Prisma {
 
   export type DoctorCreateWithoutPatientsInput = {
     id?: string
+    doctorCode?: string | null
     fullName: string
     username?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     yearOfExperience?: number | null
@@ -51238,9 +51813,11 @@ export namespace Prisma {
 
   export type DoctorUncheckedCreateWithoutPatientsInput = {
     id?: string
+    doctorCode?: string | null
     fullName: string
     username?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     yearOfExperience?: number | null
@@ -51541,9 +52118,11 @@ export namespace Prisma {
 
   export type DoctorUpdateWithoutPatientsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    doctorCode?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     yearOfExperience?: NullableIntFieldUpdateOperationsInput | number | null
@@ -51593,9 +52172,11 @@ export namespace Prisma {
 
   export type DoctorUncheckedUpdateWithoutPatientsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    doctorCode?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     yearOfExperience?: NullableIntFieldUpdateOperationsInput | number | null
@@ -51802,13 +52383,23 @@ export namespace Prisma {
     id?: string
     patientCode?: string | null
     firstName: string
+    middleName?: string | null
     lastName: string
     profileImage?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     gender?: string | null
     bloodGroup?: string | null
+    maritalStatus?: string | null
+    occupation?: string | null
+    aadhaarNumber?: string | null
+    passportNumber?: string | null
+    referredBy?: string | null
+    emergencyContactName?: string | null
+    emergencyContactRelation?: string | null
+    emergencyContactPhone?: string | null
     status?: string
     address1?: string | null
     address2?: string | null
@@ -51830,13 +52421,23 @@ export namespace Prisma {
     id?: string
     patientCode?: string | null
     firstName: string
+    middleName?: string | null
     lastName: string
     profileImage?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     gender?: string | null
     bloodGroup?: string | null
+    maritalStatus?: string | null
+    occupation?: string | null
+    aadhaarNumber?: string | null
+    passportNumber?: string | null
+    referredBy?: string | null
+    emergencyContactName?: string | null
+    emergencyContactRelation?: string | null
+    emergencyContactPhone?: string | null
     status?: string
     address1?: string | null
     address2?: string | null
@@ -51861,9 +52462,11 @@ export namespace Prisma {
 
   export type DoctorCreateWithoutAppointmentsInput = {
     id?: string
+    doctorCode?: string | null
     fullName: string
     username?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     yearOfExperience?: number | null
@@ -51913,9 +52516,11 @@ export namespace Prisma {
 
   export type DoctorUncheckedCreateWithoutAppointmentsInput = {
     id?: string
+    doctorCode?: string | null
     fullName: string
     username?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     yearOfExperience?: number | null
@@ -51970,8 +52575,10 @@ export namespace Prisma {
 
   export type DepartmentCreateWithoutAppointmentsInput = {
     id?: string
+    departmentCode?: string | null
     name: string
     description?: string | null
+    iconUrl?: string | null
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -51985,8 +52592,10 @@ export namespace Prisma {
 
   export type DepartmentUncheckedCreateWithoutAppointmentsInput = {
     id?: string
+    departmentCode?: string | null
     name: string
     description?: string | null
+    iconUrl?: string | null
     status?: string
     clinicId: string
     createdAt?: Date | string
@@ -52161,13 +52770,23 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     patientCode?: NullableStringFieldUpdateOperationsInput | string | null
     firstName?: StringFieldUpdateOperationsInput | string
+    middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    passportNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactRelation?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactPhone?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
@@ -52189,13 +52808,23 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     patientCode?: NullableStringFieldUpdateOperationsInput | string | null
     firstName?: StringFieldUpdateOperationsInput | string
+    middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    passportNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactRelation?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactPhone?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
@@ -52226,9 +52855,11 @@ export namespace Prisma {
 
   export type DoctorUpdateWithoutAppointmentsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    doctorCode?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     yearOfExperience?: NullableIntFieldUpdateOperationsInput | number | null
@@ -52278,9 +52909,11 @@ export namespace Prisma {
 
   export type DoctorUncheckedUpdateWithoutAppointmentsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    doctorCode?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     yearOfExperience?: NullableIntFieldUpdateOperationsInput | number | null
@@ -52341,8 +52974,10 @@ export namespace Prisma {
 
   export type DepartmentUpdateWithoutAppointmentsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    iconUrl?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52356,8 +52991,10 @@ export namespace Prisma {
 
   export type DepartmentUncheckedUpdateWithoutAppointmentsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    iconUrl?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52494,8 +53131,10 @@ export namespace Prisma {
 
   export type DepartmentCreateWithoutServicesInput = {
     id?: string
+    departmentCode?: string | null
     name: string
     description?: string | null
+    iconUrl?: string | null
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -52509,8 +53148,10 @@ export namespace Prisma {
 
   export type DepartmentUncheckedCreateWithoutServicesInput = {
     id?: string
+    departmentCode?: string | null
     name: string
     description?: string | null
+    iconUrl?: string | null
     status?: string
     clinicId: string
     createdAt?: Date | string
@@ -52675,8 +53316,10 @@ export namespace Prisma {
 
   export type DepartmentUpdateWithoutServicesInput = {
     id?: StringFieldUpdateOperationsInput | string
+    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    iconUrl?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52690,8 +53333,10 @@ export namespace Prisma {
 
   export type DepartmentUncheckedUpdateWithoutServicesInput = {
     id?: StringFieldUpdateOperationsInput | string
+    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    iconUrl?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52929,9 +53574,11 @@ export namespace Prisma {
 
   export type DoctorCreateWithoutSpecializationsInput = {
     id?: string
+    doctorCode?: string | null
     fullName: string
     username?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     yearOfExperience?: number | null
@@ -52981,9 +53628,11 @@ export namespace Prisma {
 
   export type DoctorUncheckedCreateWithoutSpecializationsInput = {
     id?: string
+    doctorCode?: string | null
     fullName: string
     username?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     yearOfExperience?: number | null
@@ -54947,13 +55596,23 @@ export namespace Prisma {
     id?: string
     patientCode?: string | null
     firstName: string
+    middleName?: string | null
     lastName: string
     profileImage?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     gender?: string | null
     bloodGroup?: string | null
+    maritalStatus?: string | null
+    occupation?: string | null
+    aadhaarNumber?: string | null
+    passportNumber?: string | null
+    referredBy?: string | null
+    emergencyContactName?: string | null
+    emergencyContactRelation?: string | null
+    emergencyContactPhone?: string | null
     status?: string
     address1?: string | null
     address2?: string | null
@@ -54975,13 +55634,23 @@ export namespace Prisma {
     id?: string
     patientCode?: string | null
     firstName: string
+    middleName?: string | null
     lastName: string
     profileImage?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     gender?: string | null
     bloodGroup?: string | null
+    maritalStatus?: string | null
+    occupation?: string | null
+    aadhaarNumber?: string | null
+    passportNumber?: string | null
+    referredBy?: string | null
+    emergencyContactName?: string | null
+    emergencyContactRelation?: string | null
+    emergencyContactPhone?: string | null
     status?: string
     address1?: string | null
     address2?: string | null
@@ -55006,9 +55675,11 @@ export namespace Prisma {
 
   export type DoctorCreateWithoutPrescriptionsInput = {
     id?: string
+    doctorCode?: string | null
     fullName: string
     username?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     yearOfExperience?: number | null
@@ -55058,9 +55729,11 @@ export namespace Prisma {
 
   export type DoctorUncheckedCreateWithoutPrescriptionsInput = {
     id?: string
+    doctorCode?: string | null
     fullName: string
     username?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     yearOfExperience?: number | null
@@ -55156,8 +55829,10 @@ export namespace Prisma {
 
   export type DepartmentCreateWithoutPrescriptionsInput = {
     id?: string
+    departmentCode?: string | null
     name: string
     description?: string | null
+    iconUrl?: string | null
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -55171,8 +55846,10 @@ export namespace Prisma {
 
   export type DepartmentUncheckedCreateWithoutPrescriptionsInput = {
     id?: string
+    departmentCode?: string | null
     name: string
     description?: string | null
+    iconUrl?: string | null
     status?: string
     clinicId: string
     createdAt?: Date | string
@@ -55339,13 +56016,23 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     patientCode?: NullableStringFieldUpdateOperationsInput | string | null
     firstName?: StringFieldUpdateOperationsInput | string
+    middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    passportNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactRelation?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactPhone?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
@@ -55367,13 +56054,23 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     patientCode?: NullableStringFieldUpdateOperationsInput | string | null
     firstName?: StringFieldUpdateOperationsInput | string
+    middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    passportNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactRelation?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactPhone?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
@@ -55404,9 +56101,11 @@ export namespace Prisma {
 
   export type DoctorUpdateWithoutPrescriptionsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    doctorCode?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     yearOfExperience?: NullableIntFieldUpdateOperationsInput | number | null
@@ -55456,9 +56155,11 @@ export namespace Prisma {
 
   export type DoctorUncheckedUpdateWithoutPrescriptionsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    doctorCode?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     yearOfExperience?: NullableIntFieldUpdateOperationsInput | number | null
@@ -55566,8 +56267,10 @@ export namespace Prisma {
 
   export type DepartmentUpdateWithoutPrescriptionsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    iconUrl?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -55581,8 +56284,10 @@ export namespace Prisma {
 
   export type DepartmentUncheckedUpdateWithoutPrescriptionsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    iconUrl?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -56009,13 +56714,23 @@ export namespace Prisma {
     id?: string
     patientCode?: string | null
     firstName: string
+    middleName?: string | null
     lastName: string
     profileImage?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     gender?: string | null
     bloodGroup?: string | null
+    maritalStatus?: string | null
+    occupation?: string | null
+    aadhaarNumber?: string | null
+    passportNumber?: string | null
+    referredBy?: string | null
+    emergencyContactName?: string | null
+    emergencyContactRelation?: string | null
+    emergencyContactPhone?: string | null
     status?: string
     address1?: string | null
     address2?: string | null
@@ -56037,13 +56752,23 @@ export namespace Prisma {
     id?: string
     patientCode?: string | null
     firstName: string
+    middleName?: string | null
     lastName: string
     profileImage?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     gender?: string | null
     bloodGroup?: string | null
+    maritalStatus?: string | null
+    occupation?: string | null
+    aadhaarNumber?: string | null
+    passportNumber?: string | null
+    referredBy?: string | null
+    emergencyContactName?: string | null
+    emergencyContactRelation?: string | null
+    emergencyContactPhone?: string | null
     status?: string
     address1?: string | null
     address2?: string | null
@@ -56216,13 +56941,23 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     patientCode?: NullableStringFieldUpdateOperationsInput | string | null
     firstName?: StringFieldUpdateOperationsInput | string
+    middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    passportNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactRelation?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactPhone?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
@@ -56244,13 +56979,23 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     patientCode?: NullableStringFieldUpdateOperationsInput | string | null
     firstName?: StringFieldUpdateOperationsInput | string
+    middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    passportNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactRelation?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactPhone?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
@@ -57180,8 +57925,10 @@ export namespace Prisma {
 
   export type DepartmentCreateManyClinicInput = {
     id?: string
+    departmentCode?: string | null
     name: string
     description?: string | null
+    iconUrl?: string | null
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -57200,9 +57947,11 @@ export namespace Prisma {
 
   export type DoctorCreateManyClinicInput = {
     id?: string
+    doctorCode?: string | null
     fullName: string
     username?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     yearOfExperience?: number | null
@@ -57275,13 +58024,23 @@ export namespace Prisma {
     id?: string
     patientCode?: string | null
     firstName: string
+    middleName?: string | null
     lastName: string
     profileImage?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     gender?: string | null
     bloodGroup?: string | null
+    maritalStatus?: string | null
+    occupation?: string | null
+    aadhaarNumber?: string | null
+    passportNumber?: string | null
+    referredBy?: string | null
+    emergencyContactName?: string | null
+    emergencyContactRelation?: string | null
+    emergencyContactPhone?: string | null
     status?: string
     address1?: string | null
     address2?: string | null
@@ -57412,6 +58171,9 @@ export namespace Prisma {
     employeeType: string
     leaveTypeId: string
     leaveTypeName: string
+    subject?: string | null
+    evidenceFiles?: NullableJsonNullValueInput | InputJsonValue
+    isPaid?: boolean
     startDate: Date | string
     endDate: Date | string
     days?: number
@@ -57557,8 +58319,10 @@ export namespace Prisma {
 
   export type DepartmentUpdateWithoutClinicInput = {
     id?: StringFieldUpdateOperationsInput | string
+    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    iconUrl?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57572,8 +58336,10 @@ export namespace Prisma {
 
   export type DepartmentUncheckedUpdateWithoutClinicInput = {
     id?: StringFieldUpdateOperationsInput | string
+    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    iconUrl?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57587,8 +58353,10 @@ export namespace Prisma {
 
   export type DepartmentUncheckedUpdateManyWithoutClinicInput = {
     id?: StringFieldUpdateOperationsInput | string
+    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    iconUrl?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57633,9 +58401,11 @@ export namespace Prisma {
 
   export type DoctorUpdateWithoutClinicInput = {
     id?: StringFieldUpdateOperationsInput | string
+    doctorCode?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     yearOfExperience?: NullableIntFieldUpdateOperationsInput | number | null
@@ -57685,9 +58455,11 @@ export namespace Prisma {
 
   export type DoctorUncheckedUpdateWithoutClinicInput = {
     id?: StringFieldUpdateOperationsInput | string
+    doctorCode?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     yearOfExperience?: NullableIntFieldUpdateOperationsInput | number | null
@@ -57737,9 +58509,11 @@ export namespace Prisma {
 
   export type DoctorUncheckedUpdateManyWithoutClinicInput = {
     id?: StringFieldUpdateOperationsInput | string
+    doctorCode?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     yearOfExperience?: NullableIntFieldUpdateOperationsInput | number | null
@@ -57864,13 +58638,23 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     patientCode?: NullableStringFieldUpdateOperationsInput | string | null
     firstName?: StringFieldUpdateOperationsInput | string
+    middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    passportNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactRelation?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactPhone?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
@@ -57892,13 +58676,23 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     patientCode?: NullableStringFieldUpdateOperationsInput | string | null
     firstName?: StringFieldUpdateOperationsInput | string
+    middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    passportNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactRelation?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactPhone?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
@@ -57920,13 +58714,23 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     patientCode?: NullableStringFieldUpdateOperationsInput | string | null
     firstName?: StringFieldUpdateOperationsInput | string
+    middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    passportNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactRelation?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactPhone?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
@@ -58283,6 +59087,9 @@ export namespace Prisma {
     employeeType?: StringFieldUpdateOperationsInput | string
     leaveTypeId?: StringFieldUpdateOperationsInput | string
     leaveTypeName?: StringFieldUpdateOperationsInput | string
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenceFiles?: NullableJsonNullValueInput | InputJsonValue
+    isPaid?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     days?: IntFieldUpdateOperationsInput | number
@@ -58299,6 +59106,9 @@ export namespace Prisma {
     employeeType?: StringFieldUpdateOperationsInput | string
     leaveTypeId?: StringFieldUpdateOperationsInput | string
     leaveTypeName?: StringFieldUpdateOperationsInput | string
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenceFiles?: NullableJsonNullValueInput | InputJsonValue
+    isPaid?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     days?: IntFieldUpdateOperationsInput | number
@@ -58315,6 +59125,9 @@ export namespace Prisma {
     employeeType?: StringFieldUpdateOperationsInput | string
     leaveTypeId?: StringFieldUpdateOperationsInput | string
     leaveTypeName?: StringFieldUpdateOperationsInput | string
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenceFiles?: NullableJsonNullValueInput | InputJsonValue
+    isPaid?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     days?: IntFieldUpdateOperationsInput | number
@@ -58750,9 +59563,11 @@ export namespace Prisma {
 
   export type DoctorCreateManyDepartmentInput = {
     id?: string
+    doctorCode?: string | null
     fullName: string
     username?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     yearOfExperience?: number | null
@@ -58902,9 +59717,11 @@ export namespace Prisma {
 
   export type DoctorUpdateWithoutDepartmentInput = {
     id?: StringFieldUpdateOperationsInput | string
+    doctorCode?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     yearOfExperience?: NullableIntFieldUpdateOperationsInput | number | null
@@ -58954,9 +59771,11 @@ export namespace Prisma {
 
   export type DoctorUncheckedUpdateWithoutDepartmentInput = {
     id?: StringFieldUpdateOperationsInput | string
+    doctorCode?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     yearOfExperience?: NullableIntFieldUpdateOperationsInput | number | null
@@ -59006,9 +59825,11 @@ export namespace Prisma {
 
   export type DoctorUncheckedUpdateManyWithoutDepartmentInput = {
     id?: StringFieldUpdateOperationsInput | string
+    doctorCode?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     yearOfExperience?: NullableIntFieldUpdateOperationsInput | number | null
@@ -59263,9 +60084,11 @@ export namespace Prisma {
 
   export type DoctorCreateManyDesignationInput = {
     id?: string
+    doctorCode?: string | null
     fullName: string
     username?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     yearOfExperience?: number | null
@@ -59336,9 +60159,11 @@ export namespace Prisma {
 
   export type DoctorUpdateWithoutDesignationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    doctorCode?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     yearOfExperience?: NullableIntFieldUpdateOperationsInput | number | null
@@ -59388,9 +60213,11 @@ export namespace Prisma {
 
   export type DoctorUncheckedUpdateWithoutDesignationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    doctorCode?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     yearOfExperience?: NullableIntFieldUpdateOperationsInput | number | null
@@ -59440,9 +60267,11 @@ export namespace Prisma {
 
   export type DoctorUncheckedUpdateManyWithoutDesignationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    doctorCode?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     yearOfExperience?: NullableIntFieldUpdateOperationsInput | number | null
@@ -59651,13 +60480,23 @@ export namespace Prisma {
     id?: string
     patientCode?: string | null
     firstName: string
+    middleName?: string | null
     lastName: string
     profileImage?: string | null
     phone?: string | null
+    alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
     gender?: string | null
     bloodGroup?: string | null
+    maritalStatus?: string | null
+    occupation?: string | null
+    aadhaarNumber?: string | null
+    passportNumber?: string | null
+    referredBy?: string | null
+    emergencyContactName?: string | null
+    emergencyContactRelation?: string | null
+    emergencyContactPhone?: string | null
     status?: string
     address1?: string | null
     address2?: string | null
@@ -59741,13 +60580,23 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     patientCode?: NullableStringFieldUpdateOperationsInput | string | null
     firstName?: StringFieldUpdateOperationsInput | string
+    middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    passportNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactRelation?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactPhone?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
@@ -59769,13 +60618,23 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     patientCode?: NullableStringFieldUpdateOperationsInput | string | null
     firstName?: StringFieldUpdateOperationsInput | string
+    middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    passportNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactRelation?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactPhone?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
@@ -59797,13 +60656,23 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     patientCode?: NullableStringFieldUpdateOperationsInput | string | null
     firstName?: StringFieldUpdateOperationsInput | string
+    middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    passportNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactRelation?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactPhone?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
@@ -60232,9 +61101,11 @@ export namespace Prisma {
 
   export type DoctorUpdateWithoutSpecializationsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    doctorCode?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     yearOfExperience?: NullableIntFieldUpdateOperationsInput | number | null
@@ -60284,9 +61155,11 @@ export namespace Prisma {
 
   export type DoctorUncheckedUpdateWithoutSpecializationsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    doctorCode?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     yearOfExperience?: NullableIntFieldUpdateOperationsInput | number | null
@@ -60336,9 +61209,11 @@ export namespace Prisma {
 
   export type DoctorUncheckedUpdateManyWithoutSpecializationsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    doctorCode?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     yearOfExperience?: NullableIntFieldUpdateOperationsInput | number | null

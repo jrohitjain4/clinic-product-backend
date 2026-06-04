@@ -3,7 +3,6 @@ import { AuthenticatedRequest } from "../middlewares/auth.middleware";
 import prisma from "../lib/prisma";
 
 
-// GET /api/payroll
 export const getPayrolls = async (req: AuthenticatedRequest, res: Response) => {
     try {
         const clinicId = req.user?.clinicId;
@@ -15,13 +14,27 @@ export const getPayrolls = async (req: AuthenticatedRequest, res: Response) => {
             orderBy: { createdAt: "desc" },
         });
 
-        res.json(payrolls);
+        const currentDate = new Date();
+        const enriched = payrolls.map((p) => {
+            let displayStatus = p.status;
+            if (displayStatus !== "Salary_Paid" && displayStatus !== "Paid") {
+                const createdDate = new Date(p.createdAt);
+                const isNextMonthOrLater =
+                    (currentDate.getFullYear() > createdDate.getFullYear()) ||
+                    (currentDate.getMonth() > createdDate.getMonth());
+                if (isNextMonthOrLater) {
+                    displayStatus = "Due";
+                }
+            }
+            return { ...p, displayStatus };
+        });
+
+        res.json(enriched);
     } catch (err: any) {
         res.status(500).json({ message: err.message });
     }
 };
 
-// POST /api/payroll
 export const createPayroll = async (req: AuthenticatedRequest, res: Response) => {
     try {
         const clinicId = req.user?.clinicId;

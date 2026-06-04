@@ -133,20 +133,22 @@ model User {
 }
 
 model Department {
-  id            String         @id @default(uuid())
-  name          String
-  description   String?
-  status        String         @default("Active")
-  clinicId      String
-  clinic        Clinic         @relation(fields: [clinicId], references: [id])
-  designations  Designation[]
-  doctors       Doctor[]
-  staffs        Staff[]
-  appointments  Appointment[]
-  services      Service[]
-  prescriptions Prescription[]
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  id             String         @id @default(uuid())
+  departmentCode String?
+  name           String
+  description    String?
+  iconUrl        String?
+  status         String         @default("Active")
+  clinicId       String
+  clinic         Clinic         @relation(fields: [clinicId], references: [id])
+  designations   Designation[]
+  doctors        Doctor[]
+  staffs         Staff[]
+  appointments   Appointment[]
+  services       Service[]
+  prescriptions  Prescription[]
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
 }
 
 model Designation {
@@ -197,9 +199,11 @@ model Staff {
 
 model Doctor {
   id                       String           @id @default(uuid())
+  doctorCode               String?
   fullName                 String
   username                 String?
   phone                    String?
+  alternateMobile          String?
   email                    String?
   dob                      DateTime?
   yearOfExperience         Int?
@@ -252,34 +256,44 @@ model Doctor {
 }
 
 model Patient {
-  id              String         @id @default(uuid())
-  patientCode     String?
-  firstName       String
-  lastName        String
-  profileImage    String?
-  phone           String?
-  email           String?
-  dob             DateTime?
-  gender          String?
-  bloodGroup      String?
-  status          String         @default("Active")
-  address1        String?
-  address2        String?
-  country         String?
-  state           String?
-  city            String?
-  pincode         String?
-  primaryDoctorId String?
-  primaryDoctor   Doctor?        @relation(fields: [primaryDoctorId], references: [id])
-  lastVisitedAt   DateTime?
-  vitals          Json?
-  clinicId        String
-  clinic          Clinic         @relation(fields: [clinicId], references: [id])
-  appointments    Appointment[]
-  prescriptions   Prescription[]
-  invoices        Invoice[]
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
+  id                       String         @id @default(uuid())
+  patientCode              String?
+  firstName                String
+  middleName               String?
+  lastName                 String
+  profileImage             String?
+  phone                    String?
+  alternateMobile          String?
+  email                    String?
+  dob                      DateTime?
+  gender                   String?
+  bloodGroup               String?
+  maritalStatus            String?
+  occupation               String?
+  aadhaarNumber            String?
+  passportNumber           String?
+  referredBy               String?
+  emergencyContactName     String?
+  emergencyContactRelation String?
+  emergencyContactPhone    String?
+  status                   String         @default("Active")
+  address1                 String?
+  address2                 String?
+  country                  String?
+  state                    String?
+  city                     String?
+  pincode                  String?
+  primaryDoctorId          String?
+  primaryDoctor            Doctor?        @relation(fields: [primaryDoctorId], references: [id])
+  lastVisitedAt            DateTime?
+  vitals                   Json?
+  clinicId                 String
+  clinic                   Clinic         @relation(fields: [clinicId], references: [id])
+  appointments             Appointment[]
+  prescriptions            Prescription[]
+  invoices                 Invoice[]
+  createdAt                DateTime       @default(now())
+  updatedAt                DateTime       @updatedAt
 
   @@index([clinicId])
   @@index([primaryDoctorId])
@@ -471,6 +485,9 @@ model Leave {
   employeeType  String // DOCTOR or STAFF
   leaveTypeId   String
   leaveTypeName String
+  subject       String?
+  evidenceFiles Json?    @default("[]")
+  isPaid        Boolean  @default(false)
   startDate     DateTime
   endDate       DateTime
   days          Int      @default(1)
