@@ -33,6 +33,7 @@ import notificationRoutes from "./routes/notification.routes";
 import settingsRoutes from "./routes/settings.routes";
 import landingRoutes from "./routes/landing.routes";
 import demoBookingRoutes from "./routes/demoBooking.routes";
+import supportRoutes from "./routes/support.routes";
 // Load environment variables
 dotenv.config();
 
@@ -115,6 +116,7 @@ app.use("/api/notifications", notificationRoutes);
 app.use("/api/settings", settingsRoutes);
 app.use("/api/landing", landingRoutes);
 app.use("/api/demo-booking", demoBookingRoutes);
+app.use("/api/support", supportRoutes);
 // Root Check
 app.get("/", (req, res) => {
   res.json({ message: "Clinic Management SaaS API is running perfectly!" });

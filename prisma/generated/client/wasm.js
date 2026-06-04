@@ -611,6 +611,21 @@ exports.Prisma.DemoBookingScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.TicketScalarFieldEnum = {
+  id: 'id',
+  ticketCode: 'ticketCode',
+  subject: 'subject',
+  description: 'description',
+  priority: 'priority',
+  status: 'status',
+  clinicId: 'clinicId',
+  userId: 'userId',
+  userName: 'userName',
+  userEmail: 'userEmail',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -687,7 +702,8 @@ exports.Prisma.ModelName = {
   Product: 'Product',
   Notification: 'Notification',
   SystemSetting: 'SystemSetting',
-  DemoBooking: 'DemoBooking'
+  DemoBooking: 'DemoBooking',
+  Ticket: 'Ticket'
 };
 
 /**
