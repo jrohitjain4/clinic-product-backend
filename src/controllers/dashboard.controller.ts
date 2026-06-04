@@ -27,6 +27,41 @@ export const getDashboardStats = async (req: AuthenticatedRequest, res: Response
         const cancelledAppointments = allAppointments.filter(app => app.status === 'Cancelled').length;
         const rescheduledAppointments = allAppointments.filter(app => app.status === 'Rescheduled').length;
 
+        const clinicInfo = await prisma.clinic.findUnique({
+            where: { id: clinicId },
+            include: { landingPage: true }
+        });
+
+        let profileCompletion = 0;
+        if (clinicInfo) {
+            let filledFields = 0;
+            const totalFields = 15;
+
+            // Clinic check
+            if (clinicInfo.name) filledFields++;
+            if (clinicInfo.ownerName) filledFields++;
+            if (clinicInfo.ownerEmail) filledFields++;
+            if (clinicInfo.phone || clinicInfo.whatsappNumber) filledFields++;
+            if (clinicInfo.addressLine1) filledFields++;
+            if (clinicInfo.city) filledFields++;
+            if (clinicInfo.gstNumber) filledFields++;
+            if (clinicInfo.emergencyContact) filledFields++;
+
+            // LandingPage check
+            const lp = clinicInfo.landingPage;
+            if (lp) {
+                if (lp.tagline) filledFields++;
+                if (lp.logo) filledFields++;
+                if (lp.headerImage) filledFields++;
+                if (lp.about) filledFields++;
+                if (lp.established) filledFields++;
+                if (lp.timetable && (lp.timetable as string) !== "{}") filledFields++;
+                if (lp.gallery && (lp.gallery as any[]).length > 0) filledFields++;
+            }
+
+            profileCompletion = Math.round((filledFields / totalFields) * 100);
+        }
+
         res.json({
             doctorsCount,
             patientsCount,
@@ -37,7 +72,8 @@ export const getDashboardStats = async (req: AuthenticatedRequest, res: Response
                 completed: completedAppointments,
                 cancelled: cancelledAppointments,
                 rescheduled: rescheduledAppointments
-            }
+            },
+            profileCompletion
         });
     } catch (error) {
         console.error('Get Dashboard Stats Error:', error);

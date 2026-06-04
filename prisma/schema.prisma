@@ -41,6 +41,8 @@ model Clinic {
   state                 String?
   country               String?
   pincode               String?
+  gstNumber             String?
+  emergencyContact      String?
   doctorCount           Int?
   status                ClinicStatus           @default(IN_PROGRESS)
   packageId             String?
@@ -94,6 +96,11 @@ model LandingPage {
   reviews        Json?    @default("[]")
   gallery        Json?    @default("[]")
   services       Json?    @default("[]")
+  faqs           Json?    @default("[]")
+  timetable      Json?    @default("{}")
+  headerImage    String?
+  aboutImage     String?
+  gmbUrl         String?
   logo           String?
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt

@@ -29,6 +29,50 @@ export const getClinics = async (req: Request, res: Response) => {
   }
 };
 
+export const updateProfile = async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    if (!req.user || !req.user.clinicId) return res.status(401).json({ message: "Unauthorized" });
+    const { firstName, lastName, email, phone, addressLine1, addressLine2, country, state, city, pincode, clinicName, gstNo, clinicLogo } = req.body;
+
+    const updatedUser = await prisma.user.update({
+      where: { id: req.user.id },
+      data: {
+        fullName: `${firstName} ${lastName}`.trim(),
+        email: email || undefined
+      }
+    });
+
+    const updatedClinic = await prisma.clinic.update({
+      where: { id: req.user.clinicId },
+      data: {
+        name: clinicName || undefined,
+        gstNumber: gstNo,
+        phone,
+        addressLine1,
+        addressLine2,
+        country,
+        state,
+        city,
+        pincode,
+        ...(clinicLogo ? {
+          landingPage: {
+            upsert: {
+              create: { logo: clinicLogo },
+              update: { logo: clinicLogo }
+            }
+          }
+        } : {})
+      },
+      include: { landingPage: true }
+    });
+
+    return res.json({ message: "Profile updated successfully", user: { ...updatedUser, clinic: updatedClinic } });
+  } catch (err: any) {
+    console.error("Update profile error:", err);
+    return res.status(500).json({ message: err.message || "Failed to update profile" });
+  }
+};
+
 // Get all active subscription packages
 export const getPackages = async (req: Request, res: Response) => {
   try {

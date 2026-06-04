@@ -3905,6 +3905,8 @@ export namespace Prisma {
     state: string | null
     country: string | null
     pincode: string | null
+    gstNumber: string | null
+    emergencyContact: string | null
     doctorCount: number | null
     status: $Enums.ClinicStatus | null
     packageId: string | null
@@ -3930,6 +3932,8 @@ export namespace Prisma {
     state: string | null
     country: string | null
     pincode: string | null
+    gstNumber: string | null
+    emergencyContact: string | null
     doctorCount: number | null
     status: $Enums.ClinicStatus | null
     packageId: string | null
@@ -3955,6 +3959,8 @@ export namespace Prisma {
     state: number
     country: number
     pincode: number
+    gstNumber: number
+    emergencyContact: number
     doctorCount: number
     status: number
     packageId: number
@@ -3990,6 +3996,8 @@ export namespace Prisma {
     state?: true
     country?: true
     pincode?: true
+    gstNumber?: true
+    emergencyContact?: true
     doctorCount?: true
     status?: true
     packageId?: true
@@ -4015,6 +4023,8 @@ export namespace Prisma {
     state?: true
     country?: true
     pincode?: true
+    gstNumber?: true
+    emergencyContact?: true
     doctorCount?: true
     status?: true
     packageId?: true
@@ -4040,6 +4050,8 @@ export namespace Prisma {
     state?: true
     country?: true
     pincode?: true
+    gstNumber?: true
+    emergencyContact?: true
     doctorCount?: true
     status?: true
     packageId?: true
@@ -4152,6 +4164,8 @@ export namespace Prisma {
     state: string | null
     country: string | null
     pincode: string | null
+    gstNumber: string | null
+    emergencyContact: string | null
     doctorCount: number | null
     status: $Enums.ClinicStatus
     packageId: string | null
@@ -4196,6 +4210,8 @@ export namespace Prisma {
     state?: boolean
     country?: boolean
     pincode?: boolean
+    gstNumber?: boolean
+    emergencyContact?: boolean
     doctorCount?: boolean
     status?: boolean
     packageId?: boolean
@@ -4247,6 +4263,8 @@ export namespace Prisma {
     state?: boolean
     country?: boolean
     pincode?: boolean
+    gstNumber?: boolean
+    emergencyContact?: boolean
     doctorCount?: boolean
     status?: boolean
     packageId?: boolean
@@ -4273,6 +4291,8 @@ export namespace Prisma {
     state?: boolean
     country?: boolean
     pincode?: boolean
+    gstNumber?: boolean
+    emergencyContact?: boolean
     doctorCount?: boolean
     status?: boolean
     packageId?: boolean
@@ -4359,6 +4379,8 @@ export namespace Prisma {
       state: string | null
       country: string | null
       pincode: string | null
+      gstNumber: string | null
+      emergencyContact: string | null
       doctorCount: number | null
       status: $Enums.ClinicStatus
       packageId: string | null
@@ -4799,6 +4821,8 @@ export namespace Prisma {
     readonly state: FieldRef<"Clinic", 'String'>
     readonly country: FieldRef<"Clinic", 'String'>
     readonly pincode: FieldRef<"Clinic", 'String'>
+    readonly gstNumber: FieldRef<"Clinic", 'String'>
+    readonly emergencyContact: FieldRef<"Clinic", 'String'>
     readonly doctorCount: FieldRef<"Clinic", 'Int'>
     readonly status: FieldRef<"Clinic", 'ClinicStatus'>
     readonly packageId: FieldRef<"Clinic", 'String'>
@@ -5665,6 +5689,9 @@ export namespace Prisma {
     experience: number | null
     mapUrl: string | null
     directionsUrl: string | null
+    headerImage: string | null
+    aboutImage: string | null
+    gmbUrl: string | null
     logo: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -5684,6 +5711,9 @@ export namespace Prisma {
     experience: number | null
     mapUrl: string | null
     directionsUrl: string | null
+    headerImage: string | null
+    aboutImage: string | null
+    gmbUrl: string | null
     logo: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -5706,6 +5736,11 @@ export namespace Prisma {
     reviews: number
     gallery: number
     services: number
+    faqs: number
+    timetable: number
+    headerImage: number
+    aboutImage: number
+    gmbUrl: number
     logo: number
     createdAt: number
     updatedAt: number
@@ -5737,6 +5772,9 @@ export namespace Prisma {
     experience?: true
     mapUrl?: true
     directionsUrl?: true
+    headerImage?: true
+    aboutImage?: true
+    gmbUrl?: true
     logo?: true
     createdAt?: true
     updatedAt?: true
@@ -5756,6 +5794,9 @@ export namespace Prisma {
     experience?: true
     mapUrl?: true
     directionsUrl?: true
+    headerImage?: true
+    aboutImage?: true
+    gmbUrl?: true
     logo?: true
     createdAt?: true
     updatedAt?: true
@@ -5778,6 +5819,11 @@ export namespace Prisma {
     reviews?: true
     gallery?: true
     services?: true
+    faqs?: true
+    timetable?: true
+    headerImage?: true
+    aboutImage?: true
+    gmbUrl?: true
     logo?: true
     createdAt?: true
     updatedAt?: true
@@ -5887,6 +5933,11 @@ export namespace Prisma {
     reviews: JsonValue | null
     gallery: JsonValue | null
     services: JsonValue | null
+    faqs: JsonValue | null
+    timetable: JsonValue | null
+    headerImage: string | null
+    aboutImage: string | null
+    gmbUrl: string | null
     logo: string | null
     createdAt: Date
     updatedAt: Date
@@ -5928,6 +5979,11 @@ export namespace Prisma {
     reviews?: boolean
     gallery?: boolean
     services?: boolean
+    faqs?: boolean
+    timetable?: boolean
+    headerImage?: boolean
+    aboutImage?: boolean
+    gmbUrl?: boolean
     logo?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -5951,6 +6007,11 @@ export namespace Prisma {
     reviews?: boolean
     gallery?: boolean
     services?: boolean
+    faqs?: boolean
+    timetable?: boolean
+    headerImage?: boolean
+    aboutImage?: boolean
+    gmbUrl?: boolean
     logo?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -5974,6 +6035,11 @@ export namespace Prisma {
     reviews?: boolean
     gallery?: boolean
     services?: boolean
+    faqs?: boolean
+    timetable?: boolean
+    headerImage?: boolean
+    aboutImage?: boolean
+    gmbUrl?: boolean
     logo?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -6008,6 +6074,11 @@ export namespace Prisma {
       reviews: Prisma.JsonValue | null
       gallery: Prisma.JsonValue | null
       services: Prisma.JsonValue | null
+      faqs: Prisma.JsonValue | null
+      timetable: Prisma.JsonValue | null
+      headerImage: string | null
+      aboutImage: string | null
+      gmbUrl: string | null
       logo: string | null
       createdAt: Date
       updatedAt: Date
@@ -6421,6 +6492,11 @@ export namespace Prisma {
     readonly reviews: FieldRef<"LandingPage", 'Json'>
     readonly gallery: FieldRef<"LandingPage", 'Json'>
     readonly services: FieldRef<"LandingPage", 'Json'>
+    readonly faqs: FieldRef<"LandingPage", 'Json'>
+    readonly timetable: FieldRef<"LandingPage", 'Json'>
+    readonly headerImage: FieldRef<"LandingPage", 'String'>
+    readonly aboutImage: FieldRef<"LandingPage", 'String'>
+    readonly gmbUrl: FieldRef<"LandingPage", 'String'>
     readonly logo: FieldRef<"LandingPage", 'String'>
     readonly createdAt: FieldRef<"LandingPage", 'DateTime'>
     readonly updatedAt: FieldRef<"LandingPage", 'DateTime'>
@@ -34760,6 +34836,8 @@ export namespace Prisma {
     state: 'state',
     country: 'country',
     pincode: 'pincode',
+    gstNumber: 'gstNumber',
+    emergencyContact: 'emergencyContact',
     doctorCount: 'doctorCount',
     status: 'status',
     packageId: 'packageId',
@@ -34790,6 +34868,11 @@ export namespace Prisma {
     reviews: 'reviews',
     gallery: 'gallery',
     services: 'services',
+    faqs: 'faqs',
+    timetable: 'timetable',
+    headerImage: 'headerImage',
+    aboutImage: 'aboutImage',
+    gmbUrl: 'gmbUrl',
     logo: 'logo',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -35468,6 +35551,8 @@ export namespace Prisma {
     state?: StringNullableFilter<"Clinic"> | string | null
     country?: StringNullableFilter<"Clinic"> | string | null
     pincode?: StringNullableFilter<"Clinic"> | string | null
+    gstNumber?: StringNullableFilter<"Clinic"> | string | null
+    emergencyContact?: StringNullableFilter<"Clinic"> | string | null
     doctorCount?: IntNullableFilter<"Clinic"> | number | null
     status?: EnumClinicStatusFilter<"Clinic"> | $Enums.ClinicStatus
     packageId?: StringNullableFilter<"Clinic"> | string | null
@@ -35518,6 +35603,8 @@ export namespace Prisma {
     state?: SortOrderInput | SortOrder
     country?: SortOrderInput | SortOrder
     pincode?: SortOrderInput | SortOrder
+    gstNumber?: SortOrderInput | SortOrder
+    emergencyContact?: SortOrderInput | SortOrder
     doctorCount?: SortOrderInput | SortOrder
     status?: SortOrder
     packageId?: SortOrderInput | SortOrder
@@ -35571,6 +35658,8 @@ export namespace Prisma {
     state?: StringNullableFilter<"Clinic"> | string | null
     country?: StringNullableFilter<"Clinic"> | string | null
     pincode?: StringNullableFilter<"Clinic"> | string | null
+    gstNumber?: StringNullableFilter<"Clinic"> | string | null
+    emergencyContact?: StringNullableFilter<"Clinic"> | string | null
     doctorCount?: IntNullableFilter<"Clinic"> | number | null
     status?: EnumClinicStatusFilter<"Clinic"> | $Enums.ClinicStatus
     packageId?: StringNullableFilter<"Clinic"> | string | null
@@ -35621,6 +35710,8 @@ export namespace Prisma {
     state?: SortOrderInput | SortOrder
     country?: SortOrderInput | SortOrder
     pincode?: SortOrderInput | SortOrder
+    gstNumber?: SortOrderInput | SortOrder
+    emergencyContact?: SortOrderInput | SortOrder
     doctorCount?: SortOrderInput | SortOrder
     status?: SortOrder
     packageId?: SortOrderInput | SortOrder
@@ -35654,6 +35745,8 @@ export namespace Prisma {
     state?: StringNullableWithAggregatesFilter<"Clinic"> | string | null
     country?: StringNullableWithAggregatesFilter<"Clinic"> | string | null
     pincode?: StringNullableWithAggregatesFilter<"Clinic"> | string | null
+    gstNumber?: StringNullableWithAggregatesFilter<"Clinic"> | string | null
+    emergencyContact?: StringNullableWithAggregatesFilter<"Clinic"> | string | null
     doctorCount?: IntNullableWithAggregatesFilter<"Clinic"> | number | null
     status?: EnumClinicStatusWithAggregatesFilter<"Clinic"> | $Enums.ClinicStatus
     packageId?: StringNullableWithAggregatesFilter<"Clinic"> | string | null
@@ -35684,6 +35777,11 @@ export namespace Prisma {
     reviews?: JsonNullableFilter<"LandingPage">
     gallery?: JsonNullableFilter<"LandingPage">
     services?: JsonNullableFilter<"LandingPage">
+    faqs?: JsonNullableFilter<"LandingPage">
+    timetable?: JsonNullableFilter<"LandingPage">
+    headerImage?: StringNullableFilter<"LandingPage"> | string | null
+    aboutImage?: StringNullableFilter<"LandingPage"> | string | null
+    gmbUrl?: StringNullableFilter<"LandingPage"> | string | null
     logo?: StringNullableFilter<"LandingPage"> | string | null
     createdAt?: DateTimeFilter<"LandingPage"> | Date | string
     updatedAt?: DateTimeFilter<"LandingPage"> | Date | string
@@ -35707,6 +35805,11 @@ export namespace Prisma {
     reviews?: SortOrderInput | SortOrder
     gallery?: SortOrderInput | SortOrder
     services?: SortOrderInput | SortOrder
+    faqs?: SortOrderInput | SortOrder
+    timetable?: SortOrderInput | SortOrder
+    headerImage?: SortOrderInput | SortOrder
+    aboutImage?: SortOrderInput | SortOrder
+    gmbUrl?: SortOrderInput | SortOrder
     logo?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -35733,6 +35836,11 @@ export namespace Prisma {
     reviews?: JsonNullableFilter<"LandingPage">
     gallery?: JsonNullableFilter<"LandingPage">
     services?: JsonNullableFilter<"LandingPage">
+    faqs?: JsonNullableFilter<"LandingPage">
+    timetable?: JsonNullableFilter<"LandingPage">
+    headerImage?: StringNullableFilter<"LandingPage"> | string | null
+    aboutImage?: StringNullableFilter<"LandingPage"> | string | null
+    gmbUrl?: StringNullableFilter<"LandingPage"> | string | null
     logo?: StringNullableFilter<"LandingPage"> | string | null
     createdAt?: DateTimeFilter<"LandingPage"> | Date | string
     updatedAt?: DateTimeFilter<"LandingPage"> | Date | string
@@ -35756,6 +35864,11 @@ export namespace Prisma {
     reviews?: SortOrderInput | SortOrder
     gallery?: SortOrderInput | SortOrder
     services?: SortOrderInput | SortOrder
+    faqs?: SortOrderInput | SortOrder
+    timetable?: SortOrderInput | SortOrder
+    headerImage?: SortOrderInput | SortOrder
+    aboutImage?: SortOrderInput | SortOrder
+    gmbUrl?: SortOrderInput | SortOrder
     logo?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -35786,6 +35899,11 @@ export namespace Prisma {
     reviews?: JsonNullableWithAggregatesFilter<"LandingPage">
     gallery?: JsonNullableWithAggregatesFilter<"LandingPage">
     services?: JsonNullableWithAggregatesFilter<"LandingPage">
+    faqs?: JsonNullableWithAggregatesFilter<"LandingPage">
+    timetable?: JsonNullableWithAggregatesFilter<"LandingPage">
+    headerImage?: StringNullableWithAggregatesFilter<"LandingPage"> | string | null
+    aboutImage?: StringNullableWithAggregatesFilter<"LandingPage"> | string | null
+    gmbUrl?: StringNullableWithAggregatesFilter<"LandingPage"> | string | null
     logo?: StringNullableWithAggregatesFilter<"LandingPage"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"LandingPage"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"LandingPage"> | Date | string
@@ -38433,6 +38551,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
@@ -38482,6 +38602,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
@@ -38531,6 +38653,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -38580,6 +38704,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -38629,6 +38755,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
@@ -38654,6 +38782,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -38678,6 +38808,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -38704,6 +38836,11 @@ export namespace Prisma {
     reviews?: NullableJsonNullValueInput | InputJsonValue
     gallery?: NullableJsonNullValueInput | InputJsonValue
     services?: NullableJsonNullValueInput | InputJsonValue
+    faqs?: NullableJsonNullValueInput | InputJsonValue
+    timetable?: NullableJsonNullValueInput | InputJsonValue
+    headerImage?: string | null
+    aboutImage?: string | null
+    gmbUrl?: string | null
     logo?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -38727,6 +38864,11 @@ export namespace Prisma {
     reviews?: NullableJsonNullValueInput | InputJsonValue
     gallery?: NullableJsonNullValueInput | InputJsonValue
     services?: NullableJsonNullValueInput | InputJsonValue
+    faqs?: NullableJsonNullValueInput | InputJsonValue
+    timetable?: NullableJsonNullValueInput | InputJsonValue
+    headerImage?: string | null
+    aboutImage?: string | null
+    gmbUrl?: string | null
     logo?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -38748,6 +38890,11 @@ export namespace Prisma {
     reviews?: NullableJsonNullValueInput | InputJsonValue
     gallery?: NullableJsonNullValueInput | InputJsonValue
     services?: NullableJsonNullValueInput | InputJsonValue
+    faqs?: NullableJsonNullValueInput | InputJsonValue
+    timetable?: NullableJsonNullValueInput | InputJsonValue
+    headerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutImage?: NullableStringFieldUpdateOperationsInput | string | null
+    gmbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     logo?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -38771,6 +38918,11 @@ export namespace Prisma {
     reviews?: NullableJsonNullValueInput | InputJsonValue
     gallery?: NullableJsonNullValueInput | InputJsonValue
     services?: NullableJsonNullValueInput | InputJsonValue
+    faqs?: NullableJsonNullValueInput | InputJsonValue
+    timetable?: NullableJsonNullValueInput | InputJsonValue
+    headerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutImage?: NullableStringFieldUpdateOperationsInput | string | null
+    gmbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     logo?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -38793,6 +38945,11 @@ export namespace Prisma {
     reviews?: NullableJsonNullValueInput | InputJsonValue
     gallery?: NullableJsonNullValueInput | InputJsonValue
     services?: NullableJsonNullValueInput | InputJsonValue
+    faqs?: NullableJsonNullValueInput | InputJsonValue
+    timetable?: NullableJsonNullValueInput | InputJsonValue
+    headerImage?: string | null
+    aboutImage?: string | null
+    gmbUrl?: string | null
     logo?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -38814,6 +38971,11 @@ export namespace Prisma {
     reviews?: NullableJsonNullValueInput | InputJsonValue
     gallery?: NullableJsonNullValueInput | InputJsonValue
     services?: NullableJsonNullValueInput | InputJsonValue
+    faqs?: NullableJsonNullValueInput | InputJsonValue
+    timetable?: NullableJsonNullValueInput | InputJsonValue
+    headerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutImage?: NullableStringFieldUpdateOperationsInput | string | null
+    gmbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     logo?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -38836,6 +38998,11 @@ export namespace Prisma {
     reviews?: NullableJsonNullValueInput | InputJsonValue
     gallery?: NullableJsonNullValueInput | InputJsonValue
     services?: NullableJsonNullValueInput | InputJsonValue
+    faqs?: NullableJsonNullValueInput | InputJsonValue
+    timetable?: NullableJsonNullValueInput | InputJsonValue
+    headerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutImage?: NullableStringFieldUpdateOperationsInput | string | null
+    gmbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     logo?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -42162,6 +42329,8 @@ export namespace Prisma {
     state?: SortOrder
     country?: SortOrder
     pincode?: SortOrder
+    gstNumber?: SortOrder
+    emergencyContact?: SortOrder
     doctorCount?: SortOrder
     status?: SortOrder
     packageId?: SortOrder
@@ -42191,6 +42360,8 @@ export namespace Prisma {
     state?: SortOrder
     country?: SortOrder
     pincode?: SortOrder
+    gstNumber?: SortOrder
+    emergencyContact?: SortOrder
     doctorCount?: SortOrder
     status?: SortOrder
     packageId?: SortOrder
@@ -42216,6 +42387,8 @@ export namespace Prisma {
     state?: SortOrder
     country?: SortOrder
     pincode?: SortOrder
+    gstNumber?: SortOrder
+    emergencyContact?: SortOrder
     doctorCount?: SortOrder
     status?: SortOrder
     packageId?: SortOrder
@@ -42372,6 +42545,11 @@ export namespace Prisma {
     reviews?: SortOrder
     gallery?: SortOrder
     services?: SortOrder
+    faqs?: SortOrder
+    timetable?: SortOrder
+    headerImage?: SortOrder
+    aboutImage?: SortOrder
+    gmbUrl?: SortOrder
     logo?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -42396,6 +42574,9 @@ export namespace Prisma {
     experience?: SortOrder
     mapUrl?: SortOrder
     directionsUrl?: SortOrder
+    headerImage?: SortOrder
+    aboutImage?: SortOrder
+    gmbUrl?: SortOrder
     logo?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -42415,6 +42596,9 @@ export namespace Prisma {
     experience?: SortOrder
     mapUrl?: SortOrder
     directionsUrl?: SortOrder
+    headerImage?: SortOrder
+    aboutImage?: SortOrder
+    gmbUrl?: SortOrder
     logo?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -48049,6 +48233,11 @@ export namespace Prisma {
     reviews?: NullableJsonNullValueInput | InputJsonValue
     gallery?: NullableJsonNullValueInput | InputJsonValue
     services?: NullableJsonNullValueInput | InputJsonValue
+    faqs?: NullableJsonNullValueInput | InputJsonValue
+    timetable?: NullableJsonNullValueInput | InputJsonValue
+    headerImage?: string | null
+    aboutImage?: string | null
+    gmbUrl?: string | null
     logo?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -48070,6 +48259,11 @@ export namespace Prisma {
     reviews?: NullableJsonNullValueInput | InputJsonValue
     gallery?: NullableJsonNullValueInput | InputJsonValue
     services?: NullableJsonNullValueInput | InputJsonValue
+    faqs?: NullableJsonNullValueInput | InputJsonValue
+    timetable?: NullableJsonNullValueInput | InputJsonValue
+    headerImage?: string | null
+    aboutImage?: string | null
+    gmbUrl?: string | null
     logo?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -48968,6 +49162,11 @@ export namespace Prisma {
     reviews?: NullableJsonNullValueInput | InputJsonValue
     gallery?: NullableJsonNullValueInput | InputJsonValue
     services?: NullableJsonNullValueInput | InputJsonValue
+    faqs?: NullableJsonNullValueInput | InputJsonValue
+    timetable?: NullableJsonNullValueInput | InputJsonValue
+    headerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutImage?: NullableStringFieldUpdateOperationsInput | string | null
+    gmbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     logo?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -48989,6 +49188,11 @@ export namespace Prisma {
     reviews?: NullableJsonNullValueInput | InputJsonValue
     gallery?: NullableJsonNullValueInput | InputJsonValue
     services?: NullableJsonNullValueInput | InputJsonValue
+    faqs?: NullableJsonNullValueInput | InputJsonValue
+    timetable?: NullableJsonNullValueInput | InputJsonValue
+    headerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutImage?: NullableStringFieldUpdateOperationsInput | string | null
+    gmbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     logo?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -49009,6 +49213,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
@@ -49057,6 +49263,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
@@ -49121,6 +49329,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -49169,6 +49379,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -49217,6 +49429,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
@@ -49265,6 +49479,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
@@ -49342,6 +49558,8 @@ export namespace Prisma {
     state?: StringNullableFilter<"Clinic"> | string | null
     country?: StringNullableFilter<"Clinic"> | string | null
     pincode?: StringNullableFilter<"Clinic"> | string | null
+    gstNumber?: StringNullableFilter<"Clinic"> | string | null
+    emergencyContact?: StringNullableFilter<"Clinic"> | string | null
     doctorCount?: IntNullableFilter<"Clinic"> | number | null
     status?: EnumClinicStatusFilter<"Clinic"> | $Enums.ClinicStatus
     packageId?: StringNullableFilter<"Clinic"> | string | null
@@ -49367,6 +49585,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
@@ -49415,6 +49635,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
@@ -49479,6 +49701,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -49527,6 +49751,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -49575,6 +49801,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
@@ -49623,6 +49851,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
@@ -50023,6 +50253,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -50071,6 +50303,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -50215,6 +50449,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
@@ -50263,6 +50499,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
@@ -50546,6 +50784,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -50594,6 +50834,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -50789,6 +51031,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
@@ -50837,6 +51081,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
@@ -51035,6 +51281,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -51083,6 +51331,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -51244,6 +51494,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
@@ -51292,6 +51544,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
@@ -51628,6 +51882,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -51676,6 +51932,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -51885,6 +52143,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
@@ -51933,6 +52193,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
@@ -52250,6 +52512,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -52298,6 +52562,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -52627,6 +52893,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
@@ -52675,6 +52943,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
@@ -53032,6 +53302,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -53080,6 +53352,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53183,6 +53457,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
@@ -53231,6 +53507,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
@@ -53374,6 +53652,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -53422,6 +53702,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53486,6 +53768,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
@@ -53534,6 +53818,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
@@ -53711,6 +53997,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -53759,6 +54047,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53823,6 +54113,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
@@ -53871,6 +54163,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
@@ -53935,6 +54229,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -53983,6 +54279,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -54088,6 +54386,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
@@ -54136,6 +54436,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
@@ -54263,6 +54565,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -54311,6 +54615,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -54359,6 +54665,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
@@ -54407,6 +54715,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
@@ -54471,6 +54781,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -54519,6 +54831,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -54567,6 +54881,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
@@ -54615,6 +54931,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
@@ -54679,6 +54997,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -54727,6 +55047,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -54775,6 +55097,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
@@ -54823,6 +55147,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
@@ -54887,6 +55213,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -54935,6 +55263,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -54983,6 +55313,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
@@ -55031,6 +55363,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
@@ -55095,6 +55429,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -55143,6 +55479,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -55191,6 +55529,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
@@ -55239,6 +55579,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
@@ -55303,6 +55645,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -55351,6 +55695,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -55399,6 +55745,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
@@ -55447,6 +55795,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
@@ -55511,6 +55861,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -55559,6 +55911,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -55881,6 +56235,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
@@ -55929,6 +56285,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
@@ -56325,6 +56683,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -56373,6 +56733,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -56474,6 +56836,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
@@ -56522,6 +56886,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
@@ -56629,6 +56995,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -56677,6 +57045,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -56806,6 +57176,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
@@ -56854,6 +57226,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
@@ -57039,6 +57413,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -57087,6 +57463,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -57219,6 +57597,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
@@ -57267,6 +57647,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
@@ -57411,6 +57793,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -57459,6 +57843,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -57507,6 +57893,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
@@ -57555,6 +57943,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
@@ -57619,6 +58009,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -57667,6 +58059,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -57715,6 +58109,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
@@ -57763,6 +58159,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageId?: string | null
@@ -57827,6 +58225,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -57875,6 +58275,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -59421,6 +59823,8 @@ export namespace Prisma {
     state?: string | null
     country?: string | null
     pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
     packageStartsAt?: Date | string | null
@@ -59445,6 +59849,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -59493,6 +59899,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -59541,6 +59949,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
