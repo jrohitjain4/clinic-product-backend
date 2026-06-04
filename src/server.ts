@@ -75,10 +75,10 @@ app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
-// Rate limiting on auth routes (20 requests per 15 minutes)
+// Rate limiting on auth routes (200 requests per 15 minutes)
 const authRateLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 20,
+  max: 200,
   standardHeaders: true,
   legacyHeaders: false,
   message: { message: "Too many requests, please try again later." },
