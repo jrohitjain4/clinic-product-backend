@@ -114,6 +114,11 @@ export type LeaveType = $Result.DefaultSelection<Prisma.$LeaveTypePayload>
  */
 export type Leave = $Result.DefaultSelection<Prisma.$LeavePayload>
 /**
+ * Model WorkingDaysConfig
+ * 
+ */
+export type WorkingDaysConfig = $Result.DefaultSelection<Prisma.$WorkingDaysConfigPayload>
+/**
  * Model Prescription
  * 
  */
@@ -513,6 +518,16 @@ export class PrismaClient<
     * ```
     */
   get leave(): Prisma.LeaveDelegate<ExtArgs>;
+
+  /**
+   * `prisma.workingDaysConfig`: Exposes CRUD operations for the **WorkingDaysConfig** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more WorkingDaysConfigs
+    * const workingDaysConfigs = await prisma.workingDaysConfig.findMany()
+    * ```
+    */
+  get workingDaysConfig(): Prisma.WorkingDaysConfigDelegate<ExtArgs>;
 
   /**
    * `prisma.prescription`: Exposes CRUD operations for the **Prescription** model.
@@ -1054,6 +1069,7 @@ export namespace Prisma {
     Attendance: 'Attendance',
     LeaveType: 'LeaveType',
     Leave: 'Leave',
+    WorkingDaysConfig: 'WorkingDaysConfig',
     Prescription: 'Prescription',
     PrescriptionMedicine: 'PrescriptionMedicine',
     Invoice: 'Invoice',
@@ -1077,7 +1093,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "clinic" | "landingPage" | "subscriptionPackage" | "user" | "department" | "designation" | "staff" | "doctor" | "patient" | "appointment" | "service" | "specialization" | "holiday" | "payroll" | "expense" | "expenseCategory" | "clinicRole" | "attendance" | "leaveType" | "leave" | "prescription" | "prescriptionMedicine" | "invoice" | "invoiceItem" | "product" | "notification" | "systemSetting" | "demoBooking"
+      modelProps: "clinic" | "landingPage" | "subscriptionPackage" | "user" | "department" | "designation" | "staff" | "doctor" | "patient" | "appointment" | "service" | "specialization" | "holiday" | "payroll" | "expense" | "expenseCategory" | "clinicRole" | "attendance" | "leaveType" | "leave" | "workingDaysConfig" | "prescription" | "prescriptionMedicine" | "invoice" | "invoiceItem" | "product" | "notification" | "systemSetting" | "demoBooking"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2478,6 +2494,76 @@ export namespace Prisma {
           count: {
             args: Prisma.LeaveCountArgs<ExtArgs>
             result: $Utils.Optional<LeaveCountAggregateOutputType> | number
+          }
+        }
+      }
+      WorkingDaysConfig: {
+        payload: Prisma.$WorkingDaysConfigPayload<ExtArgs>
+        fields: Prisma.WorkingDaysConfigFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.WorkingDaysConfigFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WorkingDaysConfigPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.WorkingDaysConfigFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WorkingDaysConfigPayload>
+          }
+          findFirst: {
+            args: Prisma.WorkingDaysConfigFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WorkingDaysConfigPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.WorkingDaysConfigFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WorkingDaysConfigPayload>
+          }
+          findMany: {
+            args: Prisma.WorkingDaysConfigFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WorkingDaysConfigPayload>[]
+          }
+          create: {
+            args: Prisma.WorkingDaysConfigCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WorkingDaysConfigPayload>
+          }
+          createMany: {
+            args: Prisma.WorkingDaysConfigCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.WorkingDaysConfigCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WorkingDaysConfigPayload>[]
+          }
+          delete: {
+            args: Prisma.WorkingDaysConfigDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WorkingDaysConfigPayload>
+          }
+          update: {
+            args: Prisma.WorkingDaysConfigUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WorkingDaysConfigPayload>
+          }
+          deleteMany: {
+            args: Prisma.WorkingDaysConfigDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.WorkingDaysConfigUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.WorkingDaysConfigUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WorkingDaysConfigPayload>
+          }
+          aggregate: {
+            args: Prisma.WorkingDaysConfigAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateWorkingDaysConfig>
+          }
+          groupBy: {
+            args: Prisma.WorkingDaysConfigGroupByArgs<ExtArgs>
+            result: $Utils.Optional<WorkingDaysConfigGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.WorkingDaysConfigCountArgs<ExtArgs>
+            result: $Utils.Optional<WorkingDaysConfigCountAggregateOutputType> | number
           }
         }
       }
@@ -4245,6 +4331,7 @@ export namespace Prisma {
     products?: boolean | Clinic$productsArgs<ExtArgs>
     notifications?: boolean | Clinic$notificationsArgs<ExtArgs>
     landingPage?: boolean | Clinic$landingPageArgs<ExtArgs>
+    workingDaysConfig?: boolean | Clinic$workingDaysConfigArgs<ExtArgs>
     _count?: boolean | ClinicCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["clinic"]>
 
@@ -4329,6 +4416,7 @@ export namespace Prisma {
     products?: boolean | Clinic$productsArgs<ExtArgs>
     notifications?: boolean | Clinic$notificationsArgs<ExtArgs>
     landingPage?: boolean | Clinic$landingPageArgs<ExtArgs>
+    workingDaysConfig?: boolean | Clinic$workingDaysConfigArgs<ExtArgs>
     _count?: boolean | ClinicCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ClinicIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4363,6 +4451,7 @@ export namespace Prisma {
       products: Prisma.$ProductPayload<ExtArgs>[]
       notifications: Prisma.$NotificationPayload<ExtArgs>[]
       landingPage: Prisma.$LandingPagePayload<ExtArgs> | null
+      workingDaysConfig: Prisma.$WorkingDaysConfigPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4778,6 +4867,7 @@ export namespace Prisma {
     products<T extends Clinic$productsArgs<ExtArgs> = {}>(args?: Subset<T, Clinic$productsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany"> | Null>
     notifications<T extends Clinic$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, Clinic$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany"> | Null>
     landingPage<T extends Clinic$landingPageArgs<ExtArgs> = {}>(args?: Subset<T, Clinic$landingPageArgs<ExtArgs>>): Prisma__LandingPageClient<$Result.GetResult<Prisma.$LandingPagePayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    workingDaysConfig<T extends Clinic$workingDaysConfigArgs<ExtArgs> = {}>(args?: Subset<T, Clinic$workingDaysConfigArgs<ExtArgs>>): Prisma__WorkingDaysConfigClient<$Result.GetResult<Prisma.$WorkingDaysConfigPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5636,6 +5726,21 @@ export namespace Prisma {
      */
     include?: LandingPageInclude<ExtArgs> | null
     where?: LandingPageWhereInput
+  }
+
+  /**
+   * Clinic.workingDaysConfig
+   */
+  export type Clinic$workingDaysConfigArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkingDaysConfig
+     */
+    select?: WorkingDaysConfigSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkingDaysConfigInclude<ExtArgs> | null
+    where?: WorkingDaysConfigWhereInput
   }
 
   /**
@@ -25586,10 +25691,12 @@ export namespace Prisma {
 
   export type LeaveAvgAggregateOutputType = {
     days: number | null
+    workingDays: number | null
   }
 
   export type LeaveSumAggregateOutputType = {
     days: number | null
+    workingDays: number | null
   }
 
   export type LeaveMinAggregateOutputType = {
@@ -25604,9 +25711,15 @@ export namespace Prisma {
     startDate: Date | null
     endDate: Date | null
     days: number | null
+    workingDays: number | null
     reason: string | null
     status: string | null
+    rejectRemark: string | null
+    adminNotes: string | null
     appliedOn: Date | null
+    completedAt: Date | null
+    withdrawnAt: Date | null
+    cancelledAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -25623,9 +25736,15 @@ export namespace Prisma {
     startDate: Date | null
     endDate: Date | null
     days: number | null
+    workingDays: number | null
     reason: string | null
     status: string | null
+    rejectRemark: string | null
+    adminNotes: string | null
     appliedOn: Date | null
+    completedAt: Date | null
+    withdrawnAt: Date | null
+    cancelledAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -25643,9 +25762,15 @@ export namespace Prisma {
     startDate: number
     endDate: number
     days: number
+    workingDays: number
     reason: number
     status: number
+    rejectRemark: number
+    adminNotes: number
     appliedOn: number
+    completedAt: number
+    withdrawnAt: number
+    cancelledAt: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -25654,10 +25779,12 @@ export namespace Prisma {
 
   export type LeaveAvgAggregateInputType = {
     days?: true
+    workingDays?: true
   }
 
   export type LeaveSumAggregateInputType = {
     days?: true
+    workingDays?: true
   }
 
   export type LeaveMinAggregateInputType = {
@@ -25672,9 +25799,15 @@ export namespace Prisma {
     startDate?: true
     endDate?: true
     days?: true
+    workingDays?: true
     reason?: true
     status?: true
+    rejectRemark?: true
+    adminNotes?: true
     appliedOn?: true
+    completedAt?: true
+    withdrawnAt?: true
+    cancelledAt?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -25691,9 +25824,15 @@ export namespace Prisma {
     startDate?: true
     endDate?: true
     days?: true
+    workingDays?: true
     reason?: true
     status?: true
+    rejectRemark?: true
+    adminNotes?: true
     appliedOn?: true
+    completedAt?: true
+    withdrawnAt?: true
+    cancelledAt?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -25711,9 +25850,15 @@ export namespace Prisma {
     startDate?: true
     endDate?: true
     days?: true
+    workingDays?: true
     reason?: true
     status?: true
+    rejectRemark?: true
+    adminNotes?: true
     appliedOn?: true
+    completedAt?: true
+    withdrawnAt?: true
+    cancelledAt?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -25818,9 +25963,15 @@ export namespace Prisma {
     startDate: Date
     endDate: Date
     days: number
+    workingDays: number
     reason: string | null
     status: string
+    rejectRemark: string | null
+    adminNotes: string | null
     appliedOn: Date
+    completedAt: Date | null
+    withdrawnAt: Date | null
+    cancelledAt: Date | null
     createdAt: Date
     updatedAt: Date
     _count: LeaveCountAggregateOutputType | null
@@ -25857,9 +26008,15 @@ export namespace Prisma {
     startDate?: boolean
     endDate?: boolean
     days?: boolean
+    workingDays?: boolean
     reason?: boolean
     status?: boolean
+    rejectRemark?: boolean
+    adminNotes?: boolean
     appliedOn?: boolean
+    completedAt?: boolean
+    withdrawnAt?: boolean
+    cancelledAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     clinic?: boolean | ClinicDefaultArgs<ExtArgs>
@@ -25878,9 +26035,15 @@ export namespace Prisma {
     startDate?: boolean
     endDate?: boolean
     days?: boolean
+    workingDays?: boolean
     reason?: boolean
     status?: boolean
+    rejectRemark?: boolean
+    adminNotes?: boolean
     appliedOn?: boolean
+    completedAt?: boolean
+    withdrawnAt?: boolean
+    cancelledAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     clinic?: boolean | ClinicDefaultArgs<ExtArgs>
@@ -25899,9 +26062,15 @@ export namespace Prisma {
     startDate?: boolean
     endDate?: boolean
     days?: boolean
+    workingDays?: boolean
     reason?: boolean
     status?: boolean
+    rejectRemark?: boolean
+    adminNotes?: boolean
     appliedOn?: boolean
+    completedAt?: boolean
+    withdrawnAt?: boolean
+    cancelledAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
@@ -25931,9 +26100,15 @@ export namespace Prisma {
       startDate: Date
       endDate: Date
       days: number
+      workingDays: number
       reason: string | null
       status: string
+      rejectRemark: string | null
+      adminNotes: string | null
       appliedOn: Date
+      completedAt: Date | null
+      withdrawnAt: Date | null
+      cancelledAt: Date | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["leave"]>
@@ -26342,9 +26517,15 @@ export namespace Prisma {
     readonly startDate: FieldRef<"Leave", 'DateTime'>
     readonly endDate: FieldRef<"Leave", 'DateTime'>
     readonly days: FieldRef<"Leave", 'Int'>
+    readonly workingDays: FieldRef<"Leave", 'Int'>
     readonly reason: FieldRef<"Leave", 'String'>
     readonly status: FieldRef<"Leave", 'String'>
+    readonly rejectRemark: FieldRef<"Leave", 'String'>
+    readonly adminNotes: FieldRef<"Leave", 'String'>
     readonly appliedOn: FieldRef<"Leave", 'DateTime'>
+    readonly completedAt: FieldRef<"Leave", 'DateTime'>
+    readonly withdrawnAt: FieldRef<"Leave", 'DateTime'>
+    readonly cancelledAt: FieldRef<"Leave", 'DateTime'>
     readonly createdAt: FieldRef<"Leave", 'DateTime'>
     readonly updatedAt: FieldRef<"Leave", 'DateTime'>
   }
@@ -26676,6 +26857,977 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: LeaveInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model WorkingDaysConfig
+   */
+
+  export type AggregateWorkingDaysConfig = {
+    _count: WorkingDaysConfigCountAggregateOutputType | null
+    _avg: WorkingDaysConfigAvgAggregateOutputType | null
+    _sum: WorkingDaysConfigSumAggregateOutputType | null
+    _min: WorkingDaysConfigMinAggregateOutputType | null
+    _max: WorkingDaysConfigMaxAggregateOutputType | null
+  }
+
+  export type WorkingDaysConfigAvgAggregateOutputType = {
+    offDays: number | null
+  }
+
+  export type WorkingDaysConfigSumAggregateOutputType = {
+    offDays: number[]
+  }
+
+  export type WorkingDaysConfigMinAggregateOutputType = {
+    id: string | null
+    clinicId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WorkingDaysConfigMaxAggregateOutputType = {
+    id: string | null
+    clinicId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WorkingDaysConfigCountAggregateOutputType = {
+    id: number
+    clinicId: number
+    offDays: number
+    schedules: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type WorkingDaysConfigAvgAggregateInputType = {
+    offDays?: true
+  }
+
+  export type WorkingDaysConfigSumAggregateInputType = {
+    offDays?: true
+  }
+
+  export type WorkingDaysConfigMinAggregateInputType = {
+    id?: true
+    clinicId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WorkingDaysConfigMaxAggregateInputType = {
+    id?: true
+    clinicId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WorkingDaysConfigCountAggregateInputType = {
+    id?: true
+    clinicId?: true
+    offDays?: true
+    schedules?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type WorkingDaysConfigAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which WorkingDaysConfig to aggregate.
+     */
+    where?: WorkingDaysConfigWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WorkingDaysConfigs to fetch.
+     */
+    orderBy?: WorkingDaysConfigOrderByWithRelationInput | WorkingDaysConfigOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: WorkingDaysConfigWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WorkingDaysConfigs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WorkingDaysConfigs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned WorkingDaysConfigs
+    **/
+    _count?: true | WorkingDaysConfigCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: WorkingDaysConfigAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: WorkingDaysConfigSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: WorkingDaysConfigMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: WorkingDaysConfigMaxAggregateInputType
+  }
+
+  export type GetWorkingDaysConfigAggregateType<T extends WorkingDaysConfigAggregateArgs> = {
+        [P in keyof T & keyof AggregateWorkingDaysConfig]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWorkingDaysConfig[P]>
+      : GetScalarType<T[P], AggregateWorkingDaysConfig[P]>
+  }
+
+
+
+
+  export type WorkingDaysConfigGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WorkingDaysConfigWhereInput
+    orderBy?: WorkingDaysConfigOrderByWithAggregationInput | WorkingDaysConfigOrderByWithAggregationInput[]
+    by: WorkingDaysConfigScalarFieldEnum[] | WorkingDaysConfigScalarFieldEnum
+    having?: WorkingDaysConfigScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: WorkingDaysConfigCountAggregateInputType | true
+    _avg?: WorkingDaysConfigAvgAggregateInputType
+    _sum?: WorkingDaysConfigSumAggregateInputType
+    _min?: WorkingDaysConfigMinAggregateInputType
+    _max?: WorkingDaysConfigMaxAggregateInputType
+  }
+
+  export type WorkingDaysConfigGroupByOutputType = {
+    id: string
+    clinicId: string
+    offDays: number[]
+    schedules: JsonValue | null
+    createdAt: Date
+    updatedAt: Date
+    _count: WorkingDaysConfigCountAggregateOutputType | null
+    _avg: WorkingDaysConfigAvgAggregateOutputType | null
+    _sum: WorkingDaysConfigSumAggregateOutputType | null
+    _min: WorkingDaysConfigMinAggregateOutputType | null
+    _max: WorkingDaysConfigMaxAggregateOutputType | null
+  }
+
+  type GetWorkingDaysConfigGroupByPayload<T extends WorkingDaysConfigGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<WorkingDaysConfigGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof WorkingDaysConfigGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], WorkingDaysConfigGroupByOutputType[P]>
+            : GetScalarType<T[P], WorkingDaysConfigGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type WorkingDaysConfigSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    clinicId?: boolean
+    offDays?: boolean
+    schedules?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    clinic?: boolean | ClinicDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["workingDaysConfig"]>
+
+  export type WorkingDaysConfigSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    clinicId?: boolean
+    offDays?: boolean
+    schedules?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    clinic?: boolean | ClinicDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["workingDaysConfig"]>
+
+  export type WorkingDaysConfigSelectScalar = {
+    id?: boolean
+    clinicId?: boolean
+    offDays?: boolean
+    schedules?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type WorkingDaysConfigInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    clinic?: boolean | ClinicDefaultArgs<ExtArgs>
+  }
+  export type WorkingDaysConfigIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    clinic?: boolean | ClinicDefaultArgs<ExtArgs>
+  }
+
+  export type $WorkingDaysConfigPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "WorkingDaysConfig"
+    objects: {
+      clinic: Prisma.$ClinicPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      clinicId: string
+      offDays: number[]
+      schedules: Prisma.JsonValue | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["workingDaysConfig"]>
+    composites: {}
+  }
+
+  type WorkingDaysConfigGetPayload<S extends boolean | null | undefined | WorkingDaysConfigDefaultArgs> = $Result.GetResult<Prisma.$WorkingDaysConfigPayload, S>
+
+  type WorkingDaysConfigCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<WorkingDaysConfigFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: WorkingDaysConfigCountAggregateInputType | true
+    }
+
+  export interface WorkingDaysConfigDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['WorkingDaysConfig'], meta: { name: 'WorkingDaysConfig' } }
+    /**
+     * Find zero or one WorkingDaysConfig that matches the filter.
+     * @param {WorkingDaysConfigFindUniqueArgs} args - Arguments to find a WorkingDaysConfig
+     * @example
+     * // Get one WorkingDaysConfig
+     * const workingDaysConfig = await prisma.workingDaysConfig.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends WorkingDaysConfigFindUniqueArgs>(args: SelectSubset<T, WorkingDaysConfigFindUniqueArgs<ExtArgs>>): Prisma__WorkingDaysConfigClient<$Result.GetResult<Prisma.$WorkingDaysConfigPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one WorkingDaysConfig that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {WorkingDaysConfigFindUniqueOrThrowArgs} args - Arguments to find a WorkingDaysConfig
+     * @example
+     * // Get one WorkingDaysConfig
+     * const workingDaysConfig = await prisma.workingDaysConfig.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends WorkingDaysConfigFindUniqueOrThrowArgs>(args: SelectSubset<T, WorkingDaysConfigFindUniqueOrThrowArgs<ExtArgs>>): Prisma__WorkingDaysConfigClient<$Result.GetResult<Prisma.$WorkingDaysConfigPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first WorkingDaysConfig that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WorkingDaysConfigFindFirstArgs} args - Arguments to find a WorkingDaysConfig
+     * @example
+     * // Get one WorkingDaysConfig
+     * const workingDaysConfig = await prisma.workingDaysConfig.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends WorkingDaysConfigFindFirstArgs>(args?: SelectSubset<T, WorkingDaysConfigFindFirstArgs<ExtArgs>>): Prisma__WorkingDaysConfigClient<$Result.GetResult<Prisma.$WorkingDaysConfigPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first WorkingDaysConfig that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WorkingDaysConfigFindFirstOrThrowArgs} args - Arguments to find a WorkingDaysConfig
+     * @example
+     * // Get one WorkingDaysConfig
+     * const workingDaysConfig = await prisma.workingDaysConfig.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends WorkingDaysConfigFindFirstOrThrowArgs>(args?: SelectSubset<T, WorkingDaysConfigFindFirstOrThrowArgs<ExtArgs>>): Prisma__WorkingDaysConfigClient<$Result.GetResult<Prisma.$WorkingDaysConfigPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more WorkingDaysConfigs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WorkingDaysConfigFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all WorkingDaysConfigs
+     * const workingDaysConfigs = await prisma.workingDaysConfig.findMany()
+     * 
+     * // Get first 10 WorkingDaysConfigs
+     * const workingDaysConfigs = await prisma.workingDaysConfig.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const workingDaysConfigWithIdOnly = await prisma.workingDaysConfig.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends WorkingDaysConfigFindManyArgs>(args?: SelectSubset<T, WorkingDaysConfigFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WorkingDaysConfigPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a WorkingDaysConfig.
+     * @param {WorkingDaysConfigCreateArgs} args - Arguments to create a WorkingDaysConfig.
+     * @example
+     * // Create one WorkingDaysConfig
+     * const WorkingDaysConfig = await prisma.workingDaysConfig.create({
+     *   data: {
+     *     // ... data to create a WorkingDaysConfig
+     *   }
+     * })
+     * 
+     */
+    create<T extends WorkingDaysConfigCreateArgs>(args: SelectSubset<T, WorkingDaysConfigCreateArgs<ExtArgs>>): Prisma__WorkingDaysConfigClient<$Result.GetResult<Prisma.$WorkingDaysConfigPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many WorkingDaysConfigs.
+     * @param {WorkingDaysConfigCreateManyArgs} args - Arguments to create many WorkingDaysConfigs.
+     * @example
+     * // Create many WorkingDaysConfigs
+     * const workingDaysConfig = await prisma.workingDaysConfig.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends WorkingDaysConfigCreateManyArgs>(args?: SelectSubset<T, WorkingDaysConfigCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many WorkingDaysConfigs and returns the data saved in the database.
+     * @param {WorkingDaysConfigCreateManyAndReturnArgs} args - Arguments to create many WorkingDaysConfigs.
+     * @example
+     * // Create many WorkingDaysConfigs
+     * const workingDaysConfig = await prisma.workingDaysConfig.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many WorkingDaysConfigs and only return the `id`
+     * const workingDaysConfigWithIdOnly = await prisma.workingDaysConfig.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends WorkingDaysConfigCreateManyAndReturnArgs>(args?: SelectSubset<T, WorkingDaysConfigCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WorkingDaysConfigPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a WorkingDaysConfig.
+     * @param {WorkingDaysConfigDeleteArgs} args - Arguments to delete one WorkingDaysConfig.
+     * @example
+     * // Delete one WorkingDaysConfig
+     * const WorkingDaysConfig = await prisma.workingDaysConfig.delete({
+     *   where: {
+     *     // ... filter to delete one WorkingDaysConfig
+     *   }
+     * })
+     * 
+     */
+    delete<T extends WorkingDaysConfigDeleteArgs>(args: SelectSubset<T, WorkingDaysConfigDeleteArgs<ExtArgs>>): Prisma__WorkingDaysConfigClient<$Result.GetResult<Prisma.$WorkingDaysConfigPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one WorkingDaysConfig.
+     * @param {WorkingDaysConfigUpdateArgs} args - Arguments to update one WorkingDaysConfig.
+     * @example
+     * // Update one WorkingDaysConfig
+     * const workingDaysConfig = await prisma.workingDaysConfig.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends WorkingDaysConfigUpdateArgs>(args: SelectSubset<T, WorkingDaysConfigUpdateArgs<ExtArgs>>): Prisma__WorkingDaysConfigClient<$Result.GetResult<Prisma.$WorkingDaysConfigPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more WorkingDaysConfigs.
+     * @param {WorkingDaysConfigDeleteManyArgs} args - Arguments to filter WorkingDaysConfigs to delete.
+     * @example
+     * // Delete a few WorkingDaysConfigs
+     * const { count } = await prisma.workingDaysConfig.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends WorkingDaysConfigDeleteManyArgs>(args?: SelectSubset<T, WorkingDaysConfigDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WorkingDaysConfigs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WorkingDaysConfigUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many WorkingDaysConfigs
+     * const workingDaysConfig = await prisma.workingDaysConfig.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends WorkingDaysConfigUpdateManyArgs>(args: SelectSubset<T, WorkingDaysConfigUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one WorkingDaysConfig.
+     * @param {WorkingDaysConfigUpsertArgs} args - Arguments to update or create a WorkingDaysConfig.
+     * @example
+     * // Update or create a WorkingDaysConfig
+     * const workingDaysConfig = await prisma.workingDaysConfig.upsert({
+     *   create: {
+     *     // ... data to create a WorkingDaysConfig
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the WorkingDaysConfig we want to update
+     *   }
+     * })
+     */
+    upsert<T extends WorkingDaysConfigUpsertArgs>(args: SelectSubset<T, WorkingDaysConfigUpsertArgs<ExtArgs>>): Prisma__WorkingDaysConfigClient<$Result.GetResult<Prisma.$WorkingDaysConfigPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of WorkingDaysConfigs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WorkingDaysConfigCountArgs} args - Arguments to filter WorkingDaysConfigs to count.
+     * @example
+     * // Count the number of WorkingDaysConfigs
+     * const count = await prisma.workingDaysConfig.count({
+     *   where: {
+     *     // ... the filter for the WorkingDaysConfigs we want to count
+     *   }
+     * })
+    **/
+    count<T extends WorkingDaysConfigCountArgs>(
+      args?: Subset<T, WorkingDaysConfigCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], WorkingDaysConfigCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a WorkingDaysConfig.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WorkingDaysConfigAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends WorkingDaysConfigAggregateArgs>(args: Subset<T, WorkingDaysConfigAggregateArgs>): Prisma.PrismaPromise<GetWorkingDaysConfigAggregateType<T>>
+
+    /**
+     * Group by WorkingDaysConfig.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WorkingDaysConfigGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends WorkingDaysConfigGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: WorkingDaysConfigGroupByArgs['orderBy'] }
+        : { orderBy?: WorkingDaysConfigGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, WorkingDaysConfigGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWorkingDaysConfigGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the WorkingDaysConfig model
+   */
+  readonly fields: WorkingDaysConfigFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for WorkingDaysConfig.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__WorkingDaysConfigClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    clinic<T extends ClinicDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClinicDefaultArgs<ExtArgs>>): Prisma__ClinicClient<$Result.GetResult<Prisma.$ClinicPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the WorkingDaysConfig model
+   */ 
+  interface WorkingDaysConfigFieldRefs {
+    readonly id: FieldRef<"WorkingDaysConfig", 'String'>
+    readonly clinicId: FieldRef<"WorkingDaysConfig", 'String'>
+    readonly offDays: FieldRef<"WorkingDaysConfig", 'Int[]'>
+    readonly schedules: FieldRef<"WorkingDaysConfig", 'Json'>
+    readonly createdAt: FieldRef<"WorkingDaysConfig", 'DateTime'>
+    readonly updatedAt: FieldRef<"WorkingDaysConfig", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * WorkingDaysConfig findUnique
+   */
+  export type WorkingDaysConfigFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkingDaysConfig
+     */
+    select?: WorkingDaysConfigSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkingDaysConfigInclude<ExtArgs> | null
+    /**
+     * Filter, which WorkingDaysConfig to fetch.
+     */
+    where: WorkingDaysConfigWhereUniqueInput
+  }
+
+  /**
+   * WorkingDaysConfig findUniqueOrThrow
+   */
+  export type WorkingDaysConfigFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkingDaysConfig
+     */
+    select?: WorkingDaysConfigSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkingDaysConfigInclude<ExtArgs> | null
+    /**
+     * Filter, which WorkingDaysConfig to fetch.
+     */
+    where: WorkingDaysConfigWhereUniqueInput
+  }
+
+  /**
+   * WorkingDaysConfig findFirst
+   */
+  export type WorkingDaysConfigFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkingDaysConfig
+     */
+    select?: WorkingDaysConfigSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkingDaysConfigInclude<ExtArgs> | null
+    /**
+     * Filter, which WorkingDaysConfig to fetch.
+     */
+    where?: WorkingDaysConfigWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WorkingDaysConfigs to fetch.
+     */
+    orderBy?: WorkingDaysConfigOrderByWithRelationInput | WorkingDaysConfigOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WorkingDaysConfigs.
+     */
+    cursor?: WorkingDaysConfigWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WorkingDaysConfigs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WorkingDaysConfigs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WorkingDaysConfigs.
+     */
+    distinct?: WorkingDaysConfigScalarFieldEnum | WorkingDaysConfigScalarFieldEnum[]
+  }
+
+  /**
+   * WorkingDaysConfig findFirstOrThrow
+   */
+  export type WorkingDaysConfigFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkingDaysConfig
+     */
+    select?: WorkingDaysConfigSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkingDaysConfigInclude<ExtArgs> | null
+    /**
+     * Filter, which WorkingDaysConfig to fetch.
+     */
+    where?: WorkingDaysConfigWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WorkingDaysConfigs to fetch.
+     */
+    orderBy?: WorkingDaysConfigOrderByWithRelationInput | WorkingDaysConfigOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WorkingDaysConfigs.
+     */
+    cursor?: WorkingDaysConfigWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WorkingDaysConfigs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WorkingDaysConfigs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WorkingDaysConfigs.
+     */
+    distinct?: WorkingDaysConfigScalarFieldEnum | WorkingDaysConfigScalarFieldEnum[]
+  }
+
+  /**
+   * WorkingDaysConfig findMany
+   */
+  export type WorkingDaysConfigFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkingDaysConfig
+     */
+    select?: WorkingDaysConfigSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkingDaysConfigInclude<ExtArgs> | null
+    /**
+     * Filter, which WorkingDaysConfigs to fetch.
+     */
+    where?: WorkingDaysConfigWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WorkingDaysConfigs to fetch.
+     */
+    orderBy?: WorkingDaysConfigOrderByWithRelationInput | WorkingDaysConfigOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing WorkingDaysConfigs.
+     */
+    cursor?: WorkingDaysConfigWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WorkingDaysConfigs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WorkingDaysConfigs.
+     */
+    skip?: number
+    distinct?: WorkingDaysConfigScalarFieldEnum | WorkingDaysConfigScalarFieldEnum[]
+  }
+
+  /**
+   * WorkingDaysConfig create
+   */
+  export type WorkingDaysConfigCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkingDaysConfig
+     */
+    select?: WorkingDaysConfigSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkingDaysConfigInclude<ExtArgs> | null
+    /**
+     * The data needed to create a WorkingDaysConfig.
+     */
+    data: XOR<WorkingDaysConfigCreateInput, WorkingDaysConfigUncheckedCreateInput>
+  }
+
+  /**
+   * WorkingDaysConfig createMany
+   */
+  export type WorkingDaysConfigCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many WorkingDaysConfigs.
+     */
+    data: WorkingDaysConfigCreateManyInput | WorkingDaysConfigCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * WorkingDaysConfig createManyAndReturn
+   */
+  export type WorkingDaysConfigCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkingDaysConfig
+     */
+    select?: WorkingDaysConfigSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many WorkingDaysConfigs.
+     */
+    data: WorkingDaysConfigCreateManyInput | WorkingDaysConfigCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkingDaysConfigIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * WorkingDaysConfig update
+   */
+  export type WorkingDaysConfigUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkingDaysConfig
+     */
+    select?: WorkingDaysConfigSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkingDaysConfigInclude<ExtArgs> | null
+    /**
+     * The data needed to update a WorkingDaysConfig.
+     */
+    data: XOR<WorkingDaysConfigUpdateInput, WorkingDaysConfigUncheckedUpdateInput>
+    /**
+     * Choose, which WorkingDaysConfig to update.
+     */
+    where: WorkingDaysConfigWhereUniqueInput
+  }
+
+  /**
+   * WorkingDaysConfig updateMany
+   */
+  export type WorkingDaysConfigUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update WorkingDaysConfigs.
+     */
+    data: XOR<WorkingDaysConfigUpdateManyMutationInput, WorkingDaysConfigUncheckedUpdateManyInput>
+    /**
+     * Filter which WorkingDaysConfigs to update
+     */
+    where?: WorkingDaysConfigWhereInput
+  }
+
+  /**
+   * WorkingDaysConfig upsert
+   */
+  export type WorkingDaysConfigUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkingDaysConfig
+     */
+    select?: WorkingDaysConfigSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkingDaysConfigInclude<ExtArgs> | null
+    /**
+     * The filter to search for the WorkingDaysConfig to update in case it exists.
+     */
+    where: WorkingDaysConfigWhereUniqueInput
+    /**
+     * In case the WorkingDaysConfig found by the `where` argument doesn't exist, create a new WorkingDaysConfig with this data.
+     */
+    create: XOR<WorkingDaysConfigCreateInput, WorkingDaysConfigUncheckedCreateInput>
+    /**
+     * In case the WorkingDaysConfig was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<WorkingDaysConfigUpdateInput, WorkingDaysConfigUncheckedUpdateInput>
+  }
+
+  /**
+   * WorkingDaysConfig delete
+   */
+  export type WorkingDaysConfigDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkingDaysConfig
+     */
+    select?: WorkingDaysConfigSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkingDaysConfigInclude<ExtArgs> | null
+    /**
+     * Filter which WorkingDaysConfig to delete.
+     */
+    where: WorkingDaysConfigWhereUniqueInput
+  }
+
+  /**
+   * WorkingDaysConfig deleteMany
+   */
+  export type WorkingDaysConfigDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which WorkingDaysConfigs to delete
+     */
+    where?: WorkingDaysConfigWhereInput
+  }
+
+  /**
+   * WorkingDaysConfig without action
+   */
+  export type WorkingDaysConfigDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkingDaysConfig
+     */
+    select?: WorkingDaysConfigSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkingDaysConfigInclude<ExtArgs> | null
   }
 
 
@@ -35240,14 +36392,32 @@ export namespace Prisma {
     startDate: 'startDate',
     endDate: 'endDate',
     days: 'days',
+    workingDays: 'workingDays',
     reason: 'reason',
     status: 'status',
+    rejectRemark: 'rejectRemark',
+    adminNotes: 'adminNotes',
     appliedOn: 'appliedOn',
+    completedAt: 'completedAt',
+    withdrawnAt: 'withdrawnAt',
+    cancelledAt: 'cancelledAt',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
 
   export type LeaveScalarFieldEnum = (typeof LeaveScalarFieldEnum)[keyof typeof LeaveScalarFieldEnum]
+
+
+  export const WorkingDaysConfigScalarFieldEnum: {
+    id: 'id',
+    clinicId: 'clinicId',
+    offDays: 'offDays',
+    schedules: 'schedules',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type WorkingDaysConfigScalarFieldEnum = (typeof WorkingDaysConfigScalarFieldEnum)[keyof typeof WorkingDaysConfigScalarFieldEnum]
 
 
   export const PrescriptionScalarFieldEnum: {
@@ -35586,6 +36756,7 @@ export namespace Prisma {
     products?: ProductListRelationFilter
     notifications?: NotificationListRelationFilter
     landingPage?: XOR<LandingPageNullableRelationFilter, LandingPageWhereInput> | null
+    workingDaysConfig?: XOR<WorkingDaysConfigNullableRelationFilter, WorkingDaysConfigWhereInput> | null
   }
 
   export type ClinicOrderByWithRelationInput = {
@@ -35638,6 +36809,7 @@ export namespace Prisma {
     products?: ProductOrderByRelationAggregateInput
     notifications?: NotificationOrderByRelationAggregateInput
     landingPage?: LandingPageOrderByWithRelationInput
+    workingDaysConfig?: WorkingDaysConfigOrderByWithRelationInput
   }
 
   export type ClinicWhereUniqueInput = Prisma.AtLeast<{
@@ -35693,6 +36865,7 @@ export namespace Prisma {
     products?: ProductListRelationFilter
     notifications?: NotificationListRelationFilter
     landingPage?: XOR<LandingPageNullableRelationFilter, LandingPageWhereInput> | null
+    workingDaysConfig?: XOR<WorkingDaysConfigNullableRelationFilter, WorkingDaysConfigWhereInput> | null
   }, "id" | "username">
 
   export type ClinicOrderByWithAggregationInput = {
@@ -37760,9 +38933,15 @@ export namespace Prisma {
     startDate?: DateTimeFilter<"Leave"> | Date | string
     endDate?: DateTimeFilter<"Leave"> | Date | string
     days?: IntFilter<"Leave"> | number
+    workingDays?: IntFilter<"Leave"> | number
     reason?: StringNullableFilter<"Leave"> | string | null
     status?: StringFilter<"Leave"> | string
+    rejectRemark?: StringNullableFilter<"Leave"> | string | null
+    adminNotes?: StringNullableFilter<"Leave"> | string | null
     appliedOn?: DateTimeFilter<"Leave"> | Date | string
+    completedAt?: DateTimeNullableFilter<"Leave"> | Date | string | null
+    withdrawnAt?: DateTimeNullableFilter<"Leave"> | Date | string | null
+    cancelledAt?: DateTimeNullableFilter<"Leave"> | Date | string | null
     createdAt?: DateTimeFilter<"Leave"> | Date | string
     updatedAt?: DateTimeFilter<"Leave"> | Date | string
     clinic?: XOR<ClinicRelationFilter, ClinicWhereInput>
@@ -37781,9 +38960,15 @@ export namespace Prisma {
     startDate?: SortOrder
     endDate?: SortOrder
     days?: SortOrder
+    workingDays?: SortOrder
     reason?: SortOrderInput | SortOrder
     status?: SortOrder
+    rejectRemark?: SortOrderInput | SortOrder
+    adminNotes?: SortOrderInput | SortOrder
     appliedOn?: SortOrder
+    completedAt?: SortOrderInput | SortOrder
+    withdrawnAt?: SortOrderInput | SortOrder
+    cancelledAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     clinic?: ClinicOrderByWithRelationInput
@@ -37805,9 +38990,15 @@ export namespace Prisma {
     startDate?: DateTimeFilter<"Leave"> | Date | string
     endDate?: DateTimeFilter<"Leave"> | Date | string
     days?: IntFilter<"Leave"> | number
+    workingDays?: IntFilter<"Leave"> | number
     reason?: StringNullableFilter<"Leave"> | string | null
     status?: StringFilter<"Leave"> | string
+    rejectRemark?: StringNullableFilter<"Leave"> | string | null
+    adminNotes?: StringNullableFilter<"Leave"> | string | null
     appliedOn?: DateTimeFilter<"Leave"> | Date | string
+    completedAt?: DateTimeNullableFilter<"Leave"> | Date | string | null
+    withdrawnAt?: DateTimeNullableFilter<"Leave"> | Date | string | null
+    cancelledAt?: DateTimeNullableFilter<"Leave"> | Date | string | null
     createdAt?: DateTimeFilter<"Leave"> | Date | string
     updatedAt?: DateTimeFilter<"Leave"> | Date | string
     clinic?: XOR<ClinicRelationFilter, ClinicWhereInput>
@@ -37826,9 +39017,15 @@ export namespace Prisma {
     startDate?: SortOrder
     endDate?: SortOrder
     days?: SortOrder
+    workingDays?: SortOrder
     reason?: SortOrderInput | SortOrder
     status?: SortOrder
+    rejectRemark?: SortOrderInput | SortOrder
+    adminNotes?: SortOrderInput | SortOrder
     appliedOn?: SortOrder
+    completedAt?: SortOrderInput | SortOrder
+    withdrawnAt?: SortOrderInput | SortOrder
+    cancelledAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: LeaveCountOrderByAggregateInput
@@ -37854,11 +39051,79 @@ export namespace Prisma {
     startDate?: DateTimeWithAggregatesFilter<"Leave"> | Date | string
     endDate?: DateTimeWithAggregatesFilter<"Leave"> | Date | string
     days?: IntWithAggregatesFilter<"Leave"> | number
+    workingDays?: IntWithAggregatesFilter<"Leave"> | number
     reason?: StringNullableWithAggregatesFilter<"Leave"> | string | null
     status?: StringWithAggregatesFilter<"Leave"> | string
+    rejectRemark?: StringNullableWithAggregatesFilter<"Leave"> | string | null
+    adminNotes?: StringNullableWithAggregatesFilter<"Leave"> | string | null
     appliedOn?: DateTimeWithAggregatesFilter<"Leave"> | Date | string
+    completedAt?: DateTimeNullableWithAggregatesFilter<"Leave"> | Date | string | null
+    withdrawnAt?: DateTimeNullableWithAggregatesFilter<"Leave"> | Date | string | null
+    cancelledAt?: DateTimeNullableWithAggregatesFilter<"Leave"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Leave"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Leave"> | Date | string
+  }
+
+  export type WorkingDaysConfigWhereInput = {
+    AND?: WorkingDaysConfigWhereInput | WorkingDaysConfigWhereInput[]
+    OR?: WorkingDaysConfigWhereInput[]
+    NOT?: WorkingDaysConfigWhereInput | WorkingDaysConfigWhereInput[]
+    id?: StringFilter<"WorkingDaysConfig"> | string
+    clinicId?: StringFilter<"WorkingDaysConfig"> | string
+    offDays?: IntNullableListFilter<"WorkingDaysConfig">
+    schedules?: JsonNullableFilter<"WorkingDaysConfig">
+    createdAt?: DateTimeFilter<"WorkingDaysConfig"> | Date | string
+    updatedAt?: DateTimeFilter<"WorkingDaysConfig"> | Date | string
+    clinic?: XOR<ClinicRelationFilter, ClinicWhereInput>
+  }
+
+  export type WorkingDaysConfigOrderByWithRelationInput = {
+    id?: SortOrder
+    clinicId?: SortOrder
+    offDays?: SortOrder
+    schedules?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    clinic?: ClinicOrderByWithRelationInput
+  }
+
+  export type WorkingDaysConfigWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    clinicId?: string
+    AND?: WorkingDaysConfigWhereInput | WorkingDaysConfigWhereInput[]
+    OR?: WorkingDaysConfigWhereInput[]
+    NOT?: WorkingDaysConfigWhereInput | WorkingDaysConfigWhereInput[]
+    offDays?: IntNullableListFilter<"WorkingDaysConfig">
+    schedules?: JsonNullableFilter<"WorkingDaysConfig">
+    createdAt?: DateTimeFilter<"WorkingDaysConfig"> | Date | string
+    updatedAt?: DateTimeFilter<"WorkingDaysConfig"> | Date | string
+    clinic?: XOR<ClinicRelationFilter, ClinicWhereInput>
+  }, "id" | "clinicId">
+
+  export type WorkingDaysConfigOrderByWithAggregationInput = {
+    id?: SortOrder
+    clinicId?: SortOrder
+    offDays?: SortOrder
+    schedules?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: WorkingDaysConfigCountOrderByAggregateInput
+    _avg?: WorkingDaysConfigAvgOrderByAggregateInput
+    _max?: WorkingDaysConfigMaxOrderByAggregateInput
+    _min?: WorkingDaysConfigMinOrderByAggregateInput
+    _sum?: WorkingDaysConfigSumOrderByAggregateInput
+  }
+
+  export type WorkingDaysConfigScalarWhereWithAggregatesInput = {
+    AND?: WorkingDaysConfigScalarWhereWithAggregatesInput | WorkingDaysConfigScalarWhereWithAggregatesInput[]
+    OR?: WorkingDaysConfigScalarWhereWithAggregatesInput[]
+    NOT?: WorkingDaysConfigScalarWhereWithAggregatesInput | WorkingDaysConfigScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"WorkingDaysConfig"> | string
+    clinicId?: StringWithAggregatesFilter<"WorkingDaysConfig"> | string
+    offDays?: IntNullableListFilter<"WorkingDaysConfig">
+    schedules?: JsonNullableWithAggregatesFilter<"WorkingDaysConfig">
+    createdAt?: DateTimeWithAggregatesFilter<"WorkingDaysConfig"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"WorkingDaysConfig"> | Date | string
   }
 
   export type PrescriptionWhereInput = {
@@ -38585,6 +39850,7 @@ export namespace Prisma {
     products?: ProductCreateNestedManyWithoutClinicInput
     notifications?: NotificationCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateInput = {
@@ -38636,6 +39902,7 @@ export namespace Prisma {
     products?: ProductUncheckedCreateNestedManyWithoutClinicInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicUpdateInput = {
@@ -38687,6 +39954,7 @@ export namespace Prisma {
     products?: ProductUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateInput = {
@@ -38738,6 +40006,7 @@ export namespace Prisma {
     products?: ProductUncheckedUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicCreateManyInput = {
@@ -41138,9 +42407,15 @@ export namespace Prisma {
     startDate: Date | string
     endDate: Date | string
     days?: number
+    workingDays?: number
     reason?: string | null
     status?: string
+    rejectRemark?: string | null
+    adminNotes?: string | null
     appliedOn?: Date | string
+    completedAt?: Date | string | null
+    withdrawnAt?: Date | string | null
+    cancelledAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     clinic: ClinicCreateNestedOneWithoutLeavesInput
@@ -41159,9 +42434,15 @@ export namespace Prisma {
     startDate: Date | string
     endDate: Date | string
     days?: number
+    workingDays?: number
     reason?: string | null
     status?: string
+    rejectRemark?: string | null
+    adminNotes?: string | null
     appliedOn?: Date | string
+    completedAt?: Date | string | null
+    withdrawnAt?: Date | string | null
+    cancelledAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -41178,9 +42459,15 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     days?: IntFieldUpdateOperationsInput | number
+    workingDays?: IntFieldUpdateOperationsInput | number
     reason?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    rejectRemark?: NullableStringFieldUpdateOperationsInput | string | null
+    adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
     appliedOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    withdrawnAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     clinic?: ClinicUpdateOneRequiredWithoutLeavesNestedInput
@@ -41199,9 +42486,15 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     days?: IntFieldUpdateOperationsInput | number
+    workingDays?: IntFieldUpdateOperationsInput | number
     reason?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    rejectRemark?: NullableStringFieldUpdateOperationsInput | string | null
+    adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
     appliedOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    withdrawnAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -41219,9 +42512,15 @@ export namespace Prisma {
     startDate: Date | string
     endDate: Date | string
     days?: number
+    workingDays?: number
     reason?: string | null
     status?: string
+    rejectRemark?: string | null
+    adminNotes?: string | null
     appliedOn?: Date | string
+    completedAt?: Date | string | null
+    withdrawnAt?: Date | string | null
+    cancelledAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -41238,9 +42537,15 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     days?: IntFieldUpdateOperationsInput | number
+    workingDays?: IntFieldUpdateOperationsInput | number
     reason?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    rejectRemark?: NullableStringFieldUpdateOperationsInput | string | null
+    adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
     appliedOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    withdrawnAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -41258,9 +42563,77 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     days?: IntFieldUpdateOperationsInput | number
+    workingDays?: IntFieldUpdateOperationsInput | number
     reason?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    rejectRemark?: NullableStringFieldUpdateOperationsInput | string | null
+    adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
     appliedOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    withdrawnAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WorkingDaysConfigCreateInput = {
+    id?: string
+    offDays?: WorkingDaysConfigCreateoffDaysInput | number[]
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    clinic: ClinicCreateNestedOneWithoutWorkingDaysConfigInput
+  }
+
+  export type WorkingDaysConfigUncheckedCreateInput = {
+    id?: string
+    clinicId: string
+    offDays?: WorkingDaysConfigCreateoffDaysInput | number[]
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WorkingDaysConfigUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    offDays?: WorkingDaysConfigUpdateoffDaysInput | number[]
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    clinic?: ClinicUpdateOneRequiredWithoutWorkingDaysConfigNestedInput
+  }
+
+  export type WorkingDaysConfigUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    clinicId?: StringFieldUpdateOperationsInput | string
+    offDays?: WorkingDaysConfigUpdateoffDaysInput | number[]
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WorkingDaysConfigCreateManyInput = {
+    id?: string
+    clinicId: string
+    offDays?: WorkingDaysConfigCreateoffDaysInput | number[]
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WorkingDaysConfigUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    offDays?: WorkingDaysConfigUpdateoffDaysInput | number[]
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WorkingDaysConfigUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    clinicId?: StringFieldUpdateOperationsInput | string
+    offDays?: WorkingDaysConfigUpdateoffDaysInput | number[]
+    schedules?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -42215,6 +43588,11 @@ export namespace Prisma {
   export type LandingPageNullableRelationFilter = {
     is?: LandingPageWhereInput | null
     isNot?: LandingPageWhereInput | null
+  }
+
+  export type WorkingDaysConfigNullableRelationFilter = {
+    is?: WorkingDaysConfigWhereInput | null
+    isNot?: WorkingDaysConfigWhereInput | null
   }
 
   export type SortOrderInput = {
@@ -43828,15 +45206,22 @@ export namespace Prisma {
     startDate?: SortOrder
     endDate?: SortOrder
     days?: SortOrder
+    workingDays?: SortOrder
     reason?: SortOrder
     status?: SortOrder
+    rejectRemark?: SortOrder
+    adminNotes?: SortOrder
     appliedOn?: SortOrder
+    completedAt?: SortOrder
+    withdrawnAt?: SortOrder
+    cancelledAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type LeaveAvgOrderByAggregateInput = {
     days?: SortOrder
+    workingDays?: SortOrder
   }
 
   export type LeaveMaxOrderByAggregateInput = {
@@ -43851,9 +45236,15 @@ export namespace Prisma {
     startDate?: SortOrder
     endDate?: SortOrder
     days?: SortOrder
+    workingDays?: SortOrder
     reason?: SortOrder
     status?: SortOrder
+    rejectRemark?: SortOrder
+    adminNotes?: SortOrder
     appliedOn?: SortOrder
+    completedAt?: SortOrder
+    withdrawnAt?: SortOrder
+    cancelledAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -43870,15 +45261,61 @@ export namespace Prisma {
     startDate?: SortOrder
     endDate?: SortOrder
     days?: SortOrder
+    workingDays?: SortOrder
     reason?: SortOrder
     status?: SortOrder
+    rejectRemark?: SortOrder
+    adminNotes?: SortOrder
     appliedOn?: SortOrder
+    completedAt?: SortOrder
+    withdrawnAt?: SortOrder
+    cancelledAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type LeaveSumOrderByAggregateInput = {
     days?: SortOrder
+    workingDays?: SortOrder
+  }
+
+  export type IntNullableListFilter<$PrismaModel = never> = {
+    equals?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    has?: number | IntFieldRefInput<$PrismaModel> | null
+    hasEvery?: number[] | ListIntFieldRefInput<$PrismaModel>
+    hasSome?: number[] | ListIntFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
+  export type WorkingDaysConfigCountOrderByAggregateInput = {
+    id?: SortOrder
+    clinicId?: SortOrder
+    offDays?: SortOrder
+    schedules?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WorkingDaysConfigAvgOrderByAggregateInput = {
+    offDays?: SortOrder
+  }
+
+  export type WorkingDaysConfigMaxOrderByAggregateInput = {
+    id?: SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WorkingDaysConfigMinOrderByAggregateInput = {
+    id?: SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WorkingDaysConfigSumOrderByAggregateInput = {
+    offDays?: SortOrder
   }
 
   export type AppointmentNullableRelationFilter = {
@@ -44423,6 +45860,12 @@ export namespace Prisma {
     connect?: LandingPageWhereUniqueInput
   }
 
+  export type WorkingDaysConfigCreateNestedOneWithoutClinicInput = {
+    create?: XOR<WorkingDaysConfigCreateWithoutClinicInput, WorkingDaysConfigUncheckedCreateWithoutClinicInput>
+    connectOrCreate?: WorkingDaysConfigCreateOrConnectWithoutClinicInput
+    connect?: WorkingDaysConfigWhereUniqueInput
+  }
+
   export type UserUncheckedCreateNestedManyWithoutClinicInput = {
     create?: XOR<UserCreateWithoutClinicInput, UserUncheckedCreateWithoutClinicInput> | UserCreateWithoutClinicInput[] | UserUncheckedCreateWithoutClinicInput[]
     connectOrCreate?: UserCreateOrConnectWithoutClinicInput | UserCreateOrConnectWithoutClinicInput[]
@@ -44588,6 +46031,12 @@ export namespace Prisma {
     create?: XOR<LandingPageCreateWithoutClinicInput, LandingPageUncheckedCreateWithoutClinicInput>
     connectOrCreate?: LandingPageCreateOrConnectWithoutClinicInput
     connect?: LandingPageWhereUniqueInput
+  }
+
+  export type WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput = {
+    create?: XOR<WorkingDaysConfigCreateWithoutClinicInput, WorkingDaysConfigUncheckedCreateWithoutClinicInput>
+    connectOrCreate?: WorkingDaysConfigCreateOrConnectWithoutClinicInput
+    connect?: WorkingDaysConfigWhereUniqueInput
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -44964,6 +46413,16 @@ export namespace Prisma {
     update?: XOR<XOR<LandingPageUpdateToOneWithWhereWithoutClinicInput, LandingPageUpdateWithoutClinicInput>, LandingPageUncheckedUpdateWithoutClinicInput>
   }
 
+  export type WorkingDaysConfigUpdateOneWithoutClinicNestedInput = {
+    create?: XOR<WorkingDaysConfigCreateWithoutClinicInput, WorkingDaysConfigUncheckedCreateWithoutClinicInput>
+    connectOrCreate?: WorkingDaysConfigCreateOrConnectWithoutClinicInput
+    upsert?: WorkingDaysConfigUpsertWithoutClinicInput
+    disconnect?: WorkingDaysConfigWhereInput | boolean
+    delete?: WorkingDaysConfigWhereInput | boolean
+    connect?: WorkingDaysConfigWhereUniqueInput
+    update?: XOR<XOR<WorkingDaysConfigUpdateToOneWithWhereWithoutClinicInput, WorkingDaysConfigUpdateWithoutClinicInput>, WorkingDaysConfigUncheckedUpdateWithoutClinicInput>
+  }
+
   export type UserUncheckedUpdateManyWithoutClinicNestedInput = {
     create?: XOR<UserCreateWithoutClinicInput, UserUncheckedCreateWithoutClinicInput> | UserCreateWithoutClinicInput[] | UserUncheckedCreateWithoutClinicInput[]
     connectOrCreate?: UserCreateOrConnectWithoutClinicInput | UserCreateOrConnectWithoutClinicInput[]
@@ -45294,6 +46753,16 @@ export namespace Prisma {
     delete?: LandingPageWhereInput | boolean
     connect?: LandingPageWhereUniqueInput
     update?: XOR<XOR<LandingPageUpdateToOneWithWhereWithoutClinicInput, LandingPageUpdateWithoutClinicInput>, LandingPageUncheckedUpdateWithoutClinicInput>
+  }
+
+  export type WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput = {
+    create?: XOR<WorkingDaysConfigCreateWithoutClinicInput, WorkingDaysConfigUncheckedCreateWithoutClinicInput>
+    connectOrCreate?: WorkingDaysConfigCreateOrConnectWithoutClinicInput
+    upsert?: WorkingDaysConfigUpsertWithoutClinicInput
+    disconnect?: WorkingDaysConfigWhereInput | boolean
+    delete?: WorkingDaysConfigWhereInput | boolean
+    connect?: WorkingDaysConfigWhereUniqueInput
+    update?: XOR<XOR<WorkingDaysConfigUpdateToOneWithWhereWithoutClinicInput, WorkingDaysConfigUpdateWithoutClinicInput>, WorkingDaysConfigUncheckedUpdateWithoutClinicInput>
   }
 
   export type ClinicCreateNestedOneWithoutLandingPageInput = {
@@ -46585,6 +48054,29 @@ export namespace Prisma {
     upsert?: ClinicUpsertWithoutLeavesInput
     connect?: ClinicWhereUniqueInput
     update?: XOR<XOR<ClinicUpdateToOneWithWhereWithoutLeavesInput, ClinicUpdateWithoutLeavesInput>, ClinicUncheckedUpdateWithoutLeavesInput>
+  }
+
+  export type WorkingDaysConfigCreateoffDaysInput = {
+    set: number[]
+  }
+
+  export type ClinicCreateNestedOneWithoutWorkingDaysConfigInput = {
+    create?: XOR<ClinicCreateWithoutWorkingDaysConfigInput, ClinicUncheckedCreateWithoutWorkingDaysConfigInput>
+    connectOrCreate?: ClinicCreateOrConnectWithoutWorkingDaysConfigInput
+    connect?: ClinicWhereUniqueInput
+  }
+
+  export type WorkingDaysConfigUpdateoffDaysInput = {
+    set?: number[]
+    push?: number | number[]
+  }
+
+  export type ClinicUpdateOneRequiredWithoutWorkingDaysConfigNestedInput = {
+    create?: XOR<ClinicCreateWithoutWorkingDaysConfigInput, ClinicUncheckedCreateWithoutWorkingDaysConfigInput>
+    connectOrCreate?: ClinicCreateOrConnectWithoutWorkingDaysConfigInput
+    upsert?: ClinicUpsertWithoutWorkingDaysConfigInput
+    connect?: ClinicWhereUniqueInput
+    update?: XOR<XOR<ClinicUpdateToOneWithWhereWithoutWorkingDaysConfigInput, ClinicUpdateWithoutWorkingDaysConfigInput>, ClinicUncheckedUpdateWithoutWorkingDaysConfigInput>
   }
 
   export type PatientCreateNestedOneWithoutPrescriptionsInput = {
@@ -47931,9 +49423,15 @@ export namespace Prisma {
     startDate: Date | string
     endDate: Date | string
     days?: number
+    workingDays?: number
     reason?: string | null
     status?: string
+    rejectRemark?: string | null
+    adminNotes?: string | null
     appliedOn?: Date | string
+    completedAt?: Date | string | null
+    withdrawnAt?: Date | string | null
+    cancelledAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -47950,9 +49448,15 @@ export namespace Prisma {
     startDate: Date | string
     endDate: Date | string
     days?: number
+    workingDays?: number
     reason?: string | null
     status?: string
+    rejectRemark?: string | null
+    adminNotes?: string | null
     appliedOn?: Date | string
+    completedAt?: Date | string | null
+    withdrawnAt?: Date | string | null
+    cancelledAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -48272,6 +49776,27 @@ export namespace Prisma {
   export type LandingPageCreateOrConnectWithoutClinicInput = {
     where: LandingPageWhereUniqueInput
     create: XOR<LandingPageCreateWithoutClinicInput, LandingPageUncheckedCreateWithoutClinicInput>
+  }
+
+  export type WorkingDaysConfigCreateWithoutClinicInput = {
+    id?: string
+    offDays?: WorkingDaysConfigCreateoffDaysInput | number[]
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WorkingDaysConfigUncheckedCreateWithoutClinicInput = {
+    id?: string
+    offDays?: WorkingDaysConfigCreateoffDaysInput | number[]
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WorkingDaysConfigCreateOrConnectWithoutClinicInput = {
+    where: WorkingDaysConfigWhereUniqueInput
+    create: XOR<WorkingDaysConfigCreateWithoutClinicInput, WorkingDaysConfigUncheckedCreateWithoutClinicInput>
   }
 
   export type SubscriptionPackageUpsertWithoutClinicsInput = {
@@ -48900,9 +50425,15 @@ export namespace Prisma {
     startDate?: DateTimeFilter<"Leave"> | Date | string
     endDate?: DateTimeFilter<"Leave"> | Date | string
     days?: IntFilter<"Leave"> | number
+    workingDays?: IntFilter<"Leave"> | number
     reason?: StringNullableFilter<"Leave"> | string | null
     status?: StringFilter<"Leave"> | string
+    rejectRemark?: StringNullableFilter<"Leave"> | string | null
+    adminNotes?: StringNullableFilter<"Leave"> | string | null
     appliedOn?: DateTimeFilter<"Leave"> | Date | string
+    completedAt?: DateTimeNullableFilter<"Leave"> | Date | string | null
+    withdrawnAt?: DateTimeNullableFilter<"Leave"> | Date | string | null
+    cancelledAt?: DateTimeNullableFilter<"Leave"> | Date | string | null
     createdAt?: DateTimeFilter<"Leave"> | Date | string
     updatedAt?: DateTimeFilter<"Leave"> | Date | string
   }
@@ -49198,6 +50729,33 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type WorkingDaysConfigUpsertWithoutClinicInput = {
+    update: XOR<WorkingDaysConfigUpdateWithoutClinicInput, WorkingDaysConfigUncheckedUpdateWithoutClinicInput>
+    create: XOR<WorkingDaysConfigCreateWithoutClinicInput, WorkingDaysConfigUncheckedCreateWithoutClinicInput>
+    where?: WorkingDaysConfigWhereInput
+  }
+
+  export type WorkingDaysConfigUpdateToOneWithWhereWithoutClinicInput = {
+    where?: WorkingDaysConfigWhereInput
+    data: XOR<WorkingDaysConfigUpdateWithoutClinicInput, WorkingDaysConfigUncheckedUpdateWithoutClinicInput>
+  }
+
+  export type WorkingDaysConfigUpdateWithoutClinicInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    offDays?: WorkingDaysConfigUpdateoffDaysInput | number[]
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WorkingDaysConfigUncheckedUpdateWithoutClinicInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    offDays?: WorkingDaysConfigUpdateoffDaysInput | number[]
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type ClinicCreateWithoutLandingPageInput = {
     id?: string
     name: string
@@ -49246,6 +50804,7 @@ export namespace Prisma {
     invoiceItems?: InvoiceItemCreateNestedManyWithoutClinicInput
     products?: ProductCreateNestedManyWithoutClinicInput
     notifications?: NotificationCreateNestedManyWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutLandingPageInput = {
@@ -49296,6 +50855,7 @@ export namespace Prisma {
     invoiceItems?: InvoiceItemUncheckedCreateNestedManyWithoutClinicInput
     products?: ProductUncheckedCreateNestedManyWithoutClinicInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutLandingPageInput = {
@@ -49362,6 +50922,7 @@ export namespace Prisma {
     invoiceItems?: InvoiceItemUpdateManyWithoutClinicNestedInput
     products?: ProductUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUpdateManyWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutLandingPageInput = {
@@ -49412,6 +50973,7 @@ export namespace Prisma {
     invoiceItems?: InvoiceItemUncheckedUpdateManyWithoutClinicNestedInput
     products?: ProductUncheckedUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutPackageInput = {
@@ -49462,6 +51024,7 @@ export namespace Prisma {
     products?: ProductCreateNestedManyWithoutClinicInput
     notifications?: NotificationCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutPackageInput = {
@@ -49512,6 +51075,7 @@ export namespace Prisma {
     products?: ProductUncheckedCreateNestedManyWithoutClinicInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutPackageInput = {
@@ -49618,6 +51182,7 @@ export namespace Prisma {
     products?: ProductCreateNestedManyWithoutClinicInput
     notifications?: NotificationCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutUsersInput = {
@@ -49668,6 +51233,7 @@ export namespace Prisma {
     products?: ProductUncheckedCreateNestedManyWithoutClinicInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutUsersInput = {
@@ -49734,6 +51300,7 @@ export namespace Prisma {
     products?: ProductUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutUsersInput = {
@@ -49784,6 +51351,7 @@ export namespace Prisma {
     products?: ProductUncheckedUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutDepartmentsInput = {
@@ -49834,6 +51402,7 @@ export namespace Prisma {
     products?: ProductCreateNestedManyWithoutClinicInput
     notifications?: NotificationCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutDepartmentsInput = {
@@ -49884,6 +51453,7 @@ export namespace Prisma {
     products?: ProductUncheckedCreateNestedManyWithoutClinicInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutDepartmentsInput = {
@@ -50286,6 +51856,7 @@ export namespace Prisma {
     products?: ProductUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutDepartmentsInput = {
@@ -50336,6 +51907,7 @@ export namespace Prisma {
     products?: ProductUncheckedUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
   }
 
   export type DesignationUpsertWithWhereUniqueWithoutDepartmentInput = {
@@ -50482,6 +52054,7 @@ export namespace Prisma {
     products?: ProductCreateNestedManyWithoutClinicInput
     notifications?: NotificationCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutDesignationsInput = {
@@ -50532,6 +52105,7 @@ export namespace Prisma {
     products?: ProductUncheckedCreateNestedManyWithoutClinicInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutDesignationsInput = {
@@ -50817,6 +52391,7 @@ export namespace Prisma {
     products?: ProductUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutDesignationsInput = {
@@ -50867,6 +52442,7 @@ export namespace Prisma {
     products?: ProductUncheckedUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
   }
 
   export type DepartmentUpsertWithoutDesignationsInput = {
@@ -51064,6 +52640,7 @@ export namespace Prisma {
     products?: ProductCreateNestedManyWithoutClinicInput
     notifications?: NotificationCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutStaffsInput = {
@@ -51114,6 +52691,7 @@ export namespace Prisma {
     products?: ProductUncheckedCreateNestedManyWithoutClinicInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutStaffsInput = {
@@ -51314,6 +52892,7 @@ export namespace Prisma {
     products?: ProductUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutStaffsInput = {
@@ -51364,6 +52943,7 @@ export namespace Prisma {
     products?: ProductUncheckedUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
   }
 
   export type PayrollUpsertWithWhereUniqueWithoutStaffInput = {
@@ -51527,6 +53107,7 @@ export namespace Prisma {
     products?: ProductCreateNestedManyWithoutClinicInput
     notifications?: NotificationCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutDoctorsInput = {
@@ -51577,6 +53158,7 @@ export namespace Prisma {
     products?: ProductUncheckedCreateNestedManyWithoutClinicInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutDoctorsInput = {
@@ -51915,6 +53497,7 @@ export namespace Prisma {
     products?: ProductUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutDoctorsInput = {
@@ -51965,6 +53548,7 @@ export namespace Prisma {
     products?: ProductUncheckedUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
   }
 
   export type PatientUpsertWithWhereUniqueWithoutPrimaryDoctorInput = {
@@ -52176,6 +53760,7 @@ export namespace Prisma {
     products?: ProductCreateNestedManyWithoutClinicInput
     notifications?: NotificationCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutPatientsInput = {
@@ -52226,6 +53811,7 @@ export namespace Prisma {
     products?: ProductUncheckedCreateNestedManyWithoutClinicInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutPatientsInput = {
@@ -52545,6 +54131,7 @@ export namespace Prisma {
     products?: ProductUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutPatientsInput = {
@@ -52595,6 +54182,7 @@ export namespace Prisma {
     products?: ProductUncheckedUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
   }
 
   export type AppointmentUpsertWithWhereUniqueWithoutPatientInput = {
@@ -52926,6 +54514,7 @@ export namespace Prisma {
     products?: ProductCreateNestedManyWithoutClinicInput
     notifications?: NotificationCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutAppointmentsInput = {
@@ -52976,6 +54565,7 @@ export namespace Prisma {
     products?: ProductUncheckedCreateNestedManyWithoutClinicInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutAppointmentsInput = {
@@ -53335,6 +54925,7 @@ export namespace Prisma {
     products?: ProductUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutAppointmentsInput = {
@@ -53385,6 +54976,7 @@ export namespace Prisma {
     products?: ProductUncheckedUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
   }
 
   export type PrescriptionUpsertWithWhereUniqueWithoutAppointmentInput = {
@@ -53490,6 +55082,7 @@ export namespace Prisma {
     products?: ProductCreateNestedManyWithoutClinicInput
     notifications?: NotificationCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutServicesInput = {
@@ -53540,6 +55133,7 @@ export namespace Prisma {
     products?: ProductUncheckedCreateNestedManyWithoutClinicInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutServicesInput = {
@@ -53685,6 +55279,7 @@ export namespace Prisma {
     products?: ProductUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutServicesInput = {
@@ -53735,6 +55330,7 @@ export namespace Prisma {
     products?: ProductUncheckedUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
   }
 
   export type InvoiceItemUpsertWithWhereUniqueWithoutServiceInput = {
@@ -53801,6 +55397,7 @@ export namespace Prisma {
     products?: ProductCreateNestedManyWithoutClinicInput
     notifications?: NotificationCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutSpecializationsInput = {
@@ -53851,6 +55448,7 @@ export namespace Prisma {
     products?: ProductUncheckedCreateNestedManyWithoutClinicInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutSpecializationsInput = {
@@ -54030,6 +55628,7 @@ export namespace Prisma {
     products?: ProductUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutSpecializationsInput = {
@@ -54080,6 +55679,7 @@ export namespace Prisma {
     products?: ProductUncheckedUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
   }
 
   export type DoctorUpsertWithWhereUniqueWithoutSpecializationsInput = {
@@ -54146,6 +55746,7 @@ export namespace Prisma {
     products?: ProductCreateNestedManyWithoutClinicInput
     notifications?: NotificationCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutHolidaysInput = {
@@ -54196,6 +55797,7 @@ export namespace Prisma {
     products?: ProductUncheckedCreateNestedManyWithoutClinicInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutHolidaysInput = {
@@ -54262,6 +55864,7 @@ export namespace Prisma {
     products?: ProductUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutHolidaysInput = {
@@ -54312,6 +55915,7 @@ export namespace Prisma {
     products?: ProductUncheckedUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
   }
 
   export type StaffCreateWithoutPayrollsInput = {
@@ -54419,6 +56023,7 @@ export namespace Prisma {
     products?: ProductCreateNestedManyWithoutClinicInput
     notifications?: NotificationCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutPayrollsInput = {
@@ -54469,6 +56074,7 @@ export namespace Prisma {
     products?: ProductUncheckedCreateNestedManyWithoutClinicInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutPayrollsInput = {
@@ -54598,6 +56204,7 @@ export namespace Prisma {
     products?: ProductUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutPayrollsInput = {
@@ -54648,6 +56255,7 @@ export namespace Prisma {
     products?: ProductUncheckedUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutExpensesInput = {
@@ -54698,6 +56306,7 @@ export namespace Prisma {
     products?: ProductCreateNestedManyWithoutClinicInput
     notifications?: NotificationCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutExpensesInput = {
@@ -54748,6 +56357,7 @@ export namespace Prisma {
     products?: ProductUncheckedCreateNestedManyWithoutClinicInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutExpensesInput = {
@@ -54814,6 +56424,7 @@ export namespace Prisma {
     products?: ProductUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutExpensesInput = {
@@ -54864,6 +56475,7 @@ export namespace Prisma {
     products?: ProductUncheckedUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutExpenseCategoriesInput = {
@@ -54914,6 +56526,7 @@ export namespace Prisma {
     products?: ProductCreateNestedManyWithoutClinicInput
     notifications?: NotificationCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutExpenseCategoriesInput = {
@@ -54964,6 +56577,7 @@ export namespace Prisma {
     products?: ProductUncheckedCreateNestedManyWithoutClinicInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutExpenseCategoriesInput = {
@@ -55030,6 +56644,7 @@ export namespace Prisma {
     products?: ProductUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutExpenseCategoriesInput = {
@@ -55080,6 +56695,7 @@ export namespace Prisma {
     products?: ProductUncheckedUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutClinicRolesInput = {
@@ -55130,6 +56746,7 @@ export namespace Prisma {
     products?: ProductCreateNestedManyWithoutClinicInput
     notifications?: NotificationCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutClinicRolesInput = {
@@ -55180,6 +56797,7 @@ export namespace Prisma {
     products?: ProductUncheckedCreateNestedManyWithoutClinicInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutClinicRolesInput = {
@@ -55246,6 +56864,7 @@ export namespace Prisma {
     products?: ProductUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutClinicRolesInput = {
@@ -55296,6 +56915,7 @@ export namespace Prisma {
     products?: ProductUncheckedUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutAttendancesInput = {
@@ -55346,6 +56966,7 @@ export namespace Prisma {
     products?: ProductCreateNestedManyWithoutClinicInput
     notifications?: NotificationCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutAttendancesInput = {
@@ -55396,6 +57017,7 @@ export namespace Prisma {
     products?: ProductUncheckedCreateNestedManyWithoutClinicInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutAttendancesInput = {
@@ -55462,6 +57084,7 @@ export namespace Prisma {
     products?: ProductUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutAttendancesInput = {
@@ -55512,6 +57135,7 @@ export namespace Prisma {
     products?: ProductUncheckedUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutLeaveTypesInput = {
@@ -55562,6 +57186,7 @@ export namespace Prisma {
     products?: ProductCreateNestedManyWithoutClinicInput
     notifications?: NotificationCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutLeaveTypesInput = {
@@ -55612,6 +57237,7 @@ export namespace Prisma {
     products?: ProductUncheckedCreateNestedManyWithoutClinicInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutLeaveTypesInput = {
@@ -55678,6 +57304,7 @@ export namespace Prisma {
     products?: ProductUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutLeaveTypesInput = {
@@ -55728,6 +57355,7 @@ export namespace Prisma {
     products?: ProductUncheckedUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutLeavesInput = {
@@ -55778,6 +57406,7 @@ export namespace Prisma {
     products?: ProductCreateNestedManyWithoutClinicInput
     notifications?: NotificationCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutLeavesInput = {
@@ -55828,6 +57457,7 @@ export namespace Prisma {
     products?: ProductUncheckedCreateNestedManyWithoutClinicInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutLeavesInput = {
@@ -55894,6 +57524,7 @@ export namespace Prisma {
     products?: ProductUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutLeavesInput = {
@@ -55936,6 +57567,227 @@ export namespace Prisma {
     expenseCategories?: ExpenseCategoryUncheckedUpdateManyWithoutClinicNestedInput
     attendances?: AttendanceUncheckedUpdateManyWithoutClinicNestedInput
     leaveTypes?: LeaveTypeUncheckedUpdateManyWithoutClinicNestedInput
+    prescriptions?: PrescriptionUncheckedUpdateManyWithoutClinicNestedInput
+    prescriptionMedicines?: PrescriptionMedicineUncheckedUpdateManyWithoutClinicNestedInput
+    clinicRoles?: ClinicRoleUncheckedUpdateManyWithoutClinicNestedInput
+    invoices?: InvoiceUncheckedUpdateManyWithoutClinicNestedInput
+    invoiceItems?: InvoiceItemUncheckedUpdateManyWithoutClinicNestedInput
+    products?: ProductUncheckedUpdateManyWithoutClinicNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
+    landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
+  }
+
+  export type ClinicCreateWithoutWorkingDaysConfigInput = {
+    id?: string
+    name: string
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
+    phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
+    doctorCount?: number | null
+    status?: $Enums.ClinicStatus
+    packageStartsAt?: Date | string | null
+    packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    package?: SubscriptionPackageCreateNestedOneWithoutClinicsInput
+    users?: UserCreateNestedManyWithoutClinicInput
+    departments?: DepartmentCreateNestedManyWithoutClinicInput
+    designations?: DesignationCreateNestedManyWithoutClinicInput
+    doctors?: DoctorCreateNestedManyWithoutClinicInput
+    staffs?: StaffCreateNestedManyWithoutClinicInput
+    patients?: PatientCreateNestedManyWithoutClinicInput
+    appointments?: AppointmentCreateNestedManyWithoutClinicInput
+    services?: ServiceCreateNestedManyWithoutClinicInput
+    specializations?: SpecializationCreateNestedManyWithoutClinicInput
+    holidays?: HolidayCreateNestedManyWithoutClinicInput
+    payrolls?: PayrollCreateNestedManyWithoutClinicInput
+    expenses?: ExpenseCreateNestedManyWithoutClinicInput
+    expenseCategories?: ExpenseCategoryCreateNestedManyWithoutClinicInput
+    attendances?: AttendanceCreateNestedManyWithoutClinicInput
+    leaveTypes?: LeaveTypeCreateNestedManyWithoutClinicInput
+    leaves?: LeaveCreateNestedManyWithoutClinicInput
+    prescriptions?: PrescriptionCreateNestedManyWithoutClinicInput
+    prescriptionMedicines?: PrescriptionMedicineCreateNestedManyWithoutClinicInput
+    clinicRoles?: ClinicRoleCreateNestedManyWithoutClinicInput
+    invoices?: InvoiceCreateNestedManyWithoutClinicInput
+    invoiceItems?: InvoiceItemCreateNestedManyWithoutClinicInput
+    products?: ProductCreateNestedManyWithoutClinicInput
+    notifications?: NotificationCreateNestedManyWithoutClinicInput
+    landingPage?: LandingPageCreateNestedOneWithoutClinicInput
+  }
+
+  export type ClinicUncheckedCreateWithoutWorkingDaysConfigInput = {
+    id?: string
+    name: string
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
+    phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
+    doctorCount?: number | null
+    status?: $Enums.ClinicStatus
+    packageId?: string | null
+    packageStartsAt?: Date | string | null
+    packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: UserUncheckedCreateNestedManyWithoutClinicInput
+    departments?: DepartmentUncheckedCreateNestedManyWithoutClinicInput
+    designations?: DesignationUncheckedCreateNestedManyWithoutClinicInput
+    doctors?: DoctorUncheckedCreateNestedManyWithoutClinicInput
+    staffs?: StaffUncheckedCreateNestedManyWithoutClinicInput
+    patients?: PatientUncheckedCreateNestedManyWithoutClinicInput
+    appointments?: AppointmentUncheckedCreateNestedManyWithoutClinicInput
+    services?: ServiceUncheckedCreateNestedManyWithoutClinicInput
+    specializations?: SpecializationUncheckedCreateNestedManyWithoutClinicInput
+    holidays?: HolidayUncheckedCreateNestedManyWithoutClinicInput
+    payrolls?: PayrollUncheckedCreateNestedManyWithoutClinicInput
+    expenses?: ExpenseUncheckedCreateNestedManyWithoutClinicInput
+    expenseCategories?: ExpenseCategoryUncheckedCreateNestedManyWithoutClinicInput
+    attendances?: AttendanceUncheckedCreateNestedManyWithoutClinicInput
+    leaveTypes?: LeaveTypeUncheckedCreateNestedManyWithoutClinicInput
+    leaves?: LeaveUncheckedCreateNestedManyWithoutClinicInput
+    prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutClinicInput
+    prescriptionMedicines?: PrescriptionMedicineUncheckedCreateNestedManyWithoutClinicInput
+    clinicRoles?: ClinicRoleUncheckedCreateNestedManyWithoutClinicInput
+    invoices?: InvoiceUncheckedCreateNestedManyWithoutClinicInput
+    invoiceItems?: InvoiceItemUncheckedCreateNestedManyWithoutClinicInput
+    products?: ProductUncheckedCreateNestedManyWithoutClinicInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
+    landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
+  }
+
+  export type ClinicCreateOrConnectWithoutWorkingDaysConfigInput = {
+    where: ClinicWhereUniqueInput
+    create: XOR<ClinicCreateWithoutWorkingDaysConfigInput, ClinicUncheckedCreateWithoutWorkingDaysConfigInput>
+  }
+
+  export type ClinicUpsertWithoutWorkingDaysConfigInput = {
+    update: XOR<ClinicUpdateWithoutWorkingDaysConfigInput, ClinicUncheckedUpdateWithoutWorkingDaysConfigInput>
+    create: XOR<ClinicCreateWithoutWorkingDaysConfigInput, ClinicUncheckedCreateWithoutWorkingDaysConfigInput>
+    where?: ClinicWhereInput
+  }
+
+  export type ClinicUpdateToOneWithWhereWithoutWorkingDaysConfigInput = {
+    where?: ClinicWhereInput
+    data: XOR<ClinicUpdateWithoutWorkingDaysConfigInput, ClinicUncheckedUpdateWithoutWorkingDaysConfigInput>
+  }
+
+  export type ClinicUpdateWithoutWorkingDaysConfigInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    package?: SubscriptionPackageUpdateOneWithoutClinicsNestedInput
+    users?: UserUpdateManyWithoutClinicNestedInput
+    departments?: DepartmentUpdateManyWithoutClinicNestedInput
+    designations?: DesignationUpdateManyWithoutClinicNestedInput
+    doctors?: DoctorUpdateManyWithoutClinicNestedInput
+    staffs?: StaffUpdateManyWithoutClinicNestedInput
+    patients?: PatientUpdateManyWithoutClinicNestedInput
+    appointments?: AppointmentUpdateManyWithoutClinicNestedInput
+    services?: ServiceUpdateManyWithoutClinicNestedInput
+    specializations?: SpecializationUpdateManyWithoutClinicNestedInput
+    holidays?: HolidayUpdateManyWithoutClinicNestedInput
+    payrolls?: PayrollUpdateManyWithoutClinicNestedInput
+    expenses?: ExpenseUpdateManyWithoutClinicNestedInput
+    expenseCategories?: ExpenseCategoryUpdateManyWithoutClinicNestedInput
+    attendances?: AttendanceUpdateManyWithoutClinicNestedInput
+    leaveTypes?: LeaveTypeUpdateManyWithoutClinicNestedInput
+    leaves?: LeaveUpdateManyWithoutClinicNestedInput
+    prescriptions?: PrescriptionUpdateManyWithoutClinicNestedInput
+    prescriptionMedicines?: PrescriptionMedicineUpdateManyWithoutClinicNestedInput
+    clinicRoles?: ClinicRoleUpdateManyWithoutClinicNestedInput
+    invoices?: InvoiceUpdateManyWithoutClinicNestedInput
+    invoiceItems?: InvoiceItemUpdateManyWithoutClinicNestedInput
+    products?: ProductUpdateManyWithoutClinicNestedInput
+    notifications?: NotificationUpdateManyWithoutClinicNestedInput
+    landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
+  }
+
+  export type ClinicUncheckedUpdateWithoutWorkingDaysConfigInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    packageId?: NullableStringFieldUpdateOperationsInput | string | null
+    packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: UserUncheckedUpdateManyWithoutClinicNestedInput
+    departments?: DepartmentUncheckedUpdateManyWithoutClinicNestedInput
+    designations?: DesignationUncheckedUpdateManyWithoutClinicNestedInput
+    doctors?: DoctorUncheckedUpdateManyWithoutClinicNestedInput
+    staffs?: StaffUncheckedUpdateManyWithoutClinicNestedInput
+    patients?: PatientUncheckedUpdateManyWithoutClinicNestedInput
+    appointments?: AppointmentUncheckedUpdateManyWithoutClinicNestedInput
+    services?: ServiceUncheckedUpdateManyWithoutClinicNestedInput
+    specializations?: SpecializationUncheckedUpdateManyWithoutClinicNestedInput
+    holidays?: HolidayUncheckedUpdateManyWithoutClinicNestedInput
+    payrolls?: PayrollUncheckedUpdateManyWithoutClinicNestedInput
+    expenses?: ExpenseUncheckedUpdateManyWithoutClinicNestedInput
+    expenseCategories?: ExpenseCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    attendances?: AttendanceUncheckedUpdateManyWithoutClinicNestedInput
+    leaveTypes?: LeaveTypeUncheckedUpdateManyWithoutClinicNestedInput
+    leaves?: LeaveUncheckedUpdateManyWithoutClinicNestedInput
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutClinicNestedInput
     prescriptionMedicines?: PrescriptionMedicineUncheckedUpdateManyWithoutClinicNestedInput
     clinicRoles?: ClinicRoleUncheckedUpdateManyWithoutClinicNestedInput
@@ -56268,6 +58120,7 @@ export namespace Prisma {
     products?: ProductCreateNestedManyWithoutClinicInput
     notifications?: NotificationCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutPrescriptionsInput = {
@@ -56318,6 +58171,7 @@ export namespace Prisma {
     products?: ProductUncheckedCreateNestedManyWithoutClinicInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutPrescriptionsInput = {
@@ -56716,6 +58570,7 @@ export namespace Prisma {
     products?: ProductUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutPrescriptionsInput = {
@@ -56766,6 +58621,7 @@ export namespace Prisma {
     products?: ProductUncheckedUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
   }
 
   export type PrescriptionMedicineUpsertWithWhereUniqueWithoutPrescriptionInput = {
@@ -56869,6 +58725,7 @@ export namespace Prisma {
     products?: ProductCreateNestedManyWithoutClinicInput
     notifications?: NotificationCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutPrescriptionMedicinesInput = {
@@ -56919,6 +58776,7 @@ export namespace Prisma {
     products?: ProductUncheckedCreateNestedManyWithoutClinicInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutPrescriptionMedicinesInput = {
@@ -57028,6 +58886,7 @@ export namespace Prisma {
     products?: ProductUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutPrescriptionMedicinesInput = {
@@ -57078,6 +58937,7 @@ export namespace Prisma {
     products?: ProductUncheckedUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
   }
 
   export type PatientCreateWithoutInvoicesInput = {
@@ -57209,6 +59069,7 @@ export namespace Prisma {
     products?: ProductCreateNestedManyWithoutClinicInput
     notifications?: NotificationCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutInvoicesInput = {
@@ -57259,6 +59120,7 @@ export namespace Prisma {
     products?: ProductUncheckedCreateNestedManyWithoutClinicInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutInvoicesInput = {
@@ -57446,6 +59308,7 @@ export namespace Prisma {
     products?: ProductUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutInvoicesInput = {
@@ -57496,6 +59359,7 @@ export namespace Prisma {
     products?: ProductUncheckedUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
   }
 
   export type InvoiceItemUpsertWithWhereUniqueWithoutInvoiceInput = {
@@ -57630,6 +59494,7 @@ export namespace Prisma {
     products?: ProductCreateNestedManyWithoutClinicInput
     notifications?: NotificationCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutInvoiceItemsInput = {
@@ -57680,6 +59545,7 @@ export namespace Prisma {
     products?: ProductUncheckedCreateNestedManyWithoutClinicInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutInvoiceItemsInput = {
@@ -57826,6 +59692,7 @@ export namespace Prisma {
     products?: ProductUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutInvoiceItemsInput = {
@@ -57876,6 +59743,7 @@ export namespace Prisma {
     products?: ProductUncheckedUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutProductsInput = {
@@ -57926,6 +59794,7 @@ export namespace Prisma {
     invoiceItems?: InvoiceItemCreateNestedManyWithoutClinicInput
     notifications?: NotificationCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutProductsInput = {
@@ -57976,6 +59845,7 @@ export namespace Prisma {
     invoiceItems?: InvoiceItemUncheckedCreateNestedManyWithoutClinicInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutProductsInput = {
@@ -58042,6 +59912,7 @@ export namespace Prisma {
     invoiceItems?: InvoiceItemUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutProductsInput = {
@@ -58092,6 +59963,7 @@ export namespace Prisma {
     invoiceItems?: InvoiceItemUncheckedUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutNotificationsInput = {
@@ -58142,6 +60014,7 @@ export namespace Prisma {
     invoiceItems?: InvoiceItemCreateNestedManyWithoutClinicInput
     products?: ProductCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutNotificationsInput = {
@@ -58192,6 +60065,7 @@ export namespace Prisma {
     invoiceItems?: InvoiceItemUncheckedCreateNestedManyWithoutClinicInput
     products?: ProductUncheckedCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutNotificationsInput = {
@@ -58258,6 +60132,7 @@ export namespace Prisma {
     invoiceItems?: InvoiceItemUpdateManyWithoutClinicNestedInput
     products?: ProductUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutNotificationsInput = {
@@ -58308,6 +60183,7 @@ export namespace Prisma {
     invoiceItems?: InvoiceItemUncheckedUpdateManyWithoutClinicNestedInput
     products?: ProductUncheckedUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
   }
 
   export type UserCreateManyClinicInput = {
@@ -58579,9 +60455,15 @@ export namespace Prisma {
     startDate: Date | string
     endDate: Date | string
     days?: number
+    workingDays?: number
     reason?: string | null
     status?: string
+    rejectRemark?: string | null
+    adminNotes?: string | null
     appliedOn?: Date | string
+    completedAt?: Date | string | null
+    withdrawnAt?: Date | string | null
+    cancelledAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -59495,9 +61377,15 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     days?: IntFieldUpdateOperationsInput | number
+    workingDays?: IntFieldUpdateOperationsInput | number
     reason?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    rejectRemark?: NullableStringFieldUpdateOperationsInput | string | null
+    adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
     appliedOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    withdrawnAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -59514,9 +61402,15 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     days?: IntFieldUpdateOperationsInput | number
+    workingDays?: IntFieldUpdateOperationsInput | number
     reason?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    rejectRemark?: NullableStringFieldUpdateOperationsInput | string | null
+    adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
     appliedOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    withdrawnAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -59533,9 +61427,15 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     days?: IntFieldUpdateOperationsInput | number
+    workingDays?: IntFieldUpdateOperationsInput | number
     reason?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    rejectRemark?: NullableStringFieldUpdateOperationsInput | string | null
+    adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
     appliedOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    withdrawnAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -59882,6 +61782,7 @@ export namespace Prisma {
     products?: ProductUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutPackageInput = {
@@ -59932,6 +61833,7 @@ export namespace Prisma {
     products?: ProductUncheckedUpdateManyWithoutClinicNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateManyWithoutPackageInput = {
@@ -61897,6 +63799,10 @@ export namespace Prisma {
      * @deprecated Use LeaveDefaultArgs instead
      */
     export type LeaveArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LeaveDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use WorkingDaysConfigDefaultArgs instead
+     */
+    export type WorkingDaysConfigArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = WorkingDaysConfigDefaultArgs<ExtArgs>
     /**
      * @deprecated Use PrescriptionDefaultArgs instead
      */

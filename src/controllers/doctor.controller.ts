@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { AuthenticatedRequest } from "../middlewares/auth.middleware";
-import bcrypt from "bcryptjs";
+import * as bcrypt from "bcryptjs";
 import { randomBytes } from "crypto";
 import prisma from "../lib/prisma";
 import { createNotificationInternal } from "./notification.controller";
@@ -121,7 +121,10 @@ export const createDoctor = async (req: AuthenticatedRequest, res: Response) => 
         const doctorCode = `DOC${String(doctorCount + 1).padStart(6, "0")}`;
 
         const generatedPassword = req.body.password || randomBytes(4).toString("hex");
+        console.log(`CREATING DOCTOR: ${fullName}`);
+        console.log(`Generated Password: ${generatedPassword}`);
         const passwordHash = await bcrypt.hash(generatedPassword, 10);
+        console.log(`Generated Hash: ${passwordHash}`);
         // Username defaults to phone if not provided
         const effectiveUsername = username || phone || null;
 

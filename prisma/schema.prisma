@@ -76,6 +76,7 @@ model Clinic {
   products              Product[]
   notifications         Notification[]
   landingPage           LandingPage?
+  workingDaysConfig     WorkingDaysConfig?
 }
 
 model LandingPage {
@@ -498,14 +499,30 @@ model Leave {
   startDate     DateTime
   endDate       DateTime
   days          Int      @default(1)
+  workingDays   Int      @default(1)
   reason        String?  @default("")
-  status        String   @default("APPLIED") // APPLIED, APPROVED, REJECTED
+  status        String   @default("APPLIED") // APPLIED, APPROVED, REJECTED, COMPLETED, WITHDRAWN, CANCELLED
+  rejectRemark  String?
+  adminNotes    String?
   appliedOn     DateTime @default(now())
+  completedAt   DateTime?
+  withdrawnAt   DateTime?
+  cancelledAt   DateTime?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
   @@index([clinicId])
   @@index([employeeId])
+}
+
+model WorkingDaysConfig {
+  id          String   @id @default(uuid())
+  clinicId    String   @unique
+  clinic      Clinic   @relation(fields: [clinicId], references: [id])
+  offDays     Int[]    @default([0]) // Array of days (0 = Sunday, 1 = Monday, etc.)
+  schedules   Json?    @default("[]") // [{ day: 0, startTime: "09:00", endTime: "18:00", isActive: false }, ...]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Prescription {

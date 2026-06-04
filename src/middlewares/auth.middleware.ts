@@ -9,6 +9,7 @@ export interface AuthenticatedRequest extends Request {
     id: string;
     email: string;
     role: string;
+    fullName: string;
     clinicId?: string | null;
   };
 }

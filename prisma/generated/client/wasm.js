@@ -484,9 +484,24 @@ exports.Prisma.LeaveScalarFieldEnum = {
   startDate: 'startDate',
   endDate: 'endDate',
   days: 'days',
+  workingDays: 'workingDays',
   reason: 'reason',
   status: 'status',
+  rejectRemark: 'rejectRemark',
+  adminNotes: 'adminNotes',
   appliedOn: 'appliedOn',
+  completedAt: 'completedAt',
+  withdrawnAt: 'withdrawnAt',
+  cancelledAt: 'cancelledAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.WorkingDaysConfigScalarFieldEnum = {
+  id: 'id',
+  clinicId: 'clinicId',
+  offDays: 'offDays',
+  schedules: 'schedules',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -664,6 +679,7 @@ exports.Prisma.ModelName = {
   Attendance: 'Attendance',
   LeaveType: 'LeaveType',
   Leave: 'Leave',
+  WorkingDaysConfig: 'WorkingDaysConfig',
   Prescription: 'Prescription',
   PrescriptionMedicine: 'PrescriptionMedicine',
   Invoice: 'Invoice',

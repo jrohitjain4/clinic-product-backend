@@ -448,7 +448,11 @@ export const login = async (req: Request, res: Response) => {
     }
 
     // Validate password
+    console.log(`Login attempt for: ${identifier}`);
+    console.log(`Password provided: ${password}`);
+    console.log(`Hash in DB: ${user.passwordHash}`);
     const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
+    console.log(`Is valid: ${isPasswordValid}`);
     if (!isPasswordValid) {
       return res.status(401).json({ message: "Invalid password credentials" });
     }

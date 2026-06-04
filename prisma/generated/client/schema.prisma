@@ -41,6 +41,8 @@ model Clinic {
   state                 String?
   country               String?
   pincode               String?
+  gstNumber             String?
+  emergencyContact      String?
   doctorCount           Int?
   status                ClinicStatus           @default(IN_PROGRESS)
   packageId             String?
@@ -74,6 +76,7 @@ model Clinic {
   products              Product[]
   notifications         Notification[]
   landingPage           LandingPage?
+  workingDaysConfig     WorkingDaysConfig?
 }
 
 model LandingPage {
@@ -94,6 +97,11 @@ model LandingPage {
   reviews        Json?    @default("[]")
   gallery        Json?    @default("[]")
   services       Json?    @default("[]")
+  faqs           Json?    @default("[]")
+  timetable      Json?    @default("{}")
+  headerImage    String?
+  aboutImage     String?
+  gmbUrl         String?
   logo           String?
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
@@ -478,27 +486,43 @@ model LeaveType {
 }
 
 model Leave {
-  id            String   @id @default(uuid())
+  id            String    @id @default(uuid())
   clinicId      String
-  clinic        Clinic   @relation(fields: [clinicId], references: [id])
+  clinic        Clinic    @relation(fields: [clinicId], references: [id])
   employeeId    String
   employeeType  String // DOCTOR or STAFF
   leaveTypeId   String
   leaveTypeName String
   subject       String?
-  evidenceFiles Json?    @default("[]")
-  isPaid        Boolean  @default(false)
+  evidenceFiles Json?     @default("[]")
+  isPaid        Boolean   @default(false)
   startDate     DateTime
   endDate       DateTime
-  days          Int      @default(1)
-  reason        String?  @default("")
-  status        String   @default("APPLIED") // APPLIED, APPROVED, REJECTED
-  appliedOn     DateTime @default(now())
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  days          Int       @default(1)
+  workingDays   Int       @default(1)
+  reason        String?   @default("")
+  status        String    @default("APPLIED") // APPLIED, APPROVED, REJECTED, COMPLETED, WITHDRAWN, CANCELLED
+  rejectRemark  String?
+  adminNotes    String?
+  appliedOn     DateTime  @default(now())
+  completedAt   DateTime?
+  withdrawnAt   DateTime?
+  cancelledAt   DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   @@index([clinicId])
   @@index([employeeId])
+}
+
+model WorkingDaysConfig {
+  id        String   @id @default(uuid())
+  clinicId  String   @unique
+  clinic    Clinic   @relation(fields: [clinicId], references: [id])
+  offDays   Int[]    @default([0]) // Array of days (0 = Sunday, 1 = Monday, etc.)
+  schedules Json?    @default("[]") // [{ day: 0, startTime: "09:00", endTime: "18:00", isActive: false }, ...]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Prescription {
