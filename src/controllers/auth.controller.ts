@@ -140,35 +140,16 @@ export const upgradePlan = async (req: AuthenticatedRequest, res: Response) => {
   }
 };
 
-// Step 2: Register Draft (Personal + Business info)
+// Register Draft — now only validates, does NOT save to DB
 export const registerDraft = async (req: Request, res: Response) => {
-  console.log("REGISTER DRAFT BODY:", req.body);
   try {
-    const {
-      ownerName,
-      email,
-      phone,
-      whatsappNumber,
-      password,
-      clinicName,
-      addressLine1,
-      addressLine2,
-      district,
-      city,
-      state,
-      country,
-      pincode,
-      doctorCount: doctorCountRaw,
-      username // Clinic username
-    } = req.body;
+    const { email, phone, username } = req.body;
 
-    const doctorCount = doctorCountRaw ? parseInt(doctorCountRaw.toString(), 10) : undefined;
-
-    if (!email || !password || !ownerName || !phone || !clinicName || !username) {
-      return res.status(400).json({ message: "Essential fields (Email, Password, Name, Phone, Clinic Name, Username) are missing" });
+    if (!email || !phone || !username) {
+      return res.status(400).json({ message: "Email, Phone and Username are required for validation" });
     }
 
-    // Check if user or clinic with this info already exists
+    // Check if user with this info already exists
     const existingUser = await prisma.user.findFirst({
       where: {
         OR: [
@@ -191,7 +172,63 @@ export const registerDraft = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "This Clinic Username is already taken" });
     }
 
+    return res.status(200).json({ message: "Validation passed", valid: true });
+  } catch (error: any) {
+    console.error("Register draft validation error:", error);
+    return res.status(400).json({ message: error.message || "Validation failed" });
+  }
+};
+
+// Full Registration — creates user + clinic + assigns package in one atomic transaction
+export const registerFull = async (req: Request, res: Response) => {
+  try {
+    const {
+      ownerName,
+      email,
+      phone,
+      whatsappNumber,
+      password,
+      clinicName,
+      addressLine1,
+      addressLine2,
+      district,
+      city,
+      state,
+      country,
+      pincode,
+      doctorCount: doctorCountRaw,
+      username,
+      packageId
+    } = req.body;
+
+    const doctorCount = doctorCountRaw ? parseInt(doctorCountRaw.toString(), 10) : undefined;
+
+    if (!email || !password || !ownerName || !phone || !clinicName || !username || !packageId) {
+      return res.status(400).json({ message: "All fields including package selection are required" });
+    }
+
+    // Check duplicates
+    const existingUser = await prisma.user.findFirst({
+      where: { OR: [{ email }, { phone }, { username }] }
+    });
+    if (existingUser) {
+      return res.status(400).json({ message: "A user with this Email, Phone, or Username already exists" });
+    }
+
+    const existingClinic = await prisma.clinic.findUnique({ where: { username } });
+    if (existingClinic) {
+      return res.status(400).json({ message: "This Clinic Username is already taken" });
+    }
+
+    const pkg = await prisma.subscriptionPackage.findUnique({ where: { id: packageId } });
+    if (!pkg) {
+      return res.status(404).json({ message: "Package not found" });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
+    const now = new Date();
+    const packageExpiresAt = new Date(now.getTime() + pkg.durationInDays * 24 * 60 * 60 * 1000);
+    const clinicStatus = pkg.price === 0 ? "TRIAL" : "UPGRADED";
 
     const result = await prisma.$transaction(async (tx) => {
       const clinic = await tx.clinic.create({
@@ -210,7 +247,11 @@ export const registerDraft = async (req: Request, res: Response) => {
           country,
           pincode,
           doctorCount: doctorCount || null,
-          status: "IN_PROGRESS",
+          status: clinicStatus as ClinicStatus,
+          packageId,
+          packageStartsAt: now,
+          packageExpiresAt,
+          isTrialUsed: pkg.price === 0,
         }
       });
 
@@ -218,7 +259,7 @@ export const registerDraft = async (req: Request, res: Response) => {
         data: {
           email,
           phone,
-          username, // Matching clinic username for administrative login
+          username,
           passwordHash: hashedPassword,
           fullName: ownerName,
           role: "ADMIN",
@@ -229,15 +270,39 @@ export const registerDraft = async (req: Request, res: Response) => {
       return { user, clinic };
     });
 
+    // Generate JWT token
+    const token = jwt.sign(
+      { id: result.user.id, email: result.user.email, role: result.user.role, clinicId: result.user.clinicId },
+      JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    // Notify super admin
+    try {
+      await createSuperAdminNotification({
+        type: "CLINIC_REGISTERED",
+        title: "New Clinic Registered",
+        message: `${clinicName} has registered with the "${pkg.name}" plan (${clinicStatus}).`,
+        link: "/super-admin/tenants",
+      });
+    } catch (_) { /* non-blocking */ }
+
     return res.status(201).json({
-      message: "Draft created successfully",
-      userId: result.user.id
+      message: "Registration completed successfully!",
+      token,
+      user: {
+        id: result.user.id,
+        email: result.user.email,
+        fullName: result.user.fullName,
+        role: result.user.role,
+        clinicId: result.user.clinicId,
+        clinic: result.clinic,
+      },
     });
   } catch (error: any) {
-    console.error("Register draft error detail:", error);
+    console.error("Register full error:", error);
     return res.status(400).json({
-      message: error.message || "Failed to create registration draft",
-      error: error.message,
+      message: error.message || "Failed to complete registration",
       detail: error.code === 'P2002' ? "A clinic or user with these details already exists." : undefined
     });
   }

@@ -17,24 +17,12 @@ export const authValidation = {
         }),
     }),
 
-    // NEW multi-step registration draft schema
+    // NEW multi-step registration draft schema (Now just for uniqueness validation)
     registerDraft: z.object({
         body: z.object({
-            ownerName: z.string().min(2, "Owner name is required"),
             email: z.string().email("Invalid email format"),
             phone: z.string().min(10, "Valid mobile number is required"),
-            whatsappNumber: z.string().optional(),
-            password: z.string().min(6, "Password must be at least 6 characters"),
-            clinicName: z.string().min(2, "Clinic name is required"),
             username: z.string().min(3, "Username must be at least 3 characters"),
-            addressLine1: z.string().min(3, "Address is required"),
-            addressLine2: z.string().optional(),
-            district: z.string().optional(),
-            city: z.string().optional(),
-            state: z.string().optional(),
-            country: z.string().optional(),
-            pincode: z.string().optional(),
-            doctorCount: z.number().optional().or(z.string().optional()),
         }),
     }),
 
