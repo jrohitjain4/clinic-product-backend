@@ -12,6 +12,7 @@ router.post("/register", validate(authValidation.register), register);
 router.post("/register-draft", validate(authValidation.registerDraft), registerDraft);
 router.post("/register-full", registerFull);
 router.post("/complete-registration", completeRegistration);
+router.post("/login", validate(authValidation.login), login);
 router.post("/request-password-reset", requestPasswordReset);
 router.post("/reset-password", resetPassword);
 router.get("/me", authenticateJWT, getMe);
