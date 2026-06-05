@@ -52,6 +52,9 @@ app.use(
       // Allow requests with no origin (like mobile apps or curl requests)
       if (!origin) return callback(null, true);
 
+      // Check if origin matches docyori.com or any of its subdomains
+      const isDocyori = /^https?:\/\/(.*?\.)?docyori\.com$/.test(origin);
+
       const isAllowed = allowedOrigins.some(allowed => {
         if (allowed.includes('*')) {
           const pattern = new RegExp('^' + allowed.replace(/\*/g, '.*') + '$');
@@ -60,7 +63,7 @@ app.use(
         return allowed === origin;
       });
 
-      if (isAllowed || origin.endsWith('.docyori.com') || origin === 'https://docyori.com') {
+      if (isAllowed || isDocyori) {
         callback(null, true);
       } else {
         console.log("CORS Blocked for origin:", origin);
