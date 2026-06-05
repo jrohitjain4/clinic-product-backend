@@ -41,8 +41,7 @@ export const authValidation = {
     // Flexible login - accepts email, mobile, or username
     login: z.object({
         body: z.object({
-            identifier: z.string().min(1, "Email, mobile or username is required").optional(),
-            email: z.string().optional(),
+            identifier: z.string().min(1, "Email, mobile or username is required"),
             password: z.string().min(1, "Password is required"),
         }),
     }),
