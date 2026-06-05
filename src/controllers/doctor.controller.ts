@@ -419,14 +419,107 @@ export const getDoctorAvailability = async (req: AuthenticatedRequest, res: Resp
             select: { scheduledAt: true, endAt: true }
         });
 
+        // Fetch Working Days Config
+        const workingDaysConfig = await prisma.workingDaysConfig.findUnique({
+            where: { clinicId }
+        });
+
         res.json({
             schedules: doctor.schedules,
             duration: doctor.appointmentDuration || 30,
-            holidays: holidays.map(h => ({ date: h.date, endDate: h.endDate, title: h.title })),
-            leaves: leaves.map(l => ({ start: l.startDate, end: l.endDate })),
-            appointments: appointments.map(a => ({ start: a.scheduledAt, end: a.endAt }))
+            holidays: holidays.map((h: any) => ({ date: h.date, endDate: h.endDate, title: h.title })),
+            leaves: leaves.map((l: any) => ({ start: l.startDate, end: l.endDate })),
+            appointments: appointments.map((a: any) => ({ start: a.scheduledAt, end: a.endAt })),
+            clinicWorkingDays: workingDaysConfig?.offDays || [0],
+            clinicSchedules: workingDaysConfig?.schedules || []
         });
     } catch (err: any) {
         res.status(500).json({ message: err.message });
     }
 };
+
+// GET /api/doctors/my-dashboard
+export const getDoctorDashboardStats = async (req: AuthenticatedRequest, res: Response) => {
+    try {
+        const userEmail = req.user?.email;
+        if (!userEmail) return res.status(403).json({ message: "Unauthorized" });
+
+        // Look up doctor record by email
+        const doctor = await prisma.doctor.findFirst({ where: { email: userEmail } });
+        if (!doctor) return res.status(403).json({ message: "Not a doctor account" });
+        const doctorId = doctor.id;
+
+        const now = new Date();
+        const last7Days = new Date(now);
+        last7Days.setDate(last7Days.getDate() - 7);
+        const prev7Days = new Date(last7Days);
+        prev7Days.setDate(prev7Days.getDate() - 7);
+
+        const [total, totalOnline, totalCancelled, uniquePatients,
+            last7Total, prev7Total, last7Online, prev7Online, last7Cancelled, prev7Cancelled,
+            recentAppointments, todayAppointment] = await Promise.all([
+                prisma.appointment.count({ where: { doctorId } }),
+                prisma.appointment.count({ where: { doctorId, appointmentType: { contains: "Online", mode: "insensitive" } } }),
+                prisma.appointment.count({ where: { doctorId, status: "Cancelled" } }),
+                prisma.appointment.groupBy({ by: ["patientId"], where: { doctorId } }),
+
+                prisma.appointment.count({ where: { doctorId, scheduledAt: { gte: last7Days } } }),
+                prisma.appointment.count({ where: { doctorId, scheduledAt: { gte: prev7Days, lt: last7Days } } }),
+                prisma.appointment.count({ where: { doctorId, appointmentType: { contains: "Online", mode: "insensitive" }, scheduledAt: { gte: last7Days } } }),
+                prisma.appointment.count({ where: { doctorId, appointmentType: { contains: "Online", mode: "insensitive" }, scheduledAt: { gte: prev7Days, lt: last7Days } } }),
+                prisma.appointment.count({ where: { doctorId, status: "Cancelled", scheduledAt: { gte: last7Days } } }),
+                prisma.appointment.count({ where: { doctorId, status: "Cancelled", scheduledAt: { gte: prev7Days, lt: last7Days } } }),
+
+                prisma.appointment.findMany({
+                    where: { doctorId },
+                    orderBy: { scheduledAt: "desc" },
+                    take: 8,
+                    include: {
+                        patient: { select: { id: true, firstName: true, lastName: true, phone: true, profileImage: true } },
+                    },
+                }),
+
+                prisma.appointment.findFirst({
+                    where: {
+                        doctorId,
+                        scheduledAt: { gte: new Date(now.toDateString()) },
+                    },
+                    orderBy: { scheduledAt: "asc" },
+                    include: {
+                        patient: { select: { id: true, firstName: true, lastName: true, phone: true, profileImage: true } },
+                        department: { select: { name: true } },
+                    },
+                }),
+            ]);
+
+        const pctChange = (curr: number, prev: number) => {
+            if (prev === 0) return curr > 0 ? 100 : 0;
+            return Math.round(((curr - prev) / prev) * 100);
+        };
+
+        res.json({
+            stats: {
+                totalAppointments: total,
+                onlineConsultations: totalOnline,
+                cancelledAppointments: totalCancelled,
+                totalPatients: uniquePatients.length,
+                totalChange: pctChange(last7Total, prev7Total),
+                onlineChange: pctChange(last7Online, prev7Online),
+                cancelledChange: pctChange(last7Cancelled, prev7Cancelled),
+            },
+            todayAppointment,
+            recentAppointments: recentAppointments.map(a => ({
+                id: a.id,
+                patientName: a.patient ? `${a.patient.firstName} ${a.patient.lastName}` : "Unknown",
+                patientPhone: a.patient?.phone || "—",
+                patientImage: a.patient?.profileImage || null,
+                dateTime: a.scheduledAt,
+                mode: a.appointmentType?.toLowerCase().includes("online") ? "Online" : "In-Person",
+                status: a.status,
+            })),
+        });
+    } catch (err: any) {
+        res.status(500).json({ message: err.message });
+    }
+};
+

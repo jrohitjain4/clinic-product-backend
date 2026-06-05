@@ -9,12 +9,14 @@ import {
     createDoctor,
     updateDoctor,
     deleteDoctor,
+    getDoctorDashboardStats,
 } from "../controllers/doctor.controller";
 
 const router = Router();
 
 router.use(authenticateJWT);
 
+router.get("/my-dashboard", getDoctorDashboardStats);
 router.get("/", getDoctors);
 router.get("/:id", getDoctorById);
 router.get("/:id/availability", getDoctorAvailability);

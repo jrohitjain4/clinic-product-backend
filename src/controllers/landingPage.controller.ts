@@ -22,6 +22,7 @@ export const getClinicLandingPage = async (req: Request, res: Response) => {
                     orderBy: { serviceName: "asc" },
                 },
                 patients: { select: { id: true } },
+                workingDaysConfig: true,
             },
         });
 
@@ -98,6 +99,7 @@ export const getClinicLandingPage = async (req: Request, res: Response) => {
             services,
             reviews: (lp?.reviews as Array<{ name: string; rating: number; feedback: string }>) || [],
             gallery: (lp?.gallery as Array<{ url: string; category: string }>) || [],
+            workingDays: clinic.workingDaysConfig || null
         };
 
         return res.json(response);
@@ -155,8 +157,19 @@ export const bookPublicAppointment = async (req: Request, res: Response) => {
             return res.status(400).json({ message: "Name, phone, date and time are required." });
         }
 
-        const clinic = await prisma.clinic.findUnique({ where: { id: clinicId } });
+        const clinic = await prisma.clinic.findUnique({
+            where: { id: clinicId },
+            include: { workingDaysConfig: true }
+        });
         if (!clinic) return res.status(404).json({ message: "Clinic not found" });
+
+        // Validate Clinic Working Days
+        const scheduledDate = new Date(date);
+        const dayOfWeek = scheduledDate.getDay();
+        const offDays = (clinic.workingDaysConfig?.offDays as number[]) || [0];
+        if (offDays.includes(dayOfWeek)) {
+            return res.status(400).json({ message: "The clinic is closed on this day. Please select another date." });
+        }
 
         // Find or create patient by phone
         const nameParts = name.trim().split(" ");

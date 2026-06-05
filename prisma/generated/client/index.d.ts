@@ -16993,7 +16993,7 @@ export namespace Prisma {
     id: string
     serviceName: string
     departmentId: string
-    price: number
+    price: number | null
     status: string
     clinicId: string
     createdAt: Date
@@ -17080,7 +17080,7 @@ export namespace Prisma {
       id: string
       serviceName: string
       departmentId: string
-      price: number
+      price: number | null
       status: string
       clinicId: string
       createdAt: Date
@@ -40490,7 +40490,7 @@ export namespace Prisma {
     id?: StringFilter<"Service"> | string
     serviceName?: StringFilter<"Service"> | string
     departmentId?: StringFilter<"Service"> | string
-    price?: FloatFilter<"Service"> | number
+    price?: FloatNullableFilter<"Service"> | number | null
     status?: StringFilter<"Service"> | string
     clinicId?: StringFilter<"Service"> | string
     createdAt?: DateTimeFilter<"Service"> | Date | string
@@ -40504,7 +40504,7 @@ export namespace Prisma {
     id?: SortOrder
     serviceName?: SortOrder
     departmentId?: SortOrder
-    price?: SortOrder
+    price?: SortOrderInput | SortOrder
     status?: SortOrder
     clinicId?: SortOrder
     createdAt?: SortOrder
@@ -40521,7 +40521,7 @@ export namespace Prisma {
     NOT?: ServiceWhereInput | ServiceWhereInput[]
     serviceName?: StringFilter<"Service"> | string
     departmentId?: StringFilter<"Service"> | string
-    price?: FloatFilter<"Service"> | number
+    price?: FloatNullableFilter<"Service"> | number | null
     status?: StringFilter<"Service"> | string
     clinicId?: StringFilter<"Service"> | string
     createdAt?: DateTimeFilter<"Service"> | Date | string
@@ -40535,7 +40535,7 @@ export namespace Prisma {
     id?: SortOrder
     serviceName?: SortOrder
     departmentId?: SortOrder
-    price?: SortOrder
+    price?: SortOrderInput | SortOrder
     status?: SortOrder
     clinicId?: SortOrder
     createdAt?: SortOrder
@@ -40554,7 +40554,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Service"> | string
     serviceName?: StringWithAggregatesFilter<"Service"> | string
     departmentId?: StringWithAggregatesFilter<"Service"> | string
-    price?: FloatWithAggregatesFilter<"Service"> | number
+    price?: FloatNullableWithAggregatesFilter<"Service"> | number | null
     status?: StringWithAggregatesFilter<"Service"> | string
     clinicId?: StringWithAggregatesFilter<"Service"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Service"> | Date | string
@@ -44069,7 +44069,7 @@ export namespace Prisma {
   export type ServiceCreateInput = {
     id?: string
     serviceName: string
-    price: number
+    price?: number | null
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -44082,7 +44082,7 @@ export namespace Prisma {
     id?: string
     serviceName: string
     departmentId: string
-    price: number
+    price?: number | null
     status?: string
     clinicId: string
     createdAt?: Date | string
@@ -44093,7 +44093,7 @@ export namespace Prisma {
   export type ServiceUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     serviceName?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
+    price?: NullableFloatFieldUpdateOperationsInput | number | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -44106,7 +44106,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     serviceName?: StringFieldUpdateOperationsInput | string
     departmentId?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
+    price?: NullableFloatFieldUpdateOperationsInput | number | null
     status?: StringFieldUpdateOperationsInput | string
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -44118,7 +44118,7 @@ export namespace Prisma {
     id?: string
     serviceName: string
     departmentId: string
-    price: number
+    price?: number | null
     status?: string
     clinicId: string
     createdAt?: Date | string
@@ -44128,7 +44128,7 @@ export namespace Prisma {
   export type ServiceUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     serviceName?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
+    price?: NullableFloatFieldUpdateOperationsInput | number | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -44138,7 +44138,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     serviceName?: StringFieldUpdateOperationsInput | string
     departmentId?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
+    price?: NullableFloatFieldUpdateOperationsInput | number | null
     status?: StringFieldUpdateOperationsInput | string
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -51981,7 +51981,7 @@ export namespace Prisma {
   export type ServiceCreateWithoutClinicInput = {
     id?: string
     serviceName: string
-    price: number
+    price?: number | null
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -51993,7 +51993,7 @@ export namespace Prisma {
     id?: string
     serviceName: string
     departmentId: string
-    price: number
+    price?: number | null
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -53068,7 +53068,7 @@ export namespace Prisma {
     id?: StringFilter<"Service"> | string
     serviceName?: StringFilter<"Service"> | string
     departmentId?: StringFilter<"Service"> | string
-    price?: FloatFilter<"Service"> | number
+    price?: FloatNullableFilter<"Service"> | number | null
     status?: StringFilter<"Service"> | string
     clinicId?: StringFilter<"Service"> | string
     createdAt?: DateTimeFilter<"Service"> | Date | string
@@ -54719,7 +54719,7 @@ export namespace Prisma {
   export type ServiceCreateWithoutDepartmentInput = {
     id?: string
     serviceName: string
-    price: number
+    price?: number | null
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -54730,7 +54730,7 @@ export namespace Prisma {
   export type ServiceUncheckedCreateWithoutDepartmentInput = {
     id?: string
     serviceName: string
-    price: number
+    price?: number | null
     status?: string
     clinicId: string
     createdAt?: Date | string
@@ -62571,7 +62571,7 @@ export namespace Prisma {
   export type ServiceCreateWithoutInvoiceItemsInput = {
     id?: string
     serviceName: string
-    price: number
+    price?: number | null
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -62583,7 +62583,7 @@ export namespace Prisma {
     id?: string
     serviceName: string
     departmentId: string
-    price: number
+    price?: number | null
     status?: string
     clinicId: string
     createdAt?: Date | string
@@ -62767,7 +62767,7 @@ export namespace Prisma {
   export type ServiceUpdateWithoutInvoiceItemsInput = {
     id?: StringFieldUpdateOperationsInput | string
     serviceName?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
+    price?: NullableFloatFieldUpdateOperationsInput | number | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -62779,7 +62779,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     serviceName?: StringFieldUpdateOperationsInput | string
     departmentId?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
+    price?: NullableFloatFieldUpdateOperationsInput | number | null
     status?: StringFieldUpdateOperationsInput | string
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -63983,7 +63983,7 @@ export namespace Prisma {
     id?: string
     serviceName: string
     departmentId: string
-    price: number
+    price?: number | null
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -64738,7 +64738,7 @@ export namespace Prisma {
   export type ServiceUpdateWithoutClinicInput = {
     id?: StringFieldUpdateOperationsInput | string
     serviceName?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
+    price?: NullableFloatFieldUpdateOperationsInput | number | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -64750,7 +64750,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     serviceName?: StringFieldUpdateOperationsInput | string
     departmentId?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
+    price?: NullableFloatFieldUpdateOperationsInput | number | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -64761,7 +64761,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     serviceName?: StringFieldUpdateOperationsInput | string
     departmentId?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
+    price?: NullableFloatFieldUpdateOperationsInput | number | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -65697,7 +65697,7 @@ export namespace Prisma {
   export type ServiceCreateManyDepartmentInput = {
     id?: string
     serviceName: string
-    price: number
+    price?: number | null
     status?: string
     clinicId: string
     createdAt?: Date | string
@@ -66047,7 +66047,7 @@ export namespace Prisma {
   export type ServiceUpdateWithoutDepartmentInput = {
     id?: StringFieldUpdateOperationsInput | string
     serviceName?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
+    price?: NullableFloatFieldUpdateOperationsInput | number | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -66058,7 +66058,7 @@ export namespace Prisma {
   export type ServiceUncheckedUpdateWithoutDepartmentInput = {
     id?: StringFieldUpdateOperationsInput | string
     serviceName?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
+    price?: NullableFloatFieldUpdateOperationsInput | number | null
     status?: StringFieldUpdateOperationsInput | string
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -66069,7 +66069,7 @@ export namespace Prisma {
   export type ServiceUncheckedUpdateManyWithoutDepartmentInput = {
     id?: StringFieldUpdateOperationsInput | string
     serviceName?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
+    price?: NullableFloatFieldUpdateOperationsInput | number | null
     status?: StringFieldUpdateOperationsInput | string
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

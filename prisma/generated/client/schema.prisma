@@ -344,7 +344,7 @@ model Service {
   serviceName  String
   departmentId String
   department   Department    @relation(fields: [departmentId], references: [id])
-  price        Float
+  price        Float?
   status       String        @default("Active")
   clinicId     String
   clinic       Clinic        @relation(fields: [clinicId], references: [id])

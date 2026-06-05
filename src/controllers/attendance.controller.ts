@@ -64,6 +64,12 @@ export const getAttendance = async (req: AuthenticatedRequest, res: Response) =>
 
         const daysInMonth = endDate.getDate();
 
+        // Fetch Working Days Config
+        const workingDaysConfig = await prisma.workingDaysConfig.findUnique({
+            where: { clinicId }
+        });
+        const offDays = (workingDaysConfig?.offDays as number[]) || [0]; // Default Sunday off if no config
+
         const formattedData = employees.map((emp: any) => {
             const empAttendance = attendances.filter((a: any) => a.employeeId === emp.id && a.employeeType === emp.type);
 
@@ -82,7 +88,6 @@ export const getAttendance = async (req: AuthenticatedRequest, res: Response) =>
                     attendanceMap[day] = record.status;
                 } else {
                     // Check if day falls within any holiday range
-                    const currentDate = new Date(numericYear, numericMonth - 1, day);
                     const isHoliday = holidays.some((h: any) => {
                         const hStart = new Date(h.date);
                         hStart.setHours(0, 0, 0, 0);
@@ -91,7 +96,12 @@ export const getAttendance = async (req: AuthenticatedRequest, res: Response) =>
                         return currentDate >= hStart && currentDate <= hEnd;
                     });
 
-                    if (isHoliday) {
+                    const dayOfWeek = currentDate.getDay();
+                    const isOffDay = offDays.includes(dayOfWeek);
+
+                    if (isOffDay) {
+                        attendanceMap[day] = 'OFF';
+                    } else if (isHoliday) {
                         attendanceMap[day] = 'HOLIDAY';
                     } else {
                         attendanceMap[day] = ''; // No record
@@ -211,7 +221,17 @@ export const markSelfAttendance = async (req: AuthenticatedRequest, res: Respons
 
         // Set date to today without time for consistent checking
         const today = new Date();
+        const dayOfWeek = today.getDay();
         today.setHours(0, 0, 0, 0);
+
+        // Check Clinic Working Days
+        const workingDaysConfig = await prisma.workingDaysConfig.findUnique({
+            where: { clinicId }
+        });
+        const offDays = (workingDaysConfig?.offDays as number[]) || [0];
+        if (offDays.includes(dayOfWeek)) {
+            return res.status(400).json({ message: "The clinic is closed today. You cannot mark attendance." });
+        }
 
         const existing = await prisma.attendance.findFirst({
             where: {

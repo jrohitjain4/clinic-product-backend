@@ -31,15 +31,15 @@ export const createService = async (req: AuthenticatedRequest, res: Response) =>
 
         const { serviceName, departmentId, price, status } = req.body;
 
-        if (!serviceName || !departmentId || price === undefined) {
-            return res.status(400).json({ message: "Service Name, Department, and Price are required" });
+        if (!serviceName || !departmentId) {
+            return res.status(400).json({ message: "Service Name and Department are required" });
         }
 
         const newService = await prisma.service.create({
             data: {
                 serviceName,
                 departmentId,
-                price: parseFloat(price),
+                price: price !== undefined && price !== null && price !== "" ? parseFloat(price) : undefined,
                 status: status || "Active",
                 clinicId,
             },
