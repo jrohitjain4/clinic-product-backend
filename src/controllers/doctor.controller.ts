@@ -368,3 +368,65 @@ export const deleteDoctor = async (req: AuthenticatedRequest, res: Response) => 
         res.status(500).json({ message: err.message });
     }
 };
+// GET /api/doctors/:id/availability
+export const getDoctorAvailability = async (req: AuthenticatedRequest, res: Response) => {
+    try {
+        const { id: doctorId } = req.params;
+        const { startDate, endDate } = req.query;
+        const clinicId = req.user?.clinicId;
+
+        if (!clinicId) return res.status(403).json({ message: "No clinic associated" });
+
+        const doctor = await prisma.doctor.findUnique({
+            where: { id: doctorId },
+            select: { schedules: true, appointmentDuration: true, clinicId: true }
+        });
+
+        if (!doctor || doctor.clinicId !== clinicId) {
+            return res.status(404).json({ message: "Doctor not found" });
+        }
+
+        const start = startDate ? new Date(startDate as string) : new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+        const end = endDate ? new Date(endDate as string) : new Date(start.getFullYear(), start.getMonth() + 2, 0);
+
+        // Fetch Holidays
+        const holidays = await prisma.holiday.findMany({
+            where: {
+                clinicId,
+                date: { gte: start, lte: end }
+            }
+        });
+
+        // Fetch Leaves
+        const leaves = await prisma.leave.findMany({
+            where: {
+                employeeId: doctorId,
+                employeeType: "DOCTOR",
+                status: "APPROVED",
+                OR: [
+                    { startDate: { lte: end }, endDate: { gte: start } }
+                ]
+            }
+        });
+
+        // Fetch Appointments
+        const appointments = await prisma.appointment.findMany({
+            where: {
+                doctorId,
+                scheduledAt: { gte: start, lte: end },
+                status: { notIn: ["Cancelled", "Rejected"] }
+            },
+            select: { scheduledAt: true, endAt: true }
+        });
+
+        res.json({
+            schedules: doctor.schedules,
+            duration: doctor.appointmentDuration || 30,
+            holidays: holidays.map(h => ({ date: h.date, endDate: h.endDate, title: h.title })),
+            leaves: leaves.map(l => ({ start: l.startDate, end: l.endDate })),
+            appointments: appointments.map(a => ({ start: a.scheduledAt, end: a.endAt }))
+        });
+    } catch (err: any) {
+        res.status(500).json({ message: err.message });
+    }
+};

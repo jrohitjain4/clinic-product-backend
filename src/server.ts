@@ -5,6 +5,8 @@ import path from "path";
 import rateLimit from "express-rate-limit";
 import authRoutes from "./routes/auth.routes";
 import packageRoutes from "./routes/package.routes";
+import todoRoutes from "./routes/todo.routes";
+import { authenticateJWT } from "./middlewares/auth.middleware";
 import tenantRoutes from "./routes/tenant.routes";
 import departmentRoutes from "./routes/department.routes";
 import designationRoutes from "./routes/designation.routes";
@@ -92,6 +94,8 @@ const authRateLimiter = rateLimit({
 app.use("/api/health", healthRoutes);
 app.use("/api/auth", authRateLimiter, authRoutes);
 app.use("/api/packages", packageRoutes);
+app.use("/api/support", supportRoutes);
+app.use("/api/todos", todoRoutes);
 app.use("/api/tenants", tenantRoutes);
 app.use("/api/departments", departmentRoutes);
 app.use("/api/designations", designationRoutes);

@@ -78,6 +78,7 @@ model Clinic {
   landingPage           LandingPage?
   workingDaysConfig     WorkingDaysConfig?
   tickets               Ticket[]
+  todos                 Todo[]
 }
 
 model LandingPage {
@@ -681,6 +682,20 @@ model Ticket {
   userEmail   String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  @@index([status])
+}
+
+model Todo {
+  id        String   @id @default(uuid())
+  title     String
+  priority  String   @default("Medium") // Low, Medium, High
+  status    String   @default("Pending") // Pending, Completed
+  clinicId  String
+  clinic    Clinic   @relation(fields: [clinicId], references: [id])
+  userId    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([clinicId])
   @@index([status])

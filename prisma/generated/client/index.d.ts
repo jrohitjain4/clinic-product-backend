@@ -163,6 +163,11 @@ export type DemoBooking = $Result.DefaultSelection<Prisma.$DemoBookingPayload>
  * 
  */
 export type Ticket = $Result.DefaultSelection<Prisma.$TicketPayload>
+/**
+ * Model Todo
+ * 
+ */
+export type Todo = $Result.DefaultSelection<Prisma.$TodoPayload>
 
 /**
  * Enums
@@ -623,6 +628,16 @@ export class PrismaClient<
     * ```
     */
   get ticket(): Prisma.TicketDelegate<ExtArgs>;
+
+  /**
+   * `prisma.todo`: Exposes CRUD operations for the **Todo** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Todos
+    * const todos = await prisma.todo.findMany()
+    * ```
+    */
+  get todo(): Prisma.TodoDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -1093,7 +1108,8 @@ export namespace Prisma {
     Notification: 'Notification',
     SystemSetting: 'SystemSetting',
     DemoBooking: 'DemoBooking',
-    Ticket: 'Ticket'
+    Ticket: 'Ticket',
+    Todo: 'Todo'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1109,7 +1125,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "clinic" | "landingPage" | "subscriptionPackage" | "user" | "department" | "designation" | "staff" | "doctor" | "patient" | "appointment" | "service" | "specialization" | "holiday" | "payroll" | "expense" | "expenseCategory" | "clinicRole" | "attendance" | "leaveType" | "leave" | "workingDaysConfig" | "prescription" | "prescriptionMedicine" | "invoice" | "invoiceItem" | "product" | "notification" | "systemSetting" | "demoBooking" | "ticket"
+      modelProps: "clinic" | "landingPage" | "subscriptionPackage" | "user" | "department" | "designation" | "staff" | "doctor" | "patient" | "appointment" | "service" | "specialization" | "holiday" | "payroll" | "expense" | "expenseCategory" | "clinicRole" | "attendance" | "leaveType" | "leave" | "workingDaysConfig" | "prescription" | "prescriptionMedicine" | "invoice" | "invoiceItem" | "product" | "notification" | "systemSetting" | "demoBooking" | "ticket" | "todo"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3213,6 +3229,76 @@ export namespace Prisma {
           }
         }
       }
+      Todo: {
+        payload: Prisma.$TodoPayload<ExtArgs>
+        fields: Prisma.TodoFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TodoFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TodoPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TodoFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TodoPayload>
+          }
+          findFirst: {
+            args: Prisma.TodoFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TodoPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TodoFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TodoPayload>
+          }
+          findMany: {
+            args: Prisma.TodoFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TodoPayload>[]
+          }
+          create: {
+            args: Prisma.TodoCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TodoPayload>
+          }
+          createMany: {
+            args: Prisma.TodoCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TodoCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TodoPayload>[]
+          }
+          delete: {
+            args: Prisma.TodoDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TodoPayload>
+          }
+          update: {
+            args: Prisma.TodoUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TodoPayload>
+          }
+          deleteMany: {
+            args: Prisma.TodoDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TodoUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.TodoUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TodoPayload>
+          }
+          aggregate: {
+            args: Prisma.TodoAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTodo>
+          }
+          groupBy: {
+            args: Prisma.TodoGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TodoGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TodoCountArgs<ExtArgs>
+            result: $Utils.Optional<TodoCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3398,6 +3484,7 @@ export namespace Prisma {
     products: number
     notifications: number
     tickets: number
+    todos: number
   }
 
   export type ClinicCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3425,6 +3512,7 @@ export namespace Prisma {
     products?: boolean | ClinicCountOutputTypeCountProductsArgs
     notifications?: boolean | ClinicCountOutputTypeCountNotificationsArgs
     tickets?: boolean | ClinicCountOutputTypeCountTicketsArgs
+    todos?: boolean | ClinicCountOutputTypeCountTodosArgs
   }
 
   // Custom InputTypes
@@ -3604,6 +3692,13 @@ export namespace Prisma {
    */
   export type ClinicCountOutputTypeCountTicketsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TicketWhereInput
+  }
+
+  /**
+   * ClinicCountOutputType without action
+   */
+  export type ClinicCountOutputTypeCountTodosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TodoWhereInput
   }
 
 
@@ -4428,6 +4523,7 @@ export namespace Prisma {
     landingPage?: boolean | Clinic$landingPageArgs<ExtArgs>
     workingDaysConfig?: boolean | Clinic$workingDaysConfigArgs<ExtArgs>
     tickets?: boolean | Clinic$ticketsArgs<ExtArgs>
+    todos?: boolean | Clinic$todosArgs<ExtArgs>
     _count?: boolean | ClinicCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["clinic"]>
 
@@ -4514,6 +4610,7 @@ export namespace Prisma {
     landingPage?: boolean | Clinic$landingPageArgs<ExtArgs>
     workingDaysConfig?: boolean | Clinic$workingDaysConfigArgs<ExtArgs>
     tickets?: boolean | Clinic$ticketsArgs<ExtArgs>
+    todos?: boolean | Clinic$todosArgs<ExtArgs>
     _count?: boolean | ClinicCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ClinicIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4550,6 +4647,7 @@ export namespace Prisma {
       landingPage: Prisma.$LandingPagePayload<ExtArgs> | null
       workingDaysConfig: Prisma.$WorkingDaysConfigPayload<ExtArgs> | null
       tickets: Prisma.$TicketPayload<ExtArgs>[]
+      todos: Prisma.$TodoPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4967,6 +5065,7 @@ export namespace Prisma {
     landingPage<T extends Clinic$landingPageArgs<ExtArgs> = {}>(args?: Subset<T, Clinic$landingPageArgs<ExtArgs>>): Prisma__LandingPageClient<$Result.GetResult<Prisma.$LandingPagePayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     workingDaysConfig<T extends Clinic$workingDaysConfigArgs<ExtArgs> = {}>(args?: Subset<T, Clinic$workingDaysConfigArgs<ExtArgs>>): Prisma__WorkingDaysConfigClient<$Result.GetResult<Prisma.$WorkingDaysConfigPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     tickets<T extends Clinic$ticketsArgs<ExtArgs> = {}>(args?: Subset<T, Clinic$ticketsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TicketPayload<ExtArgs>, T, "findMany"> | Null>
+    todos<T extends Clinic$todosArgs<ExtArgs> = {}>(args?: Subset<T, Clinic$todosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TodoPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5860,6 +5959,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: TicketScalarFieldEnum | TicketScalarFieldEnum[]
+  }
+
+  /**
+   * Clinic.todos
+   */
+  export type Clinic$todosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Todo
+     */
+    select?: TodoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TodoInclude<ExtArgs> | null
+    where?: TodoWhereInput
+    orderBy?: TodoOrderByWithRelationInput | TodoOrderByWithRelationInput[]
+    cursor?: TodoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TodoScalarFieldEnum | TodoScalarFieldEnum[]
   }
 
   /**
@@ -37111,6 +37230,975 @@ export namespace Prisma {
 
 
   /**
+   * Model Todo
+   */
+
+  export type AggregateTodo = {
+    _count: TodoCountAggregateOutputType | null
+    _min: TodoMinAggregateOutputType | null
+    _max: TodoMaxAggregateOutputType | null
+  }
+
+  export type TodoMinAggregateOutputType = {
+    id: string | null
+    title: string | null
+    priority: string | null
+    status: string | null
+    clinicId: string | null
+    userId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TodoMaxAggregateOutputType = {
+    id: string | null
+    title: string | null
+    priority: string | null
+    status: string | null
+    clinicId: string | null
+    userId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TodoCountAggregateOutputType = {
+    id: number
+    title: number
+    priority: number
+    status: number
+    clinicId: number
+    userId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type TodoMinAggregateInputType = {
+    id?: true
+    title?: true
+    priority?: true
+    status?: true
+    clinicId?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TodoMaxAggregateInputType = {
+    id?: true
+    title?: true
+    priority?: true
+    status?: true
+    clinicId?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TodoCountAggregateInputType = {
+    id?: true
+    title?: true
+    priority?: true
+    status?: true
+    clinicId?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type TodoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Todo to aggregate.
+     */
+    where?: TodoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Todos to fetch.
+     */
+    orderBy?: TodoOrderByWithRelationInput | TodoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TodoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Todos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Todos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Todos
+    **/
+    _count?: true | TodoCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TodoMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TodoMaxAggregateInputType
+  }
+
+  export type GetTodoAggregateType<T extends TodoAggregateArgs> = {
+        [P in keyof T & keyof AggregateTodo]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTodo[P]>
+      : GetScalarType<T[P], AggregateTodo[P]>
+  }
+
+
+
+
+  export type TodoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TodoWhereInput
+    orderBy?: TodoOrderByWithAggregationInput | TodoOrderByWithAggregationInput[]
+    by: TodoScalarFieldEnum[] | TodoScalarFieldEnum
+    having?: TodoScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TodoCountAggregateInputType | true
+    _min?: TodoMinAggregateInputType
+    _max?: TodoMaxAggregateInputType
+  }
+
+  export type TodoGroupByOutputType = {
+    id: string
+    title: string
+    priority: string
+    status: string
+    clinicId: string
+    userId: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: TodoCountAggregateOutputType | null
+    _min: TodoMinAggregateOutputType | null
+    _max: TodoMaxAggregateOutputType | null
+  }
+
+  type GetTodoGroupByPayload<T extends TodoGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TodoGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TodoGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TodoGroupByOutputType[P]>
+            : GetScalarType<T[P], TodoGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TodoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    priority?: boolean
+    status?: boolean
+    clinicId?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    clinic?: boolean | ClinicDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["todo"]>
+
+  export type TodoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    priority?: boolean
+    status?: boolean
+    clinicId?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    clinic?: boolean | ClinicDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["todo"]>
+
+  export type TodoSelectScalar = {
+    id?: boolean
+    title?: boolean
+    priority?: boolean
+    status?: boolean
+    clinicId?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type TodoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    clinic?: boolean | ClinicDefaultArgs<ExtArgs>
+  }
+  export type TodoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    clinic?: boolean | ClinicDefaultArgs<ExtArgs>
+  }
+
+  export type $TodoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Todo"
+    objects: {
+      clinic: Prisma.$ClinicPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      title: string
+      priority: string
+      status: string
+      clinicId: string
+      userId: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["todo"]>
+    composites: {}
+  }
+
+  type TodoGetPayload<S extends boolean | null | undefined | TodoDefaultArgs> = $Result.GetResult<Prisma.$TodoPayload, S>
+
+  type TodoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<TodoFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: TodoCountAggregateInputType | true
+    }
+
+  export interface TodoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Todo'], meta: { name: 'Todo' } }
+    /**
+     * Find zero or one Todo that matches the filter.
+     * @param {TodoFindUniqueArgs} args - Arguments to find a Todo
+     * @example
+     * // Get one Todo
+     * const todo = await prisma.todo.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TodoFindUniqueArgs>(args: SelectSubset<T, TodoFindUniqueArgs<ExtArgs>>): Prisma__TodoClient<$Result.GetResult<Prisma.$TodoPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Todo that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {TodoFindUniqueOrThrowArgs} args - Arguments to find a Todo
+     * @example
+     * // Get one Todo
+     * const todo = await prisma.todo.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TodoFindUniqueOrThrowArgs>(args: SelectSubset<T, TodoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TodoClient<$Result.GetResult<Prisma.$TodoPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Todo that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TodoFindFirstArgs} args - Arguments to find a Todo
+     * @example
+     * // Get one Todo
+     * const todo = await prisma.todo.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TodoFindFirstArgs>(args?: SelectSubset<T, TodoFindFirstArgs<ExtArgs>>): Prisma__TodoClient<$Result.GetResult<Prisma.$TodoPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Todo that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TodoFindFirstOrThrowArgs} args - Arguments to find a Todo
+     * @example
+     * // Get one Todo
+     * const todo = await prisma.todo.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TodoFindFirstOrThrowArgs>(args?: SelectSubset<T, TodoFindFirstOrThrowArgs<ExtArgs>>): Prisma__TodoClient<$Result.GetResult<Prisma.$TodoPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Todos that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TodoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Todos
+     * const todos = await prisma.todo.findMany()
+     * 
+     * // Get first 10 Todos
+     * const todos = await prisma.todo.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const todoWithIdOnly = await prisma.todo.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TodoFindManyArgs>(args?: SelectSubset<T, TodoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TodoPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Todo.
+     * @param {TodoCreateArgs} args - Arguments to create a Todo.
+     * @example
+     * // Create one Todo
+     * const Todo = await prisma.todo.create({
+     *   data: {
+     *     // ... data to create a Todo
+     *   }
+     * })
+     * 
+     */
+    create<T extends TodoCreateArgs>(args: SelectSubset<T, TodoCreateArgs<ExtArgs>>): Prisma__TodoClient<$Result.GetResult<Prisma.$TodoPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Todos.
+     * @param {TodoCreateManyArgs} args - Arguments to create many Todos.
+     * @example
+     * // Create many Todos
+     * const todo = await prisma.todo.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TodoCreateManyArgs>(args?: SelectSubset<T, TodoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Todos and returns the data saved in the database.
+     * @param {TodoCreateManyAndReturnArgs} args - Arguments to create many Todos.
+     * @example
+     * // Create many Todos
+     * const todo = await prisma.todo.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Todos and only return the `id`
+     * const todoWithIdOnly = await prisma.todo.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TodoCreateManyAndReturnArgs>(args?: SelectSubset<T, TodoCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TodoPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Todo.
+     * @param {TodoDeleteArgs} args - Arguments to delete one Todo.
+     * @example
+     * // Delete one Todo
+     * const Todo = await prisma.todo.delete({
+     *   where: {
+     *     // ... filter to delete one Todo
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TodoDeleteArgs>(args: SelectSubset<T, TodoDeleteArgs<ExtArgs>>): Prisma__TodoClient<$Result.GetResult<Prisma.$TodoPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Todo.
+     * @param {TodoUpdateArgs} args - Arguments to update one Todo.
+     * @example
+     * // Update one Todo
+     * const todo = await prisma.todo.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TodoUpdateArgs>(args: SelectSubset<T, TodoUpdateArgs<ExtArgs>>): Prisma__TodoClient<$Result.GetResult<Prisma.$TodoPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Todos.
+     * @param {TodoDeleteManyArgs} args - Arguments to filter Todos to delete.
+     * @example
+     * // Delete a few Todos
+     * const { count } = await prisma.todo.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TodoDeleteManyArgs>(args?: SelectSubset<T, TodoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Todos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TodoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Todos
+     * const todo = await prisma.todo.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TodoUpdateManyArgs>(args: SelectSubset<T, TodoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Todo.
+     * @param {TodoUpsertArgs} args - Arguments to update or create a Todo.
+     * @example
+     * // Update or create a Todo
+     * const todo = await prisma.todo.upsert({
+     *   create: {
+     *     // ... data to create a Todo
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Todo we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TodoUpsertArgs>(args: SelectSubset<T, TodoUpsertArgs<ExtArgs>>): Prisma__TodoClient<$Result.GetResult<Prisma.$TodoPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Todos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TodoCountArgs} args - Arguments to filter Todos to count.
+     * @example
+     * // Count the number of Todos
+     * const count = await prisma.todo.count({
+     *   where: {
+     *     // ... the filter for the Todos we want to count
+     *   }
+     * })
+    **/
+    count<T extends TodoCountArgs>(
+      args?: Subset<T, TodoCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TodoCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Todo.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TodoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TodoAggregateArgs>(args: Subset<T, TodoAggregateArgs>): Prisma.PrismaPromise<GetTodoAggregateType<T>>
+
+    /**
+     * Group by Todo.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TodoGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TodoGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TodoGroupByArgs['orderBy'] }
+        : { orderBy?: TodoGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TodoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTodoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Todo model
+   */
+  readonly fields: TodoFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Todo.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TodoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    clinic<T extends ClinicDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClinicDefaultArgs<ExtArgs>>): Prisma__ClinicClient<$Result.GetResult<Prisma.$ClinicPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Todo model
+   */ 
+  interface TodoFieldRefs {
+    readonly id: FieldRef<"Todo", 'String'>
+    readonly title: FieldRef<"Todo", 'String'>
+    readonly priority: FieldRef<"Todo", 'String'>
+    readonly status: FieldRef<"Todo", 'String'>
+    readonly clinicId: FieldRef<"Todo", 'String'>
+    readonly userId: FieldRef<"Todo", 'String'>
+    readonly createdAt: FieldRef<"Todo", 'DateTime'>
+    readonly updatedAt: FieldRef<"Todo", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Todo findUnique
+   */
+  export type TodoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Todo
+     */
+    select?: TodoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TodoInclude<ExtArgs> | null
+    /**
+     * Filter, which Todo to fetch.
+     */
+    where: TodoWhereUniqueInput
+  }
+
+  /**
+   * Todo findUniqueOrThrow
+   */
+  export type TodoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Todo
+     */
+    select?: TodoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TodoInclude<ExtArgs> | null
+    /**
+     * Filter, which Todo to fetch.
+     */
+    where: TodoWhereUniqueInput
+  }
+
+  /**
+   * Todo findFirst
+   */
+  export type TodoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Todo
+     */
+    select?: TodoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TodoInclude<ExtArgs> | null
+    /**
+     * Filter, which Todo to fetch.
+     */
+    where?: TodoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Todos to fetch.
+     */
+    orderBy?: TodoOrderByWithRelationInput | TodoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Todos.
+     */
+    cursor?: TodoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Todos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Todos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Todos.
+     */
+    distinct?: TodoScalarFieldEnum | TodoScalarFieldEnum[]
+  }
+
+  /**
+   * Todo findFirstOrThrow
+   */
+  export type TodoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Todo
+     */
+    select?: TodoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TodoInclude<ExtArgs> | null
+    /**
+     * Filter, which Todo to fetch.
+     */
+    where?: TodoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Todos to fetch.
+     */
+    orderBy?: TodoOrderByWithRelationInput | TodoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Todos.
+     */
+    cursor?: TodoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Todos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Todos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Todos.
+     */
+    distinct?: TodoScalarFieldEnum | TodoScalarFieldEnum[]
+  }
+
+  /**
+   * Todo findMany
+   */
+  export type TodoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Todo
+     */
+    select?: TodoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TodoInclude<ExtArgs> | null
+    /**
+     * Filter, which Todos to fetch.
+     */
+    where?: TodoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Todos to fetch.
+     */
+    orderBy?: TodoOrderByWithRelationInput | TodoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Todos.
+     */
+    cursor?: TodoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Todos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Todos.
+     */
+    skip?: number
+    distinct?: TodoScalarFieldEnum | TodoScalarFieldEnum[]
+  }
+
+  /**
+   * Todo create
+   */
+  export type TodoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Todo
+     */
+    select?: TodoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TodoInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Todo.
+     */
+    data: XOR<TodoCreateInput, TodoUncheckedCreateInput>
+  }
+
+  /**
+   * Todo createMany
+   */
+  export type TodoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Todos.
+     */
+    data: TodoCreateManyInput | TodoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Todo createManyAndReturn
+   */
+  export type TodoCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Todo
+     */
+    select?: TodoSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Todos.
+     */
+    data: TodoCreateManyInput | TodoCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TodoIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Todo update
+   */
+  export type TodoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Todo
+     */
+    select?: TodoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TodoInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Todo.
+     */
+    data: XOR<TodoUpdateInput, TodoUncheckedUpdateInput>
+    /**
+     * Choose, which Todo to update.
+     */
+    where: TodoWhereUniqueInput
+  }
+
+  /**
+   * Todo updateMany
+   */
+  export type TodoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Todos.
+     */
+    data: XOR<TodoUpdateManyMutationInput, TodoUncheckedUpdateManyInput>
+    /**
+     * Filter which Todos to update
+     */
+    where?: TodoWhereInput
+  }
+
+  /**
+   * Todo upsert
+   */
+  export type TodoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Todo
+     */
+    select?: TodoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TodoInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Todo to update in case it exists.
+     */
+    where: TodoWhereUniqueInput
+    /**
+     * In case the Todo found by the `where` argument doesn't exist, create a new Todo with this data.
+     */
+    create: XOR<TodoCreateInput, TodoUncheckedCreateInput>
+    /**
+     * In case the Todo was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TodoUpdateInput, TodoUncheckedUpdateInput>
+  }
+
+  /**
+   * Todo delete
+   */
+  export type TodoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Todo
+     */
+    select?: TodoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TodoInclude<ExtArgs> | null
+    /**
+     * Filter which Todo to delete.
+     */
+    where: TodoWhereUniqueInput
+  }
+
+  /**
+   * Todo deleteMany
+   */
+  export type TodoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Todos to delete
+     */
+    where?: TodoWhereInput
+  }
+
+  /**
+   * Todo without action
+   */
+  export type TodoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Todo
+     */
+    select?: TodoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TodoInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -37718,6 +38806,20 @@ export namespace Prisma {
   export type TicketScalarFieldEnum = (typeof TicketScalarFieldEnum)[keyof typeof TicketScalarFieldEnum]
 
 
+  export const TodoScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    priority: 'priority',
+    status: 'status',
+    clinicId: 'clinicId',
+    userId: 'userId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type TodoScalarFieldEnum = (typeof TodoScalarFieldEnum)[keyof typeof TodoScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -37927,6 +39029,7 @@ export namespace Prisma {
     landingPage?: XOR<LandingPageNullableRelationFilter, LandingPageWhereInput> | null
     workingDaysConfig?: XOR<WorkingDaysConfigNullableRelationFilter, WorkingDaysConfigWhereInput> | null
     tickets?: TicketListRelationFilter
+    todos?: TodoListRelationFilter
   }
 
   export type ClinicOrderByWithRelationInput = {
@@ -37981,6 +39084,7 @@ export namespace Prisma {
     landingPage?: LandingPageOrderByWithRelationInput
     workingDaysConfig?: WorkingDaysConfigOrderByWithRelationInput
     tickets?: TicketOrderByRelationAggregateInput
+    todos?: TodoOrderByRelationAggregateInput
   }
 
   export type ClinicWhereUniqueInput = Prisma.AtLeast<{
@@ -38038,6 +39142,7 @@ export namespace Prisma {
     landingPage?: XOR<LandingPageNullableRelationFilter, LandingPageWhereInput> | null
     workingDaysConfig?: XOR<WorkingDaysConfigNullableRelationFilter, WorkingDaysConfigWhereInput> | null
     tickets?: TicketListRelationFilter
+    todos?: TodoListRelationFilter
   }, "id" | "username">
 
   export type ClinicOrderByWithAggregationInput = {
@@ -41063,6 +42168,76 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Ticket"> | Date | string
   }
 
+  export type TodoWhereInput = {
+    AND?: TodoWhereInput | TodoWhereInput[]
+    OR?: TodoWhereInput[]
+    NOT?: TodoWhereInput | TodoWhereInput[]
+    id?: StringFilter<"Todo"> | string
+    title?: StringFilter<"Todo"> | string
+    priority?: StringFilter<"Todo"> | string
+    status?: StringFilter<"Todo"> | string
+    clinicId?: StringFilter<"Todo"> | string
+    userId?: StringNullableFilter<"Todo"> | string | null
+    createdAt?: DateTimeFilter<"Todo"> | Date | string
+    updatedAt?: DateTimeFilter<"Todo"> | Date | string
+    clinic?: XOR<ClinicRelationFilter, ClinicWhereInput>
+  }
+
+  export type TodoOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    priority?: SortOrder
+    status?: SortOrder
+    clinicId?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    clinic?: ClinicOrderByWithRelationInput
+  }
+
+  export type TodoWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: TodoWhereInput | TodoWhereInput[]
+    OR?: TodoWhereInput[]
+    NOT?: TodoWhereInput | TodoWhereInput[]
+    title?: StringFilter<"Todo"> | string
+    priority?: StringFilter<"Todo"> | string
+    status?: StringFilter<"Todo"> | string
+    clinicId?: StringFilter<"Todo"> | string
+    userId?: StringNullableFilter<"Todo"> | string | null
+    createdAt?: DateTimeFilter<"Todo"> | Date | string
+    updatedAt?: DateTimeFilter<"Todo"> | Date | string
+    clinic?: XOR<ClinicRelationFilter, ClinicWhereInput>
+  }, "id">
+
+  export type TodoOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    priority?: SortOrder
+    status?: SortOrder
+    clinicId?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: TodoCountOrderByAggregateInput
+    _max?: TodoMaxOrderByAggregateInput
+    _min?: TodoMinOrderByAggregateInput
+  }
+
+  export type TodoScalarWhereWithAggregatesInput = {
+    AND?: TodoScalarWhereWithAggregatesInput | TodoScalarWhereWithAggregatesInput[]
+    OR?: TodoScalarWhereWithAggregatesInput[]
+    NOT?: TodoScalarWhereWithAggregatesInput | TodoScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Todo"> | string
+    title?: StringWithAggregatesFilter<"Todo"> | string
+    priority?: StringWithAggregatesFilter<"Todo"> | string
+    status?: StringWithAggregatesFilter<"Todo"> | string
+    clinicId?: StringWithAggregatesFilter<"Todo"> | string
+    userId?: StringNullableWithAggregatesFilter<"Todo"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Todo"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Todo"> | Date | string
+  }
+
   export type ClinicCreateInput = {
     id?: string
     name: string
@@ -41114,6 +42289,7 @@ export namespace Prisma {
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
     tickets?: TicketCreateNestedManyWithoutClinicInput
+    todos?: TodoCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateInput = {
@@ -41167,6 +42343,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
+    todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUpdateInput = {
@@ -41220,6 +42397,7 @@ export namespace Prisma {
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
     tickets?: TicketUpdateManyWithoutClinicNestedInput
+    todos?: TodoUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateInput = {
@@ -41273,6 +42451,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
+    todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateManyInput = {
@@ -44737,6 +45916,82 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type TodoCreateInput = {
+    id?: string
+    title: string
+    priority?: string
+    status?: string
+    userId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    clinic: ClinicCreateNestedOneWithoutTodosInput
+  }
+
+  export type TodoUncheckedCreateInput = {
+    id?: string
+    title: string
+    priority?: string
+    status?: string
+    clinicId: string
+    userId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TodoUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    clinic?: ClinicUpdateOneRequiredWithoutTodosNestedInput
+  }
+
+  export type TodoUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    clinicId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TodoCreateManyInput = {
+    id?: string
+    title: string
+    priority?: string
+    status?: string
+    clinicId: string
+    userId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TodoUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TodoUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    clinicId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -44971,6 +46226,12 @@ export namespace Prisma {
     none?: TicketWhereInput
   }
 
+  export type TodoListRelationFilter = {
+    every?: TodoWhereInput
+    some?: TodoWhereInput
+    none?: TodoWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -45069,6 +46330,10 @@ export namespace Prisma {
   }
 
   export type TicketOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TodoOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -47112,6 +48377,39 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type TodoCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    priority?: SortOrder
+    status?: SortOrder
+    clinicId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TodoMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    priority?: SortOrder
+    status?: SortOrder
+    clinicId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TodoMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    priority?: SortOrder
+    status?: SortOrder
+    clinicId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
   export type SubscriptionPackageCreateNestedOneWithoutClinicsInput = {
     create?: XOR<SubscriptionPackageCreateWithoutClinicsInput, SubscriptionPackageUncheckedCreateWithoutClinicsInput>
     connectOrCreate?: SubscriptionPackageCreateOrConnectWithoutClinicsInput
@@ -47298,6 +48596,13 @@ export namespace Prisma {
     connect?: TicketWhereUniqueInput | TicketWhereUniqueInput[]
   }
 
+  export type TodoCreateNestedManyWithoutClinicInput = {
+    create?: XOR<TodoCreateWithoutClinicInput, TodoUncheckedCreateWithoutClinicInput> | TodoCreateWithoutClinicInput[] | TodoUncheckedCreateWithoutClinicInput[]
+    connectOrCreate?: TodoCreateOrConnectWithoutClinicInput | TodoCreateOrConnectWithoutClinicInput[]
+    createMany?: TodoCreateManyClinicInputEnvelope
+    connect?: TodoWhereUniqueInput | TodoWhereUniqueInput[]
+  }
+
   export type UserUncheckedCreateNestedManyWithoutClinicInput = {
     create?: XOR<UserCreateWithoutClinicInput, UserUncheckedCreateWithoutClinicInput> | UserCreateWithoutClinicInput[] | UserUncheckedCreateWithoutClinicInput[]
     connectOrCreate?: UserCreateOrConnectWithoutClinicInput | UserCreateOrConnectWithoutClinicInput[]
@@ -47476,6 +48781,13 @@ export namespace Prisma {
     connectOrCreate?: TicketCreateOrConnectWithoutClinicInput | TicketCreateOrConnectWithoutClinicInput[]
     createMany?: TicketCreateManyClinicInputEnvelope
     connect?: TicketWhereUniqueInput | TicketWhereUniqueInput[]
+  }
+
+  export type TodoUncheckedCreateNestedManyWithoutClinicInput = {
+    create?: XOR<TodoCreateWithoutClinicInput, TodoUncheckedCreateWithoutClinicInput> | TodoCreateWithoutClinicInput[] | TodoUncheckedCreateWithoutClinicInput[]
+    connectOrCreate?: TodoCreateOrConnectWithoutClinicInput | TodoCreateOrConnectWithoutClinicInput[]
+    createMany?: TodoCreateManyClinicInputEnvelope
+    connect?: TodoWhereUniqueInput | TodoWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -47876,6 +49188,20 @@ export namespace Prisma {
     deleteMany?: TicketScalarWhereInput | TicketScalarWhereInput[]
   }
 
+  export type TodoUpdateManyWithoutClinicNestedInput = {
+    create?: XOR<TodoCreateWithoutClinicInput, TodoUncheckedCreateWithoutClinicInput> | TodoCreateWithoutClinicInput[] | TodoUncheckedCreateWithoutClinicInput[]
+    connectOrCreate?: TodoCreateOrConnectWithoutClinicInput | TodoCreateOrConnectWithoutClinicInput[]
+    upsert?: TodoUpsertWithWhereUniqueWithoutClinicInput | TodoUpsertWithWhereUniqueWithoutClinicInput[]
+    createMany?: TodoCreateManyClinicInputEnvelope
+    set?: TodoWhereUniqueInput | TodoWhereUniqueInput[]
+    disconnect?: TodoWhereUniqueInput | TodoWhereUniqueInput[]
+    delete?: TodoWhereUniqueInput | TodoWhereUniqueInput[]
+    connect?: TodoWhereUniqueInput | TodoWhereUniqueInput[]
+    update?: TodoUpdateWithWhereUniqueWithoutClinicInput | TodoUpdateWithWhereUniqueWithoutClinicInput[]
+    updateMany?: TodoUpdateManyWithWhereWithoutClinicInput | TodoUpdateManyWithWhereWithoutClinicInput[]
+    deleteMany?: TodoScalarWhereInput | TodoScalarWhereInput[]
+  }
+
   export type UserUncheckedUpdateManyWithoutClinicNestedInput = {
     create?: XOR<UserCreateWithoutClinicInput, UserUncheckedCreateWithoutClinicInput> | UserCreateWithoutClinicInput[] | UserUncheckedCreateWithoutClinicInput[]
     connectOrCreate?: UserCreateOrConnectWithoutClinicInput | UserCreateOrConnectWithoutClinicInput[]
@@ -48230,6 +49556,20 @@ export namespace Prisma {
     update?: TicketUpdateWithWhereUniqueWithoutClinicInput | TicketUpdateWithWhereUniqueWithoutClinicInput[]
     updateMany?: TicketUpdateManyWithWhereWithoutClinicInput | TicketUpdateManyWithWhereWithoutClinicInput[]
     deleteMany?: TicketScalarWhereInput | TicketScalarWhereInput[]
+  }
+
+  export type TodoUncheckedUpdateManyWithoutClinicNestedInput = {
+    create?: XOR<TodoCreateWithoutClinicInput, TodoUncheckedCreateWithoutClinicInput> | TodoCreateWithoutClinicInput[] | TodoUncheckedCreateWithoutClinicInput[]
+    connectOrCreate?: TodoCreateOrConnectWithoutClinicInput | TodoCreateOrConnectWithoutClinicInput[]
+    upsert?: TodoUpsertWithWhereUniqueWithoutClinicInput | TodoUpsertWithWhereUniqueWithoutClinicInput[]
+    createMany?: TodoCreateManyClinicInputEnvelope
+    set?: TodoWhereUniqueInput | TodoWhereUniqueInput[]
+    disconnect?: TodoWhereUniqueInput | TodoWhereUniqueInput[]
+    delete?: TodoWhereUniqueInput | TodoWhereUniqueInput[]
+    connect?: TodoWhereUniqueInput | TodoWhereUniqueInput[]
+    update?: TodoUpdateWithWhereUniqueWithoutClinicInput | TodoUpdateWithWhereUniqueWithoutClinicInput[]
+    updateMany?: TodoUpdateManyWithWhereWithoutClinicInput | TodoUpdateManyWithWhereWithoutClinicInput[]
+    deleteMany?: TodoScalarWhereInput | TodoScalarWhereInput[]
   }
 
   export type ClinicCreateNestedOneWithoutLandingPageInput = {
@@ -49850,6 +51190,20 @@ export namespace Prisma {
     update?: XOR<XOR<ClinicUpdateToOneWithWhereWithoutTicketsInput, ClinicUpdateWithoutTicketsInput>, ClinicUncheckedUpdateWithoutTicketsInput>
   }
 
+  export type ClinicCreateNestedOneWithoutTodosInput = {
+    create?: XOR<ClinicCreateWithoutTodosInput, ClinicUncheckedCreateWithoutTodosInput>
+    connectOrCreate?: ClinicCreateOrConnectWithoutTodosInput
+    connect?: ClinicWhereUniqueInput
+  }
+
+  export type ClinicUpdateOneRequiredWithoutTodosNestedInput = {
+    create?: XOR<ClinicCreateWithoutTodosInput, ClinicUncheckedCreateWithoutTodosInput>
+    connectOrCreate?: ClinicCreateOrConnectWithoutTodosInput
+    upsert?: ClinicUpsertWithoutTodosInput
+    connect?: ClinicWhereUniqueInput
+    update?: XOR<XOR<ClinicUpdateToOneWithWhereWithoutTodosInput, ClinicUpdateWithoutTodosInput>, ClinicUncheckedUpdateWithoutTodosInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -51320,6 +52674,36 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type TodoCreateWithoutClinicInput = {
+    id?: string
+    title: string
+    priority?: string
+    status?: string
+    userId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TodoUncheckedCreateWithoutClinicInput = {
+    id?: string
+    title: string
+    priority?: string
+    status?: string
+    userId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TodoCreateOrConnectWithoutClinicInput = {
+    where: TodoWhereUniqueInput
+    create: XOR<TodoCreateWithoutClinicInput, TodoUncheckedCreateWithoutClinicInput>
+  }
+
+  export type TodoCreateManyClinicInputEnvelope = {
+    data: TodoCreateManyClinicInput | TodoCreateManyClinicInput[]
+    skipDuplicates?: boolean
+  }
+
   export type SubscriptionPackageUpsertWithoutClinicsInput = {
     update: XOR<SubscriptionPackageUpdateWithoutClinicsInput, SubscriptionPackageUncheckedUpdateWithoutClinicsInput>
     create: XOR<SubscriptionPackageCreateWithoutClinicsInput, SubscriptionPackageUncheckedCreateWithoutClinicsInput>
@@ -52311,6 +53695,36 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Ticket"> | Date | string
   }
 
+  export type TodoUpsertWithWhereUniqueWithoutClinicInput = {
+    where: TodoWhereUniqueInput
+    update: XOR<TodoUpdateWithoutClinicInput, TodoUncheckedUpdateWithoutClinicInput>
+    create: XOR<TodoCreateWithoutClinicInput, TodoUncheckedCreateWithoutClinicInput>
+  }
+
+  export type TodoUpdateWithWhereUniqueWithoutClinicInput = {
+    where: TodoWhereUniqueInput
+    data: XOR<TodoUpdateWithoutClinicInput, TodoUncheckedUpdateWithoutClinicInput>
+  }
+
+  export type TodoUpdateManyWithWhereWithoutClinicInput = {
+    where: TodoScalarWhereInput
+    data: XOR<TodoUpdateManyMutationInput, TodoUncheckedUpdateManyWithoutClinicInput>
+  }
+
+  export type TodoScalarWhereInput = {
+    AND?: TodoScalarWhereInput | TodoScalarWhereInput[]
+    OR?: TodoScalarWhereInput[]
+    NOT?: TodoScalarWhereInput | TodoScalarWhereInput[]
+    id?: StringFilter<"Todo"> | string
+    title?: StringFilter<"Todo"> | string
+    priority?: StringFilter<"Todo"> | string
+    status?: StringFilter<"Todo"> | string
+    clinicId?: StringFilter<"Todo"> | string
+    userId?: StringNullableFilter<"Todo"> | string | null
+    createdAt?: DateTimeFilter<"Todo"> | Date | string
+    updatedAt?: DateTimeFilter<"Todo"> | Date | string
+  }
+
   export type ClinicCreateWithoutLandingPageInput = {
     id?: string
     name: string
@@ -52361,6 +53775,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
     tickets?: TicketCreateNestedManyWithoutClinicInput
+    todos?: TodoCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutLandingPageInput = {
@@ -52413,6 +53828,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
+    todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutLandingPageInput = {
@@ -52481,6 +53897,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
     tickets?: TicketUpdateManyWithoutClinicNestedInput
+    todos?: TodoUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutLandingPageInput = {
@@ -52533,6 +53950,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
+    todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutPackageInput = {
@@ -52585,6 +54003,7 @@ export namespace Prisma {
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
     tickets?: TicketCreateNestedManyWithoutClinicInput
+    todos?: TodoCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutPackageInput = {
@@ -52637,6 +54056,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
+    todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutPackageInput = {
@@ -52745,6 +54165,7 @@ export namespace Prisma {
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
     tickets?: TicketCreateNestedManyWithoutClinicInput
+    todos?: TodoCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutUsersInput = {
@@ -52797,6 +54218,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
+    todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutUsersInput = {
@@ -52865,6 +54287,7 @@ export namespace Prisma {
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
     tickets?: TicketUpdateManyWithoutClinicNestedInput
+    todos?: TodoUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutUsersInput = {
@@ -52917,6 +54340,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
+    todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutDepartmentsInput = {
@@ -52969,6 +54393,7 @@ export namespace Prisma {
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
     tickets?: TicketCreateNestedManyWithoutClinicInput
+    todos?: TodoCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutDepartmentsInput = {
@@ -53021,6 +54446,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
+    todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutDepartmentsInput = {
@@ -53425,6 +54851,7 @@ export namespace Prisma {
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
     tickets?: TicketUpdateManyWithoutClinicNestedInput
+    todos?: TodoUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutDepartmentsInput = {
@@ -53477,6 +54904,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
+    todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type DesignationUpsertWithWhereUniqueWithoutDepartmentInput = {
@@ -53625,6 +55053,7 @@ export namespace Prisma {
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
     tickets?: TicketCreateNestedManyWithoutClinicInput
+    todos?: TodoCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutDesignationsInput = {
@@ -53677,6 +55106,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
+    todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutDesignationsInput = {
@@ -53964,6 +55394,7 @@ export namespace Prisma {
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
     tickets?: TicketUpdateManyWithoutClinicNestedInput
+    todos?: TodoUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutDesignationsInput = {
@@ -54016,6 +55447,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
+    todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type DepartmentUpsertWithoutDesignationsInput = {
@@ -54215,6 +55647,7 @@ export namespace Prisma {
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
     tickets?: TicketCreateNestedManyWithoutClinicInput
+    todos?: TodoCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutStaffsInput = {
@@ -54267,6 +55700,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
+    todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutStaffsInput = {
@@ -54469,6 +55903,7 @@ export namespace Prisma {
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
     tickets?: TicketUpdateManyWithoutClinicNestedInput
+    todos?: TodoUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutStaffsInput = {
@@ -54521,6 +55956,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
+    todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type PayrollUpsertWithWhereUniqueWithoutStaffInput = {
@@ -54686,6 +56122,7 @@ export namespace Prisma {
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
     tickets?: TicketCreateNestedManyWithoutClinicInput
+    todos?: TodoCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutDoctorsInput = {
@@ -54738,6 +56175,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
+    todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutDoctorsInput = {
@@ -55078,6 +56516,7 @@ export namespace Prisma {
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
     tickets?: TicketUpdateManyWithoutClinicNestedInput
+    todos?: TodoUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutDoctorsInput = {
@@ -55130,6 +56569,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
+    todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type PatientUpsertWithWhereUniqueWithoutPrimaryDoctorInput = {
@@ -55343,6 +56783,7 @@ export namespace Prisma {
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
     tickets?: TicketCreateNestedManyWithoutClinicInput
+    todos?: TodoCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutPatientsInput = {
@@ -55395,6 +56836,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
+    todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutPatientsInput = {
@@ -55716,6 +57158,7 @@ export namespace Prisma {
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
     tickets?: TicketUpdateManyWithoutClinicNestedInput
+    todos?: TodoUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutPatientsInput = {
@@ -55768,6 +57211,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
+    todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type AppointmentUpsertWithWhereUniqueWithoutPatientInput = {
@@ -56101,6 +57545,7 @@ export namespace Prisma {
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
     tickets?: TicketCreateNestedManyWithoutClinicInput
+    todos?: TodoCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutAppointmentsInput = {
@@ -56153,6 +57598,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
+    todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutAppointmentsInput = {
@@ -56514,6 +57960,7 @@ export namespace Prisma {
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
     tickets?: TicketUpdateManyWithoutClinicNestedInput
+    todos?: TodoUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutAppointmentsInput = {
@@ -56566,6 +58013,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
+    todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type PrescriptionUpsertWithWhereUniqueWithoutAppointmentInput = {
@@ -56673,6 +58121,7 @@ export namespace Prisma {
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
     tickets?: TicketCreateNestedManyWithoutClinicInput
+    todos?: TodoCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutServicesInput = {
@@ -56725,6 +58174,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
+    todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutServicesInput = {
@@ -56872,6 +58322,7 @@ export namespace Prisma {
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
     tickets?: TicketUpdateManyWithoutClinicNestedInput
+    todos?: TodoUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutServicesInput = {
@@ -56924,6 +58375,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
+    todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type InvoiceItemUpsertWithWhereUniqueWithoutServiceInput = {
@@ -56992,6 +58444,7 @@ export namespace Prisma {
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
     tickets?: TicketCreateNestedManyWithoutClinicInput
+    todos?: TodoCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutSpecializationsInput = {
@@ -57044,6 +58497,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
+    todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutSpecializationsInput = {
@@ -57225,6 +58679,7 @@ export namespace Prisma {
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
     tickets?: TicketUpdateManyWithoutClinicNestedInput
+    todos?: TodoUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutSpecializationsInput = {
@@ -57277,6 +58732,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
+    todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type DoctorUpsertWithWhereUniqueWithoutSpecializationsInput = {
@@ -57345,6 +58801,7 @@ export namespace Prisma {
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
     tickets?: TicketCreateNestedManyWithoutClinicInput
+    todos?: TodoCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutHolidaysInput = {
@@ -57397,6 +58854,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
+    todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutHolidaysInput = {
@@ -57465,6 +58923,7 @@ export namespace Prisma {
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
     tickets?: TicketUpdateManyWithoutClinicNestedInput
+    todos?: TodoUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutHolidaysInput = {
@@ -57517,6 +58976,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
+    todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type StaffCreateWithoutPayrollsInput = {
@@ -57626,6 +59086,7 @@ export namespace Prisma {
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
     tickets?: TicketCreateNestedManyWithoutClinicInput
+    todos?: TodoCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutPayrollsInput = {
@@ -57678,6 +59139,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
+    todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutPayrollsInput = {
@@ -57809,6 +59271,7 @@ export namespace Prisma {
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
     tickets?: TicketUpdateManyWithoutClinicNestedInput
+    todos?: TodoUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutPayrollsInput = {
@@ -57861,6 +59324,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
+    todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutExpensesInput = {
@@ -57913,6 +59377,7 @@ export namespace Prisma {
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
     tickets?: TicketCreateNestedManyWithoutClinicInput
+    todos?: TodoCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutExpensesInput = {
@@ -57965,6 +59430,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
+    todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutExpensesInput = {
@@ -58033,6 +59499,7 @@ export namespace Prisma {
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
     tickets?: TicketUpdateManyWithoutClinicNestedInput
+    todos?: TodoUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutExpensesInput = {
@@ -58085,6 +59552,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
+    todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutExpenseCategoriesInput = {
@@ -58137,6 +59605,7 @@ export namespace Prisma {
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
     tickets?: TicketCreateNestedManyWithoutClinicInput
+    todos?: TodoCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutExpenseCategoriesInput = {
@@ -58189,6 +59658,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
+    todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutExpenseCategoriesInput = {
@@ -58257,6 +59727,7 @@ export namespace Prisma {
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
     tickets?: TicketUpdateManyWithoutClinicNestedInput
+    todos?: TodoUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutExpenseCategoriesInput = {
@@ -58309,6 +59780,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
+    todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutClinicRolesInput = {
@@ -58361,6 +59833,7 @@ export namespace Prisma {
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
     tickets?: TicketCreateNestedManyWithoutClinicInput
+    todos?: TodoCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutClinicRolesInput = {
@@ -58413,6 +59886,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
+    todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutClinicRolesInput = {
@@ -58481,6 +59955,7 @@ export namespace Prisma {
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
     tickets?: TicketUpdateManyWithoutClinicNestedInput
+    todos?: TodoUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutClinicRolesInput = {
@@ -58533,6 +60008,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
+    todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutAttendancesInput = {
@@ -58585,6 +60061,7 @@ export namespace Prisma {
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
     tickets?: TicketCreateNestedManyWithoutClinicInput
+    todos?: TodoCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutAttendancesInput = {
@@ -58637,6 +60114,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
+    todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutAttendancesInput = {
@@ -58705,6 +60183,7 @@ export namespace Prisma {
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
     tickets?: TicketUpdateManyWithoutClinicNestedInput
+    todos?: TodoUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutAttendancesInput = {
@@ -58757,6 +60236,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
+    todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutLeaveTypesInput = {
@@ -58809,6 +60289,7 @@ export namespace Prisma {
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
     tickets?: TicketCreateNestedManyWithoutClinicInput
+    todos?: TodoCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutLeaveTypesInput = {
@@ -58861,6 +60342,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
+    todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutLeaveTypesInput = {
@@ -58929,6 +60411,7 @@ export namespace Prisma {
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
     tickets?: TicketUpdateManyWithoutClinicNestedInput
+    todos?: TodoUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutLeaveTypesInput = {
@@ -58981,6 +60464,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
+    todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutLeavesInput = {
@@ -59033,6 +60517,7 @@ export namespace Prisma {
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
     tickets?: TicketCreateNestedManyWithoutClinicInput
+    todos?: TodoCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutLeavesInput = {
@@ -59085,6 +60570,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
+    todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutLeavesInput = {
@@ -59153,6 +60639,7 @@ export namespace Prisma {
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
     tickets?: TicketUpdateManyWithoutClinicNestedInput
+    todos?: TodoUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutLeavesInput = {
@@ -59205,6 +60692,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
+    todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutWorkingDaysConfigInput = {
@@ -59257,6 +60745,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
     tickets?: TicketCreateNestedManyWithoutClinicInput
+    todos?: TodoCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutWorkingDaysConfigInput = {
@@ -59309,6 +60798,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
+    todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutWorkingDaysConfigInput = {
@@ -59377,6 +60867,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
     tickets?: TicketUpdateManyWithoutClinicNestedInput
+    todos?: TodoUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutWorkingDaysConfigInput = {
@@ -59429,6 +60920,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
+    todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type PatientCreateWithoutPrescriptionsInput = {
@@ -59755,6 +61247,7 @@ export namespace Prisma {
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
     tickets?: TicketCreateNestedManyWithoutClinicInput
+    todos?: TodoCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutPrescriptionsInput = {
@@ -59807,6 +61300,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
+    todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutPrescriptionsInput = {
@@ -60207,6 +61701,7 @@ export namespace Prisma {
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
     tickets?: TicketUpdateManyWithoutClinicNestedInput
+    todos?: TodoUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutPrescriptionsInput = {
@@ -60259,6 +61754,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
+    todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type PrescriptionMedicineUpsertWithWhereUniqueWithoutPrescriptionInput = {
@@ -60364,6 +61860,7 @@ export namespace Prisma {
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
     tickets?: TicketCreateNestedManyWithoutClinicInput
+    todos?: TodoCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutPrescriptionMedicinesInput = {
@@ -60416,6 +61913,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
+    todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutPrescriptionMedicinesInput = {
@@ -60527,6 +62025,7 @@ export namespace Prisma {
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
     tickets?: TicketUpdateManyWithoutClinicNestedInput
+    todos?: TodoUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutPrescriptionMedicinesInput = {
@@ -60579,6 +62078,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
+    todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type PatientCreateWithoutInvoicesInput = {
@@ -60712,6 +62212,7 @@ export namespace Prisma {
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
     tickets?: TicketCreateNestedManyWithoutClinicInput
+    todos?: TodoCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutInvoicesInput = {
@@ -60764,6 +62265,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
+    todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutInvoicesInput = {
@@ -60953,6 +62455,7 @@ export namespace Prisma {
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
     tickets?: TicketUpdateManyWithoutClinicNestedInput
+    todos?: TodoUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutInvoicesInput = {
@@ -61005,6 +62508,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
+    todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type InvoiceItemUpsertWithWhereUniqueWithoutInvoiceInput = {
@@ -61141,6 +62645,7 @@ export namespace Prisma {
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
     tickets?: TicketCreateNestedManyWithoutClinicInput
+    todos?: TodoCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutInvoiceItemsInput = {
@@ -61193,6 +62698,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
+    todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutInvoiceItemsInput = {
@@ -61341,6 +62847,7 @@ export namespace Prisma {
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
     tickets?: TicketUpdateManyWithoutClinicNestedInput
+    todos?: TodoUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutInvoiceItemsInput = {
@@ -61393,6 +62900,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
+    todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutProductsInput = {
@@ -61445,6 +62953,7 @@ export namespace Prisma {
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
     tickets?: TicketCreateNestedManyWithoutClinicInput
+    todos?: TodoCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutProductsInput = {
@@ -61497,6 +63006,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
+    todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutProductsInput = {
@@ -61565,6 +63075,7 @@ export namespace Prisma {
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
     tickets?: TicketUpdateManyWithoutClinicNestedInput
+    todos?: TodoUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutProductsInput = {
@@ -61617,6 +63128,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
+    todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutNotificationsInput = {
@@ -61669,6 +63181,7 @@ export namespace Prisma {
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
     tickets?: TicketCreateNestedManyWithoutClinicInput
+    todos?: TodoCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutNotificationsInput = {
@@ -61721,6 +63234,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
+    todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutNotificationsInput = {
@@ -61789,6 +63303,7 @@ export namespace Prisma {
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
     tickets?: TicketUpdateManyWithoutClinicNestedInput
+    todos?: TodoUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutNotificationsInput = {
@@ -61841,6 +63356,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
+    todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutTicketsInput = {
@@ -61893,6 +63409,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
+    todos?: TodoCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutTicketsInput = {
@@ -61945,6 +63462,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
     landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
     workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
+    todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutTicketsInput = {
@@ -62013,6 +63531,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
+    todos?: TodoUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutTicketsInput = {
@@ -62065,6 +63584,235 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
+    todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
+  }
+
+  export type ClinicCreateWithoutTodosInput = {
+    id?: string
+    name: string
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
+    phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
+    doctorCount?: number | null
+    status?: $Enums.ClinicStatus
+    packageStartsAt?: Date | string | null
+    packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    package?: SubscriptionPackageCreateNestedOneWithoutClinicsInput
+    users?: UserCreateNestedManyWithoutClinicInput
+    departments?: DepartmentCreateNestedManyWithoutClinicInput
+    designations?: DesignationCreateNestedManyWithoutClinicInput
+    doctors?: DoctorCreateNestedManyWithoutClinicInput
+    staffs?: StaffCreateNestedManyWithoutClinicInput
+    patients?: PatientCreateNestedManyWithoutClinicInput
+    appointments?: AppointmentCreateNestedManyWithoutClinicInput
+    services?: ServiceCreateNestedManyWithoutClinicInput
+    specializations?: SpecializationCreateNestedManyWithoutClinicInput
+    holidays?: HolidayCreateNestedManyWithoutClinicInput
+    payrolls?: PayrollCreateNestedManyWithoutClinicInput
+    expenses?: ExpenseCreateNestedManyWithoutClinicInput
+    expenseCategories?: ExpenseCategoryCreateNestedManyWithoutClinicInput
+    attendances?: AttendanceCreateNestedManyWithoutClinicInput
+    leaveTypes?: LeaveTypeCreateNestedManyWithoutClinicInput
+    leaves?: LeaveCreateNestedManyWithoutClinicInput
+    prescriptions?: PrescriptionCreateNestedManyWithoutClinicInput
+    prescriptionMedicines?: PrescriptionMedicineCreateNestedManyWithoutClinicInput
+    clinicRoles?: ClinicRoleCreateNestedManyWithoutClinicInput
+    invoices?: InvoiceCreateNestedManyWithoutClinicInput
+    invoiceItems?: InvoiceItemCreateNestedManyWithoutClinicInput
+    products?: ProductCreateNestedManyWithoutClinicInput
+    notifications?: NotificationCreateNestedManyWithoutClinicInput
+    landingPage?: LandingPageCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
+    tickets?: TicketCreateNestedManyWithoutClinicInput
+  }
+
+  export type ClinicUncheckedCreateWithoutTodosInput = {
+    id?: string
+    name: string
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
+    phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
+    doctorCount?: number | null
+    status?: $Enums.ClinicStatus
+    packageId?: string | null
+    packageStartsAt?: Date | string | null
+    packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: UserUncheckedCreateNestedManyWithoutClinicInput
+    departments?: DepartmentUncheckedCreateNestedManyWithoutClinicInput
+    designations?: DesignationUncheckedCreateNestedManyWithoutClinicInput
+    doctors?: DoctorUncheckedCreateNestedManyWithoutClinicInput
+    staffs?: StaffUncheckedCreateNestedManyWithoutClinicInput
+    patients?: PatientUncheckedCreateNestedManyWithoutClinicInput
+    appointments?: AppointmentUncheckedCreateNestedManyWithoutClinicInput
+    services?: ServiceUncheckedCreateNestedManyWithoutClinicInput
+    specializations?: SpecializationUncheckedCreateNestedManyWithoutClinicInput
+    holidays?: HolidayUncheckedCreateNestedManyWithoutClinicInput
+    payrolls?: PayrollUncheckedCreateNestedManyWithoutClinicInput
+    expenses?: ExpenseUncheckedCreateNestedManyWithoutClinicInput
+    expenseCategories?: ExpenseCategoryUncheckedCreateNestedManyWithoutClinicInput
+    attendances?: AttendanceUncheckedCreateNestedManyWithoutClinicInput
+    leaveTypes?: LeaveTypeUncheckedCreateNestedManyWithoutClinicInput
+    leaves?: LeaveUncheckedCreateNestedManyWithoutClinicInput
+    prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutClinicInput
+    prescriptionMedicines?: PrescriptionMedicineUncheckedCreateNestedManyWithoutClinicInput
+    clinicRoles?: ClinicRoleUncheckedCreateNestedManyWithoutClinicInput
+    invoices?: InvoiceUncheckedCreateNestedManyWithoutClinicInput
+    invoiceItems?: InvoiceItemUncheckedCreateNestedManyWithoutClinicInput
+    products?: ProductUncheckedCreateNestedManyWithoutClinicInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
+    landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
+    tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
+  }
+
+  export type ClinicCreateOrConnectWithoutTodosInput = {
+    where: ClinicWhereUniqueInput
+    create: XOR<ClinicCreateWithoutTodosInput, ClinicUncheckedCreateWithoutTodosInput>
+  }
+
+  export type ClinicUpsertWithoutTodosInput = {
+    update: XOR<ClinicUpdateWithoutTodosInput, ClinicUncheckedUpdateWithoutTodosInput>
+    create: XOR<ClinicCreateWithoutTodosInput, ClinicUncheckedCreateWithoutTodosInput>
+    where?: ClinicWhereInput
+  }
+
+  export type ClinicUpdateToOneWithWhereWithoutTodosInput = {
+    where?: ClinicWhereInput
+    data: XOR<ClinicUpdateWithoutTodosInput, ClinicUncheckedUpdateWithoutTodosInput>
+  }
+
+  export type ClinicUpdateWithoutTodosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    package?: SubscriptionPackageUpdateOneWithoutClinicsNestedInput
+    users?: UserUpdateManyWithoutClinicNestedInput
+    departments?: DepartmentUpdateManyWithoutClinicNestedInput
+    designations?: DesignationUpdateManyWithoutClinicNestedInput
+    doctors?: DoctorUpdateManyWithoutClinicNestedInput
+    staffs?: StaffUpdateManyWithoutClinicNestedInput
+    patients?: PatientUpdateManyWithoutClinicNestedInput
+    appointments?: AppointmentUpdateManyWithoutClinicNestedInput
+    services?: ServiceUpdateManyWithoutClinicNestedInput
+    specializations?: SpecializationUpdateManyWithoutClinicNestedInput
+    holidays?: HolidayUpdateManyWithoutClinicNestedInput
+    payrolls?: PayrollUpdateManyWithoutClinicNestedInput
+    expenses?: ExpenseUpdateManyWithoutClinicNestedInput
+    expenseCategories?: ExpenseCategoryUpdateManyWithoutClinicNestedInput
+    attendances?: AttendanceUpdateManyWithoutClinicNestedInput
+    leaveTypes?: LeaveTypeUpdateManyWithoutClinicNestedInput
+    leaves?: LeaveUpdateManyWithoutClinicNestedInput
+    prescriptions?: PrescriptionUpdateManyWithoutClinicNestedInput
+    prescriptionMedicines?: PrescriptionMedicineUpdateManyWithoutClinicNestedInput
+    clinicRoles?: ClinicRoleUpdateManyWithoutClinicNestedInput
+    invoices?: InvoiceUpdateManyWithoutClinicNestedInput
+    invoiceItems?: InvoiceItemUpdateManyWithoutClinicNestedInput
+    products?: ProductUpdateManyWithoutClinicNestedInput
+    notifications?: NotificationUpdateManyWithoutClinicNestedInput
+    landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
+    tickets?: TicketUpdateManyWithoutClinicNestedInput
+  }
+
+  export type ClinicUncheckedUpdateWithoutTodosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    packageId?: NullableStringFieldUpdateOperationsInput | string | null
+    packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: UserUncheckedUpdateManyWithoutClinicNestedInput
+    departments?: DepartmentUncheckedUpdateManyWithoutClinicNestedInput
+    designations?: DesignationUncheckedUpdateManyWithoutClinicNestedInput
+    doctors?: DoctorUncheckedUpdateManyWithoutClinicNestedInput
+    staffs?: StaffUncheckedUpdateManyWithoutClinicNestedInput
+    patients?: PatientUncheckedUpdateManyWithoutClinicNestedInput
+    appointments?: AppointmentUncheckedUpdateManyWithoutClinicNestedInput
+    services?: ServiceUncheckedUpdateManyWithoutClinicNestedInput
+    specializations?: SpecializationUncheckedUpdateManyWithoutClinicNestedInput
+    holidays?: HolidayUncheckedUpdateManyWithoutClinicNestedInput
+    payrolls?: PayrollUncheckedUpdateManyWithoutClinicNestedInput
+    expenses?: ExpenseUncheckedUpdateManyWithoutClinicNestedInput
+    expenseCategories?: ExpenseCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    attendances?: AttendanceUncheckedUpdateManyWithoutClinicNestedInput
+    leaveTypes?: LeaveTypeUncheckedUpdateManyWithoutClinicNestedInput
+    leaves?: LeaveUncheckedUpdateManyWithoutClinicNestedInput
+    prescriptions?: PrescriptionUncheckedUpdateManyWithoutClinicNestedInput
+    prescriptionMedicines?: PrescriptionMedicineUncheckedUpdateManyWithoutClinicNestedInput
+    clinicRoles?: ClinicRoleUncheckedUpdateManyWithoutClinicNestedInput
+    invoices?: InvoiceUncheckedUpdateManyWithoutClinicNestedInput
+    invoiceItems?: InvoiceItemUncheckedUpdateManyWithoutClinicNestedInput
+    products?: ProductUncheckedUpdateManyWithoutClinicNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
+    landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
+    tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type UserCreateManyClinicInput = {
@@ -62447,6 +64195,16 @@ export namespace Prisma {
     userId?: string | null
     userName?: string | null
     userEmail?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TodoCreateManyClinicInput = {
+    id?: string
+    title: string
+    priority?: string
+    status?: string
+    userId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -63645,6 +65403,36 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type TodoUpdateWithoutClinicInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TodoUncheckedUpdateWithoutClinicInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TodoUncheckedUpdateManyWithoutClinicInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type ClinicCreateManyPackageInput = {
     id?: string
     name: string
@@ -63721,6 +65509,7 @@ export namespace Prisma {
     landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
     tickets?: TicketUpdateManyWithoutClinicNestedInput
+    todos?: TodoUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutPackageInput = {
@@ -63773,6 +65562,7 @@ export namespace Prisma {
     landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
     workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
+    todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateManyWithoutPackageInput = {
@@ -65778,6 +67568,10 @@ export namespace Prisma {
      * @deprecated Use TicketDefaultArgs instead
      */
     export type TicketArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = TicketDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use TodoDefaultArgs instead
+     */
+    export type TodoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = TodoDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

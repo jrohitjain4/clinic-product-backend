@@ -626,6 +626,17 @@ exports.Prisma.TicketScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.TodoScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  priority: 'priority',
+  status: 'status',
+  clinicId: 'clinicId',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -703,7 +714,8 @@ exports.Prisma.ModelName = {
   Notification: 'Notification',
   SystemSetting: 'SystemSetting',
   DemoBooking: 'DemoBooking',
-  Ticket: 'Ticket'
+  Ticket: 'Ticket',
+  Todo: 'Todo'
 };
 
 /**
