@@ -14,18 +14,97 @@ export const getDashboardStats = async (req: AuthenticatedRequest, res: Response
         const patientsCount = await prisma.patient.count({ where: { clinicId } });
         const appointmentsCount = await prisma.appointment.count({ where: { clinicId } });
 
+        // 1. Monthly Stats (Last 12 Months)
+        const now = new Date();
+        const twelveMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 11, 1);
+
+        const monthlyAppointments = await prisma.appointment.findMany({
+            where: {
+                clinicId,
+                scheduledAt: { gte: twelveMonthsAgo }
+            },
+            select: { scheduledAt: true, status: true }
+        });
+
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const monthlyData = Array.from({ length: 12 }).map((_, i) => {
+            const date = new Date(now.getFullYear(), now.getMonth() - 11 + i, 1);
+            const monthLabel = monthNames[date.getMonth()];
+            const year = date.getFullYear();
+
+            const monthApps = monthlyAppointments.filter(a => {
+                const d = new Date(a.scheduledAt);
+                return d.getMonth() === date.getMonth() && d.getFullYear() === year;
+            });
+
+            return {
+                month: monthLabel,
+                completed: monthApps.filter(a => a.status === 'Completed').length,
+                ongoing: monthApps.filter(a => ['Schedule', 'Confirmed', 'Checked In'].includes(a.status)).length,
+                rescheduled: monthApps.filter(a => a.status === 'Rescheduled').length
+            };
+        });
+
+        // 2. Top 3 Departments
+        const topDeptsRaw = await prisma.department.findMany({
+            where: { clinicId },
+            include: {
+                _count: { select: { appointments: true } },
+                appointments: { distinct: ['patientId'] } // Not exactly accurate but count of unique patients is better
+            },
+            take: 10 // Get some to sort
+        });
+
+        const topDepartments = topDeptsRaw
+            .map(d => ({
+                name: d.name,
+                patientCount: d._count.appointments // Using appointment count as simplified proxy
+            }))
+            .sort((a, b) => b.patientCount - a.patientCount)
+            .slice(0, 3);
+
+        // 3. Income by Treatment (Department)
+        const incomeByDepts = await prisma.department.findMany({
+            where: { clinicId },
+            include: {
+                services: {
+                    include: {
+                        invoiceItems: {
+                            include: { invoice: true }
+                        }
+                    }
+                },
+                _count: { select: { appointments: true } }
+            }
+        });
+
+        const incomeByTreatment = incomeByDepts.map(dept => {
+            let totalIncome = 0;
+            dept.services.forEach(s => {
+                s.invoiceItems.forEach(item => {
+                    if (item.invoice.paymentStatus === 'Paid') {
+                        totalIncome += item.amount;
+                    }
+                });
+            });
+
+            return {
+                name: dept.name,
+                income: totalIncome,
+                appointmentCount: dept._count.appointments
+            };
+        }).sort((a, b) => b.income - a.income).slice(0, 5);
+
         const invoices = await prisma.invoice.findMany({
             where: { clinicId },
             select: { totalAmount: true }
         });
-
         const revenue = invoices.reduce((acc, curr) => acc + (Number(curr.totalAmount) || 0), 0);
 
-        // Appointment stats for the chart (grouped by status)
         const allAppointments = await prisma.appointment.findMany({ where: { clinicId } });
-        const completedAppointments = allAppointments.filter(app => app.status === 'Completed').length;
-        const cancelledAppointments = allAppointments.filter(app => app.status === 'Cancelled').length;
-        const rescheduledAppointments = allAppointments.filter(app => app.status === 'Rescheduled').length;
+        const completedApps = allAppointments.filter(app => app.status === 'Completed').length;
+        const cancelledApps = allAppointments.filter(app => app.status === 'Cancelled').length;
+        const rescheduledApps = allAppointments.filter(app => app.status === 'Rescheduled').length;
 
         const clinicInfo = await prisma.clinic.findUnique({
             where: { id: clinicId },
@@ -36,8 +115,6 @@ export const getDashboardStats = async (req: AuthenticatedRequest, res: Response
         if (clinicInfo) {
             let filledFields = 0;
             const totalFields = 15;
-
-            // Clinic check
             if (clinicInfo.name) filledFields++;
             if (clinicInfo.ownerName) filledFields++;
             if (clinicInfo.ownerEmail) filledFields++;
@@ -46,8 +123,6 @@ export const getDashboardStats = async (req: AuthenticatedRequest, res: Response
             if (clinicInfo.city) filledFields++;
             if (clinicInfo.gstNumber) filledFields++;
             if (clinicInfo.emergencyContact) filledFields++;
-
-            // LandingPage check
             const lp = clinicInfo.landingPage;
             if (lp) {
                 if (lp.tagline) filledFields++;
@@ -58,9 +133,59 @@ export const getDashboardStats = async (req: AuthenticatedRequest, res: Response
                 if (lp.timetable && (lp.timetable as string) !== "{}") filledFields++;
                 if (lp.gallery && (lp.gallery as any[]).length > 0) filledFields++;
             }
-
             profileCompletion = Math.round((filledFields / totalFields) * 100);
         }
+
+        // 4. Top Patients (by total paid and appointment counts)
+        const patientsRaw = await prisma.patient.findMany({
+            where: { clinicId },
+            include: {
+                invoices: {
+                    where: { paymentStatus: 'Paid' },
+                    select: { totalAmount: true }
+                },
+                _count: { select: { appointments: true } }
+            },
+            take: 10
+        });
+
+        const topPatients = patientsRaw.map(p => ({
+            id: p.id,
+            fullName: `${p.firstName} ${p.lastName}`,
+            profileImage: p.profileImage,
+            totalPaid: p.invoices.reduce((acc, curr) => acc + curr.totalAmount, 0),
+            appointmentCount: p._count.appointments
+        })).sort((a, b) => b.totalPaid - a.totalPaid).slice(0, 5);
+
+        // 5. Recent Transactions
+        const recentInvoices = await prisma.invoice.findMany({
+            where: { clinicId },
+            orderBy: { createdAt: 'desc' },
+            take: 5,
+            include: { patient: true }
+        });
+
+        const recentTransactions = recentInvoices.map(inv => ({
+            id: inv.id,
+            invoiceCode: inv.invoiceCode,
+            amount: inv.totalAmount,
+            status: inv.paymentStatus,
+            patientName: `${inv.patient.firstName} ${inv.patient.lastName}`,
+            method: inv.paymentMethod,
+            createdAt: inv.createdAt
+        }));
+
+        // 6. Recent Appointments
+        const recentAppointments = await prisma.appointment.findMany({
+            where: { clinicId },
+            orderBy: { scheduledAt: 'desc' },
+            take: 5,
+            include: {
+                doctor: true,
+                patient: true,
+                department: true
+            }
+        });
 
         res.json({
             doctorsCount,
@@ -69,10 +194,24 @@ export const getDashboardStats = async (req: AuthenticatedRequest, res: Response
             revenue,
             appointmentStats: {
                 total: allAppointments.length,
-                completed: completedAppointments,
-                cancelled: cancelledAppointments,
-                rescheduled: rescheduledAppointments
+                completed: completedApps,
+                cancelled: cancelledApps,
+                rescheduled: rescheduledApps
             },
+            recentAppointments: recentAppointments.map(app => ({
+                id: app.id,
+                doctor: { fullName: app.doctor.fullName, profileImage: app.doctor.profileImage },
+                patient: { firstName: app.patient.firstName, lastName: app.patient.lastName, phone: app.patient.phone },
+                department: { name: app.department?.name },
+                scheduledAt: app.scheduledAt,
+                status: app.status,
+                mode: app.mode
+            })),
+            monthlyData,
+            topDepartments,
+            incomeByTreatment,
+            topPatients,
+            recentTransactions,
             profileCompletion
         });
     } catch (error) {
