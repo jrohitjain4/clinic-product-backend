@@ -687,15 +687,16 @@ model Ticket {
 }
 
 model Todo {
-  id        String   @id @default(uuid())
+  id        String    @id @default(uuid())
   title     String
-  priority  String   @default("Medium") // Low, Medium, High
-  status    String   @default("Pending") // Pending, Completed
+  priority  String    @default("Medium") // Low, Medium, High
+  status    String    @default("Pending") // Pending, Completed
+  taskDate  DateTime?
   clinicId  String
-  clinic    Clinic   @relation(fields: [clinicId], references: [id])
+  clinic    Clinic    @relation(fields: [clinicId], references: [id])
   userId    String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 
   @@index([clinicId])
   @@index([status])

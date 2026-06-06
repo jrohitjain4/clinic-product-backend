@@ -37244,6 +37244,7 @@ export namespace Prisma {
     title: string | null
     priority: string | null
     status: string | null
+    taskDate: Date | null
     clinicId: string | null
     userId: string | null
     createdAt: Date | null
@@ -37255,6 +37256,7 @@ export namespace Prisma {
     title: string | null
     priority: string | null
     status: string | null
+    taskDate: Date | null
     clinicId: string | null
     userId: string | null
     createdAt: Date | null
@@ -37266,6 +37268,7 @@ export namespace Prisma {
     title: number
     priority: number
     status: number
+    taskDate: number
     clinicId: number
     userId: number
     createdAt: number
@@ -37279,6 +37282,7 @@ export namespace Prisma {
     title?: true
     priority?: true
     status?: true
+    taskDate?: true
     clinicId?: true
     userId?: true
     createdAt?: true
@@ -37290,6 +37294,7 @@ export namespace Prisma {
     title?: true
     priority?: true
     status?: true
+    taskDate?: true
     clinicId?: true
     userId?: true
     createdAt?: true
@@ -37301,6 +37306,7 @@ export namespace Prisma {
     title?: true
     priority?: true
     status?: true
+    taskDate?: true
     clinicId?: true
     userId?: true
     createdAt?: true
@@ -37385,6 +37391,7 @@ export namespace Prisma {
     title: string
     priority: string
     status: string
+    taskDate: Date | null
     clinicId: string
     userId: string | null
     createdAt: Date
@@ -37413,6 +37420,7 @@ export namespace Prisma {
     title?: boolean
     priority?: boolean
     status?: boolean
+    taskDate?: boolean
     clinicId?: boolean
     userId?: boolean
     createdAt?: boolean
@@ -37425,6 +37433,7 @@ export namespace Prisma {
     title?: boolean
     priority?: boolean
     status?: boolean
+    taskDate?: boolean
     clinicId?: boolean
     userId?: boolean
     createdAt?: boolean
@@ -37437,6 +37446,7 @@ export namespace Prisma {
     title?: boolean
     priority?: boolean
     status?: boolean
+    taskDate?: boolean
     clinicId?: boolean
     userId?: boolean
     createdAt?: boolean
@@ -37460,6 +37470,7 @@ export namespace Prisma {
       title: string
       priority: string
       status: string
+      taskDate: Date | null
       clinicId: string
       userId: string | null
       createdAt: Date
@@ -37862,6 +37873,7 @@ export namespace Prisma {
     readonly title: FieldRef<"Todo", 'String'>
     readonly priority: FieldRef<"Todo", 'String'>
     readonly status: FieldRef<"Todo", 'String'>
+    readonly taskDate: FieldRef<"Todo", 'DateTime'>
     readonly clinicId: FieldRef<"Todo", 'String'>
     readonly userId: FieldRef<"Todo", 'String'>
     readonly createdAt: FieldRef<"Todo", 'DateTime'>
@@ -38811,6 +38823,7 @@ export namespace Prisma {
     title: 'title',
     priority: 'priority',
     status: 'status',
+    taskDate: 'taskDate',
     clinicId: 'clinicId',
     userId: 'userId',
     createdAt: 'createdAt',
@@ -42176,6 +42189,7 @@ export namespace Prisma {
     title?: StringFilter<"Todo"> | string
     priority?: StringFilter<"Todo"> | string
     status?: StringFilter<"Todo"> | string
+    taskDate?: DateTimeNullableFilter<"Todo"> | Date | string | null
     clinicId?: StringFilter<"Todo"> | string
     userId?: StringNullableFilter<"Todo"> | string | null
     createdAt?: DateTimeFilter<"Todo"> | Date | string
@@ -42188,6 +42202,7 @@ export namespace Prisma {
     title?: SortOrder
     priority?: SortOrder
     status?: SortOrder
+    taskDate?: SortOrderInput | SortOrder
     clinicId?: SortOrder
     userId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -42203,6 +42218,7 @@ export namespace Prisma {
     title?: StringFilter<"Todo"> | string
     priority?: StringFilter<"Todo"> | string
     status?: StringFilter<"Todo"> | string
+    taskDate?: DateTimeNullableFilter<"Todo"> | Date | string | null
     clinicId?: StringFilter<"Todo"> | string
     userId?: StringNullableFilter<"Todo"> | string | null
     createdAt?: DateTimeFilter<"Todo"> | Date | string
@@ -42215,6 +42231,7 @@ export namespace Prisma {
     title?: SortOrder
     priority?: SortOrder
     status?: SortOrder
+    taskDate?: SortOrderInput | SortOrder
     clinicId?: SortOrder
     userId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -42232,6 +42249,7 @@ export namespace Prisma {
     title?: StringWithAggregatesFilter<"Todo"> | string
     priority?: StringWithAggregatesFilter<"Todo"> | string
     status?: StringWithAggregatesFilter<"Todo"> | string
+    taskDate?: DateTimeNullableWithAggregatesFilter<"Todo"> | Date | string | null
     clinicId?: StringWithAggregatesFilter<"Todo"> | string
     userId?: StringNullableWithAggregatesFilter<"Todo"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Todo"> | Date | string
@@ -45921,6 +45939,7 @@ export namespace Prisma {
     title: string
     priority?: string
     status?: string
+    taskDate?: Date | string | null
     userId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -45932,6 +45951,7 @@ export namespace Prisma {
     title: string
     priority?: string
     status?: string
+    taskDate?: Date | string | null
     clinicId: string
     userId?: string | null
     createdAt?: Date | string
@@ -45943,6 +45963,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    taskDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -45954,6 +45975,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    taskDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -45965,6 +45987,7 @@ export namespace Prisma {
     title: string
     priority?: string
     status?: string
+    taskDate?: Date | string | null
     clinicId: string
     userId?: string | null
     createdAt?: Date | string
@@ -45976,6 +45999,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    taskDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -45986,6 +46010,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    taskDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -48382,6 +48407,7 @@ export namespace Prisma {
     title?: SortOrder
     priority?: SortOrder
     status?: SortOrder
+    taskDate?: SortOrder
     clinicId?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
@@ -48393,6 +48419,7 @@ export namespace Prisma {
     title?: SortOrder
     priority?: SortOrder
     status?: SortOrder
+    taskDate?: SortOrder
     clinicId?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
@@ -48404,6 +48431,7 @@ export namespace Prisma {
     title?: SortOrder
     priority?: SortOrder
     status?: SortOrder
+    taskDate?: SortOrder
     clinicId?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
@@ -52679,6 +52707,7 @@ export namespace Prisma {
     title: string
     priority?: string
     status?: string
+    taskDate?: Date | string | null
     userId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -52689,6 +52718,7 @@ export namespace Prisma {
     title: string
     priority?: string
     status?: string
+    taskDate?: Date | string | null
     userId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -53719,6 +53749,7 @@ export namespace Prisma {
     title?: StringFilter<"Todo"> | string
     priority?: StringFilter<"Todo"> | string
     status?: StringFilter<"Todo"> | string
+    taskDate?: DateTimeNullableFilter<"Todo"> | Date | string | null
     clinicId?: StringFilter<"Todo"> | string
     userId?: StringNullableFilter<"Todo"> | string | null
     createdAt?: DateTimeFilter<"Todo"> | Date | string
@@ -64204,6 +64235,7 @@ export namespace Prisma {
     title: string
     priority?: string
     status?: string
+    taskDate?: Date | string | null
     userId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -65408,6 +65440,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    taskDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -65418,6 +65451,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    taskDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -65428,6 +65462,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    taskDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

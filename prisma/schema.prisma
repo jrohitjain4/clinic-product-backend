@@ -691,6 +691,7 @@ model Todo {
   title     String
   priority  String   @default("Medium") // Low, Medium, High
   status    String   @default("Pending") // Pending, Completed
+  taskDate  DateTime?
   clinicId  String
   clinic    Clinic   @relation(fields: [clinicId], references: [id])
   userId    String?
