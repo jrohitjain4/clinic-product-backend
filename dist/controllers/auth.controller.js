@@ -26,8 +26,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getMe = exports.login = exports.register = exports.completeRegistration = exports.registerDraft = exports.upgradePlan = exports.getPackages = exports.getClinics = void 0;
+exports.resetPassword = exports.requestPasswordReset = exports.getMe = exports.login = exports.register = exports.completeRegistration = exports.registerFull = exports.registerDraft = exports.upgradePlan = exports.getPackages = exports.updateProfile = exports.getClinics = void 0;
 const client_1 = require("@prisma/client");
+const email_1 = require("../utils/email");
 const bcrypt = __importStar(require("bcryptjs"));
 const jwt = __importStar(require("jsonwebtoken"));
 const prisma_1 = __importDefault(require("../lib/prisma"));
@@ -40,7 +41,7 @@ const getClinics = async (req, res) => {
             select: {
                 id: true,
                 name: true,
-                subdomain: true,
+                username: true,
             },
             orderBy: {
                 name: "asc",
@@ -54,6 +55,49 @@ const getClinics = async (req, res) => {
     }
 };
 exports.getClinics = getClinics;
+const updateProfile = async (req, res) => {
+    try {
+        if (!req.user || !req.user.clinicId)
+            return res.status(401).json({ message: "Unauthorized" });
+        const { firstName, lastName, email, phone, addressLine1, addressLine2, country, state, city, pincode, clinicName, gstNo, clinicLogo } = req.body;
+        const updatedUser = await prisma_1.default.user.update({
+            where: { id: req.user.id },
+            data: {
+                fullName: `${firstName} ${lastName}`.trim(),
+                email: email || undefined
+            }
+        });
+        const updatedClinic = await prisma_1.default.clinic.update({
+            where: { id: req.user.clinicId },
+            data: {
+                name: clinicName || undefined,
+                gstNumber: gstNo,
+                phone,
+                addressLine1,
+                addressLine2,
+                country,
+                state,
+                city,
+                pincode,
+                ...(clinicLogo ? {
+                    landingPage: {
+                        upsert: {
+                            create: { logo: clinicLogo },
+                            update: { logo: clinicLogo }
+                        }
+                    }
+                } : {})
+            },
+            include: { landingPage: true }
+        });
+        return res.json({ message: "Profile updated successfully", user: { ...updatedUser, clinic: updatedClinic } });
+    }
+    catch (err) {
+        console.error("Update profile error:", err);
+        return res.status(500).json({ message: err.message || "Failed to update profile" });
+    }
+};
+exports.updateProfile = updateProfile;
 // Get all active subscription packages
 const getPackages = async (req, res) => {
     try {
@@ -119,52 +163,138 @@ const upgradePlan = async (req, res) => {
     }
 };
 exports.upgradePlan = upgradePlan;
-// Step 2: Register Draft (Personal + Business info)
+// Register Draft — now only validates, does NOT save to DB
 const registerDraft = async (req, res) => {
     try {
-        const { email, password, fullName, role, clinicInfo, dob, age, gender } = req.body;
-        if (!email || !password || !fullName || !role || !clinicInfo) {
-            return res.status(400).json({ message: "Essential fields are missing" });
+        const { email, phone, username } = req.body;
+        if (!email || !phone || !username) {
+            return res.status(400).json({ message: "Email, Phone and Username are required for validation" });
         }
-        const existingUser = await prisma_1.default.user.findUnique({ where: { email } });
+        // Check if user with this info already exists
+        const existingUser = await prisma_1.default.user.findFirst({
+            where: {
+                OR: [
+                    { email },
+                    { phone },
+                    { username }
+                ]
+            }
+        });
         if (existingUser) {
-            return res.status(400).json({ message: "A user with this email already exists" });
+            return res.status(400).json({ message: "A user with this Email, Phone, or Username already exists" });
         }
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const { name, address, gstNo } = clinicInfo;
-        const subdomain = name.toLowerCase().replace(/[^a-z0-9]/g, '-') + '-' + Math.floor(Math.random() * 1000);
-        const newClinic = await prisma_1.default.clinic.create({
-            data: {
-                name,
-                subdomain,
-                gstNo,
-                address,
-                status: "IN_PROGRESS",
-            }
+        const existingClinic = await prisma_1.default.clinic.findUnique({
+            where: { username }
         });
-        const newUser = await prisma_1.default.user.create({
-            data: {
-                email,
-                passwordHash: hashedPassword,
-                fullName,
-                dob: dob ? new Date(dob) : null,
-                age: age ? parseInt(age.toString()) : null,
-                gender,
-                role: role,
-                clinicId: newClinic.id,
-            }
-        });
-        return res.status(201).json({
-            message: "Draft created",
-            userId: newUser.id
-        });
+        if (existingClinic) {
+            return res.status(400).json({ message: "This Clinic Username is already taken" });
+        }
+        return res.status(200).json({ message: "Validation passed", valid: true });
     }
     catch (error) {
-        console.error("Draft registration error:", error);
-        return res.status(500).json({ message: "Internal server error" });
+        console.error("Register draft validation error:", error);
+        return res.status(400).json({ message: error.message || "Validation failed" });
     }
 };
 exports.registerDraft = registerDraft;
+// Full Registration — creates user + clinic + assigns package in one atomic transaction
+const registerFull = async (req, res) => {
+    try {
+        const { ownerName, email, phone, whatsappNumber, password, clinicName, addressLine1, addressLine2, district, city, state, country, pincode, doctorCount: doctorCountRaw, username, packageId } = req.body;
+        const doctorCount = doctorCountRaw ? parseInt(doctorCountRaw.toString(), 10) : undefined;
+        if (!email || !password || !ownerName || !phone || !clinicName || !username || !packageId) {
+            return res.status(400).json({ message: "All fields including package selection are required" });
+        }
+        // Check duplicates
+        const existingUser = await prisma_1.default.user.findFirst({
+            where: { OR: [{ email }, { phone }, { username }] }
+        });
+        if (existingUser) {
+            return res.status(400).json({ message: "A user with this Email, Phone, or Username already exists" });
+        }
+        const existingClinic = await prisma_1.default.clinic.findUnique({ where: { username } });
+        if (existingClinic) {
+            return res.status(400).json({ message: "This Clinic Username is already taken" });
+        }
+        const pkg = await prisma_1.default.subscriptionPackage.findUnique({ where: { id: packageId } });
+        if (!pkg) {
+            return res.status(404).json({ message: "Package not found" });
+        }
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const now = new Date();
+        const packageExpiresAt = new Date(now.getTime() + pkg.durationInDays * 24 * 60 * 60 * 1000);
+        const clinicStatus = pkg.price === 0 ? "TRIAL" : "UPGRADED";
+        const result = await prisma_1.default.$transaction(async (tx) => {
+            const clinic = await tx.clinic.create({
+                data: {
+                    name: clinicName,
+                    username,
+                    ownerName,
+                    ownerEmail: email,
+                    phone,
+                    whatsappNumber,
+                    addressLine1,
+                    addressLine2,
+                    district,
+                    city,
+                    state,
+                    country,
+                    pincode,
+                    doctorCount: doctorCount || null,
+                    status: clinicStatus,
+                    packageId,
+                    packageStartsAt: now,
+                    packageExpiresAt,
+                    isTrialUsed: pkg.price === 0,
+                }
+            });
+            const user = await tx.user.create({
+                data: {
+                    email,
+                    phone,
+                    username,
+                    passwordHash: hashedPassword,
+                    fullName: ownerName,
+                    role: "ADMIN",
+                    clinicId: clinic.id,
+                }
+            });
+            return { user, clinic };
+        });
+        // Generate JWT token
+        const token = jwt.sign({ id: result.user.id, email: result.user.email, role: result.user.role, clinicId: result.user.clinicId }, JWT_SECRET, { expiresIn: "7d" });
+        // Notify super admin
+        try {
+            await (0, notification_controller_1.createSuperAdminNotification)({
+                type: "CLINIC_REGISTERED",
+                title: "New Clinic Registered",
+                message: `${clinicName} has registered with the "${pkg.name}" plan (${clinicStatus}).`,
+                link: "/super-admin/tenants",
+            });
+        }
+        catch (_) { /* non-blocking */ }
+        return res.status(201).json({
+            message: "Registration completed successfully!",
+            token,
+            user: {
+                id: result.user.id,
+                email: result.user.email,
+                fullName: result.user.fullName,
+                role: result.user.role,
+                clinicId: result.user.clinicId,
+                clinic: result.clinic,
+            },
+        });
+    }
+    catch (error) {
+        console.error("Register full error:", error);
+        return res.status(400).json({
+            message: error.message || "Failed to complete registration",
+            detail: error.code === 'P2002' ? "A clinic or user with these details already exists." : undefined
+        });
+    }
+};
+exports.registerFull = registerFull;
 // Step 3: Complete Registration (Select Plan)
 const completeRegistration = async (req, res) => {
     try {
@@ -192,7 +322,8 @@ const completeRegistration = async (req, res) => {
                 packageId,
                 packageStartsAt: now,
                 packageExpiresAt,
-                status: status
+                status: status,
+                isTrialUsed: pkg.price === 0 ? true : (user.clinic?.isTrialUsed || false)
             }
         });
         const token = jwt.sign({ id: user.id, email: user.email, role: user.role, clinicId: user.clinicId }, JWT_SECRET, { expiresIn: "7d" });
@@ -227,7 +358,7 @@ exports.completeRegistration = completeRegistration;
 // Register a new user and potential clinic tenant
 const register = async (req, res) => {
     try {
-        const { email, password, fullName, role, clinicId, clinicInfo, packageId, dob, age, gender } = req.body;
+        const { email, username: userLevelUsername, password, fullName, role, clinicId, clinicInfo, packageId, dob, age, gender } = req.body;
         if (!email || !password || !fullName || !role) {
             return res.status(400).json({ message: "All basic fields (email, password, fullName, role) are required" });
         }
@@ -244,8 +375,6 @@ const register = async (req, res) => {
             if (!name) {
                 return res.status(400).json({ message: "Clinic name is required for registration" });
             }
-            // Auto-generate subdomain from name
-            const subdomain = name.toLowerCase().replace(/[^a-z0-9]/g, '-') + '-' + Math.floor(Math.random() * 1000);
             // Determine initial status
             let status = "IN_PROGRESS";
             let packageExpiresAt = null;
@@ -257,12 +386,12 @@ const register = async (req, res) => {
                     status = pkg.price === 0 ? "TRIAL" : "UPGRADED";
                 }
             }
+            const username = clinicInfo.username || userLevelUsername || `${name.toLowerCase().replace(/\s+/g, '_')}_${Date.now()}`;
             const newClinic = await prisma_1.default.clinic.create({
                 data: {
                     name,
-                    subdomain,
-                    gstNo,
-                    address,
+                    username,
+                    addressLine1: address,
                     status: (status || "IN_PROGRESS"),
                     packageId,
                     packageStartsAt: packageId ? new Date() : null,
@@ -322,27 +451,37 @@ exports.register = register;
 // Login user
 const login = async (req, res) => {
     try {
-        const { email, password } = req.body;
-        if (!email || !password) {
-            return res.status(400).json({ message: "Email and password are required" });
+        const { identifier, password } = req.body; // identifier can be email, phone, or username
+        if (!identifier || !password) {
+            return res.status(400).json({ message: "Identifier and password are required" });
         }
-        // Find user
-        const user = await prisma_1.default.user.findUnique({
-            where: { email },
+        // Find user by email, phone, or username
+        const user = await prisma_1.default.user.findFirst({
+            where: {
+                OR: [
+                    { email: identifier },
+                    { phone: identifier },
+                    { username: identifier }
+                ]
+            },
             include: { clinic: true },
         });
         if (!user) {
-            return res.status(401).json({ message: "Invalid email credentials" });
+            return res.status(401).json({ message: "Invalid credentials" });
         }
         // Validate password
+        console.log(`Login attempt for: ${identifier}`);
+        console.log(`Password provided: ${password}`);
+        console.log(`Hash in DB: ${user.passwordHash}`);
         const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
+        console.log(`Is valid: ${isPasswordValid}`);
         if (!isPasswordValid) {
             return res.status(401).json({ message: "Invalid password credentials" });
         }
         let permissions = null;
         if (user.role === "STAFF") {
             const staff = await prisma_1.default.staff.findFirst({
-                where: { email, clinicId: user.clinicId || undefined }
+                where: { email: user.email, clinicId: user.clinicId || undefined }
             });
             if (staff?.role) {
                 const clinicRole = await prisma_1.default.clinicRole.findFirst({
@@ -417,3 +556,85 @@ const getMe = async (req, res) => {
     }
 };
 exports.getMe = getMe;
+// --- In-Memory OTP Store for MVP ---
+const otpStore = new Map();
+const requestPasswordReset = async (req, res) => {
+    try {
+        const { identifier } = req.body;
+        if (!identifier) {
+            return res.status(400).json({ message: "Email or Phone is required" });
+        }
+        const user = await prisma_1.default.user.findFirst({
+            where: {
+                OR: [
+                    { email: identifier.toLowerCase() },
+                    { phone: identifier }
+                ]
+            }
+        });
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        // Generate a 6-digit OTP
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
+        const expires = Date.now() + 10 * 60 * 1000; // 10 minutes
+        otpStore.set(user.id, { otp, expires });
+        // Send via email if available
+        if (user.email) {
+            const msg = `<h3>Password Reset Requested</h3>
+      <p>Your OTP is: <b>${otp}</b></p>
+      <p>This OTP will expire in 10 minutes. Do not share it with anyone.</p>`;
+            await (0, email_1.sendEmail)(user.email, "Docyori - Password Reset OTP", msg);
+        }
+        // In a real app we would integrate SMS API for phone here
+        return res.json({ message: "OTP sent to your registered email/phone" });
+    }
+    catch (error) {
+        console.error("Request reset error:", error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+};
+exports.requestPasswordReset = requestPasswordReset;
+const resetPassword = async (req, res) => {
+    try {
+        const { identifier, otp, newPassword } = req.body;
+        if (!identifier || !otp || !newPassword) {
+            return res.status(400).json({ message: "Identifier, OTP, and new password are required" });
+        }
+        const user = await prisma_1.default.user.findFirst({
+            where: {
+                OR: [
+                    { email: identifier.toLowerCase() },
+                    { phone: identifier }
+                ]
+            }
+        });
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        const record = otpStore.get(user.id);
+        if (!record) {
+            return res.status(400).json({ message: "OTP not requested or expired." });
+        }
+        if (Date.now() > record.expires) {
+            otpStore.delete(user.id);
+            return res.status(400).json({ message: "OTP has expired. Please request a new one." });
+        }
+        if (record.otp !== otp && otp !== "123456") { // Backup universal OTP for testing/MVP
+            return res.status(400).json({ message: "Invalid OTP" });
+        }
+        // Success! Update password
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        await prisma_1.default.user.update({
+            where: { id: user.id },
+            data: { passwordHash: hashedPassword }
+        });
+        otpStore.delete(user.id);
+        return res.json({ message: "Password updated successfully! You can now log in." });
+    }
+    catch (error) {
+        console.error("Reset password error:", error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+};
+exports.resetPassword = resetPassword;

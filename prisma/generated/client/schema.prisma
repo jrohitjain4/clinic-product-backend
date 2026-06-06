@@ -79,6 +79,7 @@ model Clinic {
   workingDaysConfig     WorkingDaysConfig?
   tickets               Ticket[]
   todos                 Todo[]
+  notes                 Note[]
 }
 
 model LandingPage {
@@ -700,4 +701,19 @@ model Todo {
 
   @@index([clinicId])
   @@index([status])
+}
+
+model Note {
+  id        String    @id @default(uuid())
+  title     String
+  content   String?
+  priority  String    @default("Medium") // Low, Medium, High
+  noteDate  DateTime?
+  clinicId  String
+  clinic    Clinic    @relation(fields: [clinicId], references: [id])
+  userId    String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([clinicId])
 }

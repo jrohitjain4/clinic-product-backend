@@ -36,7 +36,7 @@ const getTenants = async (req, res) => {
             return {
                 id: tenant.id,
                 name: tenant.name,
-                subdomain: tenant.subdomain,
+                subdomain: tenant.username,
                 ownerName: admin?.fullName || "N/A",
                 ownerEmail: admin?.email || "N/A",
                 packageName: tenant.package?.name || "No Plan",

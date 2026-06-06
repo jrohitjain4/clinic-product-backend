@@ -32,14 +32,14 @@ const createService = async (req, res) => {
         if (!clinicId)
             return res.status(403).json({ message: "No clinic associated" });
         const { serviceName, departmentId, price, status } = req.body;
-        if (!serviceName || !departmentId || price === undefined) {
-            return res.status(400).json({ message: "Service Name, Department, and Price are required" });
+        if (!serviceName || !departmentId) {
+            return res.status(400).json({ message: "Service Name and Department are required" });
         }
         const newService = await prisma_1.default.service.create({
             data: {
                 serviceName,
                 departmentId,
-                price: parseFloat(price),
+                price: price !== undefined && price !== null && price !== "" ? parseFloat(price) : undefined,
                 status: status || "Active",
                 clinicId,
             },

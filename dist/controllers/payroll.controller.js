@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deletePayroll = exports.updatePayroll = exports.createPayroll = exports.getPayrolls = void 0;
 const prisma_1 = __importDefault(require("../lib/prisma"));
-// GET /api/payroll
 const getPayrolls = async (req, res) => {
     try {
         const clinicId = req.user?.clinicId;
@@ -16,14 +15,26 @@ const getPayrolls = async (req, res) => {
             include: { staff: true },
             orderBy: { createdAt: "desc" },
         });
-        res.json(payrolls);
+        const currentDate = new Date();
+        const enriched = payrolls.map((p) => {
+            let displayStatus = p.status;
+            if (displayStatus !== "Salary_Paid" && displayStatus !== "Paid") {
+                const createdDate = new Date(p.createdAt);
+                const isNextMonthOrLater = (currentDate.getFullYear() > createdDate.getFullYear()) ||
+                    (currentDate.getMonth() > createdDate.getMonth());
+                if (isNextMonthOrLater) {
+                    displayStatus = "Due";
+                }
+            }
+            return { ...p, displayStatus };
+        });
+        res.json(enriched);
     }
     catch (err) {
         res.status(500).json({ message: err.message });
     }
 };
 exports.getPayrolls = getPayrolls;
-// POST /api/payroll
 const createPayroll = async (req, res) => {
     try {
         const clinicId = req.user?.clinicId;

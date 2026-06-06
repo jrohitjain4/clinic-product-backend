@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.authValidation = void 0;
 const zod_1 = require("zod");
 exports.authValidation = {
+    // OLD register schema (keep for backward compat)
     register: zod_1.z.object({
         body: zod_1.z.object({
             email: zod_1.z.string().email("Invalid email format"),
@@ -17,9 +18,18 @@ exports.authValidation = {
             experience: zod_1.z.number().nonnegative().optional(),
         }),
     }),
-    login: zod_1.z.object({
+    // NEW multi-step registration draft schema (Now just for uniqueness validation)
+    registerDraft: zod_1.z.object({
         body: zod_1.z.object({
             email: zod_1.z.string().email("Invalid email format"),
+            phone: zod_1.z.string().min(10, "Valid mobile number is required"),
+            username: zod_1.z.string().min(3, "Username must be at least 3 characters"),
+        }),
+    }),
+    // Flexible login - accepts email, mobile, or username
+    login: zod_1.z.object({
+        body: zod_1.z.object({
+            identifier: zod_1.z.string().min(1, "Email, mobile or username is required"),
             password: zod_1.z.string().min(1, "Password is required"),
         }),
     }),

@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteAppointment = exports.updateAppointment = exports.createAppointment = exports.getAppointmentById = exports.getAppointmentsCalendar = exports.getAppointments = void 0;
+exports.checkFollowupStatus = exports.deleteAppointment = exports.updateAppointment = exports.createAppointment = exports.getAppointmentById = exports.getAppointmentsCalendar = exports.getAppointments = void 0;
 const prisma_1 = __importDefault(require("../lib/prisma"));
 const notification_controller_1 = require("./notification.controller");
 const VALID_STATUSES = [
@@ -12,6 +12,7 @@ const VALID_STATUSES = [
     "Cancelled",
     "Schedule",
     "Confirmed",
+    "Follow-up",
 ];
 const formatDateTimeLabel = (date) => {
     const d = date.toLocaleDateString("en-GB", {
@@ -284,7 +285,29 @@ const createAppointment = async (req, res) => {
             resolvedEnd = new Date(scheduled.getTime() + doctor.appointmentDuration * 60000);
         }
         const resolvedMode = mode || modeFromAppointmentType(appointmentType);
-        const resolvedStatus = normalizeStatus(status);
+        let resolvedStatus = normalizeStatus(status);
+        // ── Self-correct: Check for Follow-up status ──────────────────
+        if (resolvedStatus === "Schedule" || resolvedStatus === "Confirmed") {
+            if (doctor.followUpEnabled && doctor.followUpValidityDays) {
+                const lastAppt = await prisma_1.default.appointment.findFirst({
+                    where: {
+                        patientId,
+                        doctorId,
+                        clinicId,
+                        status: "Checked Out",
+                        scheduledAt: { lt: scheduled },
+                    },
+                    orderBy: { scheduledAt: "desc" },
+                });
+                if (lastAppt) {
+                    const diffDays = (scheduled.getTime() - lastAppt.scheduledAt.getTime()) /
+                        (1000 * 60 * 60 * 24);
+                    if (diffDays <= doctor.followUpValidityDays) {
+                        resolvedStatus = "Follow-up";
+                    }
+                }
+            }
+        }
         const appointment = await prisma_1.default.appointment.create({
             data: {
                 appointmentCode,
@@ -418,3 +441,53 @@ const deleteAppointment = async (req, res) => {
     }
 };
 exports.deleteAppointment = deleteAppointment;
+// GET /api/appointments/check-followup?patientId=X&doctorId=Y
+const checkFollowupStatus = async (req, res) => {
+    try {
+        const clinicId = req.user?.clinicId;
+        const { patientId, doctorId, date } = req.query;
+        if (!patientId || !doctorId) {
+            return res.json({ isFollowup: false });
+        }
+        const doctor = await prisma_1.default.doctor.findUnique({
+            where: { id: doctorId },
+        });
+        if (!doctor) {
+            return res.json({ isFollowup: false, reason: "Doctor not found" });
+        }
+        if (!doctor.followUpEnabled || !doctor.followUpValidityDays) {
+            return res.json({ isFollowup: false, reason: "Follow-up disabled for this doctor" });
+        }
+        const scheduledDate = date ? new Date(date) : new Date();
+        // Find the latest completed appointment BEFORE this date
+        const lastAppt = await prisma_1.default.appointment.findFirst({
+            where: {
+                patientId: patientId,
+                doctorId: doctorId,
+                clinicId: clinicId,
+                status: "Checked Out",
+                scheduledAt: { lt: scheduledDate },
+            },
+            orderBy: { scheduledAt: "desc" },
+        });
+        if (lastAppt) {
+            const diffMs = scheduledDate.getTime() - lastAppt.scheduledAt.getTime();
+            const diffDays = diffMs / (1000 * 60 * 60 * 24);
+            console.log(`Checking follow-up: diffDays=${diffDays}, validity=${doctor.followUpValidityDays}`);
+            if (diffDays >= 0 && diffDays <= doctor.followUpValidityDays) {
+                return res.json({
+                    isFollowup: true,
+                    lastApptId: lastAppt.id,
+                    diffDays,
+                    validity: doctor.followUpValidityDays
+                });
+            }
+        }
+        res.json({ isFollowup: false, reason: "No qualifying past appointment found" });
+    }
+    catch (err) {
+        console.error("checkFollowupStatus error:", err);
+        res.status(500).json({ message: err.message });
+    }
+};
+exports.checkFollowupStatus = checkFollowupStatus;

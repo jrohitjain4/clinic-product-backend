@@ -5,6 +5,7 @@ const auth_middleware_1 = require("../middlewares/auth.middleware");
 const appointment_controller_1 = require("../controllers/appointment.controller");
 const router = (0, express_1.Router)();
 router.use(auth_middleware_1.authenticateJWT);
+router.get("/check-followup", appointment_controller_1.checkFollowupStatus);
 router.get("/calendar", appointment_controller_1.getAppointmentsCalendar);
 router.get("/", appointment_controller_1.getAppointments);
 router.get("/:id", appointment_controller_1.getAppointmentById);

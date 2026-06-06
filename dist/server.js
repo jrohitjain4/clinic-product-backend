@@ -10,6 +10,7 @@ const path_1 = __importDefault(require("path"));
 const express_rate_limit_1 = __importDefault(require("express-rate-limit"));
 const auth_routes_1 = __importDefault(require("./routes/auth.routes"));
 const package_routes_1 = __importDefault(require("./routes/package.routes"));
+const todo_routes_1 = __importDefault(require("./routes/todo.routes"));
 const tenant_routes_1 = __importDefault(require("./routes/tenant.routes"));
 const department_routes_1 = __importDefault(require("./routes/department.routes"));
 const designation_routes_1 = __importDefault(require("./routes/designation.routes"));
@@ -35,32 +36,53 @@ const invoice_routes_1 = __importDefault(require("./routes/invoice.routes"));
 const dashboard_routes_1 = __importDefault(require("./routes/dashboard.routes"));
 const superadmin_routes_1 = __importDefault(require("./routes/superadmin.routes"));
 const notification_routes_1 = __importDefault(require("./routes/notification.routes"));
+const settings_routes_1 = __importDefault(require("./routes/settings.routes"));
+const landing_routes_1 = __importDefault(require("./routes/landing.routes"));
+const demoBooking_routes_1 = __importDefault(require("./routes/demoBooking.routes"));
+const support_routes_1 = __importDefault(require("./routes/support.routes"));
+const note_routes_1 = __importDefault(require("./routes/note.routes"));
 // Load environment variables
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 5000;
-const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:5173")
+const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:5173,https://docyori.com,https://api.docyori.com")
     .split(",")
     .map((o) => o.trim())
     .filter(Boolean);
 // Middleware
 app.use((0, cors_1.default)({
     origin: (origin, callback) => {
-        if (!origin || allowedOrigins.includes(origin)) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin)
+            return callback(null, true);
+        // Check if origin matches docyori.com or any of its subdomains
+        const isDocyori = /^https?:\/\/(.*?\.)?docyori\.com$/.test(origin);
+        const isAllowed = allowedOrigins.some(allowed => {
+            if (allowed.includes('*')) {
+                const pattern = new RegExp('^' + allowed.replace(/\*/g, '.*') + '$');
+                return pattern.test(origin);
+            }
+            return allowed === origin;
+        });
+        if (isAllowed || isDocyori) {
             callback(null, true);
         }
         else {
+            console.log("CORS Blocked for origin:", origin);
             callback(null, false);
         }
     },
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
 }));
-app.use(express_1.default.json());
+app.use(express_1.default.json({ limit: "50mb" }));
+app.use(express_1.default.urlencoded({ limit: "50mb", extended: true }));
 app.use("/uploads", express_1.default.static(path_1.default.join(process.cwd(), "uploads")));
-// Rate limiting on auth routes (20 requests per 15 minutes)
+// Rate limiting on auth routes (200 requests per 15 minutes)
 const authRateLimiter = (0, express_rate_limit_1.default)({
     windowMs: 15 * 60 * 1000,
-    max: 20,
+    max: 200,
     standardHeaders: true,
     legacyHeaders: false,
     message: { message: "Too many requests, please try again later." },
@@ -69,6 +91,9 @@ const authRateLimiter = (0, express_rate_limit_1.default)({
 app.use("/api/health", health_routes_1.default);
 app.use("/api/auth", authRateLimiter, auth_routes_1.default);
 app.use("/api/packages", package_routes_1.default);
+app.use("/api/support", support_routes_1.default);
+app.use("/api/todos", todo_routes_1.default);
+app.use("/api/notes", note_routes_1.default);
 app.use("/api/tenants", tenant_routes_1.default);
 app.use("/api/departments", department_routes_1.default);
 app.use("/api/designations", designation_routes_1.default);
@@ -93,6 +118,10 @@ app.use("/api/invoices", invoice_routes_1.default);
 app.use("/api/dashboard", dashboard_routes_1.default);
 app.use("/api/superadmin", superadmin_routes_1.default);
 app.use("/api/notifications", notification_routes_1.default);
+app.use("/api/settings", settings_routes_1.default);
+app.use("/api/landing", landing_routes_1.default);
+app.use("/api/demo-booking", demoBooking_routes_1.default);
+app.use("/api/support", support_routes_1.default);
 // Root Check
 app.get("/", (req, res) => {
     res.json({ message: "Clinic Management SaaS API is running perfectly!" });

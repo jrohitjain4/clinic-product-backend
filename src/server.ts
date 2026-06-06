@@ -36,6 +36,7 @@ import settingsRoutes from "./routes/settings.routes";
 import landingRoutes from "./routes/landing.routes";
 import demoBookingRoutes from "./routes/demoBooking.routes";
 import supportRoutes from "./routes/support.routes";
+import noteRoutes from "./routes/note.routes";
 // Load environment variables
 dotenv.config();
 
@@ -96,6 +97,7 @@ app.use("/api/auth", authRateLimiter, authRoutes);
 app.use("/api/packages", packageRoutes);
 app.use("/api/support", supportRoutes);
 app.use("/api/todos", todoRoutes);
+app.use("/api/notes", noteRoutes);
 app.use("/api/tenants", tenantRoutes);
 app.use("/api/departments", departmentRoutes);
 app.use("/api/designations", designationRoutes);
