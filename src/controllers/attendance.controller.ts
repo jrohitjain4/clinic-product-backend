@@ -56,6 +56,15 @@ export const getAttendance = async (req: AuthenticatedRequest, res: Response) =>
             }
         });
 
+        const approvedLeaves = await prisma.leave.findMany({
+            where: {
+                clinicId,
+                status: 'APPROVED',
+                startDate: { lte: endDate },
+                endDate: { gte: startDate }
+            }
+        });
+
         // Map into a uniform list of employees with their attendance records
         const employees = [
             ...doctors.map((d: any) => ({ ...d, type: 'DOCTOR' })),
@@ -72,11 +81,36 @@ export const getAttendance = async (req: AuthenticatedRequest, res: Response) =>
 
         const formattedData = employees.map((emp: any) => {
             const empAttendance = attendances.filter((a: any) => a.employeeId === emp.id && a.employeeType === emp.type);
+            const empLeaves = approvedLeaves.filter((l: any) => l.employeeId === emp.id && l.employeeType === emp.type);
 
             const attendanceMap: Record<number, string> = {};
+            let totalWorkingDays = 0;
 
             for (let day = 1; day <= daysInMonth; day++) {
                 const currentDate = new Date(numericYear, numericMonth - 1, day);
+                currentDate.setHours(0, 0, 0, 0);
+
+                // Check if day falls within any holiday range
+                const isHoliday = holidays.some((h: any) => {
+                    const hStart = new Date(h.date);
+                    hStart.setHours(0, 0, 0, 0);
+                    const hEnd = h.endDate ? new Date(h.endDate) : new Date(hStart);
+                    hEnd.setHours(23, 59, 59, 999);
+                    return currentDate >= hStart && currentDate <= hEnd;
+                });
+
+                const dayOfWeek = currentDate.getDay();
+                const isOffDay = offDays.includes(dayOfWeek);
+
+                const isOnLeave = empLeaves.some((l: any) => {
+                    const lStart = new Date(l.startDate); lStart.setHours(0, 0, 0, 0);
+                    const lEnd = new Date(l.endDate); lEnd.setHours(23, 59, 59, 999);
+                    return currentDate >= lStart && currentDate <= lEnd;
+                });
+
+                if (!isHoliday && !isOffDay && !isOnLeave) {
+                    totalWorkingDays++;
+                }
 
                 // Check attendance record
                 const record = empAttendance.find((a: any) => {
@@ -87,22 +121,12 @@ export const getAttendance = async (req: AuthenticatedRequest, res: Response) =>
                 if (record && record.status) {
                     attendanceMap[day] = record.status;
                 } else {
-                    // Check if day falls within any holiday range
-                    const isHoliday = holidays.some((h: any) => {
-                        const hStart = new Date(h.date);
-                        hStart.setHours(0, 0, 0, 0);
-                        const hEnd = h.endDate ? new Date(h.endDate) : new Date(hStart);
-                        hEnd.setHours(23, 59, 59, 999);
-                        return currentDate >= hStart && currentDate <= hEnd;
-                    });
-
-                    const dayOfWeek = currentDate.getDay();
-                    const isOffDay = offDays.includes(dayOfWeek);
-
                     if (isOffDay) {
                         attendanceMap[day] = 'OFF';
                     } else if (isHoliday) {
                         attendanceMap[day] = 'HOLIDAY';
+                    } else if (isOnLeave) {
+                        attendanceMap[day] = 'LEAVE';
                     } else {
                         attendanceMap[day] = ''; // No record
                     }
@@ -110,7 +134,6 @@ export const getAttendance = async (req: AuthenticatedRequest, res: Response) =>
             }
 
             // Calculate percentage
-            const totalWorkingDays = daysInMonth - holidays.length;
             const presentDays = empAttendance.filter((a: any) => a.status === 'PRESENT' || a.status === 'HALF_DAY').length; // Treating half day as partial or present for now
             const percentage = totalWorkingDays > 0 ? Math.round((presentDays / totalWorkingDays) * 100) : 0;
 
@@ -120,7 +143,9 @@ export const getAttendance = async (req: AuthenticatedRequest, res: Response) =>
                 type: emp.type,
                 img: emp.profileImage || (emp.type === 'DOCTOR' ? "user-08.jpg" : "user-05.jpg"),
                 percentage: `${percentage}%`,
-                attendance: attendanceMap
+                attendance: attendanceMap,
+                totalWorkingDays,
+                presentDays
             };
         });
 

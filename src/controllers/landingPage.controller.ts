@@ -93,6 +93,8 @@ export const getClinicLandingPage = async (req: Request, res: Response) => {
             patientsServed: lp?.patientsServed || `${clinic.patients.length}+`,
             experience: lp?.experience || null,
             logo: lp?.logo || "",
+            headerImage: lp?.headerImage || "",
+            aboutImage: lp?.aboutImage || "",
             facebook: lp?.facebook || "",
             instagram: lp?.instagram || "",
             doctors,
@@ -117,6 +119,7 @@ export const upsertLandingPage = async (req: Request, res: Response) => {
             tagline, whatsapp, email, facebook, instagram,
             about, established, patientsServed, experience,
             mapUrl, directionsUrl, reviews, gallery, services, logo,
+            headerImage, aboutImage,
         } = req.body;
 
         const landingPage = await prisma.landingPage.upsert({
@@ -127,6 +130,7 @@ export const upsertLandingPage = async (req: Request, res: Response) => {
                 about, established: established ? Number(established) : undefined,
                 patientsServed, experience: experience ? Number(experience) : undefined,
                 mapUrl, directionsUrl, reviews, gallery, services, logo,
+                headerImage, aboutImage,
             },
             update: {
                 tagline, whatsapp, email, facebook, instagram,
@@ -137,6 +141,8 @@ export const upsertLandingPage = async (req: Request, res: Response) => {
                 ...(gallery !== undefined && { gallery }),
                 ...(services !== undefined && { services }),
                 ...(logo !== undefined && { logo }),
+                ...(headerImage !== undefined && { headerImage }),
+                ...(aboutImage !== undefined && { aboutImage }),
             },
         });
 

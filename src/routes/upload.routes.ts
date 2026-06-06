@@ -4,11 +4,13 @@ import {
   doctorProfileUpload,
   patientProfileUpload,
   staffProfileUpload,
+  landingImageUpload,
 } from "../middlewares/upload.middleware";
 import {
   uploadDoctorProfile,
   uploadPatientProfile,
   uploadStaffProfile,
+  uploadLandingImage,
 } from "../controllers/upload.controller";
 
 const router = Router();
@@ -45,6 +47,17 @@ router.post("/patient-profile", (req, res) => {
       });
     }
     return uploadPatientProfile(req, res);
+  });
+});
+
+router.post("/landing-image", (req, res) => {
+  landingImageUpload.single("image")(req, res, (err) => {
+    if (err) {
+      return res.status(400).json({
+        message: err instanceof Error ? err.message : "Upload failed",
+      });
+    }
+    return uploadLandingImage(req, res);
   });
 });
 

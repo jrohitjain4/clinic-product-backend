@@ -20,6 +20,7 @@ const createImageStorage = (folder: string, prefix: string) => {
 const doctorStorage = createImageStorage("doctors", "doctor");
 const staffStorage = createImageStorage("staffs", "staff");
 const patientStorage = createImageStorage("patients", "patient");
+const landingStorage = createImageStorage("landing", "landing");
 
 const fileFilter: multer.Options["fileFilter"] = (_req, file, cb) => {
   if (file.mimetype.startsWith("image/")) {
@@ -45,4 +46,10 @@ export const patientProfileUpload = multer({
   storage: patientStorage,
   fileFilter,
   limits: { fileSize: 5 * 1024 * 1024 },
+});
+
+export const landingImageUpload = multer({
+  storage: landingStorage,
+  fileFilter,
+  limits: { fileSize: 8 * 1024 * 1024 },
 });

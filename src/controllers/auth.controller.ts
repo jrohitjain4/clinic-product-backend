@@ -703,3 +703,22 @@ export const resetPassword = async (req: Request, res: Response) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const changePassword = async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    if (!req.user) return res.status(401).json({ message: "Unauthorized" });
+    const { newPassword } = req.body;
+    if (!newPassword) return res.status(400).json({ message: "New password is required" });
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    await prisma.user.update({
+      where: { id: req.user.id },
+      data: { passwordHash: hashedPassword }
+    });
+
+    return res.json({ message: "Password updated successfully" });
+  } catch (err: any) {
+    console.error("Change password error:", err);
+    return res.status(500).json({ message: "Failed to update password" });
+  }
+};
