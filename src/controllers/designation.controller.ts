@@ -100,8 +100,46 @@ export const deleteDesignation = async (req: AuthenticatedRequest, res: Response
         const existing = await prisma.designation.findFirst({ where: { id, clinicId: clinicId! } });
         if (!existing) return res.status(404).json({ message: "Designation not found" });
 
-        await prisma.designation.delete({ where: { id } });
+        // Update related entities to null
+        await prisma.$transaction([
+            prisma.doctor.updateMany({ where: { designationId: id }, data: { designationId: null } }),
+            prisma.staff.updateMany({ where: { designationId: id }, data: { designationId: null } }),
+            prisma.designation.delete({ where: { id } })
+        ]);
+
         res.json({ message: "Designation deleted successfully" });
+    } catch (err: any) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
+// POST /api/designations/bulk-delete
+export const bulkDeleteDesignations = async (req: AuthenticatedRequest, res: Response) => {
+    try {
+        const clinicId = req.user?.clinicId;
+        const { ids } = req.body;
+
+        if (!ids || !Array.isArray(ids)) {
+            return res.status(400).json({ message: "Invalid IDs provided" });
+        }
+
+        const toDelete = await prisma.designation.findMany({
+            where: { id: { in: ids }, clinicId: clinicId! }
+        });
+
+        if (toDelete.length === 0) {
+            return res.status(404).json({ message: "No matching designations found" });
+        }
+
+        const validIds = toDelete.map(d => d.id);
+
+        await prisma.$transaction([
+            prisma.doctor.updateMany({ where: { designationId: { in: validIds } }, data: { designationId: null } }),
+            prisma.staff.updateMany({ where: { designationId: { in: validIds } }, data: { designationId: null } }),
+            prisma.designation.deleteMany({ where: { id: { in: validIds } } })
+        ]);
+
+        res.json({ message: `${validIds.length} designations deleted successfully` });
     } catch (err: any) {
         res.status(500).json({ message: err.message });
     }

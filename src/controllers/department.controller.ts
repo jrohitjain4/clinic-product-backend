@@ -86,13 +86,71 @@ export const deleteDepartment = async (req: AuthenticatedRequest, res: Response)
         const existing = await prisma.department.findFirst({ where: { id, clinicId: clinicId! } });
         if (!existing) return res.status(404).json({ message: "Department not found" });
 
-        const linkedDesignations = await prisma.designation.count({ where: { departmentId: id } });
-        if (linkedDesignations > 0) {
-            return res.status(400).json({ message: `Cannot delete: ${linkedDesignations} designation(s) are linked to this department` });
+        await prisma.$transaction(async (tx) => {
+            // Nullify optional FK references
+            await tx.designation.updateMany({ where: { departmentId: id }, data: { departmentId: null } });
+            await tx.doctor.updateMany({ where: { departmentId: id }, data: { departmentId: null } });
+            await tx.staff.updateMany({ where: { departmentId: id }, data: { departmentId: null } });
+            await tx.appointment.updateMany({ where: { departmentId: id }, data: { departmentId: null } });
+            await tx.prescription.updateMany({ where: { departmentId: id }, data: { departmentId: null } });
+
+            // Service.departmentId is required (non-nullable), so delete services and their invoice items
+            const services = await tx.service.findMany({ where: { departmentId: id }, select: { id: true } });
+            const serviceIds = services.map(s => s.id);
+            if (serviceIds.length > 0) {
+                await tx.invoiceItem.deleteMany({ where: { serviceId: { in: serviceIds } } });
+                await tx.service.deleteMany({ where: { id: { in: serviceIds } } });
+            }
+
+            await tx.department.delete({ where: { id } });
+        });
+
+        res.json({ message: "Department deleted successfully" });
+    } catch (err: any) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
+// POST /api/departments/bulk-delete
+export const bulkDeleteDepartments = async (req: AuthenticatedRequest, res: Response) => {
+    try {
+        const clinicId = req.user?.clinicId;
+        const { ids } = req.body;
+
+        if (!ids || !Array.isArray(ids)) {
+            return res.status(400).json({ message: "Invalid IDs provided" });
         }
 
-        await prisma.department.delete({ where: { id } });
-        res.json({ message: "Department deleted successfully" });
+        const departmentsToDelete = await prisma.department.findMany({
+            where: { id: { in: ids }, clinicId: clinicId! }
+        });
+
+        if (departmentsToDelete.length === 0) {
+            return res.status(404).json({ message: "No matching departments found" });
+        }
+
+        const validIds = departmentsToDelete.map(d => d.id);
+
+        await prisma.$transaction(async (tx) => {
+            // Nullify optional FK references
+            await tx.designation.updateMany({ where: { departmentId: { in: validIds } }, data: { departmentId: null } });
+            await tx.doctor.updateMany({ where: { departmentId: { in: validIds } }, data: { departmentId: null } });
+            await tx.staff.updateMany({ where: { departmentId: { in: validIds } }, data: { departmentId: null } });
+            await tx.appointment.updateMany({ where: { departmentId: { in: validIds } }, data: { departmentId: null } });
+            await tx.prescription.updateMany({ where: { departmentId: { in: validIds } }, data: { departmentId: null } });
+
+            // Service.departmentId is required, so delete services and their invoice items
+            const services = await tx.service.findMany({ where: { departmentId: { in: validIds } }, select: { id: true } });
+            const serviceIds = services.map(s => s.id);
+            if (serviceIds.length > 0) {
+                await tx.invoiceItem.deleteMany({ where: { serviceId: { in: serviceIds } } });
+                await tx.service.deleteMany({ where: { id: { in: serviceIds } } });
+            }
+
+            await tx.department.deleteMany({ where: { id: { in: validIds } } });
+        });
+
+        res.json({ message: `${validIds.length} department(s) deleted successfully` });
     } catch (err: any) {
         res.status(500).json({ message: err.message });
     }
