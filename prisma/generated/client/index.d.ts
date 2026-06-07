@@ -12894,6 +12894,7 @@ export namespace Prisma {
     medicalRegCertificate: string | null
     qualificationCertificate: string | null
     aadhaarCard: string | null
+    aadhaarCardBack: string | null
     panCard: string | null
     followUpEnabled: boolean | null
     followUpValidityDays: number | null
@@ -12940,6 +12941,7 @@ export namespace Prisma {
     medicalRegCertificate: string | null
     qualificationCertificate: string | null
     aadhaarCard: string | null
+    aadhaarCardBack: string | null
     panCard: string | null
     followUpEnabled: boolean | null
     followUpValidityDays: number | null
@@ -12991,6 +12993,7 @@ export namespace Prisma {
     medicalRegCertificate: number
     qualificationCertificate: number
     aadhaarCard: number
+    aadhaarCardBack: number
     panCard: number
     followUpEnabled: number
     followUpValidityDays: number
@@ -13059,6 +13062,7 @@ export namespace Prisma {
     medicalRegCertificate?: true
     qualificationCertificate?: true
     aadhaarCard?: true
+    aadhaarCardBack?: true
     panCard?: true
     followUpEnabled?: true
     followUpValidityDays?: true
@@ -13105,6 +13109,7 @@ export namespace Prisma {
     medicalRegCertificate?: true
     qualificationCertificate?: true
     aadhaarCard?: true
+    aadhaarCardBack?: true
     panCard?: true
     followUpEnabled?: true
     followUpValidityDays?: true
@@ -13156,6 +13161,7 @@ export namespace Prisma {
     medicalRegCertificate?: true
     qualificationCertificate?: true
     aadhaarCard?: true
+    aadhaarCardBack?: true
     panCard?: true
     followUpEnabled?: true
     followUpValidityDays?: true
@@ -13294,6 +13300,7 @@ export namespace Prisma {
     medicalRegCertificate: string | null
     qualificationCertificate: string | null
     aadhaarCard: string | null
+    aadhaarCardBack: string | null
     panCard: string | null
     followUpEnabled: boolean
     followUpValidityDays: number | null
@@ -13364,6 +13371,7 @@ export namespace Prisma {
     medicalRegCertificate?: boolean
     qualificationCertificate?: boolean
     aadhaarCard?: boolean
+    aadhaarCardBack?: boolean
     panCard?: boolean
     followUpEnabled?: boolean
     followUpValidityDays?: boolean
@@ -13423,6 +13431,7 @@ export namespace Prisma {
     medicalRegCertificate?: boolean
     qualificationCertificate?: boolean
     aadhaarCard?: boolean
+    aadhaarCardBack?: boolean
     panCard?: boolean
     followUpEnabled?: boolean
     followUpValidityDays?: boolean
@@ -13477,6 +13486,7 @@ export namespace Prisma {
     medicalRegCertificate?: boolean
     qualificationCertificate?: boolean
     aadhaarCard?: boolean
+    aadhaarCardBack?: boolean
     panCard?: boolean
     followUpEnabled?: boolean
     followUpValidityDays?: boolean
@@ -13555,6 +13565,7 @@ export namespace Prisma {
       medicalRegCertificate: string | null
       qualificationCertificate: string | null
       aadhaarCard: string | null
+      aadhaarCardBack: string | null
       panCard: string | null
       followUpEnabled: boolean
       followUpValidityDays: number | null
@@ -14003,6 +14014,7 @@ export namespace Prisma {
     readonly medicalRegCertificate: FieldRef<"Doctor", 'String'>
     readonly qualificationCertificate: FieldRef<"Doctor", 'String'>
     readonly aadhaarCard: FieldRef<"Doctor", 'String'>
+    readonly aadhaarCardBack: FieldRef<"Doctor", 'String'>
     readonly panCard: FieldRef<"Doctor", 'String'>
     readonly followUpEnabled: FieldRef<"Doctor", 'Boolean'>
     readonly followUpValidityDays: FieldRef<"Doctor", 'Int'>
@@ -39519,6 +39531,7 @@ export namespace Prisma {
     medicalRegCertificate: 'medicalRegCertificate',
     qualificationCertificate: 'qualificationCertificate',
     aadhaarCard: 'aadhaarCard',
+    aadhaarCardBack: 'aadhaarCardBack',
     panCard: 'panCard',
     followUpEnabled: 'followUpEnabled',
     followUpValidityDays: 'followUpValidityDays',
@@ -41044,6 +41057,7 @@ export namespace Prisma {
     medicalRegCertificate?: StringNullableFilter<"Doctor"> | string | null
     qualificationCertificate?: StringNullableFilter<"Doctor"> | string | null
     aadhaarCard?: StringNullableFilter<"Doctor"> | string | null
+    aadhaarCardBack?: StringNullableFilter<"Doctor"> | string | null
     panCard?: StringNullableFilter<"Doctor"> | string | null
     followUpEnabled?: BoolFilter<"Doctor"> | boolean
     followUpValidityDays?: IntNullableFilter<"Doctor"> | number | null
@@ -41102,6 +41116,7 @@ export namespace Prisma {
     medicalRegCertificate?: SortOrderInput | SortOrder
     qualificationCertificate?: SortOrderInput | SortOrder
     aadhaarCard?: SortOrderInput | SortOrder
+    aadhaarCardBack?: SortOrderInput | SortOrder
     panCard?: SortOrderInput | SortOrder
     followUpEnabled?: SortOrder
     followUpValidityDays?: SortOrderInput | SortOrder
@@ -41163,6 +41178,7 @@ export namespace Prisma {
     medicalRegCertificate?: StringNullableFilter<"Doctor"> | string | null
     qualificationCertificate?: StringNullableFilter<"Doctor"> | string | null
     aadhaarCard?: StringNullableFilter<"Doctor"> | string | null
+    aadhaarCardBack?: StringNullableFilter<"Doctor"> | string | null
     panCard?: StringNullableFilter<"Doctor"> | string | null
     followUpEnabled?: BoolFilter<"Doctor"> | boolean
     followUpValidityDays?: IntNullableFilter<"Doctor"> | number | null
@@ -41221,6 +41237,7 @@ export namespace Prisma {
     medicalRegCertificate?: SortOrderInput | SortOrder
     qualificationCertificate?: SortOrderInput | SortOrder
     aadhaarCard?: SortOrderInput | SortOrder
+    aadhaarCardBack?: SortOrderInput | SortOrder
     panCard?: SortOrderInput | SortOrder
     followUpEnabled?: SortOrder
     followUpValidityDays?: SortOrderInput | SortOrder
@@ -41280,6 +41297,7 @@ export namespace Prisma {
     medicalRegCertificate?: StringNullableWithAggregatesFilter<"Doctor"> | string | null
     qualificationCertificate?: StringNullableWithAggregatesFilter<"Doctor"> | string | null
     aadhaarCard?: StringNullableWithAggregatesFilter<"Doctor"> | string | null
+    aadhaarCardBack?: StringNullableWithAggregatesFilter<"Doctor"> | string | null
     panCard?: StringNullableWithAggregatesFilter<"Doctor"> | string | null
     followUpEnabled?: BoolWithAggregatesFilter<"Doctor"> | boolean
     followUpValidityDays?: IntNullableWithAggregatesFilter<"Doctor"> | number | null
@@ -44563,6 +44581,7 @@ export namespace Prisma {
     medicalRegCertificate?: string | null
     qualificationCertificate?: string | null
     aadhaarCard?: string | null
+    aadhaarCardBack?: string | null
     panCard?: string | null
     followUpEnabled?: boolean
     followUpValidityDays?: number | null
@@ -44619,6 +44638,7 @@ export namespace Prisma {
     medicalRegCertificate?: string | null
     qualificationCertificate?: string | null
     aadhaarCard?: string | null
+    aadhaarCardBack?: string | null
     panCard?: string | null
     followUpEnabled?: boolean
     followUpValidityDays?: number | null
@@ -44673,6 +44693,7 @@ export namespace Prisma {
     medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCardBack?: NullableStringFieldUpdateOperationsInput | string | null
     panCard?: NullableStringFieldUpdateOperationsInput | string | null
     followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
     followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
@@ -44729,6 +44750,7 @@ export namespace Prisma {
     medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCardBack?: NullableStringFieldUpdateOperationsInput | string | null
     panCard?: NullableStringFieldUpdateOperationsInput | string | null
     followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
     followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
@@ -44784,6 +44806,7 @@ export namespace Prisma {
     medicalRegCertificate?: string | null
     qualificationCertificate?: string | null
     aadhaarCard?: string | null
+    aadhaarCardBack?: string | null
     panCard?: string | null
     followUpEnabled?: boolean
     followUpValidityDays?: number | null
@@ -44834,6 +44857,7 @@ export namespace Prisma {
     medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCardBack?: NullableStringFieldUpdateOperationsInput | string | null
     panCard?: NullableStringFieldUpdateOperationsInput | string | null
     followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
     followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
@@ -44883,6 +44907,7 @@ export namespace Prisma {
     medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCardBack?: NullableStringFieldUpdateOperationsInput | string | null
     panCard?: NullableStringFieldUpdateOperationsInput | string | null
     followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
     followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
@@ -48389,6 +48414,7 @@ export namespace Prisma {
     medicalRegCertificate?: SortOrder
     qualificationCertificate?: SortOrder
     aadhaarCard?: SortOrder
+    aadhaarCardBack?: SortOrder
     panCard?: SortOrder
     followUpEnabled?: SortOrder
     followUpValidityDays?: SortOrder
@@ -48445,6 +48471,7 @@ export namespace Prisma {
     medicalRegCertificate?: SortOrder
     qualificationCertificate?: SortOrder
     aadhaarCard?: SortOrder
+    aadhaarCardBack?: SortOrder
     panCard?: SortOrder
     followUpEnabled?: SortOrder
     followUpValidityDays?: SortOrder
@@ -48491,6 +48518,7 @@ export namespace Prisma {
     medicalRegCertificate?: SortOrder
     qualificationCertificate?: SortOrder
     aadhaarCard?: SortOrder
+    aadhaarCardBack?: SortOrder
     panCard?: SortOrder
     followUpEnabled?: SortOrder
     followUpValidityDays?: SortOrder
@@ -53116,6 +53144,7 @@ export namespace Prisma {
     medicalRegCertificate?: string | null
     qualificationCertificate?: string | null
     aadhaarCard?: string | null
+    aadhaarCardBack?: string | null
     panCard?: string | null
     followUpEnabled?: boolean
     followUpValidityDays?: number | null
@@ -53171,6 +53200,7 @@ export namespace Prisma {
     medicalRegCertificate?: string | null
     qualificationCertificate?: string | null
     aadhaarCard?: string | null
+    aadhaarCardBack?: string | null
     panCard?: string | null
     followUpEnabled?: boolean
     followUpValidityDays?: number | null
@@ -54342,6 +54372,7 @@ export namespace Prisma {
     medicalRegCertificate?: StringNullableFilter<"Doctor"> | string | null
     qualificationCertificate?: StringNullableFilter<"Doctor"> | string | null
     aadhaarCard?: StringNullableFilter<"Doctor"> | string | null
+    aadhaarCardBack?: StringNullableFilter<"Doctor"> | string | null
     panCard?: StringNullableFilter<"Doctor"> | string | null
     followUpEnabled?: BoolFilter<"Doctor"> | boolean
     followUpValidityDays?: IntNullableFilter<"Doctor"> | number | null
@@ -56018,6 +56049,7 @@ export namespace Prisma {
     medicalRegCertificate?: string | null
     qualificationCertificate?: string | null
     aadhaarCard?: string | null
+    aadhaarCardBack?: string | null
     panCard?: string | null
     followUpEnabled?: boolean
     followUpValidityDays?: number | null
@@ -56072,6 +56104,7 @@ export namespace Prisma {
     medicalRegCertificate?: string | null
     qualificationCertificate?: string | null
     aadhaarCard?: string | null
+    aadhaarCardBack?: string | null
     panCard?: string | null
     followUpEnabled?: boolean
     followUpValidityDays?: number | null
@@ -56685,6 +56718,7 @@ export namespace Prisma {
     medicalRegCertificate?: string | null
     qualificationCertificate?: string | null
     aadhaarCard?: string | null
+    aadhaarCardBack?: string | null
     panCard?: string | null
     followUpEnabled?: boolean
     followUpValidityDays?: number | null
@@ -56740,6 +56774,7 @@ export namespace Prisma {
     medicalRegCertificate?: string | null
     qualificationCertificate?: string | null
     aadhaarCard?: string | null
+    aadhaarCardBack?: string | null
     panCard?: string | null
     followUpEnabled?: boolean
     followUpValidityDays?: number | null
@@ -58162,6 +58197,7 @@ export namespace Prisma {
     medicalRegCertificate?: string | null
     qualificationCertificate?: string | null
     aadhaarCard?: string | null
+    aadhaarCardBack?: string | null
     panCard?: string | null
     followUpEnabled?: boolean
     followUpValidityDays?: number | null
@@ -58217,6 +58253,7 @@ export namespace Prisma {
     medicalRegCertificate?: string | null
     qualificationCertificate?: string | null
     aadhaarCard?: string | null
+    aadhaarCardBack?: string | null
     panCard?: string | null
     followUpEnabled?: boolean
     followUpValidityDays?: number | null
@@ -58533,6 +58570,7 @@ export namespace Prisma {
     medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCardBack?: NullableStringFieldUpdateOperationsInput | string | null
     panCard?: NullableStringFieldUpdateOperationsInput | string | null
     followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
     followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
@@ -58588,6 +58626,7 @@ export namespace Prisma {
     medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCardBack?: NullableStringFieldUpdateOperationsInput | string | null
     panCard?: NullableStringFieldUpdateOperationsInput | string | null
     followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
     followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
@@ -58889,6 +58928,7 @@ export namespace Prisma {
     medicalRegCertificate?: string | null
     qualificationCertificate?: string | null
     aadhaarCard?: string | null
+    aadhaarCardBack?: string | null
     panCard?: string | null
     followUpEnabled?: boolean
     followUpValidityDays?: number | null
@@ -58944,6 +58984,7 @@ export namespace Prisma {
     medicalRegCertificate?: string | null
     qualificationCertificate?: string | null
     aadhaarCard?: string | null
+    aadhaarCardBack?: string | null
     panCard?: string | null
     followUpEnabled?: boolean
     followUpValidityDays?: number | null
@@ -59294,6 +59335,7 @@ export namespace Prisma {
     medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCardBack?: NullableStringFieldUpdateOperationsInput | string | null
     panCard?: NullableStringFieldUpdateOperationsInput | string | null
     followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
     followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
@@ -59349,6 +59391,7 @@ export namespace Prisma {
     medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCardBack?: NullableStringFieldUpdateOperationsInput | string | null
     panCard?: NullableStringFieldUpdateOperationsInput | string | null
     followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
     followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
@@ -60061,6 +60104,7 @@ export namespace Prisma {
     medicalRegCertificate?: string | null
     qualificationCertificate?: string | null
     aadhaarCard?: string | null
+    aadhaarCardBack?: string | null
     panCard?: string | null
     followUpEnabled?: boolean
     followUpValidityDays?: number | null
@@ -60116,6 +60160,7 @@ export namespace Prisma {
     medicalRegCertificate?: string | null
     qualificationCertificate?: string | null
     aadhaarCard?: string | null
+    aadhaarCardBack?: string | null
     panCard?: string | null
     followUpEnabled?: boolean
     followUpValidityDays?: number | null
@@ -62598,6 +62643,7 @@ export namespace Prisma {
     medicalRegCertificate?: string | null
     qualificationCertificate?: string | null
     aadhaarCard?: string | null
+    aadhaarCardBack?: string | null
     panCard?: string | null
     followUpEnabled?: boolean
     followUpValidityDays?: number | null
@@ -62653,6 +62699,7 @@ export namespace Prisma {
     medicalRegCertificate?: string | null
     qualificationCertificate?: string | null
     aadhaarCard?: string | null
+    aadhaarCardBack?: string | null
     panCard?: string | null
     followUpEnabled?: boolean
     followUpValidityDays?: number | null
@@ -63036,6 +63083,7 @@ export namespace Prisma {
     medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCardBack?: NullableStringFieldUpdateOperationsInput | string | null
     panCard?: NullableStringFieldUpdateOperationsInput | string | null
     followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
     followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
@@ -63091,6 +63139,7 @@ export namespace Prisma {
     medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCardBack?: NullableStringFieldUpdateOperationsInput | string | null
     panCard?: NullableStringFieldUpdateOperationsInput | string | null
     followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
     followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
@@ -65711,6 +65760,7 @@ export namespace Prisma {
     medicalRegCertificate?: string | null
     qualificationCertificate?: string | null
     aadhaarCard?: string | null
+    aadhaarCardBack?: string | null
     panCard?: string | null
     followUpEnabled?: boolean
     followUpValidityDays?: number | null
@@ -66206,6 +66256,7 @@ export namespace Prisma {
     medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCardBack?: NullableStringFieldUpdateOperationsInput | string | null
     panCard?: NullableStringFieldUpdateOperationsInput | string | null
     followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
     followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
@@ -66261,6 +66312,7 @@ export namespace Prisma {
     medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCardBack?: NullableStringFieldUpdateOperationsInput | string | null
     panCard?: NullableStringFieldUpdateOperationsInput | string | null
     followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
     followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
@@ -66315,6 +66367,7 @@ export namespace Prisma {
     medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCardBack?: NullableStringFieldUpdateOperationsInput | string | null
     panCard?: NullableStringFieldUpdateOperationsInput | string | null
     followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
     followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
@@ -67510,6 +67563,7 @@ export namespace Prisma {
     medicalRegCertificate?: string | null
     qualificationCertificate?: string | null
     aadhaarCard?: string | null
+    aadhaarCardBack?: string | null
     panCard?: string | null
     followUpEnabled?: boolean
     followUpValidityDays?: number | null
@@ -67664,6 +67718,7 @@ export namespace Prisma {
     medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCardBack?: NullableStringFieldUpdateOperationsInput | string | null
     panCard?: NullableStringFieldUpdateOperationsInput | string | null
     followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
     followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
@@ -67718,6 +67773,7 @@ export namespace Prisma {
     medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCardBack?: NullableStringFieldUpdateOperationsInput | string | null
     panCard?: NullableStringFieldUpdateOperationsInput | string | null
     followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
     followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
@@ -67772,6 +67828,7 @@ export namespace Prisma {
     medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCardBack?: NullableStringFieldUpdateOperationsInput | string | null
     panCard?: NullableStringFieldUpdateOperationsInput | string | null
     followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
     followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
@@ -68032,6 +68089,7 @@ export namespace Prisma {
     medicalRegCertificate?: string | null
     qualificationCertificate?: string | null
     aadhaarCard?: string | null
+    aadhaarCardBack?: string | null
     panCard?: string | null
     followUpEnabled?: boolean
     followUpValidityDays?: number | null
@@ -68106,6 +68164,7 @@ export namespace Prisma {
     medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCardBack?: NullableStringFieldUpdateOperationsInput | string | null
     panCard?: NullableStringFieldUpdateOperationsInput | string | null
     followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
     followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
@@ -68161,6 +68220,7 @@ export namespace Prisma {
     medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCardBack?: NullableStringFieldUpdateOperationsInput | string | null
     panCard?: NullableStringFieldUpdateOperationsInput | string | null
     followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
     followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
@@ -68215,6 +68275,7 @@ export namespace Prisma {
     medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCardBack?: NullableStringFieldUpdateOperationsInput | string | null
     panCard?: NullableStringFieldUpdateOperationsInput | string | null
     followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
     followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
@@ -69048,6 +69109,7 @@ export namespace Prisma {
     medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCardBack?: NullableStringFieldUpdateOperationsInput | string | null
     panCard?: NullableStringFieldUpdateOperationsInput | string | null
     followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
     followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
@@ -69103,6 +69165,7 @@ export namespace Prisma {
     medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCardBack?: NullableStringFieldUpdateOperationsInput | string | null
     panCard?: NullableStringFieldUpdateOperationsInput | string | null
     followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
     followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
@@ -69157,6 +69220,7 @@ export namespace Prisma {
     medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
     aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCardBack?: NullableStringFieldUpdateOperationsInput | string | null
     panCard?: NullableStringFieldUpdateOperationsInput | string | null
     followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
     followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null

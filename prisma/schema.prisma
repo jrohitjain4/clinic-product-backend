@@ -250,6 +250,7 @@ model Doctor {
   medicalRegCertificate   String?
   qualificationCertificate String?
   aadhaarCard             String?
+  aadhaarCardBack         String?
   panCard                 String?
   followUpEnabled         Boolean         @default(false)
   followUpValidityDays    Int?

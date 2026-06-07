@@ -296,6 +296,7 @@ exports.Prisma.DoctorScalarFieldEnum = {
   medicalRegCertificate: 'medicalRegCertificate',
   qualificationCertificate: 'qualificationCertificate',
   aadhaarCard: 'aadhaarCard',
+  aadhaarCardBack: 'aadhaarCardBack',
   panCard: 'panCard',
   followUpEnabled: 'followUpEnabled',
   followUpValidityDays: 'followUpValidityDays',
