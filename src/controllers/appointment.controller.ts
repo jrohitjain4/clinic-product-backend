@@ -57,6 +57,10 @@ const doctorInclude = {
       fullName: true,
       profileImage: true,
       appointmentDuration: true,
+      followUpEnabled: true,
+      freeFollowUpLimit: true,
+      followUpValidityDays: true,
+      followUpFee: true,
       designation: { select: { id: true, name: true } },
       department: { select: { id: true, name: true } },
     },
@@ -67,38 +71,19 @@ const appointmentIncludes = {
   ...patientInclude,
   ...doctorInclude,
   department: { select: { id: true, name: true } },
+  clinic: {
+    include: { landingPage: true }
+  },
+  followUps: {
+    select: { id: true, appointmentCode: true, scheduledAt: true, status: true, followUpPaymentStatus: true, reason: true },
+    orderBy: { scheduledAt: "asc" as const },
+  },
+  parentAppointment: {
+    select: { id: true, appointmentCode: true, scheduledAt: true, status: true },
+  },
 } as const;
 
-const enrichAppointment = (a: {
-  id: string;
-  appointmentCode: string | null;
-  scheduledAt: Date;
-  endAt: Date | null;
-  mode: string;
-  appointmentType: string | null;
-  status: string;
-  reason: string | null;
-  location: string | null;
-  patientId: string;
-  doctorId: string;
-  departmentId: string | null;
-  patient: {
-    id: string;
-    firstName: string;
-    lastName: string;
-    phone: string | null;
-    profileImage: string | null;
-  };
-  doctor: {
-    id: string;
-    fullName: string;
-    profileImage: string | null;
-    appointmentDuration: number | null;
-    designation: { id: string; name: string } | null;
-    department: { id: string; name: string } | null;
-  };
-  department: { id: string; name: string } | null;
-}) => ({
+const enrichAppointment = (a: any) => ({
   ...a,
   dateTimeLabel: formatDateTimeLabel(a.scheduledAt),
   patientName: `${a.patient.firstName} ${a.patient.lastName}`.trim(),
@@ -585,5 +570,139 @@ export const checkFollowupStatus = async (req: AuthenticatedRequest, res: Respon
   } catch (err: any) {
     console.error("checkFollowupStatus error:", err);
     res.status(500).json({ message: err.message });
+  }
+};
+
+// POST /api/appointments/:id/follow-up
+export const createFollowUpAppointment = async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const clinicId = req.user?.clinicId;
+    if (!clinicId) return res.status(403).json({ message: "No clinic associated" });
+
+    const { id: parentId } = req.params;
+    const { scheduledAt, reason } = req.body;
+
+    if (!scheduledAt) return res.status(400).json({ message: "Scheduled date/time is required" });
+
+    // Fetch parent appointment
+    const parent = await prisma.appointment.findFirst({
+      where: { id: parentId, clinicId },
+      include: {
+        patient: true,
+        doctor: true,
+      },
+    });
+    if (!parent) return res.status(404).json({ message: "Parent appointment not found" });
+
+    const doctor = parent.doctor;
+    if (!doctor.followUpEnabled) {
+      return res.status(400).json({ message: "Follow-up is not enabled for this doctor" });
+    }
+
+    // Check validity window
+    const scheduled = new Date(scheduledAt);
+    const diffDays = (scheduled.getTime() - parent.scheduledAt.getTime()) / (1000 * 60 * 60 * 24);
+    if (doctor.followUpValidityDays && diffDays > doctor.followUpValidityDays) {
+      return res.status(400).json({
+        message: `Follow-up must be within ${doctor.followUpValidityDays} days of the original appointment`,
+      });
+    }
+
+    // Count existing follow-ups for this parent chain
+    const rootParentId = parent.parentAppointmentId || parent.id;
+    const existingFollowUps = await prisma.appointment.count({
+      where: {
+        OR: [
+          { parentAppointmentId: rootParentId },
+          { id: rootParentId },
+        ],
+      },
+    });
+
+    // Determine payment status
+    const freeLimit = doctor.freeFollowUpLimit || 0; // 0 = unlimited
+    let paymentStatus: string;
+    if (freeLimit === 0 || existingFollowUps <= freeLimit) {
+      paymentStatus = "Free";
+    } else {
+      paymentStatus = "Unpaid";
+    }
+
+    // Generate appointment code
+    const totalCount = await prisma.appointment.count({ where: { clinicId } });
+    const appointmentCode = `AP${String(totalCount + 1).padStart(3, "0")}`;
+
+    // Auto-compute end time from doctor duration
+    let resolvedEnd: Date | null = null;
+    if (doctor.appointmentDuration) {
+      resolvedEnd = new Date(scheduled.getTime() + doctor.appointmentDuration * 60000);
+    }
+
+    const followUp = await prisma.appointment.create({
+      data: {
+        appointmentCode,
+        patientId: parent.patientId,
+        doctorId: parent.doctorId,
+        departmentId: parent.departmentId || null,
+        scheduledAt: scheduled,
+        endAt: resolvedEnd,
+        mode: parent.mode,
+        appointmentType: parent.appointmentType,
+        status: "Follow-up",
+        reason: reason || `Follow-up for ${parent.appointmentCode || parent.id}`,
+        location: parent.location,
+        clinicId,
+        parentAppointmentId: rootParentId,
+        followUpPaymentStatus: paymentStatus,
+      },
+      include: appointmentIncludes,
+    });
+
+    // 🔔 Notify
+    const patientFullName = `${parent.patient.firstName} ${parent.patient.lastName}`.trim();
+    await createNotificationInternal({
+      clinicId,
+      type: "APPOINTMENT",
+      title: "Follow-up Appointment Created",
+      message: `Follow-up ${appointmentCode} (${paymentStatus}) for ${patientFullName} with Dr. ${doctor.fullName} on ${formatDateTimeLabel(scheduled)}.`,
+      targetRole: "ALL",
+      link: `/appointments`,
+    });
+
+    res.status(201).json(enrichAppointment(followUp));
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Server error";
+    console.error("createFollowUpAppointment error:", err);
+    res.status(500).json({ message });
+  }
+};
+
+
+// PUT /api/appointments/:id/follow-up-payment
+export const updateFollowUpPayment = async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const clinicId = req.user?.clinicId;
+    const { id } = req.params;
+    const { paymentStatus } = req.body; // "Paid", "Unpaid", "Free"
+
+    if (!["Paid", "Unpaid", "Free"].includes(paymentStatus)) {
+      return res.status(400).json({ message: "Invalid payment status. Must be Paid, Unpaid, or Free" });
+    }
+
+    const appointment = await prisma.appointment.findFirst({
+      where: { id, clinicId: clinicId! },
+    });
+    if (!appointment) return res.status(404).json({ message: "Appointment not found" });
+
+    const updated = await prisma.appointment.update({
+      where: { id },
+      data: { followUpPaymentStatus: paymentStatus },
+      include: appointmentIncludes,
+    });
+
+    res.json(enrichAppointment(updated));
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Server error";
+    res.status(500).json({ message });
   }
 };

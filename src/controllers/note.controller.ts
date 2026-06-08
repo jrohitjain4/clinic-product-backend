@@ -4,8 +4,15 @@ import prisma from "../lib/prisma";
 export const getNotes = async (req: any, res: Response) => {
     try {
         const clinicId = req.user.clinicId;
+        const { appointmentId } = req.query;
+
+        const where: any = { clinicId };
+        if (appointmentId) {
+            where.appointmentId = appointmentId;
+        }
+
         const notes = await prisma.note.findMany({
-            where: { clinicId },
+            where,
             orderBy: { createdAt: "desc" },
         });
         res.json(notes);
@@ -17,7 +24,7 @@ export const getNotes = async (req: any, res: Response) => {
 export const createNote = async (req: any, res: Response) => {
     try {
         const clinicId = req.user.clinicId;
-        const { title, content, priority, noteDate } = req.body;
+        const { title, content, priority, noteDate, appointmentId } = req.body;
 
         if (!title) {
             return res.status(400).json({ message: "Note title is required" });
@@ -31,6 +38,7 @@ export const createNote = async (req: any, res: Response) => {
                 noteDate: noteDate ? new Date(noteDate) : null,
                 clinicId,
                 userId: req.user.id,
+                appointmentId: appointmentId || null,
             },
         });
         res.status(201).json(note);

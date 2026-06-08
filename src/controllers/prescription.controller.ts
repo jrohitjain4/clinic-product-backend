@@ -37,6 +37,9 @@ export const getPrescriptions = async (req: Request, res: Response) => {
                 },
                 department: true,
                 medicines: true,
+                clinic: {
+                    include: { landingPage: true }
+                }
             },
             orderBy: { createdAt: "desc" },
         });
@@ -144,7 +147,10 @@ export const getPrescriptionById = async (req: Request, res: Response) => {
                 },
                 department: true,
                 medicines: true,
-                appointment: true
+                appointment: true,
+                clinic: {
+                    include: { landingPage: true }
+                }
             },
         });
 

@@ -301,6 +301,7 @@ exports.Prisma.DoctorScalarFieldEnum = {
   followUpEnabled: 'followUpEnabled',
   followUpValidityDays: 'followUpValidityDays',
   freeFollowUpLimit: 'freeFollowUpLimit',
+  followUpFee: 'followUpFee',
   designationId: 'designationId',
   clinicId: 'clinicId',
   createdAt: 'createdAt',
@@ -357,6 +358,8 @@ exports.Prisma.AppointmentScalarFieldEnum = {
   reason: 'reason',
   location: 'location',
   clinicId: 'clinicId',
+  parentAppointmentId: 'parentAppointmentId',
+  followUpPaymentStatus: 'followUpPaymentStatus',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -647,6 +650,7 @@ exports.Prisma.NoteScalarFieldEnum = {
   noteDate: 'noteDate',
   clinicId: 'clinicId',
   userId: 'userId',
+  appointmentId: 'appointmentId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

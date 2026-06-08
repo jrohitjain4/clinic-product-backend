@@ -255,6 +255,7 @@ model Doctor {
   followUpEnabled          Boolean          @default(false)
   followUpValidityDays     Int?
   freeFollowUpLimit        Int?
+  followUpFee              Float?
   designationId            String?
   designation              Designation?     @relation(fields: [designationId], references: [id])
   specializations          Specialization[]
@@ -313,26 +314,31 @@ model Patient {
 }
 
 model Appointment {
-  id              String         @id @default(uuid())
-  appointmentCode String?
-  patientId       String
-  patient         Patient        @relation(fields: [patientId], references: [id])
-  doctorId        String
-  doctor          Doctor         @relation(fields: [doctorId], references: [id])
-  departmentId    String?
-  department      Department?    @relation(fields: [departmentId], references: [id])
-  scheduledAt     DateTime
-  endAt           DateTime?
-  mode            String         @default("In-person")
-  appointmentType String?
-  status          String         @default("Schedule")
-  reason          String?
-  location        String?
-  clinicId        String
-  clinic          Clinic         @relation(fields: [clinicId], references: [id])
-  prescriptions   Prescription[]
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
+  id                    String         @id @default(uuid())
+  appointmentCode       String?
+  patientId             String
+  patient               Patient        @relation(fields: [patientId], references: [id])
+  doctorId              String
+  doctor                Doctor         @relation(fields: [doctorId], references: [id])
+  departmentId          String?
+  department            Department?    @relation(fields: [departmentId], references: [id])
+  scheduledAt           DateTime
+  endAt                 DateTime?
+  mode                  String         @default("In-person")
+  appointmentType       String?
+  status                String         @default("Schedule")
+  reason                String?
+  location              String?
+  clinicId              String
+  clinic                Clinic         @relation(fields: [clinicId], references: [id])
+  prescriptions         Prescription[]
+  notes                 Note[]
+  parentAppointmentId   String?
+  parentAppointment     Appointment?   @relation("FollowUps", fields: [parentAppointmentId], references: [id])
+  followUps             Appointment[]  @relation("FollowUps")
+  followUpPaymentStatus String? // Paid, Unpaid, Free
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
 
   @@index([clinicId])
   @@index([patientId])
@@ -705,16 +711,19 @@ model Todo {
 }
 
 model Note {
-  id        String    @id @default(uuid())
-  title     String
-  content   String?
-  priority  String    @default("Medium") // Low, Medium, High
-  noteDate  DateTime?
-  clinicId  String
-  clinic    Clinic    @relation(fields: [clinicId], references: [id])
-  userId    String?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id            String       @id @default(uuid())
+  title         String
+  content       String?
+  priority      String       @default("Medium") // Low, Medium, High
+  noteDate      DateTime?
+  clinicId      String
+  clinic        Clinic       @relation(fields: [clinicId], references: [id])
+  userId        String?
+  appointmentId String?
+  appointment   Appointment? @relation(fields: [appointmentId], references: [id])
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
 
   @@index([clinicId])
+  @@index([appointmentId])
 }
