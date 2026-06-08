@@ -1,6 +1,10 @@
 import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+
+// Load environment variables immediately
+dotenv.config();
+
 import path from "path";
 import rateLimit from "express-rate-limit";
 import authRoutes from "./routes/auth.routes";
@@ -37,8 +41,6 @@ import landingRoutes from "./routes/landing.routes";
 import demoBookingRoutes from "./routes/demoBooking.routes";
 import supportRoutes from "./routes/support.routes";
 import noteRoutes from "./routes/note.routes";
-// Load environment variables
-dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -55,27 +57,28 @@ app.use(
       // Allow requests with no origin (like mobile apps or curl requests)
       if (!origin) return callback(null, true);
 
-      // Check if origin matches docyori.com or any of its subdomains
-      const isDocyori = /^https?:\/\/(.*?\.)?docyori\.com$/.test(origin);
+      // Explicitly allow any docyori.com subdomain (handling potential trailing slash)
+      const sanitizedOrigin = origin.replace(/\/$/, "");
+      const isDocyori = /^https?:\/\/(.*?\.)?docyori\.com$/.test(sanitizedOrigin);
 
       const isAllowed = allowedOrigins.some(allowed => {
         if (allowed.includes('*')) {
           const pattern = new RegExp('^' + allowed.replace(/\*/g, '.*') + '$');
-          return pattern.test(origin);
+          return pattern.test(sanitizedOrigin);
         }
-        return allowed === origin;
+        return allowed === sanitizedOrigin;
       });
 
       if (isAllowed || isDocyori) {
         callback(null, true);
       } else {
-        console.log("CORS Blocked for origin:", origin);
+        console.warn(`[CORS] Blocked request from origin: ${origin}`);
         callback(null, false);
       }
     },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'X-Tenant-ID'],
   })
 );
 app.use(express.json({ limit: "50mb" }));
