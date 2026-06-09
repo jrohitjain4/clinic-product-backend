@@ -336,7 +336,10 @@ model Appointment {
   parentAppointmentId   String?
   parentAppointment     Appointment?   @relation("FollowUps", fields: [parentAppointmentId], references: [id])
   followUps             Appointment[]  @relation("FollowUps")
-  followUpPaymentStatus String? // Paid, Unpaid, Free
+  isFollowUp            Boolean        @default(false)
+  followUpStatus        String? // Free Follow-up, Paid Follow-up
+  paymentStatus         String? // Paid, Free, Unpaid
+  followUpPaymentStatus String? // Keep for compatibility or remove later
   createdAt             DateTime       @default(now())
   updatedAt             DateTime       @updatedAt
 

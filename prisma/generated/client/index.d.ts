@@ -15884,6 +15884,9 @@ export namespace Prisma {
     location: string | null
     clinicId: string | null
     parentAppointmentId: string | null
+    isFollowUp: boolean | null
+    followUpStatus: string | null
+    paymentStatus: string | null
     followUpPaymentStatus: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -15904,6 +15907,9 @@ export namespace Prisma {
     location: string | null
     clinicId: string | null
     parentAppointmentId: string | null
+    isFollowUp: boolean | null
+    followUpStatus: string | null
+    paymentStatus: string | null
     followUpPaymentStatus: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -15924,6 +15930,9 @@ export namespace Prisma {
     location: number
     clinicId: number
     parentAppointmentId: number
+    isFollowUp: number
+    followUpStatus: number
+    paymentStatus: number
     followUpPaymentStatus: number
     createdAt: number
     updatedAt: number
@@ -15946,6 +15955,9 @@ export namespace Prisma {
     location?: true
     clinicId?: true
     parentAppointmentId?: true
+    isFollowUp?: true
+    followUpStatus?: true
+    paymentStatus?: true
     followUpPaymentStatus?: true
     createdAt?: true
     updatedAt?: true
@@ -15966,6 +15978,9 @@ export namespace Prisma {
     location?: true
     clinicId?: true
     parentAppointmentId?: true
+    isFollowUp?: true
+    followUpStatus?: true
+    paymentStatus?: true
     followUpPaymentStatus?: true
     createdAt?: true
     updatedAt?: true
@@ -15986,6 +16001,9 @@ export namespace Prisma {
     location?: true
     clinicId?: true
     parentAppointmentId?: true
+    isFollowUp?: true
+    followUpStatus?: true
+    paymentStatus?: true
     followUpPaymentStatus?: true
     createdAt?: true
     updatedAt?: true
@@ -16079,6 +16097,9 @@ export namespace Prisma {
     location: string | null
     clinicId: string
     parentAppointmentId: string | null
+    isFollowUp: boolean
+    followUpStatus: string | null
+    paymentStatus: string | null
     followUpPaymentStatus: string | null
     createdAt: Date
     updatedAt: Date
@@ -16116,6 +16137,9 @@ export namespace Prisma {
     location?: boolean
     clinicId?: boolean
     parentAppointmentId?: boolean
+    isFollowUp?: boolean
+    followUpStatus?: boolean
+    paymentStatus?: boolean
     followUpPaymentStatus?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -16145,6 +16169,9 @@ export namespace Prisma {
     location?: boolean
     clinicId?: boolean
     parentAppointmentId?: boolean
+    isFollowUp?: boolean
+    followUpStatus?: boolean
+    paymentStatus?: boolean
     followUpPaymentStatus?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -16170,6 +16197,9 @@ export namespace Prisma {
     location?: boolean
     clinicId?: boolean
     parentAppointmentId?: boolean
+    isFollowUp?: boolean
+    followUpStatus?: boolean
+    paymentStatus?: boolean
     followUpPaymentStatus?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -16221,6 +16251,9 @@ export namespace Prisma {
       location: string | null
       clinicId: string
       parentAppointmentId: string | null
+      isFollowUp: boolean
+      followUpStatus: string | null
+      paymentStatus: string | null
       followUpPaymentStatus: string | null
       createdAt: Date
       updatedAt: Date
@@ -16639,6 +16672,9 @@ export namespace Prisma {
     readonly location: FieldRef<"Appointment", 'String'>
     readonly clinicId: FieldRef<"Appointment", 'String'>
     readonly parentAppointmentId: FieldRef<"Appointment", 'String'>
+    readonly isFollowUp: FieldRef<"Appointment", 'Boolean'>
+    readonly followUpStatus: FieldRef<"Appointment", 'String'>
+    readonly paymentStatus: FieldRef<"Appointment", 'String'>
     readonly followUpPaymentStatus: FieldRef<"Appointment", 'String'>
     readonly createdAt: FieldRef<"Appointment", 'DateTime'>
     readonly updatedAt: FieldRef<"Appointment", 'DateTime'>
@@ -39760,6 +39796,9 @@ export namespace Prisma {
     location: 'location',
     clinicId: 'clinicId',
     parentAppointmentId: 'parentAppointmentId',
+    isFollowUp: 'isFollowUp',
+    followUpStatus: 'followUpStatus',
+    paymentStatus: 'paymentStatus',
     followUpPaymentStatus: 'followUpPaymentStatus',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -41702,6 +41741,9 @@ export namespace Prisma {
     location?: StringNullableFilter<"Appointment"> | string | null
     clinicId?: StringFilter<"Appointment"> | string
     parentAppointmentId?: StringNullableFilter<"Appointment"> | string | null
+    isFollowUp?: BoolFilter<"Appointment"> | boolean
+    followUpStatus?: StringNullableFilter<"Appointment"> | string | null
+    paymentStatus?: StringNullableFilter<"Appointment"> | string | null
     followUpPaymentStatus?: StringNullableFilter<"Appointment"> | string | null
     createdAt?: DateTimeFilter<"Appointment"> | Date | string
     updatedAt?: DateTimeFilter<"Appointment"> | Date | string
@@ -41730,6 +41772,9 @@ export namespace Prisma {
     location?: SortOrderInput | SortOrder
     clinicId?: SortOrder
     parentAppointmentId?: SortOrderInput | SortOrder
+    isFollowUp?: SortOrder
+    followUpStatus?: SortOrderInput | SortOrder
+    paymentStatus?: SortOrderInput | SortOrder
     followUpPaymentStatus?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -41761,6 +41806,9 @@ export namespace Prisma {
     location?: StringNullableFilter<"Appointment"> | string | null
     clinicId?: StringFilter<"Appointment"> | string
     parentAppointmentId?: StringNullableFilter<"Appointment"> | string | null
+    isFollowUp?: BoolFilter<"Appointment"> | boolean
+    followUpStatus?: StringNullableFilter<"Appointment"> | string | null
+    paymentStatus?: StringNullableFilter<"Appointment"> | string | null
     followUpPaymentStatus?: StringNullableFilter<"Appointment"> | string | null
     createdAt?: DateTimeFilter<"Appointment"> | Date | string
     updatedAt?: DateTimeFilter<"Appointment"> | Date | string
@@ -41789,6 +41837,9 @@ export namespace Prisma {
     location?: SortOrderInput | SortOrder
     clinicId?: SortOrder
     parentAppointmentId?: SortOrderInput | SortOrder
+    isFollowUp?: SortOrder
+    followUpStatus?: SortOrderInput | SortOrder
+    paymentStatus?: SortOrderInput | SortOrder
     followUpPaymentStatus?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -41815,6 +41866,9 @@ export namespace Prisma {
     location?: StringNullableWithAggregatesFilter<"Appointment"> | string | null
     clinicId?: StringWithAggregatesFilter<"Appointment"> | string
     parentAppointmentId?: StringNullableWithAggregatesFilter<"Appointment"> | string | null
+    isFollowUp?: BoolWithAggregatesFilter<"Appointment"> | boolean
+    followUpStatus?: StringNullableWithAggregatesFilter<"Appointment"> | string | null
+    paymentStatus?: StringNullableWithAggregatesFilter<"Appointment"> | string | null
     followUpPaymentStatus?: StringNullableWithAggregatesFilter<"Appointment"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Appointment"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Appointment"> | Date | string
@@ -45393,6 +45447,9 @@ export namespace Prisma {
     status?: string
     reason?: string | null
     location?: string | null
+    isFollowUp?: boolean
+    followUpStatus?: string | null
+    paymentStatus?: string | null
     followUpPaymentStatus?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -45421,6 +45478,9 @@ export namespace Prisma {
     location?: string | null
     clinicId: string
     parentAppointmentId?: string | null
+    isFollowUp?: boolean
+    followUpStatus?: string | null
+    paymentStatus?: string | null
     followUpPaymentStatus?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -45439,6 +45499,9 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     reason?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
+    isFollowUp?: BoolFieldUpdateOperationsInput | boolean
+    followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -45467,6 +45530,9 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
     parentAppointmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    isFollowUp?: BoolFieldUpdateOperationsInput | boolean
+    followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -45490,6 +45556,9 @@ export namespace Prisma {
     location?: string | null
     clinicId: string
     parentAppointmentId?: string | null
+    isFollowUp?: boolean
+    followUpStatus?: string | null
+    paymentStatus?: string | null
     followUpPaymentStatus?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -45505,6 +45574,9 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     reason?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
+    isFollowUp?: BoolFieldUpdateOperationsInput | boolean
+    followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -45525,6 +45597,9 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
     parentAppointmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    isFollowUp?: BoolFieldUpdateOperationsInput | boolean
+    followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -48931,6 +49006,9 @@ export namespace Prisma {
     location?: SortOrder
     clinicId?: SortOrder
     parentAppointmentId?: SortOrder
+    isFollowUp?: SortOrder
+    followUpStatus?: SortOrder
+    paymentStatus?: SortOrder
     followUpPaymentStatus?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -48951,6 +49029,9 @@ export namespace Prisma {
     location?: SortOrder
     clinicId?: SortOrder
     parentAppointmentId?: SortOrder
+    isFollowUp?: SortOrder
+    followUpStatus?: SortOrder
+    paymentStatus?: SortOrder
     followUpPaymentStatus?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -48971,6 +49052,9 @@ export namespace Prisma {
     location?: SortOrder
     clinicId?: SortOrder
     parentAppointmentId?: SortOrder
+    isFollowUp?: SortOrder
+    followUpStatus?: SortOrder
+    paymentStatus?: SortOrder
     followUpPaymentStatus?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -53744,6 +53828,9 @@ export namespace Prisma {
     status?: string
     reason?: string | null
     location?: string | null
+    isFollowUp?: boolean
+    followUpStatus?: string | null
+    paymentStatus?: string | null
     followUpPaymentStatus?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -53770,6 +53857,9 @@ export namespace Prisma {
     reason?: string | null
     location?: string | null
     parentAppointmentId?: string | null
+    isFollowUp?: boolean
+    followUpStatus?: string | null
+    paymentStatus?: string | null
     followUpPaymentStatus?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -54890,6 +54980,9 @@ export namespace Prisma {
     location?: StringNullableFilter<"Appointment"> | string | null
     clinicId?: StringFilter<"Appointment"> | string
     parentAppointmentId?: StringNullableFilter<"Appointment"> | string | null
+    isFollowUp?: BoolFilter<"Appointment"> | boolean
+    followUpStatus?: StringNullableFilter<"Appointment"> | string | null
+    paymentStatus?: StringNullableFilter<"Appointment"> | string | null
     followUpPaymentStatus?: StringNullableFilter<"Appointment"> | string | null
     createdAt?: DateTimeFilter<"Appointment"> | Date | string
     updatedAt?: DateTimeFilter<"Appointment"> | Date | string
@@ -56579,6 +56672,9 @@ export namespace Prisma {
     status?: string
     reason?: string | null
     location?: string | null
+    isFollowUp?: boolean
+    followUpStatus?: string | null
+    paymentStatus?: string | null
     followUpPaymentStatus?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -56605,6 +56701,9 @@ export namespace Prisma {
     location?: string | null
     clinicId: string
     parentAppointmentId?: string | null
+    isFollowUp?: boolean
+    followUpStatus?: string | null
+    paymentStatus?: string | null
     followUpPaymentStatus?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -58202,6 +58301,9 @@ export namespace Prisma {
     status?: string
     reason?: string | null
     location?: string | null
+    isFollowUp?: boolean
+    followUpStatus?: string | null
+    paymentStatus?: string | null
     followUpPaymentStatus?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -58228,6 +58330,9 @@ export namespace Prisma {
     location?: string | null
     clinicId: string
     parentAppointmentId?: string | null
+    isFollowUp?: boolean
+    followUpStatus?: string | null
+    paymentStatus?: string | null
     followUpPaymentStatus?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -58793,6 +58898,9 @@ export namespace Prisma {
     status?: string
     reason?: string | null
     location?: string | null
+    isFollowUp?: boolean
+    followUpStatus?: string | null
+    paymentStatus?: string | null
     followUpPaymentStatus?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -58819,6 +58927,9 @@ export namespace Prisma {
     location?: string | null
     clinicId: string
     parentAppointmentId?: string | null
+    isFollowUp?: boolean
+    followUpStatus?: string | null
+    paymentStatus?: string | null
     followUpPaymentStatus?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -59651,6 +59762,9 @@ export namespace Prisma {
     status?: string
     reason?: string | null
     location?: string | null
+    isFollowUp?: boolean
+    followUpStatus?: string | null
+    paymentStatus?: string | null
     followUpPaymentStatus?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -59678,6 +59792,9 @@ export namespace Prisma {
     location?: string | null
     clinicId: string
     parentAppointmentId?: string | null
+    isFollowUp?: boolean
+    followUpStatus?: string | null
+    paymentStatus?: string | null
     followUpPaymentStatus?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -59700,6 +59817,9 @@ export namespace Prisma {
     status?: string
     reason?: string | null
     location?: string | null
+    isFollowUp?: boolean
+    followUpStatus?: string | null
+    paymentStatus?: string | null
     followUpPaymentStatus?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -59726,6 +59846,9 @@ export namespace Prisma {
     reason?: string | null
     location?: string | null
     clinicId: string
+    isFollowUp?: boolean
+    followUpStatus?: string | null
+    paymentStatus?: string | null
     followUpPaymentStatus?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -60171,6 +60294,9 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     reason?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
+    isFollowUp?: BoolFieldUpdateOperationsInput | boolean
+    followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -60198,6 +60324,9 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
     parentAppointmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    isFollowUp?: BoolFieldUpdateOperationsInput | boolean
+    followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -63368,6 +63497,9 @@ export namespace Prisma {
     status?: string
     reason?: string | null
     location?: string | null
+    isFollowUp?: boolean
+    followUpStatus?: string | null
+    paymentStatus?: string | null
     followUpPaymentStatus?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -63395,6 +63527,9 @@ export namespace Prisma {
     location?: string | null
     clinicId: string
     parentAppointmentId?: string | null
+    isFollowUp?: boolean
+    followUpStatus?: string | null
+    paymentStatus?: string | null
     followUpPaymentStatus?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -63824,6 +63959,9 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     reason?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
+    isFollowUp?: BoolFieldUpdateOperationsInput | boolean
+    followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -63851,6 +63989,9 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
     parentAppointmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    isFollowUp?: BoolFieldUpdateOperationsInput | boolean
+    followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -66231,6 +66372,9 @@ export namespace Prisma {
     status?: string
     reason?: string | null
     location?: string | null
+    isFollowUp?: boolean
+    followUpStatus?: string | null
+    paymentStatus?: string | null
     followUpPaymentStatus?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -66258,6 +66402,9 @@ export namespace Prisma {
     location?: string | null
     clinicId: string
     parentAppointmentId?: string | null
+    isFollowUp?: boolean
+    followUpStatus?: string | null
+    paymentStatus?: string | null
     followUpPaymentStatus?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -66410,6 +66557,9 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     reason?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
+    isFollowUp?: BoolFieldUpdateOperationsInput | boolean
+    followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -66437,6 +66587,9 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
     parentAppointmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    isFollowUp?: BoolFieldUpdateOperationsInput | boolean
+    followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -66607,6 +66760,9 @@ export namespace Prisma {
     reason?: string | null
     location?: string | null
     parentAppointmentId?: string | null
+    isFollowUp?: boolean
+    followUpStatus?: string | null
+    paymentStatus?: string | null
     followUpPaymentStatus?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -67344,6 +67500,9 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     reason?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
+    isFollowUp?: BoolFieldUpdateOperationsInput | boolean
+    followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -67370,6 +67529,9 @@ export namespace Prisma {
     reason?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     parentAppointmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    isFollowUp?: BoolFieldUpdateOperationsInput | boolean
+    followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -67392,6 +67554,9 @@ export namespace Prisma {
     reason?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     parentAppointmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    isFollowUp?: BoolFieldUpdateOperationsInput | boolean
+    followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -68396,6 +68561,9 @@ export namespace Prisma {
     location?: string | null
     clinicId: string
     parentAppointmentId?: string | null
+    isFollowUp?: boolean
+    followUpStatus?: string | null
+    paymentStatus?: string | null
     followUpPaymentStatus?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -68714,6 +68882,9 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     reason?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
+    isFollowUp?: BoolFieldUpdateOperationsInput | boolean
+    followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -68740,6 +68911,9 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
     parentAppointmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    isFollowUp?: BoolFieldUpdateOperationsInput | boolean
+    followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -68762,6 +68936,9 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
     parentAppointmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    isFollowUp?: BoolFieldUpdateOperationsInput | boolean
+    followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -69297,6 +69474,9 @@ export namespace Prisma {
     location?: string | null
     clinicId: string
     parentAppointmentId?: string | null
+    isFollowUp?: boolean
+    followUpStatus?: string | null
+    paymentStatus?: string | null
     followUpPaymentStatus?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -69471,6 +69651,9 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     reason?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
+    isFollowUp?: BoolFieldUpdateOperationsInput | boolean
+    followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -69497,6 +69680,9 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
     parentAppointmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    isFollowUp?: BoolFieldUpdateOperationsInput | boolean
+    followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -69519,6 +69705,9 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
     parentAppointmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    isFollowUp?: BoolFieldUpdateOperationsInput | boolean
+    followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -69585,6 +69774,9 @@ export namespace Prisma {
     location?: string | null
     clinicId: string
     parentAppointmentId?: string | null
+    isFollowUp?: boolean
+    followUpStatus?: string | null
+    paymentStatus?: string | null
     followUpPaymentStatus?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -69632,6 +69824,9 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     reason?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
+    isFollowUp?: BoolFieldUpdateOperationsInput | boolean
+    followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -69658,6 +69853,9 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
     parentAppointmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    isFollowUp?: BoolFieldUpdateOperationsInput | boolean
+    followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -69680,6 +69878,9 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
     parentAppointmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    isFollowUp?: BoolFieldUpdateOperationsInput | boolean
+    followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -69826,6 +70027,9 @@ export namespace Prisma {
     reason?: string | null
     location?: string | null
     clinicId: string
+    isFollowUp?: boolean
+    followUpStatus?: string | null
+    paymentStatus?: string | null
     followUpPaymentStatus?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -69924,6 +70128,9 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     reason?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
+    isFollowUp?: BoolFieldUpdateOperationsInput | boolean
+    followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -69950,6 +70157,9 @@ export namespace Prisma {
     reason?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
+    isFollowUp?: BoolFieldUpdateOperationsInput | boolean
+    followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -69972,6 +70182,9 @@ export namespace Prisma {
     reason?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
+    isFollowUp?: BoolFieldUpdateOperationsInput | boolean
+    followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

@@ -9,7 +9,6 @@ const VALID_STATUSES = [
   "Cancelled",
   "Schedule",
   "Confirmed",
-  "Follow-up",
 ];
 
 const formatDateTimeLabel = (date: Date) => {
@@ -269,7 +268,33 @@ export const getAppointmentById = async (req: AuthenticatedRequest, res: Respons
     });
 
     if (!appointment) return res.status(404).json({ message: "Appointment not found" });
-    res.json(enrichAppointment(appointment));
+
+    // Ensure we fetch the full chain if this is a follow-up or has follow-ups
+    // We fetch all non-cancelled appointments for this specific patient-doctor pair that are linked
+    const fullChain = await prisma.appointment.findMany({
+      where: {
+        patientId: appointment.patientId,
+        doctorId: appointment.doctorId,
+        clinicId: clinicId!,
+        status: { not: "Cancelled" },
+        OR: [
+          { isFollowUp: true },
+          { parentAppointmentId: { not: null } },
+          { followUps: { some: {} } }
+        ]
+      },
+      include: {
+        doctor: { select: { id: true, fullName: true, designation: { select: { name: true } } } },
+        patient: { select: { id: true, firstName: true, lastName: true, phone: true } }
+      },
+      orderBy: { scheduledAt: "asc" }
+    });
+
+    const enriched = enrichAppointment(appointment);
+    // Attach the full chain so the frontend can display the complete history
+    (enriched as any).followUpChain = fullChain;
+
+    res.json(enriched);
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Server error";
     res.status(500).json({ message });
@@ -293,6 +318,10 @@ export const createAppointment = async (req: AuthenticatedRequest, res: Response
       status,
       reason,
       location,
+      isFollowUp,
+      followUpStatus,
+      paymentStatus,
+      parentAppointmentId,
     } = req.body;
 
     if (!patientId) return res.status(400).json({ message: "Patient is required" });
@@ -369,6 +398,10 @@ export const createAppointment = async (req: AuthenticatedRequest, res: Response
         reason: reason || null,
         location: location || null,
         clinicId,
+        isFollowUp: isFollowUp || false,
+        followUpStatus: followUpStatus || null,
+        paymentStatus: paymentStatus || null,
+        parentAppointmentId: parentAppointmentId || null,
       },
       include: appointmentIncludes,
     });
@@ -415,6 +448,10 @@ export const updateAppointment = async (req: AuthenticatedRequest, res: Response
       status,
       reason,
       location,
+      isFollowUp,
+      followUpStatus,
+      paymentStatus,
+      parentAppointmentId,
     } = req.body;
 
     if (doctorId) {
@@ -460,6 +497,10 @@ export const updateAppointment = async (req: AuthenticatedRequest, res: Response
         status: resolvedStatus,
         reason: reason !== undefined ? reason || null : existing.reason,
         location: location !== undefined ? location || null : existing.location,
+        isFollowUp: isFollowUp !== undefined ? isFollowUp : existing.isFollowUp,
+        followUpStatus: followUpStatus !== undefined ? followUpStatus : existing.followUpStatus,
+        paymentStatus: paymentStatus !== undefined ? paymentStatus : existing.paymentStatus,
+        parentAppointmentId: parentAppointmentId !== undefined ? parentAppointmentId : existing.parentAppointmentId,
       },
       include: appointmentIncludes,
     });
@@ -544,7 +585,7 @@ export const checkFollowupStatus = async (req: AuthenticatedRequest, res: Respon
         patientId: patientId as string,
         doctorId: doctorId as string,
         clinicId: clinicId!,
-        status: "Checked Out",
+        status: { not: "Cancelled" },
         scheduledAt: { lt: scheduledDate },
       },
       orderBy: { scheduledAt: "desc" },
@@ -557,9 +598,23 @@ export const checkFollowupStatus = async (req: AuthenticatedRequest, res: Respon
       console.log(`Checking follow-up: diffDays=${diffDays}, validity=${doctor.followUpValidityDays}`);
 
       if (diffDays >= 0 && diffDays <= doctor.followUpValidityDays) {
+        // Link to the root parent so the entire chain remains flat and visible in one view
+        const rootParentId = lastAppt.parentAppointmentId || lastAppt.id;
+
+        const existingCount = await prisma.appointment.count({
+          where: { parentAppointmentId: rootParentId, clinicId: clinicId! }
+        });
+
+        // Determine recommended defaults
+        const freeLimit = doctor.freeFollowUpLimit || 0;
+        const isFree = freeLimit === 0 || existingCount < freeLimit;
+
         return res.json({
           isFollowup: true,
-          lastApptId: lastAppt.id,
+          lastApptId: rootParentId,
+          existingCount,
+          recommendedStatus: isFree ? "Free Follow-up" : "Paid Follow-up",
+          recommendedPayment: isFree ? "Free" : "Unpaid",
           diffDays,
           validity: doctor.followUpValidityDays
         });
@@ -580,7 +635,13 @@ export const createFollowUpAppointment = async (req: AuthenticatedRequest, res: 
     if (!clinicId) return res.status(403).json({ message: "No clinic associated" });
 
     const { id: parentId } = req.params;
-    const { scheduledAt, reason } = req.body;
+    const {
+      scheduledAt,
+      reason,
+      status: statusOverride,
+      paymentStatus: paymentOverride,
+      followUpStatus: typeOverride
+    } = req.body;
 
     if (!scheduledAt) return res.status(400).json({ message: "Scheduled date/time is required" });
 
@@ -648,12 +709,14 @@ export const createFollowUpAppointment = async (req: AuthenticatedRequest, res: 
         endAt: resolvedEnd,
         mode: parent.mode,
         appointmentType: parent.appointmentType,
-        status: "Follow-up",
+        status: statusOverride || "Schedule",
         reason: reason || `Follow-up for ${parent.appointmentCode || parent.id}`,
         location: parent.location,
         clinicId,
+        isFollowUp: true,
+        followUpStatus: typeOverride || (paymentStatus === "Free" ? "Free Follow-up" : "Paid Follow-up"),
+        paymentStatus: paymentOverride || paymentStatus,
         parentAppointmentId: rootParentId,
-        followUpPaymentStatus: paymentStatus,
       },
       include: appointmentIncludes,
     });

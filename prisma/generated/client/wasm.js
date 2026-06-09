@@ -359,6 +359,9 @@ exports.Prisma.AppointmentScalarFieldEnum = {
   location: 'location',
   clinicId: 'clinicId',
   parentAppointmentId: 'parentAppointmentId',
+  isFollowUp: 'isFollowUp',
+  followUpStatus: 'followUpStatus',
+  paymentStatus: 'paymentStatus',
   followUpPaymentStatus: 'followUpPaymentStatus',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
