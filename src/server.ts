@@ -53,29 +53,7 @@ const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:5173,https
 // Middleware
 app.use(
   cors({
-    origin: (origin, callback) => {
-      // Allow requests with no origin (like mobile apps or curl requests)
-      if (!origin) return callback(null, true);
-
-      // Explicitly allow any docyori.com subdomain (handling potential trailing slash)
-      const sanitizedOrigin = origin.replace(/\/$/, "");
-      const isDocyori = /^https?:\/\/(.*?\.)?docyori\.com$/.test(sanitizedOrigin);
-
-      const isAllowed = allowedOrigins.some(allowed => {
-        if (allowed.includes('*')) {
-          const pattern = new RegExp('^' + allowed.replace(/\*/g, '.*') + '$');
-          return pattern.test(sanitizedOrigin);
-        }
-        return allowed === sanitizedOrigin;
-      });
-
-      if (isAllowed || isDocyori) {
-        callback(null, true);
-      } else {
-        console.warn(`[CORS] Blocked request from origin: ${origin}`);
-        callback(null, false);
-      }
-    },
+    origin: true,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'X-Tenant-ID'],
