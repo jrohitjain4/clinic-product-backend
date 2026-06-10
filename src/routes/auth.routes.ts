@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { register, login, getMe, getClinics, getPackages, registerDraft, registerFull, completeRegistration, upgradePlan, requestPasswordReset, resetPassword, updateProfile, changePassword } from "../controllers/auth.controller";
+import { register, login, getMe, getClinics, getPackages, checkUsername, registerDraft, registerFull, completeRegistration, upgradePlan, requestPasswordReset, resetPassword, updateProfile, changePassword } from "../controllers/auth.controller";
 import { authenticateJWT } from "../middlewares/auth.middleware";
 import { validate } from "../middlewares/validate.middleware";
 import { authValidation } from "../validations/auth.validation";
@@ -8,6 +8,7 @@ const router = Router();
 
 router.get("/clinics", getClinics);
 router.get("/packages", getPackages);
+router.get("/check-username", checkUsername);
 router.post("/register", validate(authValidation.register), register);
 router.post("/register-draft", validate(authValidation.registerDraft), registerDraft);
 router.post("/register-full", registerFull);

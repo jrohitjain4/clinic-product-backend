@@ -212,6 +212,26 @@ export const upgradePlan = async (req: AuthenticatedRequest, res: Response) => {
   }
 };
 
+// Check Username Availability
+export const checkUsername = async (req: Request, res: Response) => {
+  try {
+    const { username } = req.query;
+    if (!username) return res.status(400).json({ message: "Username is required" });
+
+    const userExists = await prisma.user.findFirst({ where: { username: String(username) } });
+    const clinicExists = await prisma.clinic.findUnique({ where: { username: String(username) } });
+
+    if (userExists || clinicExists) {
+      return res.json({ available: false, message: "Username is already taken" });
+    }
+
+    return res.json({ available: true, message: "Username is available" });
+  } catch (error) {
+    console.error("Check username error:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 // Register Draft — now only validates, does NOT save to DB
 export const registerDraft = async (req: Request, res: Response) => {
   try {
@@ -221,27 +241,17 @@ export const registerDraft = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "Email, Phone and Username are required for validation" });
     }
 
-    // Check if user with this info already exists
-    const existingUser = await prisma.user.findFirst({
-      where: {
-        OR: [
-          { email },
-          { phone },
-          { username }
-        ]
-      }
-    });
+    // Check each field individually for specific error messages
+    const emailExists = await prisma.user.findUnique({ where: { email } });
+    if (emailExists) return res.status(400).json({ message: "This email address is already registered" });
 
-    if (existingUser) {
-      return res.status(400).json({ message: "A user with this Email, Phone, or Username already exists" });
-    }
+    const phoneExists = await prisma.user.findFirst({ where: { phone } });
+    if (phoneExists) return res.status(400).json({ message: "This phone number is already registered" });
 
-    const existingClinic = await prisma.clinic.findUnique({
-      where: { username }
-    });
-
-    if (existingClinic) {
-      return res.status(400).json({ message: "This Clinic Username is already taken" });
+    const usernameExists = await prisma.user.findFirst({ where: { username } });
+    const clinicExists = await prisma.clinic.findUnique({ where: { username } });
+    if (usernameExists || clinicExists) {
+      return res.status(400).json({ message: "This clinic username is already taken" });
     }
 
     return res.status(200).json({ message: "Validation passed", valid: true });
@@ -279,17 +289,17 @@ export const registerFull = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "All fields including package selection are required" });
     }
 
-    // Check duplicates
-    const existingUser = await prisma.user.findFirst({
-      where: { OR: [{ email }, { phone }, { username }] }
-    });
-    if (existingUser) {
-      return res.status(400).json({ message: "A user with this Email, Phone, or Username already exists" });
-    }
+    // Check each field individually for specific error messages
+    const emailExists = await prisma.user.findUnique({ where: { email } });
+    if (emailExists) return res.status(400).json({ message: "This email address is already registered" });
 
-    const existingClinic = await prisma.clinic.findUnique({ where: { username } });
-    if (existingClinic) {
-      return res.status(400).json({ message: "This Clinic Username is already taken" });
+    const phoneExists = await prisma.user.findFirst({ where: { phone } });
+    if (phoneExists) return res.status(400).json({ message: "This phone number is already registered" });
+
+    const usernameExists = await prisma.user.findFirst({ where: { username } });
+    const clinicExists = await prisma.clinic.findUnique({ where: { username } });
+    if (usernameExists || clinicExists) {
+      return res.status(400).json({ message: "This clinic username is already taken" });
     }
 
     const pkg = await prisma.subscriptionPackage.findUnique({ where: { id: packageId } });
