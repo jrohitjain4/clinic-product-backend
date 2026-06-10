@@ -6,10 +6,13 @@ const prisma = new PrismaClient();
 async function main() {
   console.log("🚀 Starting database seeding (Full Realistic Data)...");
 
-  // 1. CLEAR DATABASE (in safe foreign key order)
+  // 1. CLEAR DATABASE (in safe foreign key order — ALL tables)
   await prisma.demoBooking.deleteMany({});
   await prisma.systemSetting.deleteMany({});
   await prisma.notification.deleteMany({});
+  await prisma.note.deleteMany({});
+  await prisma.todo.deleteMany({});
+  await prisma.ticket.deleteMany({});
   await prisma.invoiceItem.deleteMany({});
   await prisma.invoice.deleteMany({});
   await prisma.prescriptionMedicine.deleteMany({});
@@ -24,6 +27,7 @@ async function main() {
   await prisma.service.deleteMany({});
   await prisma.product.deleteMany({});
   await prisma.holiday.deleteMany({});
+  await prisma.workingDaysConfig.deleteMany({});
   await prisma.landingPage.deleteMany({});
   await prisma.patient.deleteMany({});
   await prisma.staff.deleteMany({});
