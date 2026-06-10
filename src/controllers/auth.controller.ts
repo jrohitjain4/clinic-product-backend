@@ -32,41 +32,113 @@ export const getClinics = async (req: Request, res: Response) => {
 export const updateProfile = async (req: AuthenticatedRequest, res: Response) => {
   try {
     if (!req.user || !req.user.clinicId) return res.status(401).json({ message: "Unauthorized" });
-    const { firstName, lastName, email, phone, addressLine1, addressLine2, country, state, city, pincode, clinicName, gstNo, clinicLogo } = req.body;
+    const {
+      firstName, lastName, email, phone, addressLine1, addressLine2,
+      country, state, city, pincode, clinicName, gstNo, clinicLogo,
+      gender, dob, bloodGroup, maritalStatus, occupation
+    } = req.body;
+
+    const fullName = `${firstName || ""} ${lastName || ""}`.trim() || undefined;
 
     const updatedUser = await prisma.user.update({
       where: { id: req.user.id },
       data: {
-        fullName: `${firstName} ${lastName}`.trim(),
-        email: email || undefined
+        fullName: fullName,
+        email: email || undefined,
+        gender: gender || undefined,
+        dob: dob ? new Date(dob) : undefined
       }
     });
 
-    const updatedClinic = await prisma.clinic.update({
-      where: { id: req.user.clinicId },
-      data: {
-        name: clinicName || undefined,
-        gstNumber: gstNo,
-        phone,
-        addressLine1,
-        addressLine2,
-        country,
-        state,
-        city,
-        pincode,
-        ...(clinicLogo ? {
-          landingPage: {
-            upsert: {
-              create: { logo: clinicLogo },
-              update: { logo: clinicLogo }
-            }
-          }
-        } : {})
-      },
-      include: { landingPage: true }
-    });
+    let details: any = null;
 
-    return res.json({ message: "Profile updated successfully", user: { ...updatedUser, clinic: updatedClinic } });
+    // If role is PATIENT, sync with Patient model
+    if (req.user.role === "PATIENT") {
+      details = await prisma.patient.findFirst({
+        where: { email: req.user.email, clinicId: req.user.clinicId }
+      });
+
+      if (details) {
+        details = await prisma.patient.update({
+          where: { id: details.id },
+          data: {
+            firstName: firstName || details.firstName,
+            lastName: lastName || details.lastName,
+            email: email || details.email,
+            phone: phone || details.phone,
+            address1: addressLine1 || details.address1,
+            address2: addressLine2 || details.address2,
+            country: country || details.country,
+            state: state || details.state,
+            city: city || details.city,
+            pincode: pincode || details.pincode,
+            gender: gender || details.gender,
+            bloodGroup: bloodGroup || details.bloodGroup,
+            maritalStatus: maritalStatus || details.maritalStatus,
+            occupation: occupation || details.occupation,
+            dob: dob ? new Date(dob) : details.dob
+          }
+        });
+      }
+    }
+
+    // If role is DOCTOR, sync with Doctor model
+    if (req.user.role === "DOCTOR") {
+      details = await prisma.doctor.findFirst({
+        where: { email: req.user.email, clinicId: req.user.clinicId }
+      });
+
+      if (details) {
+        details = await prisma.doctor.update({
+          where: { id: details.id },
+          data: {
+            fullName: fullName || details.fullName,
+            email: email || details.email,
+            phone: phone || details.phone,
+            address1: addressLine1 || details.address1,
+            address2: addressLine2 || details.address2,
+            country: country || details.country,
+            state: state || details.state,
+            city: city || details.city,
+            pincode: pincode || details.pincode,
+            gender: gender || details.gender,
+            bloodGroup: bloodGroup || details.bloodGroup,
+            dob: dob ? new Date(dob) : details.dob
+          }
+        });
+      }
+    }
+
+    const updatedClinic = (req.user.role === "ADMIN" || req.user.role === "SUPER_ADMIN")
+      ? await prisma.clinic.update({
+        where: { id: req.user.clinicId },
+        data: {
+          name: clinicName || undefined,
+          gstNumber: gstNo,
+          phone,
+          addressLine1,
+          addressLine2,
+          country,
+          state,
+          city,
+          pincode,
+          ...(clinicLogo ? {
+            landingPage: {
+              upsert: {
+                create: { logo: clinicLogo },
+                update: { logo: clinicLogo }
+              }
+            }
+          } : {})
+        },
+        include: { landingPage: true }
+      })
+      : null;
+
+    return res.json({
+      message: "Profile updated successfully",
+      user: { ...updatedUser, clinic: updatedClinic, details }
+    });
   } catch (err: any) {
     console.error("Update profile error:", err);
     return res.status(500).json({ message: err.message || "Failed to update profile" });
@@ -579,6 +651,17 @@ export const getMe = async (req: AuthenticatedRequest, res: Response) => {
       return res.status(404).json({ message: "User not found" });
     }
 
+    let details: any = null;
+    if (user.role === "PATIENT") {
+      details = await prisma.patient.findFirst({
+        where: { email: user.email, clinicId: user.clinicId || undefined },
+      });
+    } else if (user.role === "DOCTOR") {
+      details = await prisma.doctor.findFirst({
+        where: { email: user.email, clinicId: user.clinicId || undefined },
+      });
+    }
+
     let permissions: any = null;
     if ((user.role as any) === "STAFF") {
       const staff = await prisma.staff.findFirst({
@@ -600,7 +683,8 @@ export const getMe = async (req: AuthenticatedRequest, res: Response) => {
       fullName: user.fullName,
       role: user.role,
       clinic: user.clinic,
-      permissions
+      permissions,
+      details
     });
   } catch (error) {
     console.error("GetMe error:", error);

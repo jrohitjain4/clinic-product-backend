@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
+// Load environment variables immediately
+dotenv_1.default.config();
 const path_1 = __importDefault(require("path"));
 const express_rate_limit_1 = __importDefault(require("express-rate-limit"));
 const auth_routes_1 = __importDefault(require("./routes/auth.routes"));
@@ -41,8 +43,6 @@ const landing_routes_1 = __importDefault(require("./routes/landing.routes"));
 const demoBooking_routes_1 = __importDefault(require("./routes/demoBooking.routes"));
 const support_routes_1 = __importDefault(require("./routes/support.routes"));
 const note_routes_1 = __importDefault(require("./routes/note.routes"));
-// Load environment variables
-dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 5000;
 const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:5173,https://docyori.com,https://api.docyori.com")
@@ -51,30 +51,10 @@ const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:5173,https
     .filter(Boolean);
 // Middleware
 app.use((0, cors_1.default)({
-    origin: (origin, callback) => {
-        // Allow requests with no origin (like mobile apps or curl requests)
-        if (!origin)
-            return callback(null, true);
-        // Check if origin matches docyori.com or any of its subdomains
-        const isDocyori = /^https?:\/\/(.*?\.)?docyori\.com$/.test(origin);
-        const isAllowed = allowedOrigins.some(allowed => {
-            if (allowed.includes('*')) {
-                const pattern = new RegExp('^' + allowed.replace(/\*/g, '.*') + '$');
-                return pattern.test(origin);
-            }
-            return allowed === origin;
-        });
-        if (isAllowed || isDocyori) {
-            callback(null, true);
-        }
-        else {
-            console.log("CORS Blocked for origin:", origin);
-            callback(null, false);
-        }
-    },
+    origin: true,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'X-Tenant-ID'],
 }));
 app.use(express_1.default.json({ limit: "50mb" }));
 app.use(express_1.default.urlencoded({ limit: "50mb", extended: true }));

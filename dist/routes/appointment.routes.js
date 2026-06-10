@@ -10,6 +10,8 @@ router.get("/calendar", appointment_controller_1.getAppointmentsCalendar);
 router.get("/", appointment_controller_1.getAppointments);
 router.get("/:id", appointment_controller_1.getAppointmentById);
 router.post("/", appointment_controller_1.createAppointment);
+router.post("/:id/follow-up", appointment_controller_1.createFollowUpAppointment);
+router.put("/:id/follow-up-payment", appointment_controller_1.updateFollowUpPayment);
 router.put("/:id", appointment_controller_1.updateAppointment);
 router.delete("/:id", appointment_controller_1.deleteAppointment);
 exports.default = router;

@@ -26,7 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.resetPassword = exports.requestPasswordReset = exports.getMe = exports.login = exports.register = exports.completeRegistration = exports.registerFull = exports.registerDraft = exports.upgradePlan = exports.getPackages = exports.updateProfile = exports.getClinics = void 0;
+exports.changePassword = exports.resetPassword = exports.requestPasswordReset = exports.getMe = exports.login = exports.register = exports.completeRegistration = exports.registerFull = exports.registerDraft = exports.upgradePlan = exports.getPackages = exports.updateProfile = exports.getClinics = void 0;
 const client_1 = require("@prisma/client");
 const email_1 = require("../utils/email");
 const bcrypt = __importStar(require("bcryptjs"));
@@ -638,3 +638,23 @@ const resetPassword = async (req, res) => {
     }
 };
 exports.resetPassword = resetPassword;
+const changePassword = async (req, res) => {
+    try {
+        if (!req.user)
+            return res.status(401).json({ message: "Unauthorized" });
+        const { newPassword } = req.body;
+        if (!newPassword)
+            return res.status(400).json({ message: "New password is required" });
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        await prisma_1.default.user.update({
+            where: { id: req.user.id },
+            data: { passwordHash: hashedPassword }
+        });
+        return res.json({ message: "Password updated successfully" });
+    }
+    catch (err) {
+        console.error("Change password error:", err);
+        return res.status(500).json({ message: "Failed to update password" });
+    }
+};
+exports.changePassword = changePassword;

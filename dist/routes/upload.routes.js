@@ -36,4 +36,14 @@ router.post("/patient-profile", (req, res) => {
         return (0, upload_controller_1.uploadPatientProfile)(req, res);
     });
 });
+router.post("/landing-image", (req, res) => {
+    upload_middleware_1.landingImageUpload.single("image")(req, res, (err) => {
+        if (err) {
+            return res.status(400).json({
+                message: err instanceof Error ? err.message : "Upload failed",
+            });
+        }
+        return (0, upload_controller_1.uploadLandingImage)(req, res);
+    });
+});
 exports.default = router;

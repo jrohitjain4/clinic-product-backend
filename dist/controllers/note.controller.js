@@ -1,13 +1,20 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.bulkDeleteNotes = exports.deleteNote = exports.updateNote = exports.createNote = exports.getNotes = void 0;
-const client_1 = require("../prisma/generated/client");
-const prisma = new client_1.PrismaClient();
+const prisma_1 = __importDefault(require("../lib/prisma"));
 const getNotes = async (req, res) => {
     try {
         const clinicId = req.user.clinicId;
-        const notes = await prisma.note.findMany({
-            where: { clinicId },
+        const { appointmentId } = req.query;
+        const where = { clinicId };
+        if (appointmentId) {
+            where.appointmentId = appointmentId;
+        }
+        const notes = await prisma_1.default.note.findMany({
+            where,
             orderBy: { createdAt: "desc" },
         });
         res.json(notes);
@@ -20,11 +27,11 @@ exports.getNotes = getNotes;
 const createNote = async (req, res) => {
     try {
         const clinicId = req.user.clinicId;
-        const { title, content, priority, noteDate } = req.body;
+        const { title, content, priority, noteDate, appointmentId } = req.body;
         if (!title) {
             return res.status(400).json({ message: "Note title is required" });
         }
-        const note = await prisma.note.create({
+        const note = await prisma_1.default.note.create({
             data: {
                 title,
                 content,
@@ -32,6 +39,7 @@ const createNote = async (req, res) => {
                 noteDate: noteDate ? new Date(noteDate) : null,
                 clinicId,
                 userId: req.user.id,
+                appointmentId: appointmentId || null,
             },
         });
         res.status(201).json(note);
@@ -45,7 +53,7 @@ const updateNote = async (req, res) => {
     try {
         const { id } = req.params;
         const { title, content, priority, noteDate } = req.body;
-        const note = await prisma.note.update({
+        const note = await prisma_1.default.note.update({
             where: { id },
             data: {
                 title,
@@ -64,7 +72,7 @@ exports.updateNote = updateNote;
 const deleteNote = async (req, res) => {
     try {
         const { id } = req.params;
-        await prisma.note.delete({ where: { id } });
+        await prisma_1.default.note.delete({ where: { id } });
         res.json({ message: "Note deleted successfully" });
     }
     catch (error) {
@@ -78,7 +86,7 @@ const bulkDeleteNotes = async (req, res) => {
         if (!Array.isArray(ids) || ids.length === 0) {
             return res.status(400).json({ message: "Invalid or empty IDs" });
         }
-        await prisma.note.deleteMany({
+        await prisma_1.default.note.deleteMany({
             where: {
                 id: { in: ids }
             }

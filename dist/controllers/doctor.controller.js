@@ -84,7 +84,7 @@ const createDoctor = async (req, res) => {
         if (!clinicId)
             return res.status(403).json({ message: "No clinic associated" });
         const { fullName, username, phone, alternateMobile, email, dob, yearOfExperience, departmentId, designationId, specializations, // Array of specialization IDs
-        medicalLicenseNumber, maritalStatus, qualification, languagesSpoken, bloodGroup, gender, bio, featureOnWebsite, profileImage, signatureImage, medicalRegCertificate, qualificationCertificate, aadhaarCard, panCard, address1, address2, country, city, state, pincode, appointmentType, acceptBookingsInAdvance, appointmentDuration, consultationCharge, maxBookingsPerSlot, displayOnBookingPage, followUpEnabled, followUpValidityDays, freeFollowUpLimit, educations, awards, certifications, schedules, } = req.body;
+        medicalLicenseNumber, maritalStatus, qualification, languagesSpoken, bloodGroup, gender, bio, featureOnWebsite, profileImage, signatureImage, medicalRegCertificate, qualificationCertificate, aadhaarCard, aadhaarCardBack, panCard, address1, address2, country, city, state, pincode, appointmentType, acceptBookingsInAdvance, appointmentDuration, consultationCharge, maxBookingsPerSlot, displayOnBookingPage, followUpEnabled, followUpValidityDays, freeFollowUpLimit, followUpFee, educations, awards, certifications, schedules, } = req.body;
         if (!fullName)
             return res.status(400).json({ message: "Doctor name is required" });
         if (!email && !phone)
@@ -139,6 +139,7 @@ const createDoctor = async (req, res) => {
                     medicalRegCertificate: medicalRegCertificate || null,
                     qualificationCertificate: qualificationCertificate || null,
                     aadhaarCard: aadhaarCard || null,
+                    aadhaarCardBack: aadhaarCardBack || null,
                     panCard: panCard || null,
                     address1: address1 || null,
                     address2: address2 || null,
@@ -155,6 +156,7 @@ const createDoctor = async (req, res) => {
                     followUpEnabled: followUpEnabled === true || followUpEnabled === "true",
                     followUpValidityDays: followUpValidityDays ? parseInt(followUpValidityDays) : null,
                     freeFollowUpLimit: freeFollowUpLimit ? parseInt(freeFollowUpLimit) : null,
+                    followUpFee: followUpFee ? parseFloat(followUpFee) : null,
                     educations: educations || null,
                     awards: awards || null,
                     certifications: certifications || null,
@@ -236,78 +238,71 @@ const updateDoctor = async (req, res) => {
     try {
         const clinicId = req.user?.clinicId;
         const { id } = req.params;
+        const { fullName, username, phone, alternateMobile, email, dob, yearOfExperience, departmentId, designationId, specializations, medicalLicenseNumber, maritalStatus, qualification, languagesSpoken, bloodGroup, gender, bio, featureOnWebsite, profileImage, signatureImage, medicalRegCertificate, qualificationCertificate, aadhaarCard, aadhaarCardBack, panCard, address1, address2, country, city, state, pincode, appointmentType, acceptBookingsInAdvance, appointmentDuration, consultationCharge, maxBookingsPerSlot, displayOnBookingPage, followUpEnabled, followUpValidityDays, freeFollowUpLimit, followUpFee, educations, awards, certifications, schedules, status, } = req.body;
         const existing = await prisma_1.default.doctor.findFirst({ where: { id, clinicId: clinicId } });
         if (!existing)
             return res.status(404).json({ message: "Doctor not found" });
-        const { fullName, username, phone, email, dob, yearOfExperience, departmentId, designationId, specializations, medicalLicenseNumber, languagesSpoken, maritalStatus, qualification, bloodGroup, gender, bio, featureOnWebsite, profileImage, signatureImage, medicalRegCertificate, qualificationCertificate, aadhaarCard, panCard, address1, address2, country, city, state, pincode, appointmentType, acceptBookingsInAdvance, appointmentDuration, consultationCharge, maxBookingsPerSlot, displayOnBookingPage, followUpEnabled, followUpValidityDays, freeFollowUpLimit, educations, awards, certifications, schedules, status, } = req.body;
-        const updated = await prisma_1.default.doctor.update({
+        const updatedDoctor = await prisma_1.default.doctor.update({
             where: { id },
             data: {
-                fullName: fullName ?? existing.fullName,
-                username: username !== undefined ? (username || null) : existing.username,
-                phone: phone !== undefined ? (phone || null) : existing.phone,
-                email: email !== undefined ? (email || null) : existing.email,
-                dob: dob ? new Date(dob) : existing.dob,
-                yearOfExperience: yearOfExperience ? parseInt(yearOfExperience) : existing.yearOfExperience,
-                departmentId: departmentId !== undefined ? (departmentId || null) : existing.departmentId,
-                designationId: designationId !== undefined ? (designationId || null) : existing.designationId,
+                fullName,
+                username,
+                phone,
+                alternateMobile,
+                email: email ? email.toLowerCase() : undefined,
+                dob: dob ? new Date(dob) : undefined,
+                yearOfExperience: yearOfExperience ? parseInt(yearOfExperience) : undefined,
+                departmentId,
+                designationId,
                 specializations: specializations ? {
-                    set: [], // clears existing
-                    connect: specializations.map((id) => ({ id }))
+                    set: [], // Clear existing
+                    connect: specializations.map((sid) => ({ id: sid }))
                 } : undefined,
-                medicalLicenseNumber: medicalLicenseNumber !== undefined ? (medicalLicenseNumber || null) : existing.medicalLicenseNumber,
-                maritalStatus: maritalStatus !== undefined ? (maritalStatus || null) : existing.maritalStatus,
-                qualification: qualification !== undefined ? (qualification || null) : existing.qualification,
-                languagesSpoken: languagesSpoken ?? existing.languagesSpoken,
-                bloodGroup: bloodGroup !== undefined ? (bloodGroup || null) : existing.bloodGroup,
-                gender: gender !== undefined ? (gender || null) : existing.gender,
-                bio: bio !== undefined ? (bio || null) : existing.bio,
-                featureOnWebsite: featureOnWebsite !== undefined
-                    ? featureOnWebsite === true || featureOnWebsite === "true"
-                    : existing.featureOnWebsite,
-                profileImage: profileImage !== undefined ? (profileImage || null) : existing.profileImage,
-                signatureImage: signatureImage !== undefined ? (signatureImage || null) : existing.signatureImage,
-                medicalRegCertificate: medicalRegCertificate !== undefined ? (medicalRegCertificate || null) : existing.medicalRegCertificate,
-                qualificationCertificate: qualificationCertificate !== undefined ? (qualificationCertificate || null) : existing.qualificationCertificate,
-                aadhaarCard: aadhaarCard !== undefined ? (aadhaarCard || null) : existing.aadhaarCard,
-                panCard: panCard !== undefined ? (panCard || null) : existing.panCard,
-                address1: address1 || null,
-                address2: address2 || null,
-                country: country || null,
-                city: city || null,
-                state: state || null,
-                pincode: pincode || null,
-                appointmentType: appointmentType || null,
-                acceptBookingsInAdvance: acceptBookingsInAdvance ? parseInt(acceptBookingsInAdvance) : null,
-                appointmentDuration: appointmentDuration ? parseInt(appointmentDuration) : null,
-                consultationCharge: consultationCharge ? parseFloat(consultationCharge) : null,
-                maxBookingsPerSlot: maxBookingsPerSlot ? parseInt(maxBookingsPerSlot) : null,
+                medicalLicenseNumber,
+                maritalStatus,
+                qualification,
+                languagesSpoken,
+                bloodGroup,
+                gender,
+                bio,
+                featureOnWebsite: featureOnWebsite === true || featureOnWebsite === "true",
+                profileImage,
+                signatureImage,
+                medicalRegCertificate,
+                qualificationCertificate,
+                aadhaarCard,
+                aadhaarCardBack,
+                panCard,
+                address1,
+                address2,
+                country,
+                city,
+                state,
+                pincode,
+                appointmentType,
+                acceptBookingsInAdvance: acceptBookingsInAdvance ? parseInt(acceptBookingsInAdvance) : undefined,
+                appointmentDuration: appointmentDuration ? parseInt(appointmentDuration) : undefined,
+                consultationCharge: consultationCharge ? parseFloat(consultationCharge) : undefined,
+                maxBookingsPerSlot: maxBookingsPerSlot ? parseInt(maxBookingsPerSlot) : undefined,
                 displayOnBookingPage: displayOnBookingPage === true || displayOnBookingPage === "true",
-                followUpEnabled: followUpEnabled !== undefined
-                    ? followUpEnabled === true || followUpEnabled === "true"
-                    : existing.followUpEnabled,
-                followUpValidityDays: followUpValidityDays ? parseInt(followUpValidityDays) : existing.followUpValidityDays,
-                freeFollowUpLimit: freeFollowUpLimit !== undefined ? (freeFollowUpLimit === "" ? null : parseInt(freeFollowUpLimit)) : existing.freeFollowUpLimit,
-                educations: educations || null,
-                awards: awards || null,
-                certifications: certifications || null,
-                schedules: schedules || null,
-                status: status || "Active",
-            },
-            include: {
-                department: { select: { id: true, name: true } },
-                designation: { select: { id: true, name: true } },
-                specializations: { select: { id: true, name: true } },
-            },
+                followUpEnabled: followUpEnabled === true || followUpEnabled === "true",
+                followUpValidityDays: followUpValidityDays ? parseInt(followUpValidityDays) : undefined,
+                freeFollowUpLimit: freeFollowUpLimit ? parseInt(freeFollowUpLimit) : undefined,
+                followUpFee: followUpFee !== undefined ? (followUpFee ? parseFloat(followUpFee) : null) : undefined,
+                educations: educations || undefined,
+                awards: awards || undefined,
+                certifications: certifications || undefined,
+                schedules: schedules || undefined,
+                status,
+            }
         });
-        res.json(updated);
+        res.json(updatedDoctor);
     }
     catch (err) {
         res.status(500).json({ message: err.message });
     }
 };
 exports.updateDoctor = updateDoctor;
-// DELETE /api/doctors/:id
 const deleteDoctor = async (req, res) => {
     try {
         const clinicId = req.user?.clinicId;

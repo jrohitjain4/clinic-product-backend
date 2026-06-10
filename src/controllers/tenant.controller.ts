@@ -7,6 +7,9 @@ export const getTenants = async (req: Request, res: Response) => {
         const tenants = await prisma.clinic.findMany({
             include: {
                 package: true,
+                _count: {
+                    select: { doctors: true }
+                },
                 users: {
                     where: {
                         role: 'ADMIN'
@@ -33,6 +36,8 @@ export const getTenants = async (req: Request, res: Response) => {
                 }
             }
 
+            const address = [tenant.addressLine1, tenant.addressLine2, tenant.city, tenant.state].filter(Boolean).join(", ") || "N/A";
+
             return {
                 id: tenant.id,
                 name: tenant.name,
@@ -42,7 +47,10 @@ export const getTenants = async (req: Request, res: Response) => {
                 packageName: tenant.package?.name || "No Plan",
                 status: status,
                 expiresAt: tenant.packageExpiresAt,
-                createdAt: tenant.createdAt
+                createdAt: tenant.createdAt,
+                phone: tenant.phone || "N/A",
+                address: address,
+                doctorsCount: tenant._count?.doctors || 0
             };
         });
 

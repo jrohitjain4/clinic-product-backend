@@ -404,6 +404,7 @@ exports.Prisma.HolidayScalarFieldEnum = {
 exports.Prisma.PayrollScalarFieldEnum = {
   id: 'id',
   staffId: 'staffId',
+  doctorId: 'doctorId',
   netSalary: 'netSalary',
   basicSalary: 'basicSalary',
   da: 'da',
@@ -418,6 +419,7 @@ exports.Prisma.PayrollScalarFieldEnum = {
   labourWelfare: 'labourWelfare',
   otherDeductions: 'otherDeductions',
   status: 'status',
+  salaryDate: 'salaryDate',
   clinicId: 'clinicId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

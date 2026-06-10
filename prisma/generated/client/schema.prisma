@@ -264,6 +264,7 @@ model Doctor {
   patients                 Patient[]
   appointments             Appointment[]
   prescriptions            Prescription[]
+  payrolls                 Payroll[]
   createdAt                DateTime         @default(now())
   updatedAt                DateTime         @updatedAt
 }
@@ -401,8 +402,10 @@ model Holiday {
 
 model Payroll {
   id               String   @id @default(uuid())
-  staffId          String
-  staff            Staff    @relation(fields: [staffId], references: [id])
+  staffId          String?
+  staff            Staff?   @relation(fields: [staffId], references: [id])
+  doctorId         String?
+  doctor           Doctor?  @relation(fields: [doctorId], references: [id])
   netSalary        Float
   basicSalary      Float    @default(0)
   da               Float    @default(0)
@@ -417,6 +420,7 @@ model Payroll {
   labourWelfare    Float    @default(0)
   otherDeductions  Float    @default(0)
   status           String   @default("Paid")
+  salaryDate       DateTime @default(now())
   clinicId         String
   clinic           Clinic   @relation(fields: [clinicId], references: [id])
   createdAt        DateTime @default(now())
@@ -424,6 +428,7 @@ model Payroll {
 
   @@index([clinicId])
   @@index([staffId])
+  @@index([doctorId])
 }
 
 model Expense {

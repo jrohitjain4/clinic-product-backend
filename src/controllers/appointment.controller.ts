@@ -174,7 +174,50 @@ export const getAppointments = async (req: AuthenticatedRequest, res: Response) 
         sort === "oldest" ? { scheduledAt: "asc" } : { scheduledAt: "desc" },
     });
 
-    res.json(appointments.map(enrichAppointment));
+    const enriched = appointments.map(enrichAppointment);
+
+    // Calculate queue info for each appointment
+    const results = [];
+    const queueCache: Record<string, { id: string; status: string; scheduledAt: Date }[]> = {};
+
+    for (const app of enriched) {
+      // Use localized YYYY-MM-DD to group by actual calendar day
+      const d = new Date(app.scheduledAt);
+      const dateKey = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+      const cacheKey = `${app.doctorId}_${dateKey}`;
+
+      if (!queueCache[cacheKey]) {
+        const start = new Date(dateKey);
+        start.setHours(0, 0, 0, 0);
+        const end = new Date(dateKey);
+        end.setHours(23, 59, 59, 999);
+
+        queueCache[cacheKey] = await prisma.appointment.findMany({
+          where: {
+            doctorId: app.doctorId,
+            clinicId,
+            scheduledAt: { gte: start, lte: end },
+            status: { in: ["Confirmed", "Checked In", "Checked Out", "Schedule"] },
+          },
+          orderBy: [{ scheduledAt: "asc" }, { createdAt: "asc" }],
+          select: { id: true, status: true, scheduledAt: true },
+        });
+      }
+
+      const dayQueue = queueCache[cacheKey];
+      const position = dayQueue.findIndex((q) => q.id === app.id) + 1;
+      const checkoutCount = dayQueue.filter((q) => q.status === "Checked Out").length;
+      const firstScheduledAt = dayQueue[0]?.scheduledAt || null;
+
+      results.push({
+        ...app,
+        queuePosition: position > 0 ? position : null,
+        queueCheckoutCount: checkoutCount,
+        queueFirstScheduledAt: firstScheduledAt,
+      });
+    }
+
+    res.json(results);
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Server error";
     res.status(500).json({ message });

@@ -92,6 +92,8 @@ const getClinicLandingPage = async (req, res) => {
             patientsServed: lp?.patientsServed || `${clinic.patients.length}+`,
             experience: lp?.experience || null,
             logo: lp?.logo || "",
+            headerImage: lp?.headerImage || "",
+            aboutImage: lp?.aboutImage || "",
             facebook: lp?.facebook || "",
             instagram: lp?.instagram || "",
             doctors,
@@ -112,7 +114,7 @@ exports.getClinicLandingPage = getClinicLandingPage;
 const upsertLandingPage = async (req, res) => {
     try {
         const { clinicId } = req.params;
-        const { tagline, whatsapp, email, facebook, instagram, about, established, patientsServed, experience, mapUrl, directionsUrl, reviews, gallery, services, logo, } = req.body;
+        const { tagline, whatsapp, email, facebook, instagram, about, established, patientsServed, experience, mapUrl, directionsUrl, reviews, gallery, services, logo, headerImage, aboutImage, } = req.body;
         const landingPage = await prisma_1.default.landingPage.upsert({
             where: { clinicId },
             create: {
@@ -121,6 +123,7 @@ const upsertLandingPage = async (req, res) => {
                 about, established: established ? Number(established) : undefined,
                 patientsServed, experience: experience ? Number(experience) : undefined,
                 mapUrl, directionsUrl, reviews, gallery, services, logo,
+                headerImage, aboutImage,
             },
             update: {
                 tagline, whatsapp, email, facebook, instagram,
@@ -131,6 +134,8 @@ const upsertLandingPage = async (req, res) => {
                 ...(gallery !== undefined && { gallery }),
                 ...(services !== undefined && { services }),
                 ...(logo !== undefined && { logo }),
+                ...(headerImage !== undefined && { headerImage }),
+                ...(aboutImage !== undefined && { aboutImage }),
             },
         });
         return res.json({ success: true, landingPage });

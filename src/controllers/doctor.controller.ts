@@ -359,7 +359,7 @@ export const updateDoctor = async (req: AuthenticatedRequest, res: Response) => 
                 displayOnBookingPage: displayOnBookingPage === true || displayOnBookingPage === "true",
                 followUpEnabled: followUpEnabled === true || followUpEnabled === "true",
                 followUpValidityDays: followUpValidityDays ? parseInt(followUpValidityDays) : undefined,
-                freeFollowUpLimit: freeFollowUpLimit ? parseInt(freeFollowUpLimit) : undefined,
+                freeFollowUpLimit: freeFollowUpLimit ? parseInt(freeFollowUpLimit) : null,
                 followUpFee: followUpFee !== undefined ? (followUpFee ? parseFloat(followUpFee) : null) : undefined,
                 educations: educations || undefined,
                 awards: awards || undefined,
@@ -556,4 +556,3 @@ export const getDoctorDashboardStats = async (req: AuthenticatedRequest, res: Re
         res.status(500).json({ message: err.message });
     }
 };
-

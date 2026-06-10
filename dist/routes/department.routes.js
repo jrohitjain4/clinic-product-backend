@@ -7,6 +7,7 @@ const router = (0, express_1.Router)();
 router.use(auth_middleware_1.authenticateJWT);
 router.get("/", department_controller_1.getDepartments);
 router.post("/", department_controller_1.createDepartment);
+router.post("/bulk-delete", department_controller_1.bulkDeleteDepartments);
 router.put("/:id", department_controller_1.updateDepartment);
 router.delete("/:id", department_controller_1.deleteDepartment);
 exports.default = router;

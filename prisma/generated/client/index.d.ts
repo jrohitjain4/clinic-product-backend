@@ -3984,6 +3984,7 @@ export namespace Prisma {
     patients: number
     appointments: number
     prescriptions: number
+    payrolls: number
   }
 
   export type DoctorCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3991,6 +3992,7 @@ export namespace Prisma {
     patients?: boolean | DoctorCountOutputTypeCountPatientsArgs
     appointments?: boolean | DoctorCountOutputTypeCountAppointmentsArgs
     prescriptions?: boolean | DoctorCountOutputTypeCountPrescriptionsArgs
+    payrolls?: boolean | DoctorCountOutputTypeCountPayrollsArgs
   }
 
   // Custom InputTypes
@@ -4030,6 +4032,13 @@ export namespace Prisma {
    */
   export type DoctorCountOutputTypeCountPrescriptionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PrescriptionWhereInput
+  }
+
+  /**
+   * DoctorCountOutputType without action
+   */
+  export type DoctorCountOutputTypeCountPayrollsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PayrollWhereInput
   }
 
 
@@ -13417,6 +13426,7 @@ export namespace Prisma {
     patients?: boolean | Doctor$patientsArgs<ExtArgs>
     appointments?: boolean | Doctor$appointmentsArgs<ExtArgs>
     prescriptions?: boolean | Doctor$prescriptionsArgs<ExtArgs>
+    payrolls?: boolean | Doctor$payrollsArgs<ExtArgs>
     _count?: boolean | DoctorCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["doctor"]>
 
@@ -13537,6 +13547,7 @@ export namespace Prisma {
     patients?: boolean | Doctor$patientsArgs<ExtArgs>
     appointments?: boolean | Doctor$appointmentsArgs<ExtArgs>
     prescriptions?: boolean | Doctor$prescriptionsArgs<ExtArgs>
+    payrolls?: boolean | Doctor$payrollsArgs<ExtArgs>
     _count?: boolean | DoctorCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type DoctorIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -13555,6 +13566,7 @@ export namespace Prisma {
       patients: Prisma.$PatientPayload<ExtArgs>[]
       appointments: Prisma.$AppointmentPayload<ExtArgs>[]
       prescriptions: Prisma.$PrescriptionPayload<ExtArgs>[]
+      payrolls: Prisma.$PayrollPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -13978,6 +13990,7 @@ export namespace Prisma {
     patients<T extends Doctor$patientsArgs<ExtArgs> = {}>(args?: Subset<T, Doctor$patientsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PatientPayload<ExtArgs>, T, "findMany"> | Null>
     appointments<T extends Doctor$appointmentsArgs<ExtArgs> = {}>(args?: Subset<T, Doctor$appointmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppointmentPayload<ExtArgs>, T, "findMany"> | Null>
     prescriptions<T extends Doctor$prescriptionsArgs<ExtArgs> = {}>(args?: Subset<T, Doctor$prescriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PrescriptionPayload<ExtArgs>, T, "findMany"> | Null>
+    payrolls<T extends Doctor$payrollsArgs<ExtArgs> = {}>(args?: Subset<T, Doctor$payrollsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PayrollPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -14482,6 +14495,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: PrescriptionScalarFieldEnum | PrescriptionScalarFieldEnum[]
+  }
+
+  /**
+   * Doctor.payrolls
+   */
+  export type Doctor$payrollsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Payroll
+     */
+    select?: PayrollSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PayrollInclude<ExtArgs> | null
+    where?: PayrollWhereInput
+    orderBy?: PayrollOrderByWithRelationInput | PayrollOrderByWithRelationInput[]
+    cursor?: PayrollWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PayrollScalarFieldEnum | PayrollScalarFieldEnum[]
   }
 
   /**
@@ -20158,6 +20191,7 @@ export namespace Prisma {
   export type PayrollMinAggregateOutputType = {
     id: string | null
     staffId: string | null
+    doctorId: string | null
     netSalary: number | null
     basicSalary: number | null
     da: number | null
@@ -20172,6 +20206,7 @@ export namespace Prisma {
     labourWelfare: number | null
     otherDeductions: number | null
     status: string | null
+    salaryDate: Date | null
     clinicId: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -20180,6 +20215,7 @@ export namespace Prisma {
   export type PayrollMaxAggregateOutputType = {
     id: string | null
     staffId: string | null
+    doctorId: string | null
     netSalary: number | null
     basicSalary: number | null
     da: number | null
@@ -20194,6 +20230,7 @@ export namespace Prisma {
     labourWelfare: number | null
     otherDeductions: number | null
     status: string | null
+    salaryDate: Date | null
     clinicId: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -20202,6 +20239,7 @@ export namespace Prisma {
   export type PayrollCountAggregateOutputType = {
     id: number
     staffId: number
+    doctorId: number
     netSalary: number
     basicSalary: number
     da: number
@@ -20216,6 +20254,7 @@ export namespace Prisma {
     labourWelfare: number
     otherDeductions: number
     status: number
+    salaryDate: number
     clinicId: number
     createdAt: number
     updatedAt: number
@@ -20258,6 +20297,7 @@ export namespace Prisma {
   export type PayrollMinAggregateInputType = {
     id?: true
     staffId?: true
+    doctorId?: true
     netSalary?: true
     basicSalary?: true
     da?: true
@@ -20272,6 +20312,7 @@ export namespace Prisma {
     labourWelfare?: true
     otherDeductions?: true
     status?: true
+    salaryDate?: true
     clinicId?: true
     createdAt?: true
     updatedAt?: true
@@ -20280,6 +20321,7 @@ export namespace Prisma {
   export type PayrollMaxAggregateInputType = {
     id?: true
     staffId?: true
+    doctorId?: true
     netSalary?: true
     basicSalary?: true
     da?: true
@@ -20294,6 +20336,7 @@ export namespace Prisma {
     labourWelfare?: true
     otherDeductions?: true
     status?: true
+    salaryDate?: true
     clinicId?: true
     createdAt?: true
     updatedAt?: true
@@ -20302,6 +20345,7 @@ export namespace Prisma {
   export type PayrollCountAggregateInputType = {
     id?: true
     staffId?: true
+    doctorId?: true
     netSalary?: true
     basicSalary?: true
     da?: true
@@ -20316,6 +20360,7 @@ export namespace Prisma {
     labourWelfare?: true
     otherDeductions?: true
     status?: true
+    salaryDate?: true
     clinicId?: true
     createdAt?: true
     updatedAt?: true
@@ -20410,7 +20455,8 @@ export namespace Prisma {
 
   export type PayrollGroupByOutputType = {
     id: string
-    staffId: string
+    staffId: string | null
+    doctorId: string | null
     netSalary: number
     basicSalary: number
     da: number
@@ -20425,6 +20471,7 @@ export namespace Prisma {
     labourWelfare: number
     otherDeductions: number
     status: string
+    salaryDate: Date
     clinicId: string
     createdAt: Date
     updatedAt: Date
@@ -20452,6 +20499,7 @@ export namespace Prisma {
   export type PayrollSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     staffId?: boolean
+    doctorId?: boolean
     netSalary?: boolean
     basicSalary?: boolean
     da?: boolean
@@ -20466,16 +20514,19 @@ export namespace Prisma {
     labourWelfare?: boolean
     otherDeductions?: boolean
     status?: boolean
+    salaryDate?: boolean
     clinicId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    staff?: boolean | StaffDefaultArgs<ExtArgs>
+    staff?: boolean | Payroll$staffArgs<ExtArgs>
+    doctor?: boolean | Payroll$doctorArgs<ExtArgs>
     clinic?: boolean | ClinicDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["payroll"]>
 
   export type PayrollSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     staffId?: boolean
+    doctorId?: boolean
     netSalary?: boolean
     basicSalary?: boolean
     da?: boolean
@@ -20490,16 +20541,19 @@ export namespace Prisma {
     labourWelfare?: boolean
     otherDeductions?: boolean
     status?: boolean
+    salaryDate?: boolean
     clinicId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    staff?: boolean | StaffDefaultArgs<ExtArgs>
+    staff?: boolean | Payroll$staffArgs<ExtArgs>
+    doctor?: boolean | Payroll$doctorArgs<ExtArgs>
     clinic?: boolean | ClinicDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["payroll"]>
 
   export type PayrollSelectScalar = {
     id?: boolean
     staffId?: boolean
+    doctorId?: boolean
     netSalary?: boolean
     basicSalary?: boolean
     da?: boolean
@@ -20514,29 +20568,34 @@ export namespace Prisma {
     labourWelfare?: boolean
     otherDeductions?: boolean
     status?: boolean
+    salaryDate?: boolean
     clinicId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
   export type PayrollInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    staff?: boolean | StaffDefaultArgs<ExtArgs>
+    staff?: boolean | Payroll$staffArgs<ExtArgs>
+    doctor?: boolean | Payroll$doctorArgs<ExtArgs>
     clinic?: boolean | ClinicDefaultArgs<ExtArgs>
   }
   export type PayrollIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    staff?: boolean | StaffDefaultArgs<ExtArgs>
+    staff?: boolean | Payroll$staffArgs<ExtArgs>
+    doctor?: boolean | Payroll$doctorArgs<ExtArgs>
     clinic?: boolean | ClinicDefaultArgs<ExtArgs>
   }
 
   export type $PayrollPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Payroll"
     objects: {
-      staff: Prisma.$StaffPayload<ExtArgs>
+      staff: Prisma.$StaffPayload<ExtArgs> | null
+      doctor: Prisma.$DoctorPayload<ExtArgs> | null
       clinic: Prisma.$ClinicPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      staffId: string
+      staffId: string | null
+      doctorId: string | null
       netSalary: number
       basicSalary: number
       da: number
@@ -20551,6 +20610,7 @@ export namespace Prisma {
       labourWelfare: number
       otherDeductions: number
       status: string
+      salaryDate: Date
       clinicId: string
       createdAt: Date
       updatedAt: Date
@@ -20918,7 +20978,8 @@ export namespace Prisma {
    */
   export interface Prisma__PayrollClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    staff<T extends StaffDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StaffDefaultArgs<ExtArgs>>): Prisma__StaffClient<$Result.GetResult<Prisma.$StaffPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    staff<T extends Payroll$staffArgs<ExtArgs> = {}>(args?: Subset<T, Payroll$staffArgs<ExtArgs>>): Prisma__StaffClient<$Result.GetResult<Prisma.$StaffPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    doctor<T extends Payroll$doctorArgs<ExtArgs> = {}>(args?: Subset<T, Payroll$doctorArgs<ExtArgs>>): Prisma__DoctorClient<$Result.GetResult<Prisma.$DoctorPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     clinic<T extends ClinicDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClinicDefaultArgs<ExtArgs>>): Prisma__ClinicClient<$Result.GetResult<Prisma.$ClinicPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -20951,6 +21012,7 @@ export namespace Prisma {
   interface PayrollFieldRefs {
     readonly id: FieldRef<"Payroll", 'String'>
     readonly staffId: FieldRef<"Payroll", 'String'>
+    readonly doctorId: FieldRef<"Payroll", 'String'>
     readonly netSalary: FieldRef<"Payroll", 'Float'>
     readonly basicSalary: FieldRef<"Payroll", 'Float'>
     readonly da: FieldRef<"Payroll", 'Float'>
@@ -20965,6 +21027,7 @@ export namespace Prisma {
     readonly labourWelfare: FieldRef<"Payroll", 'Float'>
     readonly otherDeductions: FieldRef<"Payroll", 'Float'>
     readonly status: FieldRef<"Payroll", 'String'>
+    readonly salaryDate: FieldRef<"Payroll", 'DateTime'>
     readonly clinicId: FieldRef<"Payroll", 'String'>
     readonly createdAt: FieldRef<"Payroll", 'DateTime'>
     readonly updatedAt: FieldRef<"Payroll", 'DateTime'>
@@ -21283,6 +21346,36 @@ export namespace Prisma {
      * Filter which Payrolls to delete
      */
     where?: PayrollWhereInput
+  }
+
+  /**
+   * Payroll.staff
+   */
+  export type Payroll$staffArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Staff
+     */
+    select?: StaffSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StaffInclude<ExtArgs> | null
+    where?: StaffWhereInput
+  }
+
+  /**
+   * Payroll.doctor
+   */
+  export type Payroll$doctorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Doctor
+     */
+    select?: DoctorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DoctorInclude<ExtArgs> | null
+    where?: DoctorWhereInput
   }
 
   /**
@@ -39853,6 +39946,7 @@ export namespace Prisma {
   export const PayrollScalarFieldEnum: {
     id: 'id',
     staffId: 'staffId',
+    doctorId: 'doctorId',
     netSalary: 'netSalary',
     basicSalary: 'basicSalary',
     da: 'da',
@@ -39867,6 +39961,7 @@ export namespace Prisma {
     labourWelfare: 'labourWelfare',
     otherDeductions: 'otherDeductions',
     status: 'status',
+    salaryDate: 'salaryDate',
     clinicId: 'clinicId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -41277,6 +41372,7 @@ export namespace Prisma {
     patients?: PatientListRelationFilter
     appointments?: AppointmentListRelationFilter
     prescriptions?: PrescriptionListRelationFilter
+    payrolls?: PayrollListRelationFilter
   }
 
   export type DoctorOrderByWithRelationInput = {
@@ -41337,6 +41433,7 @@ export namespace Prisma {
     patients?: PatientOrderByRelationAggregateInput
     appointments?: AppointmentOrderByRelationAggregateInput
     prescriptions?: PrescriptionOrderByRelationAggregateInput
+    payrolls?: PayrollOrderByRelationAggregateInput
   }
 
   export type DoctorWhereUniqueInput = Prisma.AtLeast<{
@@ -41400,6 +41497,7 @@ export namespace Prisma {
     patients?: PatientListRelationFilter
     appointments?: AppointmentListRelationFilter
     prescriptions?: PrescriptionListRelationFilter
+    payrolls?: PayrollListRelationFilter
   }, "id">
 
   export type DoctorOrderByWithAggregationInput = {
@@ -42105,7 +42203,8 @@ export namespace Prisma {
     OR?: PayrollWhereInput[]
     NOT?: PayrollWhereInput | PayrollWhereInput[]
     id?: StringFilter<"Payroll"> | string
-    staffId?: StringFilter<"Payroll"> | string
+    staffId?: StringNullableFilter<"Payroll"> | string | null
+    doctorId?: StringNullableFilter<"Payroll"> | string | null
     netSalary?: FloatFilter<"Payroll"> | number
     basicSalary?: FloatFilter<"Payroll"> | number
     da?: FloatFilter<"Payroll"> | number
@@ -42120,16 +42219,19 @@ export namespace Prisma {
     labourWelfare?: FloatFilter<"Payroll"> | number
     otherDeductions?: FloatFilter<"Payroll"> | number
     status?: StringFilter<"Payroll"> | string
+    salaryDate?: DateTimeFilter<"Payroll"> | Date | string
     clinicId?: StringFilter<"Payroll"> | string
     createdAt?: DateTimeFilter<"Payroll"> | Date | string
     updatedAt?: DateTimeFilter<"Payroll"> | Date | string
-    staff?: XOR<StaffRelationFilter, StaffWhereInput>
+    staff?: XOR<StaffNullableRelationFilter, StaffWhereInput> | null
+    doctor?: XOR<DoctorNullableRelationFilter, DoctorWhereInput> | null
     clinic?: XOR<ClinicRelationFilter, ClinicWhereInput>
   }
 
   export type PayrollOrderByWithRelationInput = {
     id?: SortOrder
-    staffId?: SortOrder
+    staffId?: SortOrderInput | SortOrder
+    doctorId?: SortOrderInput | SortOrder
     netSalary?: SortOrder
     basicSalary?: SortOrder
     da?: SortOrder
@@ -42144,10 +42246,12 @@ export namespace Prisma {
     labourWelfare?: SortOrder
     otherDeductions?: SortOrder
     status?: SortOrder
+    salaryDate?: SortOrder
     clinicId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     staff?: StaffOrderByWithRelationInput
+    doctor?: DoctorOrderByWithRelationInput
     clinic?: ClinicOrderByWithRelationInput
   }
 
@@ -42156,7 +42260,8 @@ export namespace Prisma {
     AND?: PayrollWhereInput | PayrollWhereInput[]
     OR?: PayrollWhereInput[]
     NOT?: PayrollWhereInput | PayrollWhereInput[]
-    staffId?: StringFilter<"Payroll"> | string
+    staffId?: StringNullableFilter<"Payroll"> | string | null
+    doctorId?: StringNullableFilter<"Payroll"> | string | null
     netSalary?: FloatFilter<"Payroll"> | number
     basicSalary?: FloatFilter<"Payroll"> | number
     da?: FloatFilter<"Payroll"> | number
@@ -42171,16 +42276,19 @@ export namespace Prisma {
     labourWelfare?: FloatFilter<"Payroll"> | number
     otherDeductions?: FloatFilter<"Payroll"> | number
     status?: StringFilter<"Payroll"> | string
+    salaryDate?: DateTimeFilter<"Payroll"> | Date | string
     clinicId?: StringFilter<"Payroll"> | string
     createdAt?: DateTimeFilter<"Payroll"> | Date | string
     updatedAt?: DateTimeFilter<"Payroll"> | Date | string
-    staff?: XOR<StaffRelationFilter, StaffWhereInput>
+    staff?: XOR<StaffNullableRelationFilter, StaffWhereInput> | null
+    doctor?: XOR<DoctorNullableRelationFilter, DoctorWhereInput> | null
     clinic?: XOR<ClinicRelationFilter, ClinicWhereInput>
   }, "id">
 
   export type PayrollOrderByWithAggregationInput = {
     id?: SortOrder
-    staffId?: SortOrder
+    staffId?: SortOrderInput | SortOrder
+    doctorId?: SortOrderInput | SortOrder
     netSalary?: SortOrder
     basicSalary?: SortOrder
     da?: SortOrder
@@ -42195,6 +42303,7 @@ export namespace Prisma {
     labourWelfare?: SortOrder
     otherDeductions?: SortOrder
     status?: SortOrder
+    salaryDate?: SortOrder
     clinicId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -42210,7 +42319,8 @@ export namespace Prisma {
     OR?: PayrollScalarWhereWithAggregatesInput[]
     NOT?: PayrollScalarWhereWithAggregatesInput | PayrollScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Payroll"> | string
-    staffId?: StringWithAggregatesFilter<"Payroll"> | string
+    staffId?: StringNullableWithAggregatesFilter<"Payroll"> | string | null
+    doctorId?: StringNullableWithAggregatesFilter<"Payroll"> | string | null
     netSalary?: FloatWithAggregatesFilter<"Payroll"> | number
     basicSalary?: FloatWithAggregatesFilter<"Payroll"> | number
     da?: FloatWithAggregatesFilter<"Payroll"> | number
@@ -42225,6 +42335,7 @@ export namespace Prisma {
     labourWelfare?: FloatWithAggregatesFilter<"Payroll"> | number
     otherDeductions?: FloatWithAggregatesFilter<"Payroll"> | number
     status?: StringWithAggregatesFilter<"Payroll"> | string
+    salaryDate?: DateTimeWithAggregatesFilter<"Payroll"> | Date | string
     clinicId?: StringWithAggregatesFilter<"Payroll"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Payroll"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Payroll"> | Date | string
@@ -44846,6 +44957,7 @@ export namespace Prisma {
     patients?: PatientCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentCreateNestedManyWithoutDoctorInput
     prescriptions?: PrescriptionCreateNestedManyWithoutDoctorInput
+    payrolls?: PayrollCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorUncheckedCreateInput = {
@@ -44903,6 +45015,7 @@ export namespace Prisma {
     patients?: PatientUncheckedCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentUncheckedCreateNestedManyWithoutDoctorInput
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutDoctorInput
+    payrolls?: PayrollUncheckedCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorUpdateInput = {
@@ -44960,6 +45073,7 @@ export namespace Prisma {
     patients?: PatientUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUpdateManyWithoutDoctorNestedInput
     prescriptions?: PrescriptionUpdateManyWithoutDoctorNestedInput
+    payrolls?: PayrollUpdateManyWithoutDoctorNestedInput
   }
 
   export type DoctorUncheckedUpdateInput = {
@@ -45017,6 +45131,7 @@ export namespace Prisma {
     patients?: PatientUncheckedUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUncheckedUpdateManyWithoutDoctorNestedInput
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutDoctorNestedInput
+    payrolls?: PayrollUncheckedUpdateManyWithoutDoctorNestedInput
   }
 
   export type DoctorCreateManyInput = {
@@ -45863,15 +45978,18 @@ export namespace Prisma {
     labourWelfare?: number
     otherDeductions?: number
     status?: string
+    salaryDate?: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
-    staff: StaffCreateNestedOneWithoutPayrollsInput
+    staff?: StaffCreateNestedOneWithoutPayrollsInput
+    doctor?: DoctorCreateNestedOneWithoutPayrollsInput
     clinic: ClinicCreateNestedOneWithoutPayrollsInput
   }
 
   export type PayrollUncheckedCreateInput = {
     id?: string
-    staffId: string
+    staffId?: string | null
+    doctorId?: string | null
     netSalary: number
     basicSalary?: number
     da?: number
@@ -45886,6 +46004,7 @@ export namespace Prisma {
     labourWelfare?: number
     otherDeductions?: number
     status?: string
+    salaryDate?: Date | string
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -45907,15 +46026,18 @@ export namespace Prisma {
     labourWelfare?: FloatFieldUpdateOperationsInput | number
     otherDeductions?: FloatFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
+    salaryDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    staff?: StaffUpdateOneRequiredWithoutPayrollsNestedInput
+    staff?: StaffUpdateOneWithoutPayrollsNestedInput
+    doctor?: DoctorUpdateOneWithoutPayrollsNestedInput
     clinic?: ClinicUpdateOneRequiredWithoutPayrollsNestedInput
   }
 
   export type PayrollUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    staffId?: StringFieldUpdateOperationsInput | string
+    staffId?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorId?: NullableStringFieldUpdateOperationsInput | string | null
     netSalary?: FloatFieldUpdateOperationsInput | number
     basicSalary?: FloatFieldUpdateOperationsInput | number
     da?: FloatFieldUpdateOperationsInput | number
@@ -45930,6 +46052,7 @@ export namespace Prisma {
     labourWelfare?: FloatFieldUpdateOperationsInput | number
     otherDeductions?: FloatFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
+    salaryDate?: DateTimeFieldUpdateOperationsInput | Date | string
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -45937,7 +46060,8 @@ export namespace Prisma {
 
   export type PayrollCreateManyInput = {
     id?: string
-    staffId: string
+    staffId?: string | null
+    doctorId?: string | null
     netSalary: number
     basicSalary?: number
     da?: number
@@ -45952,6 +46076,7 @@ export namespace Prisma {
     labourWelfare?: number
     otherDeductions?: number
     status?: string
+    salaryDate?: Date | string
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -45973,13 +46098,15 @@ export namespace Prisma {
     labourWelfare?: FloatFieldUpdateOperationsInput | number
     otherDeductions?: FloatFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
+    salaryDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PayrollUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    staffId?: StringFieldUpdateOperationsInput | string
+    staffId?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorId?: NullableStringFieldUpdateOperationsInput | string | null
     netSalary?: FloatFieldUpdateOperationsInput | number
     basicSalary?: FloatFieldUpdateOperationsInput | number
     da?: FloatFieldUpdateOperationsInput | number
@@ -45994,6 +46121,7 @@ export namespace Prisma {
     labourWelfare?: FloatFieldUpdateOperationsInput | number
     otherDeductions?: FloatFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
+    salaryDate?: DateTimeFieldUpdateOperationsInput | Date | string
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -49175,14 +49303,15 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type StaffRelationFilter = {
-    is?: StaffWhereInput
-    isNot?: StaffWhereInput
+  export type StaffNullableRelationFilter = {
+    is?: StaffWhereInput | null
+    isNot?: StaffWhereInput | null
   }
 
   export type PayrollCountOrderByAggregateInput = {
     id?: SortOrder
     staffId?: SortOrder
+    doctorId?: SortOrder
     netSalary?: SortOrder
     basicSalary?: SortOrder
     da?: SortOrder
@@ -49197,6 +49326,7 @@ export namespace Prisma {
     labourWelfare?: SortOrder
     otherDeductions?: SortOrder
     status?: SortOrder
+    salaryDate?: SortOrder
     clinicId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -49221,6 +49351,7 @@ export namespace Prisma {
   export type PayrollMaxOrderByAggregateInput = {
     id?: SortOrder
     staffId?: SortOrder
+    doctorId?: SortOrder
     netSalary?: SortOrder
     basicSalary?: SortOrder
     da?: SortOrder
@@ -49235,6 +49366,7 @@ export namespace Prisma {
     labourWelfare?: SortOrder
     otherDeductions?: SortOrder
     status?: SortOrder
+    salaryDate?: SortOrder
     clinicId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -49243,6 +49375,7 @@ export namespace Prisma {
   export type PayrollMinOrderByAggregateInput = {
     id?: SortOrder
     staffId?: SortOrder
+    doctorId?: SortOrder
     netSalary?: SortOrder
     basicSalary?: SortOrder
     da?: SortOrder
@@ -49257,6 +49390,7 @@ export namespace Prisma {
     labourWelfare?: SortOrder
     otherDeductions?: SortOrder
     status?: SortOrder
+    salaryDate?: SortOrder
     clinicId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -51933,6 +52067,13 @@ export namespace Prisma {
     connect?: PrescriptionWhereUniqueInput | PrescriptionWhereUniqueInput[]
   }
 
+  export type PayrollCreateNestedManyWithoutDoctorInput = {
+    create?: XOR<PayrollCreateWithoutDoctorInput, PayrollUncheckedCreateWithoutDoctorInput> | PayrollCreateWithoutDoctorInput[] | PayrollUncheckedCreateWithoutDoctorInput[]
+    connectOrCreate?: PayrollCreateOrConnectWithoutDoctorInput | PayrollCreateOrConnectWithoutDoctorInput[]
+    createMany?: PayrollCreateManyDoctorInputEnvelope
+    connect?: PayrollWhereUniqueInput | PayrollWhereUniqueInput[]
+  }
+
   export type SpecializationUncheckedCreateNestedManyWithoutDoctorsInput = {
     create?: XOR<SpecializationCreateWithoutDoctorsInput, SpecializationUncheckedCreateWithoutDoctorsInput> | SpecializationCreateWithoutDoctorsInput[] | SpecializationUncheckedCreateWithoutDoctorsInput[]
     connectOrCreate?: SpecializationCreateOrConnectWithoutDoctorsInput | SpecializationCreateOrConnectWithoutDoctorsInput[]
@@ -51958,6 +52099,13 @@ export namespace Prisma {
     connectOrCreate?: PrescriptionCreateOrConnectWithoutDoctorInput | PrescriptionCreateOrConnectWithoutDoctorInput[]
     createMany?: PrescriptionCreateManyDoctorInputEnvelope
     connect?: PrescriptionWhereUniqueInput | PrescriptionWhereUniqueInput[]
+  }
+
+  export type PayrollUncheckedCreateNestedManyWithoutDoctorInput = {
+    create?: XOR<PayrollCreateWithoutDoctorInput, PayrollUncheckedCreateWithoutDoctorInput> | PayrollCreateWithoutDoctorInput[] | PayrollUncheckedCreateWithoutDoctorInput[]
+    connectOrCreate?: PayrollCreateOrConnectWithoutDoctorInput | PayrollCreateOrConnectWithoutDoctorInput[]
+    createMany?: PayrollCreateManyDoctorInputEnvelope
+    connect?: PayrollWhereUniqueInput | PayrollWhereUniqueInput[]
   }
 
   export type DoctorUpdatelanguagesSpokenInput = {
@@ -52056,6 +52204,20 @@ export namespace Prisma {
     deleteMany?: PrescriptionScalarWhereInput | PrescriptionScalarWhereInput[]
   }
 
+  export type PayrollUpdateManyWithoutDoctorNestedInput = {
+    create?: XOR<PayrollCreateWithoutDoctorInput, PayrollUncheckedCreateWithoutDoctorInput> | PayrollCreateWithoutDoctorInput[] | PayrollUncheckedCreateWithoutDoctorInput[]
+    connectOrCreate?: PayrollCreateOrConnectWithoutDoctorInput | PayrollCreateOrConnectWithoutDoctorInput[]
+    upsert?: PayrollUpsertWithWhereUniqueWithoutDoctorInput | PayrollUpsertWithWhereUniqueWithoutDoctorInput[]
+    createMany?: PayrollCreateManyDoctorInputEnvelope
+    set?: PayrollWhereUniqueInput | PayrollWhereUniqueInput[]
+    disconnect?: PayrollWhereUniqueInput | PayrollWhereUniqueInput[]
+    delete?: PayrollWhereUniqueInput | PayrollWhereUniqueInput[]
+    connect?: PayrollWhereUniqueInput | PayrollWhereUniqueInput[]
+    update?: PayrollUpdateWithWhereUniqueWithoutDoctorInput | PayrollUpdateWithWhereUniqueWithoutDoctorInput[]
+    updateMany?: PayrollUpdateManyWithWhereWithoutDoctorInput | PayrollUpdateManyWithWhereWithoutDoctorInput[]
+    deleteMany?: PayrollScalarWhereInput | PayrollScalarWhereInput[]
+  }
+
   export type SpecializationUncheckedUpdateManyWithoutDoctorsNestedInput = {
     create?: XOR<SpecializationCreateWithoutDoctorsInput, SpecializationUncheckedCreateWithoutDoctorsInput> | SpecializationCreateWithoutDoctorsInput[] | SpecializationUncheckedCreateWithoutDoctorsInput[]
     connectOrCreate?: SpecializationCreateOrConnectWithoutDoctorsInput | SpecializationCreateOrConnectWithoutDoctorsInput[]
@@ -52109,6 +52271,20 @@ export namespace Prisma {
     update?: PrescriptionUpdateWithWhereUniqueWithoutDoctorInput | PrescriptionUpdateWithWhereUniqueWithoutDoctorInput[]
     updateMany?: PrescriptionUpdateManyWithWhereWithoutDoctorInput | PrescriptionUpdateManyWithWhereWithoutDoctorInput[]
     deleteMany?: PrescriptionScalarWhereInput | PrescriptionScalarWhereInput[]
+  }
+
+  export type PayrollUncheckedUpdateManyWithoutDoctorNestedInput = {
+    create?: XOR<PayrollCreateWithoutDoctorInput, PayrollUncheckedCreateWithoutDoctorInput> | PayrollCreateWithoutDoctorInput[] | PayrollUncheckedCreateWithoutDoctorInput[]
+    connectOrCreate?: PayrollCreateOrConnectWithoutDoctorInput | PayrollCreateOrConnectWithoutDoctorInput[]
+    upsert?: PayrollUpsertWithWhereUniqueWithoutDoctorInput | PayrollUpsertWithWhereUniqueWithoutDoctorInput[]
+    createMany?: PayrollCreateManyDoctorInputEnvelope
+    set?: PayrollWhereUniqueInput | PayrollWhereUniqueInput[]
+    disconnect?: PayrollWhereUniqueInput | PayrollWhereUniqueInput[]
+    delete?: PayrollWhereUniqueInput | PayrollWhereUniqueInput[]
+    connect?: PayrollWhereUniqueInput | PayrollWhereUniqueInput[]
+    update?: PayrollUpdateWithWhereUniqueWithoutDoctorInput | PayrollUpdateWithWhereUniqueWithoutDoctorInput[]
+    updateMany?: PayrollUpdateManyWithWhereWithoutDoctorInput | PayrollUpdateManyWithWhereWithoutDoctorInput[]
+    deleteMany?: PayrollScalarWhereInput | PayrollScalarWhereInput[]
   }
 
   export type DoctorCreateNestedOneWithoutPatientsInput = {
@@ -52609,18 +52785,36 @@ export namespace Prisma {
     connect?: StaffWhereUniqueInput
   }
 
+  export type DoctorCreateNestedOneWithoutPayrollsInput = {
+    create?: XOR<DoctorCreateWithoutPayrollsInput, DoctorUncheckedCreateWithoutPayrollsInput>
+    connectOrCreate?: DoctorCreateOrConnectWithoutPayrollsInput
+    connect?: DoctorWhereUniqueInput
+  }
+
   export type ClinicCreateNestedOneWithoutPayrollsInput = {
     create?: XOR<ClinicCreateWithoutPayrollsInput, ClinicUncheckedCreateWithoutPayrollsInput>
     connectOrCreate?: ClinicCreateOrConnectWithoutPayrollsInput
     connect?: ClinicWhereUniqueInput
   }
 
-  export type StaffUpdateOneRequiredWithoutPayrollsNestedInput = {
+  export type StaffUpdateOneWithoutPayrollsNestedInput = {
     create?: XOR<StaffCreateWithoutPayrollsInput, StaffUncheckedCreateWithoutPayrollsInput>
     connectOrCreate?: StaffCreateOrConnectWithoutPayrollsInput
     upsert?: StaffUpsertWithoutPayrollsInput
+    disconnect?: StaffWhereInput | boolean
+    delete?: StaffWhereInput | boolean
     connect?: StaffWhereUniqueInput
     update?: XOR<XOR<StaffUpdateToOneWithWhereWithoutPayrollsInput, StaffUpdateWithoutPayrollsInput>, StaffUncheckedUpdateWithoutPayrollsInput>
+  }
+
+  export type DoctorUpdateOneWithoutPayrollsNestedInput = {
+    create?: XOR<DoctorCreateWithoutPayrollsInput, DoctorUncheckedCreateWithoutPayrollsInput>
+    connectOrCreate?: DoctorCreateOrConnectWithoutPayrollsInput
+    upsert?: DoctorUpsertWithoutPayrollsInput
+    disconnect?: DoctorWhereInput | boolean
+    delete?: DoctorWhereInput | boolean
+    connect?: DoctorWhereUniqueInput
+    update?: XOR<XOR<DoctorUpdateToOneWithWhereWithoutPayrollsInput, DoctorUpdateWithoutPayrollsInput>, DoctorUncheckedUpdateWithoutPayrollsInput>
   }
 
   export type ClinicUpdateOneRequiredWithoutPayrollsNestedInput = {
@@ -53602,6 +53796,7 @@ export namespace Prisma {
     patients?: PatientCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentCreateNestedManyWithoutDoctorInput
     prescriptions?: PrescriptionCreateNestedManyWithoutDoctorInput
+    payrolls?: PayrollCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorUncheckedCreateWithoutClinicInput = {
@@ -53658,6 +53853,7 @@ export namespace Prisma {
     patients?: PatientUncheckedCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentUncheckedCreateNestedManyWithoutDoctorInput
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutDoctorInput
+    payrolls?: PayrollUncheckedCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorCreateOrConnectWithoutClinicInput = {
@@ -53990,14 +54186,17 @@ export namespace Prisma {
     labourWelfare?: number
     otherDeductions?: number
     status?: string
+    salaryDate?: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
-    staff: StaffCreateNestedOneWithoutPayrollsInput
+    staff?: StaffCreateNestedOneWithoutPayrollsInput
+    doctor?: DoctorCreateNestedOneWithoutPayrollsInput
   }
 
   export type PayrollUncheckedCreateWithoutClinicInput = {
     id?: string
-    staffId: string
+    staffId?: string | null
+    doctorId?: string | null
     netSalary: number
     basicSalary?: number
     da?: number
@@ -54012,6 +54211,7 @@ export namespace Prisma {
     labourWelfare?: number
     otherDeductions?: number
     status?: string
+    salaryDate?: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -55100,7 +55300,8 @@ export namespace Prisma {
     OR?: PayrollScalarWhereInput[]
     NOT?: PayrollScalarWhereInput | PayrollScalarWhereInput[]
     id?: StringFilter<"Payroll"> | string
-    staffId?: StringFilter<"Payroll"> | string
+    staffId?: StringNullableFilter<"Payroll"> | string | null
+    doctorId?: StringNullableFilter<"Payroll"> | string | null
     netSalary?: FloatFilter<"Payroll"> | number
     basicSalary?: FloatFilter<"Payroll"> | number
     da?: FloatFilter<"Payroll"> | number
@@ -55115,6 +55316,7 @@ export namespace Prisma {
     labourWelfare?: FloatFilter<"Payroll"> | number
     otherDeductions?: FloatFilter<"Payroll"> | number
     status?: StringFilter<"Payroll"> | string
+    salaryDate?: DateTimeFilter<"Payroll"> | Date | string
     clinicId?: StringFilter<"Payroll"> | string
     createdAt?: DateTimeFilter<"Payroll"> | Date | string
     updatedAt?: DateTimeFilter<"Payroll"> | Date | string
@@ -56532,6 +56734,7 @@ export namespace Prisma {
     patients?: PatientCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentCreateNestedManyWithoutDoctorInput
     prescriptions?: PrescriptionCreateNestedManyWithoutDoctorInput
+    payrolls?: PayrollCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorUncheckedCreateWithoutDepartmentInput = {
@@ -56588,6 +56791,7 @@ export namespace Prisma {
     patients?: PatientUncheckedCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentUncheckedCreateNestedManyWithoutDoctorInput
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutDoctorInput
+    payrolls?: PayrollUncheckedCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorCreateOrConnectWithoutDepartmentInput = {
@@ -57217,6 +57421,7 @@ export namespace Prisma {
     patients?: PatientCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentCreateNestedManyWithoutDoctorInput
     prescriptions?: PrescriptionCreateNestedManyWithoutDoctorInput
+    payrolls?: PayrollCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorUncheckedCreateWithoutDesignationInput = {
@@ -57273,6 +57478,7 @@ export namespace Prisma {
     patients?: PatientUncheckedCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentUncheckedCreateNestedManyWithoutDoctorInput
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutDoctorInput
+    payrolls?: PayrollUncheckedCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorCreateOrConnectWithoutDesignationInput = {
@@ -57742,13 +57948,16 @@ export namespace Prisma {
     labourWelfare?: number
     otherDeductions?: number
     status?: string
+    salaryDate?: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
+    doctor?: DoctorCreateNestedOneWithoutPayrollsInput
     clinic: ClinicCreateNestedOneWithoutPayrollsInput
   }
 
   export type PayrollUncheckedCreateWithoutStaffInput = {
     id?: string
+    doctorId?: string | null
     netSalary: number
     basicSalary?: number
     da?: number
@@ -57763,6 +57972,7 @@ export namespace Prisma {
     labourWelfare?: number
     otherDeductions?: number
     status?: string
+    salaryDate?: Date | string
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -58393,6 +58603,62 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type PayrollCreateWithoutDoctorInput = {
+    id?: string
+    netSalary: number
+    basicSalary?: number
+    da?: number
+    hra?: number
+    conveyance?: number
+    medicalAllowance?: number
+    otherEarnings?: number
+    tds?: number
+    esi?: number
+    pf?: number
+    profTax?: number
+    labourWelfare?: number
+    otherDeductions?: number
+    status?: string
+    salaryDate?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    staff?: StaffCreateNestedOneWithoutPayrollsInput
+    clinic: ClinicCreateNestedOneWithoutPayrollsInput
+  }
+
+  export type PayrollUncheckedCreateWithoutDoctorInput = {
+    id?: string
+    staffId?: string | null
+    netSalary: number
+    basicSalary?: number
+    da?: number
+    hra?: number
+    conveyance?: number
+    medicalAllowance?: number
+    otherEarnings?: number
+    tds?: number
+    esi?: number
+    pf?: number
+    profTax?: number
+    labourWelfare?: number
+    otherDeductions?: number
+    status?: string
+    salaryDate?: Date | string
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PayrollCreateOrConnectWithoutDoctorInput = {
+    where: PayrollWhereUniqueInput
+    create: XOR<PayrollCreateWithoutDoctorInput, PayrollUncheckedCreateWithoutDoctorInput>
+  }
+
+  export type PayrollCreateManyDoctorInputEnvelope = {
+    data: PayrollCreateManyDoctorInput | PayrollCreateManyDoctorInput[]
+    skipDuplicates?: boolean
+  }
+
   export type DepartmentUpsertWithoutDoctorsInput = {
     update: XOR<DepartmentUpdateWithoutDoctorsInput, DepartmentUncheckedUpdateWithoutDoctorsInput>
     create: XOR<DepartmentCreateWithoutDoctorsInput, DepartmentUncheckedCreateWithoutDoctorsInput>
@@ -58658,6 +58924,22 @@ export namespace Prisma {
     data: XOR<PrescriptionUpdateManyMutationInput, PrescriptionUncheckedUpdateManyWithoutDoctorInput>
   }
 
+  export type PayrollUpsertWithWhereUniqueWithoutDoctorInput = {
+    where: PayrollWhereUniqueInput
+    update: XOR<PayrollUpdateWithoutDoctorInput, PayrollUncheckedUpdateWithoutDoctorInput>
+    create: XOR<PayrollCreateWithoutDoctorInput, PayrollUncheckedCreateWithoutDoctorInput>
+  }
+
+  export type PayrollUpdateWithWhereUniqueWithoutDoctorInput = {
+    where: PayrollWhereUniqueInput
+    data: XOR<PayrollUpdateWithoutDoctorInput, PayrollUncheckedUpdateWithoutDoctorInput>
+  }
+
+  export type PayrollUpdateManyWithWhereWithoutDoctorInput = {
+    where: PayrollScalarWhereInput
+    data: XOR<PayrollUpdateManyMutationInput, PayrollUncheckedUpdateManyWithoutDoctorInput>
+  }
+
   export type DoctorCreateWithoutPatientsInput = {
     id?: string
     doctorCode?: string | null
@@ -58712,6 +58994,7 @@ export namespace Prisma {
     clinic: ClinicCreateNestedOneWithoutDoctorsInput
     appointments?: AppointmentCreateNestedManyWithoutDoctorInput
     prescriptions?: PrescriptionCreateNestedManyWithoutDoctorInput
+    payrolls?: PayrollCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorUncheckedCreateWithoutPatientsInput = {
@@ -58768,6 +59051,7 @@ export namespace Prisma {
     specializations?: SpecializationUncheckedCreateNestedManyWithoutDoctorsInput
     appointments?: AppointmentUncheckedCreateNestedManyWithoutDoctorInput
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutDoctorInput
+    payrolls?: PayrollUncheckedCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorCreateOrConnectWithoutPatientsInput = {
@@ -59101,6 +59385,7 @@ export namespace Prisma {
     clinic?: ClinicUpdateOneRequiredWithoutDoctorsNestedInput
     appointments?: AppointmentUpdateManyWithoutDoctorNestedInput
     prescriptions?: PrescriptionUpdateManyWithoutDoctorNestedInput
+    payrolls?: PayrollUpdateManyWithoutDoctorNestedInput
   }
 
   export type DoctorUncheckedUpdateWithoutPatientsInput = {
@@ -59157,6 +59442,7 @@ export namespace Prisma {
     specializations?: SpecializationUncheckedUpdateManyWithoutDoctorsNestedInput
     appointments?: AppointmentUncheckedUpdateManyWithoutDoctorNestedInput
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutDoctorNestedInput
+    payrolls?: PayrollUncheckedUpdateManyWithoutDoctorNestedInput
   }
 
   export type ClinicUpsertWithoutPatientsInput = {
@@ -59461,6 +59747,7 @@ export namespace Prisma {
     clinic: ClinicCreateNestedOneWithoutDoctorsInput
     patients?: PatientCreateNestedManyWithoutPrimaryDoctorInput
     prescriptions?: PrescriptionCreateNestedManyWithoutDoctorInput
+    payrolls?: PayrollCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorUncheckedCreateWithoutAppointmentsInput = {
@@ -59517,6 +59804,7 @@ export namespace Prisma {
     specializations?: SpecializationUncheckedCreateNestedManyWithoutDoctorsInput
     patients?: PatientUncheckedCreateNestedManyWithoutPrimaryDoctorInput
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutDoctorInput
+    payrolls?: PayrollUncheckedCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorCreateOrConnectWithoutAppointmentsInput = {
@@ -60019,6 +60307,7 @@ export namespace Prisma {
     clinic?: ClinicUpdateOneRequiredWithoutDoctorsNestedInput
     patients?: PatientUpdateManyWithoutPrimaryDoctorNestedInput
     prescriptions?: PrescriptionUpdateManyWithoutDoctorNestedInput
+    payrolls?: PayrollUpdateManyWithoutDoctorNestedInput
   }
 
   export type DoctorUncheckedUpdateWithoutAppointmentsInput = {
@@ -60075,6 +60364,7 @@ export namespace Prisma {
     specializations?: SpecializationUncheckedUpdateManyWithoutDoctorsNestedInput
     patients?: PatientUncheckedUpdateManyWithoutPrimaryDoctorNestedInput
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutDoctorNestedInput
+    payrolls?: PayrollUncheckedUpdateManyWithoutDoctorNestedInput
   }
 
   export type DepartmentUpsertWithoutAppointmentsInput = {
@@ -60883,6 +61173,7 @@ export namespace Prisma {
     patients?: PatientCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentCreateNestedManyWithoutDoctorInput
     prescriptions?: PrescriptionCreateNestedManyWithoutDoctorInput
+    payrolls?: PayrollCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorUncheckedCreateWithoutSpecializationsInput = {
@@ -60939,6 +61230,7 @@ export namespace Prisma {
     patients?: PatientUncheckedCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentUncheckedCreateNestedManyWithoutDoctorInput
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutDoctorInput
+    payrolls?: PayrollUncheckedCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorCreateOrConnectWithoutSpecializationsInput = {
@@ -61370,6 +61662,125 @@ export namespace Prisma {
     create: XOR<StaffCreateWithoutPayrollsInput, StaffUncheckedCreateWithoutPayrollsInput>
   }
 
+  export type DoctorCreateWithoutPayrollsInput = {
+    id?: string
+    doctorCode?: string | null
+    fullName: string
+    username?: string | null
+    phone?: string | null
+    alternateMobile?: string | null
+    email?: string | null
+    dob?: Date | string | null
+    yearOfExperience?: number | null
+    medicalLicenseNumber?: string | null
+    languagesSpoken?: DoctorCreatelanguagesSpokenInput | string[]
+    bloodGroup?: string | null
+    gender?: string | null
+    bio?: string | null
+    featureOnWebsite?: boolean
+    profileImage?: string | null
+    address1?: string | null
+    address2?: string | null
+    country?: string | null
+    city?: string | null
+    state?: string | null
+    pincode?: string | null
+    appointmentType?: string | null
+    acceptBookingsInAdvance?: number | null
+    appointmentDuration?: number | null
+    consultationCharge?: number | null
+    maxBookingsPerSlot?: number | null
+    displayOnBookingPage?: boolean
+    educations?: NullableJsonNullValueInput | InputJsonValue
+    awards?: NullableJsonNullValueInput | InputJsonValue
+    certifications?: NullableJsonNullValueInput | InputJsonValue
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    status?: string
+    maritalStatus?: string | null
+    qualification?: string | null
+    signatureImage?: string | null
+    medicalRegCertificate?: string | null
+    qualificationCertificate?: string | null
+    aadhaarCard?: string | null
+    aadhaarCardBack?: string | null
+    panCard?: string | null
+    followUpEnabled?: boolean
+    followUpValidityDays?: number | null
+    freeFollowUpLimit?: number | null
+    followUpFee?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    department?: DepartmentCreateNestedOneWithoutDoctorsInput
+    designation?: DesignationCreateNestedOneWithoutDoctorsInput
+    specializations?: SpecializationCreateNestedManyWithoutDoctorsInput
+    clinic: ClinicCreateNestedOneWithoutDoctorsInput
+    patients?: PatientCreateNestedManyWithoutPrimaryDoctorInput
+    appointments?: AppointmentCreateNestedManyWithoutDoctorInput
+    prescriptions?: PrescriptionCreateNestedManyWithoutDoctorInput
+  }
+
+  export type DoctorUncheckedCreateWithoutPayrollsInput = {
+    id?: string
+    doctorCode?: string | null
+    fullName: string
+    username?: string | null
+    phone?: string | null
+    alternateMobile?: string | null
+    email?: string | null
+    dob?: Date | string | null
+    yearOfExperience?: number | null
+    medicalLicenseNumber?: string | null
+    languagesSpoken?: DoctorCreatelanguagesSpokenInput | string[]
+    bloodGroup?: string | null
+    gender?: string | null
+    bio?: string | null
+    featureOnWebsite?: boolean
+    profileImage?: string | null
+    address1?: string | null
+    address2?: string | null
+    country?: string | null
+    city?: string | null
+    state?: string | null
+    pincode?: string | null
+    appointmentType?: string | null
+    acceptBookingsInAdvance?: number | null
+    appointmentDuration?: number | null
+    consultationCharge?: number | null
+    maxBookingsPerSlot?: number | null
+    displayOnBookingPage?: boolean
+    educations?: NullableJsonNullValueInput | InputJsonValue
+    awards?: NullableJsonNullValueInput | InputJsonValue
+    certifications?: NullableJsonNullValueInput | InputJsonValue
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    status?: string
+    departmentId?: string | null
+    maritalStatus?: string | null
+    qualification?: string | null
+    signatureImage?: string | null
+    medicalRegCertificate?: string | null
+    qualificationCertificate?: string | null
+    aadhaarCard?: string | null
+    aadhaarCardBack?: string | null
+    panCard?: string | null
+    followUpEnabled?: boolean
+    followUpValidityDays?: number | null
+    freeFollowUpLimit?: number | null
+    followUpFee?: number | null
+    designationId?: string | null
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    specializations?: SpecializationUncheckedCreateNestedManyWithoutDoctorsInput
+    patients?: PatientUncheckedCreateNestedManyWithoutPrimaryDoctorInput
+    appointments?: AppointmentUncheckedCreateNestedManyWithoutDoctorInput
+    prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutDoctorInput
+  }
+
+  export type DoctorCreateOrConnectWithoutPayrollsInput = {
+    where: DoctorWhereUniqueInput
+    create: XOR<DoctorCreateWithoutPayrollsInput, DoctorUncheckedCreateWithoutPayrollsInput>
+  }
+
   export type ClinicCreateWithoutPayrollsInput = {
     id?: string
     name: string
@@ -61544,6 +61955,131 @@ export namespace Prisma {
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DoctorUpsertWithoutPayrollsInput = {
+    update: XOR<DoctorUpdateWithoutPayrollsInput, DoctorUncheckedUpdateWithoutPayrollsInput>
+    create: XOR<DoctorCreateWithoutPayrollsInput, DoctorUncheckedCreateWithoutPayrollsInput>
+    where?: DoctorWhereInput
+  }
+
+  export type DoctorUpdateToOneWithWhereWithoutPayrollsInput = {
+    where?: DoctorWhereInput
+    data: XOR<DoctorUpdateWithoutPayrollsInput, DoctorUncheckedUpdateWithoutPayrollsInput>
+  }
+
+  export type DoctorUpdateWithoutPayrollsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    doctorCode?: NullableStringFieldUpdateOperationsInput | string | null
+    fullName?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    yearOfExperience?: NullableIntFieldUpdateOperationsInput | number | null
+    medicalLicenseNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    languagesSpoken?: DoctorUpdatelanguagesSpokenInput | string[]
+    bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    featureOnWebsite?: BoolFieldUpdateOperationsInput | boolean
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
+    address1?: NullableStringFieldUpdateOperationsInput | string | null
+    address2?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    appointmentType?: NullableStringFieldUpdateOperationsInput | string | null
+    acceptBookingsInAdvance?: NullableIntFieldUpdateOperationsInput | number | null
+    appointmentDuration?: NullableIntFieldUpdateOperationsInput | number | null
+    consultationCharge?: NullableFloatFieldUpdateOperationsInput | number | null
+    maxBookingsPerSlot?: NullableIntFieldUpdateOperationsInput | number | null
+    displayOnBookingPage?: BoolFieldUpdateOperationsInput | boolean
+    educations?: NullableJsonNullValueInput | InputJsonValue
+    awards?: NullableJsonNullValueInput | InputJsonValue
+    certifications?: NullableJsonNullValueInput | InputJsonValue
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    qualification?: NullableStringFieldUpdateOperationsInput | string | null
+    signatureImage?: NullableStringFieldUpdateOperationsInput | string | null
+    medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCardBack?: NullableStringFieldUpdateOperationsInput | string | null
+    panCard?: NullableStringFieldUpdateOperationsInput | string | null
+    followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
+    followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
+    freeFollowUpLimit?: NullableIntFieldUpdateOperationsInput | number | null
+    followUpFee?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    department?: DepartmentUpdateOneWithoutDoctorsNestedInput
+    designation?: DesignationUpdateOneWithoutDoctorsNestedInput
+    specializations?: SpecializationUpdateManyWithoutDoctorsNestedInput
+    clinic?: ClinicUpdateOneRequiredWithoutDoctorsNestedInput
+    patients?: PatientUpdateManyWithoutPrimaryDoctorNestedInput
+    appointments?: AppointmentUpdateManyWithoutDoctorNestedInput
+    prescriptions?: PrescriptionUpdateManyWithoutDoctorNestedInput
+  }
+
+  export type DoctorUncheckedUpdateWithoutPayrollsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    doctorCode?: NullableStringFieldUpdateOperationsInput | string | null
+    fullName?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    yearOfExperience?: NullableIntFieldUpdateOperationsInput | number | null
+    medicalLicenseNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    languagesSpoken?: DoctorUpdatelanguagesSpokenInput | string[]
+    bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    featureOnWebsite?: BoolFieldUpdateOperationsInput | boolean
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
+    address1?: NullableStringFieldUpdateOperationsInput | string | null
+    address2?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    appointmentType?: NullableStringFieldUpdateOperationsInput | string | null
+    acceptBookingsInAdvance?: NullableIntFieldUpdateOperationsInput | number | null
+    appointmentDuration?: NullableIntFieldUpdateOperationsInput | number | null
+    consultationCharge?: NullableFloatFieldUpdateOperationsInput | number | null
+    maxBookingsPerSlot?: NullableIntFieldUpdateOperationsInput | number | null
+    displayOnBookingPage?: BoolFieldUpdateOperationsInput | boolean
+    educations?: NullableJsonNullValueInput | InputJsonValue
+    awards?: NullableJsonNullValueInput | InputJsonValue
+    certifications?: NullableJsonNullValueInput | InputJsonValue
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    departmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    qualification?: NullableStringFieldUpdateOperationsInput | string | null
+    signatureImage?: NullableStringFieldUpdateOperationsInput | string | null
+    medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarCardBack?: NullableStringFieldUpdateOperationsInput | string | null
+    panCard?: NullableStringFieldUpdateOperationsInput | string | null
+    followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
+    followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
+    freeFollowUpLimit?: NullableIntFieldUpdateOperationsInput | number | null
+    followUpFee?: NullableFloatFieldUpdateOperationsInput | number | null
+    designationId?: NullableStringFieldUpdateOperationsInput | string | null
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    specializations?: SpecializationUncheckedUpdateManyWithoutDoctorsNestedInput
+    patients?: PatientUncheckedUpdateManyWithoutPrimaryDoctorNestedInput
+    appointments?: AppointmentUncheckedUpdateManyWithoutDoctorNestedInput
+    prescriptions?: PrescriptionUncheckedUpdateManyWithoutDoctorNestedInput
   }
 
   export type ClinicUpsertWithoutPayrollsInput = {
@@ -63424,6 +63960,7 @@ export namespace Prisma {
     clinic: ClinicCreateNestedOneWithoutDoctorsInput
     patients?: PatientCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentCreateNestedManyWithoutDoctorInput
+    payrolls?: PayrollCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorUncheckedCreateWithoutPrescriptionsInput = {
@@ -63480,6 +64017,7 @@ export namespace Prisma {
     specializations?: SpecializationUncheckedCreateNestedManyWithoutDoctorsInput
     patients?: PatientUncheckedCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentUncheckedCreateNestedManyWithoutDoctorInput
+    payrolls?: PayrollUncheckedCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorCreateOrConnectWithoutPrescriptionsInput = {
@@ -63880,6 +64418,7 @@ export namespace Prisma {
     clinic?: ClinicUpdateOneRequiredWithoutDoctorsNestedInput
     patients?: PatientUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUpdateManyWithoutDoctorNestedInput
+    payrolls?: PayrollUpdateManyWithoutDoctorNestedInput
   }
 
   export type DoctorUncheckedUpdateWithoutPrescriptionsInput = {
@@ -63936,6 +64475,7 @@ export namespace Prisma {
     specializations?: SpecializationUncheckedUpdateManyWithoutDoctorsNestedInput
     patients?: PatientUncheckedUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUncheckedUpdateManyWithoutDoctorNestedInput
+    payrolls?: PayrollUncheckedUpdateManyWithoutDoctorNestedInput
   }
 
   export type AppointmentUpsertWithoutPrescriptionsInput = {
@@ -66801,7 +67341,8 @@ export namespace Prisma {
 
   export type PayrollCreateManyClinicInput = {
     id?: string
-    staffId: string
+    staffId?: string | null
+    doctorId?: string | null
     netSalary: number
     basicSalary?: number
     da?: number
@@ -66816,6 +67357,7 @@ export namespace Prisma {
     labourWelfare?: number
     otherDeductions?: number
     status?: string
+    salaryDate?: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -67192,6 +67734,7 @@ export namespace Prisma {
     patients?: PatientUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUpdateManyWithoutDoctorNestedInput
     prescriptions?: PrescriptionUpdateManyWithoutDoctorNestedInput
+    payrolls?: PayrollUpdateManyWithoutDoctorNestedInput
   }
 
   export type DoctorUncheckedUpdateWithoutClinicInput = {
@@ -67248,6 +67791,7 @@ export namespace Prisma {
     patients?: PatientUncheckedUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUncheckedUpdateManyWithoutDoctorNestedInput
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutDoctorNestedInput
+    payrolls?: PayrollUncheckedUpdateManyWithoutDoctorNestedInput
   }
 
   export type DoctorUncheckedUpdateManyWithoutClinicInput = {
@@ -67675,14 +68219,17 @@ export namespace Prisma {
     labourWelfare?: FloatFieldUpdateOperationsInput | number
     otherDeductions?: FloatFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
+    salaryDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    staff?: StaffUpdateOneRequiredWithoutPayrollsNestedInput
+    staff?: StaffUpdateOneWithoutPayrollsNestedInput
+    doctor?: DoctorUpdateOneWithoutPayrollsNestedInput
   }
 
   export type PayrollUncheckedUpdateWithoutClinicInput = {
     id?: StringFieldUpdateOperationsInput | string
-    staffId?: StringFieldUpdateOperationsInput | string
+    staffId?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorId?: NullableStringFieldUpdateOperationsInput | string | null
     netSalary?: FloatFieldUpdateOperationsInput | number
     basicSalary?: FloatFieldUpdateOperationsInput | number
     da?: FloatFieldUpdateOperationsInput | number
@@ -67697,13 +68244,15 @@ export namespace Prisma {
     labourWelfare?: FloatFieldUpdateOperationsInput | number
     otherDeductions?: FloatFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
+    salaryDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PayrollUncheckedUpdateManyWithoutClinicInput = {
     id?: StringFieldUpdateOperationsInput | string
-    staffId?: StringFieldUpdateOperationsInput | string
+    staffId?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorId?: NullableStringFieldUpdateOperationsInput | string | null
     netSalary?: FloatFieldUpdateOperationsInput | number
     basicSalary?: FloatFieldUpdateOperationsInput | number
     da?: FloatFieldUpdateOperationsInput | number
@@ -67718,6 +68267,7 @@ export namespace Prisma {
     labourWelfare?: FloatFieldUpdateOperationsInput | number
     otherDeductions?: FloatFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
+    salaryDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -68685,6 +69235,7 @@ export namespace Prisma {
     patients?: PatientUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUpdateManyWithoutDoctorNestedInput
     prescriptions?: PrescriptionUpdateManyWithoutDoctorNestedInput
+    payrolls?: PayrollUpdateManyWithoutDoctorNestedInput
   }
 
   export type DoctorUncheckedUpdateWithoutDepartmentInput = {
@@ -68741,6 +69292,7 @@ export namespace Prisma {
     patients?: PatientUncheckedUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUncheckedUpdateManyWithoutDoctorNestedInput
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutDoctorNestedInput
+    payrolls?: PayrollUncheckedUpdateManyWithoutDoctorNestedInput
   }
 
   export type DoctorUncheckedUpdateManyWithoutDepartmentInput = {
@@ -69154,6 +69706,7 @@ export namespace Prisma {
     patients?: PatientUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUpdateManyWithoutDoctorNestedInput
     prescriptions?: PrescriptionUpdateManyWithoutDoctorNestedInput
+    payrolls?: PayrollUpdateManyWithoutDoctorNestedInput
   }
 
   export type DoctorUncheckedUpdateWithoutDesignationInput = {
@@ -69210,6 +69763,7 @@ export namespace Prisma {
     patients?: PatientUncheckedUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUncheckedUpdateManyWithoutDoctorNestedInput
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutDoctorNestedInput
+    payrolls?: PayrollUncheckedUpdateManyWithoutDoctorNestedInput
   }
 
   export type DoctorUncheckedUpdateManyWithoutDesignationInput = {
@@ -69343,6 +69897,7 @@ export namespace Prisma {
 
   export type PayrollCreateManyStaffInput = {
     id?: string
+    doctorId?: string | null
     netSalary: number
     basicSalary?: number
     da?: number
@@ -69357,6 +69912,7 @@ export namespace Prisma {
     labourWelfare?: number
     otherDeductions?: number
     status?: string
+    salaryDate?: Date | string
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -69378,13 +69934,16 @@ export namespace Prisma {
     labourWelfare?: FloatFieldUpdateOperationsInput | number
     otherDeductions?: FloatFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
+    salaryDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    doctor?: DoctorUpdateOneWithoutPayrollsNestedInput
     clinic?: ClinicUpdateOneRequiredWithoutPayrollsNestedInput
   }
 
   export type PayrollUncheckedUpdateWithoutStaffInput = {
     id?: StringFieldUpdateOperationsInput | string
+    doctorId?: NullableStringFieldUpdateOperationsInput | string | null
     netSalary?: FloatFieldUpdateOperationsInput | number
     basicSalary?: FloatFieldUpdateOperationsInput | number
     da?: FloatFieldUpdateOperationsInput | number
@@ -69399,6 +69958,7 @@ export namespace Prisma {
     labourWelfare?: FloatFieldUpdateOperationsInput | number
     otherDeductions?: FloatFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
+    salaryDate?: DateTimeFieldUpdateOperationsInput | Date | string
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -69406,6 +69966,7 @@ export namespace Prisma {
 
   export type PayrollUncheckedUpdateManyWithoutStaffInput = {
     id?: StringFieldUpdateOperationsInput | string
+    doctorId?: NullableStringFieldUpdateOperationsInput | string | null
     netSalary?: FloatFieldUpdateOperationsInput | number
     basicSalary?: FloatFieldUpdateOperationsInput | number
     da?: FloatFieldUpdateOperationsInput | number
@@ -69420,6 +69981,7 @@ export namespace Prisma {
     labourWelfare?: FloatFieldUpdateOperationsInput | number
     otherDeductions?: FloatFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
+    salaryDate?: DateTimeFieldUpdateOperationsInput | Date | string
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -69492,6 +70054,29 @@ export namespace Prisma {
     followUpDate?: Date | string | null
     followUpNotes?: string | null
     status?: string
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PayrollCreateManyDoctorInput = {
+    id?: string
+    staffId?: string | null
+    netSalary: number
+    basicSalary?: number
+    da?: number
+    hra?: number
+    conveyance?: number
+    medicalAllowance?: number
+    otherEarnings?: number
+    tds?: number
+    esi?: number
+    pf?: number
+    profTax?: number
+    labourWelfare?: number
+    otherDeductions?: number
+    status?: string
+    salaryDate?: Date | string
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -69755,6 +70340,75 @@ export namespace Prisma {
     followUpDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     followUpNotes?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PayrollUpdateWithoutDoctorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    netSalary?: FloatFieldUpdateOperationsInput | number
+    basicSalary?: FloatFieldUpdateOperationsInput | number
+    da?: FloatFieldUpdateOperationsInput | number
+    hra?: FloatFieldUpdateOperationsInput | number
+    conveyance?: FloatFieldUpdateOperationsInput | number
+    medicalAllowance?: FloatFieldUpdateOperationsInput | number
+    otherEarnings?: FloatFieldUpdateOperationsInput | number
+    tds?: FloatFieldUpdateOperationsInput | number
+    esi?: FloatFieldUpdateOperationsInput | number
+    pf?: FloatFieldUpdateOperationsInput | number
+    profTax?: FloatFieldUpdateOperationsInput | number
+    labourWelfare?: FloatFieldUpdateOperationsInput | number
+    otherDeductions?: FloatFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    salaryDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    staff?: StaffUpdateOneWithoutPayrollsNestedInput
+    clinic?: ClinicUpdateOneRequiredWithoutPayrollsNestedInput
+  }
+
+  export type PayrollUncheckedUpdateWithoutDoctorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    staffId?: NullableStringFieldUpdateOperationsInput | string | null
+    netSalary?: FloatFieldUpdateOperationsInput | number
+    basicSalary?: FloatFieldUpdateOperationsInput | number
+    da?: FloatFieldUpdateOperationsInput | number
+    hra?: FloatFieldUpdateOperationsInput | number
+    conveyance?: FloatFieldUpdateOperationsInput | number
+    medicalAllowance?: FloatFieldUpdateOperationsInput | number
+    otherEarnings?: FloatFieldUpdateOperationsInput | number
+    tds?: FloatFieldUpdateOperationsInput | number
+    esi?: FloatFieldUpdateOperationsInput | number
+    pf?: FloatFieldUpdateOperationsInput | number
+    profTax?: FloatFieldUpdateOperationsInput | number
+    labourWelfare?: FloatFieldUpdateOperationsInput | number
+    otherDeductions?: FloatFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    salaryDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PayrollUncheckedUpdateManyWithoutDoctorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    staffId?: NullableStringFieldUpdateOperationsInput | string | null
+    netSalary?: FloatFieldUpdateOperationsInput | number
+    basicSalary?: FloatFieldUpdateOperationsInput | number
+    da?: FloatFieldUpdateOperationsInput | number
+    hra?: FloatFieldUpdateOperationsInput | number
+    conveyance?: FloatFieldUpdateOperationsInput | number
+    medicalAllowance?: FloatFieldUpdateOperationsInput | number
+    otherEarnings?: FloatFieldUpdateOperationsInput | number
+    tds?: FloatFieldUpdateOperationsInput | number
+    esi?: FloatFieldUpdateOperationsInput | number
+    pf?: FloatFieldUpdateOperationsInput | number
+    profTax?: FloatFieldUpdateOperationsInput | number
+    labourWelfare?: FloatFieldUpdateOperationsInput | number
+    otherDeductions?: FloatFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    salaryDate?: DateTimeFieldUpdateOperationsInput | Date | string
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -70292,6 +70946,7 @@ export namespace Prisma {
     patients?: PatientUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUpdateManyWithoutDoctorNestedInput
     prescriptions?: PrescriptionUpdateManyWithoutDoctorNestedInput
+    payrolls?: PayrollUpdateManyWithoutDoctorNestedInput
   }
 
   export type DoctorUncheckedUpdateWithoutSpecializationsInput = {
@@ -70348,6 +71003,7 @@ export namespace Prisma {
     patients?: PatientUncheckedUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUncheckedUpdateManyWithoutDoctorNestedInput
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutDoctorNestedInput
+    payrolls?: PayrollUncheckedUpdateManyWithoutDoctorNestedInput
   }
 
   export type DoctorUncheckedUpdateManyWithoutSpecializationsInput = {

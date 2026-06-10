@@ -83,7 +83,7 @@ const getPatients = async (req, res) => {
         const patients = await prisma_1.default.patient.findMany({
             where: {
                 clinicId,
-                ...(status && typeof status === "string" ? { status } : {}),
+                status: status && typeof status === "string" ? status : { not: "Deleted" },
                 ...(doctorId && typeof doctorId === "string"
                     ? { primaryDoctorId: doctorId }
                     : {}),
@@ -137,21 +137,15 @@ const createPatient = async (req, res) => {
         const clinicId = req.user?.clinicId;
         if (!clinicId)
             return res.status(403).json({ message: "No clinic associated" });
-        const { firstName, middleName, lastName, profileImage, phone, alternateMobile, email, dob, gender, bloodGroup, maritalStatus, occupation, aadhaarNumber, passportNumber, referredBy, emergencyContactName, emergencyContactRelation, emergencyContactPhone, status, address1, address2, country, state, city, pincode, primaryDoctorId, lastVisitedAt, } = req.body;
+        const { firstName, middleName, lastName, profileImage, phone, alternateMobile, email, dob, gender, bloodGroup, maritalStatus, occupation, aadhaarNumber, passportNumber, referredBy, emergencyContactName, emergencyContactRelation, emergencyContactPhone, status, address1, address2, country, state, city, pincode, primaryDoctorId, lastVisitedAt, vitals, } = req.body;
         if (!firstName?.trim()) {
             return res.status(400).json({ message: "First name is required" });
         }
         if (!lastName?.trim()) {
             return res.status(400).json({ message: "Last name is required" });
         }
-        if (!primaryDoctorId) {
-            return res.status(400).json({ message: "Primary doctor is required" });
-        }
-        const doctor = await prisma_1.default.doctor.findFirst({
-            where: { id: primaryDoctorId, clinicId },
-        });
-        if (!doctor) {
-            return res.status(400).json({ message: "Invalid primary doctor" });
+        if (!address1?.trim()) {
+            return res.status(400).json({ message: "Address Line 1 is required" });
         }
         // 🔴 P0 Duplicate Patient Detection
         if (phone || email) {
@@ -215,6 +209,7 @@ const createPatient = async (req, res) => {
                 pincode: pincode || null,
                 primaryDoctorId,
                 lastVisitedAt: lastVisitedAt ? new Date(lastVisitedAt) : null,
+                vitals: vitals || {},
                 clinicId,
             },
             include: doctorInclude,
@@ -291,7 +286,7 @@ const createPatient = async (req, res) => {
                 clinicId,
                 type: "PATIENT_ADDED",
                 title: "New Patient Registered",
-                message: `${firstName.trim()} ${lastName.trim()} (${patientCode}) has been registered${doctor ? ` under Dr. ${doctor.fullName}` : ""}.`,
+                message: `${firstName.trim()} ${lastName.trim()} (${patientCode}) has been registered.`,
                 targetRole: "ALL",
                 link: "/patients/patient-list",
             });
@@ -314,14 +309,12 @@ const updatePatient = async (req, res) => {
         });
         if (!existing)
             return res.status(404).json({ message: "Patient not found" });
-        const { firstName, lastName, profileImage, phone, email, dob, gender, bloodGroup, status, address1, address2, country, state, city, pincode, primaryDoctorId, lastVisitedAt, } = req.body;
+        const { firstName, lastName, profileImage, phone, email, dob, gender, bloodGroup, status, address1, address2, country, state, city, pincode, primaryDoctorId, lastVisitedAt, vitals, } = req.body;
         if (primaryDoctorId) {
             const doctor = await prisma_1.default.doctor.findFirst({
                 where: { id: primaryDoctorId, clinicId: clinicId },
             });
-            if (!doctor) {
-                return res.status(400).json({ message: "Invalid primary doctor" });
-            }
+            // Removing strict check as per user request to remove primary doctor
         }
         const updated = await prisma_1.default.patient.update({
             where: { id },
@@ -362,6 +355,7 @@ const updatePatient = async (req, res) => {
                     : existing.city,
                 pincode: pincode !== undefined ? pincode || null : existing.pincode,
                 primaryDoctorId: primaryDoctorId !== undefined ? primaryDoctorId || null : existing.primaryDoctorId,
+                vitals: vitals !== undefined ? vitals : existing.vitals,
                 lastVisitedAt: lastVisitedAt !== undefined
                     ? lastVisitedAt
                         ? new Date(lastVisitedAt)
@@ -388,7 +382,12 @@ const deletePatient = async (req, res) => {
         });
         if (!existing)
             return res.status(404).json({ message: "Patient not found" });
-        await prisma_1.default.patient.delete({ where: { id } });
+        // SOFT DELETE: Just change the status to "Deleted" instead of removing the record
+        // This keeps the Appointments intact as requested.
+        await prisma_1.default.patient.update({
+            where: { id },
+            data: { status: "Deleted" }
+        });
         // 🔔 Notify on patient removal
         try {
             await (0, notification_controller_1.createNotificationInternal)({

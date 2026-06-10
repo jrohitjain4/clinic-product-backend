@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkFollowupStatus = exports.deleteAppointment = exports.updateAppointment = exports.createAppointment = exports.getAppointmentById = exports.getAppointmentsCalendar = exports.getAppointments = void 0;
+exports.updateFollowUpPayment = exports.createFollowUpAppointment = exports.checkFollowupStatus = exports.deleteAppointment = exports.updateAppointment = exports.createAppointment = exports.getAppointmentById = exports.getAppointmentsCalendar = exports.getAppointments = void 0;
 const prisma_1 = __importDefault(require("../lib/prisma"));
 const notification_controller_1 = require("./notification.controller");
 const VALID_STATUSES = [
@@ -12,7 +12,6 @@ const VALID_STATUSES = [
     "Cancelled",
     "Schedule",
     "Confirmed",
-    "Follow-up",
 ];
 const formatDateTimeLabel = (date) => {
     const d = date.toLocaleDateString("en-GB", {
@@ -59,6 +58,10 @@ const doctorInclude = {
             fullName: true,
             profileImage: true,
             appointmentDuration: true,
+            followUpEnabled: true,
+            freeFollowUpLimit: true,
+            followUpValidityDays: true,
+            followUpFee: true,
             designation: { select: { id: true, name: true } },
             department: { select: { id: true, name: true } },
         },
@@ -68,6 +71,16 @@ const appointmentIncludes = {
     ...patientInclude,
     ...doctorInclude,
     department: { select: { id: true, name: true } },
+    clinic: {
+        include: { landingPage: true }
+    },
+    followUps: {
+        select: { id: true, appointmentCode: true, scheduledAt: true, status: true, followUpPaymentStatus: true, reason: true },
+        orderBy: { scheduledAt: "asc" },
+    },
+    parentAppointment: {
+        select: { id: true, appointmentCode: true, scheduledAt: true, status: true },
+    },
 };
 const enrichAppointment = (a) => ({
     ...a,
@@ -238,7 +251,30 @@ const getAppointmentById = async (req, res) => {
         });
         if (!appointment)
             return res.status(404).json({ message: "Appointment not found" });
-        res.json(enrichAppointment(appointment));
+        // Ensure we fetch the full chain if this is a follow-up or has follow-ups
+        // We fetch all non-cancelled appointments for this specific patient-doctor pair that are linked
+        const fullChain = await prisma_1.default.appointment.findMany({
+            where: {
+                patientId: appointment.patientId,
+                doctorId: appointment.doctorId,
+                clinicId: clinicId,
+                status: { not: "Cancelled" },
+                OR: [
+                    { isFollowUp: true },
+                    { parentAppointmentId: { not: null } },
+                    { followUps: { some: {} } }
+                ]
+            },
+            include: {
+                doctor: { select: { id: true, fullName: true, designation: { select: { name: true } } } },
+                patient: { select: { id: true, firstName: true, lastName: true, phone: true } }
+            },
+            orderBy: { scheduledAt: "asc" }
+        });
+        const enriched = enrichAppointment(appointment);
+        // Attach the full chain so the frontend can display the complete history
+        enriched.followUpChain = fullChain;
+        res.json(enriched);
     }
     catch (err) {
         const message = err instanceof Error ? err.message : "Server error";
@@ -252,7 +288,7 @@ const createAppointment = async (req, res) => {
         const clinicId = req.user?.clinicId;
         if (!clinicId)
             return res.status(403).json({ message: "No clinic associated" });
-        const { patientId, doctorId, departmentId, scheduledAt, endAt, mode, appointmentType, status, reason, location, } = req.body;
+        const { patientId, doctorId, departmentId, scheduledAt, endAt, mode, appointmentType, status, reason, location, isFollowUp, followUpStatus, paymentStatus, parentAppointmentId, } = req.body;
         if (!patientId)
             return res.status(400).json({ message: "Patient is required" });
         if (!doctorId)
@@ -322,6 +358,10 @@ const createAppointment = async (req, res) => {
                 reason: reason || null,
                 location: location || null,
                 clinicId,
+                isFollowUp: isFollowUp || false,
+                followUpStatus: followUpStatus || null,
+                paymentStatus: paymentStatus || null,
+                parentAppointmentId: parentAppointmentId || null,
             },
             include: appointmentIncludes,
         });
@@ -354,7 +394,7 @@ const updateAppointment = async (req, res) => {
         });
         if (!existing)
             return res.status(404).json({ message: "Appointment not found" });
-        const { patientId, doctorId, departmentId, scheduledAt, endAt, mode, appointmentType, status, reason, location, } = req.body;
+        const { patientId, doctorId, departmentId, scheduledAt, endAt, mode, appointmentType, status, reason, location, isFollowUp, followUpStatus, paymentStatus, parentAppointmentId, } = req.body;
         if (doctorId) {
             const doctor = await prisma_1.default.doctor.findFirst({
                 where: { id: doctorId, clinicId: clinicId },
@@ -393,6 +433,10 @@ const updateAppointment = async (req, res) => {
                 status: resolvedStatus,
                 reason: reason !== undefined ? reason || null : existing.reason,
                 location: location !== undefined ? location || null : existing.location,
+                isFollowUp: isFollowUp !== undefined ? isFollowUp : existing.isFollowUp,
+                followUpStatus: followUpStatus !== undefined ? followUpStatus : existing.followUpStatus,
+                paymentStatus: paymentStatus !== undefined ? paymentStatus : existing.paymentStatus,
+                parentAppointmentId: parentAppointmentId !== undefined ? parentAppointmentId : existing.parentAppointmentId,
             },
             include: appointmentIncludes,
         });
@@ -465,7 +509,7 @@ const checkFollowupStatus = async (req, res) => {
                 patientId: patientId,
                 doctorId: doctorId,
                 clinicId: clinicId,
-                status: "Checked Out",
+                status: { not: "Cancelled" },
                 scheduledAt: { lt: scheduledDate },
             },
             orderBy: { scheduledAt: "desc" },
@@ -475,9 +519,20 @@ const checkFollowupStatus = async (req, res) => {
             const diffDays = diffMs / (1000 * 60 * 60 * 24);
             console.log(`Checking follow-up: diffDays=${diffDays}, validity=${doctor.followUpValidityDays}`);
             if (diffDays >= 0 && diffDays <= doctor.followUpValidityDays) {
+                // Link to the root parent so the entire chain remains flat and visible in one view
+                const rootParentId = lastAppt.parentAppointmentId || lastAppt.id;
+                const existingCount = await prisma_1.default.appointment.count({
+                    where: { parentAppointmentId: rootParentId, clinicId: clinicId }
+                });
+                // Determine recommended defaults
+                const freeLimit = doctor.freeFollowUpLimit || 0;
+                const isFree = freeLimit === 0 || existingCount < freeLimit;
                 return res.json({
                     isFollowup: true,
-                    lastApptId: lastAppt.id,
+                    lastApptId: rootParentId,
+                    existingCount,
+                    recommendedStatus: isFree ? "Free Follow-up" : "Paid Follow-up",
+                    recommendedPayment: isFree ? "Free" : "Unpaid",
                     diffDays,
                     validity: doctor.followUpValidityDays
                 });
@@ -491,3 +546,129 @@ const checkFollowupStatus = async (req, res) => {
     }
 };
 exports.checkFollowupStatus = checkFollowupStatus;
+// POST /api/appointments/:id/follow-up
+const createFollowUpAppointment = async (req, res) => {
+    try {
+        const clinicId = req.user?.clinicId;
+        if (!clinicId)
+            return res.status(403).json({ message: "No clinic associated" });
+        const { id: parentId } = req.params;
+        const { scheduledAt, reason, status: statusOverride, paymentStatus: paymentOverride, followUpStatus: typeOverride } = req.body;
+        if (!scheduledAt)
+            return res.status(400).json({ message: "Scheduled date/time is required" });
+        // Fetch parent appointment
+        const parent = await prisma_1.default.appointment.findFirst({
+            where: { id: parentId, clinicId },
+            include: {
+                patient: true,
+                doctor: true,
+            },
+        });
+        if (!parent)
+            return res.status(404).json({ message: "Parent appointment not found" });
+        const doctor = parent.doctor;
+        if (!doctor.followUpEnabled) {
+            return res.status(400).json({ message: "Follow-up is not enabled for this doctor" });
+        }
+        // Check validity window
+        const scheduled = new Date(scheduledAt);
+        const diffDays = (scheduled.getTime() - parent.scheduledAt.getTime()) / (1000 * 60 * 60 * 24);
+        if (doctor.followUpValidityDays && diffDays > doctor.followUpValidityDays) {
+            return res.status(400).json({
+                message: `Follow-up must be within ${doctor.followUpValidityDays} days of the original appointment`,
+            });
+        }
+        // Count existing follow-ups for this parent chain
+        const rootParentId = parent.parentAppointmentId || parent.id;
+        const existingFollowUps = await prisma_1.default.appointment.count({
+            where: {
+                OR: [
+                    { parentAppointmentId: rootParentId },
+                    { id: rootParentId },
+                ],
+            },
+        });
+        // Determine payment status
+        const freeLimit = doctor.freeFollowUpLimit || 0; // 0 = unlimited
+        let paymentStatus;
+        if (freeLimit === 0 || existingFollowUps <= freeLimit) {
+            paymentStatus = "Free";
+        }
+        else {
+            paymentStatus = "Unpaid";
+        }
+        // Generate appointment code
+        const totalCount = await prisma_1.default.appointment.count({ where: { clinicId } });
+        const appointmentCode = `AP${String(totalCount + 1).padStart(3, "0")}`;
+        // Auto-compute end time from doctor duration
+        let resolvedEnd = null;
+        if (doctor.appointmentDuration) {
+            resolvedEnd = new Date(scheduled.getTime() + doctor.appointmentDuration * 60000);
+        }
+        const followUp = await prisma_1.default.appointment.create({
+            data: {
+                appointmentCode,
+                patientId: parent.patientId,
+                doctorId: parent.doctorId,
+                departmentId: parent.departmentId || null,
+                scheduledAt: scheduled,
+                endAt: resolvedEnd,
+                mode: parent.mode,
+                appointmentType: parent.appointmentType,
+                status: statusOverride || "Schedule",
+                reason: reason || `Follow-up for ${parent.appointmentCode || parent.id}`,
+                location: parent.location,
+                clinicId,
+                isFollowUp: true,
+                followUpStatus: typeOverride || (paymentStatus === "Free" ? "Free Follow-up" : "Paid Follow-up"),
+                paymentStatus: paymentOverride || paymentStatus,
+                parentAppointmentId: rootParentId,
+            },
+            include: appointmentIncludes,
+        });
+        // 🔔 Notify
+        const patientFullName = `${parent.patient.firstName} ${parent.patient.lastName}`.trim();
+        await (0, notification_controller_1.createNotificationInternal)({
+            clinicId,
+            type: "APPOINTMENT",
+            title: "Follow-up Appointment Created",
+            message: `Follow-up ${appointmentCode} (${paymentStatus}) for ${patientFullName} with Dr. ${doctor.fullName} on ${formatDateTimeLabel(scheduled)}.`,
+            targetRole: "ALL",
+            link: `/appointments`,
+        });
+        res.status(201).json(enrichAppointment(followUp));
+    }
+    catch (err) {
+        const message = err instanceof Error ? err.message : "Server error";
+        console.error("createFollowUpAppointment error:", err);
+        res.status(500).json({ message });
+    }
+};
+exports.createFollowUpAppointment = createFollowUpAppointment;
+// PUT /api/appointments/:id/follow-up-payment
+const updateFollowUpPayment = async (req, res) => {
+    try {
+        const clinicId = req.user?.clinicId;
+        const { id } = req.params;
+        const { paymentStatus } = req.body; // "Paid", "Unpaid", "Free"
+        if (!["Paid", "Unpaid", "Free"].includes(paymentStatus)) {
+            return res.status(400).json({ message: "Invalid payment status. Must be Paid, Unpaid, or Free" });
+        }
+        const appointment = await prisma_1.default.appointment.findFirst({
+            where: { id, clinicId: clinicId },
+        });
+        if (!appointment)
+            return res.status(404).json({ message: "Appointment not found" });
+        const updated = await prisma_1.default.appointment.update({
+            where: { id },
+            data: { followUpPaymentStatus: paymentStatus },
+            include: appointmentIncludes,
+        });
+        res.json(enrichAppointment(updated));
+    }
+    catch (err) {
+        const message = err instanceof Error ? err.message : "Server error";
+        res.status(500).json({ message });
+    }
+};
+exports.updateFollowUpPayment = updateFollowUpPayment;

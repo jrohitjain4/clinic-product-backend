@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteDesignation = exports.updateDesignation = exports.createDesignation = exports.getDesignations = void 0;
+exports.bulkDeleteDesignations = exports.deleteDesignation = exports.updateDesignation = exports.createDesignation = exports.getDesignations = void 0;
 const prisma_1 = __importDefault(require("../lib/prisma"));
 // GET /api/designations
 const getDesignations = async (req, res) => {
@@ -100,7 +100,12 @@ const deleteDesignation = async (req, res) => {
         const existing = await prisma_1.default.designation.findFirst({ where: { id, clinicId: clinicId } });
         if (!existing)
             return res.status(404).json({ message: "Designation not found" });
-        await prisma_1.default.designation.delete({ where: { id } });
+        // Update related entities to null
+        await prisma_1.default.$transaction([
+            prisma_1.default.doctor.updateMany({ where: { designationId: id }, data: { designationId: null } }),
+            prisma_1.default.staff.updateMany({ where: { designationId: id }, data: { designationId: null } }),
+            prisma_1.default.designation.delete({ where: { id } })
+        ]);
         res.json({ message: "Designation deleted successfully" });
     }
     catch (err) {
@@ -108,3 +113,30 @@ const deleteDesignation = async (req, res) => {
     }
 };
 exports.deleteDesignation = deleteDesignation;
+// POST /api/designations/bulk-delete
+const bulkDeleteDesignations = async (req, res) => {
+    try {
+        const clinicId = req.user?.clinicId;
+        const { ids } = req.body;
+        if (!ids || !Array.isArray(ids)) {
+            return res.status(400).json({ message: "Invalid IDs provided" });
+        }
+        const toDelete = await prisma_1.default.designation.findMany({
+            where: { id: { in: ids }, clinicId: clinicId }
+        });
+        if (toDelete.length === 0) {
+            return res.status(404).json({ message: "No matching designations found" });
+        }
+        const validIds = toDelete.map(d => d.id);
+        await prisma_1.default.$transaction([
+            prisma_1.default.doctor.updateMany({ where: { designationId: { in: validIds } }, data: { designationId: null } }),
+            prisma_1.default.staff.updateMany({ where: { designationId: { in: validIds } }, data: { designationId: null } }),
+            prisma_1.default.designation.deleteMany({ where: { id: { in: validIds } } })
+        ]);
+        res.json({ message: `${validIds.length} designations deleted successfully` });
+    }
+    catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+exports.bulkDeleteDesignations = bulkDeleteDesignations;
