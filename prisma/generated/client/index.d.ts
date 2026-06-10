@@ -3981,7 +3981,6 @@ export namespace Prisma {
 
   export type DoctorCountOutputType = {
     specializations: number
-    patients: number
     appointments: number
     prescriptions: number
     payrolls: number
@@ -3989,7 +3988,6 @@ export namespace Prisma {
 
   export type DoctorCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     specializations?: boolean | DoctorCountOutputTypeCountSpecializationsArgs
-    patients?: boolean | DoctorCountOutputTypeCountPatientsArgs
     appointments?: boolean | DoctorCountOutputTypeCountAppointmentsArgs
     prescriptions?: boolean | DoctorCountOutputTypeCountPrescriptionsArgs
     payrolls?: boolean | DoctorCountOutputTypeCountPayrollsArgs
@@ -4011,13 +4009,6 @@ export namespace Prisma {
    */
   export type DoctorCountOutputTypeCountSpecializationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SpecializationWhereInput
-  }
-
-  /**
-   * DoctorCountOutputType without action
-   */
-  export type DoctorCountOutputTypeCountPatientsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: PatientWhereInput
   }
 
   /**
@@ -13423,7 +13414,6 @@ export namespace Prisma {
     designation?: boolean | Doctor$designationArgs<ExtArgs>
     specializations?: boolean | Doctor$specializationsArgs<ExtArgs>
     clinic?: boolean | ClinicDefaultArgs<ExtArgs>
-    patients?: boolean | Doctor$patientsArgs<ExtArgs>
     appointments?: boolean | Doctor$appointmentsArgs<ExtArgs>
     prescriptions?: boolean | Doctor$prescriptionsArgs<ExtArgs>
     payrolls?: boolean | Doctor$payrollsArgs<ExtArgs>
@@ -13544,7 +13534,6 @@ export namespace Prisma {
     designation?: boolean | Doctor$designationArgs<ExtArgs>
     specializations?: boolean | Doctor$specializationsArgs<ExtArgs>
     clinic?: boolean | ClinicDefaultArgs<ExtArgs>
-    patients?: boolean | Doctor$patientsArgs<ExtArgs>
     appointments?: boolean | Doctor$appointmentsArgs<ExtArgs>
     prescriptions?: boolean | Doctor$prescriptionsArgs<ExtArgs>
     payrolls?: boolean | Doctor$payrollsArgs<ExtArgs>
@@ -13563,7 +13552,6 @@ export namespace Prisma {
       designation: Prisma.$DesignationPayload<ExtArgs> | null
       specializations: Prisma.$SpecializationPayload<ExtArgs>[]
       clinic: Prisma.$ClinicPayload<ExtArgs>
-      patients: Prisma.$PatientPayload<ExtArgs>[]
       appointments: Prisma.$AppointmentPayload<ExtArgs>[]
       prescriptions: Prisma.$PrescriptionPayload<ExtArgs>[]
       payrolls: Prisma.$PayrollPayload<ExtArgs>[]
@@ -13987,7 +13975,6 @@ export namespace Prisma {
     designation<T extends Doctor$designationArgs<ExtArgs> = {}>(args?: Subset<T, Doctor$designationArgs<ExtArgs>>): Prisma__DesignationClient<$Result.GetResult<Prisma.$DesignationPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     specializations<T extends Doctor$specializationsArgs<ExtArgs> = {}>(args?: Subset<T, Doctor$specializationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SpecializationPayload<ExtArgs>, T, "findMany"> | Null>
     clinic<T extends ClinicDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClinicDefaultArgs<ExtArgs>>): Prisma__ClinicClient<$Result.GetResult<Prisma.$ClinicPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
-    patients<T extends Doctor$patientsArgs<ExtArgs> = {}>(args?: Subset<T, Doctor$patientsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PatientPayload<ExtArgs>, T, "findMany"> | Null>
     appointments<T extends Doctor$appointmentsArgs<ExtArgs> = {}>(args?: Subset<T, Doctor$appointmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppointmentPayload<ExtArgs>, T, "findMany"> | Null>
     prescriptions<T extends Doctor$prescriptionsArgs<ExtArgs> = {}>(args?: Subset<T, Doctor$prescriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PrescriptionPayload<ExtArgs>, T, "findMany"> | Null>
     payrolls<T extends Doctor$payrollsArgs<ExtArgs> = {}>(args?: Subset<T, Doctor$payrollsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PayrollPayload<ExtArgs>, T, "findMany"> | Null>
@@ -14438,26 +14425,6 @@ export namespace Prisma {
   }
 
   /**
-   * Doctor.patients
-   */
-  export type Doctor$patientsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Patient
-     */
-    select?: PatientSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PatientInclude<ExtArgs> | null
-    where?: PatientWhereInput
-    orderBy?: PatientOrderByWithRelationInput | PatientOrderByWithRelationInput[]
-    cursor?: PatientWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: PatientScalarFieldEnum | PatientScalarFieldEnum[]
-  }
-
-  /**
    * Doctor.appointments
    */
   export type Doctor$appointmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -14570,7 +14537,6 @@ export namespace Prisma {
     state: string | null
     city: string | null
     pincode: string | null
-    primaryDoctorId: string | null
     lastVisitedAt: Date | null
     clinicId: string | null
     createdAt: Date | null
@@ -14605,7 +14571,6 @@ export namespace Prisma {
     state: string | null
     city: string | null
     pincode: string | null
-    primaryDoctorId: string | null
     lastVisitedAt: Date | null
     clinicId: string | null
     createdAt: Date | null
@@ -14640,7 +14605,6 @@ export namespace Prisma {
     state: number
     city: number
     pincode: number
-    primaryDoctorId: number
     lastVisitedAt: number
     vitals: number
     clinicId: number
@@ -14678,7 +14642,6 @@ export namespace Prisma {
     state?: true
     city?: true
     pincode?: true
-    primaryDoctorId?: true
     lastVisitedAt?: true
     clinicId?: true
     createdAt?: true
@@ -14713,7 +14676,6 @@ export namespace Prisma {
     state?: true
     city?: true
     pincode?: true
-    primaryDoctorId?: true
     lastVisitedAt?: true
     clinicId?: true
     createdAt?: true
@@ -14748,7 +14710,6 @@ export namespace Prisma {
     state?: true
     city?: true
     pincode?: true
-    primaryDoctorId?: true
     lastVisitedAt?: true
     vitals?: true
     clinicId?: true
@@ -14857,7 +14818,6 @@ export namespace Prisma {
     state: string | null
     city: string | null
     pincode: string | null
-    primaryDoctorId: string | null
     lastVisitedAt: Date | null
     vitals: JsonValue | null
     clinicId: string
@@ -14910,13 +14870,11 @@ export namespace Prisma {
     state?: boolean
     city?: boolean
     pincode?: boolean
-    primaryDoctorId?: boolean
     lastVisitedAt?: boolean
     vitals?: boolean
     clinicId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    primaryDoctor?: boolean | Patient$primaryDoctorArgs<ExtArgs>
     clinic?: boolean | ClinicDefaultArgs<ExtArgs>
     appointments?: boolean | Patient$appointmentsArgs<ExtArgs>
     prescriptions?: boolean | Patient$prescriptionsArgs<ExtArgs>
@@ -14952,13 +14910,11 @@ export namespace Prisma {
     state?: boolean
     city?: boolean
     pincode?: boolean
-    primaryDoctorId?: boolean
     lastVisitedAt?: boolean
     vitals?: boolean
     clinicId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    primaryDoctor?: boolean | Patient$primaryDoctorArgs<ExtArgs>
     clinic?: boolean | ClinicDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["patient"]>
 
@@ -14990,7 +14946,6 @@ export namespace Prisma {
     state?: boolean
     city?: boolean
     pincode?: boolean
-    primaryDoctorId?: boolean
     lastVisitedAt?: boolean
     vitals?: boolean
     clinicId?: boolean
@@ -14999,7 +14954,6 @@ export namespace Prisma {
   }
 
   export type PatientInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    primaryDoctor?: boolean | Patient$primaryDoctorArgs<ExtArgs>
     clinic?: boolean | ClinicDefaultArgs<ExtArgs>
     appointments?: boolean | Patient$appointmentsArgs<ExtArgs>
     prescriptions?: boolean | Patient$prescriptionsArgs<ExtArgs>
@@ -15007,14 +14961,12 @@ export namespace Prisma {
     _count?: boolean | PatientCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PatientIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    primaryDoctor?: boolean | Patient$primaryDoctorArgs<ExtArgs>
     clinic?: boolean | ClinicDefaultArgs<ExtArgs>
   }
 
   export type $PatientPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Patient"
     objects: {
-      primaryDoctor: Prisma.$DoctorPayload<ExtArgs> | null
       clinic: Prisma.$ClinicPayload<ExtArgs>
       appointments: Prisma.$AppointmentPayload<ExtArgs>[]
       prescriptions: Prisma.$PrescriptionPayload<ExtArgs>[]
@@ -15048,7 +15000,6 @@ export namespace Prisma {
       state: string | null
       city: string | null
       pincode: string | null
-      primaryDoctorId: string | null
       lastVisitedAt: Date | null
       vitals: Prisma.JsonValue | null
       clinicId: string
@@ -15418,7 +15369,6 @@ export namespace Prisma {
    */
   export interface Prisma__PatientClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    primaryDoctor<T extends Patient$primaryDoctorArgs<ExtArgs> = {}>(args?: Subset<T, Patient$primaryDoctorArgs<ExtArgs>>): Prisma__DoctorClient<$Result.GetResult<Prisma.$DoctorPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     clinic<T extends ClinicDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClinicDefaultArgs<ExtArgs>>): Prisma__ClinicClient<$Result.GetResult<Prisma.$ClinicPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     appointments<T extends Patient$appointmentsArgs<ExtArgs> = {}>(args?: Subset<T, Patient$appointmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppointmentPayload<ExtArgs>, T, "findMany"> | Null>
     prescriptions<T extends Patient$prescriptionsArgs<ExtArgs> = {}>(args?: Subset<T, Patient$prescriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PrescriptionPayload<ExtArgs>, T, "findMany"> | Null>
@@ -15479,7 +15429,6 @@ export namespace Prisma {
     readonly state: FieldRef<"Patient", 'String'>
     readonly city: FieldRef<"Patient", 'String'>
     readonly pincode: FieldRef<"Patient", 'String'>
-    readonly primaryDoctorId: FieldRef<"Patient", 'String'>
     readonly lastVisitedAt: FieldRef<"Patient", 'DateTime'>
     readonly vitals: FieldRef<"Patient", 'Json'>
     readonly clinicId: FieldRef<"Patient", 'String'>
@@ -15800,21 +15749,6 @@ export namespace Prisma {
      * Filter which Patients to delete
      */
     where?: PatientWhereInput
-  }
-
-  /**
-   * Patient.primaryDoctor
-   */
-  export type Patient$primaryDoctorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Doctor
-     */
-    select?: DoctorSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: DoctorInclude<ExtArgs> | null
-    where?: DoctorWhereInput
   }
 
   /**
@@ -16184,6 +16118,7 @@ export namespace Prisma {
     notes?: boolean | Appointment$notesArgs<ExtArgs>
     parentAppointment?: boolean | Appointment$parentAppointmentArgs<ExtArgs>
     followUps?: boolean | Appointment$followUpsArgs<ExtArgs>
+    invoice?: boolean | Appointment$invoiceArgs<ExtArgs>
     _count?: boolean | AppointmentCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["appointment"]>
 
@@ -16247,6 +16182,7 @@ export namespace Prisma {
     notes?: boolean | Appointment$notesArgs<ExtArgs>
     parentAppointment?: boolean | Appointment$parentAppointmentArgs<ExtArgs>
     followUps?: boolean | Appointment$followUpsArgs<ExtArgs>
+    invoice?: boolean | Appointment$invoiceArgs<ExtArgs>
     _count?: boolean | AppointmentCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type AppointmentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -16268,6 +16204,7 @@ export namespace Prisma {
       notes: Prisma.$NotePayload<ExtArgs>[]
       parentAppointment: Prisma.$AppointmentPayload<ExtArgs> | null
       followUps: Prisma.$AppointmentPayload<ExtArgs>[]
+      invoice: Prisma.$InvoicePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -16662,6 +16599,7 @@ export namespace Prisma {
     notes<T extends Appointment$notesArgs<ExtArgs> = {}>(args?: Subset<T, Appointment$notesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotePayload<ExtArgs>, T, "findMany"> | Null>
     parentAppointment<T extends Appointment$parentAppointmentArgs<ExtArgs> = {}>(args?: Subset<T, Appointment$parentAppointmentArgs<ExtArgs>>): Prisma__AppointmentClient<$Result.GetResult<Prisma.$AppointmentPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     followUps<T extends Appointment$followUpsArgs<ExtArgs> = {}>(args?: Subset<T, Appointment$followUpsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppointmentPayload<ExtArgs>, T, "findMany"> | Null>
+    invoice<T extends Appointment$invoiceArgs<ExtArgs> = {}>(args?: Subset<T, Appointment$invoiceArgs<ExtArgs>>): Prisma__InvoiceClient<$Result.GetResult<Prisma.$InvoicePayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -17116,6 +17054,21 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: AppointmentScalarFieldEnum | AppointmentScalarFieldEnum[]
+  }
+
+  /**
+   * Appointment.invoice
+   */
+  export type Appointment$invoiceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Invoice
+     */
+    select?: InvoiceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvoiceInclude<ExtArgs> | null
+    where?: InvoiceWhereInput
   }
 
   /**
@@ -30604,6 +30557,7 @@ export namespace Prisma {
     paymentStatus: string | null
     otherInfo: string | null
     clinicId: string | null
+    appointmentId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -30622,6 +30576,7 @@ export namespace Prisma {
     paymentStatus: string | null
     otherInfo: string | null
     clinicId: string | null
+    appointmentId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -30640,6 +30595,7 @@ export namespace Prisma {
     paymentStatus: number
     otherInfo: number
     clinicId: number
+    appointmentId: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -30674,6 +30630,7 @@ export namespace Prisma {
     paymentStatus?: true
     otherInfo?: true
     clinicId?: true
+    appointmentId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -30692,6 +30649,7 @@ export namespace Prisma {
     paymentStatus?: true
     otherInfo?: true
     clinicId?: true
+    appointmentId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -30710,6 +30668,7 @@ export namespace Prisma {
     paymentStatus?: true
     otherInfo?: true
     clinicId?: true
+    appointmentId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -30815,6 +30774,7 @@ export namespace Prisma {
     paymentStatus: string
     otherInfo: string | null
     clinicId: string
+    appointmentId: string | null
     createdAt: Date
     updatedAt: Date
     _count: InvoiceCountAggregateOutputType | null
@@ -30852,11 +30812,13 @@ export namespace Prisma {
     paymentStatus?: boolean
     otherInfo?: boolean
     clinicId?: boolean
+    appointmentId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     patient?: boolean | PatientDefaultArgs<ExtArgs>
     clinic?: boolean | ClinicDefaultArgs<ExtArgs>
     items?: boolean | Invoice$itemsArgs<ExtArgs>
+    appointment?: boolean | Invoice$appointmentArgs<ExtArgs>
     _count?: boolean | InvoiceCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["invoice"]>
 
@@ -30874,10 +30836,12 @@ export namespace Prisma {
     paymentStatus?: boolean
     otherInfo?: boolean
     clinicId?: boolean
+    appointmentId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     patient?: boolean | PatientDefaultArgs<ExtArgs>
     clinic?: boolean | ClinicDefaultArgs<ExtArgs>
+    appointment?: boolean | Invoice$appointmentArgs<ExtArgs>
   }, ExtArgs["result"]["invoice"]>
 
   export type InvoiceSelectScalar = {
@@ -30894,6 +30858,7 @@ export namespace Prisma {
     paymentStatus?: boolean
     otherInfo?: boolean
     clinicId?: boolean
+    appointmentId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
@@ -30902,11 +30867,13 @@ export namespace Prisma {
     patient?: boolean | PatientDefaultArgs<ExtArgs>
     clinic?: boolean | ClinicDefaultArgs<ExtArgs>
     items?: boolean | Invoice$itemsArgs<ExtArgs>
+    appointment?: boolean | Invoice$appointmentArgs<ExtArgs>
     _count?: boolean | InvoiceCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type InvoiceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     patient?: boolean | PatientDefaultArgs<ExtArgs>
     clinic?: boolean | ClinicDefaultArgs<ExtArgs>
+    appointment?: boolean | Invoice$appointmentArgs<ExtArgs>
   }
 
   export type $InvoicePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -30915,6 +30882,7 @@ export namespace Prisma {
       patient: Prisma.$PatientPayload<ExtArgs>
       clinic: Prisma.$ClinicPayload<ExtArgs>
       items: Prisma.$InvoiceItemPayload<ExtArgs>[]
+      appointment: Prisma.$AppointmentPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -30930,6 +30898,7 @@ export namespace Prisma {
       paymentStatus: string
       otherInfo: string | null
       clinicId: string
+      appointmentId: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["invoice"]>
@@ -31299,6 +31268,7 @@ export namespace Prisma {
     patient<T extends PatientDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PatientDefaultArgs<ExtArgs>>): Prisma__PatientClient<$Result.GetResult<Prisma.$PatientPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     clinic<T extends ClinicDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClinicDefaultArgs<ExtArgs>>): Prisma__ClinicClient<$Result.GetResult<Prisma.$ClinicPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     items<T extends Invoice$itemsArgs<ExtArgs> = {}>(args?: Subset<T, Invoice$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvoiceItemPayload<ExtArgs>, T, "findMany"> | Null>
+    appointment<T extends Invoice$appointmentArgs<ExtArgs> = {}>(args?: Subset<T, Invoice$appointmentArgs<ExtArgs>>): Prisma__AppointmentClient<$Result.GetResult<Prisma.$AppointmentPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -31341,6 +31311,7 @@ export namespace Prisma {
     readonly paymentStatus: FieldRef<"Invoice", 'String'>
     readonly otherInfo: FieldRef<"Invoice", 'String'>
     readonly clinicId: FieldRef<"Invoice", 'String'>
+    readonly appointmentId: FieldRef<"Invoice", 'String'>
     readonly createdAt: FieldRef<"Invoice", 'DateTime'>
     readonly updatedAt: FieldRef<"Invoice", 'DateTime'>
   }
@@ -31678,6 +31649,21 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: InvoiceItemScalarFieldEnum | InvoiceItemScalarFieldEnum[]
+  }
+
+  /**
+   * Invoice.appointment
+   */
+  export type Invoice$appointmentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Appointment
+     */
+    select?: AppointmentSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AppointmentInclude<ExtArgs> | null
+    where?: AppointmentWhereInput
   }
 
   /**
@@ -39863,7 +39849,6 @@ export namespace Prisma {
     state: 'state',
     city: 'city',
     pincode: 'pincode',
-    primaryDoctorId: 'primaryDoctorId',
     lastVisitedAt: 'lastVisitedAt',
     vitals: 'vitals',
     clinicId: 'clinicId',
@@ -40130,6 +40115,7 @@ export namespace Prisma {
     paymentStatus: 'paymentStatus',
     otherInfo: 'otherInfo',
     clinicId: 'clinicId',
+    appointmentId: 'appointmentId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -41369,7 +41355,6 @@ export namespace Prisma {
     designation?: XOR<DesignationNullableRelationFilter, DesignationWhereInput> | null
     specializations?: SpecializationListRelationFilter
     clinic?: XOR<ClinicRelationFilter, ClinicWhereInput>
-    patients?: PatientListRelationFilter
     appointments?: AppointmentListRelationFilter
     prescriptions?: PrescriptionListRelationFilter
     payrolls?: PayrollListRelationFilter
@@ -41430,7 +41415,6 @@ export namespace Prisma {
     designation?: DesignationOrderByWithRelationInput
     specializations?: SpecializationOrderByRelationAggregateInput
     clinic?: ClinicOrderByWithRelationInput
-    patients?: PatientOrderByRelationAggregateInput
     appointments?: AppointmentOrderByRelationAggregateInput
     prescriptions?: PrescriptionOrderByRelationAggregateInput
     payrolls?: PayrollOrderByRelationAggregateInput
@@ -41494,7 +41478,6 @@ export namespace Prisma {
     designation?: XOR<DesignationNullableRelationFilter, DesignationWhereInput> | null
     specializations?: SpecializationListRelationFilter
     clinic?: XOR<ClinicRelationFilter, ClinicWhereInput>
-    patients?: PatientListRelationFilter
     appointments?: AppointmentListRelationFilter
     prescriptions?: PrescriptionListRelationFilter
     payrolls?: PayrollListRelationFilter
@@ -41645,13 +41628,11 @@ export namespace Prisma {
     state?: StringNullableFilter<"Patient"> | string | null
     city?: StringNullableFilter<"Patient"> | string | null
     pincode?: StringNullableFilter<"Patient"> | string | null
-    primaryDoctorId?: StringNullableFilter<"Patient"> | string | null
     lastVisitedAt?: DateTimeNullableFilter<"Patient"> | Date | string | null
     vitals?: JsonNullableFilter<"Patient">
     clinicId?: StringFilter<"Patient"> | string
     createdAt?: DateTimeFilter<"Patient"> | Date | string
     updatedAt?: DateTimeFilter<"Patient"> | Date | string
-    primaryDoctor?: XOR<DoctorNullableRelationFilter, DoctorWhereInput> | null
     clinic?: XOR<ClinicRelationFilter, ClinicWhereInput>
     appointments?: AppointmentListRelationFilter
     prescriptions?: PrescriptionListRelationFilter
@@ -41686,13 +41667,11 @@ export namespace Prisma {
     state?: SortOrderInput | SortOrder
     city?: SortOrderInput | SortOrder
     pincode?: SortOrderInput | SortOrder
-    primaryDoctorId?: SortOrderInput | SortOrder
     lastVisitedAt?: SortOrderInput | SortOrder
     vitals?: SortOrderInput | SortOrder
     clinicId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    primaryDoctor?: DoctorOrderByWithRelationInput
     clinic?: ClinicOrderByWithRelationInput
     appointments?: AppointmentOrderByRelationAggregateInput
     prescriptions?: PrescriptionOrderByRelationAggregateInput
@@ -41730,13 +41709,11 @@ export namespace Prisma {
     state?: StringNullableFilter<"Patient"> | string | null
     city?: StringNullableFilter<"Patient"> | string | null
     pincode?: StringNullableFilter<"Patient"> | string | null
-    primaryDoctorId?: StringNullableFilter<"Patient"> | string | null
     lastVisitedAt?: DateTimeNullableFilter<"Patient"> | Date | string | null
     vitals?: JsonNullableFilter<"Patient">
     clinicId?: StringFilter<"Patient"> | string
     createdAt?: DateTimeFilter<"Patient"> | Date | string
     updatedAt?: DateTimeFilter<"Patient"> | Date | string
-    primaryDoctor?: XOR<DoctorNullableRelationFilter, DoctorWhereInput> | null
     clinic?: XOR<ClinicRelationFilter, ClinicWhereInput>
     appointments?: AppointmentListRelationFilter
     prescriptions?: PrescriptionListRelationFilter
@@ -41771,7 +41748,6 @@ export namespace Prisma {
     state?: SortOrderInput | SortOrder
     city?: SortOrderInput | SortOrder
     pincode?: SortOrderInput | SortOrder
-    primaryDoctorId?: SortOrderInput | SortOrder
     lastVisitedAt?: SortOrderInput | SortOrder
     vitals?: SortOrderInput | SortOrder
     clinicId?: SortOrder
@@ -41813,7 +41789,6 @@ export namespace Prisma {
     state?: StringNullableWithAggregatesFilter<"Patient"> | string | null
     city?: StringNullableWithAggregatesFilter<"Patient"> | string | null
     pincode?: StringNullableWithAggregatesFilter<"Patient"> | string | null
-    primaryDoctorId?: StringNullableWithAggregatesFilter<"Patient"> | string | null
     lastVisitedAt?: DateTimeNullableWithAggregatesFilter<"Patient"> | Date | string | null
     vitals?: JsonNullableWithAggregatesFilter<"Patient">
     clinicId?: StringWithAggregatesFilter<"Patient"> | string
@@ -41853,6 +41828,7 @@ export namespace Prisma {
     notes?: NoteListRelationFilter
     parentAppointment?: XOR<AppointmentNullableRelationFilter, AppointmentWhereInput> | null
     followUps?: AppointmentListRelationFilter
+    invoice?: XOR<InvoiceNullableRelationFilter, InvoiceWhereInput> | null
   }
 
   export type AppointmentOrderByWithRelationInput = {
@@ -41884,6 +41860,7 @@ export namespace Prisma {
     notes?: NoteOrderByRelationAggregateInput
     parentAppointment?: AppointmentOrderByWithRelationInput
     followUps?: AppointmentOrderByRelationAggregateInput
+    invoice?: InvoiceOrderByWithRelationInput
   }
 
   export type AppointmentWhereUniqueInput = Prisma.AtLeast<{
@@ -41918,6 +41895,7 @@ export namespace Prisma {
     notes?: NoteListRelationFilter
     parentAppointment?: XOR<AppointmentNullableRelationFilter, AppointmentWhereInput> | null
     followUps?: AppointmentListRelationFilter
+    invoice?: XOR<InvoiceNullableRelationFilter, InvoiceWhereInput> | null
   }, "id">
 
   export type AppointmentOrderByWithAggregationInput = {
@@ -43115,11 +43093,13 @@ export namespace Prisma {
     paymentStatus?: StringFilter<"Invoice"> | string
     otherInfo?: StringNullableFilter<"Invoice"> | string | null
     clinicId?: StringFilter<"Invoice"> | string
+    appointmentId?: StringNullableFilter<"Invoice"> | string | null
     createdAt?: DateTimeFilter<"Invoice"> | Date | string
     updatedAt?: DateTimeFilter<"Invoice"> | Date | string
     patient?: XOR<PatientRelationFilter, PatientWhereInput>
     clinic?: XOR<ClinicRelationFilter, ClinicWhereInput>
     items?: InvoiceItemListRelationFilter
+    appointment?: XOR<AppointmentNullableRelationFilter, AppointmentWhereInput> | null
   }
 
   export type InvoiceOrderByWithRelationInput = {
@@ -43136,15 +43116,18 @@ export namespace Prisma {
     paymentStatus?: SortOrder
     otherInfo?: SortOrderInput | SortOrder
     clinicId?: SortOrder
+    appointmentId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     patient?: PatientOrderByWithRelationInput
     clinic?: ClinicOrderByWithRelationInput
     items?: InvoiceItemOrderByRelationAggregateInput
+    appointment?: AppointmentOrderByWithRelationInput
   }
 
   export type InvoiceWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    appointmentId?: string
     AND?: InvoiceWhereInput | InvoiceWhereInput[]
     OR?: InvoiceWhereInput[]
     NOT?: InvoiceWhereInput | InvoiceWhereInput[]
@@ -43165,7 +43148,8 @@ export namespace Prisma {
     patient?: XOR<PatientRelationFilter, PatientWhereInput>
     clinic?: XOR<ClinicRelationFilter, ClinicWhereInput>
     items?: InvoiceItemListRelationFilter
-  }, "id">
+    appointment?: XOR<AppointmentNullableRelationFilter, AppointmentWhereInput> | null
+  }, "id" | "appointmentId">
 
   export type InvoiceOrderByWithAggregationInput = {
     id?: SortOrder
@@ -43181,6 +43165,7 @@ export namespace Prisma {
     paymentStatus?: SortOrder
     otherInfo?: SortOrderInput | SortOrder
     clinicId?: SortOrder
+    appointmentId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: InvoiceCountOrderByAggregateInput
@@ -43207,6 +43192,7 @@ export namespace Prisma {
     paymentStatus?: StringWithAggregatesFilter<"Invoice"> | string
     otherInfo?: StringNullableWithAggregatesFilter<"Invoice"> | string | null
     clinicId?: StringWithAggregatesFilter<"Invoice"> | string
+    appointmentId?: StringNullableWithAggregatesFilter<"Invoice"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Invoice"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Invoice"> | Date | string
   }
@@ -44954,7 +44940,6 @@ export namespace Prisma {
     designation?: DesignationCreateNestedOneWithoutDoctorsInput
     specializations?: SpecializationCreateNestedManyWithoutDoctorsInput
     clinic: ClinicCreateNestedOneWithoutDoctorsInput
-    patients?: PatientCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentCreateNestedManyWithoutDoctorInput
     prescriptions?: PrescriptionCreateNestedManyWithoutDoctorInput
     payrolls?: PayrollCreateNestedManyWithoutDoctorInput
@@ -45012,7 +44997,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     specializations?: SpecializationUncheckedCreateNestedManyWithoutDoctorsInput
-    patients?: PatientUncheckedCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentUncheckedCreateNestedManyWithoutDoctorInput
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutDoctorInput
     payrolls?: PayrollUncheckedCreateNestedManyWithoutDoctorInput
@@ -45070,7 +45054,6 @@ export namespace Prisma {
     designation?: DesignationUpdateOneWithoutDoctorsNestedInput
     specializations?: SpecializationUpdateManyWithoutDoctorsNestedInput
     clinic?: ClinicUpdateOneRequiredWithoutDoctorsNestedInput
-    patients?: PatientUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUpdateManyWithoutDoctorNestedInput
     prescriptions?: PrescriptionUpdateManyWithoutDoctorNestedInput
     payrolls?: PayrollUpdateManyWithoutDoctorNestedInput
@@ -45128,7 +45111,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     specializations?: SpecializationUncheckedUpdateManyWithoutDoctorsNestedInput
-    patients?: PatientUncheckedUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUncheckedUpdateManyWithoutDoctorNestedInput
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutDoctorNestedInput
     payrolls?: PayrollUncheckedUpdateManyWithoutDoctorNestedInput
@@ -45322,7 +45304,6 @@ export namespace Prisma {
     vitals?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
-    primaryDoctor?: DoctorCreateNestedOneWithoutPatientsInput
     clinic: ClinicCreateNestedOneWithoutPatientsInput
     appointments?: AppointmentCreateNestedManyWithoutPatientInput
     prescriptions?: PrescriptionCreateNestedManyWithoutPatientInput
@@ -45357,7 +45338,6 @@ export namespace Prisma {
     state?: string | null
     city?: string | null
     pincode?: string | null
-    primaryDoctorId?: string | null
     lastVisitedAt?: Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
     clinicId: string
@@ -45400,7 +45380,6 @@ export namespace Prisma {
     vitals?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    primaryDoctor?: DoctorUpdateOneWithoutPatientsNestedInput
     clinic?: ClinicUpdateOneRequiredWithoutPatientsNestedInput
     appointments?: AppointmentUpdateManyWithoutPatientNestedInput
     prescriptions?: PrescriptionUpdateManyWithoutPatientNestedInput
@@ -45435,7 +45414,6 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
-    primaryDoctorId?: NullableStringFieldUpdateOperationsInput | string | null
     lastVisitedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
     clinicId?: StringFieldUpdateOperationsInput | string
@@ -45474,7 +45452,6 @@ export namespace Prisma {
     state?: string | null
     city?: string | null
     pincode?: string | null
-    primaryDoctorId?: string | null
     lastVisitedAt?: Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
     clinicId: string
@@ -45544,7 +45521,6 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
-    primaryDoctorId?: NullableStringFieldUpdateOperationsInput | string | null
     lastVisitedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
     clinicId?: StringFieldUpdateOperationsInput | string
@@ -45576,6 +45552,7 @@ export namespace Prisma {
     notes?: NoteCreateNestedManyWithoutAppointmentInput
     parentAppointment?: AppointmentCreateNestedOneWithoutFollowUpsInput
     followUps?: AppointmentCreateNestedManyWithoutParentAppointmentInput
+    invoice?: InvoiceCreateNestedOneWithoutAppointmentInput
   }
 
   export type AppointmentUncheckedCreateInput = {
@@ -45602,6 +45579,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutAppointmentInput
     notes?: NoteUncheckedCreateNestedManyWithoutAppointmentInput
     followUps?: AppointmentUncheckedCreateNestedManyWithoutParentAppointmentInput
+    invoice?: InvoiceUncheckedCreateNestedOneWithoutAppointmentInput
   }
 
   export type AppointmentUpdateInput = {
@@ -45628,6 +45606,7 @@ export namespace Prisma {
     notes?: NoteUpdateManyWithoutAppointmentNestedInput
     parentAppointment?: AppointmentUpdateOneWithoutFollowUpsNestedInput
     followUps?: AppointmentUpdateManyWithoutParentAppointmentNestedInput
+    invoice?: InvoiceUpdateOneWithoutAppointmentNestedInput
   }
 
   export type AppointmentUncheckedUpdateInput = {
@@ -45654,6 +45633,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutAppointmentNestedInput
     notes?: NoteUncheckedUpdateManyWithoutAppointmentNestedInput
     followUps?: AppointmentUncheckedUpdateManyWithoutParentAppointmentNestedInput
+    invoice?: InvoiceUncheckedUpdateOneWithoutAppointmentNestedInput
   }
 
   export type AppointmentCreateManyInput = {
@@ -46967,6 +46947,7 @@ export namespace Prisma {
     patient: PatientCreateNestedOneWithoutInvoicesInput
     clinic: ClinicCreateNestedOneWithoutInvoicesInput
     items?: InvoiceItemCreateNestedManyWithoutInvoiceInput
+    appointment?: AppointmentCreateNestedOneWithoutInvoiceInput
   }
 
   export type InvoiceUncheckedCreateInput = {
@@ -46983,6 +46964,7 @@ export namespace Prisma {
     paymentStatus?: string
     otherInfo?: string | null
     clinicId: string
+    appointmentId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     items?: InvoiceItemUncheckedCreateNestedManyWithoutInvoiceInput
@@ -47005,6 +46987,7 @@ export namespace Prisma {
     patient?: PatientUpdateOneRequiredWithoutInvoicesNestedInput
     clinic?: ClinicUpdateOneRequiredWithoutInvoicesNestedInput
     items?: InvoiceItemUpdateManyWithoutInvoiceNestedInput
+    appointment?: AppointmentUpdateOneWithoutInvoiceNestedInput
   }
 
   export type InvoiceUncheckedUpdateInput = {
@@ -47021,6 +47004,7 @@ export namespace Prisma {
     paymentStatus?: StringFieldUpdateOperationsInput | string
     otherInfo?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
+    appointmentId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: InvoiceItemUncheckedUpdateManyWithoutInvoiceNestedInput
@@ -47040,6 +47024,7 @@ export namespace Prisma {
     paymentStatus?: string
     otherInfo?: string | null
     clinicId: string
+    appointmentId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -47074,6 +47059,7 @@ export namespace Prisma {
     paymentStatus?: StringFieldUpdateOperationsInput | string
     otherInfo?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
+    appointmentId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -48993,11 +48979,6 @@ export namespace Prisma {
     _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
-  export type DoctorNullableRelationFilter = {
-    is?: DoctorWhereInput | null
-    isNot?: DoctorWhereInput | null
-  }
-
   export type PatientCountOrderByAggregateInput = {
     id?: SortOrder
     patientCode?: SortOrder
@@ -49026,7 +49007,6 @@ export namespace Prisma {
     state?: SortOrder
     city?: SortOrder
     pincode?: SortOrder
-    primaryDoctorId?: SortOrder
     lastVisitedAt?: SortOrder
     vitals?: SortOrder
     clinicId?: SortOrder
@@ -49062,7 +49042,6 @@ export namespace Prisma {
     state?: SortOrder
     city?: SortOrder
     pincode?: SortOrder
-    primaryDoctorId?: SortOrder
     lastVisitedAt?: SortOrder
     clinicId?: SortOrder
     createdAt?: SortOrder
@@ -49097,7 +49076,6 @@ export namespace Prisma {
     state?: SortOrder
     city?: SortOrder
     pincode?: SortOrder
-    primaryDoctorId?: SortOrder
     lastVisitedAt?: SortOrder
     clinicId?: SortOrder
     createdAt?: SortOrder
@@ -49117,6 +49095,11 @@ export namespace Prisma {
   export type AppointmentNullableRelationFilter = {
     is?: AppointmentWhereInput | null
     isNot?: AppointmentWhereInput | null
+  }
+
+  export type InvoiceNullableRelationFilter = {
+    is?: InvoiceWhereInput | null
+    isNot?: InvoiceWhereInput | null
   }
 
   export type AppointmentCountOrderByAggregateInput = {
@@ -49306,6 +49289,11 @@ export namespace Prisma {
   export type StaffNullableRelationFilter = {
     is?: StaffWhereInput | null
     isNot?: StaffWhereInput | null
+  }
+
+  export type DoctorNullableRelationFilter = {
+    is?: DoctorWhereInput | null
+    isNot?: DoctorWhereInput | null
   }
 
   export type PayrollCountOrderByAggregateInput = {
@@ -49876,6 +49864,7 @@ export namespace Prisma {
     paymentStatus?: SortOrder
     otherInfo?: SortOrder
     clinicId?: SortOrder
+    appointmentId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -49901,6 +49890,7 @@ export namespace Prisma {
     paymentStatus?: SortOrder
     otherInfo?: SortOrder
     clinicId?: SortOrder
+    appointmentId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -49919,6 +49909,7 @@ export namespace Prisma {
     paymentStatus?: SortOrder
     otherInfo?: SortOrder
     clinicId?: SortOrder
+    appointmentId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -52046,13 +52037,6 @@ export namespace Prisma {
     connect?: ClinicWhereUniqueInput
   }
 
-  export type PatientCreateNestedManyWithoutPrimaryDoctorInput = {
-    create?: XOR<PatientCreateWithoutPrimaryDoctorInput, PatientUncheckedCreateWithoutPrimaryDoctorInput> | PatientCreateWithoutPrimaryDoctorInput[] | PatientUncheckedCreateWithoutPrimaryDoctorInput[]
-    connectOrCreate?: PatientCreateOrConnectWithoutPrimaryDoctorInput | PatientCreateOrConnectWithoutPrimaryDoctorInput[]
-    createMany?: PatientCreateManyPrimaryDoctorInputEnvelope
-    connect?: PatientWhereUniqueInput | PatientWhereUniqueInput[]
-  }
-
   export type AppointmentCreateNestedManyWithoutDoctorInput = {
     create?: XOR<AppointmentCreateWithoutDoctorInput, AppointmentUncheckedCreateWithoutDoctorInput> | AppointmentCreateWithoutDoctorInput[] | AppointmentUncheckedCreateWithoutDoctorInput[]
     connectOrCreate?: AppointmentCreateOrConnectWithoutDoctorInput | AppointmentCreateOrConnectWithoutDoctorInput[]
@@ -52078,13 +52062,6 @@ export namespace Prisma {
     create?: XOR<SpecializationCreateWithoutDoctorsInput, SpecializationUncheckedCreateWithoutDoctorsInput> | SpecializationCreateWithoutDoctorsInput[] | SpecializationUncheckedCreateWithoutDoctorsInput[]
     connectOrCreate?: SpecializationCreateOrConnectWithoutDoctorsInput | SpecializationCreateOrConnectWithoutDoctorsInput[]
     connect?: SpecializationWhereUniqueInput | SpecializationWhereUniqueInput[]
-  }
-
-  export type PatientUncheckedCreateNestedManyWithoutPrimaryDoctorInput = {
-    create?: XOR<PatientCreateWithoutPrimaryDoctorInput, PatientUncheckedCreateWithoutPrimaryDoctorInput> | PatientCreateWithoutPrimaryDoctorInput[] | PatientUncheckedCreateWithoutPrimaryDoctorInput[]
-    connectOrCreate?: PatientCreateOrConnectWithoutPrimaryDoctorInput | PatientCreateOrConnectWithoutPrimaryDoctorInput[]
-    createMany?: PatientCreateManyPrimaryDoctorInputEnvelope
-    connect?: PatientWhereUniqueInput | PatientWhereUniqueInput[]
   }
 
   export type AppointmentUncheckedCreateNestedManyWithoutDoctorInput = {
@@ -52162,20 +52139,6 @@ export namespace Prisma {
     update?: XOR<XOR<ClinicUpdateToOneWithWhereWithoutDoctorsInput, ClinicUpdateWithoutDoctorsInput>, ClinicUncheckedUpdateWithoutDoctorsInput>
   }
 
-  export type PatientUpdateManyWithoutPrimaryDoctorNestedInput = {
-    create?: XOR<PatientCreateWithoutPrimaryDoctorInput, PatientUncheckedCreateWithoutPrimaryDoctorInput> | PatientCreateWithoutPrimaryDoctorInput[] | PatientUncheckedCreateWithoutPrimaryDoctorInput[]
-    connectOrCreate?: PatientCreateOrConnectWithoutPrimaryDoctorInput | PatientCreateOrConnectWithoutPrimaryDoctorInput[]
-    upsert?: PatientUpsertWithWhereUniqueWithoutPrimaryDoctorInput | PatientUpsertWithWhereUniqueWithoutPrimaryDoctorInput[]
-    createMany?: PatientCreateManyPrimaryDoctorInputEnvelope
-    set?: PatientWhereUniqueInput | PatientWhereUniqueInput[]
-    disconnect?: PatientWhereUniqueInput | PatientWhereUniqueInput[]
-    delete?: PatientWhereUniqueInput | PatientWhereUniqueInput[]
-    connect?: PatientWhereUniqueInput | PatientWhereUniqueInput[]
-    update?: PatientUpdateWithWhereUniqueWithoutPrimaryDoctorInput | PatientUpdateWithWhereUniqueWithoutPrimaryDoctorInput[]
-    updateMany?: PatientUpdateManyWithWhereWithoutPrimaryDoctorInput | PatientUpdateManyWithWhereWithoutPrimaryDoctorInput[]
-    deleteMany?: PatientScalarWhereInput | PatientScalarWhereInput[]
-  }
-
   export type AppointmentUpdateManyWithoutDoctorNestedInput = {
     create?: XOR<AppointmentCreateWithoutDoctorInput, AppointmentUncheckedCreateWithoutDoctorInput> | AppointmentCreateWithoutDoctorInput[] | AppointmentUncheckedCreateWithoutDoctorInput[]
     connectOrCreate?: AppointmentCreateOrConnectWithoutDoctorInput | AppointmentCreateOrConnectWithoutDoctorInput[]
@@ -52231,20 +52194,6 @@ export namespace Prisma {
     deleteMany?: SpecializationScalarWhereInput | SpecializationScalarWhereInput[]
   }
 
-  export type PatientUncheckedUpdateManyWithoutPrimaryDoctorNestedInput = {
-    create?: XOR<PatientCreateWithoutPrimaryDoctorInput, PatientUncheckedCreateWithoutPrimaryDoctorInput> | PatientCreateWithoutPrimaryDoctorInput[] | PatientUncheckedCreateWithoutPrimaryDoctorInput[]
-    connectOrCreate?: PatientCreateOrConnectWithoutPrimaryDoctorInput | PatientCreateOrConnectWithoutPrimaryDoctorInput[]
-    upsert?: PatientUpsertWithWhereUniqueWithoutPrimaryDoctorInput | PatientUpsertWithWhereUniqueWithoutPrimaryDoctorInput[]
-    createMany?: PatientCreateManyPrimaryDoctorInputEnvelope
-    set?: PatientWhereUniqueInput | PatientWhereUniqueInput[]
-    disconnect?: PatientWhereUniqueInput | PatientWhereUniqueInput[]
-    delete?: PatientWhereUniqueInput | PatientWhereUniqueInput[]
-    connect?: PatientWhereUniqueInput | PatientWhereUniqueInput[]
-    update?: PatientUpdateWithWhereUniqueWithoutPrimaryDoctorInput | PatientUpdateWithWhereUniqueWithoutPrimaryDoctorInput[]
-    updateMany?: PatientUpdateManyWithWhereWithoutPrimaryDoctorInput | PatientUpdateManyWithWhereWithoutPrimaryDoctorInput[]
-    deleteMany?: PatientScalarWhereInput | PatientScalarWhereInput[]
-  }
-
   export type AppointmentUncheckedUpdateManyWithoutDoctorNestedInput = {
     create?: XOR<AppointmentCreateWithoutDoctorInput, AppointmentUncheckedCreateWithoutDoctorInput> | AppointmentCreateWithoutDoctorInput[] | AppointmentUncheckedCreateWithoutDoctorInput[]
     connectOrCreate?: AppointmentCreateOrConnectWithoutDoctorInput | AppointmentCreateOrConnectWithoutDoctorInput[]
@@ -52285,12 +52234,6 @@ export namespace Prisma {
     update?: PayrollUpdateWithWhereUniqueWithoutDoctorInput | PayrollUpdateWithWhereUniqueWithoutDoctorInput[]
     updateMany?: PayrollUpdateManyWithWhereWithoutDoctorInput | PayrollUpdateManyWithWhereWithoutDoctorInput[]
     deleteMany?: PayrollScalarWhereInput | PayrollScalarWhereInput[]
-  }
-
-  export type DoctorCreateNestedOneWithoutPatientsInput = {
-    create?: XOR<DoctorCreateWithoutPatientsInput, DoctorUncheckedCreateWithoutPatientsInput>
-    connectOrCreate?: DoctorCreateOrConnectWithoutPatientsInput
-    connect?: DoctorWhereUniqueInput
   }
 
   export type ClinicCreateNestedOneWithoutPatientsInput = {
@@ -52339,16 +52282,6 @@ export namespace Prisma {
     connectOrCreate?: InvoiceCreateOrConnectWithoutPatientInput | InvoiceCreateOrConnectWithoutPatientInput[]
     createMany?: InvoiceCreateManyPatientInputEnvelope
     connect?: InvoiceWhereUniqueInput | InvoiceWhereUniqueInput[]
-  }
-
-  export type DoctorUpdateOneWithoutPatientsNestedInput = {
-    create?: XOR<DoctorCreateWithoutPatientsInput, DoctorUncheckedCreateWithoutPatientsInput>
-    connectOrCreate?: DoctorCreateOrConnectWithoutPatientsInput
-    upsert?: DoctorUpsertWithoutPatientsInput
-    disconnect?: DoctorWhereInput | boolean
-    delete?: DoctorWhereInput | boolean
-    connect?: DoctorWhereUniqueInput
-    update?: XOR<XOR<DoctorUpdateToOneWithWhereWithoutPatientsInput, DoctorUpdateWithoutPatientsInput>, DoctorUncheckedUpdateWithoutPatientsInput>
   }
 
   export type ClinicUpdateOneRequiredWithoutPatientsNestedInput = {
@@ -52494,6 +52427,12 @@ export namespace Prisma {
     connect?: AppointmentWhereUniqueInput | AppointmentWhereUniqueInput[]
   }
 
+  export type InvoiceCreateNestedOneWithoutAppointmentInput = {
+    create?: XOR<InvoiceCreateWithoutAppointmentInput, InvoiceUncheckedCreateWithoutAppointmentInput>
+    connectOrCreate?: InvoiceCreateOrConnectWithoutAppointmentInput
+    connect?: InvoiceWhereUniqueInput
+  }
+
   export type PrescriptionUncheckedCreateNestedManyWithoutAppointmentInput = {
     create?: XOR<PrescriptionCreateWithoutAppointmentInput, PrescriptionUncheckedCreateWithoutAppointmentInput> | PrescriptionCreateWithoutAppointmentInput[] | PrescriptionUncheckedCreateWithoutAppointmentInput[]
     connectOrCreate?: PrescriptionCreateOrConnectWithoutAppointmentInput | PrescriptionCreateOrConnectWithoutAppointmentInput[]
@@ -52513,6 +52452,12 @@ export namespace Prisma {
     connectOrCreate?: AppointmentCreateOrConnectWithoutParentAppointmentInput | AppointmentCreateOrConnectWithoutParentAppointmentInput[]
     createMany?: AppointmentCreateManyParentAppointmentInputEnvelope
     connect?: AppointmentWhereUniqueInput | AppointmentWhereUniqueInput[]
+  }
+
+  export type InvoiceUncheckedCreateNestedOneWithoutAppointmentInput = {
+    create?: XOR<InvoiceCreateWithoutAppointmentInput, InvoiceUncheckedCreateWithoutAppointmentInput>
+    connectOrCreate?: InvoiceCreateOrConnectWithoutAppointmentInput
+    connect?: InvoiceWhereUniqueInput
   }
 
   export type PatientUpdateOneRequiredWithoutAppointmentsNestedInput = {
@@ -52601,6 +52546,16 @@ export namespace Prisma {
     deleteMany?: AppointmentScalarWhereInput | AppointmentScalarWhereInput[]
   }
 
+  export type InvoiceUpdateOneWithoutAppointmentNestedInput = {
+    create?: XOR<InvoiceCreateWithoutAppointmentInput, InvoiceUncheckedCreateWithoutAppointmentInput>
+    connectOrCreate?: InvoiceCreateOrConnectWithoutAppointmentInput
+    upsert?: InvoiceUpsertWithoutAppointmentInput
+    disconnect?: InvoiceWhereInput | boolean
+    delete?: InvoiceWhereInput | boolean
+    connect?: InvoiceWhereUniqueInput
+    update?: XOR<XOR<InvoiceUpdateToOneWithWhereWithoutAppointmentInput, InvoiceUpdateWithoutAppointmentInput>, InvoiceUncheckedUpdateWithoutAppointmentInput>
+  }
+
   export type PrescriptionUncheckedUpdateManyWithoutAppointmentNestedInput = {
     create?: XOR<PrescriptionCreateWithoutAppointmentInput, PrescriptionUncheckedCreateWithoutAppointmentInput> | PrescriptionCreateWithoutAppointmentInput[] | PrescriptionUncheckedCreateWithoutAppointmentInput[]
     connectOrCreate?: PrescriptionCreateOrConnectWithoutAppointmentInput | PrescriptionCreateOrConnectWithoutAppointmentInput[]
@@ -52641,6 +52596,16 @@ export namespace Prisma {
     update?: AppointmentUpdateWithWhereUniqueWithoutParentAppointmentInput | AppointmentUpdateWithWhereUniqueWithoutParentAppointmentInput[]
     updateMany?: AppointmentUpdateManyWithWhereWithoutParentAppointmentInput | AppointmentUpdateManyWithWhereWithoutParentAppointmentInput[]
     deleteMany?: AppointmentScalarWhereInput | AppointmentScalarWhereInput[]
+  }
+
+  export type InvoiceUncheckedUpdateOneWithoutAppointmentNestedInput = {
+    create?: XOR<InvoiceCreateWithoutAppointmentInput, InvoiceUncheckedCreateWithoutAppointmentInput>
+    connectOrCreate?: InvoiceCreateOrConnectWithoutAppointmentInput
+    upsert?: InvoiceUpsertWithoutAppointmentInput
+    disconnect?: InvoiceWhereInput | boolean
+    delete?: InvoiceWhereInput | boolean
+    connect?: InvoiceWhereUniqueInput
+    update?: XOR<XOR<InvoiceUpdateToOneWithWhereWithoutAppointmentInput, InvoiceUpdateWithoutAppointmentInput>, InvoiceUncheckedUpdateWithoutAppointmentInput>
   }
 
   export type DepartmentCreateNestedOneWithoutServicesInput = {
@@ -53095,6 +53060,12 @@ export namespace Prisma {
     connect?: InvoiceItemWhereUniqueInput | InvoiceItemWhereUniqueInput[]
   }
 
+  export type AppointmentCreateNestedOneWithoutInvoiceInput = {
+    create?: XOR<AppointmentCreateWithoutInvoiceInput, AppointmentUncheckedCreateWithoutInvoiceInput>
+    connectOrCreate?: AppointmentCreateOrConnectWithoutInvoiceInput
+    connect?: AppointmentWhereUniqueInput
+  }
+
   export type InvoiceItemUncheckedCreateNestedManyWithoutInvoiceInput = {
     create?: XOR<InvoiceItemCreateWithoutInvoiceInput, InvoiceItemUncheckedCreateWithoutInvoiceInput> | InvoiceItemCreateWithoutInvoiceInput[] | InvoiceItemUncheckedCreateWithoutInvoiceInput[]
     connectOrCreate?: InvoiceItemCreateOrConnectWithoutInvoiceInput | InvoiceItemCreateOrConnectWithoutInvoiceInput[]
@@ -53130,6 +53101,16 @@ export namespace Prisma {
     update?: InvoiceItemUpdateWithWhereUniqueWithoutInvoiceInput | InvoiceItemUpdateWithWhereUniqueWithoutInvoiceInput[]
     updateMany?: InvoiceItemUpdateManyWithWhereWithoutInvoiceInput | InvoiceItemUpdateManyWithWhereWithoutInvoiceInput[]
     deleteMany?: InvoiceItemScalarWhereInput | InvoiceItemScalarWhereInput[]
+  }
+
+  export type AppointmentUpdateOneWithoutInvoiceNestedInput = {
+    create?: XOR<AppointmentCreateWithoutInvoiceInput, AppointmentUncheckedCreateWithoutInvoiceInput>
+    connectOrCreate?: AppointmentCreateOrConnectWithoutInvoiceInput
+    upsert?: AppointmentUpsertWithoutInvoiceInput
+    disconnect?: AppointmentWhereInput | boolean
+    delete?: AppointmentWhereInput | boolean
+    connect?: AppointmentWhereUniqueInput
+    update?: XOR<XOR<AppointmentUpdateToOneWithWhereWithoutInvoiceInput, AppointmentUpdateWithoutInvoiceInput>, AppointmentUncheckedUpdateWithoutInvoiceInput>
   }
 
   export type InvoiceItemUncheckedUpdateManyWithoutInvoiceNestedInput = {
@@ -53793,7 +53774,6 @@ export namespace Prisma {
     department?: DepartmentCreateNestedOneWithoutDoctorsInput
     designation?: DesignationCreateNestedOneWithoutDoctorsInput
     specializations?: SpecializationCreateNestedManyWithoutDoctorsInput
-    patients?: PatientCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentCreateNestedManyWithoutDoctorInput
     prescriptions?: PrescriptionCreateNestedManyWithoutDoctorInput
     payrolls?: PayrollCreateNestedManyWithoutDoctorInput
@@ -53850,7 +53830,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     specializations?: SpecializationUncheckedCreateNestedManyWithoutDoctorsInput
-    patients?: PatientUncheckedCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentUncheckedCreateNestedManyWithoutDoctorInput
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutDoctorInput
     payrolls?: PayrollUncheckedCreateNestedManyWithoutDoctorInput
@@ -53960,7 +53939,6 @@ export namespace Prisma {
     vitals?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
-    primaryDoctor?: DoctorCreateNestedOneWithoutPatientsInput
     appointments?: AppointmentCreateNestedManyWithoutPatientInput
     prescriptions?: PrescriptionCreateNestedManyWithoutPatientInput
     invoices?: InvoiceCreateNestedManyWithoutPatientInput
@@ -53994,7 +53972,6 @@ export namespace Prisma {
     state?: string | null
     city?: string | null
     pincode?: string | null
-    primaryDoctorId?: string | null
     lastVisitedAt?: Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
@@ -54037,6 +54014,7 @@ export namespace Prisma {
     notes?: NoteCreateNestedManyWithoutAppointmentInput
     parentAppointment?: AppointmentCreateNestedOneWithoutFollowUpsInput
     followUps?: AppointmentCreateNestedManyWithoutParentAppointmentInput
+    invoice?: InvoiceCreateNestedOneWithoutAppointmentInput
   }
 
   export type AppointmentUncheckedCreateWithoutClinicInput = {
@@ -54062,6 +54040,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutAppointmentInput
     notes?: NoteUncheckedCreateNestedManyWithoutAppointmentInput
     followUps?: AppointmentUncheckedCreateNestedManyWithoutParentAppointmentInput
+    invoice?: InvoiceUncheckedCreateNestedOneWithoutAppointmentInput
   }
 
   export type AppointmentCreateOrConnectWithoutClinicInput = {
@@ -54528,6 +54507,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     patient: PatientCreateNestedOneWithoutInvoicesInput
     items?: InvoiceItemCreateNestedManyWithoutInvoiceInput
+    appointment?: AppointmentCreateNestedOneWithoutInvoiceInput
   }
 
   export type InvoiceUncheckedCreateWithoutClinicInput = {
@@ -54543,6 +54523,7 @@ export namespace Prisma {
     paymentMethod?: string | null
     paymentStatus?: string
     otherInfo?: string | null
+    appointmentId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     items?: InvoiceItemUncheckedCreateNestedManyWithoutInvoiceInput
@@ -55138,7 +55119,6 @@ export namespace Prisma {
     state?: StringNullableFilter<"Patient"> | string | null
     city?: StringNullableFilter<"Patient"> | string | null
     pincode?: StringNullableFilter<"Patient"> | string | null
-    primaryDoctorId?: StringNullableFilter<"Patient"> | string | null
     lastVisitedAt?: DateTimeNullableFilter<"Patient"> | Date | string | null
     vitals?: JsonNullableFilter<"Patient">
     clinicId?: StringFilter<"Patient"> | string
@@ -55617,6 +55597,7 @@ export namespace Prisma {
     paymentStatus?: StringFilter<"Invoice"> | string
     otherInfo?: StringNullableFilter<"Invoice"> | string | null
     clinicId?: StringFilter<"Invoice"> | string
+    appointmentId?: StringNullableFilter<"Invoice"> | string | null
     createdAt?: DateTimeFilter<"Invoice"> | Date | string
     updatedAt?: DateTimeFilter<"Invoice"> | Date | string
   }
@@ -56731,7 +56712,6 @@ export namespace Prisma {
     designation?: DesignationCreateNestedOneWithoutDoctorsInput
     specializations?: SpecializationCreateNestedManyWithoutDoctorsInput
     clinic: ClinicCreateNestedOneWithoutDoctorsInput
-    patients?: PatientCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentCreateNestedManyWithoutDoctorInput
     prescriptions?: PrescriptionCreateNestedManyWithoutDoctorInput
     payrolls?: PayrollCreateNestedManyWithoutDoctorInput
@@ -56788,7 +56768,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     specializations?: SpecializationUncheckedCreateNestedManyWithoutDoctorsInput
-    patients?: PatientUncheckedCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentUncheckedCreateNestedManyWithoutDoctorInput
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutDoctorInput
     payrolls?: PayrollUncheckedCreateNestedManyWithoutDoctorInput
@@ -56889,6 +56868,7 @@ export namespace Prisma {
     notes?: NoteCreateNestedManyWithoutAppointmentInput
     parentAppointment?: AppointmentCreateNestedOneWithoutFollowUpsInput
     followUps?: AppointmentCreateNestedManyWithoutParentAppointmentInput
+    invoice?: InvoiceCreateNestedOneWithoutAppointmentInput
   }
 
   export type AppointmentUncheckedCreateWithoutDepartmentInput = {
@@ -56914,6 +56894,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutAppointmentInput
     notes?: NoteUncheckedCreateNestedManyWithoutAppointmentInput
     followUps?: AppointmentUncheckedCreateNestedManyWithoutParentAppointmentInput
+    invoice?: InvoiceUncheckedCreateNestedOneWithoutAppointmentInput
   }
 
   export type AppointmentCreateOrConnectWithoutDepartmentInput = {
@@ -57418,7 +57399,6 @@ export namespace Prisma {
     department?: DepartmentCreateNestedOneWithoutDoctorsInput
     specializations?: SpecializationCreateNestedManyWithoutDoctorsInput
     clinic: ClinicCreateNestedOneWithoutDoctorsInput
-    patients?: PatientCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentCreateNestedManyWithoutDoctorInput
     prescriptions?: PrescriptionCreateNestedManyWithoutDoctorInput
     payrolls?: PayrollCreateNestedManyWithoutDoctorInput
@@ -57475,7 +57455,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     specializations?: SpecializationUncheckedCreateNestedManyWithoutDoctorsInput
-    patients?: PatientUncheckedCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentUncheckedCreateNestedManyWithoutDoctorInput
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutDoctorInput
     payrolls?: PayrollUncheckedCreateNestedManyWithoutDoctorInput
@@ -58415,92 +58394,6 @@ export namespace Prisma {
     create: XOR<ClinicCreateWithoutDoctorsInput, ClinicUncheckedCreateWithoutDoctorsInput>
   }
 
-  export type PatientCreateWithoutPrimaryDoctorInput = {
-    id?: string
-    patientCode?: string | null
-    firstName: string
-    middleName?: string | null
-    lastName: string
-    profileImage?: string | null
-    phone?: string | null
-    alternateMobile?: string | null
-    email?: string | null
-    dob?: Date | string | null
-    gender?: string | null
-    bloodGroup?: string | null
-    maritalStatus?: string | null
-    occupation?: string | null
-    aadhaarNumber?: string | null
-    passportNumber?: string | null
-    referredBy?: string | null
-    emergencyContactName?: string | null
-    emergencyContactRelation?: string | null
-    emergencyContactPhone?: string | null
-    status?: string
-    address1?: string | null
-    address2?: string | null
-    country?: string | null
-    state?: string | null
-    city?: string | null
-    pincode?: string | null
-    lastVisitedAt?: Date | string | null
-    vitals?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    clinic: ClinicCreateNestedOneWithoutPatientsInput
-    appointments?: AppointmentCreateNestedManyWithoutPatientInput
-    prescriptions?: PrescriptionCreateNestedManyWithoutPatientInput
-    invoices?: InvoiceCreateNestedManyWithoutPatientInput
-  }
-
-  export type PatientUncheckedCreateWithoutPrimaryDoctorInput = {
-    id?: string
-    patientCode?: string | null
-    firstName: string
-    middleName?: string | null
-    lastName: string
-    profileImage?: string | null
-    phone?: string | null
-    alternateMobile?: string | null
-    email?: string | null
-    dob?: Date | string | null
-    gender?: string | null
-    bloodGroup?: string | null
-    maritalStatus?: string | null
-    occupation?: string | null
-    aadhaarNumber?: string | null
-    passportNumber?: string | null
-    referredBy?: string | null
-    emergencyContactName?: string | null
-    emergencyContactRelation?: string | null
-    emergencyContactPhone?: string | null
-    status?: string
-    address1?: string | null
-    address2?: string | null
-    country?: string | null
-    state?: string | null
-    city?: string | null
-    pincode?: string | null
-    lastVisitedAt?: Date | string | null
-    vitals?: NullableJsonNullValueInput | InputJsonValue
-    clinicId: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    appointments?: AppointmentUncheckedCreateNestedManyWithoutPatientInput
-    prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutPatientInput
-    invoices?: InvoiceUncheckedCreateNestedManyWithoutPatientInput
-  }
-
-  export type PatientCreateOrConnectWithoutPrimaryDoctorInput = {
-    where: PatientWhereUniqueInput
-    create: XOR<PatientCreateWithoutPrimaryDoctorInput, PatientUncheckedCreateWithoutPrimaryDoctorInput>
-  }
-
-  export type PatientCreateManyPrimaryDoctorInputEnvelope = {
-    data: PatientCreateManyPrimaryDoctorInput | PatientCreateManyPrimaryDoctorInput[]
-    skipDuplicates?: boolean
-  }
-
   export type AppointmentCreateWithoutDoctorInput = {
     id?: string
     appointmentCode?: string | null
@@ -58524,6 +58417,7 @@ export namespace Prisma {
     notes?: NoteCreateNestedManyWithoutAppointmentInput
     parentAppointment?: AppointmentCreateNestedOneWithoutFollowUpsInput
     followUps?: AppointmentCreateNestedManyWithoutParentAppointmentInput
+    invoice?: InvoiceCreateNestedOneWithoutAppointmentInput
   }
 
   export type AppointmentUncheckedCreateWithoutDoctorInput = {
@@ -58549,6 +58443,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutAppointmentInput
     notes?: NoteUncheckedCreateNestedManyWithoutAppointmentInput
     followUps?: AppointmentUncheckedCreateNestedManyWithoutParentAppointmentInput
+    invoice?: InvoiceUncheckedCreateNestedOneWithoutAppointmentInput
   }
 
   export type AppointmentCreateOrConnectWithoutDoctorInput = {
@@ -58876,22 +58771,6 @@ export namespace Prisma {
     notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
   }
 
-  export type PatientUpsertWithWhereUniqueWithoutPrimaryDoctorInput = {
-    where: PatientWhereUniqueInput
-    update: XOR<PatientUpdateWithoutPrimaryDoctorInput, PatientUncheckedUpdateWithoutPrimaryDoctorInput>
-    create: XOR<PatientCreateWithoutPrimaryDoctorInput, PatientUncheckedCreateWithoutPrimaryDoctorInput>
-  }
-
-  export type PatientUpdateWithWhereUniqueWithoutPrimaryDoctorInput = {
-    where: PatientWhereUniqueInput
-    data: XOR<PatientUpdateWithoutPrimaryDoctorInput, PatientUncheckedUpdateWithoutPrimaryDoctorInput>
-  }
-
-  export type PatientUpdateManyWithWhereWithoutPrimaryDoctorInput = {
-    where: PatientScalarWhereInput
-    data: XOR<PatientUpdateManyMutationInput, PatientUncheckedUpdateManyWithoutPrimaryDoctorInput>
-  }
-
   export type AppointmentUpsertWithWhereUniqueWithoutDoctorInput = {
     where: AppointmentWhereUniqueInput
     update: XOR<AppointmentUpdateWithoutDoctorInput, AppointmentUncheckedUpdateWithoutDoctorInput>
@@ -58938,125 +58817,6 @@ export namespace Prisma {
   export type PayrollUpdateManyWithWhereWithoutDoctorInput = {
     where: PayrollScalarWhereInput
     data: XOR<PayrollUpdateManyMutationInput, PayrollUncheckedUpdateManyWithoutDoctorInput>
-  }
-
-  export type DoctorCreateWithoutPatientsInput = {
-    id?: string
-    doctorCode?: string | null
-    fullName: string
-    username?: string | null
-    phone?: string | null
-    alternateMobile?: string | null
-    email?: string | null
-    dob?: Date | string | null
-    yearOfExperience?: number | null
-    medicalLicenseNumber?: string | null
-    languagesSpoken?: DoctorCreatelanguagesSpokenInput | string[]
-    bloodGroup?: string | null
-    gender?: string | null
-    bio?: string | null
-    featureOnWebsite?: boolean
-    profileImage?: string | null
-    address1?: string | null
-    address2?: string | null
-    country?: string | null
-    city?: string | null
-    state?: string | null
-    pincode?: string | null
-    appointmentType?: string | null
-    acceptBookingsInAdvance?: number | null
-    appointmentDuration?: number | null
-    consultationCharge?: number | null
-    maxBookingsPerSlot?: number | null
-    displayOnBookingPage?: boolean
-    educations?: NullableJsonNullValueInput | InputJsonValue
-    awards?: NullableJsonNullValueInput | InputJsonValue
-    certifications?: NullableJsonNullValueInput | InputJsonValue
-    schedules?: NullableJsonNullValueInput | InputJsonValue
-    status?: string
-    maritalStatus?: string | null
-    qualification?: string | null
-    signatureImage?: string | null
-    medicalRegCertificate?: string | null
-    qualificationCertificate?: string | null
-    aadhaarCard?: string | null
-    aadhaarCardBack?: string | null
-    panCard?: string | null
-    followUpEnabled?: boolean
-    followUpValidityDays?: number | null
-    freeFollowUpLimit?: number | null
-    followUpFee?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    department?: DepartmentCreateNestedOneWithoutDoctorsInput
-    designation?: DesignationCreateNestedOneWithoutDoctorsInput
-    specializations?: SpecializationCreateNestedManyWithoutDoctorsInput
-    clinic: ClinicCreateNestedOneWithoutDoctorsInput
-    appointments?: AppointmentCreateNestedManyWithoutDoctorInput
-    prescriptions?: PrescriptionCreateNestedManyWithoutDoctorInput
-    payrolls?: PayrollCreateNestedManyWithoutDoctorInput
-  }
-
-  export type DoctorUncheckedCreateWithoutPatientsInput = {
-    id?: string
-    doctorCode?: string | null
-    fullName: string
-    username?: string | null
-    phone?: string | null
-    alternateMobile?: string | null
-    email?: string | null
-    dob?: Date | string | null
-    yearOfExperience?: number | null
-    medicalLicenseNumber?: string | null
-    languagesSpoken?: DoctorCreatelanguagesSpokenInput | string[]
-    bloodGroup?: string | null
-    gender?: string | null
-    bio?: string | null
-    featureOnWebsite?: boolean
-    profileImage?: string | null
-    address1?: string | null
-    address2?: string | null
-    country?: string | null
-    city?: string | null
-    state?: string | null
-    pincode?: string | null
-    appointmentType?: string | null
-    acceptBookingsInAdvance?: number | null
-    appointmentDuration?: number | null
-    consultationCharge?: number | null
-    maxBookingsPerSlot?: number | null
-    displayOnBookingPage?: boolean
-    educations?: NullableJsonNullValueInput | InputJsonValue
-    awards?: NullableJsonNullValueInput | InputJsonValue
-    certifications?: NullableJsonNullValueInput | InputJsonValue
-    schedules?: NullableJsonNullValueInput | InputJsonValue
-    status?: string
-    departmentId?: string | null
-    maritalStatus?: string | null
-    qualification?: string | null
-    signatureImage?: string | null
-    medicalRegCertificate?: string | null
-    qualificationCertificate?: string | null
-    aadhaarCard?: string | null
-    aadhaarCardBack?: string | null
-    panCard?: string | null
-    followUpEnabled?: boolean
-    followUpValidityDays?: number | null
-    freeFollowUpLimit?: number | null
-    followUpFee?: number | null
-    designationId?: string | null
-    clinicId: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    specializations?: SpecializationUncheckedCreateNestedManyWithoutDoctorsInput
-    appointments?: AppointmentUncheckedCreateNestedManyWithoutDoctorInput
-    prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutDoctorInput
-    payrolls?: PayrollUncheckedCreateNestedManyWithoutDoctorInput
-  }
-
-  export type DoctorCreateOrConnectWithoutPatientsInput = {
-    where: DoctorWhereUniqueInput
-    create: XOR<DoctorCreateWithoutPatientsInput, DoctorUncheckedCreateWithoutPatientsInput>
   }
 
   export type ClinicCreateWithoutPatientsInput = {
@@ -59195,6 +58955,7 @@ export namespace Prisma {
     notes?: NoteCreateNestedManyWithoutAppointmentInput
     parentAppointment?: AppointmentCreateNestedOneWithoutFollowUpsInput
     followUps?: AppointmentCreateNestedManyWithoutParentAppointmentInput
+    invoice?: InvoiceCreateNestedOneWithoutAppointmentInput
   }
 
   export type AppointmentUncheckedCreateWithoutPatientInput = {
@@ -59220,6 +58981,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutAppointmentInput
     notes?: NoteUncheckedCreateNestedManyWithoutAppointmentInput
     followUps?: AppointmentUncheckedCreateNestedManyWithoutParentAppointmentInput
+    invoice?: InvoiceUncheckedCreateNestedOneWithoutAppointmentInput
   }
 
   export type AppointmentCreateOrConnectWithoutPatientInput = {
@@ -59290,6 +59052,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     clinic: ClinicCreateNestedOneWithoutInvoicesInput
     items?: InvoiceItemCreateNestedManyWithoutInvoiceInput
+    appointment?: AppointmentCreateNestedOneWithoutInvoiceInput
   }
 
   export type InvoiceUncheckedCreateWithoutPatientInput = {
@@ -59305,6 +59068,7 @@ export namespace Prisma {
     paymentStatus?: string
     otherInfo?: string | null
     clinicId: string
+    appointmentId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     items?: InvoiceItemUncheckedCreateNestedManyWithoutInvoiceInput
@@ -59318,131 +59082,6 @@ export namespace Prisma {
   export type InvoiceCreateManyPatientInputEnvelope = {
     data: InvoiceCreateManyPatientInput | InvoiceCreateManyPatientInput[]
     skipDuplicates?: boolean
-  }
-
-  export type DoctorUpsertWithoutPatientsInput = {
-    update: XOR<DoctorUpdateWithoutPatientsInput, DoctorUncheckedUpdateWithoutPatientsInput>
-    create: XOR<DoctorCreateWithoutPatientsInput, DoctorUncheckedCreateWithoutPatientsInput>
-    where?: DoctorWhereInput
-  }
-
-  export type DoctorUpdateToOneWithWhereWithoutPatientsInput = {
-    where?: DoctorWhereInput
-    data: XOR<DoctorUpdateWithoutPatientsInput, DoctorUncheckedUpdateWithoutPatientsInput>
-  }
-
-  export type DoctorUpdateWithoutPatientsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    doctorCode?: NullableStringFieldUpdateOperationsInput | string | null
-    fullName?: StringFieldUpdateOperationsInput | string
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yearOfExperience?: NullableIntFieldUpdateOperationsInput | number | null
-    medicalLicenseNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    languagesSpoken?: DoctorUpdatelanguagesSpokenInput | string[]
-    bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    featureOnWebsite?: BoolFieldUpdateOperationsInput | boolean
-    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
-    address1?: NullableStringFieldUpdateOperationsInput | string | null
-    address2?: NullableStringFieldUpdateOperationsInput | string | null
-    country?: NullableStringFieldUpdateOperationsInput | string | null
-    city?: NullableStringFieldUpdateOperationsInput | string | null
-    state?: NullableStringFieldUpdateOperationsInput | string | null
-    pincode?: NullableStringFieldUpdateOperationsInput | string | null
-    appointmentType?: NullableStringFieldUpdateOperationsInput | string | null
-    acceptBookingsInAdvance?: NullableIntFieldUpdateOperationsInput | number | null
-    appointmentDuration?: NullableIntFieldUpdateOperationsInput | number | null
-    consultationCharge?: NullableFloatFieldUpdateOperationsInput | number | null
-    maxBookingsPerSlot?: NullableIntFieldUpdateOperationsInput | number | null
-    displayOnBookingPage?: BoolFieldUpdateOperationsInput | boolean
-    educations?: NullableJsonNullValueInput | InputJsonValue
-    awards?: NullableJsonNullValueInput | InputJsonValue
-    certifications?: NullableJsonNullValueInput | InputJsonValue
-    schedules?: NullableJsonNullValueInput | InputJsonValue
-    status?: StringFieldUpdateOperationsInput | string
-    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    qualification?: NullableStringFieldUpdateOperationsInput | string | null
-    signatureImage?: NullableStringFieldUpdateOperationsInput | string | null
-    medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
-    qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
-    aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
-    aadhaarCardBack?: NullableStringFieldUpdateOperationsInput | string | null
-    panCard?: NullableStringFieldUpdateOperationsInput | string | null
-    followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
-    followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
-    freeFollowUpLimit?: NullableIntFieldUpdateOperationsInput | number | null
-    followUpFee?: NullableFloatFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    department?: DepartmentUpdateOneWithoutDoctorsNestedInput
-    designation?: DesignationUpdateOneWithoutDoctorsNestedInput
-    specializations?: SpecializationUpdateManyWithoutDoctorsNestedInput
-    clinic?: ClinicUpdateOneRequiredWithoutDoctorsNestedInput
-    appointments?: AppointmentUpdateManyWithoutDoctorNestedInput
-    prescriptions?: PrescriptionUpdateManyWithoutDoctorNestedInput
-    payrolls?: PayrollUpdateManyWithoutDoctorNestedInput
-  }
-
-  export type DoctorUncheckedUpdateWithoutPatientsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    doctorCode?: NullableStringFieldUpdateOperationsInput | string | null
-    fullName?: StringFieldUpdateOperationsInput | string
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yearOfExperience?: NullableIntFieldUpdateOperationsInput | number | null
-    medicalLicenseNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    languagesSpoken?: DoctorUpdatelanguagesSpokenInput | string[]
-    bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    featureOnWebsite?: BoolFieldUpdateOperationsInput | boolean
-    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
-    address1?: NullableStringFieldUpdateOperationsInput | string | null
-    address2?: NullableStringFieldUpdateOperationsInput | string | null
-    country?: NullableStringFieldUpdateOperationsInput | string | null
-    city?: NullableStringFieldUpdateOperationsInput | string | null
-    state?: NullableStringFieldUpdateOperationsInput | string | null
-    pincode?: NullableStringFieldUpdateOperationsInput | string | null
-    appointmentType?: NullableStringFieldUpdateOperationsInput | string | null
-    acceptBookingsInAdvance?: NullableIntFieldUpdateOperationsInput | number | null
-    appointmentDuration?: NullableIntFieldUpdateOperationsInput | number | null
-    consultationCharge?: NullableFloatFieldUpdateOperationsInput | number | null
-    maxBookingsPerSlot?: NullableIntFieldUpdateOperationsInput | number | null
-    displayOnBookingPage?: BoolFieldUpdateOperationsInput | boolean
-    educations?: NullableJsonNullValueInput | InputJsonValue
-    awards?: NullableJsonNullValueInput | InputJsonValue
-    certifications?: NullableJsonNullValueInput | InputJsonValue
-    schedules?: NullableJsonNullValueInput | InputJsonValue
-    status?: StringFieldUpdateOperationsInput | string
-    departmentId?: NullableStringFieldUpdateOperationsInput | string | null
-    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    qualification?: NullableStringFieldUpdateOperationsInput | string | null
-    signatureImage?: NullableStringFieldUpdateOperationsInput | string | null
-    medicalRegCertificate?: NullableStringFieldUpdateOperationsInput | string | null
-    qualificationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
-    aadhaarCard?: NullableStringFieldUpdateOperationsInput | string | null
-    aadhaarCardBack?: NullableStringFieldUpdateOperationsInput | string | null
-    panCard?: NullableStringFieldUpdateOperationsInput | string | null
-    followUpEnabled?: BoolFieldUpdateOperationsInput | boolean
-    followUpValidityDays?: NullableIntFieldUpdateOperationsInput | number | null
-    freeFollowUpLimit?: NullableIntFieldUpdateOperationsInput | number | null
-    followUpFee?: NullableFloatFieldUpdateOperationsInput | number | null
-    designationId?: NullableStringFieldUpdateOperationsInput | string | null
-    clinicId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    specializations?: SpecializationUncheckedUpdateManyWithoutDoctorsNestedInput
-    appointments?: AppointmentUncheckedUpdateManyWithoutDoctorNestedInput
-    prescriptions?: PrescriptionUncheckedUpdateManyWithoutDoctorNestedInput
-    payrolls?: PayrollUncheckedUpdateManyWithoutDoctorNestedInput
   }
 
   export type ClinicUpsertWithoutPatientsInput = {
@@ -59644,7 +59283,6 @@ export namespace Prisma {
     vitals?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
-    primaryDoctor?: DoctorCreateNestedOneWithoutPatientsInput
     clinic: ClinicCreateNestedOneWithoutPatientsInput
     prescriptions?: PrescriptionCreateNestedManyWithoutPatientInput
     invoices?: InvoiceCreateNestedManyWithoutPatientInput
@@ -59678,7 +59316,6 @@ export namespace Prisma {
     state?: string | null
     city?: string | null
     pincode?: string | null
-    primaryDoctorId?: string | null
     lastVisitedAt?: Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
     clinicId: string
@@ -59745,7 +59382,6 @@ export namespace Prisma {
     designation?: DesignationCreateNestedOneWithoutDoctorsInput
     specializations?: SpecializationCreateNestedManyWithoutDoctorsInput
     clinic: ClinicCreateNestedOneWithoutDoctorsInput
-    patients?: PatientCreateNestedManyWithoutPrimaryDoctorInput
     prescriptions?: PrescriptionCreateNestedManyWithoutDoctorInput
     payrolls?: PayrollCreateNestedManyWithoutDoctorInput
   }
@@ -59802,7 +59438,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     specializations?: SpecializationUncheckedCreateNestedManyWithoutDoctorsInput
-    patients?: PatientUncheckedCreateNestedManyWithoutPrimaryDoctorInput
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutDoctorInput
     payrolls?: PayrollUncheckedCreateNestedManyWithoutDoctorInput
   }
@@ -60063,6 +59698,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionCreateNestedManyWithoutAppointmentInput
     notes?: NoteCreateNestedManyWithoutAppointmentInput
     parentAppointment?: AppointmentCreateNestedOneWithoutFollowUpsInput
+    invoice?: InvoiceCreateNestedOneWithoutAppointmentInput
   }
 
   export type AppointmentUncheckedCreateWithoutFollowUpsInput = {
@@ -60088,6 +59724,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutAppointmentInput
     notes?: NoteUncheckedCreateNestedManyWithoutAppointmentInput
+    invoice?: InvoiceUncheckedCreateNestedOneWithoutAppointmentInput
   }
 
   export type AppointmentCreateOrConnectWithoutFollowUpsInput = {
@@ -60118,6 +59755,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionCreateNestedManyWithoutAppointmentInput
     notes?: NoteCreateNestedManyWithoutAppointmentInput
     followUps?: AppointmentCreateNestedManyWithoutParentAppointmentInput
+    invoice?: InvoiceCreateNestedOneWithoutAppointmentInput
   }
 
   export type AppointmentUncheckedCreateWithoutParentAppointmentInput = {
@@ -60143,6 +59781,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutAppointmentInput
     notes?: NoteUncheckedCreateNestedManyWithoutAppointmentInput
     followUps?: AppointmentUncheckedCreateNestedManyWithoutParentAppointmentInput
+    invoice?: InvoiceUncheckedCreateNestedOneWithoutAppointmentInput
   }
 
   export type AppointmentCreateOrConnectWithoutParentAppointmentInput = {
@@ -60153,6 +59792,49 @@ export namespace Prisma {
   export type AppointmentCreateManyParentAppointmentInputEnvelope = {
     data: AppointmentCreateManyParentAppointmentInput | AppointmentCreateManyParentAppointmentInput[]
     skipDuplicates?: boolean
+  }
+
+  export type InvoiceCreateWithoutAppointmentInput = {
+    id?: string
+    invoiceCode?: string | null
+    invoiceDate: Date | string
+    dueDate: Date | string
+    tax?: number
+    discount?: number
+    subTotal?: number
+    totalAmount: number
+    paymentMethod?: string | null
+    paymentStatus?: string
+    otherInfo?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    patient: PatientCreateNestedOneWithoutInvoicesInput
+    clinic: ClinicCreateNestedOneWithoutInvoicesInput
+    items?: InvoiceItemCreateNestedManyWithoutInvoiceInput
+  }
+
+  export type InvoiceUncheckedCreateWithoutAppointmentInput = {
+    id?: string
+    invoiceCode?: string | null
+    patientId: string
+    invoiceDate: Date | string
+    dueDate: Date | string
+    tax?: number
+    discount?: number
+    subTotal?: number
+    totalAmount: number
+    paymentMethod?: string | null
+    paymentStatus?: string
+    otherInfo?: string | null
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    items?: InvoiceItemUncheckedCreateNestedManyWithoutInvoiceInput
+  }
+
+  export type InvoiceCreateOrConnectWithoutAppointmentInput = {
+    where: InvoiceWhereUniqueInput
+    create: XOR<InvoiceCreateWithoutAppointmentInput, InvoiceUncheckedCreateWithoutAppointmentInput>
   }
 
   export type PatientUpsertWithoutAppointmentsInput = {
@@ -60198,7 +59880,6 @@ export namespace Prisma {
     vitals?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    primaryDoctor?: DoctorUpdateOneWithoutPatientsNestedInput
     clinic?: ClinicUpdateOneRequiredWithoutPatientsNestedInput
     prescriptions?: PrescriptionUpdateManyWithoutPatientNestedInput
     invoices?: InvoiceUpdateManyWithoutPatientNestedInput
@@ -60232,7 +59913,6 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
-    primaryDoctorId?: NullableStringFieldUpdateOperationsInput | string | null
     lastVisitedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
     clinicId?: StringFieldUpdateOperationsInput | string
@@ -60305,7 +59985,6 @@ export namespace Prisma {
     designation?: DesignationUpdateOneWithoutDoctorsNestedInput
     specializations?: SpecializationUpdateManyWithoutDoctorsNestedInput
     clinic?: ClinicUpdateOneRequiredWithoutDoctorsNestedInput
-    patients?: PatientUpdateManyWithoutPrimaryDoctorNestedInput
     prescriptions?: PrescriptionUpdateManyWithoutDoctorNestedInput
     payrolls?: PayrollUpdateManyWithoutDoctorNestedInput
   }
@@ -60362,7 +60041,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     specializations?: SpecializationUncheckedUpdateManyWithoutDoctorsNestedInput
-    patients?: PatientUncheckedUpdateManyWithoutPrimaryDoctorNestedInput
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutDoctorNestedInput
     payrolls?: PayrollUncheckedUpdateManyWithoutDoctorNestedInput
   }
@@ -60597,6 +60275,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionUpdateManyWithoutAppointmentNestedInput
     notes?: NoteUpdateManyWithoutAppointmentNestedInput
     parentAppointment?: AppointmentUpdateOneWithoutFollowUpsNestedInput
+    invoice?: InvoiceUpdateOneWithoutAppointmentNestedInput
   }
 
   export type AppointmentUncheckedUpdateWithoutFollowUpsInput = {
@@ -60622,6 +60301,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutAppointmentNestedInput
     notes?: NoteUncheckedUpdateManyWithoutAppointmentNestedInput
+    invoice?: InvoiceUncheckedUpdateOneWithoutAppointmentNestedInput
   }
 
   export type AppointmentUpsertWithWhereUniqueWithoutParentAppointmentInput = {
@@ -60638,6 +60318,55 @@ export namespace Prisma {
   export type AppointmentUpdateManyWithWhereWithoutParentAppointmentInput = {
     where: AppointmentScalarWhereInput
     data: XOR<AppointmentUpdateManyMutationInput, AppointmentUncheckedUpdateManyWithoutParentAppointmentInput>
+  }
+
+  export type InvoiceUpsertWithoutAppointmentInput = {
+    update: XOR<InvoiceUpdateWithoutAppointmentInput, InvoiceUncheckedUpdateWithoutAppointmentInput>
+    create: XOR<InvoiceCreateWithoutAppointmentInput, InvoiceUncheckedCreateWithoutAppointmentInput>
+    where?: InvoiceWhereInput
+  }
+
+  export type InvoiceUpdateToOneWithWhereWithoutAppointmentInput = {
+    where?: InvoiceWhereInput
+    data: XOR<InvoiceUpdateWithoutAppointmentInput, InvoiceUncheckedUpdateWithoutAppointmentInput>
+  }
+
+  export type InvoiceUpdateWithoutAppointmentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    invoiceCode?: NullableStringFieldUpdateOperationsInput | string | null
+    invoiceDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tax?: FloatFieldUpdateOperationsInput | number
+    discount?: FloatFieldUpdateOperationsInput | number
+    subTotal?: FloatFieldUpdateOperationsInput | number
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    otherInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    patient?: PatientUpdateOneRequiredWithoutInvoicesNestedInput
+    clinic?: ClinicUpdateOneRequiredWithoutInvoicesNestedInput
+    items?: InvoiceItemUpdateManyWithoutInvoiceNestedInput
+  }
+
+  export type InvoiceUncheckedUpdateWithoutAppointmentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    invoiceCode?: NullableStringFieldUpdateOperationsInput | string | null
+    patientId?: StringFieldUpdateOperationsInput | string
+    invoiceDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tax?: FloatFieldUpdateOperationsInput | number
+    discount?: FloatFieldUpdateOperationsInput | number
+    subTotal?: FloatFieldUpdateOperationsInput | number
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    otherInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    items?: InvoiceItemUncheckedUpdateManyWithoutInvoiceNestedInput
   }
 
   export type DepartmentCreateWithoutServicesInput = {
@@ -61170,7 +60899,6 @@ export namespace Prisma {
     department?: DepartmentCreateNestedOneWithoutDoctorsInput
     designation?: DesignationCreateNestedOneWithoutDoctorsInput
     clinic: ClinicCreateNestedOneWithoutDoctorsInput
-    patients?: PatientCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentCreateNestedManyWithoutDoctorInput
     prescriptions?: PrescriptionCreateNestedManyWithoutDoctorInput
     payrolls?: PayrollCreateNestedManyWithoutDoctorInput
@@ -61227,7 +60955,6 @@ export namespace Prisma {
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    patients?: PatientUncheckedCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentUncheckedCreateNestedManyWithoutDoctorInput
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutDoctorInput
     payrolls?: PayrollUncheckedCreateNestedManyWithoutDoctorInput
@@ -61714,7 +61441,6 @@ export namespace Prisma {
     designation?: DesignationCreateNestedOneWithoutDoctorsInput
     specializations?: SpecializationCreateNestedManyWithoutDoctorsInput
     clinic: ClinicCreateNestedOneWithoutDoctorsInput
-    patients?: PatientCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentCreateNestedManyWithoutDoctorInput
     prescriptions?: PrescriptionCreateNestedManyWithoutDoctorInput
   }
@@ -61771,7 +61497,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     specializations?: SpecializationUncheckedCreateNestedManyWithoutDoctorsInput
-    patients?: PatientUncheckedCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentUncheckedCreateNestedManyWithoutDoctorInput
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutDoctorInput
   }
@@ -62020,7 +61745,6 @@ export namespace Prisma {
     designation?: DesignationUpdateOneWithoutDoctorsNestedInput
     specializations?: SpecializationUpdateManyWithoutDoctorsNestedInput
     clinic?: ClinicUpdateOneRequiredWithoutDoctorsNestedInput
-    patients?: PatientUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUpdateManyWithoutDoctorNestedInput
     prescriptions?: PrescriptionUpdateManyWithoutDoctorNestedInput
   }
@@ -62077,7 +61801,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     specializations?: SpecializationUncheckedUpdateManyWithoutDoctorsNestedInput
-    patients?: PatientUncheckedUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUncheckedUpdateManyWithoutDoctorNestedInput
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutDoctorNestedInput
   }
@@ -63857,7 +63580,6 @@ export namespace Prisma {
     vitals?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
-    primaryDoctor?: DoctorCreateNestedOneWithoutPatientsInput
     clinic: ClinicCreateNestedOneWithoutPatientsInput
     appointments?: AppointmentCreateNestedManyWithoutPatientInput
     invoices?: InvoiceCreateNestedManyWithoutPatientInput
@@ -63891,7 +63613,6 @@ export namespace Prisma {
     state?: string | null
     city?: string | null
     pincode?: string | null
-    primaryDoctorId?: string | null
     lastVisitedAt?: Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
     clinicId: string
@@ -63958,7 +63679,6 @@ export namespace Prisma {
     designation?: DesignationCreateNestedOneWithoutDoctorsInput
     specializations?: SpecializationCreateNestedManyWithoutDoctorsInput
     clinic: ClinicCreateNestedOneWithoutDoctorsInput
-    patients?: PatientCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentCreateNestedManyWithoutDoctorInput
     payrolls?: PayrollCreateNestedManyWithoutDoctorInput
   }
@@ -64015,7 +63735,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     specializations?: SpecializationUncheckedCreateNestedManyWithoutDoctorsInput
-    patients?: PatientUncheckedCreateNestedManyWithoutPrimaryDoctorInput
     appointments?: AppointmentUncheckedCreateNestedManyWithoutDoctorInput
     payrolls?: PayrollUncheckedCreateNestedManyWithoutDoctorInput
   }
@@ -64048,6 +63767,7 @@ export namespace Prisma {
     notes?: NoteCreateNestedManyWithoutAppointmentInput
     parentAppointment?: AppointmentCreateNestedOneWithoutFollowUpsInput
     followUps?: AppointmentCreateNestedManyWithoutParentAppointmentInput
+    invoice?: InvoiceCreateNestedOneWithoutAppointmentInput
   }
 
   export type AppointmentUncheckedCreateWithoutPrescriptionsInput = {
@@ -64073,6 +63793,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     notes?: NoteUncheckedCreateNestedManyWithoutAppointmentInput
     followUps?: AppointmentUncheckedCreateNestedManyWithoutParentAppointmentInput
+    invoice?: InvoiceUncheckedCreateNestedOneWithoutAppointmentInput
   }
 
   export type AppointmentCreateOrConnectWithoutPrescriptionsInput = {
@@ -64309,7 +64030,6 @@ export namespace Prisma {
     vitals?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    primaryDoctor?: DoctorUpdateOneWithoutPatientsNestedInput
     clinic?: ClinicUpdateOneRequiredWithoutPatientsNestedInput
     appointments?: AppointmentUpdateManyWithoutPatientNestedInput
     invoices?: InvoiceUpdateManyWithoutPatientNestedInput
@@ -64343,7 +64063,6 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
-    primaryDoctorId?: NullableStringFieldUpdateOperationsInput | string | null
     lastVisitedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
     clinicId?: StringFieldUpdateOperationsInput | string
@@ -64416,7 +64135,6 @@ export namespace Prisma {
     designation?: DesignationUpdateOneWithoutDoctorsNestedInput
     specializations?: SpecializationUpdateManyWithoutDoctorsNestedInput
     clinic?: ClinicUpdateOneRequiredWithoutDoctorsNestedInput
-    patients?: PatientUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUpdateManyWithoutDoctorNestedInput
     payrolls?: PayrollUpdateManyWithoutDoctorNestedInput
   }
@@ -64473,7 +64191,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     specializations?: SpecializationUncheckedUpdateManyWithoutDoctorsNestedInput
-    patients?: PatientUncheckedUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUncheckedUpdateManyWithoutDoctorNestedInput
     payrolls?: PayrollUncheckedUpdateManyWithoutDoctorNestedInput
   }
@@ -64512,6 +64229,7 @@ export namespace Prisma {
     notes?: NoteUpdateManyWithoutAppointmentNestedInput
     parentAppointment?: AppointmentUpdateOneWithoutFollowUpsNestedInput
     followUps?: AppointmentUpdateManyWithoutParentAppointmentNestedInput
+    invoice?: InvoiceUpdateOneWithoutAppointmentNestedInput
   }
 
   export type AppointmentUncheckedUpdateWithoutPrescriptionsInput = {
@@ -64537,6 +64255,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     notes?: NoteUncheckedUpdateManyWithoutAppointmentNestedInput
     followUps?: AppointmentUncheckedUpdateManyWithoutParentAppointmentNestedInput
+    invoice?: InvoiceUncheckedUpdateOneWithoutAppointmentNestedInput
   }
 
   export type DepartmentUpsertWithoutPrescriptionsInput = {
@@ -65063,7 +64782,6 @@ export namespace Prisma {
     vitals?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
-    primaryDoctor?: DoctorCreateNestedOneWithoutPatientsInput
     clinic: ClinicCreateNestedOneWithoutPatientsInput
     appointments?: AppointmentCreateNestedManyWithoutPatientInput
     prescriptions?: PrescriptionCreateNestedManyWithoutPatientInput
@@ -65097,7 +64815,6 @@ export namespace Prisma {
     state?: string | null
     city?: string | null
     pincode?: string | null
-    primaryDoctorId?: string | null
     lastVisitedAt?: Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
     clinicId: string
@@ -65259,6 +64976,63 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type AppointmentCreateWithoutInvoiceInput = {
+    id?: string
+    appointmentCode?: string | null
+    scheduledAt: Date | string
+    endAt?: Date | string | null
+    mode?: string
+    appointmentType?: string | null
+    status?: string
+    reason?: string | null
+    location?: string | null
+    isFollowUp?: boolean
+    followUpStatus?: string | null
+    paymentStatus?: string | null
+    followUpPaymentStatus?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    patient: PatientCreateNestedOneWithoutAppointmentsInput
+    doctor: DoctorCreateNestedOneWithoutAppointmentsInput
+    department?: DepartmentCreateNestedOneWithoutAppointmentsInput
+    clinic: ClinicCreateNestedOneWithoutAppointmentsInput
+    prescriptions?: PrescriptionCreateNestedManyWithoutAppointmentInput
+    notes?: NoteCreateNestedManyWithoutAppointmentInput
+    parentAppointment?: AppointmentCreateNestedOneWithoutFollowUpsInput
+    followUps?: AppointmentCreateNestedManyWithoutParentAppointmentInput
+  }
+
+  export type AppointmentUncheckedCreateWithoutInvoiceInput = {
+    id?: string
+    appointmentCode?: string | null
+    patientId: string
+    doctorId: string
+    departmentId?: string | null
+    scheduledAt: Date | string
+    endAt?: Date | string | null
+    mode?: string
+    appointmentType?: string | null
+    status?: string
+    reason?: string | null
+    location?: string | null
+    clinicId: string
+    parentAppointmentId?: string | null
+    isFollowUp?: boolean
+    followUpStatus?: string | null
+    paymentStatus?: string | null
+    followUpPaymentStatus?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutAppointmentInput
+    notes?: NoteUncheckedCreateNestedManyWithoutAppointmentInput
+    followUps?: AppointmentUncheckedCreateNestedManyWithoutParentAppointmentInput
+  }
+
+  export type AppointmentCreateOrConnectWithoutInvoiceInput = {
+    where: AppointmentWhereUniqueInput
+    create: XOR<AppointmentCreateWithoutInvoiceInput, AppointmentUncheckedCreateWithoutInvoiceInput>
+  }
+
   export type PatientUpsertWithoutInvoicesInput = {
     update: XOR<PatientUpdateWithoutInvoicesInput, PatientUncheckedUpdateWithoutInvoicesInput>
     create: XOR<PatientCreateWithoutInvoicesInput, PatientUncheckedCreateWithoutInvoicesInput>
@@ -65302,7 +65076,6 @@ export namespace Prisma {
     vitals?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    primaryDoctor?: DoctorUpdateOneWithoutPatientsNestedInput
     clinic?: ClinicUpdateOneRequiredWithoutPatientsNestedInput
     appointments?: AppointmentUpdateManyWithoutPatientNestedInput
     prescriptions?: PrescriptionUpdateManyWithoutPatientNestedInput
@@ -65336,7 +65109,6 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
-    primaryDoctorId?: NullableStringFieldUpdateOperationsInput | string | null
     lastVisitedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
     clinicId?: StringFieldUpdateOperationsInput | string
@@ -65481,6 +65253,69 @@ export namespace Prisma {
     data: XOR<InvoiceItemUpdateManyMutationInput, InvoiceItemUncheckedUpdateManyWithoutInvoiceInput>
   }
 
+  export type AppointmentUpsertWithoutInvoiceInput = {
+    update: XOR<AppointmentUpdateWithoutInvoiceInput, AppointmentUncheckedUpdateWithoutInvoiceInput>
+    create: XOR<AppointmentCreateWithoutInvoiceInput, AppointmentUncheckedCreateWithoutInvoiceInput>
+    where?: AppointmentWhereInput
+  }
+
+  export type AppointmentUpdateToOneWithWhereWithoutInvoiceInput = {
+    where?: AppointmentWhereInput
+    data: XOR<AppointmentUpdateWithoutInvoiceInput, AppointmentUncheckedUpdateWithoutInvoiceInput>
+  }
+
+  export type AppointmentUpdateWithoutInvoiceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    appointmentCode?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    mode?: StringFieldUpdateOperationsInput | string
+    appointmentType?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    isFollowUp?: BoolFieldUpdateOperationsInput | boolean
+    followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    patient?: PatientUpdateOneRequiredWithoutAppointmentsNestedInput
+    doctor?: DoctorUpdateOneRequiredWithoutAppointmentsNestedInput
+    department?: DepartmentUpdateOneWithoutAppointmentsNestedInput
+    clinic?: ClinicUpdateOneRequiredWithoutAppointmentsNestedInput
+    prescriptions?: PrescriptionUpdateManyWithoutAppointmentNestedInput
+    notes?: NoteUpdateManyWithoutAppointmentNestedInput
+    parentAppointment?: AppointmentUpdateOneWithoutFollowUpsNestedInput
+    followUps?: AppointmentUpdateManyWithoutParentAppointmentNestedInput
+  }
+
+  export type AppointmentUncheckedUpdateWithoutInvoiceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    appointmentCode?: NullableStringFieldUpdateOperationsInput | string | null
+    patientId?: StringFieldUpdateOperationsInput | string
+    doctorId?: StringFieldUpdateOperationsInput | string
+    departmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    mode?: StringFieldUpdateOperationsInput | string
+    appointmentType?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    clinicId?: StringFieldUpdateOperationsInput | string
+    parentAppointmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    isFollowUp?: BoolFieldUpdateOperationsInput | boolean
+    followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    prescriptions?: PrescriptionUncheckedUpdateManyWithoutAppointmentNestedInput
+    notes?: NoteUncheckedUpdateManyWithoutAppointmentNestedInput
+    followUps?: AppointmentUncheckedUpdateManyWithoutParentAppointmentNestedInput
+  }
+
   export type InvoiceCreateWithoutItemsInput = {
     id?: string
     invoiceCode?: string | null
@@ -65497,6 +65332,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     patient: PatientCreateNestedOneWithoutInvoicesInput
     clinic: ClinicCreateNestedOneWithoutInvoicesInput
+    appointment?: AppointmentCreateNestedOneWithoutInvoiceInput
   }
 
   export type InvoiceUncheckedCreateWithoutItemsInput = {
@@ -65513,6 +65349,7 @@ export namespace Prisma {
     paymentStatus?: string
     otherInfo?: string | null
     clinicId: string
+    appointmentId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -65689,6 +65526,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     patient?: PatientUpdateOneRequiredWithoutInvoicesNestedInput
     clinic?: ClinicUpdateOneRequiredWithoutInvoicesNestedInput
+    appointment?: AppointmentUpdateOneWithoutInvoiceNestedInput
   }
 
   export type InvoiceUncheckedUpdateWithoutItemsInput = {
@@ -65705,6 +65543,7 @@ export namespace Prisma {
     paymentStatus?: StringFieldUpdateOperationsInput | string
     otherInfo?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
+    appointmentId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -66925,6 +66764,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionCreateNestedManyWithoutAppointmentInput
     parentAppointment?: AppointmentCreateNestedOneWithoutFollowUpsInput
     followUps?: AppointmentCreateNestedManyWithoutParentAppointmentInput
+    invoice?: InvoiceCreateNestedOneWithoutAppointmentInput
   }
 
   export type AppointmentUncheckedCreateWithoutNotesInput = {
@@ -66950,6 +66790,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutAppointmentInput
     followUps?: AppointmentUncheckedCreateNestedManyWithoutParentAppointmentInput
+    invoice?: InvoiceUncheckedCreateNestedOneWithoutAppointmentInput
   }
 
   export type AppointmentCreateOrConnectWithoutNotesInput = {
@@ -67110,6 +66951,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionUpdateManyWithoutAppointmentNestedInput
     parentAppointment?: AppointmentUpdateOneWithoutFollowUpsNestedInput
     followUps?: AppointmentUpdateManyWithoutParentAppointmentNestedInput
+    invoice?: InvoiceUpdateOneWithoutAppointmentNestedInput
   }
 
   export type AppointmentUncheckedUpdateWithoutNotesInput = {
@@ -67135,6 +66977,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutAppointmentNestedInput
     followUps?: AppointmentUncheckedUpdateManyWithoutParentAppointmentNestedInput
+    invoice?: InvoiceUncheckedUpdateOneWithoutAppointmentNestedInput
   }
 
   export type UserCreateManyClinicInput = {
@@ -67279,7 +67122,6 @@ export namespace Prisma {
     state?: string | null
     city?: string | null
     pincode?: string | null
-    primaryDoctorId?: string | null
     lastVisitedAt?: Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
@@ -67477,6 +67319,7 @@ export namespace Prisma {
     paymentMethod?: string | null
     paymentStatus?: string
     otherInfo?: string | null
+    appointmentId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -67731,7 +67574,6 @@ export namespace Prisma {
     department?: DepartmentUpdateOneWithoutDoctorsNestedInput
     designation?: DesignationUpdateOneWithoutDoctorsNestedInput
     specializations?: SpecializationUpdateManyWithoutDoctorsNestedInput
-    patients?: PatientUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUpdateManyWithoutDoctorNestedInput
     prescriptions?: PrescriptionUpdateManyWithoutDoctorNestedInput
     payrolls?: PayrollUpdateManyWithoutDoctorNestedInput
@@ -67788,7 +67630,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     specializations?: SpecializationUncheckedUpdateManyWithoutDoctorsNestedInput
-    patients?: PatientUncheckedUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUncheckedUpdateManyWithoutDoctorNestedInput
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutDoctorNestedInput
     payrolls?: PayrollUncheckedUpdateManyWithoutDoctorNestedInput
@@ -67955,7 +67796,6 @@ export namespace Prisma {
     vitals?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    primaryDoctor?: DoctorUpdateOneWithoutPatientsNestedInput
     appointments?: AppointmentUpdateManyWithoutPatientNestedInput
     prescriptions?: PrescriptionUpdateManyWithoutPatientNestedInput
     invoices?: InvoiceUpdateManyWithoutPatientNestedInput
@@ -67989,7 +67829,6 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
-    primaryDoctorId?: NullableStringFieldUpdateOperationsInput | string | null
     lastVisitedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -68027,7 +67866,6 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
-    primaryDoctorId?: NullableStringFieldUpdateOperationsInput | string | null
     lastVisitedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -68057,6 +67895,7 @@ export namespace Prisma {
     notes?: NoteUpdateManyWithoutAppointmentNestedInput
     parentAppointment?: AppointmentUpdateOneWithoutFollowUpsNestedInput
     followUps?: AppointmentUpdateManyWithoutParentAppointmentNestedInput
+    invoice?: InvoiceUpdateOneWithoutAppointmentNestedInput
   }
 
   export type AppointmentUncheckedUpdateWithoutClinicInput = {
@@ -68082,6 +67921,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutAppointmentNestedInput
     notes?: NoteUncheckedUpdateManyWithoutAppointmentNestedInput
     followUps?: AppointmentUncheckedUpdateManyWithoutParentAppointmentNestedInput
+    invoice?: InvoiceUncheckedUpdateOneWithoutAppointmentNestedInput
   }
 
   export type AppointmentUncheckedUpdateManyWithoutClinicInput = {
@@ -68596,6 +68436,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     patient?: PatientUpdateOneRequiredWithoutInvoicesNestedInput
     items?: InvoiceItemUpdateManyWithoutInvoiceNestedInput
+    appointment?: AppointmentUpdateOneWithoutInvoiceNestedInput
   }
 
   export type InvoiceUncheckedUpdateWithoutClinicInput = {
@@ -68611,6 +68452,7 @@ export namespace Prisma {
     paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
     paymentStatus?: StringFieldUpdateOperationsInput | string
     otherInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    appointmentId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: InvoiceItemUncheckedUpdateManyWithoutInvoiceNestedInput
@@ -68629,6 +68471,7 @@ export namespace Prisma {
     paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
     paymentStatus?: StringFieldUpdateOperationsInput | string
     otherInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    appointmentId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -69232,7 +69075,6 @@ export namespace Prisma {
     designation?: DesignationUpdateOneWithoutDoctorsNestedInput
     specializations?: SpecializationUpdateManyWithoutDoctorsNestedInput
     clinic?: ClinicUpdateOneRequiredWithoutDoctorsNestedInput
-    patients?: PatientUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUpdateManyWithoutDoctorNestedInput
     prescriptions?: PrescriptionUpdateManyWithoutDoctorNestedInput
     payrolls?: PayrollUpdateManyWithoutDoctorNestedInput
@@ -69289,7 +69131,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     specializations?: SpecializationUncheckedUpdateManyWithoutDoctorsNestedInput
-    patients?: PatientUncheckedUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUncheckedUpdateManyWithoutDoctorNestedInput
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutDoctorNestedInput
     payrolls?: PayrollUncheckedUpdateManyWithoutDoctorNestedInput
@@ -69447,6 +69288,7 @@ export namespace Prisma {
     notes?: NoteUpdateManyWithoutAppointmentNestedInput
     parentAppointment?: AppointmentUpdateOneWithoutFollowUpsNestedInput
     followUps?: AppointmentUpdateManyWithoutParentAppointmentNestedInput
+    invoice?: InvoiceUpdateOneWithoutAppointmentNestedInput
   }
 
   export type AppointmentUncheckedUpdateWithoutDepartmentInput = {
@@ -69472,6 +69314,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutAppointmentNestedInput
     notes?: NoteUncheckedUpdateManyWithoutAppointmentNestedInput
     followUps?: AppointmentUncheckedUpdateManyWithoutParentAppointmentNestedInput
+    invoice?: InvoiceUncheckedUpdateOneWithoutAppointmentNestedInput
   }
 
   export type AppointmentUncheckedUpdateManyWithoutDepartmentInput = {
@@ -69703,7 +69546,6 @@ export namespace Prisma {
     department?: DepartmentUpdateOneWithoutDoctorsNestedInput
     specializations?: SpecializationUpdateManyWithoutDoctorsNestedInput
     clinic?: ClinicUpdateOneRequiredWithoutDoctorsNestedInput
-    patients?: PatientUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUpdateManyWithoutDoctorNestedInput
     prescriptions?: PrescriptionUpdateManyWithoutDoctorNestedInput
     payrolls?: PayrollUpdateManyWithoutDoctorNestedInput
@@ -69760,7 +69602,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     specializations?: SpecializationUncheckedUpdateManyWithoutDoctorsNestedInput
-    patients?: PatientUncheckedUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUncheckedUpdateManyWithoutDoctorNestedInput
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutDoctorNestedInput
     payrolls?: PayrollUncheckedUpdateManyWithoutDoctorNestedInput
@@ -69987,41 +69828,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type PatientCreateManyPrimaryDoctorInput = {
-    id?: string
-    patientCode?: string | null
-    firstName: string
-    middleName?: string | null
-    lastName: string
-    profileImage?: string | null
-    phone?: string | null
-    alternateMobile?: string | null
-    email?: string | null
-    dob?: Date | string | null
-    gender?: string | null
-    bloodGroup?: string | null
-    maritalStatus?: string | null
-    occupation?: string | null
-    aadhaarNumber?: string | null
-    passportNumber?: string | null
-    referredBy?: string | null
-    emergencyContactName?: string | null
-    emergencyContactRelation?: string | null
-    emergencyContactPhone?: string | null
-    status?: string
-    address1?: string | null
-    address2?: string | null
-    country?: string | null
-    state?: string | null
-    city?: string | null
-    pincode?: string | null
-    lastVisitedAt?: Date | string | null
-    vitals?: NullableJsonNullValueInput | InputJsonValue
-    clinicId: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
   export type AppointmentCreateManyDoctorInput = {
     id?: string
     appointmentCode?: string | null
@@ -70115,117 +69921,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type PatientUpdateWithoutPrimaryDoctorInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    patientCode?: NullableStringFieldUpdateOperationsInput | string | null
-    firstName?: StringFieldUpdateOperationsInput | string
-    middleName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: StringFieldUpdateOperationsInput | string
-    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    gender?: NullableStringFieldUpdateOperationsInput | string | null
-    bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
-    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    occupation?: NullableStringFieldUpdateOperationsInput | string | null
-    aadhaarNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    passportNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
-    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
-    emergencyContactRelation?: NullableStringFieldUpdateOperationsInput | string | null
-    emergencyContactPhone?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    address1?: NullableStringFieldUpdateOperationsInput | string | null
-    address2?: NullableStringFieldUpdateOperationsInput | string | null
-    country?: NullableStringFieldUpdateOperationsInput | string | null
-    state?: NullableStringFieldUpdateOperationsInput | string | null
-    city?: NullableStringFieldUpdateOperationsInput | string | null
-    pincode?: NullableStringFieldUpdateOperationsInput | string | null
-    lastVisitedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    vitals?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    clinic?: ClinicUpdateOneRequiredWithoutPatientsNestedInput
-    appointments?: AppointmentUpdateManyWithoutPatientNestedInput
-    prescriptions?: PrescriptionUpdateManyWithoutPatientNestedInput
-    invoices?: InvoiceUpdateManyWithoutPatientNestedInput
-  }
-
-  export type PatientUncheckedUpdateWithoutPrimaryDoctorInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    patientCode?: NullableStringFieldUpdateOperationsInput | string | null
-    firstName?: StringFieldUpdateOperationsInput | string
-    middleName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: StringFieldUpdateOperationsInput | string
-    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    gender?: NullableStringFieldUpdateOperationsInput | string | null
-    bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
-    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    occupation?: NullableStringFieldUpdateOperationsInput | string | null
-    aadhaarNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    passportNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
-    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
-    emergencyContactRelation?: NullableStringFieldUpdateOperationsInput | string | null
-    emergencyContactPhone?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    address1?: NullableStringFieldUpdateOperationsInput | string | null
-    address2?: NullableStringFieldUpdateOperationsInput | string | null
-    country?: NullableStringFieldUpdateOperationsInput | string | null
-    state?: NullableStringFieldUpdateOperationsInput | string | null
-    city?: NullableStringFieldUpdateOperationsInput | string | null
-    pincode?: NullableStringFieldUpdateOperationsInput | string | null
-    lastVisitedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    vitals?: NullableJsonNullValueInput | InputJsonValue
-    clinicId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    appointments?: AppointmentUncheckedUpdateManyWithoutPatientNestedInput
-    prescriptions?: PrescriptionUncheckedUpdateManyWithoutPatientNestedInput
-    invoices?: InvoiceUncheckedUpdateManyWithoutPatientNestedInput
-  }
-
-  export type PatientUncheckedUpdateManyWithoutPrimaryDoctorInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    patientCode?: NullableStringFieldUpdateOperationsInput | string | null
-    firstName?: StringFieldUpdateOperationsInput | string
-    middleName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: StringFieldUpdateOperationsInput | string
-    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    gender?: NullableStringFieldUpdateOperationsInput | string | null
-    bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
-    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    occupation?: NullableStringFieldUpdateOperationsInput | string | null
-    aadhaarNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    passportNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
-    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
-    emergencyContactRelation?: NullableStringFieldUpdateOperationsInput | string | null
-    emergencyContactPhone?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    address1?: NullableStringFieldUpdateOperationsInput | string | null
-    address2?: NullableStringFieldUpdateOperationsInput | string | null
-    country?: NullableStringFieldUpdateOperationsInput | string | null
-    state?: NullableStringFieldUpdateOperationsInput | string | null
-    city?: NullableStringFieldUpdateOperationsInput | string | null
-    pincode?: NullableStringFieldUpdateOperationsInput | string | null
-    lastVisitedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    vitals?: NullableJsonNullValueInput | InputJsonValue
-    clinicId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
   export type AppointmentUpdateWithoutDoctorInput = {
     id?: StringFieldUpdateOperationsInput | string
     appointmentCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -70249,6 +69944,7 @@ export namespace Prisma {
     notes?: NoteUpdateManyWithoutAppointmentNestedInput
     parentAppointment?: AppointmentUpdateOneWithoutFollowUpsNestedInput
     followUps?: AppointmentUpdateManyWithoutParentAppointmentNestedInput
+    invoice?: InvoiceUpdateOneWithoutAppointmentNestedInput
   }
 
   export type AppointmentUncheckedUpdateWithoutDoctorInput = {
@@ -70274,6 +69970,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutAppointmentNestedInput
     notes?: NoteUncheckedUpdateManyWithoutAppointmentNestedInput
     followUps?: AppointmentUncheckedUpdateManyWithoutParentAppointmentNestedInput
+    invoice?: InvoiceUncheckedUpdateOneWithoutAppointmentNestedInput
   }
 
   export type AppointmentUncheckedUpdateManyWithoutDoctorInput = {
@@ -70464,6 +70161,7 @@ export namespace Prisma {
     paymentStatus?: string
     otherInfo?: string | null
     clinicId: string
+    appointmentId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -70491,6 +70189,7 @@ export namespace Prisma {
     notes?: NoteUpdateManyWithoutAppointmentNestedInput
     parentAppointment?: AppointmentUpdateOneWithoutFollowUpsNestedInput
     followUps?: AppointmentUpdateManyWithoutParentAppointmentNestedInput
+    invoice?: InvoiceUpdateOneWithoutAppointmentNestedInput
   }
 
   export type AppointmentUncheckedUpdateWithoutPatientInput = {
@@ -70516,6 +70215,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutAppointmentNestedInput
     notes?: NoteUncheckedUpdateManyWithoutAppointmentNestedInput
     followUps?: AppointmentUncheckedUpdateManyWithoutParentAppointmentNestedInput
+    invoice?: InvoiceUncheckedUpdateOneWithoutAppointmentNestedInput
   }
 
   export type AppointmentUncheckedUpdateManyWithoutPatientInput = {
@@ -70603,6 +70303,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     clinic?: ClinicUpdateOneRequiredWithoutInvoicesNestedInput
     items?: InvoiceItemUpdateManyWithoutInvoiceNestedInput
+    appointment?: AppointmentUpdateOneWithoutInvoiceNestedInput
   }
 
   export type InvoiceUncheckedUpdateWithoutPatientInput = {
@@ -70618,6 +70319,7 @@ export namespace Prisma {
     paymentStatus?: StringFieldUpdateOperationsInput | string
     otherInfo?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
+    appointmentId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: InvoiceItemUncheckedUpdateManyWithoutInvoiceNestedInput
@@ -70636,6 +70338,7 @@ export namespace Prisma {
     paymentStatus?: StringFieldUpdateOperationsInput | string
     otherInfo?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
+    appointmentId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -70795,6 +70498,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionUpdateManyWithoutAppointmentNestedInput
     notes?: NoteUpdateManyWithoutAppointmentNestedInput
     followUps?: AppointmentUpdateManyWithoutParentAppointmentNestedInput
+    invoice?: InvoiceUpdateOneWithoutAppointmentNestedInput
   }
 
   export type AppointmentUncheckedUpdateWithoutParentAppointmentInput = {
@@ -70820,6 +70524,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutAppointmentNestedInput
     notes?: NoteUncheckedUpdateManyWithoutAppointmentNestedInput
     followUps?: AppointmentUncheckedUpdateManyWithoutParentAppointmentNestedInput
+    invoice?: InvoiceUncheckedUpdateOneWithoutAppointmentNestedInput
   }
 
   export type AppointmentUncheckedUpdateManyWithoutParentAppointmentInput = {
@@ -70943,7 +70648,6 @@ export namespace Prisma {
     department?: DepartmentUpdateOneWithoutDoctorsNestedInput
     designation?: DesignationUpdateOneWithoutDoctorsNestedInput
     clinic?: ClinicUpdateOneRequiredWithoutDoctorsNestedInput
-    patients?: PatientUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUpdateManyWithoutDoctorNestedInput
     prescriptions?: PrescriptionUpdateManyWithoutDoctorNestedInput
     payrolls?: PayrollUpdateManyWithoutDoctorNestedInput
@@ -71000,7 +70704,6 @@ export namespace Prisma {
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    patients?: PatientUncheckedUpdateManyWithoutPrimaryDoctorNestedInput
     appointments?: AppointmentUncheckedUpdateManyWithoutDoctorNestedInput
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutDoctorNestedInput
     payrolls?: PayrollUncheckedUpdateManyWithoutDoctorNestedInput

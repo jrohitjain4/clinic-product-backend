@@ -101,6 +101,22 @@ export const getDashboardStats = async (req: AuthenticatedRequest, res: Response
         });
         const revenue = invoices.reduce((acc, curr) => acc + (Number(curr.totalAmount) || 0), 0);
 
+        // Income = Paid invoices only
+        const paidInvoices = await prisma.invoice.findMany({
+            where: { clinicId, paymentStatus: 'Paid' },
+            select: { totalAmount: true }
+        });
+        const totalIncome = paidInvoices.reduce((acc, curr) => acc + (Number(curr.totalAmount) || 0), 0);
+
+        // Expenses = All expenses
+        const allExpenses = await prisma.expense.findMany({
+            where: { clinicId },
+            select: { amount: true }
+        });
+        const totalExpense = allExpenses.reduce((acc, curr) => acc + (Number(curr.amount) || 0), 0);
+
+        const netProfit = totalIncome - totalExpense;
+
         const allAppointments = await prisma.appointment.findMany({ where: { clinicId } });
         const completedApps = allAppointments.filter(app => app.status === 'Completed').length;
         const cancelledApps = allAppointments.filter(app => app.status === 'Cancelled').length;
@@ -157,23 +173,45 @@ export const getDashboardStats = async (req: AuthenticatedRequest, res: Response
             appointmentCount: p._count.appointments
         })).sort((a, b) => b.totalPaid - a.totalPaid).slice(0, 5);
 
-        // 5. Recent Transactions
-        const recentInvoices = await prisma.invoice.findMany({
+        // 5. Recent Transactions (Income invoices + Expenses combined)
+        const recentInvoicesFull = await prisma.invoice.findMany({
             where: { clinicId },
             orderBy: { createdAt: 'desc' },
-            take: 5,
+            take: 10,
             include: { patient: true }
         });
 
-        const recentTransactions = recentInvoices.map(inv => ({
+        const recentExpensesFull = await prisma.expense.findMany({
+            where: { clinicId },
+            orderBy: { date: 'desc' },
+            take: 10
+        });
+
+        const incomeEntries = recentInvoicesFull.map(inv => ({
             id: inv.id,
+            type: 'income' as const,
+            description: `${inv.patient.firstName} ${inv.patient.lastName}`,
             invoiceCode: inv.invoiceCode,
-            amount: inv.totalAmount,
+            amount: Number(inv.totalAmount),
             status: inv.paymentStatus,
-            patientName: `${inv.patient.firstName} ${inv.patient.lastName}`,
             method: inv.paymentMethod,
-            createdAt: inv.createdAt
+            date: inv.createdAt
         }));
+
+        const expenseEntries = recentExpensesFull.map(exp => ({
+            id: exp.id,
+            type: 'expense' as const,
+            description: exp.name,
+            invoiceCode: exp.category || 'Expense',
+            amount: Number(exp.amount),
+            status: exp.status || 'Paid',
+            method: exp.paymentMethod,
+            date: exp.date
+        }));
+
+        const recentTransactions = [...incomeEntries, ...expenseEntries]
+            .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+            .slice(0, 10);
 
         // 6. Recent Appointments
         const recentAppointments = await prisma.appointment.findMany({
@@ -192,6 +230,9 @@ export const getDashboardStats = async (req: AuthenticatedRequest, res: Response
             patientsCount,
             appointmentsCount,
             revenue,
+            totalIncome,
+            totalExpense,
+            netProfit,
             appointmentStats: {
                 total: allAppointments.length,
                 completed: completedApps,

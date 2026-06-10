@@ -102,6 +102,61 @@ const maybeUpdatePatientLastVisit = async (
   });
 };
 
+const ensureAppointmentInvoice = async (appointmentId: string, clinicId: string) => {
+  try {
+    const appointment = await prisma.appointment.findUnique({
+      where: { id: appointmentId },
+      include: {
+        patient: true,
+        doctor: true,
+        invoice: true,
+      }
+    });
+
+    if (!appointment || appointment.status !== "Confirmed" || appointment.invoice) return;
+
+    // Determine fee
+    let fee = 0;
+    if (appointment.isFollowUp) {
+      fee = appointment.doctor.followUpFee || 0;
+    } else {
+      fee = appointment.doctor.consultationCharge || 0;
+    }
+
+    // Skip if free or no fee defined
+    if (fee <= 0 || appointment.paymentStatus === "Free") return;
+
+    // Auto-invoices for confirmed appointments are treated as "Paid" by default as per user request
+    const invStatus = "Paid";
+
+    await prisma.invoice.create({
+      data: {
+        clinicId,
+        patientId: appointment.patientId,
+        appointmentId: appointment.id,
+        invoiceDate: new Date(),
+        dueDate: new Date(),
+        subTotal: fee,
+        totalAmount: fee,
+        paymentStatus: invStatus,
+        paymentMethod: appointment.mode === "Online" ? "Online" : "Cash",
+        invoiceCode: `INV-AUTO-${appointment.appointmentCode || Date.now()}`,
+        items: {
+          create: [{
+            clinicId,
+            description: `${appointment.isFollowUp ? "Follow-up" : "Consultation"} Fee - Dr. ${appointment.doctor.fullName}`,
+            quantity: 1,
+            unitCost: fee,
+            amount: fee,
+          }]
+        }
+      }
+    });
+  } catch (err) {
+    console.error("Auto-invoice creation failed:", err);
+  }
+};
+
 // GET /api/appointments
 export const getAppointments = async (req: AuthenticatedRequest, res: Response) => {
   try {
@@ -451,6 +506,10 @@ export const createAppointment = async (req: AuthenticatedRequest, res: Response
 
     await maybeUpdatePatientLastVisit(patientId, resolvedStatus, scheduled);
 
+    if (resolvedStatus === "Confirmed") {
+      await ensureAppointmentInvoice(appointment.id, clinicId);
+    }
+
     // 🔔 Trigger notification
     const patientName = `${patient.firstName} ${patient.lastName}`.trim();
     await createNotificationInternal({
@@ -553,6 +612,10 @@ export const updateAppointment = async (req: AuthenticatedRequest, res: Response
       resolvedStatus,
       scheduled
     );
+
+    if (resolvedStatus === "Confirmed") {
+      await ensureAppointmentInvoice(updated.id, clinicId!);
+    }
 
     // 🔔 Notify on status changes
     const statusMessages: Record<string, string> = {

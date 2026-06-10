@@ -7,7 +7,6 @@ export const patientValidation = {
             lastName: z.string().min(1, "Last name is required"),
             email: z.string().email("Invalid email").optional().or(z.literal("")),
             password: z.string().optional().or(z.literal("")),
-            primaryDoctorId: z.string().min(1, "Primary doctor is required"),
         }).passthrough(),
     }),
 };

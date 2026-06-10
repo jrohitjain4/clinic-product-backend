@@ -336,7 +336,6 @@ exports.Prisma.PatientScalarFieldEnum = {
   state: 'state',
   city: 'city',
   pincode: 'pincode',
-  primaryDoctorId: 'primaryDoctorId',
   lastVisitedAt: 'lastVisitedAt',
   vitals: 'vitals',
   clinicId: 'clinicId',
@@ -558,6 +557,7 @@ exports.Prisma.InvoiceScalarFieldEnum = {
   paymentStatus: 'paymentStatus',
   otherInfo: 'otherInfo',
   clinicId: 'clinicId',
+  appointmentId: 'appointmentId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

@@ -261,7 +261,6 @@ model Doctor {
   specializations          Specialization[]
   clinicId                 String
   clinic                   Clinic           @relation(fields: [clinicId], references: [id])
-  patients                 Patient[]
   appointments             Appointment[]
   prescriptions            Prescription[]
   payrolls                 Payroll[]
@@ -297,8 +296,6 @@ model Patient {
   state                    String?
   city                     String?
   pincode                  String?
-  primaryDoctorId          String?
-  primaryDoctor            Doctor?        @relation(fields: [primaryDoctorId], references: [id])
   lastVisitedAt            DateTime?
   vitals                   Json?
   clinicId                 String
@@ -310,7 +307,6 @@ model Patient {
   updatedAt                DateTime       @updatedAt
 
   @@index([clinicId])
-  @@index([primaryDoctorId])
   @@index([status])
 }
 
@@ -341,6 +337,7 @@ model Appointment {
   followUpStatus        String? // Free Follow-up, Paid Follow-up
   paymentStatus         String? // Paid, Free, Unpaid
   followUpPaymentStatus String? // Keep for compatibility or remove later
+  invoice               Invoice?
   createdAt             DateTime       @default(now())
   updatedAt             DateTime       @updatedAt
 
@@ -604,6 +601,8 @@ model Invoice {
   clinicId      String
   clinic        Clinic        @relation(fields: [clinicId], references: [id])
   items         InvoiceItem[]
+  appointmentId String?       @unique
+  appointment   Appointment?  @relation(fields: [appointmentId], references: [id])
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
 

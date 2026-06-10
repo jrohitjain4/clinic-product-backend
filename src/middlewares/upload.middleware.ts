@@ -51,5 +51,5 @@ export const patientProfileUpload = multer({
 export const landingImageUpload = multer({
   storage: landingStorage,
   fileFilter,
-  limits: { fileSize: 8 * 1024 * 1024 },
+  limits: { fileSize: 30 * 1024 * 1024 }, // 30 MB — user crops before final upload
 });
