@@ -266,7 +266,6 @@ async function main() {
       state: "Maharashtra",
       country: "India",
       pincode: "400053",
-      primaryDoctorId: doctor1.id,
       clinicId: clinic.id,
       vitals: { height: "175cm", weight: "70kg", bp: "120/80" },
       lastVisitedAt: new Date(),
@@ -287,7 +286,6 @@ async function main() {
       city: "Mumbai",
       state: "Maharashtra",
       country: "India",
-      primaryDoctorId: doctor2.id,
       clinicId: clinic.id,
     },
   });
