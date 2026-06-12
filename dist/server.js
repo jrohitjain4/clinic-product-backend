@@ -43,6 +43,7 @@ const landing_routes_1 = __importDefault(require("./routes/landing.routes"));
 const demoBooking_routes_1 = __importDefault(require("./routes/demoBooking.routes"));
 const support_routes_1 = __importDefault(require("./routes/support.routes"));
 const note_routes_1 = __importDefault(require("./routes/note.routes"));
+const payment_routes_1 = __importDefault(require("./routes/payment.routes"));
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 5000;
 const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:5173,https://docyori.com,https://api.docyori.com")
@@ -71,6 +72,7 @@ const authRateLimiter = (0, express_rate_limit_1.default)({
 app.use("/api/health", health_routes_1.default);
 app.use("/api/auth", authRateLimiter, auth_routes_1.default);
 app.use("/api/packages", package_routes_1.default);
+app.use("/api/payments", payment_routes_1.default);
 app.use("/api/support", support_routes_1.default);
 app.use("/api/todos", todo_routes_1.default);
 app.use("/api/notes", note_routes_1.default);

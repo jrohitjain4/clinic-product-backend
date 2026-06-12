@@ -8,6 +8,7 @@ const auth_validation_1 = require("../validations/auth.validation");
 const router = (0, express_1.Router)();
 router.get("/clinics", auth_controller_1.getClinics);
 router.get("/packages", auth_controller_1.getPackages);
+router.get("/check-username", auth_controller_1.checkUsername);
 router.post("/register", (0, validate_middleware_1.validate)(auth_validation_1.authValidation.register), auth_controller_1.register);
 router.post("/register-draft", (0, validate_middleware_1.validate)(auth_validation_1.authValidation.registerDraft), auth_controller_1.registerDraft);
 router.post("/register-full", auth_controller_1.registerFull);

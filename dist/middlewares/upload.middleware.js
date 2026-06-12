@@ -51,5 +51,5 @@ exports.patientProfileUpload = (0, multer_1.default)({
 exports.landingImageUpload = (0, multer_1.default)({
     storage: landingStorage,
     fileFilter,
-    limits: { fileSize: 8 * 1024 * 1024 },
+    limits: { fileSize: 150 * 1024 * 1024 }, // 150 MB — user crops before final upload
 });

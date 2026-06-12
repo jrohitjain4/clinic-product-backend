@@ -54,16 +54,6 @@ const formatDateLabel = (iso) => {
         year: "numeric",
     });
 };
-const doctorInclude = {
-    primaryDoctor: {
-        select: {
-            id: true,
-            fullName: true,
-            profileImage: true,
-            designation: { select: { id: true, name: true } },
-        },
-    },
-};
 const enrichPatient = (p) => ({
     ...p,
     fullName: `${p.firstName} ${p.lastName}`.trim(),
@@ -84,9 +74,6 @@ const getPatients = async (req, res) => {
             where: {
                 clinicId,
                 status: status && typeof status === "string" ? status : { not: "Deleted" },
-                ...(doctorId && typeof doctorId === "string"
-                    ? { primaryDoctorId: doctorId }
-                    : {}),
                 ...(search && typeof search === "string"
                     ? {
                         OR: [
@@ -99,7 +86,6 @@ const getPatients = async (req, res) => {
                     }
                     : {}),
             },
-            include: doctorInclude,
             orderBy: sort === "oldest"
                 ? { createdAt: "asc" }
                 : { createdAt: "desc" },
@@ -119,7 +105,6 @@ const getPatientById = async (req, res) => {
         const { id } = req.params;
         const patient = await prisma_1.default.patient.findFirst({
             where: { id, clinicId: clinicId },
-            include: doctorInclude,
         });
         if (!patient)
             return res.status(404).json({ message: "Patient not found" });
@@ -137,7 +122,7 @@ const createPatient = async (req, res) => {
         const clinicId = req.user?.clinicId;
         if (!clinicId)
             return res.status(403).json({ message: "No clinic associated" });
-        const { firstName, middleName, lastName, profileImage, phone, alternateMobile, email, dob, gender, bloodGroup, maritalStatus, occupation, aadhaarNumber, passportNumber, referredBy, emergencyContactName, emergencyContactRelation, emergencyContactPhone, status, address1, address2, country, state, city, pincode, primaryDoctorId, lastVisitedAt, vitals, } = req.body;
+        const { firstName, middleName, lastName, profileImage, phone, alternateMobile, email, dob, gender, bloodGroup, maritalStatus, occupation, aadhaarNumber, passportNumber, referredBy, emergencyContactName, emergencyContactRelation, emergencyContactPhone, status, address1, address2, country, state, city, pincode, lastVisitedAt, vitals, } = req.body;
         if (!firstName?.trim()) {
             return res.status(400).json({ message: "First name is required" });
         }
@@ -207,12 +192,10 @@ const createPatient = async (req, res) => {
                 state: state && state !== "Select" ? state : null,
                 city: city && city !== "Select" ? city : null,
                 pincode: pincode || null,
-                primaryDoctorId,
                 lastVisitedAt: lastVisitedAt ? new Date(lastVisitedAt) : null,
                 vitals: vitals || {},
                 clinicId,
             },
-            include: doctorInclude,
         });
         // Create User mapping using Phone and/or Email
         const loginIdentifier = phone || email;
@@ -309,13 +292,7 @@ const updatePatient = async (req, res) => {
         });
         if (!existing)
             return res.status(404).json({ message: "Patient not found" });
-        const { firstName, lastName, profileImage, phone, email, dob, gender, bloodGroup, status, address1, address2, country, state, city, pincode, primaryDoctorId, lastVisitedAt, vitals, } = req.body;
-        if (primaryDoctorId) {
-            const doctor = await prisma_1.default.doctor.findFirst({
-                where: { id: primaryDoctorId, clinicId: clinicId },
-            });
-            // Removing strict check as per user request to remove primary doctor
-        }
+        const { firstName, lastName, profileImage, phone, email, dob, gender, bloodGroup, status, address1, address2, country, state, city, pincode, lastVisitedAt, vitals, } = req.body;
         const updated = await prisma_1.default.patient.update({
             where: { id },
             data: {
@@ -354,7 +331,6 @@ const updatePatient = async (req, res) => {
                         : null
                     : existing.city,
                 pincode: pincode !== undefined ? pincode || null : existing.pincode,
-                primaryDoctorId: primaryDoctorId !== undefined ? primaryDoctorId || null : existing.primaryDoctorId,
                 vitals: vitals !== undefined ? vitals : existing.vitals,
                 lastVisitedAt: lastVisitedAt !== undefined
                     ? lastVisitedAt
@@ -362,7 +338,6 @@ const updatePatient = async (req, res) => {
                         : null
                     : existing.lastVisitedAt,
             },
-            include: doctorInclude,
         });
         res.json(enrichPatient(updated));
     }

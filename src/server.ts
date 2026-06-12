@@ -41,6 +41,9 @@ import landingRoutes from "./routes/landing.routes";
 import demoBookingRoutes from "./routes/demoBooking.routes";
 import supportRoutes from "./routes/support.routes";
 import noteRoutes from "./routes/note.routes";
+import paymentRoutes from "./routes/payment.routes";
+import searchRoutes from "./routes/search.routes";
+
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -59,8 +62,8 @@ app.use(
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'X-Tenant-ID'],
   })
 );
-app.use(express.json({ limit: "50mb" }));
-app.use(express.urlencoded({ limit: "50mb", extended: true }));
+app.use(express.json({ limit: "1000mb" }));
+app.use(express.urlencoded({ limit: "1000mb", extended: true }));
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 // Rate limiting on auth routes (200 requests per 15 minutes)
@@ -76,6 +79,7 @@ const authRateLimiter = rateLimit({
 app.use("/api/health", healthRoutes);
 app.use("/api/auth", authRateLimiter, authRoutes);
 app.use("/api/packages", packageRoutes);
+app.use("/api/payments", paymentRoutes);
 app.use("/api/support", supportRoutes);
 app.use("/api/todos", todoRoutes);
 app.use("/api/notes", noteRoutes);
@@ -107,6 +111,7 @@ app.use("/api/settings", settingsRoutes);
 app.use("/api/landing", landingRoutes);
 app.use("/api/demo-booking", demoBookingRoutes);
 app.use("/api/support", supportRoutes);
+app.use("/api/search", searchRoutes);
 // Root Check
 app.get("/", (req, res) => {
   res.json({ message: "Clinic Management SaaS API is running perfectly!" });

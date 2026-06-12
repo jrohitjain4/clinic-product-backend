@@ -26,7 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.changePassword = exports.resetPassword = exports.requestPasswordReset = exports.getMe = exports.login = exports.register = exports.completeRegistration = exports.registerFull = exports.registerDraft = exports.upgradePlan = exports.getPackages = exports.updateProfile = exports.getClinics = void 0;
+exports.changePassword = exports.resetPassword = exports.requestPasswordReset = exports.getMe = exports.login = exports.register = exports.completeRegistration = exports.registerFull = exports.registerDraft = exports.checkUsername = exports.upgradePlan = exports.getPackages = exports.updateProfile = exports.getClinics = void 0;
 const client_1 = require("@prisma/client");
 const email_1 = require("../utils/email");
 const bcrypt = __importStar(require("bcryptjs"));
@@ -59,38 +59,100 @@ const updateProfile = async (req, res) => {
     try {
         if (!req.user || !req.user.clinicId)
             return res.status(401).json({ message: "Unauthorized" });
-        const { firstName, lastName, email, phone, addressLine1, addressLine2, country, state, city, pincode, clinicName, gstNo, clinicLogo } = req.body;
+        const { firstName, lastName, email, phone, addressLine1, addressLine2, country, state, city, pincode, clinicName, gstNo, clinicLogo, gender, dob, bloodGroup, maritalStatus, occupation } = req.body;
+        const fullName = `${firstName || ""} ${lastName || ""}`.trim() || undefined;
         const updatedUser = await prisma_1.default.user.update({
             where: { id: req.user.id },
             data: {
-                fullName: `${firstName} ${lastName}`.trim(),
-                email: email || undefined
+                fullName: fullName,
+                email: email || undefined,
+                gender: gender || undefined,
+                dob: dob ? new Date(dob) : undefined
             }
         });
-        const updatedClinic = await prisma_1.default.clinic.update({
-            where: { id: req.user.clinicId },
-            data: {
-                name: clinicName || undefined,
-                gstNumber: gstNo,
-                phone,
-                addressLine1,
-                addressLine2,
-                country,
-                state,
-                city,
-                pincode,
-                ...(clinicLogo ? {
-                    landingPage: {
-                        upsert: {
-                            create: { logo: clinicLogo },
-                            update: { logo: clinicLogo }
-                        }
+        let details = null;
+        // If role is PATIENT, sync with Patient model
+        if (req.user.role === "PATIENT") {
+            details = await prisma_1.default.patient.findFirst({
+                where: { email: req.user.email, clinicId: req.user.clinicId }
+            });
+            if (details) {
+                details = await prisma_1.default.patient.update({
+                    where: { id: details.id },
+                    data: {
+                        firstName: firstName || details.firstName,
+                        lastName: lastName || details.lastName,
+                        email: email || details.email,
+                        phone: phone || details.phone,
+                        address1: addressLine1 || details.address1,
+                        address2: addressLine2 || details.address2,
+                        country: country || details.country,
+                        state: state || details.state,
+                        city: city || details.city,
+                        pincode: pincode || details.pincode,
+                        gender: gender || details.gender,
+                        bloodGroup: bloodGroup || details.bloodGroup,
+                        maritalStatus: maritalStatus || details.maritalStatus,
+                        occupation: occupation || details.occupation,
+                        dob: dob ? new Date(dob) : details.dob
                     }
-                } : {})
-            },
-            include: { landingPage: true }
+                });
+            }
+        }
+        // If role is DOCTOR, sync with Doctor model
+        if (req.user.role === "DOCTOR") {
+            details = await prisma_1.default.doctor.findFirst({
+                where: { email: req.user.email, clinicId: req.user.clinicId }
+            });
+            if (details) {
+                details = await prisma_1.default.doctor.update({
+                    where: { id: details.id },
+                    data: {
+                        fullName: fullName || details.fullName,
+                        email: email || details.email,
+                        phone: phone || details.phone,
+                        address1: addressLine1 || details.address1,
+                        address2: addressLine2 || details.address2,
+                        country: country || details.country,
+                        state: state || details.state,
+                        city: city || details.city,
+                        pincode: pincode || details.pincode,
+                        gender: gender || details.gender,
+                        bloodGroup: bloodGroup || details.bloodGroup,
+                        dob: dob ? new Date(dob) : details.dob
+                    }
+                });
+            }
+        }
+        const updatedClinic = (req.user.role === "ADMIN" || req.user.role === "SUPER_ADMIN")
+            ? await prisma_1.default.clinic.update({
+                where: { id: req.user.clinicId },
+                data: {
+                    name: clinicName || undefined,
+                    gstNumber: gstNo,
+                    phone,
+                    addressLine1,
+                    addressLine2,
+                    country,
+                    state,
+                    city,
+                    pincode,
+                    ...(clinicLogo ? {
+                        landingPage: {
+                            upsert: {
+                                create: { logo: clinicLogo },
+                                update: { logo: clinicLogo }
+                            }
+                        }
+                    } : {})
+                },
+                include: { landingPage: true }
+            })
+            : null;
+        return res.json({
+            message: "Profile updated successfully",
+            user: { ...updatedUser, clinic: updatedClinic, details }
         });
-        return res.json({ message: "Profile updated successfully", user: { ...updatedUser, clinic: updatedClinic } });
     }
     catch (err) {
         console.error("Update profile error:", err);
@@ -163,6 +225,25 @@ const upgradePlan = async (req, res) => {
     }
 };
 exports.upgradePlan = upgradePlan;
+// Check Username Availability
+const checkUsername = async (req, res) => {
+    try {
+        const { username } = req.query;
+        if (!username)
+            return res.status(400).json({ message: "Username is required" });
+        const userExists = await prisma_1.default.user.findFirst({ where: { username: String(username) } });
+        const clinicExists = await prisma_1.default.clinic.findUnique({ where: { username: String(username) } });
+        if (userExists || clinicExists) {
+            return res.json({ available: false, message: "Username is already taken" });
+        }
+        return res.json({ available: true, message: "Username is available" });
+    }
+    catch (error) {
+        console.error("Check username error:", error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+};
+exports.checkUsername = checkUsername;
 // Register Draft — now only validates, does NOT save to DB
 const registerDraft = async (req, res) => {
     try {
@@ -170,24 +251,17 @@ const registerDraft = async (req, res) => {
         if (!email || !phone || !username) {
             return res.status(400).json({ message: "Email, Phone and Username are required for validation" });
         }
-        // Check if user with this info already exists
-        const existingUser = await prisma_1.default.user.findFirst({
-            where: {
-                OR: [
-                    { email },
-                    { phone },
-                    { username }
-                ]
-            }
-        });
-        if (existingUser) {
-            return res.status(400).json({ message: "A user with this Email, Phone, or Username already exists" });
-        }
-        const existingClinic = await prisma_1.default.clinic.findUnique({
-            where: { username }
-        });
-        if (existingClinic) {
-            return res.status(400).json({ message: "This Clinic Username is already taken" });
+        // Check each field individually for specific error messages
+        const emailExists = await prisma_1.default.user.findUnique({ where: { email } });
+        if (emailExists)
+            return res.status(400).json({ message: "This email address is already registered" });
+        const phoneExists = await prisma_1.default.user.findFirst({ where: { phone } });
+        if (phoneExists)
+            return res.status(400).json({ message: "This phone number is already registered" });
+        const usernameExists = await prisma_1.default.user.findFirst({ where: { username } });
+        const clinicExists = await prisma_1.default.clinic.findUnique({ where: { username } });
+        if (usernameExists || clinicExists) {
+            return res.status(400).json({ message: "This clinic username is already taken" });
         }
         return res.status(200).json({ message: "Validation passed", valid: true });
     }
@@ -205,16 +279,17 @@ const registerFull = async (req, res) => {
         if (!email || !password || !ownerName || !phone || !clinicName || !username || !packageId) {
             return res.status(400).json({ message: "All fields including package selection are required" });
         }
-        // Check duplicates
-        const existingUser = await prisma_1.default.user.findFirst({
-            where: { OR: [{ email }, { phone }, { username }] }
-        });
-        if (existingUser) {
-            return res.status(400).json({ message: "A user with this Email, Phone, or Username already exists" });
-        }
-        const existingClinic = await prisma_1.default.clinic.findUnique({ where: { username } });
-        if (existingClinic) {
-            return res.status(400).json({ message: "This Clinic Username is already taken" });
+        // Check each field individually for specific error messages
+        const emailExists = await prisma_1.default.user.findUnique({ where: { email } });
+        if (emailExists)
+            return res.status(400).json({ message: "This email address is already registered" });
+        const phoneExists = await prisma_1.default.user.findFirst({ where: { phone } });
+        if (phoneExists)
+            return res.status(400).json({ message: "This phone number is already registered" });
+        const usernameExists = await prisma_1.default.user.findFirst({ where: { username } });
+        const clinicExists = await prisma_1.default.clinic.findUnique({ where: { username } });
+        if (usernameExists || clinicExists) {
+            return res.status(400).json({ message: "This clinic username is already taken" });
         }
         const pkg = await prisma_1.default.subscriptionPackage.findUnique({ where: { id: packageId } });
         if (!pkg) {
@@ -527,6 +602,17 @@ const getMe = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
+        let details = null;
+        if (user.role === "PATIENT") {
+            details = await prisma_1.default.patient.findFirst({
+                where: { email: user.email, clinicId: user.clinicId || undefined },
+            });
+        }
+        else if (user.role === "DOCTOR") {
+            details = await prisma_1.default.doctor.findFirst({
+                where: { email: user.email, clinicId: user.clinicId || undefined },
+            });
+        }
         let permissions = null;
         if (user.role === "STAFF") {
             const staff = await prisma_1.default.staff.findFirst({
@@ -547,7 +633,8 @@ const getMe = async (req, res) => {
             fullName: user.fullName,
             role: user.role,
             clinic: user.clinic,
-            permissions
+            permissions,
+            details
         });
     }
     catch (error) {

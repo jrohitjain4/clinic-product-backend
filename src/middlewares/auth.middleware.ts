@@ -11,6 +11,8 @@ export interface AuthenticatedRequest extends Request {
     role: string;
     fullName: string;
     clinicId?: string | null;
+    doctorId?: string | null;
+    patientId?: string | null;
   };
 }
 

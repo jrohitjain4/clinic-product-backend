@@ -619,9 +619,27 @@ export const login = async (req: Request, res: Response) => {
       }
     }
 
+    // Resolve doctorId / patientId for role-scoped filtering
+    let doctorId: string | null = null;
+    let patientId: string | null = null;
+    if (user.role === "DOCTOR" && user.clinicId) {
+      const doc = await prisma.doctor.findFirst({
+        where: { email: user.email, clinicId: user.clinicId },
+        select: { id: true }
+      });
+      doctorId = doc?.id ?? null;
+    }
+    if (user.role === "PATIENT" && user.clinicId) {
+      const pat = await prisma.patient.findFirst({
+        where: { email: user.email, clinicId: user.clinicId },
+        select: { id: true }
+      });
+      patientId = pat?.id ?? null;
+    }
+
     // Generate JWT
     const token = jwt.sign(
-      { id: user.id, email: user.email, role: user.role, clinicId: user.clinicId },
+      { id: user.id, email: user.email, role: user.role, clinicId: user.clinicId, doctorId, patientId },
       JWT_SECRET,
       { expiresIn: "7d" }
     );
@@ -636,7 +654,9 @@ export const login = async (req: Request, res: Response) => {
         role: user.role,
         clinicId: user.clinicId,
         clinic: user.clinic,
-        permissions
+        permissions,
+        doctorId,
+        patientId,
       },
     });
   } catch (error) {

@@ -9,7 +9,6 @@ exports.patientValidation = {
             lastName: zod_1.z.string().min(1, "Last name is required"),
             email: zod_1.z.string().email("Invalid email").optional().or(zod_1.z.literal("")),
             password: zod_1.z.string().optional().or(zod_1.z.literal("")),
-            primaryDoctorId: zod_1.z.string().min(1, "Primary doctor is required"),
         }).passthrough(),
     }),
 };

@@ -287,7 +287,7 @@ const updateDoctor = async (req, res) => {
                 displayOnBookingPage: displayOnBookingPage === true || displayOnBookingPage === "true",
                 followUpEnabled: followUpEnabled === true || followUpEnabled === "true",
                 followUpValidityDays: followUpValidityDays ? parseInt(followUpValidityDays) : undefined,
-                freeFollowUpLimit: freeFollowUpLimit ? parseInt(freeFollowUpLimit) : undefined,
+                freeFollowUpLimit: freeFollowUpLimit ? parseInt(freeFollowUpLimit) : null,
                 followUpFee: followUpFee !== undefined ? (followUpFee ? parseFloat(followUpFee) : null) : undefined,
                 educations: educations || undefined,
                 awards: awards || undefined,
