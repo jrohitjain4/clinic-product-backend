@@ -18,6 +18,7 @@ router.post("/request-password-reset", auth_controller_1.requestPasswordReset);
 router.post("/reset-password", auth_controller_1.resetPassword);
 router.get("/me", auth_middleware_1.authenticateJWT, auth_controller_1.getMe);
 router.put("/profile", auth_middleware_1.authenticateJWT, auth_controller_1.updateProfile);
+router.put("/onboarding-step", auth_middleware_1.authenticateJWT, auth_controller_1.updateOnboardingStep);
 router.put("/change-password", auth_middleware_1.authenticateJWT, auth_controller_1.changePassword);
 router.post("/upgrade-plan", auth_middleware_1.authenticateJWT, auth_controller_1.upgradePlan);
 exports.default = router;

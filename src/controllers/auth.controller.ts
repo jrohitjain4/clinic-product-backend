@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Role, ClinicStatus } from "@prisma/client";
-import { sendEmail } from "../utils/email";
+import { sendEmail, sendAdminCongratulationsEmail } from "../utils/email";
 import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
 import { AuthenticatedRequest } from "../middlewares/auth.middleware";
@@ -369,6 +369,17 @@ export const registerFull = async (req: Request, res: Response) => {
       });
     } catch (_) { /* non-blocking */ }
 
+    // Send congratulations email to admin with credentials & plan details
+    try {
+      await sendAdminCongratulationsEmail(
+        email,
+        ownerName,
+        username,
+        password,
+        pkg
+      );
+    } catch (_) { /* non-blocking */ }
+
     return res.status(201).json({
       message: "Registration completed successfully!",
       token,
@@ -551,6 +562,20 @@ export const register = async (req: Request, res: Response) => {
       JWT_SECRET,
       { expiresIn: "7d" }
     );
+
+    // Send congratulations email if admin is registering a new clinic with a package
+    if (newUser.role === "ADMIN" && newUser.clinic && newUser.clinic.package) {
+      try {
+        const clinicUsername = newUser.clinic.username || userLevelUsername || newUser.username || "";
+        await sendAdminCongratulationsEmail(
+          email,
+          fullName,
+          clinicUsername,
+          password,
+          newUser.clinic.package
+        );
+      } catch (_) { /* non-blocking */ }
+    }
 
     return res.status(201).json({
       message: "Registration successful!",
@@ -834,5 +859,30 @@ export const changePassword = async (req: AuthenticatedRequest, res: Response) =
   } catch (err: any) {
     console.error("Change password error:", err);
     return res.status(500).json({ message: "Failed to update password" });
+  }
+};
+
+export const updateOnboardingStep = async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    if (!req.user || !req.user.clinicId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    const { onboardingStep } = req.body;
+    if (typeof onboardingStep !== "number") {
+      return res.status(400).json({ message: "onboardingStep must be a number" });
+    }
+
+    const updatedClinic = await prisma.clinic.update({
+      where: { id: req.user.clinicId },
+      data: { onboardingStep }
+    });
+
+    return res.json({
+      message: "Onboarding step updated successfully",
+      onboardingStep: updatedClinic.onboardingStep
+    });
+  } catch (err: any) {
+    console.error("Update onboarding step error:", err);
+    return res.status(500).json({ message: err.message || "Failed to update onboarding step" });
   }
 };

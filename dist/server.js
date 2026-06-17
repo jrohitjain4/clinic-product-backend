@@ -44,6 +44,7 @@ const demoBooking_routes_1 = __importDefault(require("./routes/demoBooking.route
 const support_routes_1 = __importDefault(require("./routes/support.routes"));
 const note_routes_1 = __importDefault(require("./routes/note.routes"));
 const payment_routes_1 = __importDefault(require("./routes/payment.routes"));
+const search_routes_1 = __importDefault(require("./routes/search.routes"));
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 5000;
 const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:5173,https://docyori.com,https://api.docyori.com")
@@ -57,8 +58,8 @@ app.use((0, cors_1.default)({
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'X-Tenant-ID'],
 }));
-app.use(express_1.default.json({ limit: "50mb" }));
-app.use(express_1.default.urlencoded({ limit: "50mb", extended: true }));
+app.use(express_1.default.json({ limit: "1000mb" }));
+app.use(express_1.default.urlencoded({ limit: "1000mb", extended: true }));
 app.use("/uploads", express_1.default.static(path_1.default.join(process.cwd(), "uploads")));
 // Rate limiting on auth routes (200 requests per 15 minutes)
 const authRateLimiter = (0, express_rate_limit_1.default)({
@@ -104,6 +105,7 @@ app.use("/api/settings", settings_routes_1.default);
 app.use("/api/landing", landing_routes_1.default);
 app.use("/api/demo-booking", demoBooking_routes_1.default);
 app.use("/api/support", support_routes_1.default);
+app.use("/api/search", search_routes_1.default);
 // Root Check
 app.get("/", (req, res) => {
     res.json({ message: "Clinic Management SaaS API is running perfectly!" });

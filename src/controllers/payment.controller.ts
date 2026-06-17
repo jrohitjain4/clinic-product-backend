@@ -7,6 +7,7 @@ import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
 import { ClinicStatus } from "@prisma/client";
 import { createSuperAdminNotification } from "./notification.controller";
+import { sendAdminCongratulationsEmail } from "../utils/email";
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 
@@ -217,6 +218,17 @@ export const verifyRazorpayPayment = async (req: Request, res: Response) => {
                 message: `${clinicName} has registered & completed payment for the "${pkg.name}" plan.`,
                 link: "/super-admin/tenants",
             });
+        } catch (_) { /* non-blocking */ }
+
+        // Send congratulations email to admin with credentials & plan details
+        try {
+            await sendAdminCongratulationsEmail(
+                email,
+                ownerName,
+                username,
+                password,
+                pkg
+            );
         } catch (_) { /* non-blocking */ }
 
         return res.status(201).json({

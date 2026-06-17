@@ -4273,10 +4273,12 @@ export namespace Prisma {
 
   export type ClinicAvgAggregateOutputType = {
     doctorCount: number | null
+    onboardingStep: number | null
   }
 
   export type ClinicSumAggregateOutputType = {
     doctorCount: number | null
+    onboardingStep: number | null
   }
 
   export type ClinicMinAggregateOutputType = {
@@ -4298,6 +4300,7 @@ export namespace Prisma {
     emergencyContact: string | null
     doctorCount: number | null
     status: $Enums.ClinicStatus | null
+    onboardingStep: number | null
     packageId: string | null
     packageStartsAt: Date | null
     packageExpiresAt: Date | null
@@ -4325,6 +4328,7 @@ export namespace Prisma {
     emergencyContact: string | null
     doctorCount: number | null
     status: $Enums.ClinicStatus | null
+    onboardingStep: number | null
     packageId: string | null
     packageStartsAt: Date | null
     packageExpiresAt: Date | null
@@ -4352,6 +4356,7 @@ export namespace Prisma {
     emergencyContact: number
     doctorCount: number
     status: number
+    onboardingStep: number
     packageId: number
     packageStartsAt: number
     packageExpiresAt: number
@@ -4364,10 +4369,12 @@ export namespace Prisma {
 
   export type ClinicAvgAggregateInputType = {
     doctorCount?: true
+    onboardingStep?: true
   }
 
   export type ClinicSumAggregateInputType = {
     doctorCount?: true
+    onboardingStep?: true
   }
 
   export type ClinicMinAggregateInputType = {
@@ -4389,6 +4396,7 @@ export namespace Prisma {
     emergencyContact?: true
     doctorCount?: true
     status?: true
+    onboardingStep?: true
     packageId?: true
     packageStartsAt?: true
     packageExpiresAt?: true
@@ -4416,6 +4424,7 @@ export namespace Prisma {
     emergencyContact?: true
     doctorCount?: true
     status?: true
+    onboardingStep?: true
     packageId?: true
     packageStartsAt?: true
     packageExpiresAt?: true
@@ -4443,6 +4452,7 @@ export namespace Prisma {
     emergencyContact?: true
     doctorCount?: true
     status?: true
+    onboardingStep?: true
     packageId?: true
     packageStartsAt?: true
     packageExpiresAt?: true
@@ -4557,6 +4567,7 @@ export namespace Prisma {
     emergencyContact: string | null
     doctorCount: number | null
     status: $Enums.ClinicStatus
+    onboardingStep: number
     packageId: string | null
     packageStartsAt: Date | null
     packageExpiresAt: Date | null
@@ -4603,6 +4614,7 @@ export namespace Prisma {
     emergencyContact?: boolean
     doctorCount?: boolean
     status?: boolean
+    onboardingStep?: boolean
     packageId?: boolean
     packageStartsAt?: boolean
     packageExpiresAt?: boolean
@@ -4660,6 +4672,7 @@ export namespace Prisma {
     emergencyContact?: boolean
     doctorCount?: boolean
     status?: boolean
+    onboardingStep?: boolean
     packageId?: boolean
     packageStartsAt?: boolean
     packageExpiresAt?: boolean
@@ -4688,6 +4701,7 @@ export namespace Prisma {
     emergencyContact?: boolean
     doctorCount?: boolean
     status?: boolean
+    onboardingStep?: boolean
     packageId?: boolean
     packageStartsAt?: boolean
     packageExpiresAt?: boolean
@@ -4784,6 +4798,7 @@ export namespace Prisma {
       emergencyContact: string | null
       doctorCount: number | null
       status: $Enums.ClinicStatus
+      onboardingStep: number
       packageId: string | null
       packageStartsAt: Date | null
       packageExpiresAt: Date | null
@@ -5230,6 +5245,7 @@ export namespace Prisma {
     readonly emergencyContact: FieldRef<"Clinic", 'String'>
     readonly doctorCount: FieldRef<"Clinic", 'Int'>
     readonly status: FieldRef<"Clinic", 'ClinicStatus'>
+    readonly onboardingStep: FieldRef<"Clinic", 'Int'>
     readonly packageId: FieldRef<"Clinic", 'String'>
     readonly packageStartsAt: FieldRef<"Clinic", 'DateTime'>
     readonly packageExpiresAt: FieldRef<"Clinic", 'DateTime'>
@@ -39630,6 +39646,7 @@ export namespace Prisma {
     emergencyContact: 'emergencyContact',
     doctorCount: 'doctorCount',
     status: 'status',
+    onboardingStep: 'onboardingStep',
     packageId: 'packageId',
     packageStartsAt: 'packageStartsAt',
     packageExpiresAt: 'packageExpiresAt',
@@ -40421,6 +40438,7 @@ export namespace Prisma {
     emergencyContact?: StringNullableFilter<"Clinic"> | string | null
     doctorCount?: IntNullableFilter<"Clinic"> | number | null
     status?: EnumClinicStatusFilter<"Clinic"> | $Enums.ClinicStatus
+    onboardingStep?: IntFilter<"Clinic"> | number
     packageId?: StringNullableFilter<"Clinic"> | string | null
     packageStartsAt?: DateTimeNullableFilter<"Clinic"> | Date | string | null
     packageExpiresAt?: DateTimeNullableFilter<"Clinic"> | Date | string | null
@@ -40477,6 +40495,7 @@ export namespace Prisma {
     emergencyContact?: SortOrderInput | SortOrder
     doctorCount?: SortOrderInput | SortOrder
     status?: SortOrder
+    onboardingStep?: SortOrder
     packageId?: SortOrderInput | SortOrder
     packageStartsAt?: SortOrderInput | SortOrder
     packageExpiresAt?: SortOrderInput | SortOrder
@@ -40536,6 +40555,7 @@ export namespace Prisma {
     emergencyContact?: StringNullableFilter<"Clinic"> | string | null
     doctorCount?: IntNullableFilter<"Clinic"> | number | null
     status?: EnumClinicStatusFilter<"Clinic"> | $Enums.ClinicStatus
+    onboardingStep?: IntFilter<"Clinic"> | number
     packageId?: StringNullableFilter<"Clinic"> | string | null
     packageStartsAt?: DateTimeNullableFilter<"Clinic"> | Date | string | null
     packageExpiresAt?: DateTimeNullableFilter<"Clinic"> | Date | string | null
@@ -40592,6 +40612,7 @@ export namespace Prisma {
     emergencyContact?: SortOrderInput | SortOrder
     doctorCount?: SortOrderInput | SortOrder
     status?: SortOrder
+    onboardingStep?: SortOrder
     packageId?: SortOrderInput | SortOrder
     packageStartsAt?: SortOrderInput | SortOrder
     packageExpiresAt?: SortOrderInput | SortOrder
@@ -40627,6 +40648,7 @@ export namespace Prisma {
     emergencyContact?: StringNullableWithAggregatesFilter<"Clinic"> | string | null
     doctorCount?: IntNullableWithAggregatesFilter<"Clinic"> | number | null
     status?: EnumClinicStatusWithAggregatesFilter<"Clinic"> | $Enums.ClinicStatus
+    onboardingStep?: IntWithAggregatesFilter<"Clinic"> | number
     packageId?: StringNullableWithAggregatesFilter<"Clinic"> | string | null
     packageStartsAt?: DateTimeNullableWithAggregatesFilter<"Clinic"> | Date | string | null
     packageExpiresAt?: DateTimeNullableWithAggregatesFilter<"Clinic"> | Date | string | null
@@ -43833,6 +43855,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
     isTrialUsed?: boolean
@@ -43888,6 +43911,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
@@ -43943,6 +43967,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
@@ -43998,6 +44023,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -44053,6 +44079,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
@@ -44080,6 +44107,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
@@ -44106,6 +44134,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -47789,6 +47818,17 @@ export namespace Prisma {
     not?: NestedEnumClinicStatusFilter<$PrismaModel> | $Enums.ClinicStatus
   }
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
   export type DateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -48115,6 +48155,7 @@ export namespace Prisma {
     emergencyContact?: SortOrder
     doctorCount?: SortOrder
     status?: SortOrder
+    onboardingStep?: SortOrder
     packageId?: SortOrder
     packageStartsAt?: SortOrder
     packageExpiresAt?: SortOrder
@@ -48125,6 +48166,7 @@ export namespace Prisma {
 
   export type ClinicAvgOrderByAggregateInput = {
     doctorCount?: SortOrder
+    onboardingStep?: SortOrder
   }
 
   export type ClinicMaxOrderByAggregateInput = {
@@ -48146,6 +48188,7 @@ export namespace Prisma {
     emergencyContact?: SortOrder
     doctorCount?: SortOrder
     status?: SortOrder
+    onboardingStep?: SortOrder
     packageId?: SortOrder
     packageStartsAt?: SortOrder
     packageExpiresAt?: SortOrder
@@ -48173,6 +48216,7 @@ export namespace Prisma {
     emergencyContact?: SortOrder
     doctorCount?: SortOrder
     status?: SortOrder
+    onboardingStep?: SortOrder
     packageId?: SortOrder
     packageStartsAt?: SortOrder
     packageExpiresAt?: SortOrder
@@ -48183,6 +48227,7 @@ export namespace Prisma {
 
   export type ClinicSumOrderByAggregateInput = {
     doctorCount?: SortOrder
+    onboardingStep?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -48245,6 +48290,22 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumClinicStatusFilter<$PrismaModel>
     _max?: NestedEnumClinicStatusFilter<$PrismaModel>
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -48427,17 +48488,6 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
   export type ClinicListRelationFilter = {
     every?: ClinicWhereInput
     some?: ClinicWhereInput
@@ -48517,22 +48567,6 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type EnumRoleFilter<$PrismaModel = never> = {
@@ -50659,6 +50693,14 @@ export namespace Prisma {
     set?: $Enums.ClinicStatus
   }
 
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
   }
@@ -51478,14 +51520,6 @@ export namespace Prisma {
   }
 
   export type FloatFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
-  export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
     decrement?: number
@@ -53307,6 +53341,17 @@ export namespace Prisma {
     not?: NestedEnumClinicStatusFilter<$PrismaModel> | $Enums.ClinicStatus
   }
 
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -53349,17 +53394,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
-  }
-
-  export type NestedIntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -53414,6 +53448,33 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumClinicStatusFilter<$PrismaModel>
     _max?: NestedEnumClinicStatusFilter<$PrismaModel>
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -53474,17 +53535,6 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
   export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[] | ListFloatFieldRefInput<$PrismaModel>
@@ -53499,22 +53549,6 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
-  }
-
-  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type NestedEnumRoleFilter<$PrismaModel = never> = {
@@ -55903,6 +55937,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
     isTrialUsed?: boolean
@@ -55957,6 +55992,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
@@ -56027,6 +56063,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
@@ -56081,6 +56118,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -56135,6 +56173,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
     isTrialUsed?: boolean
@@ -56189,6 +56228,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
     isTrialUsed?: boolean
@@ -56272,6 +56312,7 @@ export namespace Prisma {
     emergencyContact?: StringNullableFilter<"Clinic"> | string | null
     doctorCount?: IntNullableFilter<"Clinic"> | number | null
     status?: EnumClinicStatusFilter<"Clinic"> | $Enums.ClinicStatus
+    onboardingStep?: IntFilter<"Clinic"> | number
     packageId?: StringNullableFilter<"Clinic"> | string | null
     packageStartsAt?: DateTimeNullableFilter<"Clinic"> | Date | string | null
     packageExpiresAt?: DateTimeNullableFilter<"Clinic"> | Date | string | null
@@ -56299,6 +56340,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
     isTrialUsed?: boolean
@@ -56353,6 +56395,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
@@ -56423,6 +56466,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
@@ -56477,6 +56521,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -56531,6 +56576,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
     isTrialUsed?: boolean
@@ -56585,6 +56631,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
@@ -57011,6 +57058,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
@@ -57065,6 +57113,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -57215,6 +57264,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
     isTrialUsed?: boolean
@@ -57269,6 +57319,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
@@ -57562,6 +57613,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
@@ -57616,6 +57668,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -57817,6 +57870,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
     isTrialUsed?: boolean
@@ -57871,6 +57925,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
@@ -58079,6 +58134,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
@@ -58133,6 +58189,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -58300,6 +58357,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
     isTrialUsed?: boolean
@@ -58354,6 +58412,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
@@ -58682,6 +58741,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
@@ -58736,6 +58796,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -58838,6 +58899,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
     isTrialUsed?: boolean
@@ -58892,6 +58954,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
@@ -59114,6 +59177,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
@@ -59168,6 +59232,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -59505,6 +59570,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
     isTrialUsed?: boolean
@@ -59559,6 +59625,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
@@ -60120,6 +60187,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
@@ -60174,6 +60242,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -60427,6 +60496,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
     isTrialUsed?: boolean
@@ -60481,6 +60551,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
@@ -60630,6 +60701,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
@@ -60684,6 +60756,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -60754,6 +60827,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
     isTrialUsed?: boolean
@@ -60808,6 +60882,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
@@ -60995,6 +61070,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
@@ -61049,6 +61125,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -61119,6 +61196,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
     isTrialUsed?: boolean
@@ -61173,6 +61251,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
@@ -61243,6 +61322,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
@@ -61297,6 +61377,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -61525,6 +61606,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
     isTrialUsed?: boolean
@@ -61579,6 +61661,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
@@ -61835,6 +61918,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
@@ -61889,6 +61973,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -61943,6 +62028,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
     isTrialUsed?: boolean
@@ -61997,6 +62083,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
@@ -62067,6 +62154,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
@@ -62121,6 +62209,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -62175,6 +62264,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
     isTrialUsed?: boolean
@@ -62229,6 +62319,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
@@ -62299,6 +62390,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
@@ -62353,6 +62445,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -62407,6 +62500,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
     isTrialUsed?: boolean
@@ -62461,6 +62555,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
@@ -62531,6 +62626,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
@@ -62585,6 +62681,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -62639,6 +62736,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
     isTrialUsed?: boolean
@@ -62693,6 +62791,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
@@ -62763,6 +62862,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
@@ -62817,6 +62917,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -62871,6 +62972,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
     isTrialUsed?: boolean
@@ -62925,6 +63027,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
@@ -62995,6 +63098,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
@@ -63049,6 +63153,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -63103,6 +63208,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
     isTrialUsed?: boolean
@@ -63157,6 +63263,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
@@ -63227,6 +63334,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
@@ -63281,6 +63389,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -63335,6 +63444,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
     isTrialUsed?: boolean
@@ -63389,6 +63499,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
@@ -63459,6 +63570,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
@@ -63513,6 +63625,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -63859,6 +63972,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
     isTrialUsed?: boolean
@@ -63913,6 +64027,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
@@ -64333,6 +64448,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
@@ -64387,6 +64503,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -64494,6 +64611,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
     isTrialUsed?: boolean
@@ -64548,6 +64666,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
@@ -64661,6 +64780,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
@@ -64715,6 +64835,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -64848,6 +64969,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
     isTrialUsed?: boolean
@@ -64902,6 +65024,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
@@ -65148,6 +65271,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
@@ -65202,6 +65326,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -65405,6 +65530,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
     isTrialUsed?: boolean
@@ -65459,6 +65585,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
@@ -65611,6 +65738,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
@@ -65665,6 +65793,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -65719,6 +65848,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
     isTrialUsed?: boolean
@@ -65773,6 +65903,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
@@ -65843,6 +65974,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
@@ -65897,6 +66029,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -65951,6 +66084,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
     isTrialUsed?: boolean
@@ -66005,6 +66139,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
@@ -66075,6 +66210,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
@@ -66129,6 +66265,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -66183,6 +66320,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
     isTrialUsed?: boolean
@@ -66237,6 +66375,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
@@ -66307,6 +66446,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
@@ -66361,6 +66501,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -66415,6 +66556,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
     isTrialUsed?: boolean
@@ -66469,6 +66611,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
@@ -66539,6 +66682,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
@@ -66593,6 +66737,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -66647,6 +66792,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
     isTrialUsed?: boolean
@@ -66701,6 +66847,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageId?: string | null
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
@@ -66828,6 +66975,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
@@ -66882,6 +67030,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageId?: NullableStringFieldUpdateOperationsInput | string | null
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -68711,6 +68860,7 @@ export namespace Prisma {
     emergencyContact?: string | null
     doctorCount?: number | null
     status?: $Enums.ClinicStatus
+    onboardingStep?: number
     packageStartsAt?: Date | string | null
     packageExpiresAt?: Date | string | null
     isTrialUsed?: boolean
@@ -68737,6 +68887,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
@@ -68791,6 +68942,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
@@ -68845,6 +68997,7 @@ export namespace Prisma {
     emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
     doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
     packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isTrialUsed?: BoolFieldUpdateOperationsInput | boolean

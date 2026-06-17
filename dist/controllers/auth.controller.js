@@ -26,7 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.changePassword = exports.resetPassword = exports.requestPasswordReset = exports.getMe = exports.login = exports.register = exports.completeRegistration = exports.registerFull = exports.registerDraft = exports.checkUsername = exports.upgradePlan = exports.getPackages = exports.updateProfile = exports.getClinics = void 0;
+exports.updateOnboardingStep = exports.changePassword = exports.resetPassword = exports.requestPasswordReset = exports.getMe = exports.login = exports.register = exports.completeRegistration = exports.registerFull = exports.registerDraft = exports.checkUsername = exports.upgradePlan = exports.getPackages = exports.updateProfile = exports.getClinics = void 0;
 const client_1 = require("@prisma/client");
 const email_1 = require("../utils/email");
 const bcrypt = __importStar(require("bcryptjs"));
@@ -348,6 +348,11 @@ const registerFull = async (req, res) => {
             });
         }
         catch (_) { /* non-blocking */ }
+        // Send congratulations email to admin with credentials & plan details
+        try {
+            await (0, email_1.sendAdminCongratulationsEmail)(email, ownerName, username, password, pkg);
+        }
+        catch (_) { /* non-blocking */ }
         return res.status(201).json({
             message: "Registration completed successfully!",
             token,
@@ -505,6 +510,14 @@ const register = async (req, res) => {
         });
         // Generate Token
         const token = jwt.sign({ id: newUser.id, email: newUser.email, role: newUser.role, clinicId: newUser.clinicId }, JWT_SECRET, { expiresIn: "7d" });
+        // Send congratulations email if admin is registering a new clinic with a package
+        if (newUser.role === "ADMIN" && newUser.clinic && newUser.clinic.package) {
+            try {
+                const clinicUsername = newUser.clinic.username || userLevelUsername || newUser.username || "";
+                await (0, email_1.sendAdminCongratulationsEmail)(email, fullName, clinicUsername, password, newUser.clinic.package);
+            }
+            catch (_) { /* non-blocking */ }
+        }
         return res.status(201).json({
             message: "Registration successful!",
             token,
@@ -567,8 +580,25 @@ const login = async (req, res) => {
                 }
             }
         }
+        // Resolve doctorId / patientId for role-scoped filtering
+        let doctorId = null;
+        let patientId = null;
+        if (user.role === "DOCTOR" && user.clinicId) {
+            const doc = await prisma_1.default.doctor.findFirst({
+                where: { email: user.email, clinicId: user.clinicId },
+                select: { id: true }
+            });
+            doctorId = doc?.id ?? null;
+        }
+        if (user.role === "PATIENT" && user.clinicId) {
+            const pat = await prisma_1.default.patient.findFirst({
+                where: { email: user.email, clinicId: user.clinicId },
+                select: { id: true }
+            });
+            patientId = pat?.id ?? null;
+        }
         // Generate JWT
-        const token = jwt.sign({ id: user.id, email: user.email, role: user.role, clinicId: user.clinicId }, JWT_SECRET, { expiresIn: "7d" });
+        const token = jwt.sign({ id: user.id, email: user.email, role: user.role, clinicId: user.clinicId, doctorId, patientId }, JWT_SECRET, { expiresIn: "7d" });
         return res.json({
             message: "Login successful!",
             token,
@@ -579,7 +609,9 @@ const login = async (req, res) => {
                 role: user.role,
                 clinicId: user.clinicId,
                 clinic: user.clinic,
-                permissions
+                permissions,
+                doctorId,
+                patientId,
             },
         });
     }
@@ -745,3 +777,27 @@ const changePassword = async (req, res) => {
     }
 };
 exports.changePassword = changePassword;
+const updateOnboardingStep = async (req, res) => {
+    try {
+        if (!req.user || !req.user.clinicId) {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+        const { onboardingStep } = req.body;
+        if (typeof onboardingStep !== "number") {
+            return res.status(400).json({ message: "onboardingStep must be a number" });
+        }
+        const updatedClinic = await prisma_1.default.clinic.update({
+            where: { id: req.user.clinicId },
+            data: { onboardingStep }
+        });
+        return res.json({
+            message: "Onboarding step updated successfully",
+            onboardingStep: updatedClinic.onboardingStep
+        });
+    }
+    catch (err) {
+        console.error("Update onboarding step error:", err);
+        return res.status(500).json({ message: err.message || "Failed to update onboarding step" });
+    }
+};
+exports.updateOnboardingStep = updateOnboardingStep;

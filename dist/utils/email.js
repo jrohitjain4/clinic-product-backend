@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sendEmail = void 0;
+exports.sendAdminCongratulationsEmail = exports.sendEmail = void 0;
 const nodemailer_1 = __importDefault(require("nodemailer"));
 const prisma_1 = __importDefault(require("../lib/prisma"));
 const getTransporter = async () => {
@@ -102,3 +102,55 @@ const sendEmail = async (to, subject, html) => {
     }
 };
 exports.sendEmail = sendEmail;
+const sendAdminCongratulationsEmail = async (to, ownerName, username, password, plan) => {
+    try {
+        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "http://localhost:5173";
+        const loginUrl = `${frontendLink}/login`;
+        const priceDisplay = plan.price === 0 ? "Free Trial" : `₹${plan.price.toLocaleString("en-IN")}`;
+        const formatLimit = (limit) => {
+            if (limit === -1 || limit === 9999 || limit >= 9999)
+                return "Unlimited";
+            return limit.toString();
+        };
+        const emailBody = `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333; line-height: 1.6;">
+            <h2 style="color: #2c3e50;">Congratulations, ${ownerName}! Your Account has been Created</h2>
+            <p>We are excited to welcome you to Docyori! Your clinic administration account has been successfully created. Here are your account credentials and subscription plan details:</p>
+            
+            <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin: 20px 0; border-left: 4px solid #0d6efd;">
+              <p style="margin-top: 0;"><strong>Your Login Credentials:</strong></p>
+              <ul style="margin-bottom: 0;">
+                <li>Username: <strong>${username}</strong></li>
+                <li>Email: <strong>${to}</strong></li>
+                <li>Password: <strong>${password}</strong></li>
+              </ul>
+            </div>
+
+            <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin: 20px 0; border-left: 4px solid #198754;">
+              <p style="margin-top: 0;"><strong>Your Subscription Plan Details:</strong></p>
+              <ul style="margin-bottom: 0;">
+                <li>Plan Name: <strong>${plan.name}</strong></li>
+                <li>Price: <strong>${priceDisplay}</strong></li>
+                <li>Duration: <strong>${plan.durationInDays} Days</strong></li>
+                <li>Max Doctors: <strong>${formatLimit(plan.maxDoctors)}</strong></li>
+                <li>Max Patients: <strong>${formatLimit(plan.maxPatients)}</strong></li>
+                <li>Max Appointments: <strong>${formatLimit(plan.maxAppointments)}</strong></li>
+              </ul>
+            </div>
+
+            <p style="color: #dc3545; font-size: 14px; font-weight: bold;">
+              ⚠️ Please change your password after logging in for the first time.
+            </p>
+            <div style="text-align: center; margin: 30px 0;">
+              <a href="${loginUrl}" style="background-color: #0d6efd; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">Click here to Login</a>
+            </div>
+            <p style="font-size: 13px; color: #6c757d;">Regards,<br/><strong>The Docyori Team</strong></p>
+          </div>`;
+        return await (0, exports.sendEmail)(to.toLowerCase(), "Welcome to Docyori! Account & Plan Details", emailBody);
+    }
+    catch (error) {
+        console.error("Error sending admin congratulations email:", error);
+        return false;
+    }
+};
+exports.sendAdminCongratulationsEmail = sendAdminCongratulationsEmail;

@@ -141,6 +141,7 @@ exports.Prisma.ClinicScalarFieldEnum = {
   emergencyContact: 'emergencyContact',
   doctorCount: 'doctorCount',
   status: 'status',
+  onboardingStep: 'onboardingStep',
   packageId: 'packageId',
   packageStartsAt: 'packageStartsAt',
   packageExpiresAt: 'packageExpiresAt',

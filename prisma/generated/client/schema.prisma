@@ -45,6 +45,7 @@ model Clinic {
   emergencyContact      String?
   doctorCount           Int?
   status                ClinicStatus           @default(IN_PROGRESS)
+  onboardingStep        Int                    @default(0)
   packageId             String?
   package               SubscriptionPackage?   @relation(fields: [packageId], references: [id])
   packageStartsAt       DateTime?

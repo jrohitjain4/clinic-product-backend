@@ -34,6 +34,7 @@ const encryption_1 = require("../utils/encryption");
 const bcrypt = __importStar(require("bcryptjs"));
 const jwt = __importStar(require("jsonwebtoken"));
 const notification_controller_1 = require("./notification.controller");
+const email_1 = require("../utils/email");
 const JWT_SECRET = process.env.JWT_SECRET;
 // Helper to get active Razorpay credential
 const getActiveRazorpayConfig = async () => {
@@ -196,6 +197,11 @@ const verifyRazorpayPayment = async (req, res) => {
                 message: `${clinicName} has registered & completed payment for the "${pkg.name}" plan.`,
                 link: "/super-admin/tenants",
             });
+        }
+        catch (_) { /* non-blocking */ }
+        // Send congratulations email to admin with credentials & plan details
+        try {
+            await (0, email_1.sendAdminCongratulationsEmail)(email, ownerName, username, password, pkg);
         }
         catch (_) { /* non-blocking */ }
         return res.status(201).json({
