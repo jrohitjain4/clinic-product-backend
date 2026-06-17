@@ -14,12 +14,13 @@ import {
 
 const router = Router();
 
+router.get("/:id/availability", getDoctorAvailability);
+
 router.use(authenticateJWT);
 
 router.get("/my-dashboard", getDoctorDashboardStats);
 router.get("/", getDoctors);
 router.get("/:id", getDoctorById);
-router.get("/:id/availability", getDoctorAvailability);
 router.post("/", validate(doctorValidation.create), createDoctor);
 router.put("/:id", updateDoctor);
 router.delete("/:id", deleteDoctor);

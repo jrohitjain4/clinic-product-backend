@@ -6,6 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.bookPublicAppointment = exports.upsertLandingPage = exports.getClinicLandingPage = void 0;
 const prisma_1 = __importDefault(require("../lib/prisma"));
 const notification_controller_1 = require("./notification.controller");
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
+const crypto_1 = require("crypto");
+const email_1 = require("../utils/email");
 /* ─── GET /api/landing/:clinicId  (public, no auth) ─── */
 const getClinicLandingPage = async (req, res) => {
     try {
@@ -76,6 +79,8 @@ const getClinicLandingPage = async (req, res) => {
                 icon: "ti ti-stethoscope",
                 label: s.serviceName,
             }));
+        const apptCount = await prisma_1.default.appointment.count({ where: { clinicId: clinic.id } });
+        const nextAppointmentCode = `AP${String(apptCount + 1).padStart(3, "0")}`;
         const response = {
             id: clinic.id,
             name: clinic.name,
@@ -100,7 +105,9 @@ const getClinicLandingPage = async (req, res) => {
             services,
             reviews: lp?.reviews || [],
             gallery: lp?.gallery || [],
-            workingDays: clinic.workingDaysConfig || null
+            workingDays: clinic.workingDaysConfig || null,
+            onboardingStep: clinic.onboardingStep,
+            nextAppointmentCode
         };
         return res.json(response);
     }
@@ -150,9 +157,9 @@ exports.upsertLandingPage = upsertLandingPage;
 const bookPublicAppointment = async (req, res) => {
     try {
         const { clinicId } = req.params;
-        const { name, phone, doctorId, date, time, reason } = req.body;
-        if (!name || !phone || !date || !time) {
-            return res.status(400).json({ message: "Name, phone, date and time are required." });
+        const { firstName, lastName, email, phone, gender, doctorId, date, time, reason } = req.body;
+        if (!firstName || !lastName || !email || !phone || !gender || !date || !time) {
+            return res.status(400).json({ message: "First name, last name, email, phone, gender, date and time are required." });
         }
         const clinic = await prisma_1.default.clinic.findUnique({
             where: { id: clinicId },
@@ -167,23 +174,64 @@ const bookPublicAppointment = async (req, res) => {
         if (offDays.includes(dayOfWeek)) {
             return res.status(400).json({ message: "The clinic is closed on this day. Please select another date." });
         }
-        // Find or create patient by phone
-        const nameParts = name.trim().split(" ");
-        const firstName = nameParts[0] || "Walk-in";
-        const lastName = nameParts.slice(1).join(" ") || "Patient";
-        let patient = await prisma_1.default.patient.findFirst({ where: { phone, clinicId } });
+        // Find or create patient by phone or email
+        let patient = await prisma_1.default.patient.findFirst({
+            where: {
+                clinicId,
+                OR: [
+                    { phone },
+                    { email: email.toLowerCase() }
+                ]
+            }
+        });
         if (!patient) {
+            const count = await prisma_1.default.patient.count({ where: { clinicId } });
+            const patientCode = `PAT${String(count + 1).padStart(6, "0")}`;
             patient = await prisma_1.default.patient.create({
                 data: {
-                    firstName,
-                    lastName,
+                    patientCode,
+                    firstName: firstName.trim(),
+                    lastName: lastName.trim(),
                     phone,
+                    email: email.toLowerCase(),
+                    gender,
                     clinicId,
                     status: "Active",
-                    email: `walkin.${Date.now()}@clinic.local`,
                     dob: new Date("1990-01-01"),
                 },
             });
+        }
+        // Check if user account already exists by email
+        let existingUser = await prisma_1.default.user.findFirst({
+            where: { email: email.toLowerCase() }
+        });
+        let generatedPassword = "";
+        let isNewUserCreated = false;
+        if (!existingUser) {
+            // Check if phone number is already taken by another user account
+            let phoneToUse = phone || null;
+            if (phone) {
+                const phoneTaken = await prisma_1.default.user.findFirst({
+                    where: { phone }
+                });
+                if (phoneTaken) {
+                    phoneToUse = null; // Prevent unique constraint crash by omitting duplicate phone
+                }
+            }
+            generatedPassword = (0, crypto_1.randomBytes)(4).toString("hex"); // 8 chars hex password
+            const passwordHash = await bcryptjs_1.default.hash(generatedPassword, 10);
+            await prisma_1.default.user.create({
+                data: {
+                    email: email.toLowerCase(),
+                    phone: phoneToUse,
+                    username: email.toLowerCase(),
+                    passwordHash,
+                    fullName: `${firstName.trim()} ${lastName.trim()}`,
+                    role: "PATIENT",
+                    clinicId,
+                }
+            });
+            isNewUserCreated = true;
         }
         // Resolve doctor
         let resolvedDoctorId = doctorId;
@@ -196,7 +244,11 @@ const bookPublicAppointment = async (req, res) => {
         const doctor = await prisma_1.default.doctor.findFirst({ where: { id: resolvedDoctorId, clinicId } });
         if (!doctor)
             return res.status(400).json({ message: "Invalid doctor selected." });
-        const scheduledAt = new Date(`${date}T${time}:00`);
+        let timeStr = time;
+        if (timeStr.split(':').length === 2) {
+            timeStr = `${timeStr}:00`;
+        }
+        const scheduledAt = new Date(`${date}T${timeStr}`);
         if (isNaN(scheduledAt.getTime())) {
             return res.status(400).json({ message: "Invalid date or time format." });
         }
@@ -218,6 +270,86 @@ const bookPublicAppointment = async (req, res) => {
                 clinicId,
             },
         });
+        // 🔴 P0 Email Notification with credentials and booking status
+        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "http://localhost:5173";
+        const loginUrl = `${frontendLink}/login`;
+        let emailBody = "";
+        if (isNewUserCreated) {
+            emailBody = `
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333; line-height: 1.6; border: 1px solid #e2e8f0; padding: 24px; borderRadius: 8px;">
+                    <h2 style="color: #1d4ed8; text-align: center; margin-top: 0;">Booking Confirmation</h2>
+                    <p>Dear <strong>${firstName.trim()} ${lastName.trim()}</strong>,</p>
+                    <p>Thank you for booking an appointment with us. Your appointment has been scheduled successfully!</p>
+                    
+                    <div style="background-color: #f0fdf4; padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #10b981;">
+                        <h4 style="margin: 0 0 10px 0; color: #15803d;">Appointment Details:</h4>
+                        <ul style="margin: 0; padding-left: 20px;">
+                            <li>Appointment ID: <strong>${appointmentCode}</strong></li>
+                            <li>Doctor: <strong>Dr. ${doctor.fullName}</strong></li>
+                            <li>Date: <strong>${scheduledAt.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}</strong></li>
+                            <li>Time: <strong>${time}</strong></li>
+                        </ul>
+                    </div>
+
+                    <div style="background-color: #f8fafc; padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #3b82f6;">
+                        <h4 style="margin: 0 0 10px 0; color: #1d4ed8;">Your Patient Portal Account:</h4>
+                        <p style="margin: 0 0 10px 0;">We have automatically created an account for you to view your prescriptions and history.</p>
+                        <ul style="margin: 0; padding-left: 20px;">
+                            <li>Login URL: <a href="${loginUrl}">${loginUrl}</a></li>
+                            <li>Email / Username: <strong>${email.toLowerCase()}</strong></li>
+                            <li>Password: <strong>${generatedPassword}</strong></li>
+                        </ul>
+                        <p style="margin: 10px 0 0 0; font-size: 12px; color: #ef4444; font-weight: bold;">
+                            * Note: Please change this temporary password after logging in for the first time.
+                        </p>
+                    </div>
+
+                    <div style="background-color: #fffbeb; padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #f59e0b; text-align: center;">
+                        <h4 style="margin: 0 0 10px 0; color: #b45309;">⚠️ Action Required to Confirm Your Booking</h4>
+                        <p style="margin: 0; font-weight: bold; font-size: 15px; color: #b45309;">
+                            To confirm your booking, please call the admin and pay the advance.
+                        </p>
+                    </div>
+
+                    <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 25px 0;" />
+                    <p style="font-size: 13px; color: #64748b; text-align: center; margin-bottom: 0;">
+                        Regards,<br/><strong>${clinic.name} Team</strong>
+                    </p>
+                </div>
+            `;
+        }
+        else {
+            emailBody = `
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333; line-height: 1.6; border: 1px solid #e2e8f0; padding: 24px; borderRadius: 8px;">
+                    <h2 style="color: #1d4ed8; text-align: center; margin-top: 0;">Booking Confirmation</h2>
+                    <p>Dear <strong>${firstName.trim()} ${lastName.trim()}</strong>,</p>
+                    <p>Your new appointment has been scheduled successfully!</p>
+                    
+                    <div style="background-color: #f0fdf4; padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #10b981;">
+                        <h4 style="margin: 0 0 10px 0; color: #15803d;">Appointment Details:</h4>
+                        <ul style="margin: 0; padding-left: 20px;">
+                            <li>Appointment ID: <strong>${appointmentCode}</strong></li>
+                            <li>Doctor: <strong>Dr. ${doctor.fullName}</strong></li>
+                            <li>Date: <strong>${scheduledAt.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}</strong></li>
+                            <li>Time: <strong>${time}</strong></li>
+                        </ul>
+                    </div>
+
+                    <div style="background-color: #fffbeb; padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #f59e0b; text-align: center;">
+                        <h4 style="margin: 0 0 10px 0; color: #b45309;">⚠️ Action Required to Confirm Your Booking</h4>
+                        <p style="margin: 0; font-weight: bold; font-size: 15px; color: #b45309;">
+                            To confirm your booking, please call the admin and pay the advance.
+                        </p>
+                    </div>
+
+                    <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 25px 0;" />
+                    <p style="font-size: 13px; color: #64748b; text-align: center; margin-bottom: 0;">
+                        Regards,<br/><strong>${clinic.name} Team</strong>
+                    </p>
+                </div>
+            `;
+        }
+        await (0, email_1.sendEmail)(email.toLowerCase(), "Your Booking Confirmation & Account Details", emailBody);
         const patientName = `${patient.firstName} ${patient.lastName}`.trim();
         await (0, notification_controller_1.createNotificationInternal)({
             clinicId,
@@ -229,8 +361,11 @@ const bookPublicAppointment = async (req, res) => {
         });
         return res.status(201).json({
             success: true,
-            appointmentCode: appointment.appointmentCode,
-            message: `Appointment ${appointment.appointmentCode} booked! We will confirm your appointment shortly.`,
+            appointmentCode,
+            isNewUserCreated,
+            generatedPassword,
+            email,
+            message: "Appointment booked successfully!",
         });
     }
     catch (error) {

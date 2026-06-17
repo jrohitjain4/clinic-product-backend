@@ -36,17 +36,17 @@ const fileFilter = (_req, file, cb) => {
 exports.doctorProfileUpload = (0, multer_1.default)({
     storage: doctorStorage,
     fileFilter,
-    limits: { fileSize: 5 * 1024 * 1024 },
+    limits: { fileSize: 150 * 1024 * 1024 },
 });
 exports.staffProfileUpload = (0, multer_1.default)({
     storage: staffStorage,
     fileFilter,
-    limits: { fileSize: 5 * 1024 * 1024 },
+    limits: { fileSize: 150 * 1024 * 1024 },
 });
 exports.patientProfileUpload = (0, multer_1.default)({
     storage: patientStorage,
     fileFilter,
-    limits: { fileSize: 5 * 1024 * 1024 },
+    limits: { fileSize: 150 * 1024 * 1024 },
 });
 exports.landingImageUpload = (0, multer_1.default)({
     storage: landingStorage,

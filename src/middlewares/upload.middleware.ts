@@ -33,19 +33,19 @@ const fileFilter: multer.Options["fileFilter"] = (_req, file, cb) => {
 export const doctorProfileUpload = multer({
   storage: doctorStorage,
   fileFilter,
-  limits: { fileSize: 5 * 1024 * 1024 },
+  limits: { fileSize: 150 * 1024 * 1024 },
 });
 
 export const staffProfileUpload = multer({
   storage: staffStorage,
   fileFilter,
-  limits: { fileSize: 5 * 1024 * 1024 },
+  limits: { fileSize: 150 * 1024 * 1024 },
 });
 
 export const patientProfileUpload = multer({
   storage: patientStorage,
   fileFilter,
-  limits: { fileSize: 5 * 1024 * 1024 },
+  limits: { fileSize: 150 * 1024 * 1024 },
 });
 
 export const landingImageUpload = multer({

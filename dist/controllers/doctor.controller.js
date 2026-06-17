@@ -335,16 +335,14 @@ const getDoctorAvailability = async (req, res) => {
     try {
         const { id: doctorId } = req.params;
         const { startDate, endDate } = req.query;
-        const clinicId = req.user?.clinicId;
-        if (!clinicId)
-            return res.status(403).json({ message: "No clinic associated" });
         const doctor = await prisma_1.default.doctor.findUnique({
             where: { id: doctorId },
             select: { schedules: true, appointmentDuration: true, clinicId: true }
         });
-        if (!doctor || doctor.clinicId !== clinicId) {
+        if (!doctor) {
             return res.status(404).json({ message: "Doctor not found" });
         }
+        const clinicId = doctor.clinicId;
         const start = startDate ? new Date(startDate) : new Date(new Date().getFullYear(), new Date().getMonth(), 1);
         const end = endDate ? new Date(endDate) : new Date(start.getFullYear(), start.getMonth() + 2, 0);
         // Fetch Holidays
