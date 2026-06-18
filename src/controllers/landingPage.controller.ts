@@ -281,7 +281,7 @@ export const bookPublicAppointment = async (req: Request, res: Response) => {
                 departmentId: doctor.departmentId || null,
                 scheduledAt,
                 endAt: null,
-                mode: "In-person",
+                mode: "Clinic Landing",
                 appointmentType: "Online Booking",
                 status: "Schedule",
                 reason: reason || "Online booking from clinic website",
@@ -388,6 +388,7 @@ export const bookPublicAppointment = async (req: Request, res: Response) => {
             isNewUserCreated,
             generatedPassword,
             email,
+            patientCode: patient.patientCode,
             message: "Appointment booked successfully!",
         });
 

@@ -70,15 +70,29 @@ const appointmentIncludes = {
   ...patientInclude,
   ...doctorInclude,
   department: { select: { id: true, name: true } },
-  clinic: {
-    include: { landingPage: true }
-  },
   followUps: {
     select: { id: true, appointmentCode: true, scheduledAt: true, status: true, followUpPaymentStatus: true, reason: true },
     orderBy: { scheduledAt: "asc" as const },
   },
   parentAppointment: {
     select: { id: true, appointmentCode: true, scheduledAt: true, status: true },
+  },
+  clinic: {
+    select: {
+      id: true,
+      name: true,
+      phone: true,
+      addressLine1: true,
+      addressLine2: true,
+      city: true,
+      landingPage: {
+        select: {
+          logo: true,
+          email: true,
+          whatsapp: true
+        }
+      }
+    }
   },
 } as const;
 
