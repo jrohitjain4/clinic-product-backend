@@ -15917,6 +15917,7 @@ export namespace Prisma {
     followUpStatus: number
     paymentStatus: number
     followUpPaymentStatus: number
+    serviceIds: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -15988,6 +15989,7 @@ export namespace Prisma {
     followUpStatus?: true
     paymentStatus?: true
     followUpPaymentStatus?: true
+    serviceIds?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -16084,6 +16086,7 @@ export namespace Prisma {
     followUpStatus: string | null
     paymentStatus: string | null
     followUpPaymentStatus: string | null
+    serviceIds: string[]
     createdAt: Date
     updatedAt: Date
     _count: AppointmentCountAggregateOutputType | null
@@ -16124,6 +16127,7 @@ export namespace Prisma {
     followUpStatus?: boolean
     paymentStatus?: boolean
     followUpPaymentStatus?: boolean
+    serviceIds?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     patient?: boolean | PatientDefaultArgs<ExtArgs>
@@ -16157,6 +16161,7 @@ export namespace Prisma {
     followUpStatus?: boolean
     paymentStatus?: boolean
     followUpPaymentStatus?: boolean
+    serviceIds?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     patient?: boolean | PatientDefaultArgs<ExtArgs>
@@ -16185,6 +16190,7 @@ export namespace Prisma {
     followUpStatus?: boolean
     paymentStatus?: boolean
     followUpPaymentStatus?: boolean
+    serviceIds?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
@@ -16241,6 +16247,7 @@ export namespace Prisma {
       followUpStatus: string | null
       paymentStatus: string | null
       followUpPaymentStatus: string | null
+      serviceIds: string[]
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["appointment"]>
@@ -16663,6 +16670,7 @@ export namespace Prisma {
     readonly followUpStatus: FieldRef<"Appointment", 'String'>
     readonly paymentStatus: FieldRef<"Appointment", 'String'>
     readonly followUpPaymentStatus: FieldRef<"Appointment", 'String'>
+    readonly serviceIds: FieldRef<"Appointment", 'String[]'>
     readonly createdAt: FieldRef<"Appointment", 'DateTime'>
     readonly updatedAt: FieldRef<"Appointment", 'DateTime'>
   }
@@ -17127,6 +17135,7 @@ export namespace Prisma {
     serviceName: string | null
     departmentId: string | null
     price: number | null
+    duration: string | null
     status: string | null
     clinicId: string | null
     createdAt: Date | null
@@ -17138,6 +17147,7 @@ export namespace Prisma {
     serviceName: string | null
     departmentId: string | null
     price: number | null
+    duration: string | null
     status: string | null
     clinicId: string | null
     createdAt: Date | null
@@ -17149,6 +17159,7 @@ export namespace Prisma {
     serviceName: number
     departmentId: number
     price: number
+    duration: number
     status: number
     clinicId: number
     createdAt: number
@@ -17170,6 +17181,7 @@ export namespace Prisma {
     serviceName?: true
     departmentId?: true
     price?: true
+    duration?: true
     status?: true
     clinicId?: true
     createdAt?: true
@@ -17181,6 +17193,7 @@ export namespace Prisma {
     serviceName?: true
     departmentId?: true
     price?: true
+    duration?: true
     status?: true
     clinicId?: true
     createdAt?: true
@@ -17192,6 +17205,7 @@ export namespace Prisma {
     serviceName?: true
     departmentId?: true
     price?: true
+    duration?: true
     status?: true
     clinicId?: true
     createdAt?: true
@@ -17290,6 +17304,7 @@ export namespace Prisma {
     serviceName: string
     departmentId: string
     price: number | null
+    duration: string | null
     status: string
     clinicId: string
     createdAt: Date
@@ -17320,6 +17335,7 @@ export namespace Prisma {
     serviceName?: boolean
     departmentId?: boolean
     price?: boolean
+    duration?: boolean
     status?: boolean
     clinicId?: boolean
     createdAt?: boolean
@@ -17335,6 +17351,7 @@ export namespace Prisma {
     serviceName?: boolean
     departmentId?: boolean
     price?: boolean
+    duration?: boolean
     status?: boolean
     clinicId?: boolean
     createdAt?: boolean
@@ -17348,6 +17365,7 @@ export namespace Prisma {
     serviceName?: boolean
     departmentId?: boolean
     price?: boolean
+    duration?: boolean
     status?: boolean
     clinicId?: boolean
     createdAt?: boolean
@@ -17377,6 +17395,7 @@ export namespace Prisma {
       serviceName: string
       departmentId: string
       price: number | null
+      duration: string | null
       status: string
       clinicId: string
       createdAt: Date
@@ -17781,6 +17800,7 @@ export namespace Prisma {
     readonly serviceName: FieldRef<"Service", 'String'>
     readonly departmentId: FieldRef<"Service", 'String'>
     readonly price: FieldRef<"Service", 'Float'>
+    readonly duration: FieldRef<"Service", 'String'>
     readonly status: FieldRef<"Service", 'String'>
     readonly clinicId: FieldRef<"Service", 'String'>
     readonly createdAt: FieldRef<"Service", 'DateTime'>
@@ -39895,6 +39915,7 @@ export namespace Prisma {
     followUpStatus: 'followUpStatus',
     paymentStatus: 'paymentStatus',
     followUpPaymentStatus: 'followUpPaymentStatus',
+    serviceIds: 'serviceIds',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -39907,6 +39928,7 @@ export namespace Prisma {
     serviceName: 'serviceName',
     departmentId: 'departmentId',
     price: 'price',
+    duration: 'duration',
     status: 'status',
     clinicId: 'clinicId',
     createdAt: 'createdAt',
@@ -41840,6 +41862,7 @@ export namespace Prisma {
     followUpStatus?: StringNullableFilter<"Appointment"> | string | null
     paymentStatus?: StringNullableFilter<"Appointment"> | string | null
     followUpPaymentStatus?: StringNullableFilter<"Appointment"> | string | null
+    serviceIds?: StringNullableListFilter<"Appointment">
     createdAt?: DateTimeFilter<"Appointment"> | Date | string
     updatedAt?: DateTimeFilter<"Appointment"> | Date | string
     patient?: XOR<PatientRelationFilter, PatientWhereInput>
@@ -41872,6 +41895,7 @@ export namespace Prisma {
     followUpStatus?: SortOrderInput | SortOrder
     paymentStatus?: SortOrderInput | SortOrder
     followUpPaymentStatus?: SortOrderInput | SortOrder
+    serviceIds?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     patient?: PatientOrderByWithRelationInput
@@ -41907,6 +41931,7 @@ export namespace Prisma {
     followUpStatus?: StringNullableFilter<"Appointment"> | string | null
     paymentStatus?: StringNullableFilter<"Appointment"> | string | null
     followUpPaymentStatus?: StringNullableFilter<"Appointment"> | string | null
+    serviceIds?: StringNullableListFilter<"Appointment">
     createdAt?: DateTimeFilter<"Appointment"> | Date | string
     updatedAt?: DateTimeFilter<"Appointment"> | Date | string
     patient?: XOR<PatientRelationFilter, PatientWhereInput>
@@ -41939,6 +41964,7 @@ export namespace Prisma {
     followUpStatus?: SortOrderInput | SortOrder
     paymentStatus?: SortOrderInput | SortOrder
     followUpPaymentStatus?: SortOrderInput | SortOrder
+    serviceIds?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: AppointmentCountOrderByAggregateInput
@@ -41968,6 +41994,7 @@ export namespace Prisma {
     followUpStatus?: StringNullableWithAggregatesFilter<"Appointment"> | string | null
     paymentStatus?: StringNullableWithAggregatesFilter<"Appointment"> | string | null
     followUpPaymentStatus?: StringNullableWithAggregatesFilter<"Appointment"> | string | null
+    serviceIds?: StringNullableListFilter<"Appointment">
     createdAt?: DateTimeWithAggregatesFilter<"Appointment"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Appointment"> | Date | string
   }
@@ -41980,6 +42007,7 @@ export namespace Prisma {
     serviceName?: StringFilter<"Service"> | string
     departmentId?: StringFilter<"Service"> | string
     price?: FloatNullableFilter<"Service"> | number | null
+    duration?: StringNullableFilter<"Service"> | string | null
     status?: StringFilter<"Service"> | string
     clinicId?: StringFilter<"Service"> | string
     createdAt?: DateTimeFilter<"Service"> | Date | string
@@ -41994,6 +42022,7 @@ export namespace Prisma {
     serviceName?: SortOrder
     departmentId?: SortOrder
     price?: SortOrderInput | SortOrder
+    duration?: SortOrderInput | SortOrder
     status?: SortOrder
     clinicId?: SortOrder
     createdAt?: SortOrder
@@ -42011,6 +42040,7 @@ export namespace Prisma {
     serviceName?: StringFilter<"Service"> | string
     departmentId?: StringFilter<"Service"> | string
     price?: FloatNullableFilter<"Service"> | number | null
+    duration?: StringNullableFilter<"Service"> | string | null
     status?: StringFilter<"Service"> | string
     clinicId?: StringFilter<"Service"> | string
     createdAt?: DateTimeFilter<"Service"> | Date | string
@@ -42025,6 +42055,7 @@ export namespace Prisma {
     serviceName?: SortOrder
     departmentId?: SortOrder
     price?: SortOrderInput | SortOrder
+    duration?: SortOrderInput | SortOrder
     status?: SortOrder
     clinicId?: SortOrder
     createdAt?: SortOrder
@@ -42044,6 +42075,7 @@ export namespace Prisma {
     serviceName?: StringWithAggregatesFilter<"Service"> | string
     departmentId?: StringWithAggregatesFilter<"Service"> | string
     price?: FloatNullableWithAggregatesFilter<"Service"> | number | null
+    duration?: StringNullableWithAggregatesFilter<"Service"> | string | null
     status?: StringWithAggregatesFilter<"Service"> | string
     clinicId?: StringWithAggregatesFilter<"Service"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Service"> | Date | string
@@ -45571,6 +45603,7 @@ export namespace Prisma {
     followUpStatus?: string | null
     paymentStatus?: string | null
     followUpPaymentStatus?: string | null
+    serviceIds?: AppointmentCreateserviceIdsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     patient: PatientCreateNestedOneWithoutAppointmentsInput
@@ -45603,6 +45636,7 @@ export namespace Prisma {
     followUpStatus?: string | null
     paymentStatus?: string | null
     followUpPaymentStatus?: string | null
+    serviceIds?: AppointmentCreateserviceIdsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutAppointmentInput
@@ -45625,6 +45659,7 @@ export namespace Prisma {
     followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
     paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    serviceIds?: AppointmentUpdateserviceIdsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     patient?: PatientUpdateOneRequiredWithoutAppointmentsNestedInput
@@ -45657,6 +45692,7 @@ export namespace Prisma {
     followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
     paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    serviceIds?: AppointmentUpdateserviceIdsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutAppointmentNestedInput
@@ -45684,6 +45720,7 @@ export namespace Prisma {
     followUpStatus?: string | null
     paymentStatus?: string | null
     followUpPaymentStatus?: string | null
+    serviceIds?: AppointmentCreateserviceIdsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -45702,6 +45739,7 @@ export namespace Prisma {
     followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
     paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    serviceIds?: AppointmentUpdateserviceIdsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -45725,6 +45763,7 @@ export namespace Prisma {
     followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
     paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    serviceIds?: AppointmentUpdateserviceIdsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -45733,6 +45772,7 @@ export namespace Prisma {
     id?: string
     serviceName: string
     price?: number | null
+    duration?: string | null
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -45746,6 +45786,7 @@ export namespace Prisma {
     serviceName: string
     departmentId: string
     price?: number | null
+    duration?: string | null
     status?: string
     clinicId: string
     createdAt?: Date | string
@@ -45757,6 +45798,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     serviceName?: StringFieldUpdateOperationsInput | string
     price?: NullableFloatFieldUpdateOperationsInput | number | null
+    duration?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -45770,6 +45812,7 @@ export namespace Prisma {
     serviceName?: StringFieldUpdateOperationsInput | string
     departmentId?: StringFieldUpdateOperationsInput | string
     price?: NullableFloatFieldUpdateOperationsInput | number | null
+    duration?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -45782,6 +45825,7 @@ export namespace Prisma {
     serviceName: string
     departmentId: string
     price?: number | null
+    duration?: string | null
     status?: string
     clinicId: string
     createdAt?: Date | string
@@ -45792,6 +45836,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     serviceName?: StringFieldUpdateOperationsInput | string
     price?: NullableFloatFieldUpdateOperationsInput | number | null
+    duration?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -45802,6 +45847,7 @@ export namespace Prisma {
     serviceName?: StringFieldUpdateOperationsInput | string
     departmentId?: StringFieldUpdateOperationsInput | string
     price?: NullableFloatFieldUpdateOperationsInput | number | null
+    duration?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -49155,6 +49201,7 @@ export namespace Prisma {
     followUpStatus?: SortOrder
     paymentStatus?: SortOrder
     followUpPaymentStatus?: SortOrder
+    serviceIds?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -49215,6 +49262,7 @@ export namespace Prisma {
     serviceName?: SortOrder
     departmentId?: SortOrder
     price?: SortOrder
+    duration?: SortOrder
     status?: SortOrder
     clinicId?: SortOrder
     createdAt?: SortOrder
@@ -49230,6 +49278,7 @@ export namespace Prisma {
     serviceName?: SortOrder
     departmentId?: SortOrder
     price?: SortOrder
+    duration?: SortOrder
     status?: SortOrder
     clinicId?: SortOrder
     createdAt?: SortOrder
@@ -49241,6 +49290,7 @@ export namespace Prisma {
     serviceName?: SortOrder
     departmentId?: SortOrder
     price?: SortOrder
+    duration?: SortOrder
     status?: SortOrder
     clinicId?: SortOrder
     createdAt?: SortOrder
@@ -52410,6 +52460,10 @@ export namespace Prisma {
     deleteMany?: InvoiceScalarWhereInput | InvoiceScalarWhereInput[]
   }
 
+  export type AppointmentCreateserviceIdsInput = {
+    set: string[]
+  }
+
   export type PatientCreateNestedOneWithoutAppointmentsInput = {
     create?: XOR<PatientCreateWithoutAppointmentsInput, PatientUncheckedCreateWithoutAppointmentsInput>
     connectOrCreate?: PatientCreateOrConnectWithoutAppointmentsInput
@@ -52492,6 +52546,11 @@ export namespace Prisma {
     create?: XOR<InvoiceCreateWithoutAppointmentInput, InvoiceUncheckedCreateWithoutAppointmentInput>
     connectOrCreate?: InvoiceCreateOrConnectWithoutAppointmentInput
     connect?: InvoiceWhereUniqueInput
+  }
+
+  export type AppointmentUpdateserviceIdsInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type PatientUpdateOneRequiredWithoutAppointmentsNestedInput = {
@@ -54039,6 +54098,7 @@ export namespace Prisma {
     followUpStatus?: string | null
     paymentStatus?: string | null
     followUpPaymentStatus?: string | null
+    serviceIds?: AppointmentCreateserviceIdsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     patient: PatientCreateNestedOneWithoutAppointmentsInput
@@ -54069,6 +54129,7 @@ export namespace Prisma {
     followUpStatus?: string | null
     paymentStatus?: string | null
     followUpPaymentStatus?: string | null
+    serviceIds?: AppointmentCreateserviceIdsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutAppointmentInput
@@ -54091,6 +54152,7 @@ export namespace Prisma {
     id?: string
     serviceName: string
     price?: number | null
+    duration?: string | null
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -54103,6 +54165,7 @@ export namespace Prisma {
     serviceName: string
     departmentId: string
     price?: number | null
+    duration?: string | null
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -55198,6 +55261,7 @@ export namespace Prisma {
     followUpStatus?: StringNullableFilter<"Appointment"> | string | null
     paymentStatus?: StringNullableFilter<"Appointment"> | string | null
     followUpPaymentStatus?: StringNullableFilter<"Appointment"> | string | null
+    serviceIds?: StringNullableListFilter<"Appointment">
     createdAt?: DateTimeFilter<"Appointment"> | Date | string
     updatedAt?: DateTimeFilter<"Appointment"> | Date | string
   }
@@ -55226,6 +55290,7 @@ export namespace Prisma {
     serviceName?: StringFilter<"Service"> | string
     departmentId?: StringFilter<"Service"> | string
     price?: FloatNullableFilter<"Service"> | number | null
+    duration?: StringNullableFilter<"Service"> | string | null
     status?: StringFilter<"Service"> | string
     clinicId?: StringFilter<"Service"> | string
     createdAt?: DateTimeFilter<"Service"> | Date | string
@@ -56906,6 +56971,7 @@ export namespace Prisma {
     followUpStatus?: string | null
     paymentStatus?: string | null
     followUpPaymentStatus?: string | null
+    serviceIds?: AppointmentCreateserviceIdsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     patient: PatientCreateNestedOneWithoutAppointmentsInput
@@ -56936,6 +57002,7 @@ export namespace Prisma {
     followUpStatus?: string | null
     paymentStatus?: string | null
     followUpPaymentStatus?: string | null
+    serviceIds?: AppointmentCreateserviceIdsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutAppointmentInput
@@ -56958,6 +57025,7 @@ export namespace Prisma {
     id?: string
     serviceName: string
     price?: number | null
+    duration?: string | null
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -56969,6 +57037,7 @@ export namespace Prisma {
     id?: string
     serviceName: string
     price?: number | null
+    duration?: string | null
     status?: string
     clinicId: string
     createdAt?: Date | string
@@ -58467,6 +58536,7 @@ export namespace Prisma {
     followUpStatus?: string | null
     paymentStatus?: string | null
     followUpPaymentStatus?: string | null
+    serviceIds?: AppointmentCreateserviceIdsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     patient: PatientCreateNestedOneWithoutAppointmentsInput
@@ -58497,6 +58567,7 @@ export namespace Prisma {
     followUpStatus?: string | null
     paymentStatus?: string | null
     followUpPaymentStatus?: string | null
+    serviceIds?: AppointmentCreateserviceIdsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutAppointmentInput
@@ -59009,6 +59080,7 @@ export namespace Prisma {
     followUpStatus?: string | null
     paymentStatus?: string | null
     followUpPaymentStatus?: string | null
+    serviceIds?: AppointmentCreateserviceIdsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     doctor: DoctorCreateNestedOneWithoutAppointmentsInput
@@ -59039,6 +59111,7 @@ export namespace Prisma {
     followUpStatus?: string | null
     paymentStatus?: string | null
     followUpPaymentStatus?: string | null
+    serviceIds?: AppointmentCreateserviceIdsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutAppointmentInput
@@ -59756,6 +59829,7 @@ export namespace Prisma {
     followUpStatus?: string | null
     paymentStatus?: string | null
     followUpPaymentStatus?: string | null
+    serviceIds?: AppointmentCreateserviceIdsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     patient: PatientCreateNestedOneWithoutAppointmentsInput
@@ -59787,6 +59861,7 @@ export namespace Prisma {
     followUpStatus?: string | null
     paymentStatus?: string | null
     followUpPaymentStatus?: string | null
+    serviceIds?: AppointmentCreateserviceIdsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutAppointmentInput
@@ -59813,6 +59888,7 @@ export namespace Prisma {
     followUpStatus?: string | null
     paymentStatus?: string | null
     followUpPaymentStatus?: string | null
+    serviceIds?: AppointmentCreateserviceIdsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     patient: PatientCreateNestedOneWithoutAppointmentsInput
@@ -59843,6 +59919,7 @@ export namespace Prisma {
     followUpStatus?: string | null
     paymentStatus?: string | null
     followUpPaymentStatus?: string | null
+    serviceIds?: AppointmentCreateserviceIdsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutAppointmentInput
@@ -60335,6 +60412,7 @@ export namespace Prisma {
     followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
     paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    serviceIds?: AppointmentUpdateserviceIdsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     patient?: PatientUpdateOneRequiredWithoutAppointmentsNestedInput
@@ -60366,6 +60444,7 @@ export namespace Prisma {
     followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
     paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    serviceIds?: AppointmentUpdateserviceIdsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutAppointmentNestedInput
@@ -63871,6 +63950,7 @@ export namespace Prisma {
     followUpStatus?: string | null
     paymentStatus?: string | null
     followUpPaymentStatus?: string | null
+    serviceIds?: AppointmentCreateserviceIdsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     patient: PatientCreateNestedOneWithoutAppointmentsInput
@@ -63902,6 +63982,7 @@ export namespace Prisma {
     followUpStatus?: string | null
     paymentStatus?: string | null
     followUpPaymentStatus?: string | null
+    serviceIds?: AppointmentCreateserviceIdsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     notes?: NoteUncheckedCreateNestedManyWithoutAppointmentInput
@@ -64335,6 +64416,7 @@ export namespace Prisma {
     followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
     paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    serviceIds?: AppointmentUpdateserviceIdsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     patient?: PatientUpdateOneRequiredWithoutAppointmentsNestedInput
@@ -64366,6 +64448,7 @@ export namespace Prisma {
     followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
     paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    serviceIds?: AppointmentUpdateserviceIdsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     notes?: NoteUncheckedUpdateManyWithoutAppointmentNestedInput
@@ -65113,6 +65196,7 @@ export namespace Prisma {
     followUpStatus?: string | null
     paymentStatus?: string | null
     followUpPaymentStatus?: string | null
+    serviceIds?: AppointmentCreateserviceIdsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     patient: PatientCreateNestedOneWithoutAppointmentsInput
@@ -65144,6 +65228,7 @@ export namespace Prisma {
     followUpStatus?: string | null
     paymentStatus?: string | null
     followUpPaymentStatus?: string | null
+    serviceIds?: AppointmentCreateserviceIdsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutAppointmentInput
@@ -65403,6 +65488,7 @@ export namespace Prisma {
     followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
     paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    serviceIds?: AppointmentUpdateserviceIdsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     patient?: PatientUpdateOneRequiredWithoutAppointmentsNestedInput
@@ -65434,6 +65520,7 @@ export namespace Prisma {
     followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
     paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    serviceIds?: AppointmentUpdateserviceIdsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutAppointmentNestedInput
@@ -65488,6 +65575,7 @@ export namespace Prisma {
     id?: string
     serviceName: string
     price?: number | null
+    duration?: string | null
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -65500,6 +65588,7 @@ export namespace Prisma {
     serviceName: string
     departmentId: string
     price?: number | null
+    duration?: string | null
     status?: string
     clinicId: string
     createdAt?: Date | string
@@ -65690,6 +65779,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     serviceName?: StringFieldUpdateOperationsInput | string
     price?: NullableFloatFieldUpdateOperationsInput | number | null
+    duration?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -65702,6 +65792,7 @@ export namespace Prisma {
     serviceName?: StringFieldUpdateOperationsInput | string
     departmentId?: StringFieldUpdateOperationsInput | string
     price?: NullableFloatFieldUpdateOperationsInput | number | null
+    duration?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -66902,6 +66993,7 @@ export namespace Prisma {
     followUpStatus?: string | null
     paymentStatus?: string | null
     followUpPaymentStatus?: string | null
+    serviceIds?: AppointmentCreateserviceIdsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     patient: PatientCreateNestedOneWithoutAppointmentsInput
@@ -66933,6 +67025,7 @@ export namespace Prisma {
     followUpStatus?: string | null
     paymentStatus?: string | null
     followUpPaymentStatus?: string | null
+    serviceIds?: AppointmentCreateserviceIdsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutAppointmentInput
@@ -67091,6 +67184,7 @@ export namespace Prisma {
     followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
     paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    serviceIds?: AppointmentUpdateserviceIdsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     patient?: PatientUpdateOneRequiredWithoutAppointmentsNestedInput
@@ -67122,6 +67216,7 @@ export namespace Prisma {
     followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
     paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    serviceIds?: AppointmentUpdateserviceIdsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutAppointmentNestedInput
@@ -67295,6 +67390,7 @@ export namespace Prisma {
     followUpStatus?: string | null
     paymentStatus?: string | null
     followUpPaymentStatus?: string | null
+    serviceIds?: AppointmentCreateserviceIdsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -67304,6 +67400,7 @@ export namespace Prisma {
     serviceName: string
     departmentId: string
     price?: number | null
+    duration?: string | null
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -68035,6 +68132,7 @@ export namespace Prisma {
     followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
     paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    serviceIds?: AppointmentUpdateserviceIdsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     patient?: PatientUpdateOneRequiredWithoutAppointmentsNestedInput
@@ -68065,6 +68163,7 @@ export namespace Prisma {
     followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
     paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    serviceIds?: AppointmentUpdateserviceIdsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutAppointmentNestedInput
@@ -68091,6 +68190,7 @@ export namespace Prisma {
     followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
     paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    serviceIds?: AppointmentUpdateserviceIdsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -68099,6 +68199,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     serviceName?: StringFieldUpdateOperationsInput | string
     price?: NullableFloatFieldUpdateOperationsInput | number | null
+    duration?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -68111,6 +68212,7 @@ export namespace Prisma {
     serviceName?: StringFieldUpdateOperationsInput | string
     departmentId?: StringFieldUpdateOperationsInput | string
     price?: NullableFloatFieldUpdateOperationsInput | number | null
+    duration?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -68122,6 +68224,7 @@ export namespace Prisma {
     serviceName?: StringFieldUpdateOperationsInput | string
     departmentId?: StringFieldUpdateOperationsInput | string
     price?: NullableFloatFieldUpdateOperationsInput | number | null
+    duration?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -69111,6 +69214,7 @@ export namespace Prisma {
     followUpStatus?: string | null
     paymentStatus?: string | null
     followUpPaymentStatus?: string | null
+    serviceIds?: AppointmentCreateserviceIdsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -69119,6 +69223,7 @@ export namespace Prisma {
     id?: string
     serviceName: string
     price?: number | null
+    duration?: string | null
     status?: string
     clinicId: string
     createdAt?: Date | string
@@ -69432,6 +69537,7 @@ export namespace Prisma {
     followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
     paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    serviceIds?: AppointmentUpdateserviceIdsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     patient?: PatientUpdateOneRequiredWithoutAppointmentsNestedInput
@@ -69462,6 +69568,7 @@ export namespace Prisma {
     followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
     paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    serviceIds?: AppointmentUpdateserviceIdsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutAppointmentNestedInput
@@ -69488,6 +69595,7 @@ export namespace Prisma {
     followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
     paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    serviceIds?: AppointmentUpdateserviceIdsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -69496,6 +69604,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     serviceName?: StringFieldUpdateOperationsInput | string
     price?: NullableFloatFieldUpdateOperationsInput | number | null
+    duration?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -69507,6 +69616,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     serviceName?: StringFieldUpdateOperationsInput | string
     price?: NullableFloatFieldUpdateOperationsInput | number | null
+    duration?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -69518,6 +69628,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     serviceName?: StringFieldUpdateOperationsInput | string
     price?: NullableFloatFieldUpdateOperationsInput | number | null
+    duration?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -69999,6 +70110,7 @@ export namespace Prisma {
     followUpStatus?: string | null
     paymentStatus?: string | null
     followUpPaymentStatus?: string | null
+    serviceIds?: AppointmentCreateserviceIdsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -70088,6 +70200,7 @@ export namespace Prisma {
     followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
     paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    serviceIds?: AppointmentUpdateserviceIdsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     patient?: PatientUpdateOneRequiredWithoutAppointmentsNestedInput
@@ -70118,6 +70231,7 @@ export namespace Prisma {
     followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
     paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    serviceIds?: AppointmentUpdateserviceIdsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutAppointmentNestedInput
@@ -70144,6 +70258,7 @@ export namespace Prisma {
     followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
     paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    serviceIds?: AppointmentUpdateserviceIdsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -70282,6 +70397,7 @@ export namespace Prisma {
     followUpStatus?: string | null
     paymentStatus?: string | null
     followUpPaymentStatus?: string | null
+    serviceIds?: AppointmentCreateserviceIdsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -70333,6 +70449,7 @@ export namespace Prisma {
     followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
     paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    serviceIds?: AppointmentUpdateserviceIdsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     doctor?: DoctorUpdateOneRequiredWithoutAppointmentsNestedInput
@@ -70363,6 +70480,7 @@ export namespace Prisma {
     followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
     paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    serviceIds?: AppointmentUpdateserviceIdsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutAppointmentNestedInput
@@ -70389,6 +70507,7 @@ export namespace Prisma {
     followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
     paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    serviceIds?: AppointmentUpdateserviceIdsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -70541,6 +70660,7 @@ export namespace Prisma {
     followUpStatus?: string | null
     paymentStatus?: string | null
     followUpPaymentStatus?: string | null
+    serviceIds?: AppointmentCreateserviceIdsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -70642,6 +70762,7 @@ export namespace Prisma {
     followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
     paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    serviceIds?: AppointmentUpdateserviceIdsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     patient?: PatientUpdateOneRequiredWithoutAppointmentsNestedInput
@@ -70672,6 +70793,7 @@ export namespace Prisma {
     followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
     paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    serviceIds?: AppointmentUpdateserviceIdsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutAppointmentNestedInput
@@ -70698,6 +70820,7 @@ export namespace Prisma {
     followUpStatus?: NullableStringFieldUpdateOperationsInput | string | null
     paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     followUpPaymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    serviceIds?: AppointmentUpdateserviceIdsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

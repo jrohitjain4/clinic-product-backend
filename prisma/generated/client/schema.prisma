@@ -338,6 +338,7 @@ model Appointment {
   followUpStatus        String? // Free Follow-up, Paid Follow-up
   paymentStatus         String? // Paid, Free, Unpaid
   followUpPaymentStatus String? // Keep for compatibility or remove later
+  serviceIds            String[]       @default([])
   invoice               Invoice?
   createdAt             DateTime       @default(now())
   updatedAt             DateTime       @updatedAt
@@ -355,6 +356,7 @@ model Service {
   departmentId String
   department   Department    @relation(fields: [departmentId], references: [id])
   price        Float?
+  duration     String?
   status       String        @default("Active")
   clinicId     String
   clinic       Clinic        @relation(fields: [clinicId], references: [id])

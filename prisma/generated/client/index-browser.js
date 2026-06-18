@@ -363,6 +363,7 @@ exports.Prisma.AppointmentScalarFieldEnum = {
   followUpStatus: 'followUpStatus',
   paymentStatus: 'paymentStatus',
   followUpPaymentStatus: 'followUpPaymentStatus',
+  serviceIds: 'serviceIds',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -372,6 +373,7 @@ exports.Prisma.ServiceScalarFieldEnum = {
   serviceName: 'serviceName',
   departmentId: 'departmentId',
   price: 'price',
+  duration: 'duration',
   status: 'status',
   clinicId: 'clinicId',
   createdAt: 'createdAt',

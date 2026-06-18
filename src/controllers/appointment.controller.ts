@@ -116,6 +116,69 @@ const maybeUpdatePatientLastVisit = async (
   });
 };
 
+// ── Helper: Parse service duration string (e.g. "15 days", "10") → number of days
+const parseServiceDurationDays = (duration?: string | null): number => {
+  if (!duration) return 0;
+  const match = duration.match(/(\d+)/);
+  return match ? parseInt(match[1], 10) : 0;
+};
+
+// ── Helper: Get total session days from serviceIds
+const getTotalSessionDays = async (serviceIds: string[]): Promise<number> => {
+  if (!serviceIds || serviceIds.length === 0) return 0;
+  const services = await prisma.service.findMany({
+    where: { id: { in: serviceIds } },
+    select: { duration: true },
+  });
+  const days = services.reduce((sum, s) => sum + parseServiceDurationDays(s.duration), 0);
+  return days > 0 ? days : 0;
+};
+
+// ── Helper: Create daily session appointments (day 2 onwards) for a session
+const createSessionDailyAppointments = async (
+  baseAppointment: any,
+  totalDays: number,
+  clinicId: string,
+  parentId: string
+) => {
+  if (totalDays <= 1) return;
+  const base = new Date(baseAppointment.scheduledAt);
+  const endBase = baseAppointment.endAt ? new Date(baseAppointment.endAt) : null;
+  const durationMs = endBase ? endBase.getTime() - base.getTime() : 0;
+
+  const count = await prisma.appointment.count({ where: { clinicId } });
+
+  for (let day = 1; day < totalDays; day++) {
+    const scheduledAt = new Date(base);
+    scheduledAt.setDate(scheduledAt.getDate() + day);
+    const endAt = endBase ? new Date(scheduledAt.getTime() + durationMs) : null;
+
+    const apptCount = count + day;
+    const appointmentCode = `AP${String(apptCount).padStart(3, "0")}`;
+
+    await prisma.appointment.create({
+      data: {
+        appointmentCode,
+        patientId: baseAppointment.patientId,
+        doctorId: baseAppointment.doctorId,
+        departmentId: baseAppointment.departmentId || null,
+        scheduledAt,
+        endAt,
+        mode: baseAppointment.mode,
+        appointmentType: baseAppointment.appointmentType || null,
+        status: "Confirmed",
+        reason: baseAppointment.reason || null,
+        location: baseAppointment.location || null,
+        clinicId,
+        isFollowUp: false,
+        paymentStatus: baseAppointment.paymentStatus || null,
+        parentAppointmentId: parentId,
+        serviceIds: baseAppointment.serviceIds || [],
+      },
+    });
+  }
+};
+
 const ensureAppointmentInvoice = async (appointmentId: string, clinicId: string) => {
   try {
     const appointment = await prisma.appointment.findUnique({
@@ -434,7 +497,11 @@ export const createAppointment = async (req: AuthenticatedRequest, res: Response
       followUpStatus,
       paymentStatus,
       parentAppointmentId,
+      serviceIds,
     } = req.body;
+
+    const resolvedServiceIds: string[] = Array.isArray(serviceIds) ? serviceIds : [];
+    const isSessionAppointment = resolvedServiceIds.length > 0;
 
     if (!patientId) return res.status(400).json({ message: "Patient is required" });
     if (!doctorId) return res.status(400).json({ message: "Doctor is required" });
@@ -514,6 +581,7 @@ export const createAppointment = async (req: AuthenticatedRequest, res: Response
         followUpStatus: followUpStatus || null,
         paymentStatus: paymentStatus || null,
         parentAppointmentId: parentAppointmentId || null,
+        serviceIds: resolvedServiceIds,
       },
       include: appointmentIncludes,
     });
@@ -522,15 +590,26 @@ export const createAppointment = async (req: AuthenticatedRequest, res: Response
 
     if (resolvedStatus === "Confirmed") {
       await ensureAppointmentInvoice(appointment.id, clinicId);
+
+      // ── Session Appointment: create daily appointments for remaining days ──
+      if (isSessionAppointment) {
+        const totalDays = await getTotalSessionDays(resolvedServiceIds);
+        if (totalDays > 1) {
+          await createSessionDailyAppointments(appointment, totalDays, clinicId, appointment.id);
+        }
+      }
     }
 
     // 🔔 Trigger notification
     const patientName = `${patient.firstName} ${patient.lastName}`.trim();
+    const sessionNote = (isSessionAppointment && resolvedStatus === "Confirmed")
+      ? ` (Session: ${await getTotalSessionDays(resolvedServiceIds)} days)`
+      : "";
     await createNotificationInternal({
       clinicId,
       type: "APPOINTMENT",
       title: "New Appointment Scheduled",
-      message: `Appointment ${appointmentCode} for ${patientName} with Dr. ${doctor.fullName} on ${formatDateTimeLabel(scheduled)}.`,
+      message: `Appointment ${appointmentCode} for ${patientName} with Dr. ${doctor.fullName} on ${formatDateTimeLabel(scheduled)}${sessionNote}.`,
       targetRole: "ALL",
       link: `/appointments`,
     });
@@ -568,6 +647,7 @@ export const updateAppointment = async (req: AuthenticatedRequest, res: Response
       followUpStatus,
       paymentStatus,
       parentAppointmentId,
+      serviceIds,
     } = req.body;
 
     if (doctorId) {
@@ -586,6 +666,10 @@ export const updateAppointment = async (req: AuthenticatedRequest, res: Response
     const scheduled = scheduledAt ? new Date(scheduledAt) : existing.scheduledAt;
     const resolvedStatus =
       status !== undefined ? normalizeStatus(status) : existing.status;
+
+    const resolvedServiceIds: string[] = Array.isArray(serviceIds)
+      ? serviceIds
+      : (existing as any).serviceIds || [];
 
     const updated = await prisma.appointment.update({
       where: { id },
@@ -617,6 +701,7 @@ export const updateAppointment = async (req: AuthenticatedRequest, res: Response
         followUpStatus: followUpStatus !== undefined ? followUpStatus : existing.followUpStatus,
         paymentStatus: paymentStatus !== undefined ? paymentStatus : existing.paymentStatus,
         parentAppointmentId: parentAppointmentId !== undefined ? parentAppointmentId : existing.parentAppointmentId,
+        serviceIds: resolvedServiceIds,
       },
       include: appointmentIncludes,
     });
@@ -629,6 +714,23 @@ export const updateAppointment = async (req: AuthenticatedRequest, res: Response
 
     if (resolvedStatus === "Confirmed") {
       await ensureAppointmentInvoice(updated.id, clinicId!);
+
+      // ── Session Appointment: if being confirmed for the first time and has serviceIds,
+      //    create daily appointments for remaining days (only if none already exist)
+      const isNowConfirmed = existing.status !== "Confirmed" && resolvedStatus === "Confirmed";
+      const hasServiceIds = resolvedServiceIds.length > 0;
+      if (isNowConfirmed && hasServiceIds) {
+        // Check if session children already exist
+        const existingChildren = await prisma.appointment.count({
+          where: { parentAppointmentId: id, clinicId: clinicId! },
+        });
+        if (existingChildren === 0) {
+          const totalDays = await getTotalSessionDays(resolvedServiceIds);
+          if (totalDays > 1) {
+            await createSessionDailyAppointments(updated, totalDays, clinicId!, id);
+          }
+        }
+      }
     }
 
     // 🔔 Notify on status changes
