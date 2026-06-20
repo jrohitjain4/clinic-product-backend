@@ -9,7 +9,6 @@ const notification_controller_1 = require("./notification.controller");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const crypto_1 = require("crypto");
 const email_1 = require("../utils/email");
-/* ─── GET /api/landing/:clinicId  (public, no auth) ─── */
 const getClinicLandingPage = async (req, res) => {
     try {
         const { clinicId, username } = req.params;
@@ -19,7 +18,7 @@ const getClinicLandingPage = async (req, res) => {
                 landingPage: true,
                 doctors: {
                     where: { status: "Active" },
-                    include: { specializations: true, designation: true },
+                    include: { specializations: true, designation: true, department: true },
                     orderBy: { createdAt: "asc" },
                 },
                 services: {
@@ -72,7 +71,9 @@ const getClinicLandingPage = async (req, res) => {
             awards: d.awards || [],
             certifications: d.certifications || [],
             schedules: d.schedules || [],
-            clinicName: clinic.name
+            clinicName: clinic.name,
+            department: d.department?.name || "",
+            designation: d.designation?.name || ""
         }));
         const services = lp?.services ??
             clinic.services.map((s) => ({
@@ -81,6 +82,12 @@ const getClinicLandingPage = async (req, res) => {
             }));
         const apptCount = await prisma_1.default.appointment.count({ where: { clinicId: clinic.id } });
         const nextAppointmentCode = `AP${String(apptCount + 1).padStart(3, "0")}`;
+        const rawServices = clinic.services.map((s) => ({
+            id: s.id,
+            name: s.serviceName,
+            price: s.price,
+            departmentId: s.departmentId
+        }));
         const response = {
             id: clinic.id,
             name: clinic.name,
@@ -103,6 +110,7 @@ const getClinicLandingPage = async (req, res) => {
             instagram: lp?.instagram || "",
             doctors,
             services,
+            rawServices,
             reviews: lp?.reviews || [],
             gallery: lp?.gallery || [],
             workingDays: clinic.workingDaysConfig || null,
@@ -157,7 +165,7 @@ exports.upsertLandingPage = upsertLandingPage;
 const bookPublicAppointment = async (req, res) => {
     try {
         const { clinicId } = req.params;
-        const { firstName, lastName, email, phone, gender, doctorId, date, time, reason } = req.body;
+        const { firstName, lastName, email, phone, gender, doctorId, date, time, reason, appointmentType, serviceIds } = req.body;
         if (!firstName || !lastName || !email || !phone || !gender || !date || !time) {
             return res.status(400).json({ message: "First name, last name, email, phone, gender, date and time are required." });
         }
@@ -263,11 +271,12 @@ const bookPublicAppointment = async (req, res) => {
                 scheduledAt,
                 endAt: null,
                 mode: "Clinic Landing",
-                appointmentType: "Online Booking",
+                appointmentType: appointmentType || "Online Booking",
                 status: "Schedule",
                 reason: reason || "Online booking from clinic website",
                 location: null,
                 clinicId,
+                serviceIds: Array.isArray(serviceIds) ? serviceIds : [],
             },
         });
         // 🔴 P0 Email Notification with credentials and booking status

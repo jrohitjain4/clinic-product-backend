@@ -466,12 +466,33 @@ export const deletePatient = async (req: AuthenticatedRequest, res: Response) =>
     });
     if (!existing) return res.status(404).json({ message: "Patient not found" });
 
-    // SOFT DELETE: Just change the status to "Deleted" instead of removing the record
-    // This keeps the Appointments intact as requested.
-    await prisma.patient.update({
-      where: { id },
-      data: { status: "Deleted" }
+    // Step 1: Null out patientId on all related Appointments
+    await prisma.appointment.updateMany({
+      where: { patientId: id },
+      data: { patientId: null }
     });
+
+    // Step 2: Null out patientId on all related Prescriptions
+    await prisma.prescription.updateMany({
+      where: { patientId: id },
+      data: { patientId: null }
+    });
+
+    // Step 3: Null out patientId on all related Invoices
+    await prisma.invoice.updateMany({
+      where: { patientId: id },
+      data: { patientId: null }
+    });
+
+    // Step 4: Delete linked User account
+    if (existing.email) {
+      await prisma.user.deleteMany({ where: { email: existing.email } });
+    } else if (existing.phone) {
+      await prisma.user.deleteMany({ where: { phone: existing.phone } });
+    }
+
+    // Step 5: Hard delete the patient record
+    await prisma.patient.delete({ where: { id } });
 
     // 🔔 Notify on patient removal
     try {
@@ -479,7 +500,7 @@ export const deletePatient = async (req: AuthenticatedRequest, res: Response) =>
         clinicId: clinicId!,
         type: "PATIENT_ADDED",
         title: "Patient Record Removed",
-        message: `Patient ${existing.firstName} ${existing.lastName} (${existing.patientCode}) has been removed.`,
+        message: `Patient ${existing.firstName} ${existing.lastName} (${existing.patientCode}) has been permanently removed.`,
         targetRole: "ADMIN",
         link: "/patients/patient-list",
       });

@@ -28,8 +28,8 @@ export const createProduct = async (req: AuthenticatedRequest, res: Response) =>
 
         const { name, description, price, key } = req.body;
 
-        if (!name || price === undefined || !key) {
-            return res.status(400).json({ message: "Name, Price, and Key are required" });
+        if (!name || price === undefined) {
+            return res.status(400).json({ message: "Name and Price are required" });
         }
 
         const newProduct = await prisma.product.create({
@@ -37,7 +37,7 @@ export const createProduct = async (req: AuthenticatedRequest, res: Response) =>
                 name,
                 description,
                 price: parseFloat(price),
-                key,
+                key: key || null,
                 clinicId,
             }
         });
@@ -64,7 +64,7 @@ export const updateProduct = async (req: AuthenticatedRequest, res: Response) =>
                 name,
                 description,
                 price: price !== undefined ? parseFloat(price) : undefined,
-                key,
+                key: key !== undefined ? (key || null) : undefined,
             }
         });
 

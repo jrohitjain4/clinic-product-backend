@@ -5,7 +5,6 @@ import bcrypt from "bcryptjs";
 import { randomBytes } from "crypto";
 import { sendEmail, sendPatientAppointmentEmail, sendDoctorAppointmentEmail } from "../utils/email";
 
-/* ─── GET /api/landing/:clinicId  (public, no auth) ─── */
 export const getClinicLandingPage = async (req: Request, res: Response) => {
     try {
         const { clinicId, username } = req.params;
@@ -16,7 +15,7 @@ export const getClinicLandingPage = async (req: Request, res: Response) => {
                 landingPage: true,
                 doctors: {
                     where: { status: "Active" },
-                    include: { specializations: true, designation: true },
+                    include: { specializations: true, designation: true, department: true },
                     orderBy: { createdAt: "asc" },
                 },
                 services: {
@@ -71,7 +70,9 @@ export const getClinicLandingPage = async (req: Request, res: Response) => {
             awards: d.awards || [],
             certifications: d.certifications || [],
             schedules: d.schedules || [],
-            clinicName: clinic.name
+            clinicName: clinic.name,
+            department: d.department?.name || "",
+            designation: d.designation?.name || ""
         }));
 
         const services = (lp?.services as Array<{ icon: string; label: string }> | null) ??
@@ -82,6 +83,13 @@ export const getClinicLandingPage = async (req: Request, res: Response) => {
 
         const apptCount = await prisma.appointment.count({ where: { clinicId: clinic.id } });
         const nextAppointmentCode = `AP${String(apptCount + 1).padStart(3, "0")}`;
+
+        const rawServices = clinic.services.map((s) => ({
+            id: s.id,
+            name: s.serviceName,
+            price: s.price,
+            departmentId: s.departmentId
+        }));
 
         const response = {
             id: clinic.id,
@@ -105,6 +113,7 @@ export const getClinicLandingPage = async (req: Request, res: Response) => {
             instagram: lp?.instagram || "",
             doctors,
             services,
+            rawServices,
             reviews: (lp?.reviews as Array<{ name: string; rating: number; feedback: string }>) || [],
             gallery: (lp?.gallery as Array<{ url: string; category: string }>) || [],
             workingDays: clinic.workingDaysConfig || null,
@@ -165,7 +174,7 @@ export const upsertLandingPage = async (req: Request, res: Response) => {
 export const bookPublicAppointment = async (req: Request, res: Response) => {
     try {
         const { clinicId } = req.params;
-        const { firstName, lastName, email, phone, gender, doctorId, date, time, reason } = req.body;
+        const { firstName, lastName, email, phone, gender, doctorId, date, time, reason, appointmentType, serviceIds } = req.body;
 
         if (!firstName || !lastName || !email || !phone || !gender || !date || !time) {
             return res.status(400).json({ message: "First name, last name, email, phone, gender, date and time are required." });
@@ -282,11 +291,12 @@ export const bookPublicAppointment = async (req: Request, res: Response) => {
                 scheduledAt,
                 endAt: null,
                 mode: "Clinic Landing",
-                appointmentType: "Online Booking",
+                appointmentType: appointmentType || "Online Booking",
                 status: "Schedule",
                 reason: reason || "Online booking from clinic website",
                 location: null,
                 clinicId,
+                serviceIds: Array.isArray(serviceIds) ? serviceIds : [],
             },
         });
 

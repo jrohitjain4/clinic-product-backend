@@ -117,17 +117,17 @@ const appointmentIncludes = {
 const enrichAppointment = (a: any) => ({
   ...a,
   dateTimeLabel: formatDateTimeLabel(a.scheduledAt),
-  patientName: `${a.patient.firstName} ${a.patient.lastName}`.trim(),
-  doctorName: a.doctor.fullName,
-  doctorRole: a.doctor.designation?.name || a.doctor.department?.name || "—",
+  patientName: a.patient ? `${a.patient.firstName} ${a.patient.lastName}`.trim() : "(Patient Deleted)",
+  doctorName: a.doctor?.fullName || "(Doctor Deleted)",
+  doctorRole: a.doctor?.designation?.name || a.doctor?.department?.name || "—",
 });
 
 const maybeUpdatePatientLastVisit = async (
-  patientId: string,
+  patientId: string | null | undefined,
   status: string,
   scheduledAt: Date
 ) => {
-  if (status !== "Checked Out") return;
+  if (status !== "Checked Out" || !patientId) return;
   await prisma.patient.update({
     where: { id: patientId },
     data: { lastVisitedAt: scheduledAt },
@@ -209,6 +209,7 @@ const ensureAppointmentInvoice = async (appointmentId: string, clinicId: string)
     });
 
     if (!appointment || appointment.status !== "Confirmed" || appointment.invoice) return;
+    if (!appointment.patient || !appointment.doctor) return; // patient or doctor was deleted
 
     // Determine fee
     let fee = 0;
@@ -433,7 +434,7 @@ export const getAppointmentsCalendar = async (
         start: a.scheduledAt.toISOString(),
         end: (a.endAt || a.scheduledAt).toISOString(),
         extendedProps: {
-          image: a.patient.profileImage || "assets/img/users/user-08.jpg",
+          image: a.patient?.profileImage || "assets/img/users/user-08.jpg",
           appointmentId: a.id,
           doctorName: enriched.doctorName,
           status: a.status,
@@ -807,11 +808,12 @@ export const updateAppointment = async (req: AuthenticatedRequest, res: Response
     }
 
     // 🔔 Notify on status changes
+    const ptName = updated.patient ? `${updated.patient.firstName} ${updated.patient.lastName}` : "(Patient Deleted)";
     const statusMessages: Record<string, string> = {
-      "Checked In": `Patient ${updated.patient.firstName} ${updated.patient.lastName} has checked in (Appt: ${updated.appointmentCode}).`,
-      "Checked Out": `Patient ${updated.patient.firstName} ${updated.patient.lastName} has checked out (Appt: ${updated.appointmentCode}).`,
-      "Cancelled": `Appointment ${updated.appointmentCode} for ${updated.patient.firstName} ${updated.patient.lastName} has been cancelled.`,
-      "Confirmed": `Appointment ${updated.appointmentCode} for ${updated.patient.firstName} ${updated.patient.lastName} is confirmed.`,
+      "Checked In": `Patient ${ptName} has checked in (Appt: ${updated.appointmentCode}).`,
+      "Checked Out": `Patient ${ptName} has checked out (Appt: ${updated.appointmentCode}).`,
+      "Cancelled": `Appointment ${updated.appointmentCode} for ${ptName} has been cancelled.`,
+      "Confirmed": `Appointment ${updated.appointmentCode} for ${ptName} is confirmed.`,
     };
     if (status && statusMessages[resolvedStatus] && resolvedStatus !== existing.status) {
       await createNotificationInternal({
@@ -829,14 +831,14 @@ export const updateAppointment = async (req: AuthenticatedRequest, res: Response
     const isNowConfirmedOrScheduled = resolvedStatus === "Confirmed" || resolvedStatus === "Schedule";
     const detailsChanged = existing.scheduledAt.getTime() !== scheduled.getTime() || existing.doctorId !== (doctorId ?? existing.doctorId);
 
-    if (updated.patient.email && isNowConfirmedOrScheduled && (!wasConfirmedOrScheduled || detailsChanged)) {
+    if (updated.patient?.email && isNowConfirmedOrScheduled && (!wasConfirmedOrScheduled || detailsChanged)) {
       const formattedDate = scheduled.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
       const formattedTime = scheduled.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true });
       try {
         await sendPatientAppointmentEmail(
           updated.patient.email,
           `${updated.patient.firstName} ${updated.patient.lastName}`.trim(),
-          updated.doctor.fullName,
+          updated.doctor?.fullName || "",
           formattedDate,
           formattedTime,
           updated.appointmentCode || ""
@@ -847,14 +849,14 @@ export const updateAppointment = async (req: AuthenticatedRequest, res: Response
     }
 
     // 🔴 P0 Email Notification for Doctor on appointment confirmation or updates
-    if (updated.doctor.email && isNowConfirmedOrScheduled && (!wasConfirmedOrScheduled || detailsChanged)) {
+    if (updated.doctor?.email && isNowConfirmedOrScheduled && (!wasConfirmedOrScheduled || detailsChanged)) {
       const formattedDate = scheduled.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
       const formattedTime = scheduled.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true });
       try {
         await sendDoctorAppointmentEmail(
           updated.doctor.email,
           updated.doctor.fullName,
-          `${updated.patient.firstName} ${updated.patient.lastName}`.trim(),
+          updated.patient ? `${updated.patient.firstName} ${updated.patient.lastName}`.trim() : "(Patient Deleted)",
           formattedDate,
           formattedTime,
           updated.mode
@@ -865,15 +867,15 @@ export const updateAppointment = async (req: AuthenticatedRequest, res: Response
     }
 
     // 🔴 P0 Email Notification for Clinic Owner on appointment confirmation or updates
-    if (updated.clinic && updated.clinic.ownerEmail && isNowConfirmedOrScheduled && (!wasConfirmedOrScheduled || detailsChanged)) {
+    if (updated.clinic?.ownerEmail && isNowConfirmedOrScheduled && (!wasConfirmedOrScheduled || detailsChanged)) {
       const formattedDate = scheduled.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
       const formattedTime = scheduled.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true });
       try {
         await sendClinicAppointmentNotificationEmail(
           updated.clinic.ownerEmail,
           updated.clinic.ownerName || "Clinic Owner",
-          `${updated.patient.firstName} ${updated.patient.lastName}`.trim(),
-          updated.doctor.fullName,
+          updated.patient ? `${updated.patient.firstName} ${updated.patient.lastName}`.trim() : "(Patient Deleted)",
+          updated.doctor?.fullName || "(Doctor Deleted)",
           formattedDate,
           formattedTime,
           updated.mode
@@ -1010,6 +1012,9 @@ export const createFollowUpAppointment = async (req: AuthenticatedRequest, res: 
     if (!parent) return res.status(404).json({ message: "Parent appointment not found" });
 
     const doctor = parent.doctor;
+    if (!doctor) {
+      return res.status(400).json({ message: "Doctor no longer exists for this appointment" });
+    }
     if (!doctor.followUpEnabled) {
       return res.status(400).json({ message: "Follow-up is not enabled for this doctor" });
     }
@@ -1076,7 +1081,7 @@ export const createFollowUpAppointment = async (req: AuthenticatedRequest, res: 
     });
 
     // 🔔 Notify
-    const patientFullName = `${parent.patient.firstName} ${parent.patient.lastName}`.trim();
+    const patientFullName = parent.patient ? `${parent.patient.firstName} ${parent.patient.lastName}`.trim() : "(Patient Deleted)";
     await createNotificationInternal({
       clinicId,
       type: "APPOINTMENT",

@@ -238,6 +238,7 @@ export const deleteInvoice = async (req: AuthenticatedRequest, res: Response): P
 
         res.json({ message: "Invoice deleted successfully" });
     } catch (error) {
-        res.status(500).json({ message: "Failed to delete invoice" });
+        console.error("Delete Invoice Error:", error);
+        res.status(500).json({ message: "Failed to delete invoice", error: error instanceof Error ? error.message : String(error) });
     }
 };

@@ -314,10 +314,10 @@ model Patient {
 model Appointment {
   id              String         @id @default(uuid())
   appointmentCode String?
-  patientId       String
-  patient         Patient        @relation(fields: [patientId], references: [id])
-  doctorId        String
-  doctor          Doctor         @relation(fields: [doctorId], references: [id])
+  patientId       String?
+  patient         Patient?       @relation(fields: [patientId], references: [id], onDelete: SetNull)
+  doctorId        String?
+  doctor          Doctor?        @relation(fields: [doctorId], references: [id], onDelete: SetNull)
   departmentId    String?
   department      Department?    @relation(fields: [departmentId], references: [id])
   scheduledAt     DateTime
@@ -546,10 +546,10 @@ model WorkingDaysConfig {
 model Prescription {
   id               String       @id @default(uuid())
   prescriptionCode String?
-  patientId        String
-  patient          Patient      @relation(fields: [patientId], references: [id])
-  doctorId         String
-  doctor           Doctor       @relation(fields: [doctorId], references: [id])
+  patientId        String?
+  patient          Patient?     @relation(fields: [patientId], references: [id], onDelete: SetNull)
+  doctorId         String?
+  doctor           Doctor?      @relation(fields: [doctorId], references: [id], onDelete: SetNull)
   appointmentId    String?
   appointment      Appointment? @relation(fields: [appointmentId], references: [id])
   departmentId     String?
@@ -590,8 +590,8 @@ model PrescriptionMedicine {
 model Invoice {
   id            String        @id @default(uuid())
   invoiceCode   String?
-  patientId     String
-  patient       Patient       @relation(fields: [patientId], references: [id])
+  patientId     String?
+  patient       Patient?      @relation(fields: [patientId], references: [id], onDelete: SetNull)
   invoiceDate   DateTime
   dueDate       DateTime
   tax           Float         @default(0)

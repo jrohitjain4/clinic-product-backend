@@ -185,7 +185,7 @@ const getDashboardStats = async (req, res) => {
         const incomeEntries = recentInvoicesFull.map(inv => ({
             id: inv.id,
             type: 'income',
-            description: `${inv.patient.firstName} ${inv.patient.lastName}`,
+            description: inv.patient ? `${inv.patient.firstName} ${inv.patient.lastName}` : 'Unknown Patient',
             invoiceCode: inv.invoiceCode,
             amount: Number(inv.totalAmount),
             status: inv.paymentStatus,
@@ -216,6 +216,123 @@ const getDashboardStats = async (req, res) => {
                 department: true
             }
         });
+        // 7. Revenue Breakdown
+        const allPaidInvoices = await prisma_1.default.invoice.findMany({
+            where: { clinicId, paymentStatus: 'Paid' },
+            include: {
+                items: {
+                    include: {
+                        service: {
+                            include: {
+                                department: true
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        let consultation = 0;
+        let procedures = 0;
+        let products = 0;
+        let discounts = allPaidInvoices.reduce((acc, curr) => acc + (Number(curr.discount) || 0), 0);
+        allPaidInvoices.forEach(inv => {
+            inv.items.forEach(item => {
+                if (!item.serviceId) {
+                    products += Number(item.amount) || 0;
+                }
+                else {
+                    const sName = item.service?.serviceName?.toLowerCase() || '';
+                    const dName = item.service?.department?.name?.toLowerCase() || '';
+                    if (sName.includes('consultation') || sName.includes('opd') || dName.includes('consultation') || dName.includes('opd')) {
+                        consultation += Number(item.amount) || 0;
+                    }
+                    else {
+                        procedures += Number(item.amount) || 0;
+                    }
+                }
+            });
+        });
+        // 8. Patient Stats
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+        const newPatientsCount = await prisma_1.default.patient.count({
+            where: {
+                clinicId,
+                createdAt: { gte: thirtyDaysAgo }
+            }
+        });
+        const returningPatientsCount = await prisma_1.default.patient.count({
+            where: {
+                clinicId,
+                createdAt: { lt: thirtyDaysAgo },
+                appointments: { some: {} }
+            }
+        });
+        const inactivePatientsCount = await prisma_1.default.patient.count({
+            where: {
+                clinicId,
+                createdAt: { lt: thirtyDaysAgo },
+                appointments: { none: {} }
+            }
+        });
+        // 9. Staff Attendance Stats
+        const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const todayEnd = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+        const todayAttendance = await prisma_1.default.attendance.findMany({
+            where: {
+                clinicId,
+                date: {
+                    gte: todayStart,
+                    lt: todayEnd
+                }
+            }
+        });
+        const totalStaff = await prisma_1.default.staff.count({ where: { clinicId } });
+        const presentStaff = todayAttendance.filter(a => ['PRESENT', 'PRESENT_HALF_DAY', 'HALF_DAY'].includes(a.status.toUpperCase())).length;
+        const absentStaff = todayAttendance.filter(a => a.status.toUpperCase() === 'ABSENT').length;
+        // 10. Top Services utilized
+        const topServicesRaw = await prisma_1.default.invoiceItem.groupBy({
+            by: ['serviceId'],
+            where: { clinicId, serviceId: { not: null } },
+            _count: { serviceId: true },
+            orderBy: {
+                _count: {
+                    serviceId: 'desc'
+                }
+            },
+            take: 4
+        });
+        const topServicesIds = topServicesRaw.map(r => r.serviceId).filter(Boolean);
+        const servicesDetails = await prisma_1.default.service.findMany({
+            where: { id: { in: topServicesIds } }
+        });
+        const topServicesList = topServicesRaw.map(r => {
+            const svc = servicesDetails.find(s => s.id === r.serviceId);
+            return {
+                name: svc?.serviceName || 'Unknown Service',
+                count: r._count.serviceId,
+                type: 'Service'
+            };
+        });
+        const topProductsRaw = await prisma_1.default.invoiceItem.groupBy({
+            by: ['description'],
+            where: { clinicId, serviceId: null },
+            _count: { description: true },
+            orderBy: {
+                _count: {
+                    description: 'desc'
+                }
+            },
+            take: 4
+        });
+        const topServicesCombined = [
+            ...topServicesList,
+            ...topProductsRaw.map(r => ({
+                name: r.description || 'Medicine & Products',
+                count: r._count.description,
+                type: 'Product'
+            }))
+        ].sort((a, b) => b.count - a.count).slice(0, 4);
         res.json({
             doctorsCount,
             patientsCount,
@@ -232,8 +349,8 @@ const getDashboardStats = async (req, res) => {
             },
             recentAppointments: recentAppointments.map(app => ({
                 id: app.id,
-                doctor: { fullName: app.doctor.fullName, profileImage: app.doctor.profileImage },
-                patient: { firstName: app.patient.firstName, lastName: app.patient.lastName, phone: app.patient.phone },
+                doctor: app.doctor ? { fullName: app.doctor.fullName, profileImage: app.doctor.profileImage } : { fullName: 'Unknown Doctor', profileImage: null },
+                patient: app.patient ? { firstName: app.patient.firstName, lastName: app.patient.lastName, phone: app.patient.phone } : { firstName: 'Unknown', lastName: 'Patient', phone: null },
                 department: { name: app.department?.name },
                 scheduledAt: app.scheduledAt,
                 status: app.status,
@@ -244,7 +361,25 @@ const getDashboardStats = async (req, res) => {
             incomeByTreatment,
             topPatients,
             recentTransactions,
-            profileCompletion
+            profileCompletion,
+            revenueBreakdown: {
+                consultation,
+                procedures,
+                products,
+                discounts
+            },
+            patientStats: {
+                newCount: newPatientsCount,
+                returningCount: returningPatientsCount,
+                inactiveCount: inactivePatientsCount
+            },
+            staffAttendance: {
+                total: totalStaff,
+                present: presentStaff,
+                absent: absentStaff,
+                percentage: totalStaff > 0 ? Math.round((presentStaff / totalStaff) * 100) : 0
+            },
+            topServices: topServicesCombined
         });
     }
     catch (error) {

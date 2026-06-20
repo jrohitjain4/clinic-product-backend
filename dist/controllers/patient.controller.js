@@ -340,19 +340,37 @@ const deletePatient = async (req, res) => {
         });
         if (!existing)
             return res.status(404).json({ message: "Patient not found" });
-        // SOFT DELETE: Just change the status to "Deleted" instead of removing the record
-        // This keeps the Appointments intact as requested.
-        await prisma_1.default.patient.update({
-            where: { id },
-            data: { status: "Deleted" }
+        // Step 1: Null out patientId on all related Appointments
+        await prisma_1.default.appointment.updateMany({
+            where: { patientId: id },
+            data: { patientId: null }
         });
+        // Step 2: Null out patientId on all related Prescriptions
+        await prisma_1.default.prescription.updateMany({
+            where: { patientId: id },
+            data: { patientId: null }
+        });
+        // Step 3: Null out patientId on all related Invoices
+        await prisma_1.default.invoice.updateMany({
+            where: { patientId: id },
+            data: { patientId: null }
+        });
+        // Step 4: Delete linked User account
+        if (existing.email) {
+            await prisma_1.default.user.deleteMany({ where: { email: existing.email } });
+        }
+        else if (existing.phone) {
+            await prisma_1.default.user.deleteMany({ where: { phone: existing.phone } });
+        }
+        // Step 5: Hard delete the patient record
+        await prisma_1.default.patient.delete({ where: { id } });
         // 🔔 Notify on patient removal
         try {
             await (0, notification_controller_1.createNotificationInternal)({
                 clinicId: clinicId,
                 type: "PATIENT_ADDED",
                 title: "Patient Record Removed",
-                message: `Patient ${existing.firstName} ${existing.lastName} (${existing.patientCode}) has been removed.`,
+                message: `Patient ${existing.firstName} ${existing.lastName} (${existing.patientCode}) has been permanently removed.`,
                 targetRole: "ADMIN",
                 link: "/patients/patient-list",
             });

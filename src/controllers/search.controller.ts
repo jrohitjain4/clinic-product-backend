@@ -24,7 +24,7 @@ export const globalSearch = async (req: AuthenticatedRequest, res: Response) => 
                 where: { clinicId, doctorId },
                 select: { patientId: true, id: true, appointmentCode: true, scheduledAt: true, patient: { select: { firstName: true, lastName: true } } }
             });
-            const patientIds = [...new Set(appts.map(a => a.patientId))];
+            const patientIds = [...new Set(appts.map(a => a.patientId).filter((id): id is string => id !== null))];
 
             const [patients, appointments] = await Promise.all([
                 prisma.patient.findMany({

@@ -288,6 +288,33 @@ const deleteDoctor = async (req, res) => {
         const existing = await prisma_1.default.doctor.findFirst({ where: { id, clinicId: clinicId } });
         if (!existing)
             return res.status(404).json({ message: "Doctor not found" });
+        // Step 1: Null out doctorId on all related Appointments
+        await prisma_1.default.appointment.updateMany({
+            where: { doctorId: id },
+            data: { doctorId: null }
+        });
+        // Step 2: Null out doctorId on all related Prescriptions
+        await prisma_1.default.prescription.updateMany({
+            where: { doctorId: id },
+            data: { doctorId: null }
+        });
+        // Step 3: Null out doctorId on all related Payrolls
+        await prisma_1.default.payroll.updateMany({
+            where: { doctorId: id },
+            data: { doctorId: null }
+        });
+        // Step 4: Delete linked User account (login account)
+        if (existing.email) {
+            await prisma_1.default.user.deleteMany({
+                where: { email: existing.email }
+            });
+        }
+        else if (existing.phone) {
+            await prisma_1.default.user.deleteMany({
+                where: { phone: existing.phone }
+            });
+        }
+        // Step 5: Delete the Doctor record
         await prisma_1.default.doctor.delete({ where: { id } });
         // 🔔 Notify on doctor removal
         try {
