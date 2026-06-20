@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createDemoBooking, getAllDemoBookings, updateDemoBookingStatus } from "../controllers/demoBooking.controller";
+import { createDemoBooking, getAllDemoBookings, updateDemoBookingStatus, deleteDemoBooking, bulkDeleteDemoBookings } from "../controllers/demoBooking.controller";
 
 const router = Router();
 
@@ -12,5 +12,10 @@ router.get("/", getAllDemoBookings);
 // Admin route to update status
 router.patch("/:id/status", updateDemoBookingStatus);
 
+// Admin route to delete
+router.delete("/:id", deleteDemoBooking);
+
+// Admin route to bulk delete
+router.post("/bulk-delete", bulkDeleteDemoBookings);
 
 export default router;

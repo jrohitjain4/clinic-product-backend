@@ -7,7 +7,7 @@ import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
 import { ClinicStatus } from "@prisma/client";
 import { createSuperAdminNotification } from "./notification.controller";
-import { sendAdminCongratulationsEmail } from "../utils/email";
+import { sendAdminCongratulationsEmail, sendClinicSubscriptionActivatedEmail } from "../utils/email";
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 
@@ -228,6 +228,15 @@ export const verifyRazorpayPayment = async (req: Request, res: Response) => {
                 username,
                 password,
                 pkg
+            );
+            await sendClinicSubscriptionActivatedEmail(
+                email,
+                ownerName,
+                pkg.name,
+                pkg.price,
+                pkg.durationInDays,
+                packageExpiresAt,
+                false
             );
         } catch (_) { /* non-blocking */ }
 

@@ -9,4 +9,8 @@ router.post("/", demoBooking_controller_1.createDemoBooking);
 router.get("/", demoBooking_controller_1.getAllDemoBookings);
 // Admin route to update status
 router.patch("/:id/status", demoBooking_controller_1.updateDemoBookingStatus);
+// Admin route to delete
+router.delete("/:id", demoBooking_controller_1.deleteDemoBooking);
+// Admin route to bulk delete
+router.post("/bulk-delete", demoBooking_controller_1.bulkDeleteDemoBookings);
 exports.default = router;

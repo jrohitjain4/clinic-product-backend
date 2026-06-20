@@ -60,3 +60,35 @@ export const updateDemoBookingStatus = async (req: Request, res: Response): Prom
         res.status(500).json({ message: "Internal Server Error" });
     }
 };
+
+export const deleteDemoBooking = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { id } = req.params;
+        await prisma.demoBooking.delete({
+            where: { id },
+        });
+        res.status(200).json({ message: "Demo booking deleted successfully" });
+    } catch (error: any) {
+        console.error("Error deleting demo booking:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+};
+
+export const bulkDeleteDemoBookings = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { ids } = req.body;
+        if (!ids || !Array.isArray(ids)) {
+            res.status(400).json({ message: "IDs array is required" });
+            return;
+        }
+        await prisma.demoBooking.deleteMany({
+            where: {
+                id: { in: ids }
+            }
+        });
+        res.status(200).json({ message: "Demo bookings deleted successfully" });
+    } catch (error: any) {
+        console.error("Error bulk deleting demo bookings:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+};

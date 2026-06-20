@@ -2,6 +2,7 @@ import { Response } from "express";
 import { AuthenticatedRequest } from "../middlewares/auth.middleware";
 import prisma from "../lib/prisma";
 import { createNotificationInternal } from "./notification.controller";
+import { sendPatientAppointmentEmail, sendDoctorAppointmentEmail, sendClinicAppointmentNotificationEmail } from "../utils/email";
 
 const VALID_STATUSES = [
   "Checked Out",
@@ -44,7 +45,17 @@ const patientInclude = {
       firstName: true,
       lastName: true,
       phone: true,
+      email: true,
       profileImage: true,
+      gender: true,
+      dob: true,
+      bloodGroup: true,
+      address1: true,
+      address2: true,
+      city: true,
+      state: true,
+      pincode: true,
+      maritalStatus: true,
     },
   },
 } as const;
@@ -55,6 +66,11 @@ const doctorInclude = {
       id: true,
       fullName: true,
       profileImage: true,
+      phone: true,
+      email: true,
+      consultationCharge: true,
+      medicalLicenseNumber: true,
+      yearOfExperience: true,
       appointmentDuration: true,
       followUpEnabled: true,
       freeFollowUpLimit: true,
@@ -82,6 +98,8 @@ const appointmentIncludes = {
       id: true,
       name: true,
       phone: true,
+      ownerEmail: true,
+      ownerName: true,
       addressLine1: true,
       addressLine2: true,
       city: true,
@@ -614,6 +632,61 @@ export const createAppointment = async (req: AuthenticatedRequest, res: Response
       link: `/appointments`,
     });
 
+    // 🔴 P0 Email Notification with booking status
+    if (patient.email && (resolvedStatus === "Confirmed" || resolvedStatus === "Schedule")) {
+      const formattedDate = scheduled.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+      const formattedTime = scheduled.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true });
+      try {
+        await sendPatientAppointmentEmail(
+          patient.email,
+          patientName,
+          doctor.fullName,
+          formattedDate,
+          formattedTime,
+          appointmentCode
+        );
+      } catch (emailErr) {
+        console.error("Failed to send appointment confirmation email:", emailErr);
+      }
+    }
+
+    // 🔴 P0 Email Notification for Doctor
+    if (doctor.email && (resolvedStatus === "Confirmed" || resolvedStatus === "Schedule")) {
+      const formattedDate = scheduled.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+      const formattedTime = scheduled.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true });
+      try {
+        await sendDoctorAppointmentEmail(
+          doctor.email,
+          doctor.fullName,
+          patientName,
+          formattedDate,
+          formattedTime,
+          resolvedMode
+        );
+      } catch (emailErr) {
+        console.error("Failed to send doctor appointment notification email:", emailErr);
+      }
+    }
+
+    // 🔴 P0 Email Notification for Clinic Owner
+    if (clinic && clinic.ownerEmail && (resolvedStatus === "Confirmed" || resolvedStatus === "Schedule")) {
+      const formattedDate = scheduled.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+      const formattedTime = scheduled.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true });
+      try {
+        await sendClinicAppointmentNotificationEmail(
+          clinic.ownerEmail,
+          clinic.ownerName || "Clinic Owner",
+          patientName,
+          doctor.fullName,
+          formattedDate,
+          formattedTime,
+          resolvedMode
+        );
+      } catch (emailErr) {
+        console.error("Failed to send clinic appointment notification email:", emailErr);
+      }
+    }
+
     res.status(201).json(enrichAppointment(appointment));
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Server error";
@@ -749,6 +822,65 @@ export const updateAppointment = async (req: AuthenticatedRequest, res: Response
         targetRole: "ALL",
         link: `/appointments`,
       });
+    }
+
+    // 🔴 P0 Email Notification on appointment confirmation or updates
+    const wasConfirmedOrScheduled = existing.status === "Confirmed" || existing.status === "Schedule";
+    const isNowConfirmedOrScheduled = resolvedStatus === "Confirmed" || resolvedStatus === "Schedule";
+    const detailsChanged = existing.scheduledAt.getTime() !== scheduled.getTime() || existing.doctorId !== (doctorId ?? existing.doctorId);
+
+    if (updated.patient.email && isNowConfirmedOrScheduled && (!wasConfirmedOrScheduled || detailsChanged)) {
+      const formattedDate = scheduled.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+      const formattedTime = scheduled.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true });
+      try {
+        await sendPatientAppointmentEmail(
+          updated.patient.email,
+          `${updated.patient.firstName} ${updated.patient.lastName}`.trim(),
+          updated.doctor.fullName,
+          formattedDate,
+          formattedTime,
+          updated.appointmentCode || ""
+        );
+      } catch (emailErr) {
+        console.error("Failed to send appointment update email:", emailErr);
+      }
+    }
+
+    // 🔴 P0 Email Notification for Doctor on appointment confirmation or updates
+    if (updated.doctor.email && isNowConfirmedOrScheduled && (!wasConfirmedOrScheduled || detailsChanged)) {
+      const formattedDate = scheduled.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+      const formattedTime = scheduled.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true });
+      try {
+        await sendDoctorAppointmentEmail(
+          updated.doctor.email,
+          updated.doctor.fullName,
+          `${updated.patient.firstName} ${updated.patient.lastName}`.trim(),
+          formattedDate,
+          formattedTime,
+          updated.mode
+        );
+      } catch (emailErr) {
+        console.error("Failed to send doctor appointment update email:", emailErr);
+      }
+    }
+
+    // 🔴 P0 Email Notification for Clinic Owner on appointment confirmation or updates
+    if (updated.clinic && updated.clinic.ownerEmail && isNowConfirmedOrScheduled && (!wasConfirmedOrScheduled || detailsChanged)) {
+      const formattedDate = scheduled.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+      const formattedTime = scheduled.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true });
+      try {
+        await sendClinicAppointmentNotificationEmail(
+          updated.clinic.ownerEmail,
+          updated.clinic.ownerName || "Clinic Owner",
+          `${updated.patient.firstName} ${updated.patient.lastName}`.trim(),
+          updated.doctor.fullName,
+          formattedDate,
+          formattedTime,
+          updated.mode
+        );
+      } catch (emailErr) {
+        console.error("Failed to send clinic appointment update email:", emailErr);
+      }
     }
 
     res.json(enrichAppointment(updated));

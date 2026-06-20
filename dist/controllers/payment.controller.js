@@ -202,6 +202,7 @@ const verifyRazorpayPayment = async (req, res) => {
         // Send congratulations email to admin with credentials & plan details
         try {
             await (0, email_1.sendAdminCongratulationsEmail)(email, ownerName, username, password, pkg);
+            await (0, email_1.sendClinicSubscriptionActivatedEmail)(email, ownerName, pkg.name, pkg.price, pkg.durationInDays, packageExpiresAt, false);
         }
         catch (_) { /* non-blocking */ }
         return res.status(201).json({

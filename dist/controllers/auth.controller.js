@@ -214,6 +214,16 @@ const upgradePlan = async (req, res) => {
             });
         }
         catch (_) { /* non-blocking */ }
+        // Send subscription activated/renewed email to clinic owner
+        if (user.email) {
+            try {
+                await (0, email_1.sendClinicSubscriptionActivatedEmail)(user.email, user.fullName, pkg.name, pkg.price, pkg.durationInDays, packageExpiresAt, true // Mark as renewal/upgrade
+                );
+            }
+            catch (emailErr) {
+                console.error("Failed to send subscription renewal email:", emailErr);
+            }
+        }
         return res.json({
             message: "Plan activated successfully!",
             clinic: updatedClinic,
@@ -351,6 +361,12 @@ const registerFull = async (req, res) => {
         // Send congratulations email to admin with credentials & plan details
         try {
             await (0, email_1.sendAdminCongratulationsEmail)(email, ownerName, username, password, pkg);
+            if (pkg.price === 0) {
+                await (0, email_1.sendClinicWelcomeTrialEmail)(email, ownerName, username, password, pkg.name, pkg.durationInDays, packageExpiresAt);
+            }
+            else {
+                await (0, email_1.sendClinicSubscriptionActivatedEmail)(email, ownerName, pkg.name, pkg.price, pkg.durationInDays, packageExpiresAt, false);
+            }
         }
         catch (_) { /* non-blocking */ }
         return res.status(201).json({

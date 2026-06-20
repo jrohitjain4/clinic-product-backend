@@ -262,7 +262,7 @@ const bookPublicAppointment = async (req, res) => {
                 departmentId: doctor.departmentId || null,
                 scheduledAt,
                 endAt: null,
-                mode: "In-person",
+                mode: "Clinic Landing",
                 appointmentType: "Online Booking",
                 status: "Schedule",
                 reason: reason || "Online booking from clinic website",
@@ -271,85 +271,16 @@ const bookPublicAppointment = async (req, res) => {
             },
         });
         // 🔴 P0 Email Notification with credentials and booking status
-        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "http://localhost:5173";
-        const loginUrl = `${frontendLink}/login`;
-        let emailBody = "";
-        if (isNewUserCreated) {
-            emailBody = `
-                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333; line-height: 1.6; border: 1px solid #e2e8f0; padding: 24px; borderRadius: 8px;">
-                    <h2 style="color: #1d4ed8; text-align: center; margin-top: 0;">Booking Confirmation</h2>
-                    <p>Dear <strong>${firstName.trim()} ${lastName.trim()}</strong>,</p>
-                    <p>Thank you for booking an appointment with us. Your appointment has been scheduled successfully!</p>
-                    
-                    <div style="background-color: #f0fdf4; padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #10b981;">
-                        <h4 style="margin: 0 0 10px 0; color: #15803d;">Appointment Details:</h4>
-                        <ul style="margin: 0; padding-left: 20px;">
-                            <li>Appointment ID: <strong>${appointmentCode}</strong></li>
-                            <li>Doctor: <strong>Dr. ${doctor.fullName}</strong></li>
-                            <li>Date: <strong>${scheduledAt.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}</strong></li>
-                            <li>Time: <strong>${time}</strong></li>
-                        </ul>
-                    </div>
-
-                    <div style="background-color: #f8fafc; padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #3b82f6;">
-                        <h4 style="margin: 0 0 10px 0; color: #1d4ed8;">Your Patient Portal Account:</h4>
-                        <p style="margin: 0 0 10px 0;">We have automatically created an account for you to view your prescriptions and history.</p>
-                        <ul style="margin: 0; padding-left: 20px;">
-                            <li>Login URL: <a href="${loginUrl}">${loginUrl}</a></li>
-                            <li>Email / Username: <strong>${email.toLowerCase()}</strong></li>
-                            <li>Password: <strong>${generatedPassword}</strong></li>
-                        </ul>
-                        <p style="margin: 10px 0 0 0; font-size: 12px; color: #ef4444; font-weight: bold;">
-                            * Note: Please change this temporary password after logging in for the first time.
-                        </p>
-                    </div>
-
-                    <div style="background-color: #fffbeb; padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #f59e0b; text-align: center;">
-                        <h4 style="margin: 0 0 10px 0; color: #b45309;">⚠️ Action Required to Confirm Your Booking</h4>
-                        <p style="margin: 0; font-weight: bold; font-size: 15px; color: #b45309;">
-                            To confirm your booking, please call the admin and pay the advance.
-                        </p>
-                    </div>
-
-                    <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 25px 0;" />
-                    <p style="font-size: 13px; color: #64748b; text-align: center; margin-bottom: 0;">
-                        Regards,<br/><strong>${clinic.name} Team</strong>
-                    </p>
-                </div>
-            `;
+        await (0, email_1.sendPatientAppointmentEmail)(email.toLowerCase(), `${firstName.trim()} ${lastName.trim()}`, doctor.fullName, scheduledAt.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }), time, appointmentCode, isNewUserCreated ? { username: email.toLowerCase(), password: generatedPassword } : undefined);
+        // 🔴 P0 Email Notification for Doctor
+        if (doctor.email) {
+            try {
+                await (0, email_1.sendDoctorAppointmentEmail)(doctor.email, doctor.fullName, `${firstName.trim()} ${lastName.trim()}`, scheduledAt.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }), time, "Online Booking");
+            }
+            catch (emailErr) {
+                console.error("Failed to send doctor appointment booking email:", emailErr);
+            }
         }
-        else {
-            emailBody = `
-                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333; line-height: 1.6; border: 1px solid #e2e8f0; padding: 24px; borderRadius: 8px;">
-                    <h2 style="color: #1d4ed8; text-align: center; margin-top: 0;">Booking Confirmation</h2>
-                    <p>Dear <strong>${firstName.trim()} ${lastName.trim()}</strong>,</p>
-                    <p>Your new appointment has been scheduled successfully!</p>
-                    
-                    <div style="background-color: #f0fdf4; padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #10b981;">
-                        <h4 style="margin: 0 0 10px 0; color: #15803d;">Appointment Details:</h4>
-                        <ul style="margin: 0; padding-left: 20px;">
-                            <li>Appointment ID: <strong>${appointmentCode}</strong></li>
-                            <li>Doctor: <strong>Dr. ${doctor.fullName}</strong></li>
-                            <li>Date: <strong>${scheduledAt.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}</strong></li>
-                            <li>Time: <strong>${time}</strong></li>
-                        </ul>
-                    </div>
-
-                    <div style="background-color: #fffbeb; padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #f59e0b; text-align: center;">
-                        <h4 style="margin: 0 0 10px 0; color: #b45309;">⚠️ Action Required to Confirm Your Booking</h4>
-                        <p style="margin: 0; font-weight: bold; font-size: 15px; color: #b45309;">
-                            To confirm your booking, please call the admin and pay the advance.
-                        </p>
-                    </div>
-
-                    <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 25px 0;" />
-                    <p style="font-size: 13px; color: #64748b; text-align: center; margin-bottom: 0;">
-                        Regards,<br/><strong>${clinic.name} Team</strong>
-                    </p>
-                </div>
-            `;
-        }
-        await (0, email_1.sendEmail)(email.toLowerCase(), "Your Booking Confirmation & Account Details", emailBody);
         const patientName = `${patient.firstName} ${patient.lastName}`.trim();
         await (0, notification_controller_1.createNotificationInternal)({
             clinicId,
@@ -365,6 +296,7 @@ const bookPublicAppointment = async (req, res) => {
             isNewUserCreated,
             generatedPassword,
             email,
+            patientCode: patient.patientCode,
             message: "Appointment booked successfully!",
         });
     }

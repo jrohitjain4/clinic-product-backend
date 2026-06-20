@@ -35,12 +35,42 @@ export const getSuperAdminAnalytics = async (req: AuthenticatedRequest, res: Res
             };
         });
 
+        const freeTrials = clinics.filter(c => c.status === 'TRIAL' || c.status === 'IN_PROGRESS').length;
+        const premiumPackages = clinics.filter(c => c.status === 'UPGRADED').length;
+        const demoBookings = await prisma.demoBooking.count();
+        const totalPackages = await prisma.subscriptionPackage.count();
+        const totalTickets = await prisma.ticket.count();
+        const openTickets = await prisma.ticket.count({ where: { status: 'Pending' } });
+
+        const demoBookingsList = await prisma.demoBooking.findMany({ orderBy: { createdAt: 'desc' }, take: 4 });
+        const packagesList = await prisma.subscriptionPackage.findMany({ orderBy: { createdAt: 'desc' }, take: 4 });
+        const recentClinics = await prisma.clinic.findMany({ orderBy: { createdAt: 'desc' }, take: 4 });
+        const ticketsList = await prisma.ticket.findMany({ orderBy: { createdAt: 'desc' }, take: 4 });
+
+        const clinicStatusCounts = {
+            UPGRADED: clinics.filter(c => c.status === 'UPGRADED').length,
+            IN_PROGRESS: clinics.filter(c => c.status === 'IN_PROGRESS').length,
+            TRIAL: clinics.filter(c => c.status === 'TRIAL').length,
+            TRIAL_EXPIRED: clinics.filter(c => c.status === 'TRIAL_EXPIRED').length
+        };
+
         res.json({
             totalRevenue,
             activeSubscriptions,
             totalClinics: clinics.length,
             pendingRenewals: clinics.filter(c => c.status === 'TRIAL_EXPIRED').length,
-            transactionHistory: transactions
+            transactionHistory: transactions,
+            freeTrials,
+            premiumPackages,
+            demoBookings,
+            totalPackages,
+            totalTickets,
+            openTickets,
+            packagesList,
+            demoBookingsList,
+            recentClinics,
+            ticketsList,
+            clinicStatusCounts
         });
     } catch (error) {
         console.error('Super Admin Analytics Error:', error);

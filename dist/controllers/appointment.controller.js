@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateFollowUpPayment = exports.createFollowUpAppointment = exports.checkFollowupStatus = exports.deleteAppointment = exports.updateAppointment = exports.createAppointment = exports.getAppointmentById = exports.getAppointmentsCalendar = exports.getAppointments = void 0;
 const prisma_1 = __importDefault(require("../lib/prisma"));
 const notification_controller_1 = require("./notification.controller");
+const email_1 = require("../utils/email");
 const VALID_STATUSES = [
     "Checked Out",
     "Checked In",
@@ -47,7 +48,17 @@ const patientInclude = {
             firstName: true,
             lastName: true,
             phone: true,
+            email: true,
             profileImage: true,
+            gender: true,
+            dob: true,
+            bloodGroup: true,
+            address1: true,
+            address2: true,
+            city: true,
+            state: true,
+            pincode: true,
+            maritalStatus: true,
         },
     },
 };
@@ -57,6 +68,11 @@ const doctorInclude = {
             id: true,
             fullName: true,
             profileImage: true,
+            phone: true,
+            email: true,
+            consultationCharge: true,
+            medicalLicenseNumber: true,
+            yearOfExperience: true,
             appointmentDuration: true,
             followUpEnabled: true,
             freeFollowUpLimit: true,
@@ -71,15 +87,31 @@ const appointmentIncludes = {
     ...patientInclude,
     ...doctorInclude,
     department: { select: { id: true, name: true } },
-    clinic: {
-        include: { landingPage: true }
-    },
     followUps: {
         select: { id: true, appointmentCode: true, scheduledAt: true, status: true, followUpPaymentStatus: true, reason: true },
         orderBy: { scheduledAt: "asc" },
     },
     parentAppointment: {
         select: { id: true, appointmentCode: true, scheduledAt: true, status: true },
+    },
+    clinic: {
+        select: {
+            id: true,
+            name: true,
+            phone: true,
+            ownerEmail: true,
+            ownerName: true,
+            addressLine1: true,
+            addressLine2: true,
+            city: true,
+            landingPage: {
+                select: {
+                    logo: true,
+                    email: true,
+                    whatsapp: true
+                }
+            }
+        }
     },
 };
 const enrichAppointment = (a) => ({
@@ -96,6 +128,60 @@ const maybeUpdatePatientLastVisit = async (patientId, status, scheduledAt) => {
         where: { id: patientId },
         data: { lastVisitedAt: scheduledAt },
     });
+};
+// ── Helper: Parse service duration string (e.g. "15 days", "10") → number of days
+const parseServiceDurationDays = (duration) => {
+    if (!duration)
+        return 0;
+    const match = duration.match(/(\d+)/);
+    return match ? parseInt(match[1], 10) : 0;
+};
+// ── Helper: Get total session days from serviceIds
+const getTotalSessionDays = async (serviceIds) => {
+    if (!serviceIds || serviceIds.length === 0)
+        return 0;
+    const services = await prisma_1.default.service.findMany({
+        where: { id: { in: serviceIds } },
+        select: { duration: true },
+    });
+    const days = services.reduce((sum, s) => sum + parseServiceDurationDays(s.duration), 0);
+    return days > 0 ? days : 0;
+};
+// ── Helper: Create daily session appointments (day 2 onwards) for a session
+const createSessionDailyAppointments = async (baseAppointment, totalDays, clinicId, parentId) => {
+    if (totalDays <= 1)
+        return;
+    const base = new Date(baseAppointment.scheduledAt);
+    const endBase = baseAppointment.endAt ? new Date(baseAppointment.endAt) : null;
+    const durationMs = endBase ? endBase.getTime() - base.getTime() : 0;
+    const count = await prisma_1.default.appointment.count({ where: { clinicId } });
+    for (let day = 1; day < totalDays; day++) {
+        const scheduledAt = new Date(base);
+        scheduledAt.setDate(scheduledAt.getDate() + day);
+        const endAt = endBase ? new Date(scheduledAt.getTime() + durationMs) : null;
+        const apptCount = count + day;
+        const appointmentCode = `AP${String(apptCount).padStart(3, "0")}`;
+        await prisma_1.default.appointment.create({
+            data: {
+                appointmentCode,
+                patientId: baseAppointment.patientId,
+                doctorId: baseAppointment.doctorId,
+                departmentId: baseAppointment.departmentId || null,
+                scheduledAt,
+                endAt,
+                mode: baseAppointment.mode,
+                appointmentType: baseAppointment.appointmentType || null,
+                status: "Confirmed",
+                reason: baseAppointment.reason || null,
+                location: baseAppointment.location || null,
+                clinicId,
+                isFollowUp: false,
+                paymentStatus: baseAppointment.paymentStatus || null,
+                parentAppointmentId: parentId,
+                serviceIds: baseAppointment.serviceIds || [],
+            },
+        });
+    }
 };
 const ensureAppointmentInvoice = async (appointmentId, clinicId) => {
     try {
@@ -377,7 +463,9 @@ const createAppointment = async (req, res) => {
         const clinicId = req.user?.clinicId;
         if (!clinicId)
             return res.status(403).json({ message: "No clinic associated" });
-        const { patientId, doctorId, departmentId, scheduledAt, endAt, mode, appointmentType, status, reason, location, isFollowUp, followUpStatus, paymentStatus, parentAppointmentId, } = req.body;
+        const { patientId, doctorId, departmentId, scheduledAt, endAt, mode, appointmentType, status, reason, location, isFollowUp, followUpStatus, paymentStatus, parentAppointmentId, serviceIds, } = req.body;
+        const resolvedServiceIds = Array.isArray(serviceIds) ? serviceIds : [];
+        const isSessionAppointment = resolvedServiceIds.length > 0;
         if (!patientId)
             return res.status(400).json({ message: "Patient is required" });
         if (!doctorId)
@@ -451,23 +539,67 @@ const createAppointment = async (req, res) => {
                 followUpStatus: followUpStatus || null,
                 paymentStatus: paymentStatus || null,
                 parentAppointmentId: parentAppointmentId || null,
+                serviceIds: resolvedServiceIds,
             },
             include: appointmentIncludes,
         });
         await maybeUpdatePatientLastVisit(patientId, resolvedStatus, scheduled);
         if (resolvedStatus === "Confirmed") {
             await ensureAppointmentInvoice(appointment.id, clinicId);
+            // ── Session Appointment: create daily appointments for remaining days ──
+            if (isSessionAppointment) {
+                const totalDays = await getTotalSessionDays(resolvedServiceIds);
+                if (totalDays > 1) {
+                    await createSessionDailyAppointments(appointment, totalDays, clinicId, appointment.id);
+                }
+            }
         }
         // 🔔 Trigger notification
         const patientName = `${patient.firstName} ${patient.lastName}`.trim();
+        const sessionNote = (isSessionAppointment && resolvedStatus === "Confirmed")
+            ? ` (Session: ${await getTotalSessionDays(resolvedServiceIds)} days)`
+            : "";
         await (0, notification_controller_1.createNotificationInternal)({
             clinicId,
             type: "APPOINTMENT",
             title: "New Appointment Scheduled",
-            message: `Appointment ${appointmentCode} for ${patientName} with Dr. ${doctor.fullName} on ${formatDateTimeLabel(scheduled)}.`,
+            message: `Appointment ${appointmentCode} for ${patientName} with Dr. ${doctor.fullName} on ${formatDateTimeLabel(scheduled)}${sessionNote}.`,
             targetRole: "ALL",
             link: `/appointments`,
         });
+        // 🔴 P0 Email Notification with booking status
+        if (patient.email && (resolvedStatus === "Confirmed" || resolvedStatus === "Schedule")) {
+            const formattedDate = scheduled.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+            const formattedTime = scheduled.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true });
+            try {
+                await (0, email_1.sendPatientAppointmentEmail)(patient.email, patientName, doctor.fullName, formattedDate, formattedTime, appointmentCode);
+            }
+            catch (emailErr) {
+                console.error("Failed to send appointment confirmation email:", emailErr);
+            }
+        }
+        // 🔴 P0 Email Notification for Doctor
+        if (doctor.email && (resolvedStatus === "Confirmed" || resolvedStatus === "Schedule")) {
+            const formattedDate = scheduled.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+            const formattedTime = scheduled.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true });
+            try {
+                await (0, email_1.sendDoctorAppointmentEmail)(doctor.email, doctor.fullName, patientName, formattedDate, formattedTime, resolvedMode);
+            }
+            catch (emailErr) {
+                console.error("Failed to send doctor appointment notification email:", emailErr);
+            }
+        }
+        // 🔴 P0 Email Notification for Clinic Owner
+        if (clinic && clinic.ownerEmail && (resolvedStatus === "Confirmed" || resolvedStatus === "Schedule")) {
+            const formattedDate = scheduled.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+            const formattedTime = scheduled.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true });
+            try {
+                await (0, email_1.sendClinicAppointmentNotificationEmail)(clinic.ownerEmail, clinic.ownerName || "Clinic Owner", patientName, doctor.fullName, formattedDate, formattedTime, resolvedMode);
+            }
+            catch (emailErr) {
+                console.error("Failed to send clinic appointment notification email:", emailErr);
+            }
+        }
         res.status(201).json(enrichAppointment(appointment));
     }
     catch (err) {
@@ -486,7 +618,7 @@ const updateAppointment = async (req, res) => {
         });
         if (!existing)
             return res.status(404).json({ message: "Appointment not found" });
-        const { patientId, doctorId, departmentId, scheduledAt, endAt, mode, appointmentType, status, reason, location, isFollowUp, followUpStatus, paymentStatus, parentAppointmentId, } = req.body;
+        const { patientId, doctorId, departmentId, scheduledAt, endAt, mode, appointmentType, status, reason, location, isFollowUp, followUpStatus, paymentStatus, parentAppointmentId, serviceIds, } = req.body;
         if (doctorId) {
             const doctor = await prisma_1.default.doctor.findFirst({
                 where: { id: doctorId, clinicId: clinicId },
@@ -503,6 +635,9 @@ const updateAppointment = async (req, res) => {
         }
         const scheduled = scheduledAt ? new Date(scheduledAt) : existing.scheduledAt;
         const resolvedStatus = status !== undefined ? normalizeStatus(status) : existing.status;
+        const resolvedServiceIds = Array.isArray(serviceIds)
+            ? serviceIds
+            : existing.serviceIds || [];
         const updated = await prisma_1.default.appointment.update({
             where: { id },
             data: {
@@ -529,12 +664,29 @@ const updateAppointment = async (req, res) => {
                 followUpStatus: followUpStatus !== undefined ? followUpStatus : existing.followUpStatus,
                 paymentStatus: paymentStatus !== undefined ? paymentStatus : existing.paymentStatus,
                 parentAppointmentId: parentAppointmentId !== undefined ? parentAppointmentId : existing.parentAppointmentId,
+                serviceIds: resolvedServiceIds,
             },
             include: appointmentIncludes,
         });
         await maybeUpdatePatientLastVisit(updated.patientId, resolvedStatus, scheduled);
         if (resolvedStatus === "Confirmed") {
             await ensureAppointmentInvoice(updated.id, clinicId);
+            // ── Session Appointment: if being confirmed for the first time and has serviceIds,
+            //    create daily appointments for remaining days (only if none already exist)
+            const isNowConfirmed = existing.status !== "Confirmed" && resolvedStatus === "Confirmed";
+            const hasServiceIds = resolvedServiceIds.length > 0;
+            if (isNowConfirmed && hasServiceIds) {
+                // Check if session children already exist
+                const existingChildren = await prisma_1.default.appointment.count({
+                    where: { parentAppointmentId: id, clinicId: clinicId },
+                });
+                if (existingChildren === 0) {
+                    const totalDays = await getTotalSessionDays(resolvedServiceIds);
+                    if (totalDays > 1) {
+                        await createSessionDailyAppointments(updated, totalDays, clinicId, id);
+                    }
+                }
+            }
         }
         // 🔔 Notify on status changes
         const statusMessages = {
@@ -552,6 +704,42 @@ const updateAppointment = async (req, res) => {
                 targetRole: "ALL",
                 link: `/appointments`,
             });
+        }
+        // 🔴 P0 Email Notification on appointment confirmation or updates
+        const wasConfirmedOrScheduled = existing.status === "Confirmed" || existing.status === "Schedule";
+        const isNowConfirmedOrScheduled = resolvedStatus === "Confirmed" || resolvedStatus === "Schedule";
+        const detailsChanged = existing.scheduledAt.getTime() !== scheduled.getTime() || existing.doctorId !== (doctorId ?? existing.doctorId);
+        if (updated.patient.email && isNowConfirmedOrScheduled && (!wasConfirmedOrScheduled || detailsChanged)) {
+            const formattedDate = scheduled.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+            const formattedTime = scheduled.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true });
+            try {
+                await (0, email_1.sendPatientAppointmentEmail)(updated.patient.email, `${updated.patient.firstName} ${updated.patient.lastName}`.trim(), updated.doctor.fullName, formattedDate, formattedTime, updated.appointmentCode || "");
+            }
+            catch (emailErr) {
+                console.error("Failed to send appointment update email:", emailErr);
+            }
+        }
+        // 🔴 P0 Email Notification for Doctor on appointment confirmation or updates
+        if (updated.doctor.email && isNowConfirmedOrScheduled && (!wasConfirmedOrScheduled || detailsChanged)) {
+            const formattedDate = scheduled.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+            const formattedTime = scheduled.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true });
+            try {
+                await (0, email_1.sendDoctorAppointmentEmail)(updated.doctor.email, updated.doctor.fullName, `${updated.patient.firstName} ${updated.patient.lastName}`.trim(), formattedDate, formattedTime, updated.mode);
+            }
+            catch (emailErr) {
+                console.error("Failed to send doctor appointment update email:", emailErr);
+            }
+        }
+        // 🔴 P0 Email Notification for Clinic Owner on appointment confirmation or updates
+        if (updated.clinic && updated.clinic.ownerEmail && isNowConfirmedOrScheduled && (!wasConfirmedOrScheduled || detailsChanged)) {
+            const formattedDate = scheduled.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+            const formattedTime = scheduled.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true });
+            try {
+                await (0, email_1.sendClinicAppointmentNotificationEmail)(updated.clinic.ownerEmail, updated.clinic.ownerName || "Clinic Owner", `${updated.patient.firstName} ${updated.patient.lastName}`.trim(), updated.doctor.fullName, formattedDate, formattedTime, updated.mode);
+            }
+            catch (emailErr) {
+                console.error("Failed to send clinic appointment update email:", emailErr);
+            }
         }
         res.json(enrichAppointment(updated));
     }

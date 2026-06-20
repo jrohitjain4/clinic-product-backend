@@ -189,29 +189,7 @@ const createDoctor = async (req, res) => {
         // 📧 Send welcome email to doctor with login credentials
         if (email) {
             try {
-                const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "http://localhost:5173";
-                const loginUrl = `${frontendLink}/login`;
-                const emailBody = `
-                  <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333; line-height: 1.6;">
-                    <h2 style="color: #2c3e50;">Welcome to Docyori, Dr. ${fullName}!</h2>
-                    <p>You have been registered as a Doctor at our clinic. Your Doctor ID is <b style="color: #0d6efd;">${doctorCode}</b>.</p>
-                    <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin: 20px 0; border-left: 4px solid #0d6efd;">
-                      <p style="margin-top: 0;"><strong>Your Login Credentials:</strong></p>
-                      <ul style="margin-bottom: 0;">
-                        <li>Username: <strong>${effectiveUsername || email}</strong></li>
-                        <li>Email: <strong>${email}</strong></li>
-                        <li>Password: <strong>${generatedPassword}</strong></li>
-                      </ul>
-                    </div>
-                    <p style="color: #dc3545; font-size: 14px; font-weight: bold;">
-                      ⚠️ This is a temporary password. Please change it immediately after your first login.
-                    </p>
-                    <div style="text-align: center; margin: 30px 0;">
-                      <a href="${loginUrl}" style="background-color: #0d6efd; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">Click here to Login</a>
-                    </div>
-                    <p style="font-size: 13px; color: #6c757d;">Regards,<br/><strong>The Clinic Team</strong></p>
-                  </div>`;
-                await (0, email_1.sendEmail)(email.toLowerCase(), `Welcome to Docyori - Dr. ${fullName} Login Details`, emailBody);
+                await (0, email_1.sendDoctorRegistrationEmail)(email, fullName, doctorCode, { username: effectiveUsername || email, password: generatedPassword });
             }
             catch (_) { /* non-blocking */ }
         }
@@ -407,7 +385,7 @@ const getDoctorDashboardStats = async (req, res) => {
         last7Days.setDate(last7Days.getDate() - 7);
         const prev7Days = new Date(last7Days);
         prev7Days.setDate(prev7Days.getDate() - 7);
-        const [total, totalOnline, totalCancelled, uniquePatients, last7Total, prev7Total, last7Online, prev7Online, last7Cancelled, prev7Cancelled, recentAppointments, todayAppointment] = await Promise.all([
+        const [total, totalOnline, totalCancelled, uniquePatients, last7Total, prev7Total, last7Online, prev7Online, last7Cancelled, prev7Cancelled, totalScheduled, totalConfirmed, totalCheckedIn, totalCheckedOut, totalCompleted, todayApptsCount, recentAppointments, todayAppointment] = await Promise.all([
             prisma_1.default.appointment.count({ where: { doctorId } }),
             prisma_1.default.appointment.count({ where: { doctorId, appointmentType: { contains: "Online", mode: "insensitive" } } }),
             prisma_1.default.appointment.count({ where: { doctorId, status: "Cancelled" } }),
@@ -418,6 +396,13 @@ const getDoctorDashboardStats = async (req, res) => {
             prisma_1.default.appointment.count({ where: { doctorId, appointmentType: { contains: "Online", mode: "insensitive" }, scheduledAt: { gte: prev7Days, lt: last7Days } } }),
             prisma_1.default.appointment.count({ where: { doctorId, status: "Cancelled", scheduledAt: { gte: last7Days } } }),
             prisma_1.default.appointment.count({ where: { doctorId, status: "Cancelled", scheduledAt: { gte: prev7Days, lt: last7Days } } }),
+            // Status counts
+            prisma_1.default.appointment.count({ where: { doctorId, status: "Scheduled" } }),
+            prisma_1.default.appointment.count({ where: { doctorId, status: "Confirmed" } }),
+            prisma_1.default.appointment.count({ where: { doctorId, status: "Checked In" } }),
+            prisma_1.default.appointment.count({ where: { doctorId, status: "Checked Out" } }),
+            prisma_1.default.appointment.count({ where: { doctorId, status: "Completed" } }),
+            prisma_1.default.appointment.count({ where: { doctorId, scheduledAt: { gte: new Date(now.toDateString()), lt: new Date(new Date().setDate(now.getDate() + 1)) } } }),
             prisma_1.default.appointment.findMany({
                 where: { doctorId },
                 orderBy: { scheduledAt: "desc" },
@@ -452,6 +437,12 @@ const getDoctorDashboardStats = async (req, res) => {
                 totalChange: pctChange(last7Total, prev7Total),
                 onlineChange: pctChange(last7Online, prev7Online),
                 cancelledChange: pctChange(last7Cancelled, prev7Cancelled),
+                todayAppointments: todayApptsCount,
+                scheduled: totalScheduled,
+                confirmed: totalConfirmed,
+                checkedIn: totalCheckedIn,
+                checkedOut: totalCheckedOut,
+                completed: totalCompleted,
             },
             todayAppointment,
             recentAppointments: recentAppointments.map(a => ({
@@ -463,6 +454,10 @@ const getDoctorDashboardStats = async (req, res) => {
                 mode: a.appointmentType?.toLowerCase().includes("online") ? "Online" : "In-Person",
                 status: a.status,
             })),
+            doctorDetails: {
+                id: doctor.id,
+                departmentId: doctor.departmentId,
+            }
         });
     }
     catch (err) {

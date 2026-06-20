@@ -11,7 +11,11 @@ const getTenants = async (req, res) => {
             include: {
                 package: true,
                 _count: {
-                    select: { doctors: true }
+                    select: {
+                        doctors: true,
+                        staffs: true,
+                        patients: true
+                    }
                 },
                 users: {
                     where: {
@@ -40,16 +44,27 @@ const getTenants = async (req, res) => {
             return {
                 id: tenant.id,
                 name: tenant.name,
-                subdomain: tenant.username,
-                ownerName: admin?.fullName || "N/A",
-                ownerEmail: admin?.email || "N/A",
+                username: tenant.username || "N/A",
+                ownerName: tenant.ownerName || admin?.fullName || "N/A",
+                ownerEmail: tenant.ownerEmail || admin?.email || "N/A",
                 packageName: tenant.package?.name || "No Plan",
                 status: status,
                 expiresAt: tenant.packageExpiresAt,
                 createdAt: tenant.createdAt,
                 phone: tenant.phone || "N/A",
-                address: address,
-                doctorsCount: tenant._count?.doctors || 0
+                whatsappNumber: tenant.whatsappNumber || "N/A",
+                addressLine1: tenant.addressLine1 || "N/A",
+                addressLine2: tenant.addressLine2 || "N/A",
+                district: tenant.district || "N/A",
+                city: tenant.city || "N/A",
+                state: tenant.state || "N/A",
+                country: tenant.country || "N/A",
+                pincode: tenant.pincode || "N/A",
+                doctorCount: tenant.doctorCount || null,
+                doctorsCount: tenant._count?.doctors || 0,
+                staffsCount: tenant._count?.staffs || 0,
+                patientsCount: tenant._count?.patients || 0,
+                address: address
             };
         });
         return res.json(enrichedTenants);

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Role, ClinicStatus } from "@prisma/client";
-import { sendEmail, sendAdminCongratulationsEmail } from "../utils/email";
+import { sendEmail, sendAdminCongratulationsEmail, sendClinicWelcomeTrialEmail, sendClinicSubscriptionActivatedEmail } from "../utils/email";
 import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
 import { AuthenticatedRequest } from "../middlewares/auth.middleware";
@@ -202,6 +202,23 @@ export const upgradePlan = async (req: AuthenticatedRequest, res: Response) => {
       });
     } catch (_) { /* non-blocking */ }
 
+    // Send subscription activated/renewed email to clinic owner
+    if (user.email) {
+      try {
+        await sendClinicSubscriptionActivatedEmail(
+          user.email,
+          user.fullName,
+          pkg.name,
+          pkg.price,
+          pkg.durationInDays,
+          packageExpiresAt,
+          true // Mark as renewal/upgrade
+        );
+      } catch (emailErr) {
+        console.error("Failed to send subscription renewal email:", emailErr);
+      }
+    }
+
     return res.json({
       message: "Plan activated successfully!",
       clinic: updatedClinic,
@@ -378,6 +395,28 @@ export const registerFull = async (req: Request, res: Response) => {
         password,
         pkg
       );
+
+      if (pkg.price === 0) {
+        await sendClinicWelcomeTrialEmail(
+          email,
+          ownerName,
+          username,
+          password,
+          pkg.name,
+          pkg.durationInDays,
+          packageExpiresAt
+        );
+      } else {
+        await sendClinicSubscriptionActivatedEmail(
+          email,
+          ownerName,
+          pkg.name,
+          pkg.price,
+          pkg.durationInDays,
+          packageExpiresAt,
+          false
+        );
+      }
     } catch (_) { /* non-blocking */ }
 
     return res.status(201).json({

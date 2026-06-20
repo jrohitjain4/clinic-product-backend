@@ -31,7 +31,7 @@ const createService = async (req, res) => {
         const clinicId = req.user?.clinicId;
         if (!clinicId)
             return res.status(403).json({ message: "No clinic associated" });
-        const { serviceName, departmentId, price, status } = req.body;
+        const { serviceName, departmentId, price, duration, status } = req.body;
         if (!serviceName || !departmentId) {
             return res.status(400).json({ message: "Service Name and Department are required" });
         }
@@ -40,6 +40,7 @@ const createService = async (req, res) => {
                 serviceName,
                 departmentId,
                 price: price !== undefined && price !== null && price !== "" ? parseFloat(price) : undefined,
+                duration: duration || null,
                 status: status || "Active",
                 clinicId,
             },
@@ -59,7 +60,7 @@ const updateService = async (req, res) => {
     try {
         const clinicId = req.user?.clinicId;
         const { id } = req.params;
-        const { serviceName, departmentId, price, status } = req.body;
+        const { serviceName, departmentId, price, duration, status } = req.body;
         const existing = await prisma_1.default.service.findFirst({ where: { id, clinicId: clinicId } });
         if (!existing)
             return res.status(404).json({ message: "Service not found" });
@@ -69,6 +70,7 @@ const updateService = async (req, res) => {
                 serviceName,
                 departmentId,
                 price: price !== undefined ? parseFloat(price) : undefined,
+                duration: duration !== undefined ? duration : undefined,
                 status,
             },
             include: {

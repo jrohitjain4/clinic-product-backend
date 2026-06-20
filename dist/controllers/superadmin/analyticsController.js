@@ -32,12 +32,39 @@ const getSuperAdminAnalytics = async (req, res) => {
                 status: 'Received'
             };
         });
+        const freeTrials = clinics.filter(c => c.status === 'TRIAL' || c.status === 'IN_PROGRESS').length;
+        const premiumPackages = clinics.filter(c => c.status === 'UPGRADED').length;
+        const demoBookings = await prisma_1.default.demoBooking.count();
+        const totalPackages = await prisma_1.default.subscriptionPackage.count();
+        const totalTickets = await prisma_1.default.ticket.count();
+        const openTickets = await prisma_1.default.ticket.count({ where: { status: 'Pending' } });
+        const demoBookingsList = await prisma_1.default.demoBooking.findMany({ orderBy: { createdAt: 'desc' }, take: 4 });
+        const packagesList = await prisma_1.default.subscriptionPackage.findMany({ orderBy: { createdAt: 'desc' }, take: 4 });
+        const recentClinics = await prisma_1.default.clinic.findMany({ orderBy: { createdAt: 'desc' }, take: 4 });
+        const ticketsList = await prisma_1.default.ticket.findMany({ orderBy: { createdAt: 'desc' }, take: 4 });
+        const clinicStatusCounts = {
+            UPGRADED: clinics.filter(c => c.status === 'UPGRADED').length,
+            IN_PROGRESS: clinics.filter(c => c.status === 'IN_PROGRESS').length,
+            TRIAL: clinics.filter(c => c.status === 'TRIAL').length,
+            TRIAL_EXPIRED: clinics.filter(c => c.status === 'TRIAL_EXPIRED').length
+        };
         res.json({
             totalRevenue,
             activeSubscriptions,
             totalClinics: clinics.length,
             pendingRenewals: clinics.filter(c => c.status === 'TRIAL_EXPIRED').length,
-            transactionHistory: transactions
+            transactionHistory: transactions,
+            freeTrials,
+            premiumPackages,
+            demoBookings,
+            totalPackages,
+            totalTickets,
+            openTickets,
+            packagesList,
+            demoBookingsList,
+            recentClinics,
+            ticketsList,
+            clinicStatusCounts
         });
     }
     catch (error) {

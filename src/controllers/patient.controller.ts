@@ -9,7 +9,7 @@ import { createNotificationInternal } from "./notification.controller";
 const mapStatusLabel = (status: string) =>
   status === "Active" ? "Available" : "Unavailable";
 
-import { sendEmail } from "../utils/email";
+import { sendEmail, sendPatientRegistrationEmail } from "../utils/email";
 
 const normalizeStatus = (status?: string) => {
   if (!status) return "Active";
@@ -306,39 +306,12 @@ export const createPatient = async (req: AuthenticatedRequest, res: Response) =>
 
     // 🔴 P0 Email Notification with valid credentials
     if (email) {
-      const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "http://localhost:5173";
-      const loginUrl = `${frontendLink}/login`;
-
-      const emailBody = `
-         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333; line-height: 1.6;">
-           <h2 style="color: #2c3e50;">Welcome to Docyori!</h2>
-           <p>Dear <strong>${firstName.trim()}</strong>,</p>
-           <p>You have been registered successfully as a patient with our clinic. Your Patient ID is <b style="color: #0d6efd;">${patientCode}</b>.</p>
-           
-           <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin: 20px 0; border-left: 4px solid #0d6efd;">
-             <p style="margin-top: 0;"><strong>Your Login Credentials:</strong></p>
-             <ul style="margin-bottom: 0;">
-               <li>Username: <strong>${phone || email}</strong></li>
-               <li>Password: <strong>${generatedPassword}</strong></li>
-             </ul>
-           </div>
-           
-           <p style="color: #dc3545; font-size: 14px; font-weight: bold;">
-             ⚠️ Please Note: The password provided above is a temporary password. We strongly recommend changing it immediately after your first login for security reasons.
-           </p>
-           
-           <div style="text-align: center; margin: 30px 0;">
-             <a href="${loginUrl}" style="background-color: #0d6efd; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">
-               Click here to Login
-             </a>
-           </div>
-           
-           <hr style="border: none; border-top: 1px solid #eee; margin: 25px 0;" />
-           <p style="font-size: 13px; color: #6c757d; margin: 0;">Please log in to the patient portal to view your appointments, prescriptions, and records.</p>
-           <p style="font-size: 13px; color: #6c757d; margin: 5px 0 0 0;">Regards,<br/><strong>The Clinic Team</strong></p>
-         </div>
-       `;
-      await sendEmail(email.toLowerCase(), "Welcome to our Clinic - Your Login Details", emailBody);
+      await sendPatientRegistrationEmail(
+        email,
+        firstName.trim(),
+        patientCode,
+        { username: phone || email, password: generatedPassword }
+      );
     }
 
     res.status(201).json(enrichPatient(patient));
@@ -373,13 +346,23 @@ export const updatePatient = async (req: AuthenticatedRequest, res: Response) =>
 
     const {
       firstName,
+      middleName,
       lastName,
       profileImage,
       phone,
+      alternateMobile,
       email,
       dob,
       gender,
       bloodGroup,
+      maritalStatus,
+      occupation,
+      aadhaarNumber,
+      passportNumber,
+      referredBy,
+      emergencyContactName,
+      emergencyContactRelation,
+      emergencyContactPhone,
       status,
       address1,
       address2,
@@ -398,10 +381,12 @@ export const updatePatient = async (req: AuthenticatedRequest, res: Response) =>
       where: { id },
       data: {
         firstName: firstName !== undefined ? firstName.trim() : existing.firstName,
+        middleName: middleName !== undefined ? (middleName ? middleName.trim() : null) : existing.middleName,
         lastName: lastName !== undefined ? lastName.trim() : existing.lastName,
         profileImage:
           profileImage !== undefined ? profileImage || null : existing.profileImage,
         phone: phone !== undefined ? phone || null : existing.phone,
+        alternateMobile: alternateMobile !== undefined ? alternateMobile || null : existing.alternateMobile,
         email: email !== undefined ? email || null : existing.email,
         dob: dob !== undefined ? (dob ? new Date(dob) : null) : existing.dob,
         gender:
@@ -416,6 +401,19 @@ export const updatePatient = async (req: AuthenticatedRequest, res: Response) =>
               ? bloodGroup
               : null
             : existing.bloodGroup,
+        maritalStatus:
+          maritalStatus !== undefined
+            ? maritalStatus && maritalStatus !== "Select"
+              ? maritalStatus
+              : null
+            : existing.maritalStatus,
+        occupation: occupation !== undefined ? occupation || null : existing.occupation,
+        aadhaarNumber: aadhaarNumber !== undefined ? aadhaarNumber || null : existing.aadhaarNumber,
+        passportNumber: passportNumber !== undefined ? passportNumber || null : existing.passportNumber,
+        referredBy: referredBy !== undefined ? referredBy || null : existing.referredBy,
+        emergencyContactName: emergencyContactName !== undefined ? emergencyContactName || null : existing.emergencyContactName,
+        emergencyContactRelation: emergencyContactRelation !== undefined ? emergencyContactRelation || null : existing.emergencyContactRelation,
+        emergencyContactPhone: emergencyContactPhone !== undefined ? emergencyContactPhone || null : existing.emergencyContactPhone,
         status: status !== undefined ? normalizeStatus(status) : existing.status,
         address1: address1 !== undefined ? address1 || null : existing.address1,
         address2: address2 !== undefined ? address2 || null : existing.address2,

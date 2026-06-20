@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateDemoBookingStatus = exports.getAllDemoBookings = exports.createDemoBooking = void 0;
+exports.bulkDeleteDemoBookings = exports.deleteDemoBooking = exports.updateDemoBookingStatus = exports.getAllDemoBookings = exports.createDemoBooking = void 0;
 const prisma_1 = __importDefault(require("../lib/prisma"));
 const createDemoBooking = async (req, res) => {
     try {
@@ -63,3 +63,37 @@ const updateDemoBookingStatus = async (req, res) => {
     }
 };
 exports.updateDemoBookingStatus = updateDemoBookingStatus;
+const deleteDemoBooking = async (req, res) => {
+    try {
+        const { id } = req.params;
+        await prisma_1.default.demoBooking.delete({
+            where: { id },
+        });
+        res.status(200).json({ message: "Demo booking deleted successfully" });
+    }
+    catch (error) {
+        console.error("Error deleting demo booking:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+};
+exports.deleteDemoBooking = deleteDemoBooking;
+const bulkDeleteDemoBookings = async (req, res) => {
+    try {
+        const { ids } = req.body;
+        if (!ids || !Array.isArray(ids)) {
+            res.status(400).json({ message: "IDs array is required" });
+            return;
+        }
+        await prisma_1.default.demoBooking.deleteMany({
+            where: {
+                id: { in: ids }
+            }
+        });
+        res.status(200).json({ message: "Demo bookings deleted successfully" });
+    }
+    catch (error) {
+        console.error("Error bulk deleting demo bookings:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+};
+exports.bulkDeleteDemoBookings = bulkDeleteDemoBookings;
