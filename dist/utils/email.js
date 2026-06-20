@@ -106,12 +106,22 @@ const sendEmail = async (to, subject, html) => {
             subject,
             html,
         };
-        const logoPath = path_1.default.join(process.cwd(), 'logo.svg');
-        if (fs_1.default.existsSync(logoPath)) {
+        const logoPngPath = path_1.default.join(process.cwd(), 'logo.png');
+        const logoSvgPath = path_1.default.join(process.cwd(), 'logo.svg');
+        if (fs_1.default.existsSync(logoPngPath)) {
+            mailOptions.attachments = [
+                {
+                    filename: 'logo.png',
+                    path: logoPngPath,
+                    cid: 'logo'
+                }
+            ];
+        }
+        else if (fs_1.default.existsSync(logoSvgPath)) {
             mailOptions.attachments = [
                 {
                     filename: 'logo.svg',
-                    path: logoPath,
+                    path: logoSvgPath,
                     cid: 'logo'
                 }
             ];
@@ -137,7 +147,7 @@ const sendEmail = async (to, subject, html) => {
 exports.sendEmail = sendEmail;
 const sendAdminCongratulationsEmail = async (to, ownerName, username, password, plan) => {
     try {
-        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "http://localhost:5173";
+        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "https://docyori.com";
         const loginUrl = `${frontendLink}/login`;
         const priceDisplay = plan.price === 0 ? "Free Trial" : `₹${plan.price.toLocaleString("en-IN")}`;
         const formatLimit = (limit) => {
@@ -189,7 +199,7 @@ const sendAdminCongratulationsEmail = async (to, ownerName, username, password, 
 exports.sendAdminCongratulationsEmail = sendAdminCongratulationsEmail;
 const sendPatientRegistrationEmail = async (to, patientName, patientId, credentials) => {
     try {
-        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "http://localhost:5173";
+        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "https://docyori.com";
         const loginUrl = `${frontendLink}/login`;
         // Fetch support contacts from settings
         const supportEmailSetting = await prisma_1.default.systemSetting.findUnique({ where: { key: "contact_email" } });
@@ -268,7 +278,7 @@ const sendPatientRegistrationEmail = async (to, patientName, patientId, credenti
 exports.sendPatientRegistrationEmail = sendPatientRegistrationEmail;
 const sendPatientAppointmentEmail = async (to, patientName, doctorName, date, time, appointmentId, credentials) => {
     try {
-        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "http://localhost:5173";
+        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "https://docyori.com";
         const loginUrl = `${frontendLink}/login`;
         // Fetch support contacts from settings
         const supportEmailSetting = await prisma_1.default.systemSetting.findUnique({ where: { key: "contact_email" } });
@@ -360,7 +370,7 @@ const sendPatientAppointmentEmail = async (to, patientName, doctorName, date, ti
 exports.sendPatientAppointmentEmail = sendPatientAppointmentEmail;
 const sendDoctorRegistrationEmail = async (to, doctorName, doctorCode, credentials) => {
     try {
-        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "http://localhost:5173";
+        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "https://docyori.com";
         const loginUrl = `${frontendLink}/login`;
         // Fetch support contacts from settings
         const supportEmailSetting = await prisma_1.default.systemSetting.findUnique({ where: { key: "contact_email" } });
@@ -439,7 +449,7 @@ const sendDoctorRegistrationEmail = async (to, doctorName, doctorCode, credentia
 exports.sendDoctorRegistrationEmail = sendDoctorRegistrationEmail;
 const sendDoctorAppointmentEmail = async (to, doctorName, patientName, date, time, type) => {
     try {
-        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "http://localhost:5173";
+        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "https://docyori.com";
         const loginUrl = `${frontendLink}/login`;
         // Fetch support contacts from settings
         const supportEmailSetting = await prisma_1.default.systemSetting.findUnique({ where: { key: "contact_email" } });
@@ -512,7 +522,7 @@ const sendDoctorAppointmentEmail = async (to, doctorName, patientName, date, tim
 exports.sendDoctorAppointmentEmail = sendDoctorAppointmentEmail;
 const sendClinicWelcomeTrialEmail = async (to, ownerName, username, password, planName = "Enterprise", durationDays = 14, expiresAt) => {
     try {
-        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "http://localhost:5173";
+        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "https://docyori.com";
         const loginUrl = `${frontendLink}/login`;
         // Fetch support contacts from settings
         const supportEmailSetting = await prisma_1.default.systemSetting.findUnique({ where: { key: "contact_email" } });
@@ -600,7 +610,7 @@ const sendClinicWelcomeTrialEmail = async (to, ownerName, username, password, pl
 exports.sendClinicWelcomeTrialEmail = sendClinicWelcomeTrialEmail;
 const sendClinicSubscriptionActivatedEmail = async (to, ownerName, planName, amount, durationDays, expiresAt, isRenewal = false) => {
     try {
-        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "http://localhost:5173";
+        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "https://docyori.com";
         const loginUrl = `${frontendLink}/login`;
         // Fetch support contacts from settings
         const supportEmailSetting = await prisma_1.default.systemSetting.findUnique({ where: { key: "contact_email" } });
@@ -678,7 +688,7 @@ const sendClinicSubscriptionActivatedEmail = async (to, ownerName, planName, amo
 exports.sendClinicSubscriptionActivatedEmail = sendClinicSubscriptionActivatedEmail;
 const sendClinicSubscriptionExpiredEmail = async (to, ownerName, planName, isTrial = false) => {
     try {
-        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "http://localhost:5173";
+        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "https://docyori.com";
         const renewUrl = `${frontendLink}/membership/membership-plans`;
         // Fetch support contacts from settings
         const supportEmailSetting = await prisma_1.default.systemSetting.findUnique({ where: { key: "contact_email" } });
@@ -733,7 +743,7 @@ const sendClinicSubscriptionExpiredEmail = async (to, ownerName, planName, isTri
 exports.sendClinicSubscriptionExpiredEmail = sendClinicSubscriptionExpiredEmail;
 const sendClinicSubscriptionExpiringSoonEmail = async (to, ownerName, planName, expiresAt, daysLeft) => {
     try {
-        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "http://localhost:5173";
+        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "https://docyori.com";
         const renewUrl = `${frontendLink}/membership/membership-plans`;
         // Fetch support contacts from settings
         const supportEmailSetting = await prisma_1.default.systemSetting.findUnique({ where: { key: "contact_email" } });
@@ -803,7 +813,7 @@ const sendClinicSubscriptionExpiringSoonEmail = async (to, ownerName, planName, 
 exports.sendClinicSubscriptionExpiringSoonEmail = sendClinicSubscriptionExpiringSoonEmail;
 const sendClinicAppointmentNotificationEmail = async (to, ownerName, patientName, doctorName, date, time, type) => {
     try {
-        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "http://localhost:5173";
+        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "https://docyori.com";
         const loginUrl = `${frontendLink}/login`;
         // Fetch support contacts from settings
         const supportEmailSetting = await prisma_1.default.systemSetting.findUnique({ where: { key: "contact_email" } });

@@ -110,12 +110,21 @@ export const sendEmail = async (to: string, subject: string, html: string) => {
             html,
         };
 
-        const logoPath = path.join(process.cwd(), 'logo.svg');
-        if (fs.existsSync(logoPath)) {
+        const logoPngPath = path.join(process.cwd(), 'logo.png');
+        const logoSvgPath = path.join(process.cwd(), 'logo.svg');
+        if (fs.existsSync(logoPngPath)) {
+            mailOptions.attachments = [
+                {
+                    filename: 'logo.png',
+                    path: logoPngPath,
+                    cid: 'logo'
+                }
+            ];
+        } else if (fs.existsSync(logoSvgPath)) {
             mailOptions.attachments = [
                 {
                     filename: 'logo.svg',
-                    path: logoPath,
+                    path: logoSvgPath,
                     cid: 'logo'
                 }
             ];
@@ -156,7 +165,7 @@ export const sendAdminCongratulationsEmail = async (
     }
 ) => {
     try {
-        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "http://localhost:5173";
+        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "https://docyori.com";
         const loginUrl = `${frontendLink}/login`;
         const priceDisplay = plan.price === 0 ? "Free Trial" : `₹${plan.price.toLocaleString("en-IN")}`;
         
@@ -214,7 +223,7 @@ export const sendPatientRegistrationEmail = async (
     credentials?: { username: string; password?: string }
 ) => {
     try {
-        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "http://localhost:5173";
+        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "https://docyori.com";
         const loginUrl = `${frontendLink}/login`;
 
         // Fetch support contacts from settings
@@ -304,7 +313,7 @@ export const sendPatientAppointmentEmail = async (
     credentials?: { username: string; password?: string }
 ) => {
     try {
-        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "http://localhost:5173";
+        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "https://docyori.com";
         const loginUrl = `${frontendLink}/login`;
 
         // Fetch support contacts from settings
@@ -404,7 +413,7 @@ export const sendDoctorRegistrationEmail = async (
     credentials: { username: string; password?: string }
 ) => {
     try {
-        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "http://localhost:5173";
+        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "https://docyori.com";
         const loginUrl = `${frontendLink}/login`;
 
         // Fetch support contacts from settings
@@ -492,7 +501,7 @@ export const sendDoctorAppointmentEmail = async (
     type: string
 ) => {
     try {
-        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "http://localhost:5173";
+        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "https://docyori.com";
         const loginUrl = `${frontendLink}/login`;
 
         // Fetch support contacts from settings
@@ -575,7 +584,7 @@ export const sendClinicWelcomeTrialEmail = async (
     expiresAt?: Date
 ) => {
     try {
-        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "http://localhost:5173";
+        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "https://docyori.com";
         const loginUrl = `${frontendLink}/login`;
 
         // Fetch support contacts from settings
@@ -674,7 +683,7 @@ export const sendClinicSubscriptionActivatedEmail = async (
     isRenewal: boolean = false
 ) => {
     try {
-        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "http://localhost:5173";
+        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "https://docyori.com";
         const loginUrl = `${frontendLink}/login`;
 
         // Fetch support contacts from settings
@@ -760,7 +769,7 @@ export const sendClinicSubscriptionExpiredEmail = async (
     isTrial: boolean = false
 ) => {
     try {
-        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "http://localhost:5173";
+        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "https://docyori.com";
         const renewUrl = `${frontendLink}/membership/membership-plans`;
 
         // Fetch support contacts from settings
@@ -824,7 +833,7 @@ export const sendClinicSubscriptionExpiringSoonEmail = async (
     daysLeft: number
 ) => {
     try {
-        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "http://localhost:5173";
+        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "https://docyori.com";
         const renewUrl = `${frontendLink}/membership/membership-plans`;
 
         // Fetch support contacts from settings
@@ -905,7 +914,7 @@ export const sendClinicAppointmentNotificationEmail = async (
     type: string
 ) => {
     try {
-        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "http://localhost:5173";
+        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "https://docyori.com";
         const loginUrl = `${frontendLink}/login`;
 
         // Fetch support contacts from settings
