@@ -21,6 +21,9 @@ const getTransporter = async () => {
             user: process.env.SMTP_USER || 'test@example.com',
             pass: process.env.SMTP_PASS || 'password',
         },
+        tls: {
+            rejectUnauthorized: false
+        }
     };
     if (setting) {
         try {
@@ -37,11 +40,14 @@ const getTransporter = async () => {
                 config = {
                     host: dbConfig.host || config.host,
                     port: parseInt(dbConfig.port || config.port.toString()),
-                    secure: dbConfig.encryption === 'ssl' || dbConfig.port === '465',
+                    secure: dbConfig.encryption === 'ssl' || dbConfig.port === '465' || dbConfig.port === 465,
                     auth: {
                         user: dbConfig.user || config.auth.user,
                         pass: dbConfig.pass || config.auth.pass,
                     },
+                    tls: {
+                        rejectUnauthorized: false
+                    }
                 };
             }
         }
@@ -49,7 +55,22 @@ const getTransporter = async () => {
             console.error('Failed to parse SMTP config from DB', e);
         }
     }
-    return nodemailer_1.default.createTransport(config);
+    console.log('Creating mail transporter with config:', {
+        host: config.host,
+        port: config.port,
+        secure: config.secure,
+        user: config.auth.user,
+        pass: config.auth.pass ? '***' : 'none'
+    });
+    const transporter = nodemailer_1.default.createTransport(config);
+    try {
+        await transporter.verify();
+        console.log('SMTP transporter connection verified successfully.');
+    }
+    catch (err) {
+        console.error('SMTP transporter verification failed:', err);
+    }
+    return transporter;
 };
 const sendEmail = async (to, subject, html) => {
     try {

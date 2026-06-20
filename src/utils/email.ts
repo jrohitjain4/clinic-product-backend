@@ -10,7 +10,7 @@ const getTransporter = async () => {
         where: { key: 'SMTP_CONFIG' },
     });
 
-    let config = {
+    let config: any = {
         host: process.env.SMTP_HOST || 'smtp.gmail.com',
         port: parseInt(process.env.SMTP_PORT || '587'),
         secure: process.env.SMTP_SECURE === 'true',
@@ -18,6 +18,9 @@ const getTransporter = async () => {
             user: process.env.SMTP_USER || 'test@example.com',
             pass: process.env.SMTP_PASS || 'password',
         },
+        tls: {
+            rejectUnauthorized: false
+        }
     };
 
     if (setting) {
@@ -36,11 +39,14 @@ const getTransporter = async () => {
                 config = {
                     host: dbConfig.host || config.host,
                     port: parseInt(dbConfig.port || config.port.toString()),
-                    secure: dbConfig.encryption === 'ssl' || dbConfig.port === '465',
+                    secure: dbConfig.encryption === 'ssl' || dbConfig.port === '465' || dbConfig.port === 465,
                     auth: {
                         user: dbConfig.user || config.auth.user,
                         pass: dbConfig.pass || config.auth.pass,
                     },
+                    tls: {
+                        rejectUnauthorized: false
+                    }
                 };
             }
         } catch (e) {
@@ -48,7 +54,24 @@ const getTransporter = async () => {
         }
     }
 
-    return nodemailer.createTransport(config);
+    console.log('Creating mail transporter with config:', {
+        host: config.host,
+        port: config.port,
+        secure: config.secure,
+        user: config.auth.user,
+        pass: config.auth.pass ? '***' : 'none'
+    });
+
+    const transporter = nodemailer.createTransport(config);
+
+    try {
+        await transporter.verify();
+        console.log('SMTP transporter connection verified successfully.');
+    } catch (err) {
+        console.error('SMTP transporter verification failed:', err);
+    }
+
+    return transporter;
 };
 
 export const sendEmail = async (to: string, subject: string, html: string) => {
