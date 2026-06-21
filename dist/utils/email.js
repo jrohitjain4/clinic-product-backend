@@ -8,6 +8,8 @@ const nodemailer_1 = __importDefault(require("nodemailer"));
 const prisma_1 = __importDefault(require("../lib/prisma"));
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
+let cachedTransporter = null;
+let cachedConfigKey = '';
 const getTransporter = async () => {
     // Try to get SMTP config from database
     const setting = await prisma_1.default.systemSetting.findUnique({
@@ -55,7 +57,11 @@ const getTransporter = async () => {
             console.error('Failed to parse SMTP config from DB', e);
         }
     }
-    console.log('Creating mail transporter with config:', {
+    const configKey = JSON.stringify(config);
+    if (cachedTransporter && cachedConfigKey === configKey) {
+        return cachedTransporter;
+    }
+    console.log('Creating new mail transporter with config:', {
         host: config.host,
         port: config.port,
         secure: config.secure,
@@ -63,86 +69,90 @@ const getTransporter = async () => {
         pass: config.auth.pass ? '***' : 'none'
     });
     const transporter = nodemailer_1.default.createTransport(config);
-    try {
-        await transporter.verify();
+    cachedTransporter = transporter;
+    cachedConfigKey = configKey;
+    // Verify SMTP transporter in background
+    transporter.verify().then(() => {
         console.log('SMTP transporter connection verified successfully.');
-    }
-    catch (err) {
+    }).catch((err) => {
         console.error('SMTP transporter verification failed:', err);
-    }
+    });
     return transporter;
 };
 const sendEmail = async (to, subject, html) => {
-    try {
-        const transporter = await getTransporter();
-        // Get from address info
-        const setting = await prisma_1.default.systemSetting.findUnique({
-            where: { key: 'SMTP_CONFIG' },
-        });
-        let fromEmail = process.env.SMTP_USER || 'no-reply@docyori.com';
-        let fromName = "Docyori";
-        if (setting) {
-            try {
-                const parsed = JSON.parse(setting.value);
-                let dbConfig;
-                if (Array.isArray(parsed)) {
-                    dbConfig = parsed.find((c) => c.isActive) || parsed[0];
+    // Run the actual email sending logic in the background so it is completely non-blocking
+    (async () => {
+        try {
+            const transporter = await getTransporter();
+            // Get from address info
+            const setting = await prisma_1.default.systemSetting.findUnique({
+                where: { key: 'SMTP_CONFIG' },
+            });
+            let fromEmail = process.env.SMTP_USER || 'no-reply@docyori.com';
+            let fromName = "Docyori";
+            if (setting) {
+                try {
+                    const parsed = JSON.parse(setting.value);
+                    let dbConfig;
+                    if (Array.isArray(parsed)) {
+                        dbConfig = parsed.find((c) => c.isActive) || parsed[0];
+                    }
+                    else {
+                        dbConfig = parsed;
+                    }
+                    if (dbConfig) {
+                        if (dbConfig.user)
+                            fromEmail = dbConfig.user;
+                        if (dbConfig.fromName)
+                            fromName = dbConfig.fromName;
+                    }
                 }
-                else {
-                    dbConfig = parsed;
-                }
-                if (dbConfig) {
-                    if (dbConfig.user)
-                        fromEmail = dbConfig.user;
-                    if (dbConfig.fromName)
-                        fromName = dbConfig.fromName;
-                }
+                catch (e) { }
             }
-            catch (e) { }
+            const mailOptions = {
+                from: `"${fromName}" <${fromEmail}>`,
+                to,
+                subject,
+                html,
+            };
+            const logoPngPath = path_1.default.join(process.cwd(), 'logo.png');
+            const logoSvgPath = path_1.default.join(process.cwd(), 'logo.svg');
+            if (fs_1.default.existsSync(logoPngPath)) {
+                mailOptions.attachments = [
+                    {
+                        filename: 'logo.png',
+                        path: logoPngPath,
+                        cid: 'logo'
+                    }
+                ];
+            }
+            else if (fs_1.default.existsSync(logoSvgPath)) {
+                mailOptions.attachments = [
+                    {
+                        filename: 'logo.svg',
+                        path: logoSvgPath,
+                        cid: 'logo'
+                    }
+                ];
+            }
+            // In dev environment without credentials just log it
+            if (process.env.NODE_ENV !== 'production' && (!fromEmail || fromEmail === 'test@example.com')) {
+                console.log('--- MOCK EMAIL ---');
+                console.log(`To: ${to}`);
+                console.log(`Subject: ${subject}`);
+                console.log(`Body: ${html}`);
+                console.log('------------------');
+                return;
+            }
+            const info = await transporter.sendMail(mailOptions);
+            console.log('Email sent in background: %s', info.messageId);
         }
-        const mailOptions = {
-            from: `"${fromName}" <${fromEmail}>`,
-            to,
-            subject,
-            html,
-        };
-        const logoPngPath = path_1.default.join(process.cwd(), 'logo.png');
-        const logoSvgPath = path_1.default.join(process.cwd(), 'logo.svg');
-        if (fs_1.default.existsSync(logoPngPath)) {
-            mailOptions.attachments = [
-                {
-                    filename: 'logo.png',
-                    path: logoPngPath,
-                    cid: 'logo'
-                }
-            ];
+        catch (error) {
+            console.error('Error sending email in background:', error);
         }
-        else if (fs_1.default.existsSync(logoSvgPath)) {
-            mailOptions.attachments = [
-                {
-                    filename: 'logo.svg',
-                    path: logoSvgPath,
-                    cid: 'logo'
-                }
-            ];
-        }
-        // In dev environment without credentials just log it
-        if (process.env.NODE_ENV !== 'production' && (!fromEmail || fromEmail === 'test@example.com')) {
-            console.log('--- MOCK EMAIL ---');
-            console.log(`To: ${to}`);
-            console.log(`Subject: ${subject}`);
-            console.log(`Body: ${html}`);
-            console.log('------------------');
-            return true;
-        }
-        const info = await transporter.sendMail(mailOptions);
-        console.log('Email sent: %s', info.messageId);
-        return true;
-    }
-    catch (error) {
-        console.error('Error sending email:', error);
-        return false;
-    }
+    })();
+    // Return true immediately to prevent request blocking
+    return true;
 };
 exports.sendEmail = sendEmail;
 const sendAdminCongratulationsEmail = async (to, ownerName, username, password, plan) => {

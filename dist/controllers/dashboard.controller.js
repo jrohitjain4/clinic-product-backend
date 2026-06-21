@@ -50,69 +50,86 @@ const getDashboardStats = async (req, res) => {
         const topDeptsRaw = await prisma_1.default.department.findMany({
             where: { clinicId },
             include: {
-                _count: { select: { appointments: true } },
-                appointments: { distinct: ['patientId'] } // Not exactly accurate but count of unique patients is better
-            },
-            take: 10 // Get some to sort
+                _count: { select: { appointments: true } }
+            }
         });
         const topDepartments = topDeptsRaw
             .map(d => ({
             name: d.name,
-            patientCount: d._count.appointments // Using appointment count as simplified proxy
+            patientCount: d._count.appointments
         }))
             .sort((a, b) => b.patientCount - a.patientCount)
             .slice(0, 3);
-        // 3. Income by Treatment (Department)
+        // 3. Income by Treatment (Department) - highly optimized using selects
         const incomeByDepts = await prisma_1.default.department.findMany({
             where: { clinicId },
-            include: {
+            select: {
+                id: true,
+                name: true,
+                _count: { select: { appointments: true } },
                 services: {
-                    include: {
+                    select: {
                         invoiceItems: {
-                            include: { invoice: true }
+                            where: {
+                                invoice: { paymentStatus: 'Paid' }
+                            },
+                            select: {
+                                amount: true
+                            }
                         }
                     }
-                },
-                _count: { select: { appointments: true } }
+                }
             }
         });
         const incomeByTreatment = incomeByDepts.map(dept => {
-            let totalIncome = 0;
+            let totalIncomeVal = 0;
             dept.services.forEach(s => {
                 s.invoiceItems.forEach(item => {
-                    if (item.invoice.paymentStatus === 'Paid') {
-                        totalIncome += item.amount;
-                    }
+                    totalIncomeVal += item.amount;
                 });
             });
             return {
                 name: dept.name,
-                income: totalIncome,
+                income: totalIncomeVal,
                 appointmentCount: dept._count.appointments
             };
         }).sort((a, b) => b.income - a.income).slice(0, 5);
-        const invoices = await prisma_1.default.invoice.findMany({
+        // Revenue = Sum of all invoice totalAmount
+        const revenueAgg = await prisma_1.default.invoice.aggregate({
             where: { clinicId },
-            select: { totalAmount: true }
+            _sum: { totalAmount: true }
         });
-        const revenue = invoices.reduce((acc, curr) => acc + (Number(curr.totalAmount) || 0), 0);
-        // Income = Paid invoices only
-        const paidInvoices = await prisma_1.default.invoice.findMany({
+        const revenue = revenueAgg._sum.totalAmount || 0;
+        // Income = Sum of paid invoice totalAmount
+        const incomeAgg = await prisma_1.default.invoice.aggregate({
             where: { clinicId, paymentStatus: 'Paid' },
-            select: { totalAmount: true }
+            _sum: { totalAmount: true }
         });
-        const totalIncome = paidInvoices.reduce((acc, curr) => acc + (Number(curr.totalAmount) || 0), 0);
-        // Expenses = All expenses
-        const allExpenses = await prisma_1.default.expense.findMany({
+        const totalIncome = incomeAgg._sum.totalAmount || 0;
+        // Expenses = Sum of all expense amounts
+        const expenseAgg = await prisma_1.default.expense.aggregate({
             where: { clinicId },
-            select: { amount: true }
+            _sum: { amount: true }
         });
-        const totalExpense = allExpenses.reduce((acc, curr) => acc + (Number(curr.amount) || 0), 0);
+        const totalExpense = expenseAgg._sum.amount || 0;
         const netProfit = totalIncome - totalExpense;
-        const allAppointments = await prisma_1.default.appointment.findMany({ where: { clinicId } });
-        const completedApps = allAppointments.filter(app => app.status === 'Completed').length;
-        const cancelledApps = allAppointments.filter(app => app.status === 'Cancelled').length;
-        const rescheduledApps = allAppointments.filter(app => app.status === 'Rescheduled').length;
+        // Count appointment statuses using groupBy
+        const appointmentCounts = await prisma_1.default.appointment.groupBy({
+            by: ['status'],
+            where: { clinicId },
+            _count: { _all: true }
+        });
+        let completedApps = 0;
+        let cancelledApps = 0;
+        let rescheduledApps = 0;
+        appointmentCounts.forEach(c => {
+            if (c.status === 'Completed')
+                completedApps = c._count._all;
+            if (c.status === 'Cancelled')
+                cancelledApps = c._count._all;
+            if (c.status === 'Rescheduled')
+                rescheduledApps = c._count._all;
+        });
         const clinicInfo = await prisma_1.default.clinic.findUnique({
             where: { id: clinicId },
             include: { landingPage: true }
@@ -156,39 +173,106 @@ const getDashboardStats = async (req, res) => {
             }
             profileCompletion = Math.round((filledFields / totalFields) * 100);
         }
-        // 4. Top Patients (by total paid and appointment counts)
-        const patientsRaw = await prisma_1.default.patient.findMany({
+        // 4. Top Patients (by total paid and appointment counts) - highly optimized
+        const topPayingInvoices = await prisma_1.default.invoice.groupBy({
+            by: ['patientId'],
             where: {
                 clinicId,
-                status: { not: "Deleted" }
+                paymentStatus: 'Paid',
+                patientId: { not: null }
             },
-            include: {
-                invoices: {
-                    where: { paymentStatus: 'Paid' },
-                    select: { totalAmount: true }
-                },
-                _count: { select: { appointments: true } }
+            _sum: {
+                totalAmount: true
             },
-            take: 10
+            orderBy: {
+                _sum: {
+                    totalAmount: 'desc'
+                }
+            },
+            take: 5
         });
-        const topPatients = patientsRaw.map(p => ({
-            id: p.id,
-            fullName: `${p.firstName} ${p.lastName}`,
-            profileImage: p.profileImage,
-            totalPaid: p.invoices.reduce((acc, curr) => acc + curr.totalAmount, 0),
-            appointmentCount: p._count.appointments
-        })).sort((a, b) => b.totalPaid - a.totalPaid).slice(0, 5);
+        const topPatientIds = topPayingInvoices.map(item => item.patientId);
+        let topPatients = [];
+        if (topPatientIds.length > 0) {
+            const patientsDetails = await prisma_1.default.patient.findMany({
+                where: {
+                    id: { in: topPatientIds },
+                    status: { not: 'Deleted' }
+                },
+                include: {
+                    _count: { select: { appointments: true } }
+                }
+            });
+            topPatients = topPayingInvoices.map(ti => {
+                const p = patientsDetails.find(pt => pt.id === ti.patientId);
+                return {
+                    id: p?.id || ti.patientId || '',
+                    fullName: p ? `${p.firstName} ${p.lastName}` : 'Unknown Patient',
+                    profileImage: p?.profileImage || null,
+                    totalPaid: ti._sum.totalAmount || 0,
+                    appointmentCount: p?._count.appointments || 0
+                };
+            }).filter(p => p.id !== '');
+        }
+        if (topPatients.length < 5) {
+            const existingIds = topPatients.map(p => p.id);
+            const fallbackPatients = await prisma_1.default.patient.findMany({
+                where: {
+                    clinicId,
+                    status: { not: 'Deleted' },
+                    id: { notIn: existingIds }
+                },
+                include: {
+                    invoices: {
+                        where: { paymentStatus: 'Paid' },
+                        select: { totalAmount: true }
+                    },
+                    _count: { select: { appointments: true } }
+                },
+                take: 5 - topPatients.length
+            });
+            const mappedFallback = fallbackPatients.map(p => ({
+                id: p.id,
+                fullName: `${p.firstName} ${p.lastName}`,
+                profileImage: p.profileImage,
+                totalPaid: p.invoices.reduce((acc, curr) => acc + curr.totalAmount, 0),
+                appointmentCount: p._count.appointments
+            }));
+            topPatients = [...topPatients, ...mappedFallback];
+        }
         // 5. Recent Transactions (Income invoices + Expenses combined)
         const recentInvoicesFull = await prisma_1.default.invoice.findMany({
             where: { clinicId },
             orderBy: { createdAt: 'desc' },
             take: 10,
-            include: { patient: true }
+            select: {
+                id: true,
+                invoiceCode: true,
+                totalAmount: true,
+                paymentStatus: true,
+                paymentMethod: true,
+                createdAt: true,
+                patient: {
+                    select: {
+                        firstName: true,
+                        lastName: true
+                    }
+                }
+            }
         });
         const recentExpensesFull = await prisma_1.default.expense.findMany({
             where: { clinicId },
             orderBy: { date: 'desc' },
-            take: 10
+            take: 10,
+            select: {
+                id: true,
+                name: true,
+                category: true,
+                amount: true,
+                status: true,
+                paymentMethod: true,
+                date: true
+            }
         });
         const incomeEntries = recentInvoicesFull.map(inv => ({
             id: inv.id,
@@ -218,47 +302,71 @@ const getDashboardStats = async (req, res) => {
             where: { clinicId },
             orderBy: { scheduledAt: 'desc' },
             take: 5,
-            include: {
-                doctor: true,
-                patient: true,
-                department: true
+            select: {
+                id: true,
+                scheduledAt: true,
+                status: true,
+                mode: true,
+                doctor: {
+                    select: {
+                        fullName: true,
+                        profileImage: true
+                    }
+                },
+                patient: {
+                    select: {
+                        firstName: true,
+                        lastName: true,
+                        phone: true
+                    }
+                },
+                department: {
+                    select: {
+                        name: true
+                    }
+                }
             }
         });
         // 7. Revenue Breakdown
-        const allPaidInvoices = await prisma_1.default.invoice.findMany({
-            where: { clinicId, paymentStatus: 'Paid' },
-            include: {
-                items: {
-                    include: {
-                        service: {
-                            include: {
-                                department: true
-                            }
+        const invoiceItems = await prisma_1.default.invoiceItem.findMany({
+            where: {
+                invoice: { clinicId, paymentStatus: 'Paid' }
+            },
+            select: {
+                amount: true,
+                serviceId: true,
+                service: {
+                    select: {
+                        serviceName: true,
+                        department: {
+                            select: { name: true }
                         }
                     }
                 }
             }
         });
+        const discountAgg = await prisma_1.default.invoice.aggregate({
+            where: { clinicId, paymentStatus: 'Paid' },
+            _sum: { discount: true }
+        });
+        const discounts = discountAgg._sum.discount || 0;
         let consultation = 0;
         let procedures = 0;
         let products = 0;
-        let discounts = allPaidInvoices.reduce((acc, curr) => acc + (Number(curr.discount) || 0), 0);
-        allPaidInvoices.forEach(inv => {
-            inv.items.forEach(item => {
-                if (!item.serviceId) {
-                    products += Number(item.amount) || 0;
+        invoiceItems.forEach(item => {
+            if (!item.serviceId) {
+                products += Number(item.amount) || 0;
+            }
+            else {
+                const sName = item.service?.serviceName?.toLowerCase() || '';
+                const dName = item.service?.department?.name?.toLowerCase() || '';
+                if (sName.includes('consultation') || sName.includes('opd') || dName.includes('consultation') || dName.includes('opd')) {
+                    consultation += Number(item.amount) || 0;
                 }
                 else {
-                    const sName = item.service?.serviceName?.toLowerCase() || '';
-                    const dName = item.service?.department?.name?.toLowerCase() || '';
-                    if (sName.includes('consultation') || sName.includes('opd') || dName.includes('consultation') || dName.includes('opd')) {
-                        consultation += Number(item.amount) || 0;
-                    }
-                    else {
-                        procedures += Number(item.amount) || 0;
-                    }
+                    procedures += Number(item.amount) || 0;
                 }
-            });
+            }
         });
         // 8. Patient Stats
         const thirtyDaysAgo = new Date();
@@ -296,6 +404,9 @@ const getDashboardStats = async (req, res) => {
                     gte: todayStart,
                     lt: todayEnd
                 }
+            },
+            select: {
+                status: true
             }
         });
         const totalStaff = await prisma_1.default.staff.count({ where: { clinicId } });
@@ -353,7 +464,7 @@ const getDashboardStats = async (req, res) => {
             totalExpense,
             netProfit,
             appointmentStats: {
-                total: allAppointments.length,
+                total: appointmentsCount,
                 completed: completedApps,
                 cancelled: cancelledApps,
                 rescheduled: rescheduledApps

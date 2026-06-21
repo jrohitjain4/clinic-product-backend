@@ -143,6 +143,11 @@ export const getInvoiceById = async (req: AuthenticatedRequest, res: Response): 
             },
             include: {
                 patient: true,
+                appointment: {
+                    include: {
+                        doctor: true
+                    }
+                },
                 items: {
                     include: { service: true }
                 }
