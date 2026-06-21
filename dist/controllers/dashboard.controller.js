@@ -13,7 +13,12 @@ const getDashboardStats = async (req, res) => {
             return;
         }
         const doctorsCount = await prisma_1.default.doctor.count({ where: { clinicId } });
-        const patientsCount = await prisma_1.default.patient.count({ where: { clinicId } });
+        const patientsCount = await prisma_1.default.patient.count({
+            where: {
+                clinicId,
+                status: { not: "Deleted" }
+            }
+        });
         const appointmentsCount = await prisma_1.default.appointment.count({ where: { clinicId } });
         // 1. Monthly Stats (Last 12 Months)
         const now = new Date();
@@ -153,7 +158,10 @@ const getDashboardStats = async (req, res) => {
         }
         // 4. Top Patients (by total paid and appointment counts)
         const patientsRaw = await prisma_1.default.patient.findMany({
-            where: { clinicId },
+            where: {
+                clinicId,
+                status: { not: "Deleted" }
+            },
             include: {
                 invoices: {
                     where: { paymentStatus: 'Paid' },
@@ -258,12 +266,14 @@ const getDashboardStats = async (req, res) => {
         const newPatientsCount = await prisma_1.default.patient.count({
             where: {
                 clinicId,
+                status: { not: "Deleted" },
                 createdAt: { gte: thirtyDaysAgo }
             }
         });
         const returningPatientsCount = await prisma_1.default.patient.count({
             where: {
                 clinicId,
+                status: { not: "Deleted" },
                 createdAt: { lt: thirtyDaysAgo },
                 appointments: { some: {} }
             }
@@ -271,6 +281,7 @@ const getDashboardStats = async (req, res) => {
         const inactivePatientsCount = await prisma_1.default.patient.count({
             where: {
                 clinicId,
+                status: { not: "Deleted" },
                 createdAt: { lt: thirtyDaysAgo },
                 appointments: { none: {} }
             }

@@ -26,7 +26,7 @@ const getClinicLandingPage = async (req, res) => {
                     include: { department: true },
                     orderBy: { serviceName: "asc" },
                 },
-                patients: { select: { id: true } },
+                patients: { where: { status: { not: "Deleted" } }, select: { id: true } },
                 workingDaysConfig: true,
             },
         });

@@ -450,6 +450,129 @@ const getDoctorDashboardStats = async (req, res) => {
                 },
             }),
         ]);
+        // 1. Attendance calculations for current month
+        const currentMonth = now.getMonth() + 1; // 1-indexed
+        const currentYear = now.getFullYear();
+        const startDate = new Date(currentYear, currentMonth - 1, 1);
+        const endDate = new Date(currentYear, currentMonth, 0);
+        const workingDaysConfig = await prisma_1.default.workingDaysConfig.findUnique({
+            where: { clinicId: doctor.clinicId }
+        });
+        const offDays = workingDaysConfig?.offDays || [0];
+        const [monthlyAttendances, monthlyLeaves, holidays] = await Promise.all([
+            prisma_1.default.attendance.findMany({
+                where: {
+                    clinicId: doctor.clinicId,
+                    employeeId: doctorId,
+                    employeeType: 'DOCTOR',
+                    date: { gte: startDate, lte: endDate }
+                }
+            }),
+            prisma_1.default.leave.findMany({
+                where: {
+                    clinicId: doctor.clinicId,
+                    employeeId: doctorId,
+                    employeeType: 'DOCTOR',
+                    status: 'APPROVED',
+                    startDate: { lte: endDate },
+                    endDate: { gte: startDate }
+                }
+            }),
+            prisma_1.default.holiday.findMany({
+                where: {
+                    clinicId: doctor.clinicId,
+                    date: { gte: startDate, lte: endDate }
+                }
+            })
+        ]);
+        let presentDays = 0;
+        let absentDays = 0;
+        let leaveDays = 0;
+        let totalWorkingDays = 0;
+        const daysInMonth = endDate.getDate();
+        for (let day = 1; day <= daysInMonth; day++) {
+            const currentDate = new Date(currentYear, currentMonth - 1, day);
+            currentDate.setHours(0, 0, 0, 0);
+            const isHoliday = holidays.some((h) => {
+                const hStart = new Date(h.date);
+                hStart.setHours(0, 0, 0, 0);
+                const hEnd = h.endDate ? new Date(h.endDate) : new Date(hStart);
+                hEnd.setHours(23, 59, 59, 999);
+                return currentDate >= hStart && currentDate <= hEnd;
+            });
+            const dayOfWeek = currentDate.getDay();
+            const isOffDay = offDays.includes(dayOfWeek);
+            const isOnLeave = monthlyLeaves.some((l) => {
+                const lStart = new Date(l.startDate);
+                lStart.setHours(0, 0, 0, 0);
+                const lEnd = new Date(l.endDate);
+                lEnd.setHours(23, 59, 59, 999);
+                return currentDate >= lStart && currentDate <= lEnd;
+            });
+            if (!isHoliday && !isOffDay && !isOnLeave) {
+                totalWorkingDays++;
+            }
+            const record = monthlyAttendances.find((a) => {
+                const aDate = new Date(a.date);
+                return aDate.getDate() === day && aDate.getMonth() === (currentMonth - 1) && aDate.getFullYear() === currentYear;
+            });
+            if (record) {
+                if (record.status === 'PRESENT' || record.status === 'HALF_DAY') {
+                    presentDays++;
+                }
+                else if (record.status === 'ABSENT') {
+                    absentDays++;
+                }
+                else if (record.status === 'LEAVE') {
+                    leaveDays++;
+                }
+            }
+            else {
+                if (isOnLeave) {
+                    leaveDays++;
+                }
+                else if (!isOffDay && !isHoliday && currentDate < now) {
+                    absentDays++;
+                }
+            }
+        }
+        const attendancePercentage = totalWorkingDays > 0 ? Math.round((presentDays / totalWorkingDays) * 100) : 0;
+        // 2. Prescriptions calculations
+        const startOfToday = new Date(now);
+        startOfToday.setHours(0, 0, 0, 0);
+        const [prescriptionsIssuedToday, recentPrescriptions] = await Promise.all([
+            prisma_1.default.prescription.count({
+                where: { doctorId, createdAt: { gte: startOfToday } }
+            }),
+            prisma_1.default.prescription.findMany({
+                where: { doctorId },
+                orderBy: { createdAt: 'desc' },
+                take: 5,
+                include: {
+                    patient: { select: { firstName: true, lastName: true } },
+                    medicines: { select: { medicineName: true } }
+                }
+            })
+        ]);
+        // 3. Overview chart data (totals & completed per month for the current year)
+        const startOfYear = new Date(currentYear, 0, 1);
+        const endOfYear = new Date(currentYear, 11, 31, 23, 59, 59, 999);
+        const yearlyAppointments = await prisma_1.default.appointment.findMany({
+            where: {
+                doctorId,
+                scheduledAt: { gte: startOfYear, lte: endOfYear }
+            },
+            select: { scheduledAt: true, status: true }
+        });
+        const monthlyTotals = new Array(12).fill(0);
+        const monthlyCompleted = new Array(12).fill(0);
+        yearlyAppointments.forEach(apt => {
+            const m = new Date(apt.scheduledAt).getMonth();
+            monthlyTotals[m]++;
+            if (apt.status === "Completed") {
+                monthlyCompleted[m]++;
+            }
+        });
         const pctChange = (curr, prev) => {
             if (prev === 0)
                 return curr > 0 ? 100 : 0;
@@ -470,6 +593,7 @@ const getDoctorDashboardStats = async (req, res) => {
                 checkedIn: totalCheckedIn,
                 checkedOut: totalCheckedOut,
                 completed: totalCompleted,
+                pendingAppointments: total - totalCompleted - totalCancelled
             },
             todayAppointment,
             recentAppointments: recentAppointments.map(a => ({
@@ -484,6 +608,21 @@ const getDoctorDashboardStats = async (req, res) => {
             doctorDetails: {
                 id: doctor.id,
                 departmentId: doctor.departmentId,
+            },
+            attendance: {
+                percentage: attendancePercentage,
+                present: presentDays,
+                absent: absentDays,
+                leaves: leaveDays
+            },
+            prescriptions: {
+                issuedToday: prescriptionsIssuedToday,
+                recent: recentPrescriptions
+            },
+            schedules: doctor.schedules || {},
+            monthlyStats: {
+                totals: monthlyTotals,
+                completed: monthlyCompleted
             }
         });
     }

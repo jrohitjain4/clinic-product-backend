@@ -11,7 +11,12 @@ export const getDashboardStats = async (req: AuthenticatedRequest, res: Response
         }
 
         const doctorsCount = await prisma.doctor.count({ where: { clinicId } });
-        const patientsCount = await prisma.patient.count({ where: { clinicId } });
+        const patientsCount = await prisma.patient.count({
+            where: {
+                clinicId,
+                status: { not: "Deleted" }
+            }
+        });
         const appointmentsCount = await prisma.appointment.count({ where: { clinicId } });
 
         // 1. Monthly Stats (Last 12 Months)
@@ -154,7 +159,10 @@ export const getDashboardStats = async (req: AuthenticatedRequest, res: Response
 
         // 4. Top Patients (by total paid and appointment counts)
         const patientsRaw = await prisma.patient.findMany({
-            where: { clinicId },
+            where: {
+                clinicId,
+                status: { not: "Deleted" }
+            },
             include: {
                 invoices: {
                     where: { paymentStatus: 'Paid' },
@@ -269,12 +277,14 @@ export const getDashboardStats = async (req: AuthenticatedRequest, res: Response
         const newPatientsCount = await prisma.patient.count({
             where: {
                 clinicId,
+                status: { not: "Deleted" },
                 createdAt: { gte: thirtyDaysAgo }
             }
         });
         const returningPatientsCount = await prisma.patient.count({
             where: {
                 clinicId,
+                status: { not: "Deleted" },
                 createdAt: { lt: thirtyDaysAgo },
                 appointments: { some: {} }
             }
@@ -282,6 +292,7 @@ export const getDashboardStats = async (req: AuthenticatedRequest, res: Response
         const inactivePatientsCount = await prisma.patient.count({
             where: {
                 clinicId,
+                status: { not: "Deleted" },
                 createdAt: { lt: thirtyDaysAgo },
                 appointments: { none: {} }
             }

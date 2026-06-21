@@ -223,7 +223,12 @@ export const createPatient = async (req: AuthenticatedRequest, res: Response) =>
       include: { package: true },
     });
     if (clinic?.package?.maxPatients) {
-      const count = await prisma.patient.count({ where: { clinicId } });
+      const count = await prisma.patient.count({
+        where: {
+          clinicId,
+          status: { not: "Deleted" }
+        }
+      });
       if (count >= clinic.package.maxPatients) {
         return res.status(400).json({
           message: `Patient limit reached (${clinic.package.maxPatients}). Upgrade your plan.`,
@@ -232,7 +237,12 @@ export const createPatient = async (req: AuthenticatedRequest, res: Response) =>
     }
 
     // Fix Patient Code format to PAT000001
-    const count = await prisma.patient.count({ where: { clinicId } });
+    const count = await prisma.patient.count({
+      where: {
+        clinicId,
+        status: { not: "Deleted" }
+      }
+    });
     const patientCode = `PAT${String(count + 1).padStart(6, "0")}`;
 
     const patient = await prisma.patient.create({
