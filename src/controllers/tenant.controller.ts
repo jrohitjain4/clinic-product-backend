@@ -79,15 +79,36 @@ export const getTenants = async (req: Request, res: Response) => {
 export const updateTenantStatus = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const { status } = req.body;
+        const { status, packageId } = req.body;
+
+        const updateData: any = {};
+        if (status !== undefined) {
+            updateData.status = status;
+        }
+
+        if (packageId !== undefined) {
+            updateData.packageId = packageId || null;
+            if (packageId) {
+                const pkg = await prisma.subscriptionPackage.findUnique({ where: { id: packageId } });
+                if (pkg) {
+                    updateData.packageStartsAt = new Date();
+                    updateData.packageExpiresAt = new Date(Date.now() + pkg.durationInDays * 24 * 60 * 60 * 1000);
+                }
+            } else {
+                updateData.packageStartsAt = null;
+                updateData.packageExpiresAt = null;
+            }
+        }
 
         const updated = await prisma.clinic.update({
             where: { id },
-            data: { status }
+            data: updateData,
+            include: { package: true }
         });
 
         return res.json(updated);
     } catch (error) {
+        console.error("Update tenant status error:", error);
         return res.status(500).json({ message: "Error updating tenant status" });
     }
 };

@@ -143,9 +143,18 @@ export const getInvoiceById = async (req: AuthenticatedRequest, res: Response): 
             },
             include: {
                 patient: true,
+                clinic: {
+                    include: {
+                        landingPage: true
+                    }
+                },
                 appointment: {
                     include: {
-                        doctor: true
+                        doctor: {
+                            include: {
+                                department: true
+                            }
+                        }
                     }
                 },
                 items: {

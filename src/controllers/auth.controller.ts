@@ -168,7 +168,7 @@ export const upgradePlan = async (req: AuthenticatedRequest, res: Response) => {
 
     const user = await prisma.user.findUnique({
       where: { id: req.user.id },
-      include: { clinic: true },
+      include: { clinic: { include: { landingPage: true } } },
     });
 
     if (!user || !user.clinicId) {
@@ -451,7 +451,7 @@ export const completeRegistration = async (req: Request, res: Response) => {
 
     const user = await prisma.user.findUnique({
       where: { id: userId },
-      include: { clinic: true }
+      include: { clinic: { include: { landingPage: true } } }
     });
 
     if (!user || !user.clinicId) {
@@ -590,7 +590,7 @@ export const register = async (req: Request, res: Response) => {
       },
       include: {
         clinic: {
-          include: { package: true }
+          include: { package: true, landingPage: true }
         },
       },
     });
@@ -651,7 +651,7 @@ export const login = async (req: Request, res: Response) => {
           { username: identifier }
         ]
       },
-      include: { clinic: true },
+      include: { clinic: { include: { landingPage: true } } },
     });
 
     if (!user) {
@@ -738,7 +738,7 @@ export const getMe = async (req: AuthenticatedRequest, res: Response) => {
 
     const user = await prisma.user.findUnique({
       where: { id: req.user.id },
-      include: { clinic: true },
+      include: { clinic: { include: { landingPage: true } } },
     });
 
     if (!user) {

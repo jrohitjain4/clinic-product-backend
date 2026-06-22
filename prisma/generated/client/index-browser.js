@@ -182,9 +182,6 @@ exports.Prisma.SubscriptionPackageScalarFieldEnum = {
   name: 'name',
   price: 'price',
   durationInDays: 'durationInDays',
-  maxDoctors: 'maxDoctors',
-  maxPatients: 'maxPatients',
-  maxAppointments: 'maxAppointments',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
