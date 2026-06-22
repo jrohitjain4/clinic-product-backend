@@ -7343,11 +7343,17 @@ export namespace Prisma {
   export type SubscriptionPackageAvgAggregateOutputType = {
     price: number | null
     durationInDays: number | null
+    maxDoctors: number | null
+    maxPatients: number | null
+    maxAppointments: number | null
   }
 
   export type SubscriptionPackageSumAggregateOutputType = {
     price: number | null
     durationInDays: number | null
+    maxDoctors: number | null
+    maxPatients: number | null
+    maxAppointments: number | null
   }
 
   export type SubscriptionPackageMinAggregateOutputType = {
@@ -7356,6 +7362,9 @@ export namespace Prisma {
     price: number | null
     durationInDays: number | null
     isActive: boolean | null
+    maxDoctors: number | null
+    maxPatients: number | null
+    maxAppointments: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -7366,6 +7375,9 @@ export namespace Prisma {
     price: number | null
     durationInDays: number | null
     isActive: boolean | null
+    maxDoctors: number | null
+    maxPatients: number | null
+    maxAppointments: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -7376,6 +7388,9 @@ export namespace Prisma {
     price: number
     durationInDays: number
     isActive: number
+    maxDoctors: number
+    maxPatients: number
+    maxAppointments: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -7385,11 +7400,17 @@ export namespace Prisma {
   export type SubscriptionPackageAvgAggregateInputType = {
     price?: true
     durationInDays?: true
+    maxDoctors?: true
+    maxPatients?: true
+    maxAppointments?: true
   }
 
   export type SubscriptionPackageSumAggregateInputType = {
     price?: true
     durationInDays?: true
+    maxDoctors?: true
+    maxPatients?: true
+    maxAppointments?: true
   }
 
   export type SubscriptionPackageMinAggregateInputType = {
@@ -7398,6 +7419,9 @@ export namespace Prisma {
     price?: true
     durationInDays?: true
     isActive?: true
+    maxDoctors?: true
+    maxPatients?: true
+    maxAppointments?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -7408,6 +7432,9 @@ export namespace Prisma {
     price?: true
     durationInDays?: true
     isActive?: true
+    maxDoctors?: true
+    maxPatients?: true
+    maxAppointments?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -7418,6 +7445,9 @@ export namespace Prisma {
     price?: true
     durationInDays?: true
     isActive?: true
+    maxDoctors?: true
+    maxPatients?: true
+    maxAppointments?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -7515,6 +7545,9 @@ export namespace Prisma {
     price: number
     durationInDays: number
     isActive: boolean
+    maxDoctors: number | null
+    maxPatients: number | null
+    maxAppointments: number | null
     createdAt: Date
     updatedAt: Date
     _count: SubscriptionPackageCountAggregateOutputType | null
@@ -7544,6 +7577,9 @@ export namespace Prisma {
     price?: boolean
     durationInDays?: boolean
     isActive?: boolean
+    maxDoctors?: boolean
+    maxPatients?: boolean
+    maxAppointments?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     clinics?: boolean | SubscriptionPackage$clinicsArgs<ExtArgs>
@@ -7556,6 +7592,9 @@ export namespace Prisma {
     price?: boolean
     durationInDays?: boolean
     isActive?: boolean
+    maxDoctors?: boolean
+    maxPatients?: boolean
+    maxAppointments?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["subscriptionPackage"]>
@@ -7566,6 +7605,9 @@ export namespace Prisma {
     price?: boolean
     durationInDays?: boolean
     isActive?: boolean
+    maxDoctors?: boolean
+    maxPatients?: boolean
+    maxAppointments?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
@@ -7587,6 +7629,9 @@ export namespace Prisma {
       price: number
       durationInDays: number
       isActive: boolean
+      maxDoctors: number | null
+      maxPatients: number | null
+      maxAppointments: number | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["subscriptionPackage"]>
@@ -7988,6 +8033,9 @@ export namespace Prisma {
     readonly price: FieldRef<"SubscriptionPackage", 'Float'>
     readonly durationInDays: FieldRef<"SubscriptionPackage", 'Int'>
     readonly isActive: FieldRef<"SubscriptionPackage", 'Boolean'>
+    readonly maxDoctors: FieldRef<"SubscriptionPackage", 'Int'>
+    readonly maxPatients: FieldRef<"SubscriptionPackage", 'Int'>
+    readonly maxAppointments: FieldRef<"SubscriptionPackage", 'Int'>
     readonly createdAt: FieldRef<"SubscriptionPackage", 'DateTime'>
     readonly updatedAt: FieldRef<"SubscriptionPackage", 'DateTime'>
   }
@@ -39741,6 +39789,9 @@ export namespace Prisma {
     price: 'price',
     durationInDays: 'durationInDays',
     isActive: 'isActive',
+    maxDoctors: 'maxDoctors',
+    maxPatients: 'maxPatients',
+    maxAppointments: 'maxAppointments',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -40864,6 +40915,9 @@ export namespace Prisma {
     price?: FloatFilter<"SubscriptionPackage"> | number
     durationInDays?: IntFilter<"SubscriptionPackage"> | number
     isActive?: BoolFilter<"SubscriptionPackage"> | boolean
+    maxDoctors?: IntNullableFilter<"SubscriptionPackage"> | number | null
+    maxPatients?: IntNullableFilter<"SubscriptionPackage"> | number | null
+    maxAppointments?: IntNullableFilter<"SubscriptionPackage"> | number | null
     createdAt?: DateTimeFilter<"SubscriptionPackage"> | Date | string
     updatedAt?: DateTimeFilter<"SubscriptionPackage"> | Date | string
     clinics?: ClinicListRelationFilter
@@ -40875,6 +40929,9 @@ export namespace Prisma {
     price?: SortOrder
     durationInDays?: SortOrder
     isActive?: SortOrder
+    maxDoctors?: SortOrderInput | SortOrder
+    maxPatients?: SortOrderInput | SortOrder
+    maxAppointments?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     clinics?: ClinicOrderByRelationAggregateInput
@@ -40889,6 +40946,9 @@ export namespace Prisma {
     price?: FloatFilter<"SubscriptionPackage"> | number
     durationInDays?: IntFilter<"SubscriptionPackage"> | number
     isActive?: BoolFilter<"SubscriptionPackage"> | boolean
+    maxDoctors?: IntNullableFilter<"SubscriptionPackage"> | number | null
+    maxPatients?: IntNullableFilter<"SubscriptionPackage"> | number | null
+    maxAppointments?: IntNullableFilter<"SubscriptionPackage"> | number | null
     createdAt?: DateTimeFilter<"SubscriptionPackage"> | Date | string
     updatedAt?: DateTimeFilter<"SubscriptionPackage"> | Date | string
     clinics?: ClinicListRelationFilter
@@ -40900,6 +40960,9 @@ export namespace Prisma {
     price?: SortOrder
     durationInDays?: SortOrder
     isActive?: SortOrder
+    maxDoctors?: SortOrderInput | SortOrder
+    maxPatients?: SortOrderInput | SortOrder
+    maxAppointments?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: SubscriptionPackageCountOrderByAggregateInput
@@ -40918,6 +40981,9 @@ export namespace Prisma {
     price?: FloatWithAggregatesFilter<"SubscriptionPackage"> | number
     durationInDays?: IntWithAggregatesFilter<"SubscriptionPackage"> | number
     isActive?: BoolWithAggregatesFilter<"SubscriptionPackage"> | boolean
+    maxDoctors?: IntNullableWithAggregatesFilter<"SubscriptionPackage"> | number | null
+    maxPatients?: IntNullableWithAggregatesFilter<"SubscriptionPackage"> | number | null
+    maxAppointments?: IntNullableWithAggregatesFilter<"SubscriptionPackage"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"SubscriptionPackage"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"SubscriptionPackage"> | Date | string
   }
@@ -44378,6 +44444,9 @@ export namespace Prisma {
     price: number
     durationInDays: number
     isActive?: boolean
+    maxDoctors?: number | null
+    maxPatients?: number | null
+    maxAppointments?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     clinics?: ClinicCreateNestedManyWithoutPackageInput
@@ -44389,6 +44458,9 @@ export namespace Prisma {
     price: number
     durationInDays: number
     isActive?: boolean
+    maxDoctors?: number | null
+    maxPatients?: number | null
+    maxAppointments?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     clinics?: ClinicUncheckedCreateNestedManyWithoutPackageInput
@@ -44400,6 +44472,9 @@ export namespace Prisma {
     price?: FloatFieldUpdateOperationsInput | number
     durationInDays?: IntFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    maxDoctors?: NullableIntFieldUpdateOperationsInput | number | null
+    maxPatients?: NullableIntFieldUpdateOperationsInput | number | null
+    maxAppointments?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     clinics?: ClinicUpdateManyWithoutPackageNestedInput
@@ -44411,6 +44486,9 @@ export namespace Prisma {
     price?: FloatFieldUpdateOperationsInput | number
     durationInDays?: IntFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    maxDoctors?: NullableIntFieldUpdateOperationsInput | number | null
+    maxPatients?: NullableIntFieldUpdateOperationsInput | number | null
+    maxAppointments?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     clinics?: ClinicUncheckedUpdateManyWithoutPackageNestedInput
@@ -44422,6 +44500,9 @@ export namespace Prisma {
     price: number
     durationInDays: number
     isActive?: boolean
+    maxDoctors?: number | null
+    maxPatients?: number | null
+    maxAppointments?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -44432,6 +44513,9 @@ export namespace Prisma {
     price?: FloatFieldUpdateOperationsInput | number
     durationInDays?: IntFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    maxDoctors?: NullableIntFieldUpdateOperationsInput | number | null
+    maxPatients?: NullableIntFieldUpdateOperationsInput | number | null
+    maxAppointments?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -44442,6 +44526,9 @@ export namespace Prisma {
     price?: FloatFieldUpdateOperationsInput | number
     durationInDays?: IntFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    maxDoctors?: NullableIntFieldUpdateOperationsInput | number | null
+    maxPatients?: NullableIntFieldUpdateOperationsInput | number | null
+    maxAppointments?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -48538,6 +48625,9 @@ export namespace Prisma {
     price?: SortOrder
     durationInDays?: SortOrder
     isActive?: SortOrder
+    maxDoctors?: SortOrder
+    maxPatients?: SortOrder
+    maxAppointments?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -48545,6 +48635,9 @@ export namespace Prisma {
   export type SubscriptionPackageAvgOrderByAggregateInput = {
     price?: SortOrder
     durationInDays?: SortOrder
+    maxDoctors?: SortOrder
+    maxPatients?: SortOrder
+    maxAppointments?: SortOrder
   }
 
   export type SubscriptionPackageMaxOrderByAggregateInput = {
@@ -48553,6 +48646,9 @@ export namespace Prisma {
     price?: SortOrder
     durationInDays?: SortOrder
     isActive?: SortOrder
+    maxDoctors?: SortOrder
+    maxPatients?: SortOrder
+    maxAppointments?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -48563,6 +48659,9 @@ export namespace Prisma {
     price?: SortOrder
     durationInDays?: SortOrder
     isActive?: SortOrder
+    maxDoctors?: SortOrder
+    maxPatients?: SortOrder
+    maxAppointments?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -48570,6 +48669,9 @@ export namespace Prisma {
   export type SubscriptionPackageSumOrderByAggregateInput = {
     price?: SortOrder
     durationInDays?: SortOrder
+    maxDoctors?: SortOrder
+    maxPatients?: SortOrder
+    maxAppointments?: SortOrder
   }
 
   export type FloatWithAggregatesFilter<$PrismaModel = never> = {
@@ -53649,6 +53751,9 @@ export namespace Prisma {
     price: number
     durationInDays: number
     isActive?: boolean
+    maxDoctors?: number | null
+    maxPatients?: number | null
+    maxAppointments?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -53659,6 +53764,9 @@ export namespace Prisma {
     price: number
     durationInDays: number
     isActive?: boolean
+    maxDoctors?: number | null
+    maxPatients?: number | null
+    maxAppointments?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -54907,6 +55015,9 @@ export namespace Prisma {
     price?: FloatFieldUpdateOperationsInput | number
     durationInDays?: IntFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    maxDoctors?: NullableIntFieldUpdateOperationsInput | number | null
+    maxPatients?: NullableIntFieldUpdateOperationsInput | number | null
+    maxAppointments?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -54917,6 +55028,9 @@ export namespace Prisma {
     price?: FloatFieldUpdateOperationsInput | number
     durationInDays?: IntFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    maxDoctors?: NullableIntFieldUpdateOperationsInput | number | null
+    maxPatients?: NullableIntFieldUpdateOperationsInput | number | null
+    maxAppointments?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

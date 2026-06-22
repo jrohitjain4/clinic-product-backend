@@ -114,14 +114,17 @@ model LandingPage {
 }
 
 model SubscriptionPackage {
-  id             String   @id @default(uuid())
-  name           String
-  price          Float
-  durationInDays Int
-  isActive       Boolean  @default(true)
-  clinics        Clinic[]
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id              String   @id @default(uuid())
+  name            String
+  price           Float
+  durationInDays  Int
+  isActive        Boolean  @default(true)
+  maxDoctors      Int?
+  maxPatients     Int?
+  maxAppointments Int?
+  clinics         Clinic[]
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
 model User {

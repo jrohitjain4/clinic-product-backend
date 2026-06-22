@@ -172,9 +172,9 @@ export const sendAdminCongratulationsEmail = async (
         name: string;
         price: number;
         durationInDays: number;
-        maxDoctors: number;
-        maxPatients: number;
-        maxAppointments: number;
+        maxDoctors: number | null;
+        maxPatients: number | null;
+        maxAppointments: number | null;
     }
 ) => {
     try {
@@ -182,8 +182,8 @@ export const sendAdminCongratulationsEmail = async (
         const loginUrl = `${frontendLink}/login`;
         const priceDisplay = plan.price === 0 ? "Free Trial" : `₹${plan.price.toLocaleString("en-IN")}`;
         
-        const formatLimit = (limit: number) => {
-            if (limit === -1 || limit === 9999 || limit >= 9999) return "Unlimited";
+        const formatLimit = (limit: number | null) => {
+            if (limit === null || limit === undefined || limit === -1 || limit >= 9999) return "Unlimited";
             return limit.toString();
         };
 
