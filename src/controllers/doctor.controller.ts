@@ -336,9 +336,9 @@ export const updateDoctor = async (req: AuthenticatedRequest, res: Response) => 
                 pincode,
                 appointmentType,
                 acceptBookingsInAdvance: acceptBookingsInAdvance ? parseInt(acceptBookingsInAdvance) : undefined,
-                appointmentDuration: appointmentDuration ? parseInt(appointmentDuration) : undefined,
+                appointmentDuration: appointmentDuration !== undefined ? (appointmentDuration ? parseInt(appointmentDuration) : null) : undefined,
                 consultationCharge: consultationCharge ? parseFloat(consultationCharge) : undefined,
-                maxBookingsPerSlot: maxBookingsPerSlot ? parseInt(maxBookingsPerSlot) : undefined,
+                maxBookingsPerSlot: maxBookingsPerSlot !== undefined ? (maxBookingsPerSlot ? parseInt(maxBookingsPerSlot) : null) : undefined,
                 displayOnBookingPage: displayOnBookingPage === true || displayOnBookingPage === "true",
                 followUpEnabled: followUpEnabled === true || followUpEnabled === "true",
                 followUpValidityDays: followUpValidityDays ? parseInt(followUpValidityDays) : undefined,
@@ -423,7 +423,7 @@ export const getDoctorAvailability = async (req: AuthenticatedRequest, res: Resp
 
         const doctor = await prisma.doctor.findUnique({
             where: { id: doctorId },
-            select: { schedules: true, appointmentDuration: true, clinicId: true }
+            select: { schedules: true, appointmentDuration: true, maxBookingsPerSlot: true, clinicId: true }
         });
 
         if (!doctor) {
@@ -462,7 +462,7 @@ export const getDoctorAvailability = async (req: AuthenticatedRequest, res: Resp
                 scheduledAt: { gte: start, lte: end },
                 status: { notIn: ["Cancelled", "Rejected"] }
             },
-            select: { scheduledAt: true, endAt: true }
+            select: { id: true, scheduledAt: true, endAt: true }
         });
 
         // Fetch Working Days Config
@@ -472,10 +472,11 @@ export const getDoctorAvailability = async (req: AuthenticatedRequest, res: Resp
 
         res.json({
             schedules: doctor.schedules,
-            duration: doctor.appointmentDuration || 30,
+            duration: doctor.appointmentDuration || null,
+            maxBookingsPerSlot: doctor.maxBookingsPerSlot || null,
             holidays: holidays.map((h: any) => ({ date: h.date, endDate: h.endDate, title: h.title })),
             leaves: leaves.map((l: any) => ({ start: l.startDate, end: l.endDate })),
-            appointments: appointments.map((a: any) => ({ start: a.scheduledAt, end: a.endAt })),
+            appointments: appointments.map((a: any) => ({ id: a.id, start: a.scheduledAt, end: a.endAt })),
             clinicWorkingDays: workingDaysConfig?.offDays || [0],
             clinicSchedules: workingDaysConfig?.schedules || []
         });

@@ -130,6 +130,20 @@ const getInvoiceById = async (req, res) => {
             },
             include: {
                 patient: true,
+                clinic: {
+                    include: {
+                        landingPage: true
+                    }
+                },
+                appointment: {
+                    include: {
+                        doctor: {
+                            include: {
+                                department: true
+                            }
+                        }
+                    }
+                },
                 items: {
                     include: { service: true }
                 }

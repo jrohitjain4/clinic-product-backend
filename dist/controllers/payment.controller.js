@@ -77,8 +77,9 @@ const createRazorpayOrder = async (req, res) => {
         }
         const config = await getActiveRazorpayConfig();
         if (!config) {
-            return res.status(400).json({
-                message: "Online payment is currently unavailable. No active payment gateway config found.",
+            return res.json({
+                bypass: true,
+                message: "No active payment gateway config found. Bypassing payment.",
             });
         }
         const razorpay = new razorpay_1.default({

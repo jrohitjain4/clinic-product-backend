@@ -561,6 +561,7 @@ exports.Prisma.InvoiceScalarFieldEnum = {
   otherInfo: 'otherInfo',
   clinicId: 'clinicId',
   appointmentId: 'appointmentId',
+  labBookingId: 'labBookingId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -663,6 +664,61 @@ exports.Prisma.NoteScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.LabCategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  status: 'status',
+  clinicId: 'clinicId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.LabTestScalarFieldEnum = {
+  id: 'id',
+  testCode: 'testCode',
+  name: 'name',
+  shortName: 'shortName',
+  description: 'description',
+  price: 'price',
+  homeCollectionCharge: 'homeCollectionCharge',
+  duration: 'duration',
+  preparationInfo: 'preparationInfo',
+  assignment: 'assignment',
+  assignedDoctors: 'assignedDoctors',
+  assignedStaff: 'assignedStaff',
+  status: 'status',
+  schedules: 'schedules',
+  isSlotBookingEnabled: 'isSlotBookingEnabled',
+  slotDuration: 'slotDuration',
+  maxBookingsPerSlot: 'maxBookingsPerSlot',
+  categoryId: 'categoryId',
+  clinicId: 'clinicId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.LabBookingScalarFieldEnum = {
+  id: 'id',
+  bookingCode: 'bookingCode',
+  patientId: 'patientId',
+  testId: 'testId',
+  scheduledAt: 'scheduledAt',
+  status: 'status',
+  paymentStatus: 'paymentStatus',
+  paymentMethod: 'paymentMethod',
+  discount: 'discount',
+  tax: 'tax',
+  totalAmount: 'totalAmount',
+  invoiceNo: 'invoiceNo',
+  sessionSlot: 'sessionSlot',
+  assignedUserId: 'assignedUserId',
+  remarks: 'remarks',
+  clinicId: 'clinicId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -742,7 +798,10 @@ exports.Prisma.ModelName = {
   DemoBooking: 'DemoBooking',
   Ticket: 'Ticket',
   Todo: 'Todo',
-  Note: 'Note'
+  Note: 'Note',
+  LabCategory: 'LabCategory',
+  LabTest: 'LabTest',
+  LabBooking: 'LabBooking'
 };
 
 /**

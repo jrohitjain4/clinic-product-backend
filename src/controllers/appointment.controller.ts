@@ -72,6 +72,7 @@ const doctorInclude = {
       medicalLicenseNumber: true,
       yearOfExperience: true,
       appointmentDuration: true,
+      maxBookingsPerSlot: true,
       followUpEnabled: true,
       freeFollowUpLimit: true,
       followUpValidityDays: true,
@@ -549,6 +550,24 @@ export const createAppointment = async (req: AuthenticatedRequest, res: Response
     const appointmentCode = `AP${String(count + 1).padStart(3, "0")}`;
 
     const scheduled = new Date(scheduledAt);
+
+    // Validate slot capacity limit if doctor has slot booking active
+    if (doctor.appointmentDuration && doctor.maxBookingsPerSlot) {
+      const conflictingAppointments = await prisma.appointment.count({
+        where: {
+          doctorId: doctor.id,
+          scheduledAt: scheduled,
+          status: { notIn: ["Cancelled", "Rejected"] },
+        },
+      });
+
+      if (conflictingAppointments >= doctor.maxBookingsPerSlot) {
+        return res.status(400).json({
+          message: `The selected slot is fully booked. Only ${doctor.maxBookingsPerSlot} booking(s) allowed per slot.`,
+        });
+      }
+    }
+
     let resolvedEnd = endAt ? new Date(endAt) : null;
     if (!resolvedEnd && doctor.appointmentDuration) {
       resolvedEnd = new Date(scheduled.getTime() + doctor.appointmentDuration * 60000);
@@ -724,9 +743,11 @@ export const updateAppointment = async (req: AuthenticatedRequest, res: Response
       serviceIds,
     } = req.body;
 
-    if (doctorId) {
-      const doctor = await prisma.doctor.findFirst({
-        where: { id: doctorId, clinicId: clinicId! },
+    let doctor = null;
+    const targetDoctorId = doctorId ?? existing.doctorId;
+    if (targetDoctorId) {
+      doctor = await prisma.doctor.findFirst({
+        where: { id: targetDoctorId, clinicId: clinicId! },
       });
       if (!doctor) return res.status(400).json({ message: "Invalid doctor" });
     }
@@ -738,6 +759,23 @@ export const updateAppointment = async (req: AuthenticatedRequest, res: Response
     }
 
     const scheduled = scheduledAt ? new Date(scheduledAt) : existing.scheduledAt;
+
+    if (doctor && doctor.appointmentDuration && doctor.maxBookingsPerSlot) {
+      const conflictingAppointments = await prisma.appointment.count({
+        where: {
+          doctorId: doctor.id,
+          scheduledAt: scheduled,
+          status: { notIn: ["Cancelled", "Rejected"] },
+          id: { not: id },
+        },
+      });
+
+      if (conflictingAppointments >= doctor.maxBookingsPerSlot) {
+        return res.status(400).json({
+          message: `The selected slot is fully booked. Only ${doctor.maxBookingsPerSlot} booking(s) allowed per slot.`,
+        });
+      }
+    }
     const resolvedStatus =
       status !== undefined ? normalizeStatus(status) : existing.status;
 
@@ -1021,6 +1059,24 @@ export const createFollowUpAppointment = async (req: AuthenticatedRequest, res: 
 
     // Check validity window
     const scheduled = new Date(scheduledAt);
+
+    // Validate slot capacity limit if doctor has slot booking active
+    if (doctor.appointmentDuration && doctor.maxBookingsPerSlot) {
+      const conflictingAppointments = await prisma.appointment.count({
+        where: {
+          doctorId: doctor.id,
+          scheduledAt: scheduled,
+          status: { notIn: ["Cancelled", "Rejected"] },
+        },
+      });
+
+      if (conflictingAppointments >= doctor.maxBookingsPerSlot) {
+        return res.status(400).json({
+          message: `The selected slot is fully booked. Only ${doctor.maxBookingsPerSlot} booking(s) allowed per slot.`,
+        });
+      }
+    }
+
     const diffDays = (scheduled.getTime() - parent.scheduledAt.getTime()) / (1000 * 60 * 60 * 24);
     if (doctor.followUpValidityDays && diffDays > doctor.followUpValidityDays) {
       return res.status(400).json({

@@ -161,7 +161,7 @@ const sendAdminCongratulationsEmail = async (to, ownerName, username, password, 
         const loginUrl = `${frontendLink}/login`;
         const priceDisplay = plan.price === 0 ? "Free Trial" : `₹${plan.price.toLocaleString("en-IN")}`;
         const formatLimit = (limit) => {
-            if (limit === -1 || limit === 9999 || limit >= 9999)
+            if (limit === null || limit === undefined || limit === -1 || limit >= 9999)
                 return "Unlimited";
             return limit.toString();
         };

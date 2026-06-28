@@ -173,6 +173,21 @@ export type Todo = $Result.DefaultSelection<Prisma.$TodoPayload>
  * 
  */
 export type Note = $Result.DefaultSelection<Prisma.$NotePayload>
+/**
+ * Model LabCategory
+ * 
+ */
+export type LabCategory = $Result.DefaultSelection<Prisma.$LabCategoryPayload>
+/**
+ * Model LabTest
+ * 
+ */
+export type LabTest = $Result.DefaultSelection<Prisma.$LabTestPayload>
+/**
+ * Model LabBooking
+ * 
+ */
+export type LabBooking = $Result.DefaultSelection<Prisma.$LabBookingPayload>
 
 /**
  * Enums
@@ -653,6 +668,36 @@ export class PrismaClient<
     * ```
     */
   get note(): Prisma.NoteDelegate<ExtArgs>;
+
+  /**
+   * `prisma.labCategory`: Exposes CRUD operations for the **LabCategory** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more LabCategories
+    * const labCategories = await prisma.labCategory.findMany()
+    * ```
+    */
+  get labCategory(): Prisma.LabCategoryDelegate<ExtArgs>;
+
+  /**
+   * `prisma.labTest`: Exposes CRUD operations for the **LabTest** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more LabTests
+    * const labTests = await prisma.labTest.findMany()
+    * ```
+    */
+  get labTest(): Prisma.LabTestDelegate<ExtArgs>;
+
+  /**
+   * `prisma.labBooking`: Exposes CRUD operations for the **LabBooking** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more LabBookings
+    * const labBookings = await prisma.labBooking.findMany()
+    * ```
+    */
+  get labBooking(): Prisma.LabBookingDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -1125,7 +1170,10 @@ export namespace Prisma {
     DemoBooking: 'DemoBooking',
     Ticket: 'Ticket',
     Todo: 'Todo',
-    Note: 'Note'
+    Note: 'Note',
+    LabCategory: 'LabCategory',
+    LabTest: 'LabTest',
+    LabBooking: 'LabBooking'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1141,7 +1189,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "clinic" | "landingPage" | "subscriptionPackage" | "user" | "department" | "designation" | "staff" | "doctor" | "patient" | "appointment" | "service" | "specialization" | "holiday" | "payroll" | "expense" | "expenseCategory" | "clinicRole" | "attendance" | "leaveType" | "leave" | "workingDaysConfig" | "prescription" | "prescriptionMedicine" | "invoice" | "invoiceItem" | "product" | "notification" | "systemSetting" | "demoBooking" | "ticket" | "todo" | "note"
+      modelProps: "clinic" | "landingPage" | "subscriptionPackage" | "user" | "department" | "designation" | "staff" | "doctor" | "patient" | "appointment" | "service" | "specialization" | "holiday" | "payroll" | "expense" | "expenseCategory" | "clinicRole" | "attendance" | "leaveType" | "leave" | "workingDaysConfig" | "prescription" | "prescriptionMedicine" | "invoice" | "invoiceItem" | "product" | "notification" | "systemSetting" | "demoBooking" | "ticket" | "todo" | "note" | "labCategory" | "labTest" | "labBooking"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3385,6 +3433,216 @@ export namespace Prisma {
           }
         }
       }
+      LabCategory: {
+        payload: Prisma.$LabCategoryPayload<ExtArgs>
+        fields: Prisma.LabCategoryFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.LabCategoryFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LabCategoryPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.LabCategoryFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LabCategoryPayload>
+          }
+          findFirst: {
+            args: Prisma.LabCategoryFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LabCategoryPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.LabCategoryFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LabCategoryPayload>
+          }
+          findMany: {
+            args: Prisma.LabCategoryFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LabCategoryPayload>[]
+          }
+          create: {
+            args: Prisma.LabCategoryCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LabCategoryPayload>
+          }
+          createMany: {
+            args: Prisma.LabCategoryCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.LabCategoryCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LabCategoryPayload>[]
+          }
+          delete: {
+            args: Prisma.LabCategoryDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LabCategoryPayload>
+          }
+          update: {
+            args: Prisma.LabCategoryUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LabCategoryPayload>
+          }
+          deleteMany: {
+            args: Prisma.LabCategoryDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.LabCategoryUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.LabCategoryUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LabCategoryPayload>
+          }
+          aggregate: {
+            args: Prisma.LabCategoryAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLabCategory>
+          }
+          groupBy: {
+            args: Prisma.LabCategoryGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LabCategoryGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.LabCategoryCountArgs<ExtArgs>
+            result: $Utils.Optional<LabCategoryCountAggregateOutputType> | number
+          }
+        }
+      }
+      LabTest: {
+        payload: Prisma.$LabTestPayload<ExtArgs>
+        fields: Prisma.LabTestFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.LabTestFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LabTestPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.LabTestFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LabTestPayload>
+          }
+          findFirst: {
+            args: Prisma.LabTestFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LabTestPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.LabTestFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LabTestPayload>
+          }
+          findMany: {
+            args: Prisma.LabTestFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LabTestPayload>[]
+          }
+          create: {
+            args: Prisma.LabTestCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LabTestPayload>
+          }
+          createMany: {
+            args: Prisma.LabTestCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.LabTestCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LabTestPayload>[]
+          }
+          delete: {
+            args: Prisma.LabTestDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LabTestPayload>
+          }
+          update: {
+            args: Prisma.LabTestUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LabTestPayload>
+          }
+          deleteMany: {
+            args: Prisma.LabTestDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.LabTestUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.LabTestUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LabTestPayload>
+          }
+          aggregate: {
+            args: Prisma.LabTestAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLabTest>
+          }
+          groupBy: {
+            args: Prisma.LabTestGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LabTestGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.LabTestCountArgs<ExtArgs>
+            result: $Utils.Optional<LabTestCountAggregateOutputType> | number
+          }
+        }
+      }
+      LabBooking: {
+        payload: Prisma.$LabBookingPayload<ExtArgs>
+        fields: Prisma.LabBookingFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.LabBookingFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LabBookingPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.LabBookingFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LabBookingPayload>
+          }
+          findFirst: {
+            args: Prisma.LabBookingFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LabBookingPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.LabBookingFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LabBookingPayload>
+          }
+          findMany: {
+            args: Prisma.LabBookingFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LabBookingPayload>[]
+          }
+          create: {
+            args: Prisma.LabBookingCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LabBookingPayload>
+          }
+          createMany: {
+            args: Prisma.LabBookingCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.LabBookingCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LabBookingPayload>[]
+          }
+          delete: {
+            args: Prisma.LabBookingDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LabBookingPayload>
+          }
+          update: {
+            args: Prisma.LabBookingUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LabBookingPayload>
+          }
+          deleteMany: {
+            args: Prisma.LabBookingDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.LabBookingUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.LabBookingUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LabBookingPayload>
+          }
+          aggregate: {
+            args: Prisma.LabBookingAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLabBooking>
+          }
+          groupBy: {
+            args: Prisma.LabBookingGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LabBookingGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.LabBookingCountArgs<ExtArgs>
+            result: $Utils.Optional<LabBookingCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3572,6 +3830,9 @@ export namespace Prisma {
     tickets: number
     todos: number
     notes: number
+    labCategories: number
+    labTests: number
+    labBookings: number
   }
 
   export type ClinicCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3601,6 +3862,9 @@ export namespace Prisma {
     tickets?: boolean | ClinicCountOutputTypeCountTicketsArgs
     todos?: boolean | ClinicCountOutputTypeCountTodosArgs
     notes?: boolean | ClinicCountOutputTypeCountNotesArgs
+    labCategories?: boolean | ClinicCountOutputTypeCountLabCategoriesArgs
+    labTests?: boolean | ClinicCountOutputTypeCountLabTestsArgs
+    labBookings?: boolean | ClinicCountOutputTypeCountLabBookingsArgs
   }
 
   // Custom InputTypes
@@ -3794,6 +4058,27 @@ export namespace Prisma {
    */
   export type ClinicCountOutputTypeCountNotesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: NoteWhereInput
+  }
+
+  /**
+   * ClinicCountOutputType without action
+   */
+  export type ClinicCountOutputTypeCountLabCategoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LabCategoryWhereInput
+  }
+
+  /**
+   * ClinicCountOutputType without action
+   */
+  export type ClinicCountOutputTypeCountLabTestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LabTestWhereInput
+  }
+
+  /**
+   * ClinicCountOutputType without action
+   */
+  export type ClinicCountOutputTypeCountLabBookingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LabBookingWhereInput
   }
 
 
@@ -4041,12 +4326,14 @@ export namespace Prisma {
     appointments: number
     prescriptions: number
     invoices: number
+    labBookings: number
   }
 
   export type PatientCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     appointments?: boolean | PatientCountOutputTypeCountAppointmentsArgs
     prescriptions?: boolean | PatientCountOutputTypeCountPrescriptionsArgs
     invoices?: boolean | PatientCountOutputTypeCountInvoicesArgs
+    labBookings?: boolean | PatientCountOutputTypeCountLabBookingsArgs
   }
 
   // Custom InputTypes
@@ -4079,6 +4366,13 @@ export namespace Prisma {
    */
   export type PatientCountOutputTypeCountInvoicesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: InvoiceWhereInput
+  }
+
+  /**
+   * PatientCountOutputType without action
+   */
+  export type PatientCountOutputTypeCountLabBookingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LabBookingWhereInput
   }
 
 
@@ -4252,6 +4546,68 @@ export namespace Prisma {
    */
   export type InvoiceCountOutputTypeCountItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: InvoiceItemWhereInput
+  }
+
+
+  /**
+   * Count Type LabCategoryCountOutputType
+   */
+
+  export type LabCategoryCountOutputType = {
+    tests: number
+  }
+
+  export type LabCategoryCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tests?: boolean | LabCategoryCountOutputTypeCountTestsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * LabCategoryCountOutputType without action
+   */
+  export type LabCategoryCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabCategoryCountOutputType
+     */
+    select?: LabCategoryCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * LabCategoryCountOutputType without action
+   */
+  export type LabCategoryCountOutputTypeCountTestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LabTestWhereInput
+  }
+
+
+  /**
+   * Count Type LabTestCountOutputType
+   */
+
+  export type LabTestCountOutputType = {
+    bookings: number
+  }
+
+  export type LabTestCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    bookings?: boolean | LabTestCountOutputTypeCountBookingsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * LabTestCountOutputType without action
+   */
+  export type LabTestCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabTestCountOutputType
+     */
+    select?: LabTestCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * LabTestCountOutputType without action
+   */
+  export type LabTestCountOutputTypeCountBookingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LabBookingWhereInput
   }
 
 
@@ -4650,6 +5006,9 @@ export namespace Prisma {
     tickets?: boolean | Clinic$ticketsArgs<ExtArgs>
     todos?: boolean | Clinic$todosArgs<ExtArgs>
     notes?: boolean | Clinic$notesArgs<ExtArgs>
+    labCategories?: boolean | Clinic$labCategoriesArgs<ExtArgs>
+    labTests?: boolean | Clinic$labTestsArgs<ExtArgs>
+    labBookings?: boolean | Clinic$labBookingsArgs<ExtArgs>
     _count?: boolean | ClinicCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["clinic"]>
 
@@ -4740,6 +5099,9 @@ export namespace Prisma {
     tickets?: boolean | Clinic$ticketsArgs<ExtArgs>
     todos?: boolean | Clinic$todosArgs<ExtArgs>
     notes?: boolean | Clinic$notesArgs<ExtArgs>
+    labCategories?: boolean | Clinic$labCategoriesArgs<ExtArgs>
+    labTests?: boolean | Clinic$labTestsArgs<ExtArgs>
+    labBookings?: boolean | Clinic$labBookingsArgs<ExtArgs>
     _count?: boolean | ClinicCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ClinicIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4778,6 +5140,9 @@ export namespace Prisma {
       tickets: Prisma.$TicketPayload<ExtArgs>[]
       todos: Prisma.$TodoPayload<ExtArgs>[]
       notes: Prisma.$NotePayload<ExtArgs>[]
+      labCategories: Prisma.$LabCategoryPayload<ExtArgs>[]
+      labTests: Prisma.$LabTestPayload<ExtArgs>[]
+      labBookings: Prisma.$LabBookingPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5198,6 +5563,9 @@ export namespace Prisma {
     tickets<T extends Clinic$ticketsArgs<ExtArgs> = {}>(args?: Subset<T, Clinic$ticketsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TicketPayload<ExtArgs>, T, "findMany"> | Null>
     todos<T extends Clinic$todosArgs<ExtArgs> = {}>(args?: Subset<T, Clinic$todosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TodoPayload<ExtArgs>, T, "findMany"> | Null>
     notes<T extends Clinic$notesArgs<ExtArgs> = {}>(args?: Subset<T, Clinic$notesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotePayload<ExtArgs>, T, "findMany"> | Null>
+    labCategories<T extends Clinic$labCategoriesArgs<ExtArgs> = {}>(args?: Subset<T, Clinic$labCategoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LabCategoryPayload<ExtArgs>, T, "findMany"> | Null>
+    labTests<T extends Clinic$labTestsArgs<ExtArgs> = {}>(args?: Subset<T, Clinic$labTestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LabTestPayload<ExtArgs>, T, "findMany"> | Null>
+    labBookings<T extends Clinic$labBookingsArgs<ExtArgs> = {}>(args?: Subset<T, Clinic$labBookingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LabBookingPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6132,6 +6500,66 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: NoteScalarFieldEnum | NoteScalarFieldEnum[]
+  }
+
+  /**
+   * Clinic.labCategories
+   */
+  export type Clinic$labCategoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabCategory
+     */
+    select?: LabCategorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabCategoryInclude<ExtArgs> | null
+    where?: LabCategoryWhereInput
+    orderBy?: LabCategoryOrderByWithRelationInput | LabCategoryOrderByWithRelationInput[]
+    cursor?: LabCategoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LabCategoryScalarFieldEnum | LabCategoryScalarFieldEnum[]
+  }
+
+  /**
+   * Clinic.labTests
+   */
+  export type Clinic$labTestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabTest
+     */
+    select?: LabTestSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabTestInclude<ExtArgs> | null
+    where?: LabTestWhereInput
+    orderBy?: LabTestOrderByWithRelationInput | LabTestOrderByWithRelationInput[]
+    cursor?: LabTestWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LabTestScalarFieldEnum | LabTestScalarFieldEnum[]
+  }
+
+  /**
+   * Clinic.labBookings
+   */
+  export type Clinic$labBookingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabBooking
+     */
+    select?: LabBookingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabBookingInclude<ExtArgs> | null
+    where?: LabBookingWhereInput
+    orderBy?: LabBookingOrderByWithRelationInput | LabBookingOrderByWithRelationInput[]
+    cursor?: LabBookingWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LabBookingScalarFieldEnum | LabBookingScalarFieldEnum[]
   }
 
   /**
@@ -14895,6 +15323,7 @@ export namespace Prisma {
     appointments?: boolean | Patient$appointmentsArgs<ExtArgs>
     prescriptions?: boolean | Patient$prescriptionsArgs<ExtArgs>
     invoices?: boolean | Patient$invoicesArgs<ExtArgs>
+    labBookings?: boolean | Patient$labBookingsArgs<ExtArgs>
     _count?: boolean | PatientCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["patient"]>
 
@@ -14974,6 +15403,7 @@ export namespace Prisma {
     appointments?: boolean | Patient$appointmentsArgs<ExtArgs>
     prescriptions?: boolean | Patient$prescriptionsArgs<ExtArgs>
     invoices?: boolean | Patient$invoicesArgs<ExtArgs>
+    labBookings?: boolean | Patient$labBookingsArgs<ExtArgs>
     _count?: boolean | PatientCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PatientIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -14987,6 +15417,7 @@ export namespace Prisma {
       appointments: Prisma.$AppointmentPayload<ExtArgs>[]
       prescriptions: Prisma.$PrescriptionPayload<ExtArgs>[]
       invoices: Prisma.$InvoicePayload<ExtArgs>[]
+      labBookings: Prisma.$LabBookingPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -15389,6 +15820,7 @@ export namespace Prisma {
     appointments<T extends Patient$appointmentsArgs<ExtArgs> = {}>(args?: Subset<T, Patient$appointmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppointmentPayload<ExtArgs>, T, "findMany"> | Null>
     prescriptions<T extends Patient$prescriptionsArgs<ExtArgs> = {}>(args?: Subset<T, Patient$prescriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PrescriptionPayload<ExtArgs>, T, "findMany"> | Null>
     invoices<T extends Patient$invoicesArgs<ExtArgs> = {}>(args?: Subset<T, Patient$invoicesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvoicePayload<ExtArgs>, T, "findMany"> | Null>
+    labBookings<T extends Patient$labBookingsArgs<ExtArgs> = {}>(args?: Subset<T, Patient$labBookingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LabBookingPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -15825,6 +16257,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: InvoiceScalarFieldEnum | InvoiceScalarFieldEnum[]
+  }
+
+  /**
+   * Patient.labBookings
+   */
+  export type Patient$labBookingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabBooking
+     */
+    select?: LabBookingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabBookingInclude<ExtArgs> | null
+    where?: LabBookingWhereInput
+    orderBy?: LabBookingOrderByWithRelationInput | LabBookingOrderByWithRelationInput[]
+    cursor?: LabBookingWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LabBookingScalarFieldEnum | LabBookingScalarFieldEnum[]
   }
 
   /**
@@ -30654,6 +31106,7 @@ export namespace Prisma {
     otherInfo: string | null
     clinicId: string | null
     appointmentId: string | null
+    labBookingId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -30673,6 +31126,7 @@ export namespace Prisma {
     otherInfo: string | null
     clinicId: string | null
     appointmentId: string | null
+    labBookingId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -30692,6 +31146,7 @@ export namespace Prisma {
     otherInfo: number
     clinicId: number
     appointmentId: number
+    labBookingId: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -30727,6 +31182,7 @@ export namespace Prisma {
     otherInfo?: true
     clinicId?: true
     appointmentId?: true
+    labBookingId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -30746,6 +31202,7 @@ export namespace Prisma {
     otherInfo?: true
     clinicId?: true
     appointmentId?: true
+    labBookingId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -30765,6 +31222,7 @@ export namespace Prisma {
     otherInfo?: true
     clinicId?: true
     appointmentId?: true
+    labBookingId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -30871,6 +31329,7 @@ export namespace Prisma {
     otherInfo: string | null
     clinicId: string
     appointmentId: string | null
+    labBookingId: string | null
     createdAt: Date
     updatedAt: Date
     _count: InvoiceCountAggregateOutputType | null
@@ -30909,12 +31368,14 @@ export namespace Prisma {
     otherInfo?: boolean
     clinicId?: boolean
     appointmentId?: boolean
+    labBookingId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     patient?: boolean | Invoice$patientArgs<ExtArgs>
     clinic?: boolean | ClinicDefaultArgs<ExtArgs>
     items?: boolean | Invoice$itemsArgs<ExtArgs>
     appointment?: boolean | Invoice$appointmentArgs<ExtArgs>
+    labBooking?: boolean | Invoice$labBookingArgs<ExtArgs>
     _count?: boolean | InvoiceCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["invoice"]>
 
@@ -30933,11 +31394,13 @@ export namespace Prisma {
     otherInfo?: boolean
     clinicId?: boolean
     appointmentId?: boolean
+    labBookingId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     patient?: boolean | Invoice$patientArgs<ExtArgs>
     clinic?: boolean | ClinicDefaultArgs<ExtArgs>
     appointment?: boolean | Invoice$appointmentArgs<ExtArgs>
+    labBooking?: boolean | Invoice$labBookingArgs<ExtArgs>
   }, ExtArgs["result"]["invoice"]>
 
   export type InvoiceSelectScalar = {
@@ -30955,6 +31418,7 @@ export namespace Prisma {
     otherInfo?: boolean
     clinicId?: boolean
     appointmentId?: boolean
+    labBookingId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
@@ -30964,12 +31428,14 @@ export namespace Prisma {
     clinic?: boolean | ClinicDefaultArgs<ExtArgs>
     items?: boolean | Invoice$itemsArgs<ExtArgs>
     appointment?: boolean | Invoice$appointmentArgs<ExtArgs>
+    labBooking?: boolean | Invoice$labBookingArgs<ExtArgs>
     _count?: boolean | InvoiceCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type InvoiceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     patient?: boolean | Invoice$patientArgs<ExtArgs>
     clinic?: boolean | ClinicDefaultArgs<ExtArgs>
     appointment?: boolean | Invoice$appointmentArgs<ExtArgs>
+    labBooking?: boolean | Invoice$labBookingArgs<ExtArgs>
   }
 
   export type $InvoicePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -30979,6 +31445,7 @@ export namespace Prisma {
       clinic: Prisma.$ClinicPayload<ExtArgs>
       items: Prisma.$InvoiceItemPayload<ExtArgs>[]
       appointment: Prisma.$AppointmentPayload<ExtArgs> | null
+      labBooking: Prisma.$LabBookingPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -30995,6 +31462,7 @@ export namespace Prisma {
       otherInfo: string | null
       clinicId: string
       appointmentId: string | null
+      labBookingId: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["invoice"]>
@@ -31365,6 +31833,7 @@ export namespace Prisma {
     clinic<T extends ClinicDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClinicDefaultArgs<ExtArgs>>): Prisma__ClinicClient<$Result.GetResult<Prisma.$ClinicPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     items<T extends Invoice$itemsArgs<ExtArgs> = {}>(args?: Subset<T, Invoice$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvoiceItemPayload<ExtArgs>, T, "findMany"> | Null>
     appointment<T extends Invoice$appointmentArgs<ExtArgs> = {}>(args?: Subset<T, Invoice$appointmentArgs<ExtArgs>>): Prisma__AppointmentClient<$Result.GetResult<Prisma.$AppointmentPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    labBooking<T extends Invoice$labBookingArgs<ExtArgs> = {}>(args?: Subset<T, Invoice$labBookingArgs<ExtArgs>>): Prisma__LabBookingClient<$Result.GetResult<Prisma.$LabBookingPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -31408,6 +31877,7 @@ export namespace Prisma {
     readonly otherInfo: FieldRef<"Invoice", 'String'>
     readonly clinicId: FieldRef<"Invoice", 'String'>
     readonly appointmentId: FieldRef<"Invoice", 'String'>
+    readonly labBookingId: FieldRef<"Invoice", 'String'>
     readonly createdAt: FieldRef<"Invoice", 'DateTime'>
     readonly updatedAt: FieldRef<"Invoice", 'DateTime'>
   }
@@ -31775,6 +32245,21 @@ export namespace Prisma {
      */
     include?: AppointmentInclude<ExtArgs> | null
     where?: AppointmentWhereInput
+  }
+
+  /**
+   * Invoice.labBooking
+   */
+  export type Invoice$labBookingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabBooking
+     */
+    select?: LabBookingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabBookingInclude<ExtArgs> | null
+    where?: LabBookingWhereInput
   }
 
   /**
@@ -39709,6 +40194,3387 @@ export namespace Prisma {
 
 
   /**
+   * Model LabCategory
+   */
+
+  export type AggregateLabCategory = {
+    _count: LabCategoryCountAggregateOutputType | null
+    _min: LabCategoryMinAggregateOutputType | null
+    _max: LabCategoryMaxAggregateOutputType | null
+  }
+
+  export type LabCategoryMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    status: string | null
+    clinicId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LabCategoryMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    status: string | null
+    clinicId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LabCategoryCountAggregateOutputType = {
+    id: number
+    name: number
+    description: number
+    status: number
+    clinicId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type LabCategoryMinAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    status?: true
+    clinicId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LabCategoryMaxAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    status?: true
+    clinicId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LabCategoryCountAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    status?: true
+    clinicId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type LabCategoryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LabCategory to aggregate.
+     */
+    where?: LabCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LabCategories to fetch.
+     */
+    orderBy?: LabCategoryOrderByWithRelationInput | LabCategoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LabCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LabCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LabCategories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned LabCategories
+    **/
+    _count?: true | LabCategoryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LabCategoryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LabCategoryMaxAggregateInputType
+  }
+
+  export type GetLabCategoryAggregateType<T extends LabCategoryAggregateArgs> = {
+        [P in keyof T & keyof AggregateLabCategory]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLabCategory[P]>
+      : GetScalarType<T[P], AggregateLabCategory[P]>
+  }
+
+
+
+
+  export type LabCategoryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LabCategoryWhereInput
+    orderBy?: LabCategoryOrderByWithAggregationInput | LabCategoryOrderByWithAggregationInput[]
+    by: LabCategoryScalarFieldEnum[] | LabCategoryScalarFieldEnum
+    having?: LabCategoryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LabCategoryCountAggregateInputType | true
+    _min?: LabCategoryMinAggregateInputType
+    _max?: LabCategoryMaxAggregateInputType
+  }
+
+  export type LabCategoryGroupByOutputType = {
+    id: string
+    name: string
+    description: string | null
+    status: string
+    clinicId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: LabCategoryCountAggregateOutputType | null
+    _min: LabCategoryMinAggregateOutputType | null
+    _max: LabCategoryMaxAggregateOutputType | null
+  }
+
+  type GetLabCategoryGroupByPayload<T extends LabCategoryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LabCategoryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LabCategoryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LabCategoryGroupByOutputType[P]>
+            : GetScalarType<T[P], LabCategoryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LabCategorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    status?: boolean
+    clinicId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    clinic?: boolean | ClinicDefaultArgs<ExtArgs>
+    tests?: boolean | LabCategory$testsArgs<ExtArgs>
+    _count?: boolean | LabCategoryCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["labCategory"]>
+
+  export type LabCategorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    status?: boolean
+    clinicId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    clinic?: boolean | ClinicDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["labCategory"]>
+
+  export type LabCategorySelectScalar = {
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    status?: boolean
+    clinicId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type LabCategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    clinic?: boolean | ClinicDefaultArgs<ExtArgs>
+    tests?: boolean | LabCategory$testsArgs<ExtArgs>
+    _count?: boolean | LabCategoryCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type LabCategoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    clinic?: boolean | ClinicDefaultArgs<ExtArgs>
+  }
+
+  export type $LabCategoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "LabCategory"
+    objects: {
+      clinic: Prisma.$ClinicPayload<ExtArgs>
+      tests: Prisma.$LabTestPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      description: string | null
+      status: string
+      clinicId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["labCategory"]>
+    composites: {}
+  }
+
+  type LabCategoryGetPayload<S extends boolean | null | undefined | LabCategoryDefaultArgs> = $Result.GetResult<Prisma.$LabCategoryPayload, S>
+
+  type LabCategoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<LabCategoryFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: LabCategoryCountAggregateInputType | true
+    }
+
+  export interface LabCategoryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['LabCategory'], meta: { name: 'LabCategory' } }
+    /**
+     * Find zero or one LabCategory that matches the filter.
+     * @param {LabCategoryFindUniqueArgs} args - Arguments to find a LabCategory
+     * @example
+     * // Get one LabCategory
+     * const labCategory = await prisma.labCategory.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends LabCategoryFindUniqueArgs>(args: SelectSubset<T, LabCategoryFindUniqueArgs<ExtArgs>>): Prisma__LabCategoryClient<$Result.GetResult<Prisma.$LabCategoryPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one LabCategory that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {LabCategoryFindUniqueOrThrowArgs} args - Arguments to find a LabCategory
+     * @example
+     * // Get one LabCategory
+     * const labCategory = await prisma.labCategory.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends LabCategoryFindUniqueOrThrowArgs>(args: SelectSubset<T, LabCategoryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LabCategoryClient<$Result.GetResult<Prisma.$LabCategoryPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first LabCategory that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LabCategoryFindFirstArgs} args - Arguments to find a LabCategory
+     * @example
+     * // Get one LabCategory
+     * const labCategory = await prisma.labCategory.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends LabCategoryFindFirstArgs>(args?: SelectSubset<T, LabCategoryFindFirstArgs<ExtArgs>>): Prisma__LabCategoryClient<$Result.GetResult<Prisma.$LabCategoryPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first LabCategory that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LabCategoryFindFirstOrThrowArgs} args - Arguments to find a LabCategory
+     * @example
+     * // Get one LabCategory
+     * const labCategory = await prisma.labCategory.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends LabCategoryFindFirstOrThrowArgs>(args?: SelectSubset<T, LabCategoryFindFirstOrThrowArgs<ExtArgs>>): Prisma__LabCategoryClient<$Result.GetResult<Prisma.$LabCategoryPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more LabCategories that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LabCategoryFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all LabCategories
+     * const labCategories = await prisma.labCategory.findMany()
+     * 
+     * // Get first 10 LabCategories
+     * const labCategories = await prisma.labCategory.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const labCategoryWithIdOnly = await prisma.labCategory.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends LabCategoryFindManyArgs>(args?: SelectSubset<T, LabCategoryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LabCategoryPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a LabCategory.
+     * @param {LabCategoryCreateArgs} args - Arguments to create a LabCategory.
+     * @example
+     * // Create one LabCategory
+     * const LabCategory = await prisma.labCategory.create({
+     *   data: {
+     *     // ... data to create a LabCategory
+     *   }
+     * })
+     * 
+     */
+    create<T extends LabCategoryCreateArgs>(args: SelectSubset<T, LabCategoryCreateArgs<ExtArgs>>): Prisma__LabCategoryClient<$Result.GetResult<Prisma.$LabCategoryPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many LabCategories.
+     * @param {LabCategoryCreateManyArgs} args - Arguments to create many LabCategories.
+     * @example
+     * // Create many LabCategories
+     * const labCategory = await prisma.labCategory.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends LabCategoryCreateManyArgs>(args?: SelectSubset<T, LabCategoryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many LabCategories and returns the data saved in the database.
+     * @param {LabCategoryCreateManyAndReturnArgs} args - Arguments to create many LabCategories.
+     * @example
+     * // Create many LabCategories
+     * const labCategory = await prisma.labCategory.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many LabCategories and only return the `id`
+     * const labCategoryWithIdOnly = await prisma.labCategory.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends LabCategoryCreateManyAndReturnArgs>(args?: SelectSubset<T, LabCategoryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LabCategoryPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a LabCategory.
+     * @param {LabCategoryDeleteArgs} args - Arguments to delete one LabCategory.
+     * @example
+     * // Delete one LabCategory
+     * const LabCategory = await prisma.labCategory.delete({
+     *   where: {
+     *     // ... filter to delete one LabCategory
+     *   }
+     * })
+     * 
+     */
+    delete<T extends LabCategoryDeleteArgs>(args: SelectSubset<T, LabCategoryDeleteArgs<ExtArgs>>): Prisma__LabCategoryClient<$Result.GetResult<Prisma.$LabCategoryPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one LabCategory.
+     * @param {LabCategoryUpdateArgs} args - Arguments to update one LabCategory.
+     * @example
+     * // Update one LabCategory
+     * const labCategory = await prisma.labCategory.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends LabCategoryUpdateArgs>(args: SelectSubset<T, LabCategoryUpdateArgs<ExtArgs>>): Prisma__LabCategoryClient<$Result.GetResult<Prisma.$LabCategoryPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more LabCategories.
+     * @param {LabCategoryDeleteManyArgs} args - Arguments to filter LabCategories to delete.
+     * @example
+     * // Delete a few LabCategories
+     * const { count } = await prisma.labCategory.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends LabCategoryDeleteManyArgs>(args?: SelectSubset<T, LabCategoryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LabCategories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LabCategoryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many LabCategories
+     * const labCategory = await prisma.labCategory.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends LabCategoryUpdateManyArgs>(args: SelectSubset<T, LabCategoryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one LabCategory.
+     * @param {LabCategoryUpsertArgs} args - Arguments to update or create a LabCategory.
+     * @example
+     * // Update or create a LabCategory
+     * const labCategory = await prisma.labCategory.upsert({
+     *   create: {
+     *     // ... data to create a LabCategory
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the LabCategory we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LabCategoryUpsertArgs>(args: SelectSubset<T, LabCategoryUpsertArgs<ExtArgs>>): Prisma__LabCategoryClient<$Result.GetResult<Prisma.$LabCategoryPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of LabCategories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LabCategoryCountArgs} args - Arguments to filter LabCategories to count.
+     * @example
+     * // Count the number of LabCategories
+     * const count = await prisma.labCategory.count({
+     *   where: {
+     *     // ... the filter for the LabCategories we want to count
+     *   }
+     * })
+    **/
+    count<T extends LabCategoryCountArgs>(
+      args?: Subset<T, LabCategoryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LabCategoryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a LabCategory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LabCategoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LabCategoryAggregateArgs>(args: Subset<T, LabCategoryAggregateArgs>): Prisma.PrismaPromise<GetLabCategoryAggregateType<T>>
+
+    /**
+     * Group by LabCategory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LabCategoryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LabCategoryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LabCategoryGroupByArgs['orderBy'] }
+        : { orderBy?: LabCategoryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LabCategoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLabCategoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the LabCategory model
+   */
+  readonly fields: LabCategoryFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for LabCategory.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LabCategoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    clinic<T extends ClinicDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClinicDefaultArgs<ExtArgs>>): Prisma__ClinicClient<$Result.GetResult<Prisma.$ClinicPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    tests<T extends LabCategory$testsArgs<ExtArgs> = {}>(args?: Subset<T, LabCategory$testsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LabTestPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the LabCategory model
+   */ 
+  interface LabCategoryFieldRefs {
+    readonly id: FieldRef<"LabCategory", 'String'>
+    readonly name: FieldRef<"LabCategory", 'String'>
+    readonly description: FieldRef<"LabCategory", 'String'>
+    readonly status: FieldRef<"LabCategory", 'String'>
+    readonly clinicId: FieldRef<"LabCategory", 'String'>
+    readonly createdAt: FieldRef<"LabCategory", 'DateTime'>
+    readonly updatedAt: FieldRef<"LabCategory", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * LabCategory findUnique
+   */
+  export type LabCategoryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabCategory
+     */
+    select?: LabCategorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabCategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which LabCategory to fetch.
+     */
+    where: LabCategoryWhereUniqueInput
+  }
+
+  /**
+   * LabCategory findUniqueOrThrow
+   */
+  export type LabCategoryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabCategory
+     */
+    select?: LabCategorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabCategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which LabCategory to fetch.
+     */
+    where: LabCategoryWhereUniqueInput
+  }
+
+  /**
+   * LabCategory findFirst
+   */
+  export type LabCategoryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabCategory
+     */
+    select?: LabCategorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabCategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which LabCategory to fetch.
+     */
+    where?: LabCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LabCategories to fetch.
+     */
+    orderBy?: LabCategoryOrderByWithRelationInput | LabCategoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LabCategories.
+     */
+    cursor?: LabCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LabCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LabCategories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LabCategories.
+     */
+    distinct?: LabCategoryScalarFieldEnum | LabCategoryScalarFieldEnum[]
+  }
+
+  /**
+   * LabCategory findFirstOrThrow
+   */
+  export type LabCategoryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabCategory
+     */
+    select?: LabCategorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabCategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which LabCategory to fetch.
+     */
+    where?: LabCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LabCategories to fetch.
+     */
+    orderBy?: LabCategoryOrderByWithRelationInput | LabCategoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LabCategories.
+     */
+    cursor?: LabCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LabCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LabCategories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LabCategories.
+     */
+    distinct?: LabCategoryScalarFieldEnum | LabCategoryScalarFieldEnum[]
+  }
+
+  /**
+   * LabCategory findMany
+   */
+  export type LabCategoryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabCategory
+     */
+    select?: LabCategorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabCategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which LabCategories to fetch.
+     */
+    where?: LabCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LabCategories to fetch.
+     */
+    orderBy?: LabCategoryOrderByWithRelationInput | LabCategoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing LabCategories.
+     */
+    cursor?: LabCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LabCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LabCategories.
+     */
+    skip?: number
+    distinct?: LabCategoryScalarFieldEnum | LabCategoryScalarFieldEnum[]
+  }
+
+  /**
+   * LabCategory create
+   */
+  export type LabCategoryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabCategory
+     */
+    select?: LabCategorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabCategoryInclude<ExtArgs> | null
+    /**
+     * The data needed to create a LabCategory.
+     */
+    data: XOR<LabCategoryCreateInput, LabCategoryUncheckedCreateInput>
+  }
+
+  /**
+   * LabCategory createMany
+   */
+  export type LabCategoryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many LabCategories.
+     */
+    data: LabCategoryCreateManyInput | LabCategoryCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * LabCategory createManyAndReturn
+   */
+  export type LabCategoryCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabCategory
+     */
+    select?: LabCategorySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many LabCategories.
+     */
+    data: LabCategoryCreateManyInput | LabCategoryCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabCategoryIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * LabCategory update
+   */
+  export type LabCategoryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabCategory
+     */
+    select?: LabCategorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabCategoryInclude<ExtArgs> | null
+    /**
+     * The data needed to update a LabCategory.
+     */
+    data: XOR<LabCategoryUpdateInput, LabCategoryUncheckedUpdateInput>
+    /**
+     * Choose, which LabCategory to update.
+     */
+    where: LabCategoryWhereUniqueInput
+  }
+
+  /**
+   * LabCategory updateMany
+   */
+  export type LabCategoryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update LabCategories.
+     */
+    data: XOR<LabCategoryUpdateManyMutationInput, LabCategoryUncheckedUpdateManyInput>
+    /**
+     * Filter which LabCategories to update
+     */
+    where?: LabCategoryWhereInput
+  }
+
+  /**
+   * LabCategory upsert
+   */
+  export type LabCategoryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabCategory
+     */
+    select?: LabCategorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabCategoryInclude<ExtArgs> | null
+    /**
+     * The filter to search for the LabCategory to update in case it exists.
+     */
+    where: LabCategoryWhereUniqueInput
+    /**
+     * In case the LabCategory found by the `where` argument doesn't exist, create a new LabCategory with this data.
+     */
+    create: XOR<LabCategoryCreateInput, LabCategoryUncheckedCreateInput>
+    /**
+     * In case the LabCategory was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LabCategoryUpdateInput, LabCategoryUncheckedUpdateInput>
+  }
+
+  /**
+   * LabCategory delete
+   */
+  export type LabCategoryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabCategory
+     */
+    select?: LabCategorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabCategoryInclude<ExtArgs> | null
+    /**
+     * Filter which LabCategory to delete.
+     */
+    where: LabCategoryWhereUniqueInput
+  }
+
+  /**
+   * LabCategory deleteMany
+   */
+  export type LabCategoryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LabCategories to delete
+     */
+    where?: LabCategoryWhereInput
+  }
+
+  /**
+   * LabCategory.tests
+   */
+  export type LabCategory$testsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabTest
+     */
+    select?: LabTestSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabTestInclude<ExtArgs> | null
+    where?: LabTestWhereInput
+    orderBy?: LabTestOrderByWithRelationInput | LabTestOrderByWithRelationInput[]
+    cursor?: LabTestWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LabTestScalarFieldEnum | LabTestScalarFieldEnum[]
+  }
+
+  /**
+   * LabCategory without action
+   */
+  export type LabCategoryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabCategory
+     */
+    select?: LabCategorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabCategoryInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model LabTest
+   */
+
+  export type AggregateLabTest = {
+    _count: LabTestCountAggregateOutputType | null
+    _avg: LabTestAvgAggregateOutputType | null
+    _sum: LabTestSumAggregateOutputType | null
+    _min: LabTestMinAggregateOutputType | null
+    _max: LabTestMaxAggregateOutputType | null
+  }
+
+  export type LabTestAvgAggregateOutputType = {
+    price: number | null
+    homeCollectionCharge: number | null
+    slotDuration: number | null
+    maxBookingsPerSlot: number | null
+  }
+
+  export type LabTestSumAggregateOutputType = {
+    price: number | null
+    homeCollectionCharge: number | null
+    slotDuration: number | null
+    maxBookingsPerSlot: number | null
+  }
+
+  export type LabTestMinAggregateOutputType = {
+    id: string | null
+    testCode: string | null
+    name: string | null
+    shortName: string | null
+    description: string | null
+    price: number | null
+    homeCollectionCharge: number | null
+    duration: string | null
+    preparationInfo: string | null
+    assignment: string | null
+    status: string | null
+    isSlotBookingEnabled: boolean | null
+    slotDuration: number | null
+    maxBookingsPerSlot: number | null
+    categoryId: string | null
+    clinicId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LabTestMaxAggregateOutputType = {
+    id: string | null
+    testCode: string | null
+    name: string | null
+    shortName: string | null
+    description: string | null
+    price: number | null
+    homeCollectionCharge: number | null
+    duration: string | null
+    preparationInfo: string | null
+    assignment: string | null
+    status: string | null
+    isSlotBookingEnabled: boolean | null
+    slotDuration: number | null
+    maxBookingsPerSlot: number | null
+    categoryId: string | null
+    clinicId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LabTestCountAggregateOutputType = {
+    id: number
+    testCode: number
+    name: number
+    shortName: number
+    description: number
+    price: number
+    homeCollectionCharge: number
+    duration: number
+    preparationInfo: number
+    assignment: number
+    assignedDoctors: number
+    assignedStaff: number
+    status: number
+    schedules: number
+    isSlotBookingEnabled: number
+    slotDuration: number
+    maxBookingsPerSlot: number
+    categoryId: number
+    clinicId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type LabTestAvgAggregateInputType = {
+    price?: true
+    homeCollectionCharge?: true
+    slotDuration?: true
+    maxBookingsPerSlot?: true
+  }
+
+  export type LabTestSumAggregateInputType = {
+    price?: true
+    homeCollectionCharge?: true
+    slotDuration?: true
+    maxBookingsPerSlot?: true
+  }
+
+  export type LabTestMinAggregateInputType = {
+    id?: true
+    testCode?: true
+    name?: true
+    shortName?: true
+    description?: true
+    price?: true
+    homeCollectionCharge?: true
+    duration?: true
+    preparationInfo?: true
+    assignment?: true
+    status?: true
+    isSlotBookingEnabled?: true
+    slotDuration?: true
+    maxBookingsPerSlot?: true
+    categoryId?: true
+    clinicId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LabTestMaxAggregateInputType = {
+    id?: true
+    testCode?: true
+    name?: true
+    shortName?: true
+    description?: true
+    price?: true
+    homeCollectionCharge?: true
+    duration?: true
+    preparationInfo?: true
+    assignment?: true
+    status?: true
+    isSlotBookingEnabled?: true
+    slotDuration?: true
+    maxBookingsPerSlot?: true
+    categoryId?: true
+    clinicId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LabTestCountAggregateInputType = {
+    id?: true
+    testCode?: true
+    name?: true
+    shortName?: true
+    description?: true
+    price?: true
+    homeCollectionCharge?: true
+    duration?: true
+    preparationInfo?: true
+    assignment?: true
+    assignedDoctors?: true
+    assignedStaff?: true
+    status?: true
+    schedules?: true
+    isSlotBookingEnabled?: true
+    slotDuration?: true
+    maxBookingsPerSlot?: true
+    categoryId?: true
+    clinicId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type LabTestAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LabTest to aggregate.
+     */
+    where?: LabTestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LabTests to fetch.
+     */
+    orderBy?: LabTestOrderByWithRelationInput | LabTestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LabTestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LabTests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LabTests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned LabTests
+    **/
+    _count?: true | LabTestCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: LabTestAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: LabTestSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LabTestMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LabTestMaxAggregateInputType
+  }
+
+  export type GetLabTestAggregateType<T extends LabTestAggregateArgs> = {
+        [P in keyof T & keyof AggregateLabTest]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLabTest[P]>
+      : GetScalarType<T[P], AggregateLabTest[P]>
+  }
+
+
+
+
+  export type LabTestGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LabTestWhereInput
+    orderBy?: LabTestOrderByWithAggregationInput | LabTestOrderByWithAggregationInput[]
+    by: LabTestScalarFieldEnum[] | LabTestScalarFieldEnum
+    having?: LabTestScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LabTestCountAggregateInputType | true
+    _avg?: LabTestAvgAggregateInputType
+    _sum?: LabTestSumAggregateInputType
+    _min?: LabTestMinAggregateInputType
+    _max?: LabTestMaxAggregateInputType
+  }
+
+  export type LabTestGroupByOutputType = {
+    id: string
+    testCode: string | null
+    name: string
+    shortName: string | null
+    description: string | null
+    price: number
+    homeCollectionCharge: number | null
+    duration: string | null
+    preparationInfo: string | null
+    assignment: string | null
+    assignedDoctors: JsonValue | null
+    assignedStaff: JsonValue | null
+    status: string
+    schedules: JsonValue | null
+    isSlotBookingEnabled: boolean
+    slotDuration: number | null
+    maxBookingsPerSlot: number | null
+    categoryId: string | null
+    clinicId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: LabTestCountAggregateOutputType | null
+    _avg: LabTestAvgAggregateOutputType | null
+    _sum: LabTestSumAggregateOutputType | null
+    _min: LabTestMinAggregateOutputType | null
+    _max: LabTestMaxAggregateOutputType | null
+  }
+
+  type GetLabTestGroupByPayload<T extends LabTestGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LabTestGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LabTestGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LabTestGroupByOutputType[P]>
+            : GetScalarType<T[P], LabTestGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LabTestSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    testCode?: boolean
+    name?: boolean
+    shortName?: boolean
+    description?: boolean
+    price?: boolean
+    homeCollectionCharge?: boolean
+    duration?: boolean
+    preparationInfo?: boolean
+    assignment?: boolean
+    assignedDoctors?: boolean
+    assignedStaff?: boolean
+    status?: boolean
+    schedules?: boolean
+    isSlotBookingEnabled?: boolean
+    slotDuration?: boolean
+    maxBookingsPerSlot?: boolean
+    categoryId?: boolean
+    clinicId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    category?: boolean | LabTest$categoryArgs<ExtArgs>
+    clinic?: boolean | ClinicDefaultArgs<ExtArgs>
+    bookings?: boolean | LabTest$bookingsArgs<ExtArgs>
+    _count?: boolean | LabTestCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["labTest"]>
+
+  export type LabTestSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    testCode?: boolean
+    name?: boolean
+    shortName?: boolean
+    description?: boolean
+    price?: boolean
+    homeCollectionCharge?: boolean
+    duration?: boolean
+    preparationInfo?: boolean
+    assignment?: boolean
+    assignedDoctors?: boolean
+    assignedStaff?: boolean
+    status?: boolean
+    schedules?: boolean
+    isSlotBookingEnabled?: boolean
+    slotDuration?: boolean
+    maxBookingsPerSlot?: boolean
+    categoryId?: boolean
+    clinicId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    category?: boolean | LabTest$categoryArgs<ExtArgs>
+    clinic?: boolean | ClinicDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["labTest"]>
+
+  export type LabTestSelectScalar = {
+    id?: boolean
+    testCode?: boolean
+    name?: boolean
+    shortName?: boolean
+    description?: boolean
+    price?: boolean
+    homeCollectionCharge?: boolean
+    duration?: boolean
+    preparationInfo?: boolean
+    assignment?: boolean
+    assignedDoctors?: boolean
+    assignedStaff?: boolean
+    status?: boolean
+    schedules?: boolean
+    isSlotBookingEnabled?: boolean
+    slotDuration?: boolean
+    maxBookingsPerSlot?: boolean
+    categoryId?: boolean
+    clinicId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type LabTestInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    category?: boolean | LabTest$categoryArgs<ExtArgs>
+    clinic?: boolean | ClinicDefaultArgs<ExtArgs>
+    bookings?: boolean | LabTest$bookingsArgs<ExtArgs>
+    _count?: boolean | LabTestCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type LabTestIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    category?: boolean | LabTest$categoryArgs<ExtArgs>
+    clinic?: boolean | ClinicDefaultArgs<ExtArgs>
+  }
+
+  export type $LabTestPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "LabTest"
+    objects: {
+      category: Prisma.$LabCategoryPayload<ExtArgs> | null
+      clinic: Prisma.$ClinicPayload<ExtArgs>
+      bookings: Prisma.$LabBookingPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      testCode: string | null
+      name: string
+      shortName: string | null
+      description: string | null
+      price: number
+      homeCollectionCharge: number | null
+      duration: string | null
+      preparationInfo: string | null
+      assignment: string | null
+      assignedDoctors: Prisma.JsonValue | null
+      assignedStaff: Prisma.JsonValue | null
+      status: string
+      schedules: Prisma.JsonValue | null
+      isSlotBookingEnabled: boolean
+      slotDuration: number | null
+      maxBookingsPerSlot: number | null
+      categoryId: string | null
+      clinicId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["labTest"]>
+    composites: {}
+  }
+
+  type LabTestGetPayload<S extends boolean | null | undefined | LabTestDefaultArgs> = $Result.GetResult<Prisma.$LabTestPayload, S>
+
+  type LabTestCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<LabTestFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: LabTestCountAggregateInputType | true
+    }
+
+  export interface LabTestDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['LabTest'], meta: { name: 'LabTest' } }
+    /**
+     * Find zero or one LabTest that matches the filter.
+     * @param {LabTestFindUniqueArgs} args - Arguments to find a LabTest
+     * @example
+     * // Get one LabTest
+     * const labTest = await prisma.labTest.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends LabTestFindUniqueArgs>(args: SelectSubset<T, LabTestFindUniqueArgs<ExtArgs>>): Prisma__LabTestClient<$Result.GetResult<Prisma.$LabTestPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one LabTest that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {LabTestFindUniqueOrThrowArgs} args - Arguments to find a LabTest
+     * @example
+     * // Get one LabTest
+     * const labTest = await prisma.labTest.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends LabTestFindUniqueOrThrowArgs>(args: SelectSubset<T, LabTestFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LabTestClient<$Result.GetResult<Prisma.$LabTestPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first LabTest that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LabTestFindFirstArgs} args - Arguments to find a LabTest
+     * @example
+     * // Get one LabTest
+     * const labTest = await prisma.labTest.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends LabTestFindFirstArgs>(args?: SelectSubset<T, LabTestFindFirstArgs<ExtArgs>>): Prisma__LabTestClient<$Result.GetResult<Prisma.$LabTestPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first LabTest that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LabTestFindFirstOrThrowArgs} args - Arguments to find a LabTest
+     * @example
+     * // Get one LabTest
+     * const labTest = await prisma.labTest.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends LabTestFindFirstOrThrowArgs>(args?: SelectSubset<T, LabTestFindFirstOrThrowArgs<ExtArgs>>): Prisma__LabTestClient<$Result.GetResult<Prisma.$LabTestPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more LabTests that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LabTestFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all LabTests
+     * const labTests = await prisma.labTest.findMany()
+     * 
+     * // Get first 10 LabTests
+     * const labTests = await prisma.labTest.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const labTestWithIdOnly = await prisma.labTest.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends LabTestFindManyArgs>(args?: SelectSubset<T, LabTestFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LabTestPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a LabTest.
+     * @param {LabTestCreateArgs} args - Arguments to create a LabTest.
+     * @example
+     * // Create one LabTest
+     * const LabTest = await prisma.labTest.create({
+     *   data: {
+     *     // ... data to create a LabTest
+     *   }
+     * })
+     * 
+     */
+    create<T extends LabTestCreateArgs>(args: SelectSubset<T, LabTestCreateArgs<ExtArgs>>): Prisma__LabTestClient<$Result.GetResult<Prisma.$LabTestPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many LabTests.
+     * @param {LabTestCreateManyArgs} args - Arguments to create many LabTests.
+     * @example
+     * // Create many LabTests
+     * const labTest = await prisma.labTest.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends LabTestCreateManyArgs>(args?: SelectSubset<T, LabTestCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many LabTests and returns the data saved in the database.
+     * @param {LabTestCreateManyAndReturnArgs} args - Arguments to create many LabTests.
+     * @example
+     * // Create many LabTests
+     * const labTest = await prisma.labTest.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many LabTests and only return the `id`
+     * const labTestWithIdOnly = await prisma.labTest.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends LabTestCreateManyAndReturnArgs>(args?: SelectSubset<T, LabTestCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LabTestPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a LabTest.
+     * @param {LabTestDeleteArgs} args - Arguments to delete one LabTest.
+     * @example
+     * // Delete one LabTest
+     * const LabTest = await prisma.labTest.delete({
+     *   where: {
+     *     // ... filter to delete one LabTest
+     *   }
+     * })
+     * 
+     */
+    delete<T extends LabTestDeleteArgs>(args: SelectSubset<T, LabTestDeleteArgs<ExtArgs>>): Prisma__LabTestClient<$Result.GetResult<Prisma.$LabTestPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one LabTest.
+     * @param {LabTestUpdateArgs} args - Arguments to update one LabTest.
+     * @example
+     * // Update one LabTest
+     * const labTest = await prisma.labTest.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends LabTestUpdateArgs>(args: SelectSubset<T, LabTestUpdateArgs<ExtArgs>>): Prisma__LabTestClient<$Result.GetResult<Prisma.$LabTestPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more LabTests.
+     * @param {LabTestDeleteManyArgs} args - Arguments to filter LabTests to delete.
+     * @example
+     * // Delete a few LabTests
+     * const { count } = await prisma.labTest.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends LabTestDeleteManyArgs>(args?: SelectSubset<T, LabTestDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LabTests.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LabTestUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many LabTests
+     * const labTest = await prisma.labTest.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends LabTestUpdateManyArgs>(args: SelectSubset<T, LabTestUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one LabTest.
+     * @param {LabTestUpsertArgs} args - Arguments to update or create a LabTest.
+     * @example
+     * // Update or create a LabTest
+     * const labTest = await prisma.labTest.upsert({
+     *   create: {
+     *     // ... data to create a LabTest
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the LabTest we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LabTestUpsertArgs>(args: SelectSubset<T, LabTestUpsertArgs<ExtArgs>>): Prisma__LabTestClient<$Result.GetResult<Prisma.$LabTestPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of LabTests.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LabTestCountArgs} args - Arguments to filter LabTests to count.
+     * @example
+     * // Count the number of LabTests
+     * const count = await prisma.labTest.count({
+     *   where: {
+     *     // ... the filter for the LabTests we want to count
+     *   }
+     * })
+    **/
+    count<T extends LabTestCountArgs>(
+      args?: Subset<T, LabTestCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LabTestCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a LabTest.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LabTestAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LabTestAggregateArgs>(args: Subset<T, LabTestAggregateArgs>): Prisma.PrismaPromise<GetLabTestAggregateType<T>>
+
+    /**
+     * Group by LabTest.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LabTestGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LabTestGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LabTestGroupByArgs['orderBy'] }
+        : { orderBy?: LabTestGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LabTestGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLabTestGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the LabTest model
+   */
+  readonly fields: LabTestFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for LabTest.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LabTestClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    category<T extends LabTest$categoryArgs<ExtArgs> = {}>(args?: Subset<T, LabTest$categoryArgs<ExtArgs>>): Prisma__LabCategoryClient<$Result.GetResult<Prisma.$LabCategoryPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    clinic<T extends ClinicDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClinicDefaultArgs<ExtArgs>>): Prisma__ClinicClient<$Result.GetResult<Prisma.$ClinicPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    bookings<T extends LabTest$bookingsArgs<ExtArgs> = {}>(args?: Subset<T, LabTest$bookingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LabBookingPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the LabTest model
+   */ 
+  interface LabTestFieldRefs {
+    readonly id: FieldRef<"LabTest", 'String'>
+    readonly testCode: FieldRef<"LabTest", 'String'>
+    readonly name: FieldRef<"LabTest", 'String'>
+    readonly shortName: FieldRef<"LabTest", 'String'>
+    readonly description: FieldRef<"LabTest", 'String'>
+    readonly price: FieldRef<"LabTest", 'Float'>
+    readonly homeCollectionCharge: FieldRef<"LabTest", 'Float'>
+    readonly duration: FieldRef<"LabTest", 'String'>
+    readonly preparationInfo: FieldRef<"LabTest", 'String'>
+    readonly assignment: FieldRef<"LabTest", 'String'>
+    readonly assignedDoctors: FieldRef<"LabTest", 'Json'>
+    readonly assignedStaff: FieldRef<"LabTest", 'Json'>
+    readonly status: FieldRef<"LabTest", 'String'>
+    readonly schedules: FieldRef<"LabTest", 'Json'>
+    readonly isSlotBookingEnabled: FieldRef<"LabTest", 'Boolean'>
+    readonly slotDuration: FieldRef<"LabTest", 'Int'>
+    readonly maxBookingsPerSlot: FieldRef<"LabTest", 'Int'>
+    readonly categoryId: FieldRef<"LabTest", 'String'>
+    readonly clinicId: FieldRef<"LabTest", 'String'>
+    readonly createdAt: FieldRef<"LabTest", 'DateTime'>
+    readonly updatedAt: FieldRef<"LabTest", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * LabTest findUnique
+   */
+  export type LabTestFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabTest
+     */
+    select?: LabTestSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabTestInclude<ExtArgs> | null
+    /**
+     * Filter, which LabTest to fetch.
+     */
+    where: LabTestWhereUniqueInput
+  }
+
+  /**
+   * LabTest findUniqueOrThrow
+   */
+  export type LabTestFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabTest
+     */
+    select?: LabTestSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabTestInclude<ExtArgs> | null
+    /**
+     * Filter, which LabTest to fetch.
+     */
+    where: LabTestWhereUniqueInput
+  }
+
+  /**
+   * LabTest findFirst
+   */
+  export type LabTestFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabTest
+     */
+    select?: LabTestSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabTestInclude<ExtArgs> | null
+    /**
+     * Filter, which LabTest to fetch.
+     */
+    where?: LabTestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LabTests to fetch.
+     */
+    orderBy?: LabTestOrderByWithRelationInput | LabTestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LabTests.
+     */
+    cursor?: LabTestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LabTests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LabTests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LabTests.
+     */
+    distinct?: LabTestScalarFieldEnum | LabTestScalarFieldEnum[]
+  }
+
+  /**
+   * LabTest findFirstOrThrow
+   */
+  export type LabTestFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabTest
+     */
+    select?: LabTestSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabTestInclude<ExtArgs> | null
+    /**
+     * Filter, which LabTest to fetch.
+     */
+    where?: LabTestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LabTests to fetch.
+     */
+    orderBy?: LabTestOrderByWithRelationInput | LabTestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LabTests.
+     */
+    cursor?: LabTestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LabTests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LabTests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LabTests.
+     */
+    distinct?: LabTestScalarFieldEnum | LabTestScalarFieldEnum[]
+  }
+
+  /**
+   * LabTest findMany
+   */
+  export type LabTestFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabTest
+     */
+    select?: LabTestSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabTestInclude<ExtArgs> | null
+    /**
+     * Filter, which LabTests to fetch.
+     */
+    where?: LabTestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LabTests to fetch.
+     */
+    orderBy?: LabTestOrderByWithRelationInput | LabTestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing LabTests.
+     */
+    cursor?: LabTestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LabTests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LabTests.
+     */
+    skip?: number
+    distinct?: LabTestScalarFieldEnum | LabTestScalarFieldEnum[]
+  }
+
+  /**
+   * LabTest create
+   */
+  export type LabTestCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabTest
+     */
+    select?: LabTestSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabTestInclude<ExtArgs> | null
+    /**
+     * The data needed to create a LabTest.
+     */
+    data: XOR<LabTestCreateInput, LabTestUncheckedCreateInput>
+  }
+
+  /**
+   * LabTest createMany
+   */
+  export type LabTestCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many LabTests.
+     */
+    data: LabTestCreateManyInput | LabTestCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * LabTest createManyAndReturn
+   */
+  export type LabTestCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabTest
+     */
+    select?: LabTestSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many LabTests.
+     */
+    data: LabTestCreateManyInput | LabTestCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabTestIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * LabTest update
+   */
+  export type LabTestUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabTest
+     */
+    select?: LabTestSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabTestInclude<ExtArgs> | null
+    /**
+     * The data needed to update a LabTest.
+     */
+    data: XOR<LabTestUpdateInput, LabTestUncheckedUpdateInput>
+    /**
+     * Choose, which LabTest to update.
+     */
+    where: LabTestWhereUniqueInput
+  }
+
+  /**
+   * LabTest updateMany
+   */
+  export type LabTestUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update LabTests.
+     */
+    data: XOR<LabTestUpdateManyMutationInput, LabTestUncheckedUpdateManyInput>
+    /**
+     * Filter which LabTests to update
+     */
+    where?: LabTestWhereInput
+  }
+
+  /**
+   * LabTest upsert
+   */
+  export type LabTestUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabTest
+     */
+    select?: LabTestSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabTestInclude<ExtArgs> | null
+    /**
+     * The filter to search for the LabTest to update in case it exists.
+     */
+    where: LabTestWhereUniqueInput
+    /**
+     * In case the LabTest found by the `where` argument doesn't exist, create a new LabTest with this data.
+     */
+    create: XOR<LabTestCreateInput, LabTestUncheckedCreateInput>
+    /**
+     * In case the LabTest was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LabTestUpdateInput, LabTestUncheckedUpdateInput>
+  }
+
+  /**
+   * LabTest delete
+   */
+  export type LabTestDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabTest
+     */
+    select?: LabTestSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabTestInclude<ExtArgs> | null
+    /**
+     * Filter which LabTest to delete.
+     */
+    where: LabTestWhereUniqueInput
+  }
+
+  /**
+   * LabTest deleteMany
+   */
+  export type LabTestDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LabTests to delete
+     */
+    where?: LabTestWhereInput
+  }
+
+  /**
+   * LabTest.category
+   */
+  export type LabTest$categoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabCategory
+     */
+    select?: LabCategorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabCategoryInclude<ExtArgs> | null
+    where?: LabCategoryWhereInput
+  }
+
+  /**
+   * LabTest.bookings
+   */
+  export type LabTest$bookingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabBooking
+     */
+    select?: LabBookingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabBookingInclude<ExtArgs> | null
+    where?: LabBookingWhereInput
+    orderBy?: LabBookingOrderByWithRelationInput | LabBookingOrderByWithRelationInput[]
+    cursor?: LabBookingWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LabBookingScalarFieldEnum | LabBookingScalarFieldEnum[]
+  }
+
+  /**
+   * LabTest without action
+   */
+  export type LabTestDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabTest
+     */
+    select?: LabTestSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabTestInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model LabBooking
+   */
+
+  export type AggregateLabBooking = {
+    _count: LabBookingCountAggregateOutputType | null
+    _avg: LabBookingAvgAggregateOutputType | null
+    _sum: LabBookingSumAggregateOutputType | null
+    _min: LabBookingMinAggregateOutputType | null
+    _max: LabBookingMaxAggregateOutputType | null
+  }
+
+  export type LabBookingAvgAggregateOutputType = {
+    discount: number | null
+    tax: number | null
+    totalAmount: number | null
+  }
+
+  export type LabBookingSumAggregateOutputType = {
+    discount: number | null
+    tax: number | null
+    totalAmount: number | null
+  }
+
+  export type LabBookingMinAggregateOutputType = {
+    id: string | null
+    bookingCode: string | null
+    patientId: string | null
+    testId: string | null
+    scheduledAt: Date | null
+    status: string | null
+    paymentStatus: string | null
+    paymentMethod: string | null
+    discount: number | null
+    tax: number | null
+    totalAmount: number | null
+    invoiceNo: string | null
+    sessionSlot: string | null
+    assignedUserId: string | null
+    remarks: string | null
+    clinicId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LabBookingMaxAggregateOutputType = {
+    id: string | null
+    bookingCode: string | null
+    patientId: string | null
+    testId: string | null
+    scheduledAt: Date | null
+    status: string | null
+    paymentStatus: string | null
+    paymentMethod: string | null
+    discount: number | null
+    tax: number | null
+    totalAmount: number | null
+    invoiceNo: string | null
+    sessionSlot: string | null
+    assignedUserId: string | null
+    remarks: string | null
+    clinicId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LabBookingCountAggregateOutputType = {
+    id: number
+    bookingCode: number
+    patientId: number
+    testId: number
+    scheduledAt: number
+    status: number
+    paymentStatus: number
+    paymentMethod: number
+    discount: number
+    tax: number
+    totalAmount: number
+    invoiceNo: number
+    sessionSlot: number
+    assignedUserId: number
+    remarks: number
+    clinicId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type LabBookingAvgAggregateInputType = {
+    discount?: true
+    tax?: true
+    totalAmount?: true
+  }
+
+  export type LabBookingSumAggregateInputType = {
+    discount?: true
+    tax?: true
+    totalAmount?: true
+  }
+
+  export type LabBookingMinAggregateInputType = {
+    id?: true
+    bookingCode?: true
+    patientId?: true
+    testId?: true
+    scheduledAt?: true
+    status?: true
+    paymentStatus?: true
+    paymentMethod?: true
+    discount?: true
+    tax?: true
+    totalAmount?: true
+    invoiceNo?: true
+    sessionSlot?: true
+    assignedUserId?: true
+    remarks?: true
+    clinicId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LabBookingMaxAggregateInputType = {
+    id?: true
+    bookingCode?: true
+    patientId?: true
+    testId?: true
+    scheduledAt?: true
+    status?: true
+    paymentStatus?: true
+    paymentMethod?: true
+    discount?: true
+    tax?: true
+    totalAmount?: true
+    invoiceNo?: true
+    sessionSlot?: true
+    assignedUserId?: true
+    remarks?: true
+    clinicId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LabBookingCountAggregateInputType = {
+    id?: true
+    bookingCode?: true
+    patientId?: true
+    testId?: true
+    scheduledAt?: true
+    status?: true
+    paymentStatus?: true
+    paymentMethod?: true
+    discount?: true
+    tax?: true
+    totalAmount?: true
+    invoiceNo?: true
+    sessionSlot?: true
+    assignedUserId?: true
+    remarks?: true
+    clinicId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type LabBookingAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LabBooking to aggregate.
+     */
+    where?: LabBookingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LabBookings to fetch.
+     */
+    orderBy?: LabBookingOrderByWithRelationInput | LabBookingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LabBookingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LabBookings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LabBookings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned LabBookings
+    **/
+    _count?: true | LabBookingCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: LabBookingAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: LabBookingSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LabBookingMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LabBookingMaxAggregateInputType
+  }
+
+  export type GetLabBookingAggregateType<T extends LabBookingAggregateArgs> = {
+        [P in keyof T & keyof AggregateLabBooking]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLabBooking[P]>
+      : GetScalarType<T[P], AggregateLabBooking[P]>
+  }
+
+
+
+
+  export type LabBookingGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LabBookingWhereInput
+    orderBy?: LabBookingOrderByWithAggregationInput | LabBookingOrderByWithAggregationInput[]
+    by: LabBookingScalarFieldEnum[] | LabBookingScalarFieldEnum
+    having?: LabBookingScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LabBookingCountAggregateInputType | true
+    _avg?: LabBookingAvgAggregateInputType
+    _sum?: LabBookingSumAggregateInputType
+    _min?: LabBookingMinAggregateInputType
+    _max?: LabBookingMaxAggregateInputType
+  }
+
+  export type LabBookingGroupByOutputType = {
+    id: string
+    bookingCode: string | null
+    patientId: string | null
+    testId: string | null
+    scheduledAt: Date
+    status: string
+    paymentStatus: string
+    paymentMethod: string | null
+    discount: number
+    tax: number
+    totalAmount: number
+    invoiceNo: string | null
+    sessionSlot: string | null
+    assignedUserId: string | null
+    remarks: string | null
+    clinicId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: LabBookingCountAggregateOutputType | null
+    _avg: LabBookingAvgAggregateOutputType | null
+    _sum: LabBookingSumAggregateOutputType | null
+    _min: LabBookingMinAggregateOutputType | null
+    _max: LabBookingMaxAggregateOutputType | null
+  }
+
+  type GetLabBookingGroupByPayload<T extends LabBookingGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LabBookingGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LabBookingGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LabBookingGroupByOutputType[P]>
+            : GetScalarType<T[P], LabBookingGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LabBookingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    bookingCode?: boolean
+    patientId?: boolean
+    testId?: boolean
+    scheduledAt?: boolean
+    status?: boolean
+    paymentStatus?: boolean
+    paymentMethod?: boolean
+    discount?: boolean
+    tax?: boolean
+    totalAmount?: boolean
+    invoiceNo?: boolean
+    sessionSlot?: boolean
+    assignedUserId?: boolean
+    remarks?: boolean
+    clinicId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    patient?: boolean | LabBooking$patientArgs<ExtArgs>
+    test?: boolean | LabBooking$testArgs<ExtArgs>
+    clinic?: boolean | ClinicDefaultArgs<ExtArgs>
+    invoice?: boolean | LabBooking$invoiceArgs<ExtArgs>
+  }, ExtArgs["result"]["labBooking"]>
+
+  export type LabBookingSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    bookingCode?: boolean
+    patientId?: boolean
+    testId?: boolean
+    scheduledAt?: boolean
+    status?: boolean
+    paymentStatus?: boolean
+    paymentMethod?: boolean
+    discount?: boolean
+    tax?: boolean
+    totalAmount?: boolean
+    invoiceNo?: boolean
+    sessionSlot?: boolean
+    assignedUserId?: boolean
+    remarks?: boolean
+    clinicId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    patient?: boolean | LabBooking$patientArgs<ExtArgs>
+    test?: boolean | LabBooking$testArgs<ExtArgs>
+    clinic?: boolean | ClinicDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["labBooking"]>
+
+  export type LabBookingSelectScalar = {
+    id?: boolean
+    bookingCode?: boolean
+    patientId?: boolean
+    testId?: boolean
+    scheduledAt?: boolean
+    status?: boolean
+    paymentStatus?: boolean
+    paymentMethod?: boolean
+    discount?: boolean
+    tax?: boolean
+    totalAmount?: boolean
+    invoiceNo?: boolean
+    sessionSlot?: boolean
+    assignedUserId?: boolean
+    remarks?: boolean
+    clinicId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type LabBookingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    patient?: boolean | LabBooking$patientArgs<ExtArgs>
+    test?: boolean | LabBooking$testArgs<ExtArgs>
+    clinic?: boolean | ClinicDefaultArgs<ExtArgs>
+    invoice?: boolean | LabBooking$invoiceArgs<ExtArgs>
+  }
+  export type LabBookingIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    patient?: boolean | LabBooking$patientArgs<ExtArgs>
+    test?: boolean | LabBooking$testArgs<ExtArgs>
+    clinic?: boolean | ClinicDefaultArgs<ExtArgs>
+  }
+
+  export type $LabBookingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "LabBooking"
+    objects: {
+      patient: Prisma.$PatientPayload<ExtArgs> | null
+      test: Prisma.$LabTestPayload<ExtArgs> | null
+      clinic: Prisma.$ClinicPayload<ExtArgs>
+      invoice: Prisma.$InvoicePayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      bookingCode: string | null
+      patientId: string | null
+      testId: string | null
+      scheduledAt: Date
+      status: string
+      paymentStatus: string
+      paymentMethod: string | null
+      discount: number
+      tax: number
+      totalAmount: number
+      invoiceNo: string | null
+      sessionSlot: string | null
+      assignedUserId: string | null
+      remarks: string | null
+      clinicId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["labBooking"]>
+    composites: {}
+  }
+
+  type LabBookingGetPayload<S extends boolean | null | undefined | LabBookingDefaultArgs> = $Result.GetResult<Prisma.$LabBookingPayload, S>
+
+  type LabBookingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<LabBookingFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: LabBookingCountAggregateInputType | true
+    }
+
+  export interface LabBookingDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['LabBooking'], meta: { name: 'LabBooking' } }
+    /**
+     * Find zero or one LabBooking that matches the filter.
+     * @param {LabBookingFindUniqueArgs} args - Arguments to find a LabBooking
+     * @example
+     * // Get one LabBooking
+     * const labBooking = await prisma.labBooking.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends LabBookingFindUniqueArgs>(args: SelectSubset<T, LabBookingFindUniqueArgs<ExtArgs>>): Prisma__LabBookingClient<$Result.GetResult<Prisma.$LabBookingPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one LabBooking that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {LabBookingFindUniqueOrThrowArgs} args - Arguments to find a LabBooking
+     * @example
+     * // Get one LabBooking
+     * const labBooking = await prisma.labBooking.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends LabBookingFindUniqueOrThrowArgs>(args: SelectSubset<T, LabBookingFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LabBookingClient<$Result.GetResult<Prisma.$LabBookingPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first LabBooking that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LabBookingFindFirstArgs} args - Arguments to find a LabBooking
+     * @example
+     * // Get one LabBooking
+     * const labBooking = await prisma.labBooking.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends LabBookingFindFirstArgs>(args?: SelectSubset<T, LabBookingFindFirstArgs<ExtArgs>>): Prisma__LabBookingClient<$Result.GetResult<Prisma.$LabBookingPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first LabBooking that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LabBookingFindFirstOrThrowArgs} args - Arguments to find a LabBooking
+     * @example
+     * // Get one LabBooking
+     * const labBooking = await prisma.labBooking.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends LabBookingFindFirstOrThrowArgs>(args?: SelectSubset<T, LabBookingFindFirstOrThrowArgs<ExtArgs>>): Prisma__LabBookingClient<$Result.GetResult<Prisma.$LabBookingPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more LabBookings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LabBookingFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all LabBookings
+     * const labBookings = await prisma.labBooking.findMany()
+     * 
+     * // Get first 10 LabBookings
+     * const labBookings = await prisma.labBooking.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const labBookingWithIdOnly = await prisma.labBooking.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends LabBookingFindManyArgs>(args?: SelectSubset<T, LabBookingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LabBookingPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a LabBooking.
+     * @param {LabBookingCreateArgs} args - Arguments to create a LabBooking.
+     * @example
+     * // Create one LabBooking
+     * const LabBooking = await prisma.labBooking.create({
+     *   data: {
+     *     // ... data to create a LabBooking
+     *   }
+     * })
+     * 
+     */
+    create<T extends LabBookingCreateArgs>(args: SelectSubset<T, LabBookingCreateArgs<ExtArgs>>): Prisma__LabBookingClient<$Result.GetResult<Prisma.$LabBookingPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many LabBookings.
+     * @param {LabBookingCreateManyArgs} args - Arguments to create many LabBookings.
+     * @example
+     * // Create many LabBookings
+     * const labBooking = await prisma.labBooking.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends LabBookingCreateManyArgs>(args?: SelectSubset<T, LabBookingCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many LabBookings and returns the data saved in the database.
+     * @param {LabBookingCreateManyAndReturnArgs} args - Arguments to create many LabBookings.
+     * @example
+     * // Create many LabBookings
+     * const labBooking = await prisma.labBooking.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many LabBookings and only return the `id`
+     * const labBookingWithIdOnly = await prisma.labBooking.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends LabBookingCreateManyAndReturnArgs>(args?: SelectSubset<T, LabBookingCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LabBookingPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a LabBooking.
+     * @param {LabBookingDeleteArgs} args - Arguments to delete one LabBooking.
+     * @example
+     * // Delete one LabBooking
+     * const LabBooking = await prisma.labBooking.delete({
+     *   where: {
+     *     // ... filter to delete one LabBooking
+     *   }
+     * })
+     * 
+     */
+    delete<T extends LabBookingDeleteArgs>(args: SelectSubset<T, LabBookingDeleteArgs<ExtArgs>>): Prisma__LabBookingClient<$Result.GetResult<Prisma.$LabBookingPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one LabBooking.
+     * @param {LabBookingUpdateArgs} args - Arguments to update one LabBooking.
+     * @example
+     * // Update one LabBooking
+     * const labBooking = await prisma.labBooking.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends LabBookingUpdateArgs>(args: SelectSubset<T, LabBookingUpdateArgs<ExtArgs>>): Prisma__LabBookingClient<$Result.GetResult<Prisma.$LabBookingPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more LabBookings.
+     * @param {LabBookingDeleteManyArgs} args - Arguments to filter LabBookings to delete.
+     * @example
+     * // Delete a few LabBookings
+     * const { count } = await prisma.labBooking.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends LabBookingDeleteManyArgs>(args?: SelectSubset<T, LabBookingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LabBookings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LabBookingUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many LabBookings
+     * const labBooking = await prisma.labBooking.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends LabBookingUpdateManyArgs>(args: SelectSubset<T, LabBookingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one LabBooking.
+     * @param {LabBookingUpsertArgs} args - Arguments to update or create a LabBooking.
+     * @example
+     * // Update or create a LabBooking
+     * const labBooking = await prisma.labBooking.upsert({
+     *   create: {
+     *     // ... data to create a LabBooking
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the LabBooking we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LabBookingUpsertArgs>(args: SelectSubset<T, LabBookingUpsertArgs<ExtArgs>>): Prisma__LabBookingClient<$Result.GetResult<Prisma.$LabBookingPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of LabBookings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LabBookingCountArgs} args - Arguments to filter LabBookings to count.
+     * @example
+     * // Count the number of LabBookings
+     * const count = await prisma.labBooking.count({
+     *   where: {
+     *     // ... the filter for the LabBookings we want to count
+     *   }
+     * })
+    **/
+    count<T extends LabBookingCountArgs>(
+      args?: Subset<T, LabBookingCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LabBookingCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a LabBooking.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LabBookingAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LabBookingAggregateArgs>(args: Subset<T, LabBookingAggregateArgs>): Prisma.PrismaPromise<GetLabBookingAggregateType<T>>
+
+    /**
+     * Group by LabBooking.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LabBookingGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LabBookingGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LabBookingGroupByArgs['orderBy'] }
+        : { orderBy?: LabBookingGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LabBookingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLabBookingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the LabBooking model
+   */
+  readonly fields: LabBookingFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for LabBooking.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LabBookingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    patient<T extends LabBooking$patientArgs<ExtArgs> = {}>(args?: Subset<T, LabBooking$patientArgs<ExtArgs>>): Prisma__PatientClient<$Result.GetResult<Prisma.$PatientPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    test<T extends LabBooking$testArgs<ExtArgs> = {}>(args?: Subset<T, LabBooking$testArgs<ExtArgs>>): Prisma__LabTestClient<$Result.GetResult<Prisma.$LabTestPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    clinic<T extends ClinicDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClinicDefaultArgs<ExtArgs>>): Prisma__ClinicClient<$Result.GetResult<Prisma.$ClinicPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    invoice<T extends LabBooking$invoiceArgs<ExtArgs> = {}>(args?: Subset<T, LabBooking$invoiceArgs<ExtArgs>>): Prisma__InvoiceClient<$Result.GetResult<Prisma.$InvoicePayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the LabBooking model
+   */ 
+  interface LabBookingFieldRefs {
+    readonly id: FieldRef<"LabBooking", 'String'>
+    readonly bookingCode: FieldRef<"LabBooking", 'String'>
+    readonly patientId: FieldRef<"LabBooking", 'String'>
+    readonly testId: FieldRef<"LabBooking", 'String'>
+    readonly scheduledAt: FieldRef<"LabBooking", 'DateTime'>
+    readonly status: FieldRef<"LabBooking", 'String'>
+    readonly paymentStatus: FieldRef<"LabBooking", 'String'>
+    readonly paymentMethod: FieldRef<"LabBooking", 'String'>
+    readonly discount: FieldRef<"LabBooking", 'Float'>
+    readonly tax: FieldRef<"LabBooking", 'Float'>
+    readonly totalAmount: FieldRef<"LabBooking", 'Float'>
+    readonly invoiceNo: FieldRef<"LabBooking", 'String'>
+    readonly sessionSlot: FieldRef<"LabBooking", 'String'>
+    readonly assignedUserId: FieldRef<"LabBooking", 'String'>
+    readonly remarks: FieldRef<"LabBooking", 'String'>
+    readonly clinicId: FieldRef<"LabBooking", 'String'>
+    readonly createdAt: FieldRef<"LabBooking", 'DateTime'>
+    readonly updatedAt: FieldRef<"LabBooking", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * LabBooking findUnique
+   */
+  export type LabBookingFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabBooking
+     */
+    select?: LabBookingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabBookingInclude<ExtArgs> | null
+    /**
+     * Filter, which LabBooking to fetch.
+     */
+    where: LabBookingWhereUniqueInput
+  }
+
+  /**
+   * LabBooking findUniqueOrThrow
+   */
+  export type LabBookingFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabBooking
+     */
+    select?: LabBookingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabBookingInclude<ExtArgs> | null
+    /**
+     * Filter, which LabBooking to fetch.
+     */
+    where: LabBookingWhereUniqueInput
+  }
+
+  /**
+   * LabBooking findFirst
+   */
+  export type LabBookingFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabBooking
+     */
+    select?: LabBookingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabBookingInclude<ExtArgs> | null
+    /**
+     * Filter, which LabBooking to fetch.
+     */
+    where?: LabBookingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LabBookings to fetch.
+     */
+    orderBy?: LabBookingOrderByWithRelationInput | LabBookingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LabBookings.
+     */
+    cursor?: LabBookingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LabBookings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LabBookings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LabBookings.
+     */
+    distinct?: LabBookingScalarFieldEnum | LabBookingScalarFieldEnum[]
+  }
+
+  /**
+   * LabBooking findFirstOrThrow
+   */
+  export type LabBookingFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabBooking
+     */
+    select?: LabBookingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabBookingInclude<ExtArgs> | null
+    /**
+     * Filter, which LabBooking to fetch.
+     */
+    where?: LabBookingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LabBookings to fetch.
+     */
+    orderBy?: LabBookingOrderByWithRelationInput | LabBookingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LabBookings.
+     */
+    cursor?: LabBookingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LabBookings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LabBookings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LabBookings.
+     */
+    distinct?: LabBookingScalarFieldEnum | LabBookingScalarFieldEnum[]
+  }
+
+  /**
+   * LabBooking findMany
+   */
+  export type LabBookingFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabBooking
+     */
+    select?: LabBookingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabBookingInclude<ExtArgs> | null
+    /**
+     * Filter, which LabBookings to fetch.
+     */
+    where?: LabBookingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LabBookings to fetch.
+     */
+    orderBy?: LabBookingOrderByWithRelationInput | LabBookingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing LabBookings.
+     */
+    cursor?: LabBookingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LabBookings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LabBookings.
+     */
+    skip?: number
+    distinct?: LabBookingScalarFieldEnum | LabBookingScalarFieldEnum[]
+  }
+
+  /**
+   * LabBooking create
+   */
+  export type LabBookingCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabBooking
+     */
+    select?: LabBookingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabBookingInclude<ExtArgs> | null
+    /**
+     * The data needed to create a LabBooking.
+     */
+    data: XOR<LabBookingCreateInput, LabBookingUncheckedCreateInput>
+  }
+
+  /**
+   * LabBooking createMany
+   */
+  export type LabBookingCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many LabBookings.
+     */
+    data: LabBookingCreateManyInput | LabBookingCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * LabBooking createManyAndReturn
+   */
+  export type LabBookingCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabBooking
+     */
+    select?: LabBookingSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many LabBookings.
+     */
+    data: LabBookingCreateManyInput | LabBookingCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabBookingIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * LabBooking update
+   */
+  export type LabBookingUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabBooking
+     */
+    select?: LabBookingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabBookingInclude<ExtArgs> | null
+    /**
+     * The data needed to update a LabBooking.
+     */
+    data: XOR<LabBookingUpdateInput, LabBookingUncheckedUpdateInput>
+    /**
+     * Choose, which LabBooking to update.
+     */
+    where: LabBookingWhereUniqueInput
+  }
+
+  /**
+   * LabBooking updateMany
+   */
+  export type LabBookingUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update LabBookings.
+     */
+    data: XOR<LabBookingUpdateManyMutationInput, LabBookingUncheckedUpdateManyInput>
+    /**
+     * Filter which LabBookings to update
+     */
+    where?: LabBookingWhereInput
+  }
+
+  /**
+   * LabBooking upsert
+   */
+  export type LabBookingUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabBooking
+     */
+    select?: LabBookingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabBookingInclude<ExtArgs> | null
+    /**
+     * The filter to search for the LabBooking to update in case it exists.
+     */
+    where: LabBookingWhereUniqueInput
+    /**
+     * In case the LabBooking found by the `where` argument doesn't exist, create a new LabBooking with this data.
+     */
+    create: XOR<LabBookingCreateInput, LabBookingUncheckedCreateInput>
+    /**
+     * In case the LabBooking was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LabBookingUpdateInput, LabBookingUncheckedUpdateInput>
+  }
+
+  /**
+   * LabBooking delete
+   */
+  export type LabBookingDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabBooking
+     */
+    select?: LabBookingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabBookingInclude<ExtArgs> | null
+    /**
+     * Filter which LabBooking to delete.
+     */
+    where: LabBookingWhereUniqueInput
+  }
+
+  /**
+   * LabBooking deleteMany
+   */
+  export type LabBookingDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LabBookings to delete
+     */
+    where?: LabBookingWhereInput
+  }
+
+  /**
+   * LabBooking.patient
+   */
+  export type LabBooking$patientArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Patient
+     */
+    select?: PatientSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PatientInclude<ExtArgs> | null
+    where?: PatientWhereInput
+  }
+
+  /**
+   * LabBooking.test
+   */
+  export type LabBooking$testArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabTest
+     */
+    select?: LabTestSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabTestInclude<ExtArgs> | null
+    where?: LabTestWhereInput
+  }
+
+  /**
+   * LabBooking.invoice
+   */
+  export type LabBooking$invoiceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Invoice
+     */
+    select?: InvoiceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvoiceInclude<ExtArgs> | null
+    where?: InvoiceWhereInput
+  }
+
+  /**
+   * LabBooking without action
+   */
+  export type LabBookingDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabBooking
+     */
+    select?: LabBookingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabBookingInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -40230,6 +44096,7 @@ export namespace Prisma {
     otherInfo: 'otherInfo',
     clinicId: 'clinicId',
     appointmentId: 'appointmentId',
+    labBookingId: 'labBookingId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -40357,6 +44224,70 @@ export namespace Prisma {
   };
 
   export type NoteScalarFieldEnum = (typeof NoteScalarFieldEnum)[keyof typeof NoteScalarFieldEnum]
+
+
+  export const LabCategoryScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    description: 'description',
+    status: 'status',
+    clinicId: 'clinicId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type LabCategoryScalarFieldEnum = (typeof LabCategoryScalarFieldEnum)[keyof typeof LabCategoryScalarFieldEnum]
+
+
+  export const LabTestScalarFieldEnum: {
+    id: 'id',
+    testCode: 'testCode',
+    name: 'name',
+    shortName: 'shortName',
+    description: 'description',
+    price: 'price',
+    homeCollectionCharge: 'homeCollectionCharge',
+    duration: 'duration',
+    preparationInfo: 'preparationInfo',
+    assignment: 'assignment',
+    assignedDoctors: 'assignedDoctors',
+    assignedStaff: 'assignedStaff',
+    status: 'status',
+    schedules: 'schedules',
+    isSlotBookingEnabled: 'isSlotBookingEnabled',
+    slotDuration: 'slotDuration',
+    maxBookingsPerSlot: 'maxBookingsPerSlot',
+    categoryId: 'categoryId',
+    clinicId: 'clinicId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type LabTestScalarFieldEnum = (typeof LabTestScalarFieldEnum)[keyof typeof LabTestScalarFieldEnum]
+
+
+  export const LabBookingScalarFieldEnum: {
+    id: 'id',
+    bookingCode: 'bookingCode',
+    patientId: 'patientId',
+    testId: 'testId',
+    scheduledAt: 'scheduledAt',
+    status: 'status',
+    paymentStatus: 'paymentStatus',
+    paymentMethod: 'paymentMethod',
+    discount: 'discount',
+    tax: 'tax',
+    totalAmount: 'totalAmount',
+    invoiceNo: 'invoiceNo',
+    sessionSlot: 'sessionSlot',
+    assignedUserId: 'assignedUserId',
+    remarks: 'remarks',
+    clinicId: 'clinicId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type LabBookingScalarFieldEnum = (typeof LabBookingScalarFieldEnum)[keyof typeof LabBookingScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -40571,6 +44502,9 @@ export namespace Prisma {
     tickets?: TicketListRelationFilter
     todos?: TodoListRelationFilter
     notes?: NoteListRelationFilter
+    labCategories?: LabCategoryListRelationFilter
+    labTests?: LabTestListRelationFilter
+    labBookings?: LabBookingListRelationFilter
   }
 
   export type ClinicOrderByWithRelationInput = {
@@ -40628,6 +44562,9 @@ export namespace Prisma {
     tickets?: TicketOrderByRelationAggregateInput
     todos?: TodoOrderByRelationAggregateInput
     notes?: NoteOrderByRelationAggregateInput
+    labCategories?: LabCategoryOrderByRelationAggregateInput
+    labTests?: LabTestOrderByRelationAggregateInput
+    labBookings?: LabBookingOrderByRelationAggregateInput
   }
 
   export type ClinicWhereUniqueInput = Prisma.AtLeast<{
@@ -40688,6 +44625,9 @@ export namespace Prisma {
     tickets?: TicketListRelationFilter
     todos?: TodoListRelationFilter
     notes?: NoteListRelationFilter
+    labCategories?: LabCategoryListRelationFilter
+    labTests?: LabTestListRelationFilter
+    labBookings?: LabBookingListRelationFilter
   }, "id" | "username">
 
   export type ClinicOrderByWithAggregationInput = {
@@ -41756,6 +45696,7 @@ export namespace Prisma {
     appointments?: AppointmentListRelationFilter
     prescriptions?: PrescriptionListRelationFilter
     invoices?: InvoiceListRelationFilter
+    labBookings?: LabBookingListRelationFilter
   }
 
   export type PatientOrderByWithRelationInput = {
@@ -41795,6 +45736,7 @@ export namespace Prisma {
     appointments?: AppointmentOrderByRelationAggregateInput
     prescriptions?: PrescriptionOrderByRelationAggregateInput
     invoices?: InvoiceOrderByRelationAggregateInput
+    labBookings?: LabBookingOrderByRelationAggregateInput
   }
 
   export type PatientWhereUniqueInput = Prisma.AtLeast<{
@@ -41837,6 +45779,7 @@ export namespace Prisma {
     appointments?: AppointmentListRelationFilter
     prescriptions?: PrescriptionListRelationFilter
     invoices?: InvoiceListRelationFilter
+    labBookings?: LabBookingListRelationFilter
   }, "id">
 
   export type PatientOrderByWithAggregationInput = {
@@ -43223,12 +47166,14 @@ export namespace Prisma {
     otherInfo?: StringNullableFilter<"Invoice"> | string | null
     clinicId?: StringFilter<"Invoice"> | string
     appointmentId?: StringNullableFilter<"Invoice"> | string | null
+    labBookingId?: StringNullableFilter<"Invoice"> | string | null
     createdAt?: DateTimeFilter<"Invoice"> | Date | string
     updatedAt?: DateTimeFilter<"Invoice"> | Date | string
     patient?: XOR<PatientNullableRelationFilter, PatientWhereInput> | null
     clinic?: XOR<ClinicRelationFilter, ClinicWhereInput>
     items?: InvoiceItemListRelationFilter
     appointment?: XOR<AppointmentNullableRelationFilter, AppointmentWhereInput> | null
+    labBooking?: XOR<LabBookingNullableRelationFilter, LabBookingWhereInput> | null
   }
 
   export type InvoiceOrderByWithRelationInput = {
@@ -43246,17 +47191,20 @@ export namespace Prisma {
     otherInfo?: SortOrderInput | SortOrder
     clinicId?: SortOrder
     appointmentId?: SortOrderInput | SortOrder
+    labBookingId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     patient?: PatientOrderByWithRelationInput
     clinic?: ClinicOrderByWithRelationInput
     items?: InvoiceItemOrderByRelationAggregateInput
     appointment?: AppointmentOrderByWithRelationInput
+    labBooking?: LabBookingOrderByWithRelationInput
   }
 
   export type InvoiceWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     appointmentId?: string
+    labBookingId?: string
     AND?: InvoiceWhereInput | InvoiceWhereInput[]
     OR?: InvoiceWhereInput[]
     NOT?: InvoiceWhereInput | InvoiceWhereInput[]
@@ -43278,7 +47226,8 @@ export namespace Prisma {
     clinic?: XOR<ClinicRelationFilter, ClinicWhereInput>
     items?: InvoiceItemListRelationFilter
     appointment?: XOR<AppointmentNullableRelationFilter, AppointmentWhereInput> | null
-  }, "id" | "appointmentId">
+    labBooking?: XOR<LabBookingNullableRelationFilter, LabBookingWhereInput> | null
+  }, "id" | "appointmentId" | "labBookingId">
 
   export type InvoiceOrderByWithAggregationInput = {
     id?: SortOrder
@@ -43295,6 +47244,7 @@ export namespace Prisma {
     otherInfo?: SortOrderInput | SortOrder
     clinicId?: SortOrder
     appointmentId?: SortOrderInput | SortOrder
+    labBookingId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: InvoiceCountOrderByAggregateInput
@@ -43322,6 +47272,7 @@ export namespace Prisma {
     otherInfo?: StringNullableWithAggregatesFilter<"Invoice"> | string | null
     clinicId?: StringWithAggregatesFilter<"Invoice"> | string
     appointmentId?: StringNullableWithAggregatesFilter<"Invoice"> | string | null
+    labBookingId?: StringNullableWithAggregatesFilter<"Invoice"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Invoice"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Invoice"> | Date | string
   }
@@ -43943,6 +47894,348 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Note"> | Date | string
   }
 
+  export type LabCategoryWhereInput = {
+    AND?: LabCategoryWhereInput | LabCategoryWhereInput[]
+    OR?: LabCategoryWhereInput[]
+    NOT?: LabCategoryWhereInput | LabCategoryWhereInput[]
+    id?: StringFilter<"LabCategory"> | string
+    name?: StringFilter<"LabCategory"> | string
+    description?: StringNullableFilter<"LabCategory"> | string | null
+    status?: StringFilter<"LabCategory"> | string
+    clinicId?: StringFilter<"LabCategory"> | string
+    createdAt?: DateTimeFilter<"LabCategory"> | Date | string
+    updatedAt?: DateTimeFilter<"LabCategory"> | Date | string
+    clinic?: XOR<ClinicRelationFilter, ClinicWhereInput>
+    tests?: LabTestListRelationFilter
+  }
+
+  export type LabCategoryOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    status?: SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    clinic?: ClinicOrderByWithRelationInput
+    tests?: LabTestOrderByRelationAggregateInput
+  }
+
+  export type LabCategoryWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: LabCategoryWhereInput | LabCategoryWhereInput[]
+    OR?: LabCategoryWhereInput[]
+    NOT?: LabCategoryWhereInput | LabCategoryWhereInput[]
+    name?: StringFilter<"LabCategory"> | string
+    description?: StringNullableFilter<"LabCategory"> | string | null
+    status?: StringFilter<"LabCategory"> | string
+    clinicId?: StringFilter<"LabCategory"> | string
+    createdAt?: DateTimeFilter<"LabCategory"> | Date | string
+    updatedAt?: DateTimeFilter<"LabCategory"> | Date | string
+    clinic?: XOR<ClinicRelationFilter, ClinicWhereInput>
+    tests?: LabTestListRelationFilter
+  }, "id">
+
+  export type LabCategoryOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    status?: SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: LabCategoryCountOrderByAggregateInput
+    _max?: LabCategoryMaxOrderByAggregateInput
+    _min?: LabCategoryMinOrderByAggregateInput
+  }
+
+  export type LabCategoryScalarWhereWithAggregatesInput = {
+    AND?: LabCategoryScalarWhereWithAggregatesInput | LabCategoryScalarWhereWithAggregatesInput[]
+    OR?: LabCategoryScalarWhereWithAggregatesInput[]
+    NOT?: LabCategoryScalarWhereWithAggregatesInput | LabCategoryScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"LabCategory"> | string
+    name?: StringWithAggregatesFilter<"LabCategory"> | string
+    description?: StringNullableWithAggregatesFilter<"LabCategory"> | string | null
+    status?: StringWithAggregatesFilter<"LabCategory"> | string
+    clinicId?: StringWithAggregatesFilter<"LabCategory"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"LabCategory"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"LabCategory"> | Date | string
+  }
+
+  export type LabTestWhereInput = {
+    AND?: LabTestWhereInput | LabTestWhereInput[]
+    OR?: LabTestWhereInput[]
+    NOT?: LabTestWhereInput | LabTestWhereInput[]
+    id?: StringFilter<"LabTest"> | string
+    testCode?: StringNullableFilter<"LabTest"> | string | null
+    name?: StringFilter<"LabTest"> | string
+    shortName?: StringNullableFilter<"LabTest"> | string | null
+    description?: StringNullableFilter<"LabTest"> | string | null
+    price?: FloatFilter<"LabTest"> | number
+    homeCollectionCharge?: FloatNullableFilter<"LabTest"> | number | null
+    duration?: StringNullableFilter<"LabTest"> | string | null
+    preparationInfo?: StringNullableFilter<"LabTest"> | string | null
+    assignment?: StringNullableFilter<"LabTest"> | string | null
+    assignedDoctors?: JsonNullableFilter<"LabTest">
+    assignedStaff?: JsonNullableFilter<"LabTest">
+    status?: StringFilter<"LabTest"> | string
+    schedules?: JsonNullableFilter<"LabTest">
+    isSlotBookingEnabled?: BoolFilter<"LabTest"> | boolean
+    slotDuration?: IntNullableFilter<"LabTest"> | number | null
+    maxBookingsPerSlot?: IntNullableFilter<"LabTest"> | number | null
+    categoryId?: StringNullableFilter<"LabTest"> | string | null
+    clinicId?: StringFilter<"LabTest"> | string
+    createdAt?: DateTimeFilter<"LabTest"> | Date | string
+    updatedAt?: DateTimeFilter<"LabTest"> | Date | string
+    category?: XOR<LabCategoryNullableRelationFilter, LabCategoryWhereInput> | null
+    clinic?: XOR<ClinicRelationFilter, ClinicWhereInput>
+    bookings?: LabBookingListRelationFilter
+  }
+
+  export type LabTestOrderByWithRelationInput = {
+    id?: SortOrder
+    testCode?: SortOrderInput | SortOrder
+    name?: SortOrder
+    shortName?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    price?: SortOrder
+    homeCollectionCharge?: SortOrderInput | SortOrder
+    duration?: SortOrderInput | SortOrder
+    preparationInfo?: SortOrderInput | SortOrder
+    assignment?: SortOrderInput | SortOrder
+    assignedDoctors?: SortOrderInput | SortOrder
+    assignedStaff?: SortOrderInput | SortOrder
+    status?: SortOrder
+    schedules?: SortOrderInput | SortOrder
+    isSlotBookingEnabled?: SortOrder
+    slotDuration?: SortOrderInput | SortOrder
+    maxBookingsPerSlot?: SortOrderInput | SortOrder
+    categoryId?: SortOrderInput | SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    category?: LabCategoryOrderByWithRelationInput
+    clinic?: ClinicOrderByWithRelationInput
+    bookings?: LabBookingOrderByRelationAggregateInput
+  }
+
+  export type LabTestWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: LabTestWhereInput | LabTestWhereInput[]
+    OR?: LabTestWhereInput[]
+    NOT?: LabTestWhereInput | LabTestWhereInput[]
+    testCode?: StringNullableFilter<"LabTest"> | string | null
+    name?: StringFilter<"LabTest"> | string
+    shortName?: StringNullableFilter<"LabTest"> | string | null
+    description?: StringNullableFilter<"LabTest"> | string | null
+    price?: FloatFilter<"LabTest"> | number
+    homeCollectionCharge?: FloatNullableFilter<"LabTest"> | number | null
+    duration?: StringNullableFilter<"LabTest"> | string | null
+    preparationInfo?: StringNullableFilter<"LabTest"> | string | null
+    assignment?: StringNullableFilter<"LabTest"> | string | null
+    assignedDoctors?: JsonNullableFilter<"LabTest">
+    assignedStaff?: JsonNullableFilter<"LabTest">
+    status?: StringFilter<"LabTest"> | string
+    schedules?: JsonNullableFilter<"LabTest">
+    isSlotBookingEnabled?: BoolFilter<"LabTest"> | boolean
+    slotDuration?: IntNullableFilter<"LabTest"> | number | null
+    maxBookingsPerSlot?: IntNullableFilter<"LabTest"> | number | null
+    categoryId?: StringNullableFilter<"LabTest"> | string | null
+    clinicId?: StringFilter<"LabTest"> | string
+    createdAt?: DateTimeFilter<"LabTest"> | Date | string
+    updatedAt?: DateTimeFilter<"LabTest"> | Date | string
+    category?: XOR<LabCategoryNullableRelationFilter, LabCategoryWhereInput> | null
+    clinic?: XOR<ClinicRelationFilter, ClinicWhereInput>
+    bookings?: LabBookingListRelationFilter
+  }, "id">
+
+  export type LabTestOrderByWithAggregationInput = {
+    id?: SortOrder
+    testCode?: SortOrderInput | SortOrder
+    name?: SortOrder
+    shortName?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    price?: SortOrder
+    homeCollectionCharge?: SortOrderInput | SortOrder
+    duration?: SortOrderInput | SortOrder
+    preparationInfo?: SortOrderInput | SortOrder
+    assignment?: SortOrderInput | SortOrder
+    assignedDoctors?: SortOrderInput | SortOrder
+    assignedStaff?: SortOrderInput | SortOrder
+    status?: SortOrder
+    schedules?: SortOrderInput | SortOrder
+    isSlotBookingEnabled?: SortOrder
+    slotDuration?: SortOrderInput | SortOrder
+    maxBookingsPerSlot?: SortOrderInput | SortOrder
+    categoryId?: SortOrderInput | SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: LabTestCountOrderByAggregateInput
+    _avg?: LabTestAvgOrderByAggregateInput
+    _max?: LabTestMaxOrderByAggregateInput
+    _min?: LabTestMinOrderByAggregateInput
+    _sum?: LabTestSumOrderByAggregateInput
+  }
+
+  export type LabTestScalarWhereWithAggregatesInput = {
+    AND?: LabTestScalarWhereWithAggregatesInput | LabTestScalarWhereWithAggregatesInput[]
+    OR?: LabTestScalarWhereWithAggregatesInput[]
+    NOT?: LabTestScalarWhereWithAggregatesInput | LabTestScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"LabTest"> | string
+    testCode?: StringNullableWithAggregatesFilter<"LabTest"> | string | null
+    name?: StringWithAggregatesFilter<"LabTest"> | string
+    shortName?: StringNullableWithAggregatesFilter<"LabTest"> | string | null
+    description?: StringNullableWithAggregatesFilter<"LabTest"> | string | null
+    price?: FloatWithAggregatesFilter<"LabTest"> | number
+    homeCollectionCharge?: FloatNullableWithAggregatesFilter<"LabTest"> | number | null
+    duration?: StringNullableWithAggregatesFilter<"LabTest"> | string | null
+    preparationInfo?: StringNullableWithAggregatesFilter<"LabTest"> | string | null
+    assignment?: StringNullableWithAggregatesFilter<"LabTest"> | string | null
+    assignedDoctors?: JsonNullableWithAggregatesFilter<"LabTest">
+    assignedStaff?: JsonNullableWithAggregatesFilter<"LabTest">
+    status?: StringWithAggregatesFilter<"LabTest"> | string
+    schedules?: JsonNullableWithAggregatesFilter<"LabTest">
+    isSlotBookingEnabled?: BoolWithAggregatesFilter<"LabTest"> | boolean
+    slotDuration?: IntNullableWithAggregatesFilter<"LabTest"> | number | null
+    maxBookingsPerSlot?: IntNullableWithAggregatesFilter<"LabTest"> | number | null
+    categoryId?: StringNullableWithAggregatesFilter<"LabTest"> | string | null
+    clinicId?: StringWithAggregatesFilter<"LabTest"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"LabTest"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"LabTest"> | Date | string
+  }
+
+  export type LabBookingWhereInput = {
+    AND?: LabBookingWhereInput | LabBookingWhereInput[]
+    OR?: LabBookingWhereInput[]
+    NOT?: LabBookingWhereInput | LabBookingWhereInput[]
+    id?: StringFilter<"LabBooking"> | string
+    bookingCode?: StringNullableFilter<"LabBooking"> | string | null
+    patientId?: StringNullableFilter<"LabBooking"> | string | null
+    testId?: StringNullableFilter<"LabBooking"> | string | null
+    scheduledAt?: DateTimeFilter<"LabBooking"> | Date | string
+    status?: StringFilter<"LabBooking"> | string
+    paymentStatus?: StringFilter<"LabBooking"> | string
+    paymentMethod?: StringNullableFilter<"LabBooking"> | string | null
+    discount?: FloatFilter<"LabBooking"> | number
+    tax?: FloatFilter<"LabBooking"> | number
+    totalAmount?: FloatFilter<"LabBooking"> | number
+    invoiceNo?: StringNullableFilter<"LabBooking"> | string | null
+    sessionSlot?: StringNullableFilter<"LabBooking"> | string | null
+    assignedUserId?: StringNullableFilter<"LabBooking"> | string | null
+    remarks?: StringNullableFilter<"LabBooking"> | string | null
+    clinicId?: StringFilter<"LabBooking"> | string
+    createdAt?: DateTimeFilter<"LabBooking"> | Date | string
+    updatedAt?: DateTimeFilter<"LabBooking"> | Date | string
+    patient?: XOR<PatientNullableRelationFilter, PatientWhereInput> | null
+    test?: XOR<LabTestNullableRelationFilter, LabTestWhereInput> | null
+    clinic?: XOR<ClinicRelationFilter, ClinicWhereInput>
+    invoice?: XOR<InvoiceNullableRelationFilter, InvoiceWhereInput> | null
+  }
+
+  export type LabBookingOrderByWithRelationInput = {
+    id?: SortOrder
+    bookingCode?: SortOrderInput | SortOrder
+    patientId?: SortOrderInput | SortOrder
+    testId?: SortOrderInput | SortOrder
+    scheduledAt?: SortOrder
+    status?: SortOrder
+    paymentStatus?: SortOrder
+    paymentMethod?: SortOrderInput | SortOrder
+    discount?: SortOrder
+    tax?: SortOrder
+    totalAmount?: SortOrder
+    invoiceNo?: SortOrderInput | SortOrder
+    sessionSlot?: SortOrderInput | SortOrder
+    assignedUserId?: SortOrderInput | SortOrder
+    remarks?: SortOrderInput | SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    patient?: PatientOrderByWithRelationInput
+    test?: LabTestOrderByWithRelationInput
+    clinic?: ClinicOrderByWithRelationInput
+    invoice?: InvoiceOrderByWithRelationInput
+  }
+
+  export type LabBookingWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: LabBookingWhereInput | LabBookingWhereInput[]
+    OR?: LabBookingWhereInput[]
+    NOT?: LabBookingWhereInput | LabBookingWhereInput[]
+    bookingCode?: StringNullableFilter<"LabBooking"> | string | null
+    patientId?: StringNullableFilter<"LabBooking"> | string | null
+    testId?: StringNullableFilter<"LabBooking"> | string | null
+    scheduledAt?: DateTimeFilter<"LabBooking"> | Date | string
+    status?: StringFilter<"LabBooking"> | string
+    paymentStatus?: StringFilter<"LabBooking"> | string
+    paymentMethod?: StringNullableFilter<"LabBooking"> | string | null
+    discount?: FloatFilter<"LabBooking"> | number
+    tax?: FloatFilter<"LabBooking"> | number
+    totalAmount?: FloatFilter<"LabBooking"> | number
+    invoiceNo?: StringNullableFilter<"LabBooking"> | string | null
+    sessionSlot?: StringNullableFilter<"LabBooking"> | string | null
+    assignedUserId?: StringNullableFilter<"LabBooking"> | string | null
+    remarks?: StringNullableFilter<"LabBooking"> | string | null
+    clinicId?: StringFilter<"LabBooking"> | string
+    createdAt?: DateTimeFilter<"LabBooking"> | Date | string
+    updatedAt?: DateTimeFilter<"LabBooking"> | Date | string
+    patient?: XOR<PatientNullableRelationFilter, PatientWhereInput> | null
+    test?: XOR<LabTestNullableRelationFilter, LabTestWhereInput> | null
+    clinic?: XOR<ClinicRelationFilter, ClinicWhereInput>
+    invoice?: XOR<InvoiceNullableRelationFilter, InvoiceWhereInput> | null
+  }, "id">
+
+  export type LabBookingOrderByWithAggregationInput = {
+    id?: SortOrder
+    bookingCode?: SortOrderInput | SortOrder
+    patientId?: SortOrderInput | SortOrder
+    testId?: SortOrderInput | SortOrder
+    scheduledAt?: SortOrder
+    status?: SortOrder
+    paymentStatus?: SortOrder
+    paymentMethod?: SortOrderInput | SortOrder
+    discount?: SortOrder
+    tax?: SortOrder
+    totalAmount?: SortOrder
+    invoiceNo?: SortOrderInput | SortOrder
+    sessionSlot?: SortOrderInput | SortOrder
+    assignedUserId?: SortOrderInput | SortOrder
+    remarks?: SortOrderInput | SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: LabBookingCountOrderByAggregateInput
+    _avg?: LabBookingAvgOrderByAggregateInput
+    _max?: LabBookingMaxOrderByAggregateInput
+    _min?: LabBookingMinOrderByAggregateInput
+    _sum?: LabBookingSumOrderByAggregateInput
+  }
+
+  export type LabBookingScalarWhereWithAggregatesInput = {
+    AND?: LabBookingScalarWhereWithAggregatesInput | LabBookingScalarWhereWithAggregatesInput[]
+    OR?: LabBookingScalarWhereWithAggregatesInput[]
+    NOT?: LabBookingScalarWhereWithAggregatesInput | LabBookingScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"LabBooking"> | string
+    bookingCode?: StringNullableWithAggregatesFilter<"LabBooking"> | string | null
+    patientId?: StringNullableWithAggregatesFilter<"LabBooking"> | string | null
+    testId?: StringNullableWithAggregatesFilter<"LabBooking"> | string | null
+    scheduledAt?: DateTimeWithAggregatesFilter<"LabBooking"> | Date | string
+    status?: StringWithAggregatesFilter<"LabBooking"> | string
+    paymentStatus?: StringWithAggregatesFilter<"LabBooking"> | string
+    paymentMethod?: StringNullableWithAggregatesFilter<"LabBooking"> | string | null
+    discount?: FloatWithAggregatesFilter<"LabBooking"> | number
+    tax?: FloatWithAggregatesFilter<"LabBooking"> | number
+    totalAmount?: FloatWithAggregatesFilter<"LabBooking"> | number
+    invoiceNo?: StringNullableWithAggregatesFilter<"LabBooking"> | string | null
+    sessionSlot?: StringNullableWithAggregatesFilter<"LabBooking"> | string | null
+    assignedUserId?: StringNullableWithAggregatesFilter<"LabBooking"> | string | null
+    remarks?: StringNullableWithAggregatesFilter<"LabBooking"> | string | null
+    clinicId?: StringWithAggregatesFilter<"LabBooking"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"LabBooking"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"LabBooking"> | Date | string
+  }
+
   export type ClinicCreateInput = {
     id?: string
     name: string
@@ -43997,6 +48290,9 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutClinicInput
     todos?: TodoCreateNestedManyWithoutClinicInput
     notes?: NoteCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateInput = {
@@ -44053,6 +48349,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
     todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
     notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUpdateInput = {
@@ -44109,6 +48408,9 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutClinicNestedInput
     todos?: TodoUpdateManyWithoutClinicNestedInput
     notes?: NoteUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateInput = {
@@ -44165,6 +48467,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
     todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
     notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateManyInput = {
@@ -45444,6 +49749,7 @@ export namespace Prisma {
     appointments?: AppointmentCreateNestedManyWithoutPatientInput
     prescriptions?: PrescriptionCreateNestedManyWithoutPatientInput
     invoices?: InvoiceCreateNestedManyWithoutPatientInput
+    labBookings?: LabBookingCreateNestedManyWithoutPatientInput
   }
 
   export type PatientUncheckedCreateInput = {
@@ -45482,6 +49788,7 @@ export namespace Prisma {
     appointments?: AppointmentUncheckedCreateNestedManyWithoutPatientInput
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutPatientInput
     invoices?: InvoiceUncheckedCreateNestedManyWithoutPatientInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutPatientInput
   }
 
   export type PatientUpdateInput = {
@@ -45520,6 +49827,7 @@ export namespace Prisma {
     appointments?: AppointmentUpdateManyWithoutPatientNestedInput
     prescriptions?: PrescriptionUpdateManyWithoutPatientNestedInput
     invoices?: InvoiceUpdateManyWithoutPatientNestedInput
+    labBookings?: LabBookingUpdateManyWithoutPatientNestedInput
   }
 
   export type PatientUncheckedUpdateInput = {
@@ -45558,6 +49866,7 @@ export namespace Prisma {
     appointments?: AppointmentUncheckedUpdateManyWithoutPatientNestedInput
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutPatientNestedInput
     invoices?: InvoiceUncheckedUpdateManyWithoutPatientNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutPatientNestedInput
   }
 
   export type PatientCreateManyInput = {
@@ -47098,6 +51407,7 @@ export namespace Prisma {
     clinic: ClinicCreateNestedOneWithoutInvoicesInput
     items?: InvoiceItemCreateNestedManyWithoutInvoiceInput
     appointment?: AppointmentCreateNestedOneWithoutInvoiceInput
+    labBooking?: LabBookingCreateNestedOneWithoutInvoiceInput
   }
 
   export type InvoiceUncheckedCreateInput = {
@@ -47115,6 +51425,7 @@ export namespace Prisma {
     otherInfo?: string | null
     clinicId: string
     appointmentId?: string | null
+    labBookingId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     items?: InvoiceItemUncheckedCreateNestedManyWithoutInvoiceInput
@@ -47138,6 +51449,7 @@ export namespace Prisma {
     clinic?: ClinicUpdateOneRequiredWithoutInvoicesNestedInput
     items?: InvoiceItemUpdateManyWithoutInvoiceNestedInput
     appointment?: AppointmentUpdateOneWithoutInvoiceNestedInput
+    labBooking?: LabBookingUpdateOneWithoutInvoiceNestedInput
   }
 
   export type InvoiceUncheckedUpdateInput = {
@@ -47155,6 +51467,7 @@ export namespace Prisma {
     otherInfo?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
     appointmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    labBookingId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: InvoiceItemUncheckedUpdateManyWithoutInvoiceNestedInput
@@ -47175,6 +51488,7 @@ export namespace Prisma {
     otherInfo?: string | null
     clinicId: string
     appointmentId?: string | null
+    labBookingId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -47210,6 +51524,7 @@ export namespace Prisma {
     otherInfo?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
     appointmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    labBookingId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -47891,6 +52206,397 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type LabCategoryCreateInput = {
+    id?: string
+    name: string
+    description?: string | null
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    clinic: ClinicCreateNestedOneWithoutLabCategoriesInput
+    tests?: LabTestCreateNestedManyWithoutCategoryInput
+  }
+
+  export type LabCategoryUncheckedCreateInput = {
+    id?: string
+    name: string
+    description?: string | null
+    status?: string
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tests?: LabTestUncheckedCreateNestedManyWithoutCategoryInput
+  }
+
+  export type LabCategoryUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    clinic?: ClinicUpdateOneRequiredWithoutLabCategoriesNestedInput
+    tests?: LabTestUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type LabCategoryUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tests?: LabTestUncheckedUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type LabCategoryCreateManyInput = {
+    id?: string
+    name: string
+    description?: string | null
+    status?: string
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LabCategoryUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LabCategoryUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LabTestCreateInput = {
+    id?: string
+    testCode?: string | null
+    name: string
+    shortName?: string | null
+    description?: string | null
+    price?: number
+    homeCollectionCharge?: number | null
+    duration?: string | null
+    preparationInfo?: string | null
+    assignment?: string | null
+    assignedDoctors?: NullableJsonNullValueInput | InputJsonValue
+    assignedStaff?: NullableJsonNullValueInput | InputJsonValue
+    status?: string
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    isSlotBookingEnabled?: boolean
+    slotDuration?: number | null
+    maxBookingsPerSlot?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    category?: LabCategoryCreateNestedOneWithoutTestsInput
+    clinic: ClinicCreateNestedOneWithoutLabTestsInput
+    bookings?: LabBookingCreateNestedManyWithoutTestInput
+  }
+
+  export type LabTestUncheckedCreateInput = {
+    id?: string
+    testCode?: string | null
+    name: string
+    shortName?: string | null
+    description?: string | null
+    price?: number
+    homeCollectionCharge?: number | null
+    duration?: string | null
+    preparationInfo?: string | null
+    assignment?: string | null
+    assignedDoctors?: NullableJsonNullValueInput | InputJsonValue
+    assignedStaff?: NullableJsonNullValueInput | InputJsonValue
+    status?: string
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    isSlotBookingEnabled?: boolean
+    slotDuration?: number | null
+    maxBookingsPerSlot?: number | null
+    categoryId?: string | null
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bookings?: LabBookingUncheckedCreateNestedManyWithoutTestInput
+  }
+
+  export type LabTestUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    testCode?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    shortName?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    homeCollectionCharge?: NullableFloatFieldUpdateOperationsInput | number | null
+    duration?: NullableStringFieldUpdateOperationsInput | string | null
+    preparationInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    assignment?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedDoctors?: NullableJsonNullValueInput | InputJsonValue
+    assignedStaff?: NullableJsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    isSlotBookingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    slotDuration?: NullableIntFieldUpdateOperationsInput | number | null
+    maxBookingsPerSlot?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: LabCategoryUpdateOneWithoutTestsNestedInput
+    clinic?: ClinicUpdateOneRequiredWithoutLabTestsNestedInput
+    bookings?: LabBookingUpdateManyWithoutTestNestedInput
+  }
+
+  export type LabTestUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    testCode?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    shortName?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    homeCollectionCharge?: NullableFloatFieldUpdateOperationsInput | number | null
+    duration?: NullableStringFieldUpdateOperationsInput | string | null
+    preparationInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    assignment?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedDoctors?: NullableJsonNullValueInput | InputJsonValue
+    assignedStaff?: NullableJsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    isSlotBookingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    slotDuration?: NullableIntFieldUpdateOperationsInput | number | null
+    maxBookingsPerSlot?: NullableIntFieldUpdateOperationsInput | number | null
+    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookings?: LabBookingUncheckedUpdateManyWithoutTestNestedInput
+  }
+
+  export type LabTestCreateManyInput = {
+    id?: string
+    testCode?: string | null
+    name: string
+    shortName?: string | null
+    description?: string | null
+    price?: number
+    homeCollectionCharge?: number | null
+    duration?: string | null
+    preparationInfo?: string | null
+    assignment?: string | null
+    assignedDoctors?: NullableJsonNullValueInput | InputJsonValue
+    assignedStaff?: NullableJsonNullValueInput | InputJsonValue
+    status?: string
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    isSlotBookingEnabled?: boolean
+    slotDuration?: number | null
+    maxBookingsPerSlot?: number | null
+    categoryId?: string | null
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LabTestUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    testCode?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    shortName?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    homeCollectionCharge?: NullableFloatFieldUpdateOperationsInput | number | null
+    duration?: NullableStringFieldUpdateOperationsInput | string | null
+    preparationInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    assignment?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedDoctors?: NullableJsonNullValueInput | InputJsonValue
+    assignedStaff?: NullableJsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    isSlotBookingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    slotDuration?: NullableIntFieldUpdateOperationsInput | number | null
+    maxBookingsPerSlot?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LabTestUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    testCode?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    shortName?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    homeCollectionCharge?: NullableFloatFieldUpdateOperationsInput | number | null
+    duration?: NullableStringFieldUpdateOperationsInput | string | null
+    preparationInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    assignment?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedDoctors?: NullableJsonNullValueInput | InputJsonValue
+    assignedStaff?: NullableJsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    isSlotBookingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    slotDuration?: NullableIntFieldUpdateOperationsInput | number | null
+    maxBookingsPerSlot?: NullableIntFieldUpdateOperationsInput | number | null
+    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LabBookingCreateInput = {
+    id?: string
+    bookingCode?: string | null
+    scheduledAt: Date | string
+    status?: string
+    paymentStatus?: string
+    paymentMethod?: string | null
+    discount?: number
+    tax?: number
+    totalAmount?: number
+    invoiceNo?: string | null
+    sessionSlot?: string | null
+    assignedUserId?: string | null
+    remarks?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    patient?: PatientCreateNestedOneWithoutLabBookingsInput
+    test?: LabTestCreateNestedOneWithoutBookingsInput
+    clinic: ClinicCreateNestedOneWithoutLabBookingsInput
+    invoice?: InvoiceCreateNestedOneWithoutLabBookingInput
+  }
+
+  export type LabBookingUncheckedCreateInput = {
+    id?: string
+    bookingCode?: string | null
+    patientId?: string | null
+    testId?: string | null
+    scheduledAt: Date | string
+    status?: string
+    paymentStatus?: string
+    paymentMethod?: string | null
+    discount?: number
+    tax?: number
+    totalAmount?: number
+    invoiceNo?: string | null
+    sessionSlot?: string | null
+    assignedUserId?: string | null
+    remarks?: string | null
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    invoice?: InvoiceUncheckedCreateNestedOneWithoutLabBookingInput
+  }
+
+  export type LabBookingUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bookingCode?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    discount?: FloatFieldUpdateOperationsInput | number
+    tax?: FloatFieldUpdateOperationsInput | number
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    invoiceNo?: NullableStringFieldUpdateOperationsInput | string | null
+    sessionSlot?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    patient?: PatientUpdateOneWithoutLabBookingsNestedInput
+    test?: LabTestUpdateOneWithoutBookingsNestedInput
+    clinic?: ClinicUpdateOneRequiredWithoutLabBookingsNestedInput
+    invoice?: InvoiceUpdateOneWithoutLabBookingNestedInput
+  }
+
+  export type LabBookingUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bookingCode?: NullableStringFieldUpdateOperationsInput | string | null
+    patientId?: NullableStringFieldUpdateOperationsInput | string | null
+    testId?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    discount?: FloatFieldUpdateOperationsInput | number
+    tax?: FloatFieldUpdateOperationsInput | number
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    invoiceNo?: NullableStringFieldUpdateOperationsInput | string | null
+    sessionSlot?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    invoice?: InvoiceUncheckedUpdateOneWithoutLabBookingNestedInput
+  }
+
+  export type LabBookingCreateManyInput = {
+    id?: string
+    bookingCode?: string | null
+    patientId?: string | null
+    testId?: string | null
+    scheduledAt: Date | string
+    status?: string
+    paymentStatus?: string
+    paymentMethod?: string | null
+    discount?: number
+    tax?: number
+    totalAmount?: number
+    invoiceNo?: string | null
+    sessionSlot?: string | null
+    assignedUserId?: string | null
+    remarks?: string | null
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LabBookingUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bookingCode?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    discount?: FloatFieldUpdateOperationsInput | number
+    tax?: FloatFieldUpdateOperationsInput | number
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    invoiceNo?: NullableStringFieldUpdateOperationsInput | string | null
+    sessionSlot?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LabBookingUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bookingCode?: NullableStringFieldUpdateOperationsInput | string | null
+    patientId?: NullableStringFieldUpdateOperationsInput | string | null
+    testId?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    discount?: FloatFieldUpdateOperationsInput | number
+    tax?: FloatFieldUpdateOperationsInput | number
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    invoiceNo?: NullableStringFieldUpdateOperationsInput | string | null
+    sessionSlot?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -48148,6 +52854,24 @@ export namespace Prisma {
     none?: NoteWhereInput
   }
 
+  export type LabCategoryListRelationFilter = {
+    every?: LabCategoryWhereInput
+    some?: LabCategoryWhereInput
+    none?: LabCategoryWhereInput
+  }
+
+  export type LabTestListRelationFilter = {
+    every?: LabTestWhereInput
+    some?: LabTestWhereInput
+    none?: LabTestWhereInput
+  }
+
+  export type LabBookingListRelationFilter = {
+    every?: LabBookingWhereInput
+    some?: LabBookingWhereInput
+    none?: LabBookingWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -48254,6 +52978,18 @@ export namespace Prisma {
   }
 
   export type NoteOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type LabCategoryOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type LabTestOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type LabBookingOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -50004,6 +54740,11 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type LabBookingNullableRelationFilter = {
+    is?: LabBookingWhereInput | null
+    isNot?: LabBookingWhereInput | null
+  }
+
   export type InvoiceCountOrderByAggregateInput = {
     id?: SortOrder
     invoiceCode?: SortOrder
@@ -50019,6 +54760,7 @@ export namespace Prisma {
     otherInfo?: SortOrder
     clinicId?: SortOrder
     appointmentId?: SortOrder
+    labBookingId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -50045,6 +54787,7 @@ export namespace Prisma {
     otherInfo?: SortOrder
     clinicId?: SortOrder
     appointmentId?: SortOrder
+    labBookingId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -50064,6 +54807,7 @@ export namespace Prisma {
     otherInfo?: SortOrder
     clinicId?: SortOrder
     appointmentId?: SortOrder
+    labBookingId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -50399,6 +55143,201 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type LabCategoryCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LabCategoryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LabCategoryMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LabCategoryNullableRelationFilter = {
+    is?: LabCategoryWhereInput | null
+    isNot?: LabCategoryWhereInput | null
+  }
+
+  export type LabTestCountOrderByAggregateInput = {
+    id?: SortOrder
+    testCode?: SortOrder
+    name?: SortOrder
+    shortName?: SortOrder
+    description?: SortOrder
+    price?: SortOrder
+    homeCollectionCharge?: SortOrder
+    duration?: SortOrder
+    preparationInfo?: SortOrder
+    assignment?: SortOrder
+    assignedDoctors?: SortOrder
+    assignedStaff?: SortOrder
+    status?: SortOrder
+    schedules?: SortOrder
+    isSlotBookingEnabled?: SortOrder
+    slotDuration?: SortOrder
+    maxBookingsPerSlot?: SortOrder
+    categoryId?: SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LabTestAvgOrderByAggregateInput = {
+    price?: SortOrder
+    homeCollectionCharge?: SortOrder
+    slotDuration?: SortOrder
+    maxBookingsPerSlot?: SortOrder
+  }
+
+  export type LabTestMaxOrderByAggregateInput = {
+    id?: SortOrder
+    testCode?: SortOrder
+    name?: SortOrder
+    shortName?: SortOrder
+    description?: SortOrder
+    price?: SortOrder
+    homeCollectionCharge?: SortOrder
+    duration?: SortOrder
+    preparationInfo?: SortOrder
+    assignment?: SortOrder
+    status?: SortOrder
+    isSlotBookingEnabled?: SortOrder
+    slotDuration?: SortOrder
+    maxBookingsPerSlot?: SortOrder
+    categoryId?: SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LabTestMinOrderByAggregateInput = {
+    id?: SortOrder
+    testCode?: SortOrder
+    name?: SortOrder
+    shortName?: SortOrder
+    description?: SortOrder
+    price?: SortOrder
+    homeCollectionCharge?: SortOrder
+    duration?: SortOrder
+    preparationInfo?: SortOrder
+    assignment?: SortOrder
+    status?: SortOrder
+    isSlotBookingEnabled?: SortOrder
+    slotDuration?: SortOrder
+    maxBookingsPerSlot?: SortOrder
+    categoryId?: SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LabTestSumOrderByAggregateInput = {
+    price?: SortOrder
+    homeCollectionCharge?: SortOrder
+    slotDuration?: SortOrder
+    maxBookingsPerSlot?: SortOrder
+  }
+
+  export type LabTestNullableRelationFilter = {
+    is?: LabTestWhereInput | null
+    isNot?: LabTestWhereInput | null
+  }
+
+  export type LabBookingCountOrderByAggregateInput = {
+    id?: SortOrder
+    bookingCode?: SortOrder
+    patientId?: SortOrder
+    testId?: SortOrder
+    scheduledAt?: SortOrder
+    status?: SortOrder
+    paymentStatus?: SortOrder
+    paymentMethod?: SortOrder
+    discount?: SortOrder
+    tax?: SortOrder
+    totalAmount?: SortOrder
+    invoiceNo?: SortOrder
+    sessionSlot?: SortOrder
+    assignedUserId?: SortOrder
+    remarks?: SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LabBookingAvgOrderByAggregateInput = {
+    discount?: SortOrder
+    tax?: SortOrder
+    totalAmount?: SortOrder
+  }
+
+  export type LabBookingMaxOrderByAggregateInput = {
+    id?: SortOrder
+    bookingCode?: SortOrder
+    patientId?: SortOrder
+    testId?: SortOrder
+    scheduledAt?: SortOrder
+    status?: SortOrder
+    paymentStatus?: SortOrder
+    paymentMethod?: SortOrder
+    discount?: SortOrder
+    tax?: SortOrder
+    totalAmount?: SortOrder
+    invoiceNo?: SortOrder
+    sessionSlot?: SortOrder
+    assignedUserId?: SortOrder
+    remarks?: SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LabBookingMinOrderByAggregateInput = {
+    id?: SortOrder
+    bookingCode?: SortOrder
+    patientId?: SortOrder
+    testId?: SortOrder
+    scheduledAt?: SortOrder
+    status?: SortOrder
+    paymentStatus?: SortOrder
+    paymentMethod?: SortOrder
+    discount?: SortOrder
+    tax?: SortOrder
+    totalAmount?: SortOrder
+    invoiceNo?: SortOrder
+    sessionSlot?: SortOrder
+    assignedUserId?: SortOrder
+    remarks?: SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LabBookingSumOrderByAggregateInput = {
+    discount?: SortOrder
+    tax?: SortOrder
+    totalAmount?: SortOrder
+  }
+
   export type SubscriptionPackageCreateNestedOneWithoutClinicsInput = {
     create?: XOR<SubscriptionPackageCreateWithoutClinicsInput, SubscriptionPackageUncheckedCreateWithoutClinicsInput>
     connectOrCreate?: SubscriptionPackageCreateOrConnectWithoutClinicsInput
@@ -50599,6 +55538,27 @@ export namespace Prisma {
     connect?: NoteWhereUniqueInput | NoteWhereUniqueInput[]
   }
 
+  export type LabCategoryCreateNestedManyWithoutClinicInput = {
+    create?: XOR<LabCategoryCreateWithoutClinicInput, LabCategoryUncheckedCreateWithoutClinicInput> | LabCategoryCreateWithoutClinicInput[] | LabCategoryUncheckedCreateWithoutClinicInput[]
+    connectOrCreate?: LabCategoryCreateOrConnectWithoutClinicInput | LabCategoryCreateOrConnectWithoutClinicInput[]
+    createMany?: LabCategoryCreateManyClinicInputEnvelope
+    connect?: LabCategoryWhereUniqueInput | LabCategoryWhereUniqueInput[]
+  }
+
+  export type LabTestCreateNestedManyWithoutClinicInput = {
+    create?: XOR<LabTestCreateWithoutClinicInput, LabTestUncheckedCreateWithoutClinicInput> | LabTestCreateWithoutClinicInput[] | LabTestUncheckedCreateWithoutClinicInput[]
+    connectOrCreate?: LabTestCreateOrConnectWithoutClinicInput | LabTestCreateOrConnectWithoutClinicInput[]
+    createMany?: LabTestCreateManyClinicInputEnvelope
+    connect?: LabTestWhereUniqueInput | LabTestWhereUniqueInput[]
+  }
+
+  export type LabBookingCreateNestedManyWithoutClinicInput = {
+    create?: XOR<LabBookingCreateWithoutClinicInput, LabBookingUncheckedCreateWithoutClinicInput> | LabBookingCreateWithoutClinicInput[] | LabBookingUncheckedCreateWithoutClinicInput[]
+    connectOrCreate?: LabBookingCreateOrConnectWithoutClinicInput | LabBookingCreateOrConnectWithoutClinicInput[]
+    createMany?: LabBookingCreateManyClinicInputEnvelope
+    connect?: LabBookingWhereUniqueInput | LabBookingWhereUniqueInput[]
+  }
+
   export type UserUncheckedCreateNestedManyWithoutClinicInput = {
     create?: XOR<UserCreateWithoutClinicInput, UserUncheckedCreateWithoutClinicInput> | UserCreateWithoutClinicInput[] | UserUncheckedCreateWithoutClinicInput[]
     connectOrCreate?: UserCreateOrConnectWithoutClinicInput | UserCreateOrConnectWithoutClinicInput[]
@@ -50791,6 +55751,27 @@ export namespace Prisma {
     connectOrCreate?: NoteCreateOrConnectWithoutClinicInput | NoteCreateOrConnectWithoutClinicInput[]
     createMany?: NoteCreateManyClinicInputEnvelope
     connect?: NoteWhereUniqueInput | NoteWhereUniqueInput[]
+  }
+
+  export type LabCategoryUncheckedCreateNestedManyWithoutClinicInput = {
+    create?: XOR<LabCategoryCreateWithoutClinicInput, LabCategoryUncheckedCreateWithoutClinicInput> | LabCategoryCreateWithoutClinicInput[] | LabCategoryUncheckedCreateWithoutClinicInput[]
+    connectOrCreate?: LabCategoryCreateOrConnectWithoutClinicInput | LabCategoryCreateOrConnectWithoutClinicInput[]
+    createMany?: LabCategoryCreateManyClinicInputEnvelope
+    connect?: LabCategoryWhereUniqueInput | LabCategoryWhereUniqueInput[]
+  }
+
+  export type LabTestUncheckedCreateNestedManyWithoutClinicInput = {
+    create?: XOR<LabTestCreateWithoutClinicInput, LabTestUncheckedCreateWithoutClinicInput> | LabTestCreateWithoutClinicInput[] | LabTestUncheckedCreateWithoutClinicInput[]
+    connectOrCreate?: LabTestCreateOrConnectWithoutClinicInput | LabTestCreateOrConnectWithoutClinicInput[]
+    createMany?: LabTestCreateManyClinicInputEnvelope
+    connect?: LabTestWhereUniqueInput | LabTestWhereUniqueInput[]
+  }
+
+  export type LabBookingUncheckedCreateNestedManyWithoutClinicInput = {
+    create?: XOR<LabBookingCreateWithoutClinicInput, LabBookingUncheckedCreateWithoutClinicInput> | LabBookingCreateWithoutClinicInput[] | LabBookingUncheckedCreateWithoutClinicInput[]
+    connectOrCreate?: LabBookingCreateOrConnectWithoutClinicInput | LabBookingCreateOrConnectWithoutClinicInput[]
+    createMany?: LabBookingCreateManyClinicInputEnvelope
+    connect?: LabBookingWhereUniqueInput | LabBookingWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -51227,6 +56208,48 @@ export namespace Prisma {
     deleteMany?: NoteScalarWhereInput | NoteScalarWhereInput[]
   }
 
+  export type LabCategoryUpdateManyWithoutClinicNestedInput = {
+    create?: XOR<LabCategoryCreateWithoutClinicInput, LabCategoryUncheckedCreateWithoutClinicInput> | LabCategoryCreateWithoutClinicInput[] | LabCategoryUncheckedCreateWithoutClinicInput[]
+    connectOrCreate?: LabCategoryCreateOrConnectWithoutClinicInput | LabCategoryCreateOrConnectWithoutClinicInput[]
+    upsert?: LabCategoryUpsertWithWhereUniqueWithoutClinicInput | LabCategoryUpsertWithWhereUniqueWithoutClinicInput[]
+    createMany?: LabCategoryCreateManyClinicInputEnvelope
+    set?: LabCategoryWhereUniqueInput | LabCategoryWhereUniqueInput[]
+    disconnect?: LabCategoryWhereUniqueInput | LabCategoryWhereUniqueInput[]
+    delete?: LabCategoryWhereUniqueInput | LabCategoryWhereUniqueInput[]
+    connect?: LabCategoryWhereUniqueInput | LabCategoryWhereUniqueInput[]
+    update?: LabCategoryUpdateWithWhereUniqueWithoutClinicInput | LabCategoryUpdateWithWhereUniqueWithoutClinicInput[]
+    updateMany?: LabCategoryUpdateManyWithWhereWithoutClinicInput | LabCategoryUpdateManyWithWhereWithoutClinicInput[]
+    deleteMany?: LabCategoryScalarWhereInput | LabCategoryScalarWhereInput[]
+  }
+
+  export type LabTestUpdateManyWithoutClinicNestedInput = {
+    create?: XOR<LabTestCreateWithoutClinicInput, LabTestUncheckedCreateWithoutClinicInput> | LabTestCreateWithoutClinicInput[] | LabTestUncheckedCreateWithoutClinicInput[]
+    connectOrCreate?: LabTestCreateOrConnectWithoutClinicInput | LabTestCreateOrConnectWithoutClinicInput[]
+    upsert?: LabTestUpsertWithWhereUniqueWithoutClinicInput | LabTestUpsertWithWhereUniqueWithoutClinicInput[]
+    createMany?: LabTestCreateManyClinicInputEnvelope
+    set?: LabTestWhereUniqueInput | LabTestWhereUniqueInput[]
+    disconnect?: LabTestWhereUniqueInput | LabTestWhereUniqueInput[]
+    delete?: LabTestWhereUniqueInput | LabTestWhereUniqueInput[]
+    connect?: LabTestWhereUniqueInput | LabTestWhereUniqueInput[]
+    update?: LabTestUpdateWithWhereUniqueWithoutClinicInput | LabTestUpdateWithWhereUniqueWithoutClinicInput[]
+    updateMany?: LabTestUpdateManyWithWhereWithoutClinicInput | LabTestUpdateManyWithWhereWithoutClinicInput[]
+    deleteMany?: LabTestScalarWhereInput | LabTestScalarWhereInput[]
+  }
+
+  export type LabBookingUpdateManyWithoutClinicNestedInput = {
+    create?: XOR<LabBookingCreateWithoutClinicInput, LabBookingUncheckedCreateWithoutClinicInput> | LabBookingCreateWithoutClinicInput[] | LabBookingUncheckedCreateWithoutClinicInput[]
+    connectOrCreate?: LabBookingCreateOrConnectWithoutClinicInput | LabBookingCreateOrConnectWithoutClinicInput[]
+    upsert?: LabBookingUpsertWithWhereUniqueWithoutClinicInput | LabBookingUpsertWithWhereUniqueWithoutClinicInput[]
+    createMany?: LabBookingCreateManyClinicInputEnvelope
+    set?: LabBookingWhereUniqueInput | LabBookingWhereUniqueInput[]
+    disconnect?: LabBookingWhereUniqueInput | LabBookingWhereUniqueInput[]
+    delete?: LabBookingWhereUniqueInput | LabBookingWhereUniqueInput[]
+    connect?: LabBookingWhereUniqueInput | LabBookingWhereUniqueInput[]
+    update?: LabBookingUpdateWithWhereUniqueWithoutClinicInput | LabBookingUpdateWithWhereUniqueWithoutClinicInput[]
+    updateMany?: LabBookingUpdateManyWithWhereWithoutClinicInput | LabBookingUpdateManyWithWhereWithoutClinicInput[]
+    deleteMany?: LabBookingScalarWhereInput | LabBookingScalarWhereInput[]
+  }
+
   export type UserUncheckedUpdateManyWithoutClinicNestedInput = {
     create?: XOR<UserCreateWithoutClinicInput, UserUncheckedCreateWithoutClinicInput> | UserCreateWithoutClinicInput[] | UserUncheckedCreateWithoutClinicInput[]
     connectOrCreate?: UserCreateOrConnectWithoutClinicInput | UserCreateOrConnectWithoutClinicInput[]
@@ -51609,6 +56632,48 @@ export namespace Prisma {
     update?: NoteUpdateWithWhereUniqueWithoutClinicInput | NoteUpdateWithWhereUniqueWithoutClinicInput[]
     updateMany?: NoteUpdateManyWithWhereWithoutClinicInput | NoteUpdateManyWithWhereWithoutClinicInput[]
     deleteMany?: NoteScalarWhereInput | NoteScalarWhereInput[]
+  }
+
+  export type LabCategoryUncheckedUpdateManyWithoutClinicNestedInput = {
+    create?: XOR<LabCategoryCreateWithoutClinicInput, LabCategoryUncheckedCreateWithoutClinicInput> | LabCategoryCreateWithoutClinicInput[] | LabCategoryUncheckedCreateWithoutClinicInput[]
+    connectOrCreate?: LabCategoryCreateOrConnectWithoutClinicInput | LabCategoryCreateOrConnectWithoutClinicInput[]
+    upsert?: LabCategoryUpsertWithWhereUniqueWithoutClinicInput | LabCategoryUpsertWithWhereUniqueWithoutClinicInput[]
+    createMany?: LabCategoryCreateManyClinicInputEnvelope
+    set?: LabCategoryWhereUniqueInput | LabCategoryWhereUniqueInput[]
+    disconnect?: LabCategoryWhereUniqueInput | LabCategoryWhereUniqueInput[]
+    delete?: LabCategoryWhereUniqueInput | LabCategoryWhereUniqueInput[]
+    connect?: LabCategoryWhereUniqueInput | LabCategoryWhereUniqueInput[]
+    update?: LabCategoryUpdateWithWhereUniqueWithoutClinicInput | LabCategoryUpdateWithWhereUniqueWithoutClinicInput[]
+    updateMany?: LabCategoryUpdateManyWithWhereWithoutClinicInput | LabCategoryUpdateManyWithWhereWithoutClinicInput[]
+    deleteMany?: LabCategoryScalarWhereInput | LabCategoryScalarWhereInput[]
+  }
+
+  export type LabTestUncheckedUpdateManyWithoutClinicNestedInput = {
+    create?: XOR<LabTestCreateWithoutClinicInput, LabTestUncheckedCreateWithoutClinicInput> | LabTestCreateWithoutClinicInput[] | LabTestUncheckedCreateWithoutClinicInput[]
+    connectOrCreate?: LabTestCreateOrConnectWithoutClinicInput | LabTestCreateOrConnectWithoutClinicInput[]
+    upsert?: LabTestUpsertWithWhereUniqueWithoutClinicInput | LabTestUpsertWithWhereUniqueWithoutClinicInput[]
+    createMany?: LabTestCreateManyClinicInputEnvelope
+    set?: LabTestWhereUniqueInput | LabTestWhereUniqueInput[]
+    disconnect?: LabTestWhereUniqueInput | LabTestWhereUniqueInput[]
+    delete?: LabTestWhereUniqueInput | LabTestWhereUniqueInput[]
+    connect?: LabTestWhereUniqueInput | LabTestWhereUniqueInput[]
+    update?: LabTestUpdateWithWhereUniqueWithoutClinicInput | LabTestUpdateWithWhereUniqueWithoutClinicInput[]
+    updateMany?: LabTestUpdateManyWithWhereWithoutClinicInput | LabTestUpdateManyWithWhereWithoutClinicInput[]
+    deleteMany?: LabTestScalarWhereInput | LabTestScalarWhereInput[]
+  }
+
+  export type LabBookingUncheckedUpdateManyWithoutClinicNestedInput = {
+    create?: XOR<LabBookingCreateWithoutClinicInput, LabBookingUncheckedCreateWithoutClinicInput> | LabBookingCreateWithoutClinicInput[] | LabBookingUncheckedCreateWithoutClinicInput[]
+    connectOrCreate?: LabBookingCreateOrConnectWithoutClinicInput | LabBookingCreateOrConnectWithoutClinicInput[]
+    upsert?: LabBookingUpsertWithWhereUniqueWithoutClinicInput | LabBookingUpsertWithWhereUniqueWithoutClinicInput[]
+    createMany?: LabBookingCreateManyClinicInputEnvelope
+    set?: LabBookingWhereUniqueInput | LabBookingWhereUniqueInput[]
+    disconnect?: LabBookingWhereUniqueInput | LabBookingWhereUniqueInput[]
+    delete?: LabBookingWhereUniqueInput | LabBookingWhereUniqueInput[]
+    connect?: LabBookingWhereUniqueInput | LabBookingWhereUniqueInput[]
+    update?: LabBookingUpdateWithWhereUniqueWithoutClinicInput | LabBookingUpdateWithWhereUniqueWithoutClinicInput[]
+    updateMany?: LabBookingUpdateManyWithWhereWithoutClinicInput | LabBookingUpdateManyWithWhereWithoutClinicInput[]
+    deleteMany?: LabBookingScalarWhereInput | LabBookingScalarWhereInput[]
   }
 
   export type ClinicCreateNestedOneWithoutLandingPageInput = {
@@ -52417,6 +57482,13 @@ export namespace Prisma {
     connect?: InvoiceWhereUniqueInput | InvoiceWhereUniqueInput[]
   }
 
+  export type LabBookingCreateNestedManyWithoutPatientInput = {
+    create?: XOR<LabBookingCreateWithoutPatientInput, LabBookingUncheckedCreateWithoutPatientInput> | LabBookingCreateWithoutPatientInput[] | LabBookingUncheckedCreateWithoutPatientInput[]
+    connectOrCreate?: LabBookingCreateOrConnectWithoutPatientInput | LabBookingCreateOrConnectWithoutPatientInput[]
+    createMany?: LabBookingCreateManyPatientInputEnvelope
+    connect?: LabBookingWhereUniqueInput | LabBookingWhereUniqueInput[]
+  }
+
   export type AppointmentUncheckedCreateNestedManyWithoutPatientInput = {
     create?: XOR<AppointmentCreateWithoutPatientInput, AppointmentUncheckedCreateWithoutPatientInput> | AppointmentCreateWithoutPatientInput[] | AppointmentUncheckedCreateWithoutPatientInput[]
     connectOrCreate?: AppointmentCreateOrConnectWithoutPatientInput | AppointmentCreateOrConnectWithoutPatientInput[]
@@ -52436,6 +57508,13 @@ export namespace Prisma {
     connectOrCreate?: InvoiceCreateOrConnectWithoutPatientInput | InvoiceCreateOrConnectWithoutPatientInput[]
     createMany?: InvoiceCreateManyPatientInputEnvelope
     connect?: InvoiceWhereUniqueInput | InvoiceWhereUniqueInput[]
+  }
+
+  export type LabBookingUncheckedCreateNestedManyWithoutPatientInput = {
+    create?: XOR<LabBookingCreateWithoutPatientInput, LabBookingUncheckedCreateWithoutPatientInput> | LabBookingCreateWithoutPatientInput[] | LabBookingUncheckedCreateWithoutPatientInput[]
+    connectOrCreate?: LabBookingCreateOrConnectWithoutPatientInput | LabBookingCreateOrConnectWithoutPatientInput[]
+    createMany?: LabBookingCreateManyPatientInputEnvelope
+    connect?: LabBookingWhereUniqueInput | LabBookingWhereUniqueInput[]
   }
 
   export type ClinicUpdateOneRequiredWithoutPatientsNestedInput = {
@@ -52488,6 +57567,20 @@ export namespace Prisma {
     deleteMany?: InvoiceScalarWhereInput | InvoiceScalarWhereInput[]
   }
 
+  export type LabBookingUpdateManyWithoutPatientNestedInput = {
+    create?: XOR<LabBookingCreateWithoutPatientInput, LabBookingUncheckedCreateWithoutPatientInput> | LabBookingCreateWithoutPatientInput[] | LabBookingUncheckedCreateWithoutPatientInput[]
+    connectOrCreate?: LabBookingCreateOrConnectWithoutPatientInput | LabBookingCreateOrConnectWithoutPatientInput[]
+    upsert?: LabBookingUpsertWithWhereUniqueWithoutPatientInput | LabBookingUpsertWithWhereUniqueWithoutPatientInput[]
+    createMany?: LabBookingCreateManyPatientInputEnvelope
+    set?: LabBookingWhereUniqueInput | LabBookingWhereUniqueInput[]
+    disconnect?: LabBookingWhereUniqueInput | LabBookingWhereUniqueInput[]
+    delete?: LabBookingWhereUniqueInput | LabBookingWhereUniqueInput[]
+    connect?: LabBookingWhereUniqueInput | LabBookingWhereUniqueInput[]
+    update?: LabBookingUpdateWithWhereUniqueWithoutPatientInput | LabBookingUpdateWithWhereUniqueWithoutPatientInput[]
+    updateMany?: LabBookingUpdateManyWithWhereWithoutPatientInput | LabBookingUpdateManyWithWhereWithoutPatientInput[]
+    deleteMany?: LabBookingScalarWhereInput | LabBookingScalarWhereInput[]
+  }
+
   export type AppointmentUncheckedUpdateManyWithoutPatientNestedInput = {
     create?: XOR<AppointmentCreateWithoutPatientInput, AppointmentUncheckedCreateWithoutPatientInput> | AppointmentCreateWithoutPatientInput[] | AppointmentUncheckedCreateWithoutPatientInput[]
     connectOrCreate?: AppointmentCreateOrConnectWithoutPatientInput | AppointmentCreateOrConnectWithoutPatientInput[]
@@ -52528,6 +57621,20 @@ export namespace Prisma {
     update?: InvoiceUpdateWithWhereUniqueWithoutPatientInput | InvoiceUpdateWithWhereUniqueWithoutPatientInput[]
     updateMany?: InvoiceUpdateManyWithWhereWithoutPatientInput | InvoiceUpdateManyWithWhereWithoutPatientInput[]
     deleteMany?: InvoiceScalarWhereInput | InvoiceScalarWhereInput[]
+  }
+
+  export type LabBookingUncheckedUpdateManyWithoutPatientNestedInput = {
+    create?: XOR<LabBookingCreateWithoutPatientInput, LabBookingUncheckedCreateWithoutPatientInput> | LabBookingCreateWithoutPatientInput[] | LabBookingUncheckedCreateWithoutPatientInput[]
+    connectOrCreate?: LabBookingCreateOrConnectWithoutPatientInput | LabBookingCreateOrConnectWithoutPatientInput[]
+    upsert?: LabBookingUpsertWithWhereUniqueWithoutPatientInput | LabBookingUpsertWithWhereUniqueWithoutPatientInput[]
+    createMany?: LabBookingCreateManyPatientInputEnvelope
+    set?: LabBookingWhereUniqueInput | LabBookingWhereUniqueInput[]
+    disconnect?: LabBookingWhereUniqueInput | LabBookingWhereUniqueInput[]
+    delete?: LabBookingWhereUniqueInput | LabBookingWhereUniqueInput[]
+    connect?: LabBookingWhereUniqueInput | LabBookingWhereUniqueInput[]
+    update?: LabBookingUpdateWithWhereUniqueWithoutPatientInput | LabBookingUpdateWithWhereUniqueWithoutPatientInput[]
+    updateMany?: LabBookingUpdateManyWithWhereWithoutPatientInput | LabBookingUpdateManyWithWhereWithoutPatientInput[]
+    deleteMany?: LabBookingScalarWhereInput | LabBookingScalarWhereInput[]
   }
 
   export type AppointmentCreateserviceIdsInput = {
@@ -53237,6 +58344,12 @@ export namespace Prisma {
     connect?: AppointmentWhereUniqueInput
   }
 
+  export type LabBookingCreateNestedOneWithoutInvoiceInput = {
+    create?: XOR<LabBookingCreateWithoutInvoiceInput, LabBookingUncheckedCreateWithoutInvoiceInput>
+    connectOrCreate?: LabBookingCreateOrConnectWithoutInvoiceInput
+    connect?: LabBookingWhereUniqueInput
+  }
+
   export type InvoiceItemUncheckedCreateNestedManyWithoutInvoiceInput = {
     create?: XOR<InvoiceItemCreateWithoutInvoiceInput, InvoiceItemUncheckedCreateWithoutInvoiceInput> | InvoiceItemCreateWithoutInvoiceInput[] | InvoiceItemUncheckedCreateWithoutInvoiceInput[]
     connectOrCreate?: InvoiceItemCreateOrConnectWithoutInvoiceInput | InvoiceItemCreateOrConnectWithoutInvoiceInput[]
@@ -53284,6 +58397,16 @@ export namespace Prisma {
     delete?: AppointmentWhereInput | boolean
     connect?: AppointmentWhereUniqueInput
     update?: XOR<XOR<AppointmentUpdateToOneWithWhereWithoutInvoiceInput, AppointmentUpdateWithoutInvoiceInput>, AppointmentUncheckedUpdateWithoutInvoiceInput>
+  }
+
+  export type LabBookingUpdateOneWithoutInvoiceNestedInput = {
+    create?: XOR<LabBookingCreateWithoutInvoiceInput, LabBookingUncheckedCreateWithoutInvoiceInput>
+    connectOrCreate?: LabBookingCreateOrConnectWithoutInvoiceInput
+    upsert?: LabBookingUpsertWithoutInvoiceInput
+    disconnect?: LabBookingWhereInput | boolean
+    delete?: LabBookingWhereInput | boolean
+    connect?: LabBookingWhereUniqueInput
+    update?: XOR<XOR<LabBookingUpdateToOneWithWhereWithoutInvoiceInput, LabBookingUpdateWithoutInvoiceInput>, LabBookingUncheckedUpdateWithoutInvoiceInput>
   }
 
   export type InvoiceItemUncheckedUpdateManyWithoutInvoiceNestedInput = {
@@ -53432,6 +58555,212 @@ export namespace Prisma {
     delete?: AppointmentWhereInput | boolean
     connect?: AppointmentWhereUniqueInput
     update?: XOR<XOR<AppointmentUpdateToOneWithWhereWithoutNotesInput, AppointmentUpdateWithoutNotesInput>, AppointmentUncheckedUpdateWithoutNotesInput>
+  }
+
+  export type ClinicCreateNestedOneWithoutLabCategoriesInput = {
+    create?: XOR<ClinicCreateWithoutLabCategoriesInput, ClinicUncheckedCreateWithoutLabCategoriesInput>
+    connectOrCreate?: ClinicCreateOrConnectWithoutLabCategoriesInput
+    connect?: ClinicWhereUniqueInput
+  }
+
+  export type LabTestCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<LabTestCreateWithoutCategoryInput, LabTestUncheckedCreateWithoutCategoryInput> | LabTestCreateWithoutCategoryInput[] | LabTestUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: LabTestCreateOrConnectWithoutCategoryInput | LabTestCreateOrConnectWithoutCategoryInput[]
+    createMany?: LabTestCreateManyCategoryInputEnvelope
+    connect?: LabTestWhereUniqueInput | LabTestWhereUniqueInput[]
+  }
+
+  export type LabTestUncheckedCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<LabTestCreateWithoutCategoryInput, LabTestUncheckedCreateWithoutCategoryInput> | LabTestCreateWithoutCategoryInput[] | LabTestUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: LabTestCreateOrConnectWithoutCategoryInput | LabTestCreateOrConnectWithoutCategoryInput[]
+    createMany?: LabTestCreateManyCategoryInputEnvelope
+    connect?: LabTestWhereUniqueInput | LabTestWhereUniqueInput[]
+  }
+
+  export type ClinicUpdateOneRequiredWithoutLabCategoriesNestedInput = {
+    create?: XOR<ClinicCreateWithoutLabCategoriesInput, ClinicUncheckedCreateWithoutLabCategoriesInput>
+    connectOrCreate?: ClinicCreateOrConnectWithoutLabCategoriesInput
+    upsert?: ClinicUpsertWithoutLabCategoriesInput
+    connect?: ClinicWhereUniqueInput
+    update?: XOR<XOR<ClinicUpdateToOneWithWhereWithoutLabCategoriesInput, ClinicUpdateWithoutLabCategoriesInput>, ClinicUncheckedUpdateWithoutLabCategoriesInput>
+  }
+
+  export type LabTestUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<LabTestCreateWithoutCategoryInput, LabTestUncheckedCreateWithoutCategoryInput> | LabTestCreateWithoutCategoryInput[] | LabTestUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: LabTestCreateOrConnectWithoutCategoryInput | LabTestCreateOrConnectWithoutCategoryInput[]
+    upsert?: LabTestUpsertWithWhereUniqueWithoutCategoryInput | LabTestUpsertWithWhereUniqueWithoutCategoryInput[]
+    createMany?: LabTestCreateManyCategoryInputEnvelope
+    set?: LabTestWhereUniqueInput | LabTestWhereUniqueInput[]
+    disconnect?: LabTestWhereUniqueInput | LabTestWhereUniqueInput[]
+    delete?: LabTestWhereUniqueInput | LabTestWhereUniqueInput[]
+    connect?: LabTestWhereUniqueInput | LabTestWhereUniqueInput[]
+    update?: LabTestUpdateWithWhereUniqueWithoutCategoryInput | LabTestUpdateWithWhereUniqueWithoutCategoryInput[]
+    updateMany?: LabTestUpdateManyWithWhereWithoutCategoryInput | LabTestUpdateManyWithWhereWithoutCategoryInput[]
+    deleteMany?: LabTestScalarWhereInput | LabTestScalarWhereInput[]
+  }
+
+  export type LabTestUncheckedUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<LabTestCreateWithoutCategoryInput, LabTestUncheckedCreateWithoutCategoryInput> | LabTestCreateWithoutCategoryInput[] | LabTestUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: LabTestCreateOrConnectWithoutCategoryInput | LabTestCreateOrConnectWithoutCategoryInput[]
+    upsert?: LabTestUpsertWithWhereUniqueWithoutCategoryInput | LabTestUpsertWithWhereUniqueWithoutCategoryInput[]
+    createMany?: LabTestCreateManyCategoryInputEnvelope
+    set?: LabTestWhereUniqueInput | LabTestWhereUniqueInput[]
+    disconnect?: LabTestWhereUniqueInput | LabTestWhereUniqueInput[]
+    delete?: LabTestWhereUniqueInput | LabTestWhereUniqueInput[]
+    connect?: LabTestWhereUniqueInput | LabTestWhereUniqueInput[]
+    update?: LabTestUpdateWithWhereUniqueWithoutCategoryInput | LabTestUpdateWithWhereUniqueWithoutCategoryInput[]
+    updateMany?: LabTestUpdateManyWithWhereWithoutCategoryInput | LabTestUpdateManyWithWhereWithoutCategoryInput[]
+    deleteMany?: LabTestScalarWhereInput | LabTestScalarWhereInput[]
+  }
+
+  export type LabCategoryCreateNestedOneWithoutTestsInput = {
+    create?: XOR<LabCategoryCreateWithoutTestsInput, LabCategoryUncheckedCreateWithoutTestsInput>
+    connectOrCreate?: LabCategoryCreateOrConnectWithoutTestsInput
+    connect?: LabCategoryWhereUniqueInput
+  }
+
+  export type ClinicCreateNestedOneWithoutLabTestsInput = {
+    create?: XOR<ClinicCreateWithoutLabTestsInput, ClinicUncheckedCreateWithoutLabTestsInput>
+    connectOrCreate?: ClinicCreateOrConnectWithoutLabTestsInput
+    connect?: ClinicWhereUniqueInput
+  }
+
+  export type LabBookingCreateNestedManyWithoutTestInput = {
+    create?: XOR<LabBookingCreateWithoutTestInput, LabBookingUncheckedCreateWithoutTestInput> | LabBookingCreateWithoutTestInput[] | LabBookingUncheckedCreateWithoutTestInput[]
+    connectOrCreate?: LabBookingCreateOrConnectWithoutTestInput | LabBookingCreateOrConnectWithoutTestInput[]
+    createMany?: LabBookingCreateManyTestInputEnvelope
+    connect?: LabBookingWhereUniqueInput | LabBookingWhereUniqueInput[]
+  }
+
+  export type LabBookingUncheckedCreateNestedManyWithoutTestInput = {
+    create?: XOR<LabBookingCreateWithoutTestInput, LabBookingUncheckedCreateWithoutTestInput> | LabBookingCreateWithoutTestInput[] | LabBookingUncheckedCreateWithoutTestInput[]
+    connectOrCreate?: LabBookingCreateOrConnectWithoutTestInput | LabBookingCreateOrConnectWithoutTestInput[]
+    createMany?: LabBookingCreateManyTestInputEnvelope
+    connect?: LabBookingWhereUniqueInput | LabBookingWhereUniqueInput[]
+  }
+
+  export type LabCategoryUpdateOneWithoutTestsNestedInput = {
+    create?: XOR<LabCategoryCreateWithoutTestsInput, LabCategoryUncheckedCreateWithoutTestsInput>
+    connectOrCreate?: LabCategoryCreateOrConnectWithoutTestsInput
+    upsert?: LabCategoryUpsertWithoutTestsInput
+    disconnect?: LabCategoryWhereInput | boolean
+    delete?: LabCategoryWhereInput | boolean
+    connect?: LabCategoryWhereUniqueInput
+    update?: XOR<XOR<LabCategoryUpdateToOneWithWhereWithoutTestsInput, LabCategoryUpdateWithoutTestsInput>, LabCategoryUncheckedUpdateWithoutTestsInput>
+  }
+
+  export type ClinicUpdateOneRequiredWithoutLabTestsNestedInput = {
+    create?: XOR<ClinicCreateWithoutLabTestsInput, ClinicUncheckedCreateWithoutLabTestsInput>
+    connectOrCreate?: ClinicCreateOrConnectWithoutLabTestsInput
+    upsert?: ClinicUpsertWithoutLabTestsInput
+    connect?: ClinicWhereUniqueInput
+    update?: XOR<XOR<ClinicUpdateToOneWithWhereWithoutLabTestsInput, ClinicUpdateWithoutLabTestsInput>, ClinicUncheckedUpdateWithoutLabTestsInput>
+  }
+
+  export type LabBookingUpdateManyWithoutTestNestedInput = {
+    create?: XOR<LabBookingCreateWithoutTestInput, LabBookingUncheckedCreateWithoutTestInput> | LabBookingCreateWithoutTestInput[] | LabBookingUncheckedCreateWithoutTestInput[]
+    connectOrCreate?: LabBookingCreateOrConnectWithoutTestInput | LabBookingCreateOrConnectWithoutTestInput[]
+    upsert?: LabBookingUpsertWithWhereUniqueWithoutTestInput | LabBookingUpsertWithWhereUniqueWithoutTestInput[]
+    createMany?: LabBookingCreateManyTestInputEnvelope
+    set?: LabBookingWhereUniqueInput | LabBookingWhereUniqueInput[]
+    disconnect?: LabBookingWhereUniqueInput | LabBookingWhereUniqueInput[]
+    delete?: LabBookingWhereUniqueInput | LabBookingWhereUniqueInput[]
+    connect?: LabBookingWhereUniqueInput | LabBookingWhereUniqueInput[]
+    update?: LabBookingUpdateWithWhereUniqueWithoutTestInput | LabBookingUpdateWithWhereUniqueWithoutTestInput[]
+    updateMany?: LabBookingUpdateManyWithWhereWithoutTestInput | LabBookingUpdateManyWithWhereWithoutTestInput[]
+    deleteMany?: LabBookingScalarWhereInput | LabBookingScalarWhereInput[]
+  }
+
+  export type LabBookingUncheckedUpdateManyWithoutTestNestedInput = {
+    create?: XOR<LabBookingCreateWithoutTestInput, LabBookingUncheckedCreateWithoutTestInput> | LabBookingCreateWithoutTestInput[] | LabBookingUncheckedCreateWithoutTestInput[]
+    connectOrCreate?: LabBookingCreateOrConnectWithoutTestInput | LabBookingCreateOrConnectWithoutTestInput[]
+    upsert?: LabBookingUpsertWithWhereUniqueWithoutTestInput | LabBookingUpsertWithWhereUniqueWithoutTestInput[]
+    createMany?: LabBookingCreateManyTestInputEnvelope
+    set?: LabBookingWhereUniqueInput | LabBookingWhereUniqueInput[]
+    disconnect?: LabBookingWhereUniqueInput | LabBookingWhereUniqueInput[]
+    delete?: LabBookingWhereUniqueInput | LabBookingWhereUniqueInput[]
+    connect?: LabBookingWhereUniqueInput | LabBookingWhereUniqueInput[]
+    update?: LabBookingUpdateWithWhereUniqueWithoutTestInput | LabBookingUpdateWithWhereUniqueWithoutTestInput[]
+    updateMany?: LabBookingUpdateManyWithWhereWithoutTestInput | LabBookingUpdateManyWithWhereWithoutTestInput[]
+    deleteMany?: LabBookingScalarWhereInput | LabBookingScalarWhereInput[]
+  }
+
+  export type PatientCreateNestedOneWithoutLabBookingsInput = {
+    create?: XOR<PatientCreateWithoutLabBookingsInput, PatientUncheckedCreateWithoutLabBookingsInput>
+    connectOrCreate?: PatientCreateOrConnectWithoutLabBookingsInput
+    connect?: PatientWhereUniqueInput
+  }
+
+  export type LabTestCreateNestedOneWithoutBookingsInput = {
+    create?: XOR<LabTestCreateWithoutBookingsInput, LabTestUncheckedCreateWithoutBookingsInput>
+    connectOrCreate?: LabTestCreateOrConnectWithoutBookingsInput
+    connect?: LabTestWhereUniqueInput
+  }
+
+  export type ClinicCreateNestedOneWithoutLabBookingsInput = {
+    create?: XOR<ClinicCreateWithoutLabBookingsInput, ClinicUncheckedCreateWithoutLabBookingsInput>
+    connectOrCreate?: ClinicCreateOrConnectWithoutLabBookingsInput
+    connect?: ClinicWhereUniqueInput
+  }
+
+  export type InvoiceCreateNestedOneWithoutLabBookingInput = {
+    create?: XOR<InvoiceCreateWithoutLabBookingInput, InvoiceUncheckedCreateWithoutLabBookingInput>
+    connectOrCreate?: InvoiceCreateOrConnectWithoutLabBookingInput
+    connect?: InvoiceWhereUniqueInput
+  }
+
+  export type InvoiceUncheckedCreateNestedOneWithoutLabBookingInput = {
+    create?: XOR<InvoiceCreateWithoutLabBookingInput, InvoiceUncheckedCreateWithoutLabBookingInput>
+    connectOrCreate?: InvoiceCreateOrConnectWithoutLabBookingInput
+    connect?: InvoiceWhereUniqueInput
+  }
+
+  export type PatientUpdateOneWithoutLabBookingsNestedInput = {
+    create?: XOR<PatientCreateWithoutLabBookingsInput, PatientUncheckedCreateWithoutLabBookingsInput>
+    connectOrCreate?: PatientCreateOrConnectWithoutLabBookingsInput
+    upsert?: PatientUpsertWithoutLabBookingsInput
+    disconnect?: PatientWhereInput | boolean
+    delete?: PatientWhereInput | boolean
+    connect?: PatientWhereUniqueInput
+    update?: XOR<XOR<PatientUpdateToOneWithWhereWithoutLabBookingsInput, PatientUpdateWithoutLabBookingsInput>, PatientUncheckedUpdateWithoutLabBookingsInput>
+  }
+
+  export type LabTestUpdateOneWithoutBookingsNestedInput = {
+    create?: XOR<LabTestCreateWithoutBookingsInput, LabTestUncheckedCreateWithoutBookingsInput>
+    connectOrCreate?: LabTestCreateOrConnectWithoutBookingsInput
+    upsert?: LabTestUpsertWithoutBookingsInput
+    disconnect?: LabTestWhereInput | boolean
+    delete?: LabTestWhereInput | boolean
+    connect?: LabTestWhereUniqueInput
+    update?: XOR<XOR<LabTestUpdateToOneWithWhereWithoutBookingsInput, LabTestUpdateWithoutBookingsInput>, LabTestUncheckedUpdateWithoutBookingsInput>
+  }
+
+  export type ClinicUpdateOneRequiredWithoutLabBookingsNestedInput = {
+    create?: XOR<ClinicCreateWithoutLabBookingsInput, ClinicUncheckedCreateWithoutLabBookingsInput>
+    connectOrCreate?: ClinicCreateOrConnectWithoutLabBookingsInput
+    upsert?: ClinicUpsertWithoutLabBookingsInput
+    connect?: ClinicWhereUniqueInput
+    update?: XOR<XOR<ClinicUpdateToOneWithWhereWithoutLabBookingsInput, ClinicUpdateWithoutLabBookingsInput>, ClinicUncheckedUpdateWithoutLabBookingsInput>
+  }
+
+  export type InvoiceUpdateOneWithoutLabBookingNestedInput = {
+    create?: XOR<InvoiceCreateWithoutLabBookingInput, InvoiceUncheckedCreateWithoutLabBookingInput>
+    connectOrCreate?: InvoiceCreateOrConnectWithoutLabBookingInput
+    upsert?: InvoiceUpsertWithoutLabBookingInput
+    disconnect?: InvoiceWhereInput | boolean
+    delete?: InvoiceWhereInput | boolean
+    connect?: InvoiceWhereUniqueInput
+    update?: XOR<XOR<InvoiceUpdateToOneWithWhereWithoutLabBookingInput, InvoiceUpdateWithoutLabBookingInput>, InvoiceUncheckedUpdateWithoutLabBookingInput>
+  }
+
+  export type InvoiceUncheckedUpdateOneWithoutLabBookingNestedInput = {
+    create?: XOR<InvoiceCreateWithoutLabBookingInput, InvoiceUncheckedCreateWithoutLabBookingInput>
+    connectOrCreate?: InvoiceCreateOrConnectWithoutLabBookingInput
+    upsert?: InvoiceUpsertWithoutLabBookingInput
+    disconnect?: InvoiceWhereInput | boolean
+    delete?: InvoiceWhereInput | boolean
+    connect?: InvoiceWhereUniqueInput
+    update?: XOR<XOR<InvoiceUpdateToOneWithWhereWithoutLabBookingInput, InvoiceUpdateWithoutLabBookingInput>, InvoiceUncheckedUpdateWithoutLabBookingInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -54115,6 +59444,7 @@ export namespace Prisma {
     appointments?: AppointmentCreateNestedManyWithoutPatientInput
     prescriptions?: PrescriptionCreateNestedManyWithoutPatientInput
     invoices?: InvoiceCreateNestedManyWithoutPatientInput
+    labBookings?: LabBookingCreateNestedManyWithoutPatientInput
   }
 
   export type PatientUncheckedCreateWithoutClinicInput = {
@@ -54152,6 +59482,7 @@ export namespace Prisma {
     appointments?: AppointmentUncheckedCreateNestedManyWithoutPatientInput
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutPatientInput
     invoices?: InvoiceUncheckedCreateNestedManyWithoutPatientInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutPatientInput
   }
 
   export type PatientCreateOrConnectWithoutClinicInput = {
@@ -54685,6 +60016,7 @@ export namespace Prisma {
     patient?: PatientCreateNestedOneWithoutInvoicesInput
     items?: InvoiceItemCreateNestedManyWithoutInvoiceInput
     appointment?: AppointmentCreateNestedOneWithoutInvoiceInput
+    labBooking?: LabBookingCreateNestedOneWithoutInvoiceInput
   }
 
   export type InvoiceUncheckedCreateWithoutClinicInput = {
@@ -54701,6 +60033,7 @@ export namespace Prisma {
     paymentStatus?: string
     otherInfo?: string | null
     appointmentId?: string | null
+    labBookingId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     items?: InvoiceItemUncheckedCreateNestedManyWithoutInvoiceInput
@@ -54995,6 +60328,146 @@ export namespace Prisma {
 
   export type NoteCreateManyClinicInputEnvelope = {
     data: NoteCreateManyClinicInput | NoteCreateManyClinicInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LabCategoryCreateWithoutClinicInput = {
+    id?: string
+    name: string
+    description?: string | null
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tests?: LabTestCreateNestedManyWithoutCategoryInput
+  }
+
+  export type LabCategoryUncheckedCreateWithoutClinicInput = {
+    id?: string
+    name: string
+    description?: string | null
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tests?: LabTestUncheckedCreateNestedManyWithoutCategoryInput
+  }
+
+  export type LabCategoryCreateOrConnectWithoutClinicInput = {
+    where: LabCategoryWhereUniqueInput
+    create: XOR<LabCategoryCreateWithoutClinicInput, LabCategoryUncheckedCreateWithoutClinicInput>
+  }
+
+  export type LabCategoryCreateManyClinicInputEnvelope = {
+    data: LabCategoryCreateManyClinicInput | LabCategoryCreateManyClinicInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LabTestCreateWithoutClinicInput = {
+    id?: string
+    testCode?: string | null
+    name: string
+    shortName?: string | null
+    description?: string | null
+    price?: number
+    homeCollectionCharge?: number | null
+    duration?: string | null
+    preparationInfo?: string | null
+    assignment?: string | null
+    assignedDoctors?: NullableJsonNullValueInput | InputJsonValue
+    assignedStaff?: NullableJsonNullValueInput | InputJsonValue
+    status?: string
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    isSlotBookingEnabled?: boolean
+    slotDuration?: number | null
+    maxBookingsPerSlot?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    category?: LabCategoryCreateNestedOneWithoutTestsInput
+    bookings?: LabBookingCreateNestedManyWithoutTestInput
+  }
+
+  export type LabTestUncheckedCreateWithoutClinicInput = {
+    id?: string
+    testCode?: string | null
+    name: string
+    shortName?: string | null
+    description?: string | null
+    price?: number
+    homeCollectionCharge?: number | null
+    duration?: string | null
+    preparationInfo?: string | null
+    assignment?: string | null
+    assignedDoctors?: NullableJsonNullValueInput | InputJsonValue
+    assignedStaff?: NullableJsonNullValueInput | InputJsonValue
+    status?: string
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    isSlotBookingEnabled?: boolean
+    slotDuration?: number | null
+    maxBookingsPerSlot?: number | null
+    categoryId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bookings?: LabBookingUncheckedCreateNestedManyWithoutTestInput
+  }
+
+  export type LabTestCreateOrConnectWithoutClinicInput = {
+    where: LabTestWhereUniqueInput
+    create: XOR<LabTestCreateWithoutClinicInput, LabTestUncheckedCreateWithoutClinicInput>
+  }
+
+  export type LabTestCreateManyClinicInputEnvelope = {
+    data: LabTestCreateManyClinicInput | LabTestCreateManyClinicInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LabBookingCreateWithoutClinicInput = {
+    id?: string
+    bookingCode?: string | null
+    scheduledAt: Date | string
+    status?: string
+    paymentStatus?: string
+    paymentMethod?: string | null
+    discount?: number
+    tax?: number
+    totalAmount?: number
+    invoiceNo?: string | null
+    sessionSlot?: string | null
+    assignedUserId?: string | null
+    remarks?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    patient?: PatientCreateNestedOneWithoutLabBookingsInput
+    test?: LabTestCreateNestedOneWithoutBookingsInput
+    invoice?: InvoiceCreateNestedOneWithoutLabBookingInput
+  }
+
+  export type LabBookingUncheckedCreateWithoutClinicInput = {
+    id?: string
+    bookingCode?: string | null
+    patientId?: string | null
+    testId?: string | null
+    scheduledAt: Date | string
+    status?: string
+    paymentStatus?: string
+    paymentMethod?: string | null
+    discount?: number
+    tax?: number
+    totalAmount?: number
+    invoiceNo?: string | null
+    sessionSlot?: string | null
+    assignedUserId?: string | null
+    remarks?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    invoice?: InvoiceUncheckedCreateNestedOneWithoutLabBookingInput
+  }
+
+  export type LabBookingCreateOrConnectWithoutClinicInput = {
+    where: LabBookingWhereUniqueInput
+    create: XOR<LabBookingCreateWithoutClinicInput, LabBookingUncheckedCreateWithoutClinicInput>
+  }
+
+  export type LabBookingCreateManyClinicInputEnvelope = {
+    data: LabBookingCreateManyClinicInput | LabBookingCreateManyClinicInput[]
     skipDuplicates?: boolean
   }
 
@@ -55777,6 +61250,7 @@ export namespace Prisma {
     otherInfo?: StringNullableFilter<"Invoice"> | string | null
     clinicId?: StringFilter<"Invoice"> | string
     appointmentId?: StringNullableFilter<"Invoice"> | string | null
+    labBookingId?: StringNullableFilter<"Invoice"> | string | null
     createdAt?: DateTimeFilter<"Invoice"> | Date | string
     updatedAt?: DateTimeFilter<"Invoice"> | Date | string
   }
@@ -56063,6 +61537,118 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Note"> | Date | string
   }
 
+  export type LabCategoryUpsertWithWhereUniqueWithoutClinicInput = {
+    where: LabCategoryWhereUniqueInput
+    update: XOR<LabCategoryUpdateWithoutClinicInput, LabCategoryUncheckedUpdateWithoutClinicInput>
+    create: XOR<LabCategoryCreateWithoutClinicInput, LabCategoryUncheckedCreateWithoutClinicInput>
+  }
+
+  export type LabCategoryUpdateWithWhereUniqueWithoutClinicInput = {
+    where: LabCategoryWhereUniqueInput
+    data: XOR<LabCategoryUpdateWithoutClinicInput, LabCategoryUncheckedUpdateWithoutClinicInput>
+  }
+
+  export type LabCategoryUpdateManyWithWhereWithoutClinicInput = {
+    where: LabCategoryScalarWhereInput
+    data: XOR<LabCategoryUpdateManyMutationInput, LabCategoryUncheckedUpdateManyWithoutClinicInput>
+  }
+
+  export type LabCategoryScalarWhereInput = {
+    AND?: LabCategoryScalarWhereInput | LabCategoryScalarWhereInput[]
+    OR?: LabCategoryScalarWhereInput[]
+    NOT?: LabCategoryScalarWhereInput | LabCategoryScalarWhereInput[]
+    id?: StringFilter<"LabCategory"> | string
+    name?: StringFilter<"LabCategory"> | string
+    description?: StringNullableFilter<"LabCategory"> | string | null
+    status?: StringFilter<"LabCategory"> | string
+    clinicId?: StringFilter<"LabCategory"> | string
+    createdAt?: DateTimeFilter<"LabCategory"> | Date | string
+    updatedAt?: DateTimeFilter<"LabCategory"> | Date | string
+  }
+
+  export type LabTestUpsertWithWhereUniqueWithoutClinicInput = {
+    where: LabTestWhereUniqueInput
+    update: XOR<LabTestUpdateWithoutClinicInput, LabTestUncheckedUpdateWithoutClinicInput>
+    create: XOR<LabTestCreateWithoutClinicInput, LabTestUncheckedCreateWithoutClinicInput>
+  }
+
+  export type LabTestUpdateWithWhereUniqueWithoutClinicInput = {
+    where: LabTestWhereUniqueInput
+    data: XOR<LabTestUpdateWithoutClinicInput, LabTestUncheckedUpdateWithoutClinicInput>
+  }
+
+  export type LabTestUpdateManyWithWhereWithoutClinicInput = {
+    where: LabTestScalarWhereInput
+    data: XOR<LabTestUpdateManyMutationInput, LabTestUncheckedUpdateManyWithoutClinicInput>
+  }
+
+  export type LabTestScalarWhereInput = {
+    AND?: LabTestScalarWhereInput | LabTestScalarWhereInput[]
+    OR?: LabTestScalarWhereInput[]
+    NOT?: LabTestScalarWhereInput | LabTestScalarWhereInput[]
+    id?: StringFilter<"LabTest"> | string
+    testCode?: StringNullableFilter<"LabTest"> | string | null
+    name?: StringFilter<"LabTest"> | string
+    shortName?: StringNullableFilter<"LabTest"> | string | null
+    description?: StringNullableFilter<"LabTest"> | string | null
+    price?: FloatFilter<"LabTest"> | number
+    homeCollectionCharge?: FloatNullableFilter<"LabTest"> | number | null
+    duration?: StringNullableFilter<"LabTest"> | string | null
+    preparationInfo?: StringNullableFilter<"LabTest"> | string | null
+    assignment?: StringNullableFilter<"LabTest"> | string | null
+    assignedDoctors?: JsonNullableFilter<"LabTest">
+    assignedStaff?: JsonNullableFilter<"LabTest">
+    status?: StringFilter<"LabTest"> | string
+    schedules?: JsonNullableFilter<"LabTest">
+    isSlotBookingEnabled?: BoolFilter<"LabTest"> | boolean
+    slotDuration?: IntNullableFilter<"LabTest"> | number | null
+    maxBookingsPerSlot?: IntNullableFilter<"LabTest"> | number | null
+    categoryId?: StringNullableFilter<"LabTest"> | string | null
+    clinicId?: StringFilter<"LabTest"> | string
+    createdAt?: DateTimeFilter<"LabTest"> | Date | string
+    updatedAt?: DateTimeFilter<"LabTest"> | Date | string
+  }
+
+  export type LabBookingUpsertWithWhereUniqueWithoutClinicInput = {
+    where: LabBookingWhereUniqueInput
+    update: XOR<LabBookingUpdateWithoutClinicInput, LabBookingUncheckedUpdateWithoutClinicInput>
+    create: XOR<LabBookingCreateWithoutClinicInput, LabBookingUncheckedCreateWithoutClinicInput>
+  }
+
+  export type LabBookingUpdateWithWhereUniqueWithoutClinicInput = {
+    where: LabBookingWhereUniqueInput
+    data: XOR<LabBookingUpdateWithoutClinicInput, LabBookingUncheckedUpdateWithoutClinicInput>
+  }
+
+  export type LabBookingUpdateManyWithWhereWithoutClinicInput = {
+    where: LabBookingScalarWhereInput
+    data: XOR<LabBookingUpdateManyMutationInput, LabBookingUncheckedUpdateManyWithoutClinicInput>
+  }
+
+  export type LabBookingScalarWhereInput = {
+    AND?: LabBookingScalarWhereInput | LabBookingScalarWhereInput[]
+    OR?: LabBookingScalarWhereInput[]
+    NOT?: LabBookingScalarWhereInput | LabBookingScalarWhereInput[]
+    id?: StringFilter<"LabBooking"> | string
+    bookingCode?: StringNullableFilter<"LabBooking"> | string | null
+    patientId?: StringNullableFilter<"LabBooking"> | string | null
+    testId?: StringNullableFilter<"LabBooking"> | string | null
+    scheduledAt?: DateTimeFilter<"LabBooking"> | Date | string
+    status?: StringFilter<"LabBooking"> | string
+    paymentStatus?: StringFilter<"LabBooking"> | string
+    paymentMethod?: StringNullableFilter<"LabBooking"> | string | null
+    discount?: FloatFilter<"LabBooking"> | number
+    tax?: FloatFilter<"LabBooking"> | number
+    totalAmount?: FloatFilter<"LabBooking"> | number
+    invoiceNo?: StringNullableFilter<"LabBooking"> | string | null
+    sessionSlot?: StringNullableFilter<"LabBooking"> | string | null
+    assignedUserId?: StringNullableFilter<"LabBooking"> | string | null
+    remarks?: StringNullableFilter<"LabBooking"> | string | null
+    clinicId?: StringFilter<"LabBooking"> | string
+    createdAt?: DateTimeFilter<"LabBooking"> | Date | string
+    updatedAt?: DateTimeFilter<"LabBooking"> | Date | string
+  }
+
   export type ClinicCreateWithoutLandingPageInput = {
     id?: string
     name: string
@@ -56116,6 +61702,9 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutClinicInput
     todos?: TodoCreateNestedManyWithoutClinicInput
     notes?: NoteCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutLandingPageInput = {
@@ -56171,6 +61760,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
     todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
     notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutLandingPageInput = {
@@ -56242,6 +61834,9 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutClinicNestedInput
     todos?: TodoUpdateManyWithoutClinicNestedInput
     notes?: NoteUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutLandingPageInput = {
@@ -56297,6 +61892,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
     todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
     notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutPackageInput = {
@@ -56352,6 +61950,9 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutClinicInput
     todos?: TodoCreateNestedManyWithoutClinicInput
     notes?: NoteCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutPackageInput = {
@@ -56407,6 +62008,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
     todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
     notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutPackageInput = {
@@ -56519,6 +62123,9 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutClinicInput
     todos?: TodoCreateNestedManyWithoutClinicInput
     notes?: NoteCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutUsersInput = {
@@ -56574,6 +62181,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
     todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
     notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutUsersInput = {
@@ -56645,6 +62255,9 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutClinicNestedInput
     todos?: TodoUpdateManyWithoutClinicNestedInput
     notes?: NoteUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutUsersInput = {
@@ -56700,6 +62313,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
     todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
     notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutDepartmentsInput = {
@@ -56755,6 +62371,9 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutClinicInput
     todos?: TodoCreateNestedManyWithoutClinicInput
     notes?: NoteCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutDepartmentsInput = {
@@ -56810,6 +62429,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
     todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
     notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutDepartmentsInput = {
@@ -57241,6 +62863,9 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutClinicNestedInput
     todos?: TodoUpdateManyWithoutClinicNestedInput
     notes?: NoteUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutDepartmentsInput = {
@@ -57296,6 +62921,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
     todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
     notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type DesignationUpsertWithWhereUniqueWithoutDepartmentInput = {
@@ -57447,6 +63075,9 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutClinicInput
     todos?: TodoCreateNestedManyWithoutClinicInput
     notes?: NoteCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutDesignationsInput = {
@@ -57502,6 +63133,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
     todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
     notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutDesignationsInput = {
@@ -57796,6 +63430,9 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutClinicNestedInput
     todos?: TodoUpdateManyWithoutClinicNestedInput
     notes?: NoteUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutDesignationsInput = {
@@ -57851,6 +63488,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
     todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
     notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type DepartmentUpsertWithoutDesignationsInput = {
@@ -58053,6 +63693,9 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutClinicInput
     todos?: TodoCreateNestedManyWithoutClinicInput
     notes?: NoteCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutStaffsInput = {
@@ -58108,6 +63751,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
     todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
     notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutStaffsInput = {
@@ -58317,6 +63963,9 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutClinicNestedInput
     todos?: TodoUpdateManyWithoutClinicNestedInput
     notes?: NoteUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutStaffsInput = {
@@ -58372,6 +64021,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
     todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
     notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type PayrollUpsertWithWhereUniqueWithoutStaffInput = {
@@ -58540,6 +64192,9 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutClinicInput
     todos?: TodoCreateNestedManyWithoutClinicInput
     notes?: NoteCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutDoctorsInput = {
@@ -58595,6 +64250,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
     todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
     notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutDoctorsInput = {
@@ -58926,6 +64584,9 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutClinicNestedInput
     todos?: TodoUpdateManyWithoutClinicNestedInput
     notes?: NoteUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutDoctorsInput = {
@@ -58981,6 +64642,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
     todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
     notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type AppointmentUpsertWithWhereUniqueWithoutDoctorInput = {
@@ -59084,6 +64748,9 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutClinicInput
     todos?: TodoCreateNestedManyWithoutClinicInput
     notes?: NoteCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutPatientsInput = {
@@ -59139,6 +64806,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
     todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
     notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutPatientsInput = {
@@ -59269,6 +64939,7 @@ export namespace Prisma {
     clinic: ClinicCreateNestedOneWithoutInvoicesInput
     items?: InvoiceItemCreateNestedManyWithoutInvoiceInput
     appointment?: AppointmentCreateNestedOneWithoutInvoiceInput
+    labBooking?: LabBookingCreateNestedOneWithoutInvoiceInput
   }
 
   export type InvoiceUncheckedCreateWithoutPatientInput = {
@@ -59285,6 +64956,7 @@ export namespace Prisma {
     otherInfo?: string | null
     clinicId: string
     appointmentId?: string | null
+    labBookingId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     items?: InvoiceItemUncheckedCreateNestedManyWithoutInvoiceInput
@@ -59297,6 +64969,58 @@ export namespace Prisma {
 
   export type InvoiceCreateManyPatientInputEnvelope = {
     data: InvoiceCreateManyPatientInput | InvoiceCreateManyPatientInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LabBookingCreateWithoutPatientInput = {
+    id?: string
+    bookingCode?: string | null
+    scheduledAt: Date | string
+    status?: string
+    paymentStatus?: string
+    paymentMethod?: string | null
+    discount?: number
+    tax?: number
+    totalAmount?: number
+    invoiceNo?: string | null
+    sessionSlot?: string | null
+    assignedUserId?: string | null
+    remarks?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    test?: LabTestCreateNestedOneWithoutBookingsInput
+    clinic: ClinicCreateNestedOneWithoutLabBookingsInput
+    invoice?: InvoiceCreateNestedOneWithoutLabBookingInput
+  }
+
+  export type LabBookingUncheckedCreateWithoutPatientInput = {
+    id?: string
+    bookingCode?: string | null
+    testId?: string | null
+    scheduledAt: Date | string
+    status?: string
+    paymentStatus?: string
+    paymentMethod?: string | null
+    discount?: number
+    tax?: number
+    totalAmount?: number
+    invoiceNo?: string | null
+    sessionSlot?: string | null
+    assignedUserId?: string | null
+    remarks?: string | null
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    invoice?: InvoiceUncheckedCreateNestedOneWithoutLabBookingInput
+  }
+
+  export type LabBookingCreateOrConnectWithoutPatientInput = {
+    where: LabBookingWhereUniqueInput
+    create: XOR<LabBookingCreateWithoutPatientInput, LabBookingUncheckedCreateWithoutPatientInput>
+  }
+
+  export type LabBookingCreateManyPatientInputEnvelope = {
+    data: LabBookingCreateManyPatientInput | LabBookingCreateManyPatientInput[]
     skipDuplicates?: boolean
   }
 
@@ -59364,6 +65088,9 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutClinicNestedInput
     todos?: TodoUpdateManyWithoutClinicNestedInput
     notes?: NoteUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutPatientsInput = {
@@ -59419,6 +65146,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
     todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
     notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type AppointmentUpsertWithWhereUniqueWithoutPatientInput = {
@@ -59469,6 +65199,22 @@ export namespace Prisma {
     data: XOR<InvoiceUpdateManyMutationInput, InvoiceUncheckedUpdateManyWithoutPatientInput>
   }
 
+  export type LabBookingUpsertWithWhereUniqueWithoutPatientInput = {
+    where: LabBookingWhereUniqueInput
+    update: XOR<LabBookingUpdateWithoutPatientInput, LabBookingUncheckedUpdateWithoutPatientInput>
+    create: XOR<LabBookingCreateWithoutPatientInput, LabBookingUncheckedCreateWithoutPatientInput>
+  }
+
+  export type LabBookingUpdateWithWhereUniqueWithoutPatientInput = {
+    where: LabBookingWhereUniqueInput
+    data: XOR<LabBookingUpdateWithoutPatientInput, LabBookingUncheckedUpdateWithoutPatientInput>
+  }
+
+  export type LabBookingUpdateManyWithWhereWithoutPatientInput = {
+    where: LabBookingScalarWhereInput
+    data: XOR<LabBookingUpdateManyMutationInput, LabBookingUncheckedUpdateManyWithoutPatientInput>
+  }
+
   export type PatientCreateWithoutAppointmentsInput = {
     id?: string
     patientCode?: string | null
@@ -59504,6 +65250,7 @@ export namespace Prisma {
     clinic: ClinicCreateNestedOneWithoutPatientsInput
     prescriptions?: PrescriptionCreateNestedManyWithoutPatientInput
     invoices?: InvoiceCreateNestedManyWithoutPatientInput
+    labBookings?: LabBookingCreateNestedManyWithoutPatientInput
   }
 
   export type PatientUncheckedCreateWithoutAppointmentsInput = {
@@ -59541,6 +65288,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutPatientInput
     invoices?: InvoiceUncheckedCreateNestedManyWithoutPatientInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutPatientInput
   }
 
   export type PatientCreateOrConnectWithoutAppointmentsInput = {
@@ -59757,6 +65505,9 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutClinicInput
     todos?: TodoCreateNestedManyWithoutClinicInput
     notes?: NoteCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutAppointmentsInput = {
@@ -59812,6 +65563,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
     todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
     notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutAppointmentsInput = {
@@ -60035,6 +65789,7 @@ export namespace Prisma {
     patient?: PatientCreateNestedOneWithoutInvoicesInput
     clinic: ClinicCreateNestedOneWithoutInvoicesInput
     items?: InvoiceItemCreateNestedManyWithoutInvoiceInput
+    labBooking?: LabBookingCreateNestedOneWithoutInvoiceInput
   }
 
   export type InvoiceUncheckedCreateWithoutAppointmentInput = {
@@ -60051,6 +65806,7 @@ export namespace Prisma {
     paymentStatus?: string
     otherInfo?: string | null
     clinicId: string
+    labBookingId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     items?: InvoiceItemUncheckedCreateNestedManyWithoutInvoiceInput
@@ -60107,6 +65863,7 @@ export namespace Prisma {
     clinic?: ClinicUpdateOneRequiredWithoutPatientsNestedInput
     prescriptions?: PrescriptionUpdateManyWithoutPatientNestedInput
     invoices?: InvoiceUpdateManyWithoutPatientNestedInput
+    labBookings?: LabBookingUpdateManyWithoutPatientNestedInput
   }
 
   export type PatientUncheckedUpdateWithoutAppointmentsInput = {
@@ -60144,6 +65901,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutPatientNestedInput
     invoices?: InvoiceUncheckedUpdateManyWithoutPatientNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutPatientNestedInput
   }
 
   export type DoctorUpsertWithoutAppointmentsInput = {
@@ -60378,6 +66136,9 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutClinicNestedInput
     todos?: TodoUpdateManyWithoutClinicNestedInput
     notes?: NoteUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutAppointmentsInput = {
@@ -60433,6 +66194,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
     todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
     notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type PrescriptionUpsertWithWhereUniqueWithoutAppointmentInput = {
@@ -60576,6 +66340,7 @@ export namespace Prisma {
     patient?: PatientUpdateOneWithoutInvoicesNestedInput
     clinic?: ClinicUpdateOneRequiredWithoutInvoicesNestedInput
     items?: InvoiceItemUpdateManyWithoutInvoiceNestedInput
+    labBooking?: LabBookingUpdateOneWithoutInvoiceNestedInput
   }
 
   export type InvoiceUncheckedUpdateWithoutAppointmentInput = {
@@ -60592,6 +66357,7 @@ export namespace Prisma {
     paymentStatus?: StringFieldUpdateOperationsInput | string
     otherInfo?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
+    labBookingId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: InvoiceItemUncheckedUpdateManyWithoutInvoiceNestedInput
@@ -60689,6 +66455,9 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutClinicInput
     todos?: TodoCreateNestedManyWithoutClinicInput
     notes?: NoteCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutServicesInput = {
@@ -60744,6 +66513,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
     todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
     notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutServicesInput = {
@@ -60894,6 +66666,9 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutClinicNestedInput
     todos?: TodoUpdateManyWithoutClinicNestedInput
     notes?: NoteUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutServicesInput = {
@@ -60949,6 +66724,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
     todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
     notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type InvoiceItemUpsertWithWhereUniqueWithoutServiceInput = {
@@ -61020,6 +66798,9 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutClinicInput
     todos?: TodoCreateNestedManyWithoutClinicInput
     notes?: NoteCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutSpecializationsInput = {
@@ -61075,6 +66856,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
     todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
     notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutSpecializationsInput = {
@@ -61263,6 +67047,9 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutClinicNestedInput
     todos?: TodoUpdateManyWithoutClinicNestedInput
     notes?: NoteUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutSpecializationsInput = {
@@ -61318,6 +67105,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
     todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
     notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type DoctorUpsertWithWhereUniqueWithoutSpecializationsInput = {
@@ -61389,6 +67179,9 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutClinicInput
     todos?: TodoCreateNestedManyWithoutClinicInput
     notes?: NoteCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutHolidaysInput = {
@@ -61444,6 +67237,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
     todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
     notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutHolidaysInput = {
@@ -61515,6 +67311,9 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutClinicNestedInput
     todos?: TodoUpdateManyWithoutClinicNestedInput
     notes?: NoteUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutHolidaysInput = {
@@ -61570,6 +67369,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
     todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
     notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type StaffCreateWithoutPayrollsInput = {
@@ -61799,6 +67601,9 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutClinicInput
     todos?: TodoCreateNestedManyWithoutClinicInput
     notes?: NoteCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutPayrollsInput = {
@@ -61854,6 +67659,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
     todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
     notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutPayrollsInput = {
@@ -62111,6 +67919,9 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutClinicNestedInput
     todos?: TodoUpdateManyWithoutClinicNestedInput
     notes?: NoteUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutPayrollsInput = {
@@ -62166,6 +67977,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
     todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
     notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutExpensesInput = {
@@ -62221,6 +68035,9 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutClinicInput
     todos?: TodoCreateNestedManyWithoutClinicInput
     notes?: NoteCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutExpensesInput = {
@@ -62276,6 +68093,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
     todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
     notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutExpensesInput = {
@@ -62347,6 +68167,9 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutClinicNestedInput
     todos?: TodoUpdateManyWithoutClinicNestedInput
     notes?: NoteUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutExpensesInput = {
@@ -62402,6 +68225,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
     todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
     notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutExpenseCategoriesInput = {
@@ -62457,6 +68283,9 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutClinicInput
     todos?: TodoCreateNestedManyWithoutClinicInput
     notes?: NoteCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutExpenseCategoriesInput = {
@@ -62512,6 +68341,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
     todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
     notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutExpenseCategoriesInput = {
@@ -62583,6 +68415,9 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutClinicNestedInput
     todos?: TodoUpdateManyWithoutClinicNestedInput
     notes?: NoteUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutExpenseCategoriesInput = {
@@ -62638,6 +68473,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
     todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
     notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutClinicRolesInput = {
@@ -62693,6 +68531,9 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutClinicInput
     todos?: TodoCreateNestedManyWithoutClinicInput
     notes?: NoteCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutClinicRolesInput = {
@@ -62748,6 +68589,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
     todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
     notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutClinicRolesInput = {
@@ -62819,6 +68663,9 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutClinicNestedInput
     todos?: TodoUpdateManyWithoutClinicNestedInput
     notes?: NoteUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutClinicRolesInput = {
@@ -62874,6 +68721,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
     todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
     notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutAttendancesInput = {
@@ -62929,6 +68779,9 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutClinicInput
     todos?: TodoCreateNestedManyWithoutClinicInput
     notes?: NoteCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutAttendancesInput = {
@@ -62984,6 +68837,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
     todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
     notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutAttendancesInput = {
@@ -63055,6 +68911,9 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutClinicNestedInput
     todos?: TodoUpdateManyWithoutClinicNestedInput
     notes?: NoteUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutAttendancesInput = {
@@ -63110,6 +68969,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
     todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
     notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutLeaveTypesInput = {
@@ -63165,6 +69027,9 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutClinicInput
     todos?: TodoCreateNestedManyWithoutClinicInput
     notes?: NoteCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutLeaveTypesInput = {
@@ -63220,6 +69085,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
     todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
     notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutLeaveTypesInput = {
@@ -63291,6 +69159,9 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutClinicNestedInput
     todos?: TodoUpdateManyWithoutClinicNestedInput
     notes?: NoteUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutLeaveTypesInput = {
@@ -63346,6 +69217,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
     todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
     notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutLeavesInput = {
@@ -63401,6 +69275,9 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutClinicInput
     todos?: TodoCreateNestedManyWithoutClinicInput
     notes?: NoteCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutLeavesInput = {
@@ -63456,6 +69333,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
     todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
     notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutLeavesInput = {
@@ -63527,6 +69407,9 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutClinicNestedInput
     todos?: TodoUpdateManyWithoutClinicNestedInput
     notes?: NoteUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutLeavesInput = {
@@ -63582,6 +69465,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
     todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
     notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutWorkingDaysConfigInput = {
@@ -63637,6 +69523,9 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutClinicInput
     todos?: TodoCreateNestedManyWithoutClinicInput
     notes?: NoteCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutWorkingDaysConfigInput = {
@@ -63692,6 +69581,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
     todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
     notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutWorkingDaysConfigInput = {
@@ -63763,6 +69655,9 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutClinicNestedInput
     todos?: TodoUpdateManyWithoutClinicNestedInput
     notes?: NoteUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutWorkingDaysConfigInput = {
@@ -63818,6 +69713,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
     todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
     notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type PatientCreateWithoutPrescriptionsInput = {
@@ -63855,6 +69753,7 @@ export namespace Prisma {
     clinic: ClinicCreateNestedOneWithoutPatientsInput
     appointments?: AppointmentCreateNestedManyWithoutPatientInput
     invoices?: InvoiceCreateNestedManyWithoutPatientInput
+    labBookings?: LabBookingCreateNestedManyWithoutPatientInput
   }
 
   export type PatientUncheckedCreateWithoutPrescriptionsInput = {
@@ -63892,6 +69791,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     appointments?: AppointmentUncheckedCreateNestedManyWithoutPatientInput
     invoices?: InvoiceUncheckedCreateNestedManyWithoutPatientInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutPatientInput
   }
 
   export type PatientCreateOrConnectWithoutPrescriptionsInput = {
@@ -64167,6 +70067,9 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutClinicInput
     todos?: TodoCreateNestedManyWithoutClinicInput
     notes?: NoteCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutPrescriptionsInput = {
@@ -64222,6 +70125,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
     todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
     notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutPrescriptionsInput = {
@@ -64309,6 +70215,7 @@ export namespace Prisma {
     clinic?: ClinicUpdateOneRequiredWithoutPatientsNestedInput
     appointments?: AppointmentUpdateManyWithoutPatientNestedInput
     invoices?: InvoiceUpdateManyWithoutPatientNestedInput
+    labBookings?: LabBookingUpdateManyWithoutPatientNestedInput
   }
 
   export type PatientUncheckedUpdateWithoutPrescriptionsInput = {
@@ -64346,6 +70253,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     appointments?: AppointmentUncheckedUpdateManyWithoutPatientNestedInput
     invoices?: InvoiceUncheckedUpdateManyWithoutPatientNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutPatientNestedInput
   }
 
   export type DoctorUpsertWithoutPrescriptionsInput = {
@@ -64645,6 +70553,9 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutClinicNestedInput
     todos?: TodoUpdateManyWithoutClinicNestedInput
     notes?: NoteUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutPrescriptionsInput = {
@@ -64700,6 +70611,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
     todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
     notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type PrescriptionMedicineUpsertWithWhereUniqueWithoutPrescriptionInput = {
@@ -64808,6 +70722,9 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutClinicInput
     todos?: TodoCreateNestedManyWithoutClinicInput
     notes?: NoteCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutPrescriptionMedicinesInput = {
@@ -64863,6 +70780,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
     todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
     notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutPrescriptionMedicinesInput = {
@@ -64977,6 +70897,9 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutClinicNestedInput
     todos?: TodoUpdateManyWithoutClinicNestedInput
     notes?: NoteUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutPrescriptionMedicinesInput = {
@@ -65032,6 +70955,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
     todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
     notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type PatientCreateWithoutInvoicesInput = {
@@ -65069,6 +70995,7 @@ export namespace Prisma {
     clinic: ClinicCreateNestedOneWithoutPatientsInput
     appointments?: AppointmentCreateNestedManyWithoutPatientInput
     prescriptions?: PrescriptionCreateNestedManyWithoutPatientInput
+    labBookings?: LabBookingCreateNestedManyWithoutPatientInput
   }
 
   export type PatientUncheckedCreateWithoutInvoicesInput = {
@@ -65106,6 +71033,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     appointments?: AppointmentUncheckedCreateNestedManyWithoutPatientInput
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutPatientInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutPatientInput
   }
 
   export type PatientCreateOrConnectWithoutInvoicesInput = {
@@ -65166,6 +71094,9 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutClinicInput
     todos?: TodoCreateNestedManyWithoutClinicInput
     notes?: NoteCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutInvoicesInput = {
@@ -65221,6 +71152,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
     todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
     notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutInvoicesInput = {
@@ -65321,6 +71255,53 @@ export namespace Prisma {
     create: XOR<AppointmentCreateWithoutInvoiceInput, AppointmentUncheckedCreateWithoutInvoiceInput>
   }
 
+  export type LabBookingCreateWithoutInvoiceInput = {
+    id?: string
+    bookingCode?: string | null
+    scheduledAt: Date | string
+    status?: string
+    paymentStatus?: string
+    paymentMethod?: string | null
+    discount?: number
+    tax?: number
+    totalAmount?: number
+    invoiceNo?: string | null
+    sessionSlot?: string | null
+    assignedUserId?: string | null
+    remarks?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    patient?: PatientCreateNestedOneWithoutLabBookingsInput
+    test?: LabTestCreateNestedOneWithoutBookingsInput
+    clinic: ClinicCreateNestedOneWithoutLabBookingsInput
+  }
+
+  export type LabBookingUncheckedCreateWithoutInvoiceInput = {
+    id?: string
+    bookingCode?: string | null
+    patientId?: string | null
+    testId?: string | null
+    scheduledAt: Date | string
+    status?: string
+    paymentStatus?: string
+    paymentMethod?: string | null
+    discount?: number
+    tax?: number
+    totalAmount?: number
+    invoiceNo?: string | null
+    sessionSlot?: string | null
+    assignedUserId?: string | null
+    remarks?: string | null
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LabBookingCreateOrConnectWithoutInvoiceInput = {
+    where: LabBookingWhereUniqueInput
+    create: XOR<LabBookingCreateWithoutInvoiceInput, LabBookingUncheckedCreateWithoutInvoiceInput>
+  }
+
   export type PatientUpsertWithoutInvoicesInput = {
     update: XOR<PatientUpdateWithoutInvoicesInput, PatientUncheckedUpdateWithoutInvoicesInput>
     create: XOR<PatientCreateWithoutInvoicesInput, PatientUncheckedCreateWithoutInvoicesInput>
@@ -65367,6 +71348,7 @@ export namespace Prisma {
     clinic?: ClinicUpdateOneRequiredWithoutPatientsNestedInput
     appointments?: AppointmentUpdateManyWithoutPatientNestedInput
     prescriptions?: PrescriptionUpdateManyWithoutPatientNestedInput
+    labBookings?: LabBookingUpdateManyWithoutPatientNestedInput
   }
 
   export type PatientUncheckedUpdateWithoutInvoicesInput = {
@@ -65404,6 +71386,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     appointments?: AppointmentUncheckedUpdateManyWithoutPatientNestedInput
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutPatientNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutPatientNestedInput
   }
 
   export type ClinicUpsertWithoutInvoicesInput = {
@@ -65470,6 +71453,9 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutClinicNestedInput
     todos?: TodoUpdateManyWithoutClinicNestedInput
     notes?: NoteUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutInvoicesInput = {
@@ -65525,6 +71511,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
     todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
     notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type InvoiceItemUpsertWithWhereUniqueWithoutInvoiceInput = {
@@ -65608,6 +71597,59 @@ export namespace Prisma {
     followUps?: AppointmentUncheckedUpdateManyWithoutParentAppointmentNestedInput
   }
 
+  export type LabBookingUpsertWithoutInvoiceInput = {
+    update: XOR<LabBookingUpdateWithoutInvoiceInput, LabBookingUncheckedUpdateWithoutInvoiceInput>
+    create: XOR<LabBookingCreateWithoutInvoiceInput, LabBookingUncheckedCreateWithoutInvoiceInput>
+    where?: LabBookingWhereInput
+  }
+
+  export type LabBookingUpdateToOneWithWhereWithoutInvoiceInput = {
+    where?: LabBookingWhereInput
+    data: XOR<LabBookingUpdateWithoutInvoiceInput, LabBookingUncheckedUpdateWithoutInvoiceInput>
+  }
+
+  export type LabBookingUpdateWithoutInvoiceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bookingCode?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    discount?: FloatFieldUpdateOperationsInput | number
+    tax?: FloatFieldUpdateOperationsInput | number
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    invoiceNo?: NullableStringFieldUpdateOperationsInput | string | null
+    sessionSlot?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    patient?: PatientUpdateOneWithoutLabBookingsNestedInput
+    test?: LabTestUpdateOneWithoutBookingsNestedInput
+    clinic?: ClinicUpdateOneRequiredWithoutLabBookingsNestedInput
+  }
+
+  export type LabBookingUncheckedUpdateWithoutInvoiceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bookingCode?: NullableStringFieldUpdateOperationsInput | string | null
+    patientId?: NullableStringFieldUpdateOperationsInput | string | null
+    testId?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    discount?: FloatFieldUpdateOperationsInput | number
+    tax?: FloatFieldUpdateOperationsInput | number
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    invoiceNo?: NullableStringFieldUpdateOperationsInput | string | null
+    sessionSlot?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type InvoiceCreateWithoutItemsInput = {
     id?: string
     invoiceCode?: string | null
@@ -65625,6 +71667,7 @@ export namespace Prisma {
     patient?: PatientCreateNestedOneWithoutInvoicesInput
     clinic: ClinicCreateNestedOneWithoutInvoicesInput
     appointment?: AppointmentCreateNestedOneWithoutInvoiceInput
+    labBooking?: LabBookingCreateNestedOneWithoutInvoiceInput
   }
 
   export type InvoiceUncheckedCreateWithoutItemsInput = {
@@ -65642,6 +71685,7 @@ export namespace Prisma {
     otherInfo?: string | null
     clinicId: string
     appointmentId?: string | null
+    labBookingId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -65733,6 +71777,9 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutClinicInput
     todos?: TodoCreateNestedManyWithoutClinicInput
     notes?: NoteCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutInvoiceItemsInput = {
@@ -65788,6 +71835,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
     todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
     notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutInvoiceItemsInput = {
@@ -65823,6 +71873,7 @@ export namespace Prisma {
     patient?: PatientUpdateOneWithoutInvoicesNestedInput
     clinic?: ClinicUpdateOneRequiredWithoutInvoicesNestedInput
     appointment?: AppointmentUpdateOneWithoutInvoiceNestedInput
+    labBooking?: LabBookingUpdateOneWithoutInvoiceNestedInput
   }
 
   export type InvoiceUncheckedUpdateWithoutItemsInput = {
@@ -65840,6 +71891,7 @@ export namespace Prisma {
     otherInfo?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
     appointmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    labBookingId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -65943,6 +71995,9 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutClinicNestedInput
     todos?: TodoUpdateManyWithoutClinicNestedInput
     notes?: NoteUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutInvoiceItemsInput = {
@@ -65998,6 +72053,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
     todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
     notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutProductsInput = {
@@ -66053,6 +72111,9 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutClinicInput
     todos?: TodoCreateNestedManyWithoutClinicInput
     notes?: NoteCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutProductsInput = {
@@ -66108,6 +72169,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
     todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
     notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutProductsInput = {
@@ -66179,6 +72243,9 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutClinicNestedInput
     todos?: TodoUpdateManyWithoutClinicNestedInput
     notes?: NoteUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutProductsInput = {
@@ -66234,6 +72301,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
     todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
     notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutNotificationsInput = {
@@ -66289,6 +72359,9 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutClinicInput
     todos?: TodoCreateNestedManyWithoutClinicInput
     notes?: NoteCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutNotificationsInput = {
@@ -66344,6 +72417,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
     todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
     notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutNotificationsInput = {
@@ -66415,6 +72491,9 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutClinicNestedInput
     todos?: TodoUpdateManyWithoutClinicNestedInput
     notes?: NoteUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutNotificationsInput = {
@@ -66470,6 +72549,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
     todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
     notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutTicketsInput = {
@@ -66525,6 +72607,9 @@ export namespace Prisma {
     workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
     todos?: TodoCreateNestedManyWithoutClinicInput
     notes?: NoteCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutTicketsInput = {
@@ -66580,6 +72665,9 @@ export namespace Prisma {
     workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
     todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
     notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutTicketsInput = {
@@ -66651,6 +72739,9 @@ export namespace Prisma {
     workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
     todos?: TodoUpdateManyWithoutClinicNestedInput
     notes?: NoteUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutTicketsInput = {
@@ -66706,6 +72797,9 @@ export namespace Prisma {
     workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
     todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
     notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutTodosInput = {
@@ -66761,6 +72855,9 @@ export namespace Prisma {
     workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
     tickets?: TicketCreateNestedManyWithoutClinicInput
     notes?: NoteCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutTodosInput = {
@@ -66816,6 +72913,9 @@ export namespace Prisma {
     workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
     notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutTodosInput = {
@@ -66887,6 +72987,9 @@ export namespace Prisma {
     workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
     tickets?: TicketUpdateManyWithoutClinicNestedInput
     notes?: NoteUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutTodosInput = {
@@ -66942,6 +73045,9 @@ export namespace Prisma {
     workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
     notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutNotesInput = {
@@ -66997,6 +73103,9 @@ export namespace Prisma {
     workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
     tickets?: TicketCreateNestedManyWithoutClinicInput
     todos?: TodoCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutNotesInput = {
@@ -67052,6 +73161,9 @@ export namespace Prisma {
     workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
     todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutNotesInput = {
@@ -67182,6 +73294,9 @@ export namespace Prisma {
     workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
     tickets?: TicketUpdateManyWithoutClinicNestedInput
     todos?: TodoUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutNotesInput = {
@@ -67237,6 +73352,9 @@ export namespace Prisma {
     workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
     todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type AppointmentUpsertWithoutNotesInput = {
@@ -67302,6 +73420,1324 @@ export namespace Prisma {
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutAppointmentNestedInput
     followUps?: AppointmentUncheckedUpdateManyWithoutParentAppointmentNestedInput
     invoice?: InvoiceUncheckedUpdateOneWithoutAppointmentNestedInput
+  }
+
+  export type ClinicCreateWithoutLabCategoriesInput = {
+    id?: string
+    name: string
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
+    phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
+    doctorCount?: number | null
+    status?: $Enums.ClinicStatus
+    onboardingStep?: number
+    packageStartsAt?: Date | string | null
+    packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    package?: SubscriptionPackageCreateNestedOneWithoutClinicsInput
+    users?: UserCreateNestedManyWithoutClinicInput
+    departments?: DepartmentCreateNestedManyWithoutClinicInput
+    designations?: DesignationCreateNestedManyWithoutClinicInput
+    doctors?: DoctorCreateNestedManyWithoutClinicInput
+    staffs?: StaffCreateNestedManyWithoutClinicInput
+    patients?: PatientCreateNestedManyWithoutClinicInput
+    appointments?: AppointmentCreateNestedManyWithoutClinicInput
+    services?: ServiceCreateNestedManyWithoutClinicInput
+    specializations?: SpecializationCreateNestedManyWithoutClinicInput
+    holidays?: HolidayCreateNestedManyWithoutClinicInput
+    payrolls?: PayrollCreateNestedManyWithoutClinicInput
+    expenses?: ExpenseCreateNestedManyWithoutClinicInput
+    expenseCategories?: ExpenseCategoryCreateNestedManyWithoutClinicInput
+    attendances?: AttendanceCreateNestedManyWithoutClinicInput
+    leaveTypes?: LeaveTypeCreateNestedManyWithoutClinicInput
+    leaves?: LeaveCreateNestedManyWithoutClinicInput
+    prescriptions?: PrescriptionCreateNestedManyWithoutClinicInput
+    prescriptionMedicines?: PrescriptionMedicineCreateNestedManyWithoutClinicInput
+    clinicRoles?: ClinicRoleCreateNestedManyWithoutClinicInput
+    invoices?: InvoiceCreateNestedManyWithoutClinicInput
+    invoiceItems?: InvoiceItemCreateNestedManyWithoutClinicInput
+    products?: ProductCreateNestedManyWithoutClinicInput
+    notifications?: NotificationCreateNestedManyWithoutClinicInput
+    landingPage?: LandingPageCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
+    tickets?: TicketCreateNestedManyWithoutClinicInput
+    todos?: TodoCreateNestedManyWithoutClinicInput
+    notes?: NoteCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+  }
+
+  export type ClinicUncheckedCreateWithoutLabCategoriesInput = {
+    id?: string
+    name: string
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
+    phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
+    doctorCount?: number | null
+    status?: $Enums.ClinicStatus
+    onboardingStep?: number
+    packageId?: string | null
+    packageStartsAt?: Date | string | null
+    packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: UserUncheckedCreateNestedManyWithoutClinicInput
+    departments?: DepartmentUncheckedCreateNestedManyWithoutClinicInput
+    designations?: DesignationUncheckedCreateNestedManyWithoutClinicInput
+    doctors?: DoctorUncheckedCreateNestedManyWithoutClinicInput
+    staffs?: StaffUncheckedCreateNestedManyWithoutClinicInput
+    patients?: PatientUncheckedCreateNestedManyWithoutClinicInput
+    appointments?: AppointmentUncheckedCreateNestedManyWithoutClinicInput
+    services?: ServiceUncheckedCreateNestedManyWithoutClinicInput
+    specializations?: SpecializationUncheckedCreateNestedManyWithoutClinicInput
+    holidays?: HolidayUncheckedCreateNestedManyWithoutClinicInput
+    payrolls?: PayrollUncheckedCreateNestedManyWithoutClinicInput
+    expenses?: ExpenseUncheckedCreateNestedManyWithoutClinicInput
+    expenseCategories?: ExpenseCategoryUncheckedCreateNestedManyWithoutClinicInput
+    attendances?: AttendanceUncheckedCreateNestedManyWithoutClinicInput
+    leaveTypes?: LeaveTypeUncheckedCreateNestedManyWithoutClinicInput
+    leaves?: LeaveUncheckedCreateNestedManyWithoutClinicInput
+    prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutClinicInput
+    prescriptionMedicines?: PrescriptionMedicineUncheckedCreateNestedManyWithoutClinicInput
+    clinicRoles?: ClinicRoleUncheckedCreateNestedManyWithoutClinicInput
+    invoices?: InvoiceUncheckedCreateNestedManyWithoutClinicInput
+    invoiceItems?: InvoiceItemUncheckedCreateNestedManyWithoutClinicInput
+    products?: ProductUncheckedCreateNestedManyWithoutClinicInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
+    landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
+    tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
+    todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
+    notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+  }
+
+  export type ClinicCreateOrConnectWithoutLabCategoriesInput = {
+    where: ClinicWhereUniqueInput
+    create: XOR<ClinicCreateWithoutLabCategoriesInput, ClinicUncheckedCreateWithoutLabCategoriesInput>
+  }
+
+  export type LabTestCreateWithoutCategoryInput = {
+    id?: string
+    testCode?: string | null
+    name: string
+    shortName?: string | null
+    description?: string | null
+    price?: number
+    homeCollectionCharge?: number | null
+    duration?: string | null
+    preparationInfo?: string | null
+    assignment?: string | null
+    assignedDoctors?: NullableJsonNullValueInput | InputJsonValue
+    assignedStaff?: NullableJsonNullValueInput | InputJsonValue
+    status?: string
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    isSlotBookingEnabled?: boolean
+    slotDuration?: number | null
+    maxBookingsPerSlot?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    clinic: ClinicCreateNestedOneWithoutLabTestsInput
+    bookings?: LabBookingCreateNestedManyWithoutTestInput
+  }
+
+  export type LabTestUncheckedCreateWithoutCategoryInput = {
+    id?: string
+    testCode?: string | null
+    name: string
+    shortName?: string | null
+    description?: string | null
+    price?: number
+    homeCollectionCharge?: number | null
+    duration?: string | null
+    preparationInfo?: string | null
+    assignment?: string | null
+    assignedDoctors?: NullableJsonNullValueInput | InputJsonValue
+    assignedStaff?: NullableJsonNullValueInput | InputJsonValue
+    status?: string
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    isSlotBookingEnabled?: boolean
+    slotDuration?: number | null
+    maxBookingsPerSlot?: number | null
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bookings?: LabBookingUncheckedCreateNestedManyWithoutTestInput
+  }
+
+  export type LabTestCreateOrConnectWithoutCategoryInput = {
+    where: LabTestWhereUniqueInput
+    create: XOR<LabTestCreateWithoutCategoryInput, LabTestUncheckedCreateWithoutCategoryInput>
+  }
+
+  export type LabTestCreateManyCategoryInputEnvelope = {
+    data: LabTestCreateManyCategoryInput | LabTestCreateManyCategoryInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ClinicUpsertWithoutLabCategoriesInput = {
+    update: XOR<ClinicUpdateWithoutLabCategoriesInput, ClinicUncheckedUpdateWithoutLabCategoriesInput>
+    create: XOR<ClinicCreateWithoutLabCategoriesInput, ClinicUncheckedCreateWithoutLabCategoriesInput>
+    where?: ClinicWhereInput
+  }
+
+  export type ClinicUpdateToOneWithWhereWithoutLabCategoriesInput = {
+    where?: ClinicWhereInput
+    data: XOR<ClinicUpdateWithoutLabCategoriesInput, ClinicUncheckedUpdateWithoutLabCategoriesInput>
+  }
+
+  export type ClinicUpdateWithoutLabCategoriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
+    packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    package?: SubscriptionPackageUpdateOneWithoutClinicsNestedInput
+    users?: UserUpdateManyWithoutClinicNestedInput
+    departments?: DepartmentUpdateManyWithoutClinicNestedInput
+    designations?: DesignationUpdateManyWithoutClinicNestedInput
+    doctors?: DoctorUpdateManyWithoutClinicNestedInput
+    staffs?: StaffUpdateManyWithoutClinicNestedInput
+    patients?: PatientUpdateManyWithoutClinicNestedInput
+    appointments?: AppointmentUpdateManyWithoutClinicNestedInput
+    services?: ServiceUpdateManyWithoutClinicNestedInput
+    specializations?: SpecializationUpdateManyWithoutClinicNestedInput
+    holidays?: HolidayUpdateManyWithoutClinicNestedInput
+    payrolls?: PayrollUpdateManyWithoutClinicNestedInput
+    expenses?: ExpenseUpdateManyWithoutClinicNestedInput
+    expenseCategories?: ExpenseCategoryUpdateManyWithoutClinicNestedInput
+    attendances?: AttendanceUpdateManyWithoutClinicNestedInput
+    leaveTypes?: LeaveTypeUpdateManyWithoutClinicNestedInput
+    leaves?: LeaveUpdateManyWithoutClinicNestedInput
+    prescriptions?: PrescriptionUpdateManyWithoutClinicNestedInput
+    prescriptionMedicines?: PrescriptionMedicineUpdateManyWithoutClinicNestedInput
+    clinicRoles?: ClinicRoleUpdateManyWithoutClinicNestedInput
+    invoices?: InvoiceUpdateManyWithoutClinicNestedInput
+    invoiceItems?: InvoiceItemUpdateManyWithoutClinicNestedInput
+    products?: ProductUpdateManyWithoutClinicNestedInput
+    notifications?: NotificationUpdateManyWithoutClinicNestedInput
+    landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
+    tickets?: TicketUpdateManyWithoutClinicNestedInput
+    todos?: TodoUpdateManyWithoutClinicNestedInput
+    notes?: NoteUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+  }
+
+  export type ClinicUncheckedUpdateWithoutLabCategoriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
+    packageId?: NullableStringFieldUpdateOperationsInput | string | null
+    packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: UserUncheckedUpdateManyWithoutClinicNestedInput
+    departments?: DepartmentUncheckedUpdateManyWithoutClinicNestedInput
+    designations?: DesignationUncheckedUpdateManyWithoutClinicNestedInput
+    doctors?: DoctorUncheckedUpdateManyWithoutClinicNestedInput
+    staffs?: StaffUncheckedUpdateManyWithoutClinicNestedInput
+    patients?: PatientUncheckedUpdateManyWithoutClinicNestedInput
+    appointments?: AppointmentUncheckedUpdateManyWithoutClinicNestedInput
+    services?: ServiceUncheckedUpdateManyWithoutClinicNestedInput
+    specializations?: SpecializationUncheckedUpdateManyWithoutClinicNestedInput
+    holidays?: HolidayUncheckedUpdateManyWithoutClinicNestedInput
+    payrolls?: PayrollUncheckedUpdateManyWithoutClinicNestedInput
+    expenses?: ExpenseUncheckedUpdateManyWithoutClinicNestedInput
+    expenseCategories?: ExpenseCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    attendances?: AttendanceUncheckedUpdateManyWithoutClinicNestedInput
+    leaveTypes?: LeaveTypeUncheckedUpdateManyWithoutClinicNestedInput
+    leaves?: LeaveUncheckedUpdateManyWithoutClinicNestedInput
+    prescriptions?: PrescriptionUncheckedUpdateManyWithoutClinicNestedInput
+    prescriptionMedicines?: PrescriptionMedicineUncheckedUpdateManyWithoutClinicNestedInput
+    clinicRoles?: ClinicRoleUncheckedUpdateManyWithoutClinicNestedInput
+    invoices?: InvoiceUncheckedUpdateManyWithoutClinicNestedInput
+    invoiceItems?: InvoiceItemUncheckedUpdateManyWithoutClinicNestedInput
+    products?: ProductUncheckedUpdateManyWithoutClinicNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
+    landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
+    tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
+    todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
+    notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+  }
+
+  export type LabTestUpsertWithWhereUniqueWithoutCategoryInput = {
+    where: LabTestWhereUniqueInput
+    update: XOR<LabTestUpdateWithoutCategoryInput, LabTestUncheckedUpdateWithoutCategoryInput>
+    create: XOR<LabTestCreateWithoutCategoryInput, LabTestUncheckedCreateWithoutCategoryInput>
+  }
+
+  export type LabTestUpdateWithWhereUniqueWithoutCategoryInput = {
+    where: LabTestWhereUniqueInput
+    data: XOR<LabTestUpdateWithoutCategoryInput, LabTestUncheckedUpdateWithoutCategoryInput>
+  }
+
+  export type LabTestUpdateManyWithWhereWithoutCategoryInput = {
+    where: LabTestScalarWhereInput
+    data: XOR<LabTestUpdateManyMutationInput, LabTestUncheckedUpdateManyWithoutCategoryInput>
+  }
+
+  export type LabCategoryCreateWithoutTestsInput = {
+    id?: string
+    name: string
+    description?: string | null
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    clinic: ClinicCreateNestedOneWithoutLabCategoriesInput
+  }
+
+  export type LabCategoryUncheckedCreateWithoutTestsInput = {
+    id?: string
+    name: string
+    description?: string | null
+    status?: string
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LabCategoryCreateOrConnectWithoutTestsInput = {
+    where: LabCategoryWhereUniqueInput
+    create: XOR<LabCategoryCreateWithoutTestsInput, LabCategoryUncheckedCreateWithoutTestsInput>
+  }
+
+  export type ClinicCreateWithoutLabTestsInput = {
+    id?: string
+    name: string
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
+    phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
+    doctorCount?: number | null
+    status?: $Enums.ClinicStatus
+    onboardingStep?: number
+    packageStartsAt?: Date | string | null
+    packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    package?: SubscriptionPackageCreateNestedOneWithoutClinicsInput
+    users?: UserCreateNestedManyWithoutClinicInput
+    departments?: DepartmentCreateNestedManyWithoutClinicInput
+    designations?: DesignationCreateNestedManyWithoutClinicInput
+    doctors?: DoctorCreateNestedManyWithoutClinicInput
+    staffs?: StaffCreateNestedManyWithoutClinicInput
+    patients?: PatientCreateNestedManyWithoutClinicInput
+    appointments?: AppointmentCreateNestedManyWithoutClinicInput
+    services?: ServiceCreateNestedManyWithoutClinicInput
+    specializations?: SpecializationCreateNestedManyWithoutClinicInput
+    holidays?: HolidayCreateNestedManyWithoutClinicInput
+    payrolls?: PayrollCreateNestedManyWithoutClinicInput
+    expenses?: ExpenseCreateNestedManyWithoutClinicInput
+    expenseCategories?: ExpenseCategoryCreateNestedManyWithoutClinicInput
+    attendances?: AttendanceCreateNestedManyWithoutClinicInput
+    leaveTypes?: LeaveTypeCreateNestedManyWithoutClinicInput
+    leaves?: LeaveCreateNestedManyWithoutClinicInput
+    prescriptions?: PrescriptionCreateNestedManyWithoutClinicInput
+    prescriptionMedicines?: PrescriptionMedicineCreateNestedManyWithoutClinicInput
+    clinicRoles?: ClinicRoleCreateNestedManyWithoutClinicInput
+    invoices?: InvoiceCreateNestedManyWithoutClinicInput
+    invoiceItems?: InvoiceItemCreateNestedManyWithoutClinicInput
+    products?: ProductCreateNestedManyWithoutClinicInput
+    notifications?: NotificationCreateNestedManyWithoutClinicInput
+    landingPage?: LandingPageCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
+    tickets?: TicketCreateNestedManyWithoutClinicInput
+    todos?: TodoCreateNestedManyWithoutClinicInput
+    notes?: NoteCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+  }
+
+  export type ClinicUncheckedCreateWithoutLabTestsInput = {
+    id?: string
+    name: string
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
+    phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
+    doctorCount?: number | null
+    status?: $Enums.ClinicStatus
+    onboardingStep?: number
+    packageId?: string | null
+    packageStartsAt?: Date | string | null
+    packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: UserUncheckedCreateNestedManyWithoutClinicInput
+    departments?: DepartmentUncheckedCreateNestedManyWithoutClinicInput
+    designations?: DesignationUncheckedCreateNestedManyWithoutClinicInput
+    doctors?: DoctorUncheckedCreateNestedManyWithoutClinicInput
+    staffs?: StaffUncheckedCreateNestedManyWithoutClinicInput
+    patients?: PatientUncheckedCreateNestedManyWithoutClinicInput
+    appointments?: AppointmentUncheckedCreateNestedManyWithoutClinicInput
+    services?: ServiceUncheckedCreateNestedManyWithoutClinicInput
+    specializations?: SpecializationUncheckedCreateNestedManyWithoutClinicInput
+    holidays?: HolidayUncheckedCreateNestedManyWithoutClinicInput
+    payrolls?: PayrollUncheckedCreateNestedManyWithoutClinicInput
+    expenses?: ExpenseUncheckedCreateNestedManyWithoutClinicInput
+    expenseCategories?: ExpenseCategoryUncheckedCreateNestedManyWithoutClinicInput
+    attendances?: AttendanceUncheckedCreateNestedManyWithoutClinicInput
+    leaveTypes?: LeaveTypeUncheckedCreateNestedManyWithoutClinicInput
+    leaves?: LeaveUncheckedCreateNestedManyWithoutClinicInput
+    prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutClinicInput
+    prescriptionMedicines?: PrescriptionMedicineUncheckedCreateNestedManyWithoutClinicInput
+    clinicRoles?: ClinicRoleUncheckedCreateNestedManyWithoutClinicInput
+    invoices?: InvoiceUncheckedCreateNestedManyWithoutClinicInput
+    invoiceItems?: InvoiceItemUncheckedCreateNestedManyWithoutClinicInput
+    products?: ProductUncheckedCreateNestedManyWithoutClinicInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
+    landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
+    tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
+    todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
+    notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+  }
+
+  export type ClinicCreateOrConnectWithoutLabTestsInput = {
+    where: ClinicWhereUniqueInput
+    create: XOR<ClinicCreateWithoutLabTestsInput, ClinicUncheckedCreateWithoutLabTestsInput>
+  }
+
+  export type LabBookingCreateWithoutTestInput = {
+    id?: string
+    bookingCode?: string | null
+    scheduledAt: Date | string
+    status?: string
+    paymentStatus?: string
+    paymentMethod?: string | null
+    discount?: number
+    tax?: number
+    totalAmount?: number
+    invoiceNo?: string | null
+    sessionSlot?: string | null
+    assignedUserId?: string | null
+    remarks?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    patient?: PatientCreateNestedOneWithoutLabBookingsInput
+    clinic: ClinicCreateNestedOneWithoutLabBookingsInput
+    invoice?: InvoiceCreateNestedOneWithoutLabBookingInput
+  }
+
+  export type LabBookingUncheckedCreateWithoutTestInput = {
+    id?: string
+    bookingCode?: string | null
+    patientId?: string | null
+    scheduledAt: Date | string
+    status?: string
+    paymentStatus?: string
+    paymentMethod?: string | null
+    discount?: number
+    tax?: number
+    totalAmount?: number
+    invoiceNo?: string | null
+    sessionSlot?: string | null
+    assignedUserId?: string | null
+    remarks?: string | null
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    invoice?: InvoiceUncheckedCreateNestedOneWithoutLabBookingInput
+  }
+
+  export type LabBookingCreateOrConnectWithoutTestInput = {
+    where: LabBookingWhereUniqueInput
+    create: XOR<LabBookingCreateWithoutTestInput, LabBookingUncheckedCreateWithoutTestInput>
+  }
+
+  export type LabBookingCreateManyTestInputEnvelope = {
+    data: LabBookingCreateManyTestInput | LabBookingCreateManyTestInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LabCategoryUpsertWithoutTestsInput = {
+    update: XOR<LabCategoryUpdateWithoutTestsInput, LabCategoryUncheckedUpdateWithoutTestsInput>
+    create: XOR<LabCategoryCreateWithoutTestsInput, LabCategoryUncheckedCreateWithoutTestsInput>
+    where?: LabCategoryWhereInput
+  }
+
+  export type LabCategoryUpdateToOneWithWhereWithoutTestsInput = {
+    where?: LabCategoryWhereInput
+    data: XOR<LabCategoryUpdateWithoutTestsInput, LabCategoryUncheckedUpdateWithoutTestsInput>
+  }
+
+  export type LabCategoryUpdateWithoutTestsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    clinic?: ClinicUpdateOneRequiredWithoutLabCategoriesNestedInput
+  }
+
+  export type LabCategoryUncheckedUpdateWithoutTestsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClinicUpsertWithoutLabTestsInput = {
+    update: XOR<ClinicUpdateWithoutLabTestsInput, ClinicUncheckedUpdateWithoutLabTestsInput>
+    create: XOR<ClinicCreateWithoutLabTestsInput, ClinicUncheckedCreateWithoutLabTestsInput>
+    where?: ClinicWhereInput
+  }
+
+  export type ClinicUpdateToOneWithWhereWithoutLabTestsInput = {
+    where?: ClinicWhereInput
+    data: XOR<ClinicUpdateWithoutLabTestsInput, ClinicUncheckedUpdateWithoutLabTestsInput>
+  }
+
+  export type ClinicUpdateWithoutLabTestsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
+    packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    package?: SubscriptionPackageUpdateOneWithoutClinicsNestedInput
+    users?: UserUpdateManyWithoutClinicNestedInput
+    departments?: DepartmentUpdateManyWithoutClinicNestedInput
+    designations?: DesignationUpdateManyWithoutClinicNestedInput
+    doctors?: DoctorUpdateManyWithoutClinicNestedInput
+    staffs?: StaffUpdateManyWithoutClinicNestedInput
+    patients?: PatientUpdateManyWithoutClinicNestedInput
+    appointments?: AppointmentUpdateManyWithoutClinicNestedInput
+    services?: ServiceUpdateManyWithoutClinicNestedInput
+    specializations?: SpecializationUpdateManyWithoutClinicNestedInput
+    holidays?: HolidayUpdateManyWithoutClinicNestedInput
+    payrolls?: PayrollUpdateManyWithoutClinicNestedInput
+    expenses?: ExpenseUpdateManyWithoutClinicNestedInput
+    expenseCategories?: ExpenseCategoryUpdateManyWithoutClinicNestedInput
+    attendances?: AttendanceUpdateManyWithoutClinicNestedInput
+    leaveTypes?: LeaveTypeUpdateManyWithoutClinicNestedInput
+    leaves?: LeaveUpdateManyWithoutClinicNestedInput
+    prescriptions?: PrescriptionUpdateManyWithoutClinicNestedInput
+    prescriptionMedicines?: PrescriptionMedicineUpdateManyWithoutClinicNestedInput
+    clinicRoles?: ClinicRoleUpdateManyWithoutClinicNestedInput
+    invoices?: InvoiceUpdateManyWithoutClinicNestedInput
+    invoiceItems?: InvoiceItemUpdateManyWithoutClinicNestedInput
+    products?: ProductUpdateManyWithoutClinicNestedInput
+    notifications?: NotificationUpdateManyWithoutClinicNestedInput
+    landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
+    tickets?: TicketUpdateManyWithoutClinicNestedInput
+    todos?: TodoUpdateManyWithoutClinicNestedInput
+    notes?: NoteUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+  }
+
+  export type ClinicUncheckedUpdateWithoutLabTestsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
+    packageId?: NullableStringFieldUpdateOperationsInput | string | null
+    packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: UserUncheckedUpdateManyWithoutClinicNestedInput
+    departments?: DepartmentUncheckedUpdateManyWithoutClinicNestedInput
+    designations?: DesignationUncheckedUpdateManyWithoutClinicNestedInput
+    doctors?: DoctorUncheckedUpdateManyWithoutClinicNestedInput
+    staffs?: StaffUncheckedUpdateManyWithoutClinicNestedInput
+    patients?: PatientUncheckedUpdateManyWithoutClinicNestedInput
+    appointments?: AppointmentUncheckedUpdateManyWithoutClinicNestedInput
+    services?: ServiceUncheckedUpdateManyWithoutClinicNestedInput
+    specializations?: SpecializationUncheckedUpdateManyWithoutClinicNestedInput
+    holidays?: HolidayUncheckedUpdateManyWithoutClinicNestedInput
+    payrolls?: PayrollUncheckedUpdateManyWithoutClinicNestedInput
+    expenses?: ExpenseUncheckedUpdateManyWithoutClinicNestedInput
+    expenseCategories?: ExpenseCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    attendances?: AttendanceUncheckedUpdateManyWithoutClinicNestedInput
+    leaveTypes?: LeaveTypeUncheckedUpdateManyWithoutClinicNestedInput
+    leaves?: LeaveUncheckedUpdateManyWithoutClinicNestedInput
+    prescriptions?: PrescriptionUncheckedUpdateManyWithoutClinicNestedInput
+    prescriptionMedicines?: PrescriptionMedicineUncheckedUpdateManyWithoutClinicNestedInput
+    clinicRoles?: ClinicRoleUncheckedUpdateManyWithoutClinicNestedInput
+    invoices?: InvoiceUncheckedUpdateManyWithoutClinicNestedInput
+    invoiceItems?: InvoiceItemUncheckedUpdateManyWithoutClinicNestedInput
+    products?: ProductUncheckedUpdateManyWithoutClinicNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
+    landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
+    tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
+    todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
+    notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+  }
+
+  export type LabBookingUpsertWithWhereUniqueWithoutTestInput = {
+    where: LabBookingWhereUniqueInput
+    update: XOR<LabBookingUpdateWithoutTestInput, LabBookingUncheckedUpdateWithoutTestInput>
+    create: XOR<LabBookingCreateWithoutTestInput, LabBookingUncheckedCreateWithoutTestInput>
+  }
+
+  export type LabBookingUpdateWithWhereUniqueWithoutTestInput = {
+    where: LabBookingWhereUniqueInput
+    data: XOR<LabBookingUpdateWithoutTestInput, LabBookingUncheckedUpdateWithoutTestInput>
+  }
+
+  export type LabBookingUpdateManyWithWhereWithoutTestInput = {
+    where: LabBookingScalarWhereInput
+    data: XOR<LabBookingUpdateManyMutationInput, LabBookingUncheckedUpdateManyWithoutTestInput>
+  }
+
+  export type PatientCreateWithoutLabBookingsInput = {
+    id?: string
+    patientCode?: string | null
+    firstName: string
+    middleName?: string | null
+    lastName: string
+    profileImage?: string | null
+    phone?: string | null
+    alternateMobile?: string | null
+    email?: string | null
+    dob?: Date | string | null
+    gender?: string | null
+    bloodGroup?: string | null
+    maritalStatus?: string | null
+    occupation?: string | null
+    aadhaarNumber?: string | null
+    passportNumber?: string | null
+    referredBy?: string | null
+    emergencyContactName?: string | null
+    emergencyContactRelation?: string | null
+    emergencyContactPhone?: string | null
+    status?: string
+    address1?: string | null
+    address2?: string | null
+    country?: string | null
+    state?: string | null
+    city?: string | null
+    pincode?: string | null
+    lastVisitedAt?: Date | string | null
+    vitals?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    clinic: ClinicCreateNestedOneWithoutPatientsInput
+    appointments?: AppointmentCreateNestedManyWithoutPatientInput
+    prescriptions?: PrescriptionCreateNestedManyWithoutPatientInput
+    invoices?: InvoiceCreateNestedManyWithoutPatientInput
+  }
+
+  export type PatientUncheckedCreateWithoutLabBookingsInput = {
+    id?: string
+    patientCode?: string | null
+    firstName: string
+    middleName?: string | null
+    lastName: string
+    profileImage?: string | null
+    phone?: string | null
+    alternateMobile?: string | null
+    email?: string | null
+    dob?: Date | string | null
+    gender?: string | null
+    bloodGroup?: string | null
+    maritalStatus?: string | null
+    occupation?: string | null
+    aadhaarNumber?: string | null
+    passportNumber?: string | null
+    referredBy?: string | null
+    emergencyContactName?: string | null
+    emergencyContactRelation?: string | null
+    emergencyContactPhone?: string | null
+    status?: string
+    address1?: string | null
+    address2?: string | null
+    country?: string | null
+    state?: string | null
+    city?: string | null
+    pincode?: string | null
+    lastVisitedAt?: Date | string | null
+    vitals?: NullableJsonNullValueInput | InputJsonValue
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    appointments?: AppointmentUncheckedCreateNestedManyWithoutPatientInput
+    prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutPatientInput
+    invoices?: InvoiceUncheckedCreateNestedManyWithoutPatientInput
+  }
+
+  export type PatientCreateOrConnectWithoutLabBookingsInput = {
+    where: PatientWhereUniqueInput
+    create: XOR<PatientCreateWithoutLabBookingsInput, PatientUncheckedCreateWithoutLabBookingsInput>
+  }
+
+  export type LabTestCreateWithoutBookingsInput = {
+    id?: string
+    testCode?: string | null
+    name: string
+    shortName?: string | null
+    description?: string | null
+    price?: number
+    homeCollectionCharge?: number | null
+    duration?: string | null
+    preparationInfo?: string | null
+    assignment?: string | null
+    assignedDoctors?: NullableJsonNullValueInput | InputJsonValue
+    assignedStaff?: NullableJsonNullValueInput | InputJsonValue
+    status?: string
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    isSlotBookingEnabled?: boolean
+    slotDuration?: number | null
+    maxBookingsPerSlot?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    category?: LabCategoryCreateNestedOneWithoutTestsInput
+    clinic: ClinicCreateNestedOneWithoutLabTestsInput
+  }
+
+  export type LabTestUncheckedCreateWithoutBookingsInput = {
+    id?: string
+    testCode?: string | null
+    name: string
+    shortName?: string | null
+    description?: string | null
+    price?: number
+    homeCollectionCharge?: number | null
+    duration?: string | null
+    preparationInfo?: string | null
+    assignment?: string | null
+    assignedDoctors?: NullableJsonNullValueInput | InputJsonValue
+    assignedStaff?: NullableJsonNullValueInput | InputJsonValue
+    status?: string
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    isSlotBookingEnabled?: boolean
+    slotDuration?: number | null
+    maxBookingsPerSlot?: number | null
+    categoryId?: string | null
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LabTestCreateOrConnectWithoutBookingsInput = {
+    where: LabTestWhereUniqueInput
+    create: XOR<LabTestCreateWithoutBookingsInput, LabTestUncheckedCreateWithoutBookingsInput>
+  }
+
+  export type ClinicCreateWithoutLabBookingsInput = {
+    id?: string
+    name: string
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
+    phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
+    doctorCount?: number | null
+    status?: $Enums.ClinicStatus
+    onboardingStep?: number
+    packageStartsAt?: Date | string | null
+    packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    package?: SubscriptionPackageCreateNestedOneWithoutClinicsInput
+    users?: UserCreateNestedManyWithoutClinicInput
+    departments?: DepartmentCreateNestedManyWithoutClinicInput
+    designations?: DesignationCreateNestedManyWithoutClinicInput
+    doctors?: DoctorCreateNestedManyWithoutClinicInput
+    staffs?: StaffCreateNestedManyWithoutClinicInput
+    patients?: PatientCreateNestedManyWithoutClinicInput
+    appointments?: AppointmentCreateNestedManyWithoutClinicInput
+    services?: ServiceCreateNestedManyWithoutClinicInput
+    specializations?: SpecializationCreateNestedManyWithoutClinicInput
+    holidays?: HolidayCreateNestedManyWithoutClinicInput
+    payrolls?: PayrollCreateNestedManyWithoutClinicInput
+    expenses?: ExpenseCreateNestedManyWithoutClinicInput
+    expenseCategories?: ExpenseCategoryCreateNestedManyWithoutClinicInput
+    attendances?: AttendanceCreateNestedManyWithoutClinicInput
+    leaveTypes?: LeaveTypeCreateNestedManyWithoutClinicInput
+    leaves?: LeaveCreateNestedManyWithoutClinicInput
+    prescriptions?: PrescriptionCreateNestedManyWithoutClinicInput
+    prescriptionMedicines?: PrescriptionMedicineCreateNestedManyWithoutClinicInput
+    clinicRoles?: ClinicRoleCreateNestedManyWithoutClinicInput
+    invoices?: InvoiceCreateNestedManyWithoutClinicInput
+    invoiceItems?: InvoiceItemCreateNestedManyWithoutClinicInput
+    products?: ProductCreateNestedManyWithoutClinicInput
+    notifications?: NotificationCreateNestedManyWithoutClinicInput
+    landingPage?: LandingPageCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
+    tickets?: TicketCreateNestedManyWithoutClinicInput
+    todos?: TodoCreateNestedManyWithoutClinicInput
+    notes?: NoteCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+  }
+
+  export type ClinicUncheckedCreateWithoutLabBookingsInput = {
+    id?: string
+    name: string
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
+    phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
+    doctorCount?: number | null
+    status?: $Enums.ClinicStatus
+    onboardingStep?: number
+    packageId?: string | null
+    packageStartsAt?: Date | string | null
+    packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: UserUncheckedCreateNestedManyWithoutClinicInput
+    departments?: DepartmentUncheckedCreateNestedManyWithoutClinicInput
+    designations?: DesignationUncheckedCreateNestedManyWithoutClinicInput
+    doctors?: DoctorUncheckedCreateNestedManyWithoutClinicInput
+    staffs?: StaffUncheckedCreateNestedManyWithoutClinicInput
+    patients?: PatientUncheckedCreateNestedManyWithoutClinicInput
+    appointments?: AppointmentUncheckedCreateNestedManyWithoutClinicInput
+    services?: ServiceUncheckedCreateNestedManyWithoutClinicInput
+    specializations?: SpecializationUncheckedCreateNestedManyWithoutClinicInput
+    holidays?: HolidayUncheckedCreateNestedManyWithoutClinicInput
+    payrolls?: PayrollUncheckedCreateNestedManyWithoutClinicInput
+    expenses?: ExpenseUncheckedCreateNestedManyWithoutClinicInput
+    expenseCategories?: ExpenseCategoryUncheckedCreateNestedManyWithoutClinicInput
+    attendances?: AttendanceUncheckedCreateNestedManyWithoutClinicInput
+    leaveTypes?: LeaveTypeUncheckedCreateNestedManyWithoutClinicInput
+    leaves?: LeaveUncheckedCreateNestedManyWithoutClinicInput
+    prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutClinicInput
+    prescriptionMedicines?: PrescriptionMedicineUncheckedCreateNestedManyWithoutClinicInput
+    clinicRoles?: ClinicRoleUncheckedCreateNestedManyWithoutClinicInput
+    invoices?: InvoiceUncheckedCreateNestedManyWithoutClinicInput
+    invoiceItems?: InvoiceItemUncheckedCreateNestedManyWithoutClinicInput
+    products?: ProductUncheckedCreateNestedManyWithoutClinicInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
+    landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
+    tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
+    todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
+    notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+  }
+
+  export type ClinicCreateOrConnectWithoutLabBookingsInput = {
+    where: ClinicWhereUniqueInput
+    create: XOR<ClinicCreateWithoutLabBookingsInput, ClinicUncheckedCreateWithoutLabBookingsInput>
+  }
+
+  export type InvoiceCreateWithoutLabBookingInput = {
+    id?: string
+    invoiceCode?: string | null
+    invoiceDate: Date | string
+    dueDate: Date | string
+    tax?: number
+    discount?: number
+    subTotal?: number
+    totalAmount: number
+    paymentMethod?: string | null
+    paymentStatus?: string
+    otherInfo?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    patient?: PatientCreateNestedOneWithoutInvoicesInput
+    clinic: ClinicCreateNestedOneWithoutInvoicesInput
+    items?: InvoiceItemCreateNestedManyWithoutInvoiceInput
+    appointment?: AppointmentCreateNestedOneWithoutInvoiceInput
+  }
+
+  export type InvoiceUncheckedCreateWithoutLabBookingInput = {
+    id?: string
+    invoiceCode?: string | null
+    patientId?: string | null
+    invoiceDate: Date | string
+    dueDate: Date | string
+    tax?: number
+    discount?: number
+    subTotal?: number
+    totalAmount: number
+    paymentMethod?: string | null
+    paymentStatus?: string
+    otherInfo?: string | null
+    clinicId: string
+    appointmentId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    items?: InvoiceItemUncheckedCreateNestedManyWithoutInvoiceInput
+  }
+
+  export type InvoiceCreateOrConnectWithoutLabBookingInput = {
+    where: InvoiceWhereUniqueInput
+    create: XOR<InvoiceCreateWithoutLabBookingInput, InvoiceUncheckedCreateWithoutLabBookingInput>
+  }
+
+  export type PatientUpsertWithoutLabBookingsInput = {
+    update: XOR<PatientUpdateWithoutLabBookingsInput, PatientUncheckedUpdateWithoutLabBookingsInput>
+    create: XOR<PatientCreateWithoutLabBookingsInput, PatientUncheckedCreateWithoutLabBookingsInput>
+    where?: PatientWhereInput
+  }
+
+  export type PatientUpdateToOneWithWhereWithoutLabBookingsInput = {
+    where?: PatientWhereInput
+    data: XOR<PatientUpdateWithoutLabBookingsInput, PatientUncheckedUpdateWithoutLabBookingsInput>
+  }
+
+  export type PatientUpdateWithoutLabBookingsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    patientCode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: StringFieldUpdateOperationsInput | string
+    middleName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: StringFieldUpdateOperationsInput | string
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    passportNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactRelation?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    address1?: NullableStringFieldUpdateOperationsInput | string | null
+    address2?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    lastVisitedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    vitals?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    clinic?: ClinicUpdateOneRequiredWithoutPatientsNestedInput
+    appointments?: AppointmentUpdateManyWithoutPatientNestedInput
+    prescriptions?: PrescriptionUpdateManyWithoutPatientNestedInput
+    invoices?: InvoiceUpdateManyWithoutPatientNestedInput
+  }
+
+  export type PatientUncheckedUpdateWithoutLabBookingsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    patientCode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: StringFieldUpdateOperationsInput | string
+    middleName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: StringFieldUpdateOperationsInput | string
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    passportNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactRelation?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    address1?: NullableStringFieldUpdateOperationsInput | string | null
+    address2?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    lastVisitedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    vitals?: NullableJsonNullValueInput | InputJsonValue
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    appointments?: AppointmentUncheckedUpdateManyWithoutPatientNestedInput
+    prescriptions?: PrescriptionUncheckedUpdateManyWithoutPatientNestedInput
+    invoices?: InvoiceUncheckedUpdateManyWithoutPatientNestedInput
+  }
+
+  export type LabTestUpsertWithoutBookingsInput = {
+    update: XOR<LabTestUpdateWithoutBookingsInput, LabTestUncheckedUpdateWithoutBookingsInput>
+    create: XOR<LabTestCreateWithoutBookingsInput, LabTestUncheckedCreateWithoutBookingsInput>
+    where?: LabTestWhereInput
+  }
+
+  export type LabTestUpdateToOneWithWhereWithoutBookingsInput = {
+    where?: LabTestWhereInput
+    data: XOR<LabTestUpdateWithoutBookingsInput, LabTestUncheckedUpdateWithoutBookingsInput>
+  }
+
+  export type LabTestUpdateWithoutBookingsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    testCode?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    shortName?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    homeCollectionCharge?: NullableFloatFieldUpdateOperationsInput | number | null
+    duration?: NullableStringFieldUpdateOperationsInput | string | null
+    preparationInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    assignment?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedDoctors?: NullableJsonNullValueInput | InputJsonValue
+    assignedStaff?: NullableJsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    isSlotBookingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    slotDuration?: NullableIntFieldUpdateOperationsInput | number | null
+    maxBookingsPerSlot?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: LabCategoryUpdateOneWithoutTestsNestedInput
+    clinic?: ClinicUpdateOneRequiredWithoutLabTestsNestedInput
+  }
+
+  export type LabTestUncheckedUpdateWithoutBookingsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    testCode?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    shortName?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    homeCollectionCharge?: NullableFloatFieldUpdateOperationsInput | number | null
+    duration?: NullableStringFieldUpdateOperationsInput | string | null
+    preparationInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    assignment?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedDoctors?: NullableJsonNullValueInput | InputJsonValue
+    assignedStaff?: NullableJsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    isSlotBookingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    slotDuration?: NullableIntFieldUpdateOperationsInput | number | null
+    maxBookingsPerSlot?: NullableIntFieldUpdateOperationsInput | number | null
+    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClinicUpsertWithoutLabBookingsInput = {
+    update: XOR<ClinicUpdateWithoutLabBookingsInput, ClinicUncheckedUpdateWithoutLabBookingsInput>
+    create: XOR<ClinicCreateWithoutLabBookingsInput, ClinicUncheckedCreateWithoutLabBookingsInput>
+    where?: ClinicWhereInput
+  }
+
+  export type ClinicUpdateToOneWithWhereWithoutLabBookingsInput = {
+    where?: ClinicWhereInput
+    data: XOR<ClinicUpdateWithoutLabBookingsInput, ClinicUncheckedUpdateWithoutLabBookingsInput>
+  }
+
+  export type ClinicUpdateWithoutLabBookingsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
+    packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    package?: SubscriptionPackageUpdateOneWithoutClinicsNestedInput
+    users?: UserUpdateManyWithoutClinicNestedInput
+    departments?: DepartmentUpdateManyWithoutClinicNestedInput
+    designations?: DesignationUpdateManyWithoutClinicNestedInput
+    doctors?: DoctorUpdateManyWithoutClinicNestedInput
+    staffs?: StaffUpdateManyWithoutClinicNestedInput
+    patients?: PatientUpdateManyWithoutClinicNestedInput
+    appointments?: AppointmentUpdateManyWithoutClinicNestedInput
+    services?: ServiceUpdateManyWithoutClinicNestedInput
+    specializations?: SpecializationUpdateManyWithoutClinicNestedInput
+    holidays?: HolidayUpdateManyWithoutClinicNestedInput
+    payrolls?: PayrollUpdateManyWithoutClinicNestedInput
+    expenses?: ExpenseUpdateManyWithoutClinicNestedInput
+    expenseCategories?: ExpenseCategoryUpdateManyWithoutClinicNestedInput
+    attendances?: AttendanceUpdateManyWithoutClinicNestedInput
+    leaveTypes?: LeaveTypeUpdateManyWithoutClinicNestedInput
+    leaves?: LeaveUpdateManyWithoutClinicNestedInput
+    prescriptions?: PrescriptionUpdateManyWithoutClinicNestedInput
+    prescriptionMedicines?: PrescriptionMedicineUpdateManyWithoutClinicNestedInput
+    clinicRoles?: ClinicRoleUpdateManyWithoutClinicNestedInput
+    invoices?: InvoiceUpdateManyWithoutClinicNestedInput
+    invoiceItems?: InvoiceItemUpdateManyWithoutClinicNestedInput
+    products?: ProductUpdateManyWithoutClinicNestedInput
+    notifications?: NotificationUpdateManyWithoutClinicNestedInput
+    landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
+    tickets?: TicketUpdateManyWithoutClinicNestedInput
+    todos?: TodoUpdateManyWithoutClinicNestedInput
+    notes?: NoteUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+  }
+
+  export type ClinicUncheckedUpdateWithoutLabBookingsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
+    packageId?: NullableStringFieldUpdateOperationsInput | string | null
+    packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: UserUncheckedUpdateManyWithoutClinicNestedInput
+    departments?: DepartmentUncheckedUpdateManyWithoutClinicNestedInput
+    designations?: DesignationUncheckedUpdateManyWithoutClinicNestedInput
+    doctors?: DoctorUncheckedUpdateManyWithoutClinicNestedInput
+    staffs?: StaffUncheckedUpdateManyWithoutClinicNestedInput
+    patients?: PatientUncheckedUpdateManyWithoutClinicNestedInput
+    appointments?: AppointmentUncheckedUpdateManyWithoutClinicNestedInput
+    services?: ServiceUncheckedUpdateManyWithoutClinicNestedInput
+    specializations?: SpecializationUncheckedUpdateManyWithoutClinicNestedInput
+    holidays?: HolidayUncheckedUpdateManyWithoutClinicNestedInput
+    payrolls?: PayrollUncheckedUpdateManyWithoutClinicNestedInput
+    expenses?: ExpenseUncheckedUpdateManyWithoutClinicNestedInput
+    expenseCategories?: ExpenseCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    attendances?: AttendanceUncheckedUpdateManyWithoutClinicNestedInput
+    leaveTypes?: LeaveTypeUncheckedUpdateManyWithoutClinicNestedInput
+    leaves?: LeaveUncheckedUpdateManyWithoutClinicNestedInput
+    prescriptions?: PrescriptionUncheckedUpdateManyWithoutClinicNestedInput
+    prescriptionMedicines?: PrescriptionMedicineUncheckedUpdateManyWithoutClinicNestedInput
+    clinicRoles?: ClinicRoleUncheckedUpdateManyWithoutClinicNestedInput
+    invoices?: InvoiceUncheckedUpdateManyWithoutClinicNestedInput
+    invoiceItems?: InvoiceItemUncheckedUpdateManyWithoutClinicNestedInput
+    products?: ProductUncheckedUpdateManyWithoutClinicNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
+    landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
+    tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
+    todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
+    notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+  }
+
+  export type InvoiceUpsertWithoutLabBookingInput = {
+    update: XOR<InvoiceUpdateWithoutLabBookingInput, InvoiceUncheckedUpdateWithoutLabBookingInput>
+    create: XOR<InvoiceCreateWithoutLabBookingInput, InvoiceUncheckedCreateWithoutLabBookingInput>
+    where?: InvoiceWhereInput
+  }
+
+  export type InvoiceUpdateToOneWithWhereWithoutLabBookingInput = {
+    where?: InvoiceWhereInput
+    data: XOR<InvoiceUpdateWithoutLabBookingInput, InvoiceUncheckedUpdateWithoutLabBookingInput>
+  }
+
+  export type InvoiceUpdateWithoutLabBookingInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    invoiceCode?: NullableStringFieldUpdateOperationsInput | string | null
+    invoiceDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tax?: FloatFieldUpdateOperationsInput | number
+    discount?: FloatFieldUpdateOperationsInput | number
+    subTotal?: FloatFieldUpdateOperationsInput | number
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    otherInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    patient?: PatientUpdateOneWithoutInvoicesNestedInput
+    clinic?: ClinicUpdateOneRequiredWithoutInvoicesNestedInput
+    items?: InvoiceItemUpdateManyWithoutInvoiceNestedInput
+    appointment?: AppointmentUpdateOneWithoutInvoiceNestedInput
+  }
+
+  export type InvoiceUncheckedUpdateWithoutLabBookingInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    invoiceCode?: NullableStringFieldUpdateOperationsInput | string | null
+    patientId?: NullableStringFieldUpdateOperationsInput | string | null
+    invoiceDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tax?: FloatFieldUpdateOperationsInput | number
+    discount?: FloatFieldUpdateOperationsInput | number
+    subTotal?: FloatFieldUpdateOperationsInput | number
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    otherInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    clinicId?: StringFieldUpdateOperationsInput | string
+    appointmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    items?: InvoiceItemUncheckedUpdateManyWithoutInvoiceNestedInput
   }
 
   export type UserCreateManyClinicInput = {
@@ -67646,6 +75082,7 @@ export namespace Prisma {
     paymentStatus?: string
     otherInfo?: string | null
     appointmentId?: string | null
+    labBookingId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -67718,6 +75155,58 @@ export namespace Prisma {
     noteDate?: Date | string | null
     userId?: string | null
     appointmentId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LabCategoryCreateManyClinicInput = {
+    id?: string
+    name: string
+    description?: string | null
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LabTestCreateManyClinicInput = {
+    id?: string
+    testCode?: string | null
+    name: string
+    shortName?: string | null
+    description?: string | null
+    price?: number
+    homeCollectionCharge?: number | null
+    duration?: string | null
+    preparationInfo?: string | null
+    assignment?: string | null
+    assignedDoctors?: NullableJsonNullValueInput | InputJsonValue
+    assignedStaff?: NullableJsonNullValueInput | InputJsonValue
+    status?: string
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    isSlotBookingEnabled?: boolean
+    slotDuration?: number | null
+    maxBookingsPerSlot?: number | null
+    categoryId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LabBookingCreateManyClinicInput = {
+    id?: string
+    bookingCode?: string | null
+    patientId?: string | null
+    testId?: string | null
+    scheduledAt: Date | string
+    status?: string
+    paymentStatus?: string
+    paymentMethod?: string | null
+    discount?: number
+    tax?: number
+    totalAmount?: number
+    invoiceNo?: string | null
+    sessionSlot?: string | null
+    assignedUserId?: string | null
+    remarks?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -68125,6 +75614,7 @@ export namespace Prisma {
     appointments?: AppointmentUpdateManyWithoutPatientNestedInput
     prescriptions?: PrescriptionUpdateManyWithoutPatientNestedInput
     invoices?: InvoiceUpdateManyWithoutPatientNestedInput
+    labBookings?: LabBookingUpdateManyWithoutPatientNestedInput
   }
 
   export type PatientUncheckedUpdateWithoutClinicInput = {
@@ -68162,6 +75652,7 @@ export namespace Prisma {
     appointments?: AppointmentUncheckedUpdateManyWithoutPatientNestedInput
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutPatientNestedInput
     invoices?: InvoiceUncheckedUpdateManyWithoutPatientNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutPatientNestedInput
   }
 
   export type PatientUncheckedUpdateManyWithoutClinicInput = {
@@ -68769,6 +76260,7 @@ export namespace Prisma {
     patient?: PatientUpdateOneWithoutInvoicesNestedInput
     items?: InvoiceItemUpdateManyWithoutInvoiceNestedInput
     appointment?: AppointmentUpdateOneWithoutInvoiceNestedInput
+    labBooking?: LabBookingUpdateOneWithoutInvoiceNestedInput
   }
 
   export type InvoiceUncheckedUpdateWithoutClinicInput = {
@@ -68785,6 +76277,7 @@ export namespace Prisma {
     paymentStatus?: StringFieldUpdateOperationsInput | string
     otherInfo?: NullableStringFieldUpdateOperationsInput | string | null
     appointmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    labBookingId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: InvoiceItemUncheckedUpdateManyWithoutInvoiceNestedInput
@@ -68804,6 +76297,7 @@ export namespace Prisma {
     paymentStatus?: StringFieldUpdateOperationsInput | string
     otherInfo?: NullableStringFieldUpdateOperationsInput | string | null
     appointmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    labBookingId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -69024,6 +76518,168 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type LabCategoryUpdateWithoutClinicInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tests?: LabTestUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type LabCategoryUncheckedUpdateWithoutClinicInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tests?: LabTestUncheckedUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type LabCategoryUncheckedUpdateManyWithoutClinicInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LabTestUpdateWithoutClinicInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    testCode?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    shortName?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    homeCollectionCharge?: NullableFloatFieldUpdateOperationsInput | number | null
+    duration?: NullableStringFieldUpdateOperationsInput | string | null
+    preparationInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    assignment?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedDoctors?: NullableJsonNullValueInput | InputJsonValue
+    assignedStaff?: NullableJsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    isSlotBookingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    slotDuration?: NullableIntFieldUpdateOperationsInput | number | null
+    maxBookingsPerSlot?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: LabCategoryUpdateOneWithoutTestsNestedInput
+    bookings?: LabBookingUpdateManyWithoutTestNestedInput
+  }
+
+  export type LabTestUncheckedUpdateWithoutClinicInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    testCode?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    shortName?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    homeCollectionCharge?: NullableFloatFieldUpdateOperationsInput | number | null
+    duration?: NullableStringFieldUpdateOperationsInput | string | null
+    preparationInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    assignment?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedDoctors?: NullableJsonNullValueInput | InputJsonValue
+    assignedStaff?: NullableJsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    isSlotBookingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    slotDuration?: NullableIntFieldUpdateOperationsInput | number | null
+    maxBookingsPerSlot?: NullableIntFieldUpdateOperationsInput | number | null
+    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookings?: LabBookingUncheckedUpdateManyWithoutTestNestedInput
+  }
+
+  export type LabTestUncheckedUpdateManyWithoutClinicInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    testCode?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    shortName?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    homeCollectionCharge?: NullableFloatFieldUpdateOperationsInput | number | null
+    duration?: NullableStringFieldUpdateOperationsInput | string | null
+    preparationInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    assignment?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedDoctors?: NullableJsonNullValueInput | InputJsonValue
+    assignedStaff?: NullableJsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    isSlotBookingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    slotDuration?: NullableIntFieldUpdateOperationsInput | number | null
+    maxBookingsPerSlot?: NullableIntFieldUpdateOperationsInput | number | null
+    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LabBookingUpdateWithoutClinicInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bookingCode?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    discount?: FloatFieldUpdateOperationsInput | number
+    tax?: FloatFieldUpdateOperationsInput | number
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    invoiceNo?: NullableStringFieldUpdateOperationsInput | string | null
+    sessionSlot?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    patient?: PatientUpdateOneWithoutLabBookingsNestedInput
+    test?: LabTestUpdateOneWithoutBookingsNestedInput
+    invoice?: InvoiceUpdateOneWithoutLabBookingNestedInput
+  }
+
+  export type LabBookingUncheckedUpdateWithoutClinicInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bookingCode?: NullableStringFieldUpdateOperationsInput | string | null
+    patientId?: NullableStringFieldUpdateOperationsInput | string | null
+    testId?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    discount?: FloatFieldUpdateOperationsInput | number
+    tax?: FloatFieldUpdateOperationsInput | number
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    invoiceNo?: NullableStringFieldUpdateOperationsInput | string | null
+    sessionSlot?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    invoice?: InvoiceUncheckedUpdateOneWithoutLabBookingNestedInput
+  }
+
+  export type LabBookingUncheckedUpdateManyWithoutClinicInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bookingCode?: NullableStringFieldUpdateOperationsInput | string | null
+    patientId?: NullableStringFieldUpdateOperationsInput | string | null
+    testId?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    discount?: FloatFieldUpdateOperationsInput | number
+    tax?: FloatFieldUpdateOperationsInput | number
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    invoiceNo?: NullableStringFieldUpdateOperationsInput | string | null
+    sessionSlot?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type ClinicCreateManyPackageInput = {
     id?: string
     name: string
@@ -69104,6 +76760,9 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutClinicNestedInput
     todos?: TodoUpdateManyWithoutClinicNestedInput
     notes?: NoteUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutPackageInput = {
@@ -69159,6 +76818,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
     todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
     notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateManyWithoutPackageInput = {
@@ -70511,6 +78173,27 @@ export namespace Prisma {
     otherInfo?: string | null
     clinicId: string
     appointmentId?: string | null
+    labBookingId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LabBookingCreateManyPatientInput = {
+    id?: string
+    bookingCode?: string | null
+    testId?: string | null
+    scheduledAt: Date | string
+    status?: string
+    paymentStatus?: string
+    paymentMethod?: string | null
+    discount?: number
+    tax?: number
+    totalAmount?: number
+    invoiceNo?: string | null
+    sessionSlot?: string | null
+    assignedUserId?: string | null
+    remarks?: string | null
+    clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -70656,6 +78339,7 @@ export namespace Prisma {
     clinic?: ClinicUpdateOneRequiredWithoutInvoicesNestedInput
     items?: InvoiceItemUpdateManyWithoutInvoiceNestedInput
     appointment?: AppointmentUpdateOneWithoutInvoiceNestedInput
+    labBooking?: LabBookingUpdateOneWithoutInvoiceNestedInput
   }
 
   export type InvoiceUncheckedUpdateWithoutPatientInput = {
@@ -70672,6 +78356,7 @@ export namespace Prisma {
     otherInfo?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
     appointmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    labBookingId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: InvoiceItemUncheckedUpdateManyWithoutInvoiceNestedInput
@@ -70691,6 +78376,69 @@ export namespace Prisma {
     otherInfo?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
     appointmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    labBookingId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LabBookingUpdateWithoutPatientInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bookingCode?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    discount?: FloatFieldUpdateOperationsInput | number
+    tax?: FloatFieldUpdateOperationsInput | number
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    invoiceNo?: NullableStringFieldUpdateOperationsInput | string | null
+    sessionSlot?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    test?: LabTestUpdateOneWithoutBookingsNestedInput
+    clinic?: ClinicUpdateOneRequiredWithoutLabBookingsNestedInput
+    invoice?: InvoiceUpdateOneWithoutLabBookingNestedInput
+  }
+
+  export type LabBookingUncheckedUpdateWithoutPatientInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bookingCode?: NullableStringFieldUpdateOperationsInput | string | null
+    testId?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    discount?: FloatFieldUpdateOperationsInput | number
+    tax?: FloatFieldUpdateOperationsInput | number
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    invoiceNo?: NullableStringFieldUpdateOperationsInput | string | null
+    sessionSlot?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    invoice?: InvoiceUncheckedUpdateOneWithoutLabBookingNestedInput
+  }
+
+  export type LabBookingUncheckedUpdateManyWithoutPatientInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bookingCode?: NullableStringFieldUpdateOperationsInput | string | null
+    testId?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    discount?: FloatFieldUpdateOperationsInput | number
+    tax?: FloatFieldUpdateOperationsInput | number
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    invoiceNo?: NullableStringFieldUpdateOperationsInput | string | null
+    sessionSlot?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -71214,6 +78962,182 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type LabTestCreateManyCategoryInput = {
+    id?: string
+    testCode?: string | null
+    name: string
+    shortName?: string | null
+    description?: string | null
+    price?: number
+    homeCollectionCharge?: number | null
+    duration?: string | null
+    preparationInfo?: string | null
+    assignment?: string | null
+    assignedDoctors?: NullableJsonNullValueInput | InputJsonValue
+    assignedStaff?: NullableJsonNullValueInput | InputJsonValue
+    status?: string
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    isSlotBookingEnabled?: boolean
+    slotDuration?: number | null
+    maxBookingsPerSlot?: number | null
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LabTestUpdateWithoutCategoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    testCode?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    shortName?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    homeCollectionCharge?: NullableFloatFieldUpdateOperationsInput | number | null
+    duration?: NullableStringFieldUpdateOperationsInput | string | null
+    preparationInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    assignment?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedDoctors?: NullableJsonNullValueInput | InputJsonValue
+    assignedStaff?: NullableJsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    isSlotBookingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    slotDuration?: NullableIntFieldUpdateOperationsInput | number | null
+    maxBookingsPerSlot?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    clinic?: ClinicUpdateOneRequiredWithoutLabTestsNestedInput
+    bookings?: LabBookingUpdateManyWithoutTestNestedInput
+  }
+
+  export type LabTestUncheckedUpdateWithoutCategoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    testCode?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    shortName?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    homeCollectionCharge?: NullableFloatFieldUpdateOperationsInput | number | null
+    duration?: NullableStringFieldUpdateOperationsInput | string | null
+    preparationInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    assignment?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedDoctors?: NullableJsonNullValueInput | InputJsonValue
+    assignedStaff?: NullableJsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    isSlotBookingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    slotDuration?: NullableIntFieldUpdateOperationsInput | number | null
+    maxBookingsPerSlot?: NullableIntFieldUpdateOperationsInput | number | null
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookings?: LabBookingUncheckedUpdateManyWithoutTestNestedInput
+  }
+
+  export type LabTestUncheckedUpdateManyWithoutCategoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    testCode?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    shortName?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    homeCollectionCharge?: NullableFloatFieldUpdateOperationsInput | number | null
+    duration?: NullableStringFieldUpdateOperationsInput | string | null
+    preparationInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    assignment?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedDoctors?: NullableJsonNullValueInput | InputJsonValue
+    assignedStaff?: NullableJsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    schedules?: NullableJsonNullValueInput | InputJsonValue
+    isSlotBookingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    slotDuration?: NullableIntFieldUpdateOperationsInput | number | null
+    maxBookingsPerSlot?: NullableIntFieldUpdateOperationsInput | number | null
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LabBookingCreateManyTestInput = {
+    id?: string
+    bookingCode?: string | null
+    patientId?: string | null
+    scheduledAt: Date | string
+    status?: string
+    paymentStatus?: string
+    paymentMethod?: string | null
+    discount?: number
+    tax?: number
+    totalAmount?: number
+    invoiceNo?: string | null
+    sessionSlot?: string | null
+    assignedUserId?: string | null
+    remarks?: string | null
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LabBookingUpdateWithoutTestInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bookingCode?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    discount?: FloatFieldUpdateOperationsInput | number
+    tax?: FloatFieldUpdateOperationsInput | number
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    invoiceNo?: NullableStringFieldUpdateOperationsInput | string | null
+    sessionSlot?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    patient?: PatientUpdateOneWithoutLabBookingsNestedInput
+    clinic?: ClinicUpdateOneRequiredWithoutLabBookingsNestedInput
+    invoice?: InvoiceUpdateOneWithoutLabBookingNestedInput
+  }
+
+  export type LabBookingUncheckedUpdateWithoutTestInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bookingCode?: NullableStringFieldUpdateOperationsInput | string | null
+    patientId?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    discount?: FloatFieldUpdateOperationsInput | number
+    tax?: FloatFieldUpdateOperationsInput | number
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    invoiceNo?: NullableStringFieldUpdateOperationsInput | string | null
+    sessionSlot?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    invoice?: InvoiceUncheckedUpdateOneWithoutLabBookingNestedInput
+  }
+
+  export type LabBookingUncheckedUpdateManyWithoutTestInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bookingCode?: NullableStringFieldUpdateOperationsInput | string | null
+    patientId?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    discount?: FloatFieldUpdateOperationsInput | number
+    tax?: FloatFieldUpdateOperationsInput | number
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    invoiceNo?: NullableStringFieldUpdateOperationsInput | string | null
+    sessionSlot?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
 
 
   /**
@@ -71267,6 +79191,14 @@ export namespace Prisma {
      * @deprecated Use InvoiceCountOutputTypeDefaultArgs instead
      */
     export type InvoiceCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = InvoiceCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use LabCategoryCountOutputTypeDefaultArgs instead
+     */
+    export type LabCategoryCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LabCategoryCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use LabTestCountOutputTypeDefaultArgs instead
+     */
+    export type LabTestCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LabTestCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use ClinicDefaultArgs instead
      */
@@ -71395,6 +79327,18 @@ export namespace Prisma {
      * @deprecated Use NoteDefaultArgs instead
      */
     export type NoteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = NoteDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use LabCategoryDefaultArgs instead
+     */
+    export type LabCategoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LabCategoryDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use LabTestDefaultArgs instead
+     */
+    export type LabTestArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LabTestDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use LabBookingDefaultArgs instead
+     */
+    export type LabBookingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LabBookingDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

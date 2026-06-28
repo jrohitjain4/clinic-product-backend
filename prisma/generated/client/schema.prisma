@@ -81,6 +81,9 @@ model Clinic {
   tickets               Ticket[]
   todos                 Todo[]
   notes                 Note[]
+  labCategories         LabCategory[]
+  labTests              LabTest[]
+  labBookings           LabBooking[]
 }
 
 model LandingPage {
@@ -304,6 +307,7 @@ model Patient {
   appointments             Appointment[]
   prescriptions            Prescription[]
   invoices                 Invoice[]
+  labBookings              LabBooking[]
   createdAt                DateTime       @default(now())
   updatedAt                DateTime       @updatedAt
 
@@ -606,6 +610,8 @@ model Invoice {
   items         InvoiceItem[]
   appointmentId String?       @unique
   appointment   Appointment?  @relation(fields: [appointmentId], references: [id])
+  labBookingId  String?       @unique
+  labBooking    LabBooking?   @relation(fields: [labBookingId], references: [id])
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
 
@@ -736,4 +742,80 @@ model Note {
 
   @@index([clinicId])
   @@index([appointmentId])
+}
+
+// ============ PATHLAB MODELS ============
+
+model LabCategory {
+  id          String    @id @default(uuid())
+  name        String
+  description String?
+  status      String    @default("Active")
+  clinicId    String
+  clinic      Clinic    @relation(fields: [clinicId], references: [id])
+  tests       LabTest[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([clinicId])
+}
+
+model LabTest {
+  id                   String       @id @default(uuid())
+  testCode             String?
+  name                 String
+  shortName            String?
+  description          String?
+  price                Float        @default(0)
+  homeCollectionCharge Float?       @default(0)
+  duration             String?
+  preparationInfo      String?
+  assignment           String?      @default("Staff") // Doctor, Staff, Multiple
+  assignedDoctors      Json?
+  assignedStaff        Json?
+  status               String       @default("Active")
+  schedules            Json?
+  isSlotBookingEnabled Boolean      @default(false)
+  slotDuration         Int?
+  maxBookingsPerSlot   Int?
+  categoryId           String?
+  category             LabCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  clinicId             String
+  clinic               Clinic       @relation(fields: [clinicId], references: [id])
+  bookings             LabBooking[]
+  createdAt            DateTime     @default(now())
+  updatedAt            DateTime     @updatedAt
+
+  @@index([clinicId])
+  @@index([categoryId])
+}
+
+model LabBooking {
+  id             String   @id @default(uuid())
+  bookingCode    String?
+  patientId      String?
+  patient        Patient? @relation(fields: [patientId], references: [id], onDelete: SetNull)
+  testId         String?
+  test           LabTest? @relation(fields: [testId], references: [id], onDelete: SetNull)
+  scheduledAt    DateTime
+  status         String   @default("Pending") // Pending, Completed, Cancelled
+  paymentStatus  String   @default("Unpaid") // Paid, Unpaid, Partial
+  paymentMethod  String?
+  discount       Float    @default(0)
+  tax            Float    @default(0)
+  totalAmount    Float    @default(0)
+  invoiceNo      String?
+  sessionSlot    String?
+  assignedUserId String?
+  remarks        String?
+  clinicId       String
+  clinic         Clinic   @relation(fields: [clinicId], references: [id])
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  invoice        Invoice?
+
+  @@index([clinicId])
+  @@index([patientId])
+  @@index([testId])
+  @@index([status])
 }

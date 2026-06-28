@@ -184,7 +184,7 @@ const upgradePlan = async (req, res) => {
             return res.status(400).json({ message: "packageId is required" });
         const user = await prisma_1.default.user.findUnique({
             where: { id: req.user.id },
-            include: { clinic: true },
+            include: { clinic: { include: { landingPage: true } } },
         });
         if (!user || !user.clinicId) {
             return res.status(404).json({ message: "Clinic not found for this user" });
@@ -400,7 +400,7 @@ const completeRegistration = async (req, res) => {
         }
         const user = await prisma_1.default.user.findUnique({
             where: { id: userId },
-            include: { clinic: true }
+            include: { clinic: { include: { landingPage: true } } }
         });
         if (!user || !user.clinicId) {
             return res.status(404).json({ message: "Draft user or clinic not found" });
@@ -520,7 +520,7 @@ const register = async (req, res) => {
             },
             include: {
                 clinic: {
-                    include: { package: true }
+                    include: { package: true, landingPage: true }
                 },
             },
         });
@@ -568,7 +568,7 @@ const login = async (req, res) => {
                     { username: identifier }
                 ]
             },
-            include: { clinic: true },
+            include: { clinic: { include: { landingPage: true } } },
         });
         if (!user) {
             return res.status(401).json({ message: "Invalid credentials" });
@@ -645,7 +645,7 @@ const getMe = async (req, res) => {
         }
         const user = await prisma_1.default.user.findUnique({
             where: { id: req.user.id },
-            include: { clinic: true },
+            include: { clinic: { include: { landingPage: true } } },
         });
         if (!user) {
             return res.status(404).json({ message: "User not found" });

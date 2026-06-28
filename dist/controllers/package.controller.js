@@ -19,15 +19,12 @@ const getPackages = async (req, res) => {
 exports.getPackages = getPackages;
 const createPackage = async (req, res) => {
     try {
-        const { name, price, durationInDays, maxDoctors, maxPatients, maxAppointments } = req.body;
+        const { name, price, durationInDays } = req.body;
         const newPackage = await prisma_1.default.subscriptionPackage.create({
             data: {
                 name,
                 price: parseFloat(price),
                 durationInDays: parseInt(durationInDays),
-                maxDoctors: parseInt(maxDoctors),
-                maxPatients: parseInt(maxPatients),
-                maxAppointments: parseInt(maxAppointments),
                 isActive: true
             }
         });
@@ -42,16 +39,13 @@ exports.createPackage = createPackage;
 const updatePackage = async (req, res) => {
     try {
         const { id } = req.params;
-        const { name, price, durationInDays, maxDoctors, maxPatients, maxAppointments, isActive } = req.body;
+        const { name, price, durationInDays, isActive } = req.body;
         const updated = await prisma_1.default.subscriptionPackage.update({
             where: { id },
             data: {
                 name,
                 price: price ? parseFloat(price) : undefined,
                 durationInDays: durationInDays ? parseInt(durationInDays) : undefined,
-                maxDoctors: maxDoctors ? parseInt(maxDoctors) : undefined,
-                maxPatients: maxPatients ? parseInt(maxPatients) : undefined,
-                maxAppointments: maxAppointments ? parseInt(maxAppointments) : undefined,
                 isActive
             }
         });
