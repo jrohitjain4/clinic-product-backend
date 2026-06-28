@@ -342,7 +342,7 @@ const getDoctorAvailability = async (req, res) => {
         const { startDate, endDate } = req.query;
         const doctor = await prisma_1.default.doctor.findUnique({
             where: { id: doctorId },
-            select: { schedules: true, appointmentDuration: true, clinicId: true }
+            select: { schedules: true, appointmentDuration: true, maxBookingsPerSlot: true, clinicId: true }
         });
         if (!doctor) {
             return res.status(404).json({ message: "Doctor not found" });
@@ -375,7 +375,7 @@ const getDoctorAvailability = async (req, res) => {
                 scheduledAt: { gte: start, lte: end },
                 status: { notIn: ["Cancelled", "Rejected"] }
             },
-            select: { scheduledAt: true, endAt: true }
+            select: { id: true, scheduledAt: true, endAt: true }
         });
         // Fetch Working Days Config
         const workingDaysConfig = await prisma_1.default.workingDaysConfig.findUnique({
@@ -383,10 +383,11 @@ const getDoctorAvailability = async (req, res) => {
         });
         res.json({
             schedules: doctor.schedules,
-            duration: doctor.appointmentDuration || 30,
+            duration: doctor.appointmentDuration || null,
+            maxBookingsPerSlot: doctor.maxBookingsPerSlot || null,
             holidays: holidays.map((h) => ({ date: h.date, endDate: h.endDate, title: h.title })),
             leaves: leaves.map((l) => ({ start: l.startDate, end: l.endDate })),
-            appointments: appointments.map((a) => ({ start: a.scheduledAt, end: a.endAt })),
+            appointments: appointments.map((a) => ({ id: a.id, start: a.scheduledAt, end: a.endAt })),
             clinicWorkingDays: workingDaysConfig?.offDays || [0],
             clinicSchedules: workingDaysConfig?.schedules || []
         });

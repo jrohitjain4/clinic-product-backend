@@ -45,6 +45,9 @@ const support_routes_1 = __importDefault(require("./routes/support.routes"));
 const note_routes_1 = __importDefault(require("./routes/note.routes"));
 const payment_routes_1 = __importDefault(require("./routes/payment.routes"));
 const search_routes_1 = __importDefault(require("./routes/search.routes"));
+const labCategory_routes_1 = __importDefault(require("./routes/labCategory.routes"));
+const labTest_routes_1 = __importDefault(require("./routes/labTest.routes"));
+const labBooking_routes_1 = __importDefault(require("./routes/labBooking.routes"));
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 5000;
 const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:5173,https://docyori.com,https://api.docyori.com")
@@ -106,6 +109,9 @@ app.use("/api/landing", landing_routes_1.default);
 app.use("/api/demo-booking", demoBooking_routes_1.default);
 app.use("/api/support", support_routes_1.default);
 app.use("/api/search", search_routes_1.default);
+app.use("/api/lab-categories", labCategory_routes_1.default);
+app.use("/api/lab-tests", labTest_routes_1.default);
+app.use("/api/lab-bookings", labBooking_routes_1.default);
 // Root Check
 app.get("/", (req, res) => {
     res.json({ message: "Clinic Management SaaS API is running perfectly!" });

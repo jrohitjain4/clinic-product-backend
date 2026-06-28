@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const labTest_controller_1 = require("../controllers/labTest.controller");
+const auth_middleware_1 = require("../middlewares/auth.middleware");
+const router = (0, express_1.Router)();
+router.use(auth_middleware_1.authenticateJWT);
+router.get("/", labTest_controller_1.getLabTests);
+router.post("/", labTest_controller_1.createLabTest);
+router.post("/bulk-delete", labTest_controller_1.bulkDeleteLabTests);
+router.put("/:id", labTest_controller_1.updateLabTest);
+router.delete("/:id", labTest_controller_1.deleteLabTest);
+exports.default = router;

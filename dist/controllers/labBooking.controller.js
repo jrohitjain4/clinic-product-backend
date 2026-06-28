@@ -1,10 +1,13 @@
-import { Response } from "express";
-import { AuthenticatedRequest } from "../middlewares/auth.middleware";
-import prisma from "../lib/prisma";
-
-const ensureLabBookingInvoice = async (bookingId: string, clinicId: string) => {
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getLabDashboard = exports.bulkDeleteLabBookings = exports.deleteLabBooking = exports.updateLabBooking = exports.createLabBooking = exports.getLabBookings = void 0;
+const prisma_1 = __importDefault(require("../lib/prisma"));
+const ensureLabBookingInvoice = async (bookingId, clinicId) => {
     try {
-        const booking = await prisma.labBooking.findUnique({
+        const booking = await prisma_1.default.labBooking.findUnique({
             where: { id: bookingId },
             include: {
                 patient: true,
@@ -12,16 +15,15 @@ const ensureLabBookingInvoice = async (bookingId: string, clinicId: string) => {
                 invoice: true,
             }
         });
-
-        if (!booking || booking.status !== "Confirmed" || booking.invoice) return;
-        if (!booking.patient || !booking.test) return;
-
+        if (!booking || booking.status !== "Confirmed" || booking.invoice)
+            return;
+        if (!booking.patient || !booking.test)
+            return;
         const fee = booking.test.price || 0;
-        if (fee <= 0) return;
-
+        if (fee <= 0)
+            return;
         const invStatus = "Paid";
-
-        await prisma.invoice.create({
+        await prisma_1.default.invoice.create({
             data: {
                 clinicId,
                 patientId: booking.patientId,
@@ -35,33 +37,32 @@ const ensureLabBookingInvoice = async (bookingId: string, clinicId: string) => {
                 invoiceCode: `INV-AUTO-${booking.bookingCode || Date.now()}`,
                 items: {
                     create: [{
-                        clinicId,
-                        description: `Lab Test: ${booking.test.name}`,
-                        quantity: 1,
-                        unitCost: fee,
-                        amount: fee,
-                    }]
+                            clinicId,
+                            description: `Lab Test: ${booking.test.name}`,
+                            quantity: 1,
+                            unitCost: fee,
+                            amount: fee,
+                        }]
                 }
             }
         });
-
         // Update the lab booking itself so the diagnostic invoice page reflects it as Paid
-        await prisma.labBooking.update({
+        await prisma_1.default.labBooking.update({
             where: { id: booking.id },
             data: { paymentStatus: invStatus }
         });
-    } catch (err) {
+    }
+    catch (err) {
         console.error("Auto-invoice for LabBooking failed:", err);
     }
 };
-
 // GET /api/lab-bookings
-export const getLabBookings = async (req: AuthenticatedRequest, res: Response) => {
+const getLabBookings = async (req, res) => {
     try {
         const clinicId = req.user?.clinicId;
-        if (!clinicId) return res.status(403).json({ message: "No clinic associated" });
-
-        const bookings = await prisma.labBooking.findMany({
+        if (!clinicId)
+            return res.status(403).json({ message: "No clinic associated" });
+        const bookings = await prisma_1.default.labBooking.findMany({
             where: { clinicId },
             include: {
                 patient: { select: { id: true, firstName: true, lastName: true, patientCode: true, phone: true } },
@@ -74,33 +75,32 @@ export const getLabBookings = async (req: AuthenticatedRequest, res: Response) =
             },
             orderBy: { createdAt: "desc" },
         });
-
         res.json(bookings);
-    } catch (err: any) {
+    }
+    catch (err) {
         res.status(500).json({ message: err.message });
     }
 };
-
+exports.getLabBookings = getLabBookings;
 // POST /api/lab-bookings
-export const createLabBooking = async (req: AuthenticatedRequest, res: Response) => {
+const createLabBooking = async (req, res) => {
     try {
         const clinicId = req.user?.clinicId;
-        if (!clinicId) return res.status(403).json({ message: "No clinic associated" });
-
+        if (!clinicId)
+            return res.status(403).json({ message: "No clinic associated" });
         const { patientId, testId, scheduledAt, status, paymentStatus, paymentMethod, discount, tax, totalAmount, sessionSlot, assignedUserId, remarks } = req.body;
-
-        if (!patientId) return res.status(400).json({ message: "Patient is required" });
-        if (!testId) return res.status(400).json({ message: "Test is required" });
-        if (!scheduledAt) return res.status(400).json({ message: "Scheduled date is required" });
-
+        if (!patientId)
+            return res.status(400).json({ message: "Patient is required" });
+        if (!testId)
+            return res.status(400).json({ message: "Test is required" });
+        if (!scheduledAt)
+            return res.status(400).json({ message: "Scheduled date is required" });
         // Auto-generate booking code
-        const count = await prisma.labBooking.count({ where: { clinicId } });
+        const count = await prisma_1.default.labBooking.count({ where: { clinicId } });
         const bookingCode = `LB${String(count + 1).padStart(4, "0")}`;
-
         // Auto-generate invoice number
         const invoiceNo = `LINV-${new Date().getFullYear()}-${String(count + 1).padStart(4, "0")}`;
-
-        const booking = await prisma.labBooking.create({
+        const booking = await prisma_1.default.labBooking.create({
             data: {
                 bookingCode,
                 patientId,
@@ -128,30 +128,28 @@ export const createLabBooking = async (req: AuthenticatedRequest, res: Response)
                 },
             },
         });
-
         if (booking.status === "Confirmed") {
             await ensureLabBookingInvoice(booking.id, clinicId);
         }
-
         res.status(201).json(booking);
-    } catch (err: any) {
+    }
+    catch (err) {
         res.status(500).json({ message: err.message });
     }
 };
-
+exports.createLabBooking = createLabBooking;
 // PUT /api/lab-bookings/:id
-export const updateLabBooking = async (req: AuthenticatedRequest, res: Response) => {
+const updateLabBooking = async (req, res) => {
     try {
         const clinicId = req.user?.clinicId;
-        if (!clinicId) return res.status(403).json({ message: "No clinic associated" });
+        if (!clinicId)
+            return res.status(403).json({ message: "No clinic associated" });
         const { id } = req.params;
-
-        const existing = await prisma.labBooking.findFirst({ where: { id, clinicId } });
-        if (!existing) return res.status(404).json({ message: "Booking not found" });
-
+        const existing = await prisma_1.default.labBooking.findFirst({ where: { id, clinicId } });
+        if (!existing)
+            return res.status(404).json({ message: "Booking not found" });
         const { status, paymentStatus, paymentMethod, discount, tax, totalAmount, scheduledAt, sessionSlot, assignedUserId, remarks } = req.body;
-
-        const updated = await prisma.labBooking.update({
+        const updated = await prisma_1.default.labBooking.update({
             where: { id },
             data: {
                 ...(status !== undefined && { status }),
@@ -175,84 +173,73 @@ export const updateLabBooking = async (req: AuthenticatedRequest, res: Response)
                 },
             },
         });
-
         if (updated.status === "Confirmed") {
             await ensureLabBookingInvoice(updated.id, clinicId);
         }
-
         res.json(updated);
-    } catch (err: any) {
+    }
+    catch (err) {
         res.status(500).json({ message: err.message });
     }
 };
-
+exports.updateLabBooking = updateLabBooking;
 // DELETE /api/lab-bookings/:id
-export const deleteLabBooking = async (req: AuthenticatedRequest, res: Response) => {
+const deleteLabBooking = async (req, res) => {
     try {
         const clinicId = req.user?.clinicId;
-        if (!clinicId) return res.status(403).json({ message: "No clinic associated" });
+        if (!clinicId)
+            return res.status(403).json({ message: "No clinic associated" });
         const { id } = req.params;
-
-        const existing = await prisma.labBooking.findFirst({ where: { id, clinicId } });
-        if (!existing) return res.status(404).json({ message: "Booking not found" });
-
-        await prisma.labBooking.delete({ where: { id } });
+        const existing = await prisma_1.default.labBooking.findFirst({ where: { id, clinicId } });
+        if (!existing)
+            return res.status(404).json({ message: "Booking not found" });
+        await prisma_1.default.labBooking.delete({ where: { id } });
         res.json({ message: "Booking deleted successfully" });
-    } catch (err: any) {
+    }
+    catch (err) {
         res.status(500).json({ message: err.message });
     }
 };
-
+exports.deleteLabBooking = deleteLabBooking;
 // DELETE /api/lab-bookings/bulk
-export const bulkDeleteLabBookings = async (req: AuthenticatedRequest, res: Response) => {
+const bulkDeleteLabBookings = async (req, res) => {
     try {
         const clinicId = req.user?.clinicId;
-        if (!clinicId) return res.status(403).json({ message: "No clinic associated" });
-
+        if (!clinicId)
+            return res.status(403).json({ message: "No clinic associated" });
         const { ids } = req.body;
         if (!ids || !Array.isArray(ids) || ids.length === 0) {
             return res.status(400).json({ message: "ids array is required" });
         }
-
-        await prisma.labBooking.deleteMany({
+        await prisma_1.default.labBooking.deleteMany({
             where: { id: { in: ids }, clinicId },
         });
-
         res.json({ message: `${ids.length} bookings deleted successfully` });
-    } catch (err: any) {
+    }
+    catch (err) {
         res.status(500).json({ message: err.message });
     }
 };
-
+exports.bulkDeleteLabBookings = bulkDeleteLabBookings;
 // GET /api/lab-bookings/dashboard
-export const getLabDashboard = async (req: AuthenticatedRequest, res: Response) => {
+const getLabDashboard = async (req, res) => {
     try {
         const clinicId = req.user?.clinicId;
-        if (!clinicId) return res.status(403).json({ message: "No clinic associated" });
-
+        if (!clinicId)
+            return res.status(403).json({ message: "No clinic associated" });
         const todayStart = new Date();
         todayStart.setHours(0, 0, 0, 0);
         const todayEnd = new Date();
         todayEnd.setHours(23, 59, 59, 999);
-
-        const [
-            totalBookings,
-            todaysBookings,
-            pendingBookings,
-            completedBookings,
-            cancelledBookings,
-            todaysRevenue,
-            recentBookings,
-            categoryStats,
-        ] = await Promise.all([
-            prisma.labBooking.count({ where: { clinicId } }),
-            prisma.labBooking.count({
+        const [totalBookings, todaysBookings, pendingBookings, completedBookings, cancelledBookings, todaysRevenue, recentBookings, categoryStats,] = await Promise.all([
+            prisma_1.default.labBooking.count({ where: { clinicId } }),
+            prisma_1.default.labBooking.count({
                 where: { clinicId, scheduledAt: { gte: todayStart, lte: todayEnd } },
             }),
-            prisma.labBooking.count({ where: { clinicId, status: "Pending" } }),
-            prisma.labBooking.count({ where: { clinicId, status: "Completed" } }),
-            prisma.labBooking.count({ where: { clinicId, status: "Cancelled" } }),
-            prisma.labBooking.aggregate({
+            prisma_1.default.labBooking.count({ where: { clinicId, status: "Pending" } }),
+            prisma_1.default.labBooking.count({ where: { clinicId, status: "Completed" } }),
+            prisma_1.default.labBooking.count({ where: { clinicId, status: "Cancelled" } }),
+            prisma_1.default.labBooking.aggregate({
                 where: {
                     clinicId,
                     scheduledAt: { gte: todayStart, lte: todayEnd },
@@ -260,7 +247,7 @@ export const getLabDashboard = async (req: AuthenticatedRequest, res: Response) 
                 },
                 _sum: { totalAmount: true },
             }),
-            prisma.labBooking.findMany({
+            prisma_1.default.labBooking.findMany({
                 where: { clinicId, scheduledAt: { gte: todayStart } },
                 include: {
                     patient: { select: { firstName: true, lastName: true, patientCode: true } },
@@ -269,7 +256,7 @@ export const getLabDashboard = async (req: AuthenticatedRequest, res: Response) 
                 orderBy: { scheduledAt: "asc" },
                 take: 10,
             }),
-            prisma.labCategory.findMany({
+            prisma_1.default.labCategory.findMany({
                 where: { clinicId },
                 select: {
                     name: true,
@@ -277,7 +264,6 @@ export const getLabDashboard = async (req: AuthenticatedRequest, res: Response) 
                 },
             }),
         ]);
-
         res.json({
             totalBookings,
             todaysBookings,
@@ -288,7 +274,9 @@ export const getLabDashboard = async (req: AuthenticatedRequest, res: Response) 
             recentBookings,
             categoryStats,
         });
-    } catch (err: any) {
+    }
+    catch (err) {
         res.status(500).json({ message: err.message });
     }
 };
+exports.getLabDashboard = getLabDashboard;

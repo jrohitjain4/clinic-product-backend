@@ -260,6 +260,21 @@ const bookPublicAppointment = async (req, res) => {
         if (isNaN(scheduledAt.getTime())) {
             return res.status(400).json({ message: "Invalid date or time format." });
         }
+        // Validate slot capacity limit if doctor has slot booking active
+        if (doctor.appointmentDuration && doctor.maxBookingsPerSlot) {
+            const conflictingAppointments = await prisma_1.default.appointment.count({
+                where: {
+                    doctorId: resolvedDoctorId,
+                    scheduledAt,
+                    status: { notIn: ["Cancelled", "Rejected"] }
+                }
+            });
+            if (conflictingAppointments >= doctor.maxBookingsPerSlot) {
+                return res.status(400).json({
+                    message: "The selected slot is fully booked. Please select another slot or date."
+                });
+            }
+        }
         const count = await prisma_1.default.appointment.count({ where: { clinicId } });
         const appointmentCode = `AP${String(count + 1).padStart(3, "0")}`;
         const appointment = await prisma_1.default.appointment.create({
