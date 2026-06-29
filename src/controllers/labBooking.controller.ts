@@ -239,9 +239,11 @@ export const getLabDashboard = async (req: AuthenticatedRequest, res: Response) 
             totalBookings,
             todaysBookings,
             pendingBookings,
+            confirmedBookings,
             completedBookings,
             cancelledBookings,
-            todaysRevenue,
+            todaysRevenueAgg,
+            totalRevenueAgg,
             recentBookings,
             categoryStats,
         ] = await Promise.all([
@@ -250,12 +252,24 @@ export const getLabDashboard = async (req: AuthenticatedRequest, res: Response) 
                 where: { clinicId, scheduledAt: { gte: todayStart, lte: todayEnd } },
             }),
             prisma.labBooking.count({ where: { clinicId, status: "Pending" } }),
+            prisma.labBooking.count({ where: { clinicId, status: "Confirmed" } }),
             prisma.labBooking.count({ where: { clinicId, status: "Completed" } }),
             prisma.labBooking.count({ where: { clinicId, status: "Cancelled" } }),
-            prisma.labBooking.aggregate({
+            // Today's Revenue: Invoices paid today for lab bookings
+            prisma.invoice.aggregate({
                 where: {
                     clinicId,
-                    scheduledAt: { gte: todayStart, lte: todayEnd },
+                    labBookingId: { not: null },
+                    createdAt: { gte: todayStart, lte: todayEnd },
+                    paymentStatus: "Paid",
+                },
+                _sum: { totalAmount: true },
+            }),
+            // Total Revenue: All paid invoices for lab bookings
+            prisma.invoice.aggregate({
+                where: {
+                    clinicId,
+                    labBookingId: { not: null },
                     paymentStatus: "Paid",
                 },
                 _sum: { totalAmount: true },
@@ -282,9 +296,11 @@ export const getLabDashboard = async (req: AuthenticatedRequest, res: Response) 
             totalBookings,
             todaysBookings,
             pendingBookings,
+            confirmedBookings,
             completedBookings,
             cancelledBookings,
-            todaysRevenue: todaysRevenue._sum.totalAmount || 0,
+            todaysRevenue: todaysRevenueAgg._sum.totalAmount || 0,
+            totalRevenue: totalRevenueAgg._sum.totalAmount || 0,
             recentBookings,
             categoryStats,
         });

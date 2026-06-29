@@ -231,18 +231,30 @@ const getLabDashboard = async (req, res) => {
         todayStart.setHours(0, 0, 0, 0);
         const todayEnd = new Date();
         todayEnd.setHours(23, 59, 59, 999);
-        const [totalBookings, todaysBookings, pendingBookings, completedBookings, cancelledBookings, todaysRevenue, recentBookings, categoryStats,] = await Promise.all([
+        const [totalBookings, todaysBookings, pendingBookings, confirmedBookings, completedBookings, cancelledBookings, todaysRevenueAgg, totalRevenueAgg, recentBookings, categoryStats,] = await Promise.all([
             prisma_1.default.labBooking.count({ where: { clinicId } }),
             prisma_1.default.labBooking.count({
                 where: { clinicId, scheduledAt: { gte: todayStart, lte: todayEnd } },
             }),
             prisma_1.default.labBooking.count({ where: { clinicId, status: "Pending" } }),
+            prisma_1.default.labBooking.count({ where: { clinicId, status: "Confirmed" } }),
             prisma_1.default.labBooking.count({ where: { clinicId, status: "Completed" } }),
             prisma_1.default.labBooking.count({ where: { clinicId, status: "Cancelled" } }),
-            prisma_1.default.labBooking.aggregate({
+            // Today's Revenue: Invoices paid today for lab bookings
+            prisma_1.default.invoice.aggregate({
                 where: {
                     clinicId,
-                    scheduledAt: { gte: todayStart, lte: todayEnd },
+                    labBookingId: { not: null },
+                    createdAt: { gte: todayStart, lte: todayEnd },
+                    paymentStatus: "Paid",
+                },
+                _sum: { totalAmount: true },
+            }),
+            // Total Revenue: All paid invoices for lab bookings
+            prisma_1.default.invoice.aggregate({
+                where: {
+                    clinicId,
+                    labBookingId: { not: null },
                     paymentStatus: "Paid",
                 },
                 _sum: { totalAmount: true },
@@ -268,9 +280,11 @@ const getLabDashboard = async (req, res) => {
             totalBookings,
             todaysBookings,
             pendingBookings,
+            confirmedBookings,
             completedBookings,
             cancelledBookings,
-            todaysRevenue: todaysRevenue._sum.totalAmount || 0,
+            todaysRevenue: todaysRevenueAgg._sum.totalAmount || 0,
+            totalRevenue: totalRevenueAgg._sum.totalAmount || 0,
             recentBookings,
             categoryStats,
         });
