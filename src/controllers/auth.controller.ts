@@ -1006,8 +1006,14 @@ export const sendLoginOTP = async (req: Request, res: Response) => {
     otpStore.set(user.id, { otp, expires });
 
     // Send real OTP via TrueBulkSMS API
-    const message = `${otp} is your One Time Passcode for registration. SSWAIT`;
-    const smsUrl = `http://truebulksms.biz/api.php?username=SoftFYR&password=971236&sender=SSWAIT&sendto=91${cleanPhone}&message=${encodeURIComponent(message)}&PEID=1701167637074678841&templateid=1707168794065317157`;
+    const smsUsername = process.env.SMS_USERNAME || "SoftFYR";
+    const smsPassword = process.env.SMS_PASSWORD || "971236";
+    const smsSender = process.env.SMS_SENDER || "SSWAIT";
+    const smsPEID = process.env.SMS_PEID || "1701167637074678841";
+    const smsTemplateId = process.env.SMS_TEMPLATE_ID || "1707168794065317157";
+
+    const message = `${otp} is your One Time Passcode for registration. ${smsSender}`;
+    const smsUrl = `http://truebulksms.biz/api.php?username=${smsUsername}&password=${smsPassword}&sender=${smsSender}&sendto=91${cleanPhone}&message=${encodeURIComponent(message)}&PEID=${smsPEID}&templateid=${smsTemplateId}`;
 
     console.log(`Sending OTP to 91${cleanPhone}. URL: ${smsUrl}`);
 
