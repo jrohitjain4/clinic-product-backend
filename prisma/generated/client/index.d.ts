@@ -42422,6 +42422,7 @@ export namespace Prisma {
     sessionSlot: string | null
     assignedUserId: string | null
     remarks: string | null
+    referredBy: string | null
     clinicId: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -42443,6 +42444,7 @@ export namespace Prisma {
     sessionSlot: string | null
     assignedUserId: string | null
     remarks: string | null
+    referredBy: string | null
     clinicId: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -42464,6 +42466,7 @@ export namespace Prisma {
     sessionSlot: number
     assignedUserId: number
     remarks: number
+    referredBy: number
     clinicId: number
     createdAt: number
     updatedAt: number
@@ -42499,6 +42502,7 @@ export namespace Prisma {
     sessionSlot?: true
     assignedUserId?: true
     remarks?: true
+    referredBy?: true
     clinicId?: true
     createdAt?: true
     updatedAt?: true
@@ -42520,6 +42524,7 @@ export namespace Prisma {
     sessionSlot?: true
     assignedUserId?: true
     remarks?: true
+    referredBy?: true
     clinicId?: true
     createdAt?: true
     updatedAt?: true
@@ -42541,6 +42546,7 @@ export namespace Prisma {
     sessionSlot?: true
     assignedUserId?: true
     remarks?: true
+    referredBy?: true
     clinicId?: true
     createdAt?: true
     updatedAt?: true
@@ -42649,6 +42655,7 @@ export namespace Prisma {
     sessionSlot: string | null
     assignedUserId: string | null
     remarks: string | null
+    referredBy: string | null
     clinicId: string
     createdAt: Date
     updatedAt: Date
@@ -42689,6 +42696,7 @@ export namespace Prisma {
     sessionSlot?: boolean
     assignedUserId?: boolean
     remarks?: boolean
+    referredBy?: boolean
     clinicId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -42714,6 +42722,7 @@ export namespace Prisma {
     sessionSlot?: boolean
     assignedUserId?: boolean
     remarks?: boolean
+    referredBy?: boolean
     clinicId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -42738,6 +42747,7 @@ export namespace Prisma {
     sessionSlot?: boolean
     assignedUserId?: boolean
     remarks?: boolean
+    referredBy?: boolean
     clinicId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -42779,6 +42789,7 @@ export namespace Prisma {
       sessionSlot: string | null
       assignedUserId: string | null
       remarks: string | null
+      referredBy: string | null
       clinicId: string
       createdAt: Date
       updatedAt: Date
@@ -43194,6 +43205,7 @@ export namespace Prisma {
     readonly sessionSlot: FieldRef<"LabBooking", 'String'>
     readonly assignedUserId: FieldRef<"LabBooking", 'String'>
     readonly remarks: FieldRef<"LabBooking", 'String'>
+    readonly referredBy: FieldRef<"LabBooking", 'String'>
     readonly clinicId: FieldRef<"LabBooking", 'String'>
     readonly createdAt: FieldRef<"LabBooking", 'DateTime'>
     readonly updatedAt: FieldRef<"LabBooking", 'DateTime'>
@@ -44282,6 +44294,7 @@ export namespace Prisma {
     sessionSlot: 'sessionSlot',
     assignedUserId: 'assignedUserId',
     remarks: 'remarks',
+    referredBy: 'referredBy',
     clinicId: 'clinicId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -48124,6 +48137,7 @@ export namespace Prisma {
     sessionSlot?: StringNullableFilter<"LabBooking"> | string | null
     assignedUserId?: StringNullableFilter<"LabBooking"> | string | null
     remarks?: StringNullableFilter<"LabBooking"> | string | null
+    referredBy?: StringNullableFilter<"LabBooking"> | string | null
     clinicId?: StringFilter<"LabBooking"> | string
     createdAt?: DateTimeFilter<"LabBooking"> | Date | string
     updatedAt?: DateTimeFilter<"LabBooking"> | Date | string
@@ -48149,6 +48163,7 @@ export namespace Prisma {
     sessionSlot?: SortOrderInput | SortOrder
     assignedUserId?: SortOrderInput | SortOrder
     remarks?: SortOrderInput | SortOrder
+    referredBy?: SortOrderInput | SortOrder
     clinicId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -48177,6 +48192,7 @@ export namespace Prisma {
     sessionSlot?: StringNullableFilter<"LabBooking"> | string | null
     assignedUserId?: StringNullableFilter<"LabBooking"> | string | null
     remarks?: StringNullableFilter<"LabBooking"> | string | null
+    referredBy?: StringNullableFilter<"LabBooking"> | string | null
     clinicId?: StringFilter<"LabBooking"> | string
     createdAt?: DateTimeFilter<"LabBooking"> | Date | string
     updatedAt?: DateTimeFilter<"LabBooking"> | Date | string
@@ -48202,6 +48218,7 @@ export namespace Prisma {
     sessionSlot?: SortOrderInput | SortOrder
     assignedUserId?: SortOrderInput | SortOrder
     remarks?: SortOrderInput | SortOrder
+    referredBy?: SortOrderInput | SortOrder
     clinicId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -48231,6 +48248,7 @@ export namespace Prisma {
     sessionSlot?: StringNullableWithAggregatesFilter<"LabBooking"> | string | null
     assignedUserId?: StringNullableWithAggregatesFilter<"LabBooking"> | string | null
     remarks?: StringNullableWithAggregatesFilter<"LabBooking"> | string | null
+    referredBy?: StringNullableWithAggregatesFilter<"LabBooking"> | string | null
     clinicId?: StringWithAggregatesFilter<"LabBooking"> | string
     createdAt?: DateTimeWithAggregatesFilter<"LabBooking"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"LabBooking"> | Date | string
@@ -52463,6 +52481,7 @@ export namespace Prisma {
     sessionSlot?: string | null
     assignedUserId?: string | null
     remarks?: string | null
+    referredBy?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     patient?: PatientCreateNestedOneWithoutLabBookingsInput
@@ -52487,6 +52506,7 @@ export namespace Prisma {
     sessionSlot?: string | null
     assignedUserId?: string | null
     remarks?: string | null
+    referredBy?: string | null
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -52507,6 +52527,7 @@ export namespace Prisma {
     sessionSlot?: NullableStringFieldUpdateOperationsInput | string | null
     assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     patient?: PatientUpdateOneWithoutLabBookingsNestedInput
@@ -52531,6 +52552,7 @@ export namespace Prisma {
     sessionSlot?: NullableStringFieldUpdateOperationsInput | string | null
     assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52553,6 +52575,7 @@ export namespace Prisma {
     sessionSlot?: string | null
     assignedUserId?: string | null
     remarks?: string | null
+    referredBy?: string | null
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -52572,6 +52595,7 @@ export namespace Prisma {
     sessionSlot?: NullableStringFieldUpdateOperationsInput | string | null
     assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -52592,6 +52616,7 @@ export namespace Prisma {
     sessionSlot?: NullableStringFieldUpdateOperationsInput | string | null
     assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -55279,6 +55304,7 @@ export namespace Prisma {
     sessionSlot?: SortOrder
     assignedUserId?: SortOrder
     remarks?: SortOrder
+    referredBy?: SortOrder
     clinicId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -55306,6 +55332,7 @@ export namespace Prisma {
     sessionSlot?: SortOrder
     assignedUserId?: SortOrder
     remarks?: SortOrder
+    referredBy?: SortOrder
     clinicId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -55327,6 +55354,7 @@ export namespace Prisma {
     sessionSlot?: SortOrder
     assignedUserId?: SortOrder
     remarks?: SortOrder
+    referredBy?: SortOrder
     clinicId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -60433,6 +60461,7 @@ export namespace Prisma {
     sessionSlot?: string | null
     assignedUserId?: string | null
     remarks?: string | null
+    referredBy?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     patient?: PatientCreateNestedOneWithoutLabBookingsInput
@@ -60456,6 +60485,7 @@ export namespace Prisma {
     sessionSlot?: string | null
     assignedUserId?: string | null
     remarks?: string | null
+    referredBy?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     invoice?: InvoiceUncheckedCreateNestedOneWithoutLabBookingInput
@@ -61644,6 +61674,7 @@ export namespace Prisma {
     sessionSlot?: StringNullableFilter<"LabBooking"> | string | null
     assignedUserId?: StringNullableFilter<"LabBooking"> | string | null
     remarks?: StringNullableFilter<"LabBooking"> | string | null
+    referredBy?: StringNullableFilter<"LabBooking"> | string | null
     clinicId?: StringFilter<"LabBooking"> | string
     createdAt?: DateTimeFilter<"LabBooking"> | Date | string
     updatedAt?: DateTimeFilter<"LabBooking"> | Date | string
@@ -64986,6 +65017,7 @@ export namespace Prisma {
     sessionSlot?: string | null
     assignedUserId?: string | null
     remarks?: string | null
+    referredBy?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     test?: LabTestCreateNestedOneWithoutBookingsInput
@@ -65008,6 +65040,7 @@ export namespace Prisma {
     sessionSlot?: string | null
     assignedUserId?: string | null
     remarks?: string | null
+    referredBy?: string | null
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -71269,6 +71302,7 @@ export namespace Prisma {
     sessionSlot?: string | null
     assignedUserId?: string | null
     remarks?: string | null
+    referredBy?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     patient?: PatientCreateNestedOneWithoutLabBookingsInput
@@ -71292,6 +71326,7 @@ export namespace Prisma {
     sessionSlot?: string | null
     assignedUserId?: string | null
     remarks?: string | null
+    referredBy?: string | null
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -71622,6 +71657,7 @@ export namespace Prisma {
     sessionSlot?: NullableStringFieldUpdateOperationsInput | string | null
     assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     patient?: PatientUpdateOneWithoutLabBookingsNestedInput
@@ -71645,6 +71681,7 @@ export namespace Prisma {
     sessionSlot?: NullableStringFieldUpdateOperationsInput | string | null
     assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -73904,6 +73941,7 @@ export namespace Prisma {
     sessionSlot?: string | null
     assignedUserId?: string | null
     remarks?: string | null
+    referredBy?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     patient?: PatientCreateNestedOneWithoutLabBookingsInput
@@ -73926,6 +73964,7 @@ export namespace Prisma {
     sessionSlot?: string | null
     assignedUserId?: string | null
     remarks?: string | null
+    referredBy?: string | null
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -75207,6 +75246,7 @@ export namespace Prisma {
     sessionSlot?: string | null
     assignedUserId?: string | null
     remarks?: string | null
+    referredBy?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -76632,6 +76672,7 @@ export namespace Prisma {
     sessionSlot?: NullableStringFieldUpdateOperationsInput | string | null
     assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     patient?: PatientUpdateOneWithoutLabBookingsNestedInput
@@ -76655,6 +76696,7 @@ export namespace Prisma {
     sessionSlot?: NullableStringFieldUpdateOperationsInput | string | null
     assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     invoice?: InvoiceUncheckedUpdateOneWithoutLabBookingNestedInput
@@ -76676,6 +76718,7 @@ export namespace Prisma {
     sessionSlot?: NullableStringFieldUpdateOperationsInput | string | null
     assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -78193,6 +78236,7 @@ export namespace Prisma {
     sessionSlot?: string | null
     assignedUserId?: string | null
     remarks?: string | null
+    referredBy?: string | null
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -78395,6 +78439,7 @@ export namespace Prisma {
     sessionSlot?: NullableStringFieldUpdateOperationsInput | string | null
     assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     test?: LabTestUpdateOneWithoutBookingsNestedInput
@@ -78417,6 +78462,7 @@ export namespace Prisma {
     sessionSlot?: NullableStringFieldUpdateOperationsInput | string | null
     assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -78438,6 +78484,7 @@ export namespace Prisma {
     sessionSlot?: NullableStringFieldUpdateOperationsInput | string | null
     assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -79071,6 +79118,7 @@ export namespace Prisma {
     sessionSlot?: string | null
     assignedUserId?: string | null
     remarks?: string | null
+    referredBy?: string | null
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -79090,6 +79138,7 @@ export namespace Prisma {
     sessionSlot?: NullableStringFieldUpdateOperationsInput | string | null
     assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     patient?: PatientUpdateOneWithoutLabBookingsNestedInput
@@ -79112,6 +79161,7 @@ export namespace Prisma {
     sessionSlot?: NullableStringFieldUpdateOperationsInput | string | null
     assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -79133,6 +79183,7 @@ export namespace Prisma {
     sessionSlot?: NullableStringFieldUpdateOperationsInput | string | null
     assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

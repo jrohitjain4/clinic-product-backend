@@ -100,7 +100,7 @@ export const createLabBooking = async (req: AuthenticatedRequest, res: Response)
         const clinicId = req.user?.clinicId;
         if (!clinicId) return res.status(403).json({ message: "No clinic associated" });
 
-        const { patientId, testId, scheduledAt, status, paymentStatus, paymentMethod, discount, tax, totalAmount, sessionSlot, assignedUserId, remarks } = req.body;
+        const { patientId, testId, scheduledAt, status, paymentStatus, paymentMethod, discount, tax, totalAmount, sessionSlot, assignedUserId, remarks, referredBy } = req.body;
 
         if (!patientId) return res.status(400).json({ message: "Patient is required" });
         if (!testId) return res.status(400).json({ message: "Test is required" });
@@ -129,6 +129,7 @@ export const createLabBooking = async (req: AuthenticatedRequest, res: Response)
                 sessionSlot: sessionSlot || null,
                 assignedUserId: assignedUserId || null,
                 remarks: remarks || null,
+                referredBy: referredBy || null,
                 clinicId,
             },
             include: {
@@ -162,7 +163,7 @@ export const updateLabBooking = async (req: AuthenticatedRequest, res: Response)
         const existing = await prisma.labBooking.findFirst({ where: { id, clinicId } });
         if (!existing) return res.status(404).json({ message: "Booking not found" });
 
-        const { status, paymentStatus, paymentMethod, discount, tax, totalAmount, scheduledAt, sessionSlot, assignedUserId, remarks } = req.body;
+        const { status, paymentStatus, paymentMethod, discount, tax, totalAmount, scheduledAt, sessionSlot, assignedUserId, remarks, referredBy } = req.body;
 
         const updated = await prisma.labBooking.update({
             where: { id },
@@ -177,6 +178,7 @@ export const updateLabBooking = async (req: AuthenticatedRequest, res: Response)
                 ...(sessionSlot !== undefined && { sessionSlot }),
                 ...(assignedUserId !== undefined && { assignedUserId }),
                 ...(remarks !== undefined && { remarks }),
+                ...(referredBy !== undefined && { referredBy }),
             },
             include: {
                 patient: { select: { id: true, firstName: true, lastName: true, patientCode: true, phone: true } },

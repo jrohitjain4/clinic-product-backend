@@ -714,6 +714,7 @@ exports.Prisma.LabBookingScalarFieldEnum = {
   sessionSlot: 'sessionSlot',
   assignedUserId: 'assignedUserId',
   remarks: 'remarks',
+  referredBy: 'referredBy',
   clinicId: 'clinicId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

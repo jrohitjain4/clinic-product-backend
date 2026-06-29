@@ -808,6 +808,7 @@ model LabBooking {
   sessionSlot    String?
   assignedUserId String?
   remarks        String?
+  referredBy     String?
   clinicId       String
   clinic         Clinic   @relation(fields: [clinicId], references: [id])
   createdAt      DateTime @default(now())
