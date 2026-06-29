@@ -84,6 +84,10 @@ const getLabBookings = async (req, res) => {
                 return b.assignedUserId === docId || b.assignedUserId === userId;
             });
         }
+        else if (req.user?.role === "PATIENT" && req.user?.patientId) {
+            const patientId = req.user.patientId;
+            filteredBookings = bookings.filter(b => b.patientId === patientId);
+        }
         res.json(filteredBookings);
     }
     catch (err) {

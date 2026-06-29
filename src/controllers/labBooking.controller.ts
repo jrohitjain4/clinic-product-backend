@@ -83,6 +83,9 @@ export const getLabBookings = async (req: AuthenticatedRequest, res: Response) =
             filteredBookings = bookings.filter(b => {
                 return b.assignedUserId === docId || b.assignedUserId === userId;
             });
+        } else if (req.user?.role === "PATIENT" && req.user?.patientId) {
+            const patientId = req.user.patientId;
+            filteredBookings = bookings.filter(b => b.patientId === patientId);
         }
 
         res.json(filteredBookings);
