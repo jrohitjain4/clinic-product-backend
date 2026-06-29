@@ -11,11 +11,18 @@ const getLabTests = async (req, res) => {
         const clinicId = req.user?.clinicId;
         if (!clinicId)
             return res.status(403).json({ message: "No clinic associated" });
-        const tests = await prisma_1.default.labTest.findMany({
+        let tests = await prisma_1.default.labTest.findMany({
             where: { clinicId },
             include: { category: { select: { id: true, name: true } } },
             orderBy: { createdAt: "desc" },
         });
+        if (req.user?.role === "DOCTOR" && req.user?.doctorId) {
+            const docId = req.user.doctorId;
+            tests = tests.filter(t => {
+                const doctors = Array.isArray(t.assignedDoctors) ? t.assignedDoctors : [];
+                return doctors.includes(docId);
+            });
+        }
         res.json(tests);
     }
     catch (err) {

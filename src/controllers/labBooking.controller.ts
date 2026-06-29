@@ -68,6 +68,7 @@ export const getLabBookings = async (req: AuthenticatedRequest, res: Response) =
                 test: {
                     select: {
                         id: true, name: true, price: true, testCode: true,
+                        assignedDoctors: true,
                         category: { select: { id: true, name: true } },
                     },
                 },
@@ -75,7 +76,18 @@ export const getLabBookings = async (req: AuthenticatedRequest, res: Response) =
             orderBy: { createdAt: "desc" },
         });
 
-        res.json(bookings);
+        let filteredBookings = bookings;
+        if (req.user?.role === "DOCTOR" && req.user?.doctorId) {
+            const docId = req.user.doctorId;
+            const userId = req.user.id;
+            filteredBookings = bookings.filter(b => {
+                if (b.assignedUserId === userId) return true;
+                const doctors = Array.isArray(b.test?.assignedDoctors) ? b.test.assignedDoctors : [];
+                return doctors.includes(docId);
+            });
+        }
+
+        res.json(filteredBookings);
     } catch (err: any) {
         res.status(500).json({ message: err.message });
     }
