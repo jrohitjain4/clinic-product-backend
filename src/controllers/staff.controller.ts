@@ -2,10 +2,16 @@ import { Response } from "express";
 import { AuthenticatedRequest } from "../middlewares/auth.middleware";
 import prisma from "../lib/prisma";
 import bcrypt from "bcryptjs";
-
+import { sendStaffWelcomeEmail } from "../utils/email";
 
 const mapStatusLabel = (status: string) =>
   status === "Active" ? "Available" : "Unavailable";
+
+/** Generate a random 10-char password: letters + digits */
+const generateRandomPassword = (): string => {
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789";
+  return Array.from({ length: 10 }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
+};
 
 // GET /api/staffs
 export const getStaffs = async (req: AuthenticatedRequest, res: Response) => {
@@ -126,12 +132,18 @@ export const createStaff = async (req: AuthenticatedRequest, res: Response) => {
     let staff;
 
     if (email) {
-      const existingUser = await prisma.user.findUnique({ where: { email } });
+      const normalizedEmail = email.trim().toLowerCase();
+      const existingUser = await prisma.user.findFirst({
+        where: { email: { equals: normalizedEmail, mode: "insensitive" } }
+      });
       if (existingUser) {
         return res.status(400).json({ message: "A user with this email already exists" });
       }
 
-      const passwordHash = await bcrypt.hash("staff123", 10);
+      // Generate a secure random password
+      const plainPassword = generateRandomPassword();
+      const passwordHash = await bcrypt.hash(plainPassword, 10);
+      console.log(`[Staff Created] Email: ${normalizedEmail} | Temp Password: ${plainPassword}`);
 
       const result = await prisma.$transaction(async (tx) => {
         const createdStaff = await tx.staff.create({
@@ -165,10 +177,10 @@ export const createStaff = async (req: AuthenticatedRequest, res: Response) => {
 
         await tx.user.create({
           data: {
-            email,
+            email: normalizedEmail,
             passwordHash,
             fullName: fullName.trim(),
-            role: "STAFF" as any, // TypeScript might lag behind generated Prisma Client
+            role: "STAFF" as any,
             clinicId,
             dob: dob ? new Date(dob) : null,
             gender: gender || null,
@@ -177,7 +189,18 @@ export const createStaff = async (req: AuthenticatedRequest, res: Response) => {
 
         return createdStaff;
       });
+
       staff = result;
+
+      // Send welcome email with login credentials (non-blocking)
+      sendStaffWelcomeEmail(
+        normalizedEmail,
+        fullName.trim(),
+        staffCode,
+        role.trim(),
+        { username: normalizedEmail, password: plainPassword }
+      ).catch((err) => console.error("Staff welcome email failed:", err));
+
     } else {
       staff = await prisma.staff.create({
         data: {
@@ -303,6 +326,60 @@ export const deleteStaff = async (req: AuthenticatedRequest, res: Response) => {
 
     await prisma.staff.delete({ where: { id } });
     res.json({ message: "Staff deleted successfully" });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Server error";
+    res.status(500).json({ message });
+  }
+};
+
+// POST /api/staffs/:id/reset-password
+export const resetStaffPassword = async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const clinicId = req.user?.clinicId;
+    const { id } = req.params;
+
+    const staff = await prisma.staff.findFirst({ where: { id, clinicId: clinicId! } });
+    if (!staff) return res.status(404).json({ message: "Staff not found" });
+    if (!staff.email) return res.status(400).json({ message: "Staff has no email address. Please add an email first." });
+
+    const normalizedEmail = staff.email.trim().toLowerCase();
+    const newPassword = generateRandomPassword();
+    const passwordHash = await bcrypt.hash(newPassword, 10);
+    console.log(`[Staff Password Reset] Email: ${normalizedEmail} | New Temp Password: ${newPassword}`);
+
+    // Update existing user record or create one
+    const existingUser = await prisma.user.findFirst({
+      where: { email: { equals: normalizedEmail, mode: "insensitive" } }
+    });
+    if (existingUser) {
+      await prisma.user.update({
+        where: { id: existingUser.id },
+        data: { email: normalizedEmail, passwordHash }
+      });
+    } else {
+      await prisma.user.create({
+        data: {
+          email: normalizedEmail,
+          passwordHash,
+          fullName: staff.fullName,
+          role: "STAFF" as any,
+          clinicId: clinicId!,
+          dob: staff.dob,
+          gender: staff.gender
+        }
+      });
+    }
+
+    // Send new credentials email (non-blocking)
+    sendStaffWelcomeEmail(
+      normalizedEmail,
+      staff.fullName,
+      staff.staffCode || "",
+      staff.role,
+      { username: normalizedEmail, password: newPassword }
+    ).catch((err) => console.error("Staff reset email failed:", err));
+
+    res.json({ message: "Password reset successfully. New credentials have been emailed to the staff member." });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Server error";
     res.status(500).json({ message });

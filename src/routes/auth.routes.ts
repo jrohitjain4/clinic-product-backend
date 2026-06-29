@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { register, login, getMe, getClinics, getPackages, checkUsername, registerDraft, registerFull, completeRegistration, upgradePlan, requestPasswordReset, resetPassword, updateProfile, changePassword, updateOnboardingStep } from "../controllers/auth.controller";
+import { register, login, getMe, getClinics, getPackages, checkUsername, registerDraft, registerFull, completeRegistration, upgradePlan, requestPasswordReset, resetPassword, updateProfile, changePassword, updateOnboardingStep, sendLoginOTP, verifyOTPLogin } from "../controllers/auth.controller";
 import { authenticateJWT } from "../middlewares/auth.middleware";
 import { validate } from "../middlewares/validate.middleware";
 import { authValidation } from "../validations/auth.validation";
@@ -14,6 +14,8 @@ router.post("/register-draft", validate(authValidation.registerDraft), registerD
 router.post("/register-full", registerFull);
 router.post("/complete-registration", completeRegistration);
 router.post("/login", validate(authValidation.login), login);
+router.post("/send-otp", sendLoginOTP);
+router.post("/verify-otp-login", verifyOTPLogin);
 router.post("/request-password-reset", requestPasswordReset);
 router.post("/reset-password", resetPassword);
 router.get("/me", authenticateJWT, getMe);

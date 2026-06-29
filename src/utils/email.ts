@@ -1003,4 +1003,91 @@ export const sendClinicAppointmentNotificationEmail = async (
         return false;
     }
 };
+export const sendStaffWelcomeEmail = async (
+    to: string,
+    staffName: string,
+    staffCode: string,
+    roleName: string,
+    credentials: { username: string; password: string }
+) => {
+    try {
+        const frontendLink = process.env.FRONTEND_URL?.split(",")[0] || "https://docyori.com";
+        const loginUrl = `${frontendLink}/login`;
 
+        // Fetch support contacts from settings
+        const supportEmailSetting = await prisma.systemSetting.findUnique({ where: { key: "contact_email" } });
+        const supportPhoneSetting = await prisma.systemSetting.findUnique({ where: { key: "contact_phone" } });
+        const supportEmail = supportEmailSetting?.value || "support@docyori.com";
+        const supportPhone = supportPhoneSetting?.value || "+91 12345 67890";
+
+        const emailBody = `
+            <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; max-width: 500px; margin: 0 auto; padding: 24px; border: 1px solid #f0f0f0; border-radius: 16px; background-color: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+              <div style="text-align: center; margin-bottom: 24px;">
+                <img src="cid:logo" alt="DocYori" style="height: 50px; width: auto; object-fit: contain;" />
+              </div>
+              
+              <h2 style="color: #0f172a; text-align: center; font-size: 22px; font-weight: 800; margin-top: 0; margin-bottom: 8px;">Welcome to DocYori! 👋</h2>
+              
+              <p style="color: #475569; font-size: 15px; line-height: 1.6; text-align: center; margin-top: 0; margin-bottom: 20px;">
+                Hello <strong>${staffName}</strong>,<br/>
+                Your staff account has been created. You can now log in to the clinic portal.
+              </p>
+              
+              <div style="background-color: #f0f9ff; border: 1px solid #bae6fd; border-radius: 12px; padding: 20px; margin-bottom: 24px;">
+                <h4 style="color: #0369a1; font-size: 14px; font-weight: 700; margin-top: 0; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Account & Credentials</h4>
+                <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                  <tr>
+                    <td style="color: #6b7280; padding: 4px 0; width: 40%;">Staff ID</td>
+                    <td style="color: #1e1b4b; padding: 4px 0; font-weight: 600;">: ${staffCode}</td>
+                  </tr>
+                  <tr>
+                    <td style="color: #6b7280; padding: 4px 0;">Role</td>
+                    <td style="color: #1e1b4b; padding: 4px 0; font-weight: 600;">: ${roleName}</td>
+                  </tr>
+                  <tr>
+                    <td style="color: #6b7280; padding: 4px 0;">Email (Username)</td>
+                    <td style="color: #1e1b4b; padding: 4px 0; font-weight: 600;">: ${credentials.username}</td>
+                  </tr>
+                  <tr>
+                    <td style="color: #6b7280; padding: 4px 0;">Password</td>
+                    <td style="color: #1e1b4b; padding: 4px 0; font-weight: 600;">: ${credentials.password}</td>
+                  </tr>
+                  <tr>
+                    <td style="color: #6b7280; padding: 4px 0;">Joined On</td>
+                    <td style="color: #1e1b4b; padding: 4px 0; font-weight: 600;">: ${new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}</td>
+                  </tr>
+                </table>
+              </div>
+              
+              <p style="color: #dc2626; font-size: 13px; font-weight: 700; text-align: center; margin-bottom: 20px;">
+                ⚠️ Please change your temporary password after logging in.
+              </p>
+
+              <div style="text-align: center; margin-bottom: 30px;">
+                <a href="${loginUrl}" style="background: #0ea5e9; color: #ffffff; padding: 12px 30px; text-decoration: none; border-radius: 30px; font-weight: 700; font-size: 15px; display: inline-block; box-shadow: 0 4px 10px rgba(14, 165, 233, 0.25);">Login to Account</a>
+              </div>
+              
+              <hr style="border: none; border-top: 1px solid #f1f5f9; margin-bottom: 20px;" />
+              
+              <div style="display: flex; align-items: center; justify-content: space-between;">
+                <div>
+                  <h5 style="color: #0f172a; font-size: 13px; font-weight: 700; margin: 0 0 4px 0;">Need Help?</h5>
+                  <p style="color: #64748b; font-size: 12px; margin: 0; line-height: 1.4;">
+                    We're here for you!<br/>
+                    <a href="mailto:${supportEmail}" style="color: #0ea5e9; text-decoration: none; font-weight: 600;">${supportEmail}</a><br/>
+                    <a href="tel:${supportPhone.replace(/\s+/g, '')}" style="color: #475569; text-decoration: none;">${supportPhone}</a>
+                  </p>
+                </div>
+                <div style="text-align: right;">
+                  <img src="https://img.icons8.com/color/48/whatsapp--v1.png" alt="Help" style="height: 36px; width: 36px;" />
+                </div>
+              </div>
+            </div>
+        `;
+
+        return await sendEmail(to.toLowerCase(), "Welcome to DocYori! Your Staff Account Details", emailBody);
+    } catch (error) {
+        console.error("Error sending staff welcome email:", error);
+        return false;
+    }
+};
