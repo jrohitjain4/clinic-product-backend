@@ -20,7 +20,13 @@ const getLabTests = async (req, res) => {
             const docId = req.user.doctorId;
             tests = tests.filter(t => {
                 const doctors = Array.isArray(t.assignedDoctors) ? t.assignedDoctors : [];
-                return doctors.includes(docId);
+                return doctors.some((d) => {
+                    if (typeof d === "string")
+                        return d === docId;
+                    if (d && typeof d === "object")
+                        return d.value === docId;
+                    return false;
+                });
             });
         }
         res.json(tests);

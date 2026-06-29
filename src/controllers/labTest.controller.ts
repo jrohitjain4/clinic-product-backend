@@ -18,7 +18,11 @@ export const getLabTests = async (req: AuthenticatedRequest, res: Response) => {
             const docId = req.user.doctorId;
             tests = tests.filter(t => {
                 const doctors = Array.isArray(t.assignedDoctors) ? t.assignedDoctors : [];
-                return doctors.includes(docId);
+                return doctors.some((d: any) => {
+                    if (typeof d === "string") return d === docId;
+                    if (d && typeof d === "object") return d.value === docId;
+                    return false;
+                });
             });
         }
 

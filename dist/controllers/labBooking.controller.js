@@ -81,10 +81,7 @@ const getLabBookings = async (req, res) => {
             const docId = req.user.doctorId;
             const userId = req.user.id;
             filteredBookings = bookings.filter(b => {
-                if (b.assignedUserId === userId)
-                    return true;
-                const doctors = Array.isArray(b.test?.assignedDoctors) ? b.test.assignedDoctors : [];
-                return doctors.includes(docId);
+                return b.assignedUserId === docId || b.assignedUserId === userId;
             });
         }
         res.json(filteredBookings);
