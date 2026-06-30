@@ -84,6 +84,9 @@ model Clinic {
   labCategories         LabCategory[]
   labTests              LabTest[]
   labBookings           LabBooking[]
+  pharmacyCategories    PharmacyCategory[]
+  medicines             Medicine[]
+  pharmacyInvoices      PharmacyInvoice[]
 }
 
 model LandingPage {
@@ -308,6 +311,7 @@ model Patient {
   prescriptions   Prescription[]
   invoices        Invoice[]
   labBookings     LabBooking[]
+  pharmacyInvoices PharmacyInvoice[]
   createdAt       DateTime       @default(now())
   updatedAt       DateTime       @updatedAt
 
@@ -819,4 +823,104 @@ model LabBooking {
   @@index([patientId])
   @@index([testId])
   @@index([status])
+}
+
+// ============ PHARMACY MODELS ============
+
+model PharmacyCategory {
+  id          String     @id @default(uuid())
+  name        String
+  description String?
+  status      String     @default("Active")
+  clinicId    String
+  clinic      Clinic     @relation(fields: [clinicId], references: [id])
+  medicines   Medicine[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([clinicId])
+}
+
+model Medicine {
+  id                  String            @id @default(uuid())
+  // Basic Information
+  medicineName        String
+  genericName         String?
+  brandName           String?
+  categoryId          String?
+  category            PharmacyCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  manufacturer        String?
+  medicineCode        String?           // SKU
+  hsnCode             String?
+  description         String?
+  // Pricing
+  purchasePrice       Float             @default(0)
+  sellingPrice        Float             @default(0)
+  gst                 Float             @default(0)
+  mrp                 Float             @default(0)
+  // Stock Information
+  openingStock        Int               @default(0)
+  stockIn             Int               @default(0)
+  stockOut            Int               @default(0)
+  minimumStockAlert   Int               @default(0)
+  unit                String?           // Strip, Tablet, Bottle, etc.
+  // Batch Information
+  batchNumber         String?
+  manufacturingDate   DateTime?
+  expiryDate          DateTime?
+  // Additional
+  prescriptionRequired Boolean          @default(false)
+  status              String            @default("Active")
+  clinicId            String
+  clinic              Clinic            @relation(fields: [clinicId], references: [id])
+  invoiceItems        PharmacyInvoiceItem[]
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+
+  @@index([clinicId])
+  @@index([categoryId])
+  @@index([status])
+}
+
+model PharmacyInvoice {
+  id              String                @id @default(uuid())
+  invoiceNo       String                @unique
+  patientId       String?
+  patient         Patient?              @relation(fields: [patientId], references: [id], onDelete: SetNull)
+  customerName    String?               // For walk-in customers
+  customerPhone   String?               // For walk-in customers
+  invoiceDate     DateTime              @default(now())
+  tax             Float                 @default(0)
+  discount        Float                 @default(0)
+  subTotal        Float                 @default(0)
+  totalAmount     Float
+  paymentMethod   String                @default("Cash") // Cash, Card, UPI, etc.
+  paymentStatus   String                @default("Paid") // Paid, Unpaid
+  clinicId        String
+  clinic          Clinic                @relation(fields: [clinicId], references: [id])
+  items           PharmacyInvoiceItem[]
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+
+  @@index([clinicId])
+  @@index([patientId])
+}
+
+model PharmacyInvoiceItem {
+  id              String          @id @default(uuid())
+  invoiceId       String
+  invoice         PharmacyInvoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  medicineId      String?
+  medicine        Medicine?       @relation(fields: [medicineId], references: [id], onDelete: SetNull)
+  medicineName    String          // snapshot
+  quantity        Int
+  unitCost        Float
+  gst             Float           @default(0)
+  amount          Float
+  clinicId        String
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@index([invoiceId])
+  @@index([medicineId])
 }

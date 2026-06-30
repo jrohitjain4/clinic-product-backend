@@ -188,6 +188,26 @@ export type LabTest = $Result.DefaultSelection<Prisma.$LabTestPayload>
  * 
  */
 export type LabBooking = $Result.DefaultSelection<Prisma.$LabBookingPayload>
+/**
+ * Model PharmacyCategory
+ * 
+ */
+export type PharmacyCategory = $Result.DefaultSelection<Prisma.$PharmacyCategoryPayload>
+/**
+ * Model Medicine
+ * 
+ */
+export type Medicine = $Result.DefaultSelection<Prisma.$MedicinePayload>
+/**
+ * Model PharmacyInvoice
+ * 
+ */
+export type PharmacyInvoice = $Result.DefaultSelection<Prisma.$PharmacyInvoicePayload>
+/**
+ * Model PharmacyInvoiceItem
+ * 
+ */
+export type PharmacyInvoiceItem = $Result.DefaultSelection<Prisma.$PharmacyInvoiceItemPayload>
 
 /**
  * Enums
@@ -698,6 +718,46 @@ export class PrismaClient<
     * ```
     */
   get labBooking(): Prisma.LabBookingDelegate<ExtArgs>;
+
+  /**
+   * `prisma.pharmacyCategory`: Exposes CRUD operations for the **PharmacyCategory** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PharmacyCategories
+    * const pharmacyCategories = await prisma.pharmacyCategory.findMany()
+    * ```
+    */
+  get pharmacyCategory(): Prisma.PharmacyCategoryDelegate<ExtArgs>;
+
+  /**
+   * `prisma.medicine`: Exposes CRUD operations for the **Medicine** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Medicines
+    * const medicines = await prisma.medicine.findMany()
+    * ```
+    */
+  get medicine(): Prisma.MedicineDelegate<ExtArgs>;
+
+  /**
+   * `prisma.pharmacyInvoice`: Exposes CRUD operations for the **PharmacyInvoice** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PharmacyInvoices
+    * const pharmacyInvoices = await prisma.pharmacyInvoice.findMany()
+    * ```
+    */
+  get pharmacyInvoice(): Prisma.PharmacyInvoiceDelegate<ExtArgs>;
+
+  /**
+   * `prisma.pharmacyInvoiceItem`: Exposes CRUD operations for the **PharmacyInvoiceItem** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PharmacyInvoiceItems
+    * const pharmacyInvoiceItems = await prisma.pharmacyInvoiceItem.findMany()
+    * ```
+    */
+  get pharmacyInvoiceItem(): Prisma.PharmacyInvoiceItemDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -1173,7 +1233,11 @@ export namespace Prisma {
     Note: 'Note',
     LabCategory: 'LabCategory',
     LabTest: 'LabTest',
-    LabBooking: 'LabBooking'
+    LabBooking: 'LabBooking',
+    PharmacyCategory: 'PharmacyCategory',
+    Medicine: 'Medicine',
+    PharmacyInvoice: 'PharmacyInvoice',
+    PharmacyInvoiceItem: 'PharmacyInvoiceItem'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1189,7 +1253,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "clinic" | "landingPage" | "subscriptionPackage" | "user" | "department" | "designation" | "staff" | "doctor" | "patient" | "appointment" | "service" | "specialization" | "holiday" | "payroll" | "expense" | "expenseCategory" | "clinicRole" | "attendance" | "leaveType" | "leave" | "workingDaysConfig" | "prescription" | "prescriptionMedicine" | "invoice" | "invoiceItem" | "product" | "notification" | "systemSetting" | "demoBooking" | "ticket" | "todo" | "note" | "labCategory" | "labTest" | "labBooking"
+      modelProps: "clinic" | "landingPage" | "subscriptionPackage" | "user" | "department" | "designation" | "staff" | "doctor" | "patient" | "appointment" | "service" | "specialization" | "holiday" | "payroll" | "expense" | "expenseCategory" | "clinicRole" | "attendance" | "leaveType" | "leave" | "workingDaysConfig" | "prescription" | "prescriptionMedicine" | "invoice" | "invoiceItem" | "product" | "notification" | "systemSetting" | "demoBooking" | "ticket" | "todo" | "note" | "labCategory" | "labTest" | "labBooking" | "pharmacyCategory" | "medicine" | "pharmacyInvoice" | "pharmacyInvoiceItem"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3643,6 +3707,286 @@ export namespace Prisma {
           }
         }
       }
+      PharmacyCategory: {
+        payload: Prisma.$PharmacyCategoryPayload<ExtArgs>
+        fields: Prisma.PharmacyCategoryFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PharmacyCategoryFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PharmacyCategoryPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PharmacyCategoryFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PharmacyCategoryPayload>
+          }
+          findFirst: {
+            args: Prisma.PharmacyCategoryFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PharmacyCategoryPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PharmacyCategoryFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PharmacyCategoryPayload>
+          }
+          findMany: {
+            args: Prisma.PharmacyCategoryFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PharmacyCategoryPayload>[]
+          }
+          create: {
+            args: Prisma.PharmacyCategoryCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PharmacyCategoryPayload>
+          }
+          createMany: {
+            args: Prisma.PharmacyCategoryCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PharmacyCategoryCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PharmacyCategoryPayload>[]
+          }
+          delete: {
+            args: Prisma.PharmacyCategoryDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PharmacyCategoryPayload>
+          }
+          update: {
+            args: Prisma.PharmacyCategoryUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PharmacyCategoryPayload>
+          }
+          deleteMany: {
+            args: Prisma.PharmacyCategoryDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PharmacyCategoryUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.PharmacyCategoryUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PharmacyCategoryPayload>
+          }
+          aggregate: {
+            args: Prisma.PharmacyCategoryAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePharmacyCategory>
+          }
+          groupBy: {
+            args: Prisma.PharmacyCategoryGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PharmacyCategoryGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PharmacyCategoryCountArgs<ExtArgs>
+            result: $Utils.Optional<PharmacyCategoryCountAggregateOutputType> | number
+          }
+        }
+      }
+      Medicine: {
+        payload: Prisma.$MedicinePayload<ExtArgs>
+        fields: Prisma.MedicineFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MedicineFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MedicinePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MedicineFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MedicinePayload>
+          }
+          findFirst: {
+            args: Prisma.MedicineFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MedicinePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MedicineFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MedicinePayload>
+          }
+          findMany: {
+            args: Prisma.MedicineFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MedicinePayload>[]
+          }
+          create: {
+            args: Prisma.MedicineCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MedicinePayload>
+          }
+          createMany: {
+            args: Prisma.MedicineCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MedicineCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MedicinePayload>[]
+          }
+          delete: {
+            args: Prisma.MedicineDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MedicinePayload>
+          }
+          update: {
+            args: Prisma.MedicineUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MedicinePayload>
+          }
+          deleteMany: {
+            args: Prisma.MedicineDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MedicineUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.MedicineUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MedicinePayload>
+          }
+          aggregate: {
+            args: Prisma.MedicineAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMedicine>
+          }
+          groupBy: {
+            args: Prisma.MedicineGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MedicineGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MedicineCountArgs<ExtArgs>
+            result: $Utils.Optional<MedicineCountAggregateOutputType> | number
+          }
+        }
+      }
+      PharmacyInvoice: {
+        payload: Prisma.$PharmacyInvoicePayload<ExtArgs>
+        fields: Prisma.PharmacyInvoiceFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PharmacyInvoiceFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PharmacyInvoicePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PharmacyInvoiceFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PharmacyInvoicePayload>
+          }
+          findFirst: {
+            args: Prisma.PharmacyInvoiceFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PharmacyInvoicePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PharmacyInvoiceFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PharmacyInvoicePayload>
+          }
+          findMany: {
+            args: Prisma.PharmacyInvoiceFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PharmacyInvoicePayload>[]
+          }
+          create: {
+            args: Prisma.PharmacyInvoiceCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PharmacyInvoicePayload>
+          }
+          createMany: {
+            args: Prisma.PharmacyInvoiceCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PharmacyInvoiceCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PharmacyInvoicePayload>[]
+          }
+          delete: {
+            args: Prisma.PharmacyInvoiceDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PharmacyInvoicePayload>
+          }
+          update: {
+            args: Prisma.PharmacyInvoiceUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PharmacyInvoicePayload>
+          }
+          deleteMany: {
+            args: Prisma.PharmacyInvoiceDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PharmacyInvoiceUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.PharmacyInvoiceUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PharmacyInvoicePayload>
+          }
+          aggregate: {
+            args: Prisma.PharmacyInvoiceAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePharmacyInvoice>
+          }
+          groupBy: {
+            args: Prisma.PharmacyInvoiceGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PharmacyInvoiceGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PharmacyInvoiceCountArgs<ExtArgs>
+            result: $Utils.Optional<PharmacyInvoiceCountAggregateOutputType> | number
+          }
+        }
+      }
+      PharmacyInvoiceItem: {
+        payload: Prisma.$PharmacyInvoiceItemPayload<ExtArgs>
+        fields: Prisma.PharmacyInvoiceItemFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PharmacyInvoiceItemFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PharmacyInvoiceItemPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PharmacyInvoiceItemFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PharmacyInvoiceItemPayload>
+          }
+          findFirst: {
+            args: Prisma.PharmacyInvoiceItemFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PharmacyInvoiceItemPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PharmacyInvoiceItemFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PharmacyInvoiceItemPayload>
+          }
+          findMany: {
+            args: Prisma.PharmacyInvoiceItemFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PharmacyInvoiceItemPayload>[]
+          }
+          create: {
+            args: Prisma.PharmacyInvoiceItemCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PharmacyInvoiceItemPayload>
+          }
+          createMany: {
+            args: Prisma.PharmacyInvoiceItemCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PharmacyInvoiceItemCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PharmacyInvoiceItemPayload>[]
+          }
+          delete: {
+            args: Prisma.PharmacyInvoiceItemDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PharmacyInvoiceItemPayload>
+          }
+          update: {
+            args: Prisma.PharmacyInvoiceItemUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PharmacyInvoiceItemPayload>
+          }
+          deleteMany: {
+            args: Prisma.PharmacyInvoiceItemDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PharmacyInvoiceItemUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.PharmacyInvoiceItemUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PharmacyInvoiceItemPayload>
+          }
+          aggregate: {
+            args: Prisma.PharmacyInvoiceItemAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePharmacyInvoiceItem>
+          }
+          groupBy: {
+            args: Prisma.PharmacyInvoiceItemGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PharmacyInvoiceItemGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PharmacyInvoiceItemCountArgs<ExtArgs>
+            result: $Utils.Optional<PharmacyInvoiceItemCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3833,6 +4177,9 @@ export namespace Prisma {
     labCategories: number
     labTests: number
     labBookings: number
+    pharmacyCategories: number
+    medicines: number
+    pharmacyInvoices: number
   }
 
   export type ClinicCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3865,6 +4212,9 @@ export namespace Prisma {
     labCategories?: boolean | ClinicCountOutputTypeCountLabCategoriesArgs
     labTests?: boolean | ClinicCountOutputTypeCountLabTestsArgs
     labBookings?: boolean | ClinicCountOutputTypeCountLabBookingsArgs
+    pharmacyCategories?: boolean | ClinicCountOutputTypeCountPharmacyCategoriesArgs
+    medicines?: boolean | ClinicCountOutputTypeCountMedicinesArgs
+    pharmacyInvoices?: boolean | ClinicCountOutputTypeCountPharmacyInvoicesArgs
   }
 
   // Custom InputTypes
@@ -4079,6 +4429,27 @@ export namespace Prisma {
    */
   export type ClinicCountOutputTypeCountLabBookingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: LabBookingWhereInput
+  }
+
+  /**
+   * ClinicCountOutputType without action
+   */
+  export type ClinicCountOutputTypeCountPharmacyCategoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PharmacyCategoryWhereInput
+  }
+
+  /**
+   * ClinicCountOutputType without action
+   */
+  export type ClinicCountOutputTypeCountMedicinesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MedicineWhereInput
+  }
+
+  /**
+   * ClinicCountOutputType without action
+   */
+  export type ClinicCountOutputTypeCountPharmacyInvoicesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PharmacyInvoiceWhereInput
   }
 
 
@@ -4327,6 +4698,7 @@ export namespace Prisma {
     prescriptions: number
     invoices: number
     labBookings: number
+    pharmacyInvoices: number
   }
 
   export type PatientCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4334,6 +4706,7 @@ export namespace Prisma {
     prescriptions?: boolean | PatientCountOutputTypeCountPrescriptionsArgs
     invoices?: boolean | PatientCountOutputTypeCountInvoicesArgs
     labBookings?: boolean | PatientCountOutputTypeCountLabBookingsArgs
+    pharmacyInvoices?: boolean | PatientCountOutputTypeCountPharmacyInvoicesArgs
   }
 
   // Custom InputTypes
@@ -4373,6 +4746,13 @@ export namespace Prisma {
    */
   export type PatientCountOutputTypeCountLabBookingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: LabBookingWhereInput
+  }
+
+  /**
+   * PatientCountOutputType without action
+   */
+  export type PatientCountOutputTypeCountPharmacyInvoicesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PharmacyInvoiceWhereInput
   }
 
 
@@ -4608,6 +4988,99 @@ export namespace Prisma {
    */
   export type LabTestCountOutputTypeCountBookingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: LabBookingWhereInput
+  }
+
+
+  /**
+   * Count Type PharmacyCategoryCountOutputType
+   */
+
+  export type PharmacyCategoryCountOutputType = {
+    medicines: number
+  }
+
+  export type PharmacyCategoryCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    medicines?: boolean | PharmacyCategoryCountOutputTypeCountMedicinesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * PharmacyCategoryCountOutputType without action
+   */
+  export type PharmacyCategoryCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyCategoryCountOutputType
+     */
+    select?: PharmacyCategoryCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * PharmacyCategoryCountOutputType without action
+   */
+  export type PharmacyCategoryCountOutputTypeCountMedicinesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MedicineWhereInput
+  }
+
+
+  /**
+   * Count Type MedicineCountOutputType
+   */
+
+  export type MedicineCountOutputType = {
+    invoiceItems: number
+  }
+
+  export type MedicineCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    invoiceItems?: boolean | MedicineCountOutputTypeCountInvoiceItemsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * MedicineCountOutputType without action
+   */
+  export type MedicineCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MedicineCountOutputType
+     */
+    select?: MedicineCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * MedicineCountOutputType without action
+   */
+  export type MedicineCountOutputTypeCountInvoiceItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PharmacyInvoiceItemWhereInput
+  }
+
+
+  /**
+   * Count Type PharmacyInvoiceCountOutputType
+   */
+
+  export type PharmacyInvoiceCountOutputType = {
+    items: number
+  }
+
+  export type PharmacyInvoiceCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    items?: boolean | PharmacyInvoiceCountOutputTypeCountItemsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * PharmacyInvoiceCountOutputType without action
+   */
+  export type PharmacyInvoiceCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyInvoiceCountOutputType
+     */
+    select?: PharmacyInvoiceCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * PharmacyInvoiceCountOutputType without action
+   */
+  export type PharmacyInvoiceCountOutputTypeCountItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PharmacyInvoiceItemWhereInput
   }
 
 
@@ -5009,6 +5482,9 @@ export namespace Prisma {
     labCategories?: boolean | Clinic$labCategoriesArgs<ExtArgs>
     labTests?: boolean | Clinic$labTestsArgs<ExtArgs>
     labBookings?: boolean | Clinic$labBookingsArgs<ExtArgs>
+    pharmacyCategories?: boolean | Clinic$pharmacyCategoriesArgs<ExtArgs>
+    medicines?: boolean | Clinic$medicinesArgs<ExtArgs>
+    pharmacyInvoices?: boolean | Clinic$pharmacyInvoicesArgs<ExtArgs>
     _count?: boolean | ClinicCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["clinic"]>
 
@@ -5102,6 +5578,9 @@ export namespace Prisma {
     labCategories?: boolean | Clinic$labCategoriesArgs<ExtArgs>
     labTests?: boolean | Clinic$labTestsArgs<ExtArgs>
     labBookings?: boolean | Clinic$labBookingsArgs<ExtArgs>
+    pharmacyCategories?: boolean | Clinic$pharmacyCategoriesArgs<ExtArgs>
+    medicines?: boolean | Clinic$medicinesArgs<ExtArgs>
+    pharmacyInvoices?: boolean | Clinic$pharmacyInvoicesArgs<ExtArgs>
     _count?: boolean | ClinicCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ClinicIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5143,6 +5622,9 @@ export namespace Prisma {
       labCategories: Prisma.$LabCategoryPayload<ExtArgs>[]
       labTests: Prisma.$LabTestPayload<ExtArgs>[]
       labBookings: Prisma.$LabBookingPayload<ExtArgs>[]
+      pharmacyCategories: Prisma.$PharmacyCategoryPayload<ExtArgs>[]
+      medicines: Prisma.$MedicinePayload<ExtArgs>[]
+      pharmacyInvoices: Prisma.$PharmacyInvoicePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5566,6 +6048,9 @@ export namespace Prisma {
     labCategories<T extends Clinic$labCategoriesArgs<ExtArgs> = {}>(args?: Subset<T, Clinic$labCategoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LabCategoryPayload<ExtArgs>, T, "findMany"> | Null>
     labTests<T extends Clinic$labTestsArgs<ExtArgs> = {}>(args?: Subset<T, Clinic$labTestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LabTestPayload<ExtArgs>, T, "findMany"> | Null>
     labBookings<T extends Clinic$labBookingsArgs<ExtArgs> = {}>(args?: Subset<T, Clinic$labBookingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LabBookingPayload<ExtArgs>, T, "findMany"> | Null>
+    pharmacyCategories<T extends Clinic$pharmacyCategoriesArgs<ExtArgs> = {}>(args?: Subset<T, Clinic$pharmacyCategoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PharmacyCategoryPayload<ExtArgs>, T, "findMany"> | Null>
+    medicines<T extends Clinic$medicinesArgs<ExtArgs> = {}>(args?: Subset<T, Clinic$medicinesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MedicinePayload<ExtArgs>, T, "findMany"> | Null>
+    pharmacyInvoices<T extends Clinic$pharmacyInvoicesArgs<ExtArgs> = {}>(args?: Subset<T, Clinic$pharmacyInvoicesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PharmacyInvoicePayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6560,6 +7045,66 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: LabBookingScalarFieldEnum | LabBookingScalarFieldEnum[]
+  }
+
+  /**
+   * Clinic.pharmacyCategories
+   */
+  export type Clinic$pharmacyCategoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyCategory
+     */
+    select?: PharmacyCategorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyCategoryInclude<ExtArgs> | null
+    where?: PharmacyCategoryWhereInput
+    orderBy?: PharmacyCategoryOrderByWithRelationInput | PharmacyCategoryOrderByWithRelationInput[]
+    cursor?: PharmacyCategoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PharmacyCategoryScalarFieldEnum | PharmacyCategoryScalarFieldEnum[]
+  }
+
+  /**
+   * Clinic.medicines
+   */
+  export type Clinic$medicinesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Medicine
+     */
+    select?: MedicineSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MedicineInclude<ExtArgs> | null
+    where?: MedicineWhereInput
+    orderBy?: MedicineOrderByWithRelationInput | MedicineOrderByWithRelationInput[]
+    cursor?: MedicineWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MedicineScalarFieldEnum | MedicineScalarFieldEnum[]
+  }
+
+  /**
+   * Clinic.pharmacyInvoices
+   */
+  export type Clinic$pharmacyInvoicesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyInvoice
+     */
+    select?: PharmacyInvoiceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyInvoiceInclude<ExtArgs> | null
+    where?: PharmacyInvoiceWhereInput
+    orderBy?: PharmacyInvoiceOrderByWithRelationInput | PharmacyInvoiceOrderByWithRelationInput[]
+    cursor?: PharmacyInvoiceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PharmacyInvoiceScalarFieldEnum | PharmacyInvoiceScalarFieldEnum[]
   }
 
   /**
@@ -15324,6 +15869,7 @@ export namespace Prisma {
     prescriptions?: boolean | Patient$prescriptionsArgs<ExtArgs>
     invoices?: boolean | Patient$invoicesArgs<ExtArgs>
     labBookings?: boolean | Patient$labBookingsArgs<ExtArgs>
+    pharmacyInvoices?: boolean | Patient$pharmacyInvoicesArgs<ExtArgs>
     _count?: boolean | PatientCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["patient"]>
 
@@ -15404,6 +15950,7 @@ export namespace Prisma {
     prescriptions?: boolean | Patient$prescriptionsArgs<ExtArgs>
     invoices?: boolean | Patient$invoicesArgs<ExtArgs>
     labBookings?: boolean | Patient$labBookingsArgs<ExtArgs>
+    pharmacyInvoices?: boolean | Patient$pharmacyInvoicesArgs<ExtArgs>
     _count?: boolean | PatientCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PatientIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -15418,6 +15965,7 @@ export namespace Prisma {
       prescriptions: Prisma.$PrescriptionPayload<ExtArgs>[]
       invoices: Prisma.$InvoicePayload<ExtArgs>[]
       labBookings: Prisma.$LabBookingPayload<ExtArgs>[]
+      pharmacyInvoices: Prisma.$PharmacyInvoicePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -15821,6 +16369,7 @@ export namespace Prisma {
     prescriptions<T extends Patient$prescriptionsArgs<ExtArgs> = {}>(args?: Subset<T, Patient$prescriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PrescriptionPayload<ExtArgs>, T, "findMany"> | Null>
     invoices<T extends Patient$invoicesArgs<ExtArgs> = {}>(args?: Subset<T, Patient$invoicesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvoicePayload<ExtArgs>, T, "findMany"> | Null>
     labBookings<T extends Patient$labBookingsArgs<ExtArgs> = {}>(args?: Subset<T, Patient$labBookingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LabBookingPayload<ExtArgs>, T, "findMany"> | Null>
+    pharmacyInvoices<T extends Patient$pharmacyInvoicesArgs<ExtArgs> = {}>(args?: Subset<T, Patient$pharmacyInvoicesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PharmacyInvoicePayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -16277,6 +16826,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: LabBookingScalarFieldEnum | LabBookingScalarFieldEnum[]
+  }
+
+  /**
+   * Patient.pharmacyInvoices
+   */
+  export type Patient$pharmacyInvoicesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyInvoice
+     */
+    select?: PharmacyInvoiceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyInvoiceInclude<ExtArgs> | null
+    where?: PharmacyInvoiceWhereInput
+    orderBy?: PharmacyInvoiceOrderByWithRelationInput | PharmacyInvoiceOrderByWithRelationInput[]
+    cursor?: PharmacyInvoiceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PharmacyInvoiceScalarFieldEnum | PharmacyInvoiceScalarFieldEnum[]
   }
 
   /**
@@ -43587,6 +44156,4501 @@ export namespace Prisma {
 
 
   /**
+   * Model PharmacyCategory
+   */
+
+  export type AggregatePharmacyCategory = {
+    _count: PharmacyCategoryCountAggregateOutputType | null
+    _min: PharmacyCategoryMinAggregateOutputType | null
+    _max: PharmacyCategoryMaxAggregateOutputType | null
+  }
+
+  export type PharmacyCategoryMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    status: string | null
+    clinicId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PharmacyCategoryMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    status: string | null
+    clinicId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PharmacyCategoryCountAggregateOutputType = {
+    id: number
+    name: number
+    description: number
+    status: number
+    clinicId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type PharmacyCategoryMinAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    status?: true
+    clinicId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PharmacyCategoryMaxAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    status?: true
+    clinicId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PharmacyCategoryCountAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    status?: true
+    clinicId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type PharmacyCategoryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PharmacyCategory to aggregate.
+     */
+    where?: PharmacyCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PharmacyCategories to fetch.
+     */
+    orderBy?: PharmacyCategoryOrderByWithRelationInput | PharmacyCategoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PharmacyCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PharmacyCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PharmacyCategories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PharmacyCategories
+    **/
+    _count?: true | PharmacyCategoryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PharmacyCategoryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PharmacyCategoryMaxAggregateInputType
+  }
+
+  export type GetPharmacyCategoryAggregateType<T extends PharmacyCategoryAggregateArgs> = {
+        [P in keyof T & keyof AggregatePharmacyCategory]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePharmacyCategory[P]>
+      : GetScalarType<T[P], AggregatePharmacyCategory[P]>
+  }
+
+
+
+
+  export type PharmacyCategoryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PharmacyCategoryWhereInput
+    orderBy?: PharmacyCategoryOrderByWithAggregationInput | PharmacyCategoryOrderByWithAggregationInput[]
+    by: PharmacyCategoryScalarFieldEnum[] | PharmacyCategoryScalarFieldEnum
+    having?: PharmacyCategoryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PharmacyCategoryCountAggregateInputType | true
+    _min?: PharmacyCategoryMinAggregateInputType
+    _max?: PharmacyCategoryMaxAggregateInputType
+  }
+
+  export type PharmacyCategoryGroupByOutputType = {
+    id: string
+    name: string
+    description: string | null
+    status: string
+    clinicId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: PharmacyCategoryCountAggregateOutputType | null
+    _min: PharmacyCategoryMinAggregateOutputType | null
+    _max: PharmacyCategoryMaxAggregateOutputType | null
+  }
+
+  type GetPharmacyCategoryGroupByPayload<T extends PharmacyCategoryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PharmacyCategoryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PharmacyCategoryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PharmacyCategoryGroupByOutputType[P]>
+            : GetScalarType<T[P], PharmacyCategoryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PharmacyCategorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    status?: boolean
+    clinicId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    clinic?: boolean | ClinicDefaultArgs<ExtArgs>
+    medicines?: boolean | PharmacyCategory$medicinesArgs<ExtArgs>
+    _count?: boolean | PharmacyCategoryCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["pharmacyCategory"]>
+
+  export type PharmacyCategorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    status?: boolean
+    clinicId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    clinic?: boolean | ClinicDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["pharmacyCategory"]>
+
+  export type PharmacyCategorySelectScalar = {
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    status?: boolean
+    clinicId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type PharmacyCategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    clinic?: boolean | ClinicDefaultArgs<ExtArgs>
+    medicines?: boolean | PharmacyCategory$medicinesArgs<ExtArgs>
+    _count?: boolean | PharmacyCategoryCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type PharmacyCategoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    clinic?: boolean | ClinicDefaultArgs<ExtArgs>
+  }
+
+  export type $PharmacyCategoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PharmacyCategory"
+    objects: {
+      clinic: Prisma.$ClinicPayload<ExtArgs>
+      medicines: Prisma.$MedicinePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      description: string | null
+      status: string
+      clinicId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["pharmacyCategory"]>
+    composites: {}
+  }
+
+  type PharmacyCategoryGetPayload<S extends boolean | null | undefined | PharmacyCategoryDefaultArgs> = $Result.GetResult<Prisma.$PharmacyCategoryPayload, S>
+
+  type PharmacyCategoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<PharmacyCategoryFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: PharmacyCategoryCountAggregateInputType | true
+    }
+
+  export interface PharmacyCategoryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PharmacyCategory'], meta: { name: 'PharmacyCategory' } }
+    /**
+     * Find zero or one PharmacyCategory that matches the filter.
+     * @param {PharmacyCategoryFindUniqueArgs} args - Arguments to find a PharmacyCategory
+     * @example
+     * // Get one PharmacyCategory
+     * const pharmacyCategory = await prisma.pharmacyCategory.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PharmacyCategoryFindUniqueArgs>(args: SelectSubset<T, PharmacyCategoryFindUniqueArgs<ExtArgs>>): Prisma__PharmacyCategoryClient<$Result.GetResult<Prisma.$PharmacyCategoryPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one PharmacyCategory that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {PharmacyCategoryFindUniqueOrThrowArgs} args - Arguments to find a PharmacyCategory
+     * @example
+     * // Get one PharmacyCategory
+     * const pharmacyCategory = await prisma.pharmacyCategory.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PharmacyCategoryFindUniqueOrThrowArgs>(args: SelectSubset<T, PharmacyCategoryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PharmacyCategoryClient<$Result.GetResult<Prisma.$PharmacyCategoryPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first PharmacyCategory that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PharmacyCategoryFindFirstArgs} args - Arguments to find a PharmacyCategory
+     * @example
+     * // Get one PharmacyCategory
+     * const pharmacyCategory = await prisma.pharmacyCategory.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PharmacyCategoryFindFirstArgs>(args?: SelectSubset<T, PharmacyCategoryFindFirstArgs<ExtArgs>>): Prisma__PharmacyCategoryClient<$Result.GetResult<Prisma.$PharmacyCategoryPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first PharmacyCategory that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PharmacyCategoryFindFirstOrThrowArgs} args - Arguments to find a PharmacyCategory
+     * @example
+     * // Get one PharmacyCategory
+     * const pharmacyCategory = await prisma.pharmacyCategory.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PharmacyCategoryFindFirstOrThrowArgs>(args?: SelectSubset<T, PharmacyCategoryFindFirstOrThrowArgs<ExtArgs>>): Prisma__PharmacyCategoryClient<$Result.GetResult<Prisma.$PharmacyCategoryPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more PharmacyCategories that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PharmacyCategoryFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PharmacyCategories
+     * const pharmacyCategories = await prisma.pharmacyCategory.findMany()
+     * 
+     * // Get first 10 PharmacyCategories
+     * const pharmacyCategories = await prisma.pharmacyCategory.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const pharmacyCategoryWithIdOnly = await prisma.pharmacyCategory.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PharmacyCategoryFindManyArgs>(args?: SelectSubset<T, PharmacyCategoryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PharmacyCategoryPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a PharmacyCategory.
+     * @param {PharmacyCategoryCreateArgs} args - Arguments to create a PharmacyCategory.
+     * @example
+     * // Create one PharmacyCategory
+     * const PharmacyCategory = await prisma.pharmacyCategory.create({
+     *   data: {
+     *     // ... data to create a PharmacyCategory
+     *   }
+     * })
+     * 
+     */
+    create<T extends PharmacyCategoryCreateArgs>(args: SelectSubset<T, PharmacyCategoryCreateArgs<ExtArgs>>): Prisma__PharmacyCategoryClient<$Result.GetResult<Prisma.$PharmacyCategoryPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many PharmacyCategories.
+     * @param {PharmacyCategoryCreateManyArgs} args - Arguments to create many PharmacyCategories.
+     * @example
+     * // Create many PharmacyCategories
+     * const pharmacyCategory = await prisma.pharmacyCategory.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PharmacyCategoryCreateManyArgs>(args?: SelectSubset<T, PharmacyCategoryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PharmacyCategories and returns the data saved in the database.
+     * @param {PharmacyCategoryCreateManyAndReturnArgs} args - Arguments to create many PharmacyCategories.
+     * @example
+     * // Create many PharmacyCategories
+     * const pharmacyCategory = await prisma.pharmacyCategory.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PharmacyCategories and only return the `id`
+     * const pharmacyCategoryWithIdOnly = await prisma.pharmacyCategory.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PharmacyCategoryCreateManyAndReturnArgs>(args?: SelectSubset<T, PharmacyCategoryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PharmacyCategoryPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a PharmacyCategory.
+     * @param {PharmacyCategoryDeleteArgs} args - Arguments to delete one PharmacyCategory.
+     * @example
+     * // Delete one PharmacyCategory
+     * const PharmacyCategory = await prisma.pharmacyCategory.delete({
+     *   where: {
+     *     // ... filter to delete one PharmacyCategory
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PharmacyCategoryDeleteArgs>(args: SelectSubset<T, PharmacyCategoryDeleteArgs<ExtArgs>>): Prisma__PharmacyCategoryClient<$Result.GetResult<Prisma.$PharmacyCategoryPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one PharmacyCategory.
+     * @param {PharmacyCategoryUpdateArgs} args - Arguments to update one PharmacyCategory.
+     * @example
+     * // Update one PharmacyCategory
+     * const pharmacyCategory = await prisma.pharmacyCategory.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PharmacyCategoryUpdateArgs>(args: SelectSubset<T, PharmacyCategoryUpdateArgs<ExtArgs>>): Prisma__PharmacyCategoryClient<$Result.GetResult<Prisma.$PharmacyCategoryPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more PharmacyCategories.
+     * @param {PharmacyCategoryDeleteManyArgs} args - Arguments to filter PharmacyCategories to delete.
+     * @example
+     * // Delete a few PharmacyCategories
+     * const { count } = await prisma.pharmacyCategory.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PharmacyCategoryDeleteManyArgs>(args?: SelectSubset<T, PharmacyCategoryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PharmacyCategories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PharmacyCategoryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PharmacyCategories
+     * const pharmacyCategory = await prisma.pharmacyCategory.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PharmacyCategoryUpdateManyArgs>(args: SelectSubset<T, PharmacyCategoryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one PharmacyCategory.
+     * @param {PharmacyCategoryUpsertArgs} args - Arguments to update or create a PharmacyCategory.
+     * @example
+     * // Update or create a PharmacyCategory
+     * const pharmacyCategory = await prisma.pharmacyCategory.upsert({
+     *   create: {
+     *     // ... data to create a PharmacyCategory
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PharmacyCategory we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PharmacyCategoryUpsertArgs>(args: SelectSubset<T, PharmacyCategoryUpsertArgs<ExtArgs>>): Prisma__PharmacyCategoryClient<$Result.GetResult<Prisma.$PharmacyCategoryPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of PharmacyCategories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PharmacyCategoryCountArgs} args - Arguments to filter PharmacyCategories to count.
+     * @example
+     * // Count the number of PharmacyCategories
+     * const count = await prisma.pharmacyCategory.count({
+     *   where: {
+     *     // ... the filter for the PharmacyCategories we want to count
+     *   }
+     * })
+    **/
+    count<T extends PharmacyCategoryCountArgs>(
+      args?: Subset<T, PharmacyCategoryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PharmacyCategoryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PharmacyCategory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PharmacyCategoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PharmacyCategoryAggregateArgs>(args: Subset<T, PharmacyCategoryAggregateArgs>): Prisma.PrismaPromise<GetPharmacyCategoryAggregateType<T>>
+
+    /**
+     * Group by PharmacyCategory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PharmacyCategoryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PharmacyCategoryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PharmacyCategoryGroupByArgs['orderBy'] }
+        : { orderBy?: PharmacyCategoryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PharmacyCategoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPharmacyCategoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PharmacyCategory model
+   */
+  readonly fields: PharmacyCategoryFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PharmacyCategory.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PharmacyCategoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    clinic<T extends ClinicDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClinicDefaultArgs<ExtArgs>>): Prisma__ClinicClient<$Result.GetResult<Prisma.$ClinicPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    medicines<T extends PharmacyCategory$medicinesArgs<ExtArgs> = {}>(args?: Subset<T, PharmacyCategory$medicinesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MedicinePayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PharmacyCategory model
+   */ 
+  interface PharmacyCategoryFieldRefs {
+    readonly id: FieldRef<"PharmacyCategory", 'String'>
+    readonly name: FieldRef<"PharmacyCategory", 'String'>
+    readonly description: FieldRef<"PharmacyCategory", 'String'>
+    readonly status: FieldRef<"PharmacyCategory", 'String'>
+    readonly clinicId: FieldRef<"PharmacyCategory", 'String'>
+    readonly createdAt: FieldRef<"PharmacyCategory", 'DateTime'>
+    readonly updatedAt: FieldRef<"PharmacyCategory", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PharmacyCategory findUnique
+   */
+  export type PharmacyCategoryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyCategory
+     */
+    select?: PharmacyCategorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyCategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which PharmacyCategory to fetch.
+     */
+    where: PharmacyCategoryWhereUniqueInput
+  }
+
+  /**
+   * PharmacyCategory findUniqueOrThrow
+   */
+  export type PharmacyCategoryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyCategory
+     */
+    select?: PharmacyCategorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyCategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which PharmacyCategory to fetch.
+     */
+    where: PharmacyCategoryWhereUniqueInput
+  }
+
+  /**
+   * PharmacyCategory findFirst
+   */
+  export type PharmacyCategoryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyCategory
+     */
+    select?: PharmacyCategorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyCategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which PharmacyCategory to fetch.
+     */
+    where?: PharmacyCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PharmacyCategories to fetch.
+     */
+    orderBy?: PharmacyCategoryOrderByWithRelationInput | PharmacyCategoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PharmacyCategories.
+     */
+    cursor?: PharmacyCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PharmacyCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PharmacyCategories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PharmacyCategories.
+     */
+    distinct?: PharmacyCategoryScalarFieldEnum | PharmacyCategoryScalarFieldEnum[]
+  }
+
+  /**
+   * PharmacyCategory findFirstOrThrow
+   */
+  export type PharmacyCategoryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyCategory
+     */
+    select?: PharmacyCategorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyCategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which PharmacyCategory to fetch.
+     */
+    where?: PharmacyCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PharmacyCategories to fetch.
+     */
+    orderBy?: PharmacyCategoryOrderByWithRelationInput | PharmacyCategoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PharmacyCategories.
+     */
+    cursor?: PharmacyCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PharmacyCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PharmacyCategories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PharmacyCategories.
+     */
+    distinct?: PharmacyCategoryScalarFieldEnum | PharmacyCategoryScalarFieldEnum[]
+  }
+
+  /**
+   * PharmacyCategory findMany
+   */
+  export type PharmacyCategoryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyCategory
+     */
+    select?: PharmacyCategorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyCategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which PharmacyCategories to fetch.
+     */
+    where?: PharmacyCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PharmacyCategories to fetch.
+     */
+    orderBy?: PharmacyCategoryOrderByWithRelationInput | PharmacyCategoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PharmacyCategories.
+     */
+    cursor?: PharmacyCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PharmacyCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PharmacyCategories.
+     */
+    skip?: number
+    distinct?: PharmacyCategoryScalarFieldEnum | PharmacyCategoryScalarFieldEnum[]
+  }
+
+  /**
+   * PharmacyCategory create
+   */
+  export type PharmacyCategoryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyCategory
+     */
+    select?: PharmacyCategorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyCategoryInclude<ExtArgs> | null
+    /**
+     * The data needed to create a PharmacyCategory.
+     */
+    data: XOR<PharmacyCategoryCreateInput, PharmacyCategoryUncheckedCreateInput>
+  }
+
+  /**
+   * PharmacyCategory createMany
+   */
+  export type PharmacyCategoryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PharmacyCategories.
+     */
+    data: PharmacyCategoryCreateManyInput | PharmacyCategoryCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PharmacyCategory createManyAndReturn
+   */
+  export type PharmacyCategoryCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyCategory
+     */
+    select?: PharmacyCategorySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many PharmacyCategories.
+     */
+    data: PharmacyCategoryCreateManyInput | PharmacyCategoryCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyCategoryIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PharmacyCategory update
+   */
+  export type PharmacyCategoryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyCategory
+     */
+    select?: PharmacyCategorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyCategoryInclude<ExtArgs> | null
+    /**
+     * The data needed to update a PharmacyCategory.
+     */
+    data: XOR<PharmacyCategoryUpdateInput, PharmacyCategoryUncheckedUpdateInput>
+    /**
+     * Choose, which PharmacyCategory to update.
+     */
+    where: PharmacyCategoryWhereUniqueInput
+  }
+
+  /**
+   * PharmacyCategory updateMany
+   */
+  export type PharmacyCategoryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PharmacyCategories.
+     */
+    data: XOR<PharmacyCategoryUpdateManyMutationInput, PharmacyCategoryUncheckedUpdateManyInput>
+    /**
+     * Filter which PharmacyCategories to update
+     */
+    where?: PharmacyCategoryWhereInput
+  }
+
+  /**
+   * PharmacyCategory upsert
+   */
+  export type PharmacyCategoryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyCategory
+     */
+    select?: PharmacyCategorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyCategoryInclude<ExtArgs> | null
+    /**
+     * The filter to search for the PharmacyCategory to update in case it exists.
+     */
+    where: PharmacyCategoryWhereUniqueInput
+    /**
+     * In case the PharmacyCategory found by the `where` argument doesn't exist, create a new PharmacyCategory with this data.
+     */
+    create: XOR<PharmacyCategoryCreateInput, PharmacyCategoryUncheckedCreateInput>
+    /**
+     * In case the PharmacyCategory was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PharmacyCategoryUpdateInput, PharmacyCategoryUncheckedUpdateInput>
+  }
+
+  /**
+   * PharmacyCategory delete
+   */
+  export type PharmacyCategoryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyCategory
+     */
+    select?: PharmacyCategorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyCategoryInclude<ExtArgs> | null
+    /**
+     * Filter which PharmacyCategory to delete.
+     */
+    where: PharmacyCategoryWhereUniqueInput
+  }
+
+  /**
+   * PharmacyCategory deleteMany
+   */
+  export type PharmacyCategoryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PharmacyCategories to delete
+     */
+    where?: PharmacyCategoryWhereInput
+  }
+
+  /**
+   * PharmacyCategory.medicines
+   */
+  export type PharmacyCategory$medicinesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Medicine
+     */
+    select?: MedicineSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MedicineInclude<ExtArgs> | null
+    where?: MedicineWhereInput
+    orderBy?: MedicineOrderByWithRelationInput | MedicineOrderByWithRelationInput[]
+    cursor?: MedicineWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MedicineScalarFieldEnum | MedicineScalarFieldEnum[]
+  }
+
+  /**
+   * PharmacyCategory without action
+   */
+  export type PharmacyCategoryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyCategory
+     */
+    select?: PharmacyCategorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyCategoryInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Medicine
+   */
+
+  export type AggregateMedicine = {
+    _count: MedicineCountAggregateOutputType | null
+    _avg: MedicineAvgAggregateOutputType | null
+    _sum: MedicineSumAggregateOutputType | null
+    _min: MedicineMinAggregateOutputType | null
+    _max: MedicineMaxAggregateOutputType | null
+  }
+
+  export type MedicineAvgAggregateOutputType = {
+    purchasePrice: number | null
+    sellingPrice: number | null
+    gst: number | null
+    mrp: number | null
+    openingStock: number | null
+    stockIn: number | null
+    stockOut: number | null
+    minimumStockAlert: number | null
+  }
+
+  export type MedicineSumAggregateOutputType = {
+    purchasePrice: number | null
+    sellingPrice: number | null
+    gst: number | null
+    mrp: number | null
+    openingStock: number | null
+    stockIn: number | null
+    stockOut: number | null
+    minimumStockAlert: number | null
+  }
+
+  export type MedicineMinAggregateOutputType = {
+    id: string | null
+    medicineName: string | null
+    genericName: string | null
+    brandName: string | null
+    categoryId: string | null
+    manufacturer: string | null
+    medicineCode: string | null
+    hsnCode: string | null
+    description: string | null
+    purchasePrice: number | null
+    sellingPrice: number | null
+    gst: number | null
+    mrp: number | null
+    openingStock: number | null
+    stockIn: number | null
+    stockOut: number | null
+    minimumStockAlert: number | null
+    unit: string | null
+    batchNumber: string | null
+    manufacturingDate: Date | null
+    expiryDate: Date | null
+    prescriptionRequired: boolean | null
+    status: string | null
+    clinicId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MedicineMaxAggregateOutputType = {
+    id: string | null
+    medicineName: string | null
+    genericName: string | null
+    brandName: string | null
+    categoryId: string | null
+    manufacturer: string | null
+    medicineCode: string | null
+    hsnCode: string | null
+    description: string | null
+    purchasePrice: number | null
+    sellingPrice: number | null
+    gst: number | null
+    mrp: number | null
+    openingStock: number | null
+    stockIn: number | null
+    stockOut: number | null
+    minimumStockAlert: number | null
+    unit: string | null
+    batchNumber: string | null
+    manufacturingDate: Date | null
+    expiryDate: Date | null
+    prescriptionRequired: boolean | null
+    status: string | null
+    clinicId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MedicineCountAggregateOutputType = {
+    id: number
+    medicineName: number
+    genericName: number
+    brandName: number
+    categoryId: number
+    manufacturer: number
+    medicineCode: number
+    hsnCode: number
+    description: number
+    purchasePrice: number
+    sellingPrice: number
+    gst: number
+    mrp: number
+    openingStock: number
+    stockIn: number
+    stockOut: number
+    minimumStockAlert: number
+    unit: number
+    batchNumber: number
+    manufacturingDate: number
+    expiryDate: number
+    prescriptionRequired: number
+    status: number
+    clinicId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type MedicineAvgAggregateInputType = {
+    purchasePrice?: true
+    sellingPrice?: true
+    gst?: true
+    mrp?: true
+    openingStock?: true
+    stockIn?: true
+    stockOut?: true
+    minimumStockAlert?: true
+  }
+
+  export type MedicineSumAggregateInputType = {
+    purchasePrice?: true
+    sellingPrice?: true
+    gst?: true
+    mrp?: true
+    openingStock?: true
+    stockIn?: true
+    stockOut?: true
+    minimumStockAlert?: true
+  }
+
+  export type MedicineMinAggregateInputType = {
+    id?: true
+    medicineName?: true
+    genericName?: true
+    brandName?: true
+    categoryId?: true
+    manufacturer?: true
+    medicineCode?: true
+    hsnCode?: true
+    description?: true
+    purchasePrice?: true
+    sellingPrice?: true
+    gst?: true
+    mrp?: true
+    openingStock?: true
+    stockIn?: true
+    stockOut?: true
+    minimumStockAlert?: true
+    unit?: true
+    batchNumber?: true
+    manufacturingDate?: true
+    expiryDate?: true
+    prescriptionRequired?: true
+    status?: true
+    clinicId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MedicineMaxAggregateInputType = {
+    id?: true
+    medicineName?: true
+    genericName?: true
+    brandName?: true
+    categoryId?: true
+    manufacturer?: true
+    medicineCode?: true
+    hsnCode?: true
+    description?: true
+    purchasePrice?: true
+    sellingPrice?: true
+    gst?: true
+    mrp?: true
+    openingStock?: true
+    stockIn?: true
+    stockOut?: true
+    minimumStockAlert?: true
+    unit?: true
+    batchNumber?: true
+    manufacturingDate?: true
+    expiryDate?: true
+    prescriptionRequired?: true
+    status?: true
+    clinicId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MedicineCountAggregateInputType = {
+    id?: true
+    medicineName?: true
+    genericName?: true
+    brandName?: true
+    categoryId?: true
+    manufacturer?: true
+    medicineCode?: true
+    hsnCode?: true
+    description?: true
+    purchasePrice?: true
+    sellingPrice?: true
+    gst?: true
+    mrp?: true
+    openingStock?: true
+    stockIn?: true
+    stockOut?: true
+    minimumStockAlert?: true
+    unit?: true
+    batchNumber?: true
+    manufacturingDate?: true
+    expiryDate?: true
+    prescriptionRequired?: true
+    status?: true
+    clinicId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type MedicineAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Medicine to aggregate.
+     */
+    where?: MedicineWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Medicines to fetch.
+     */
+    orderBy?: MedicineOrderByWithRelationInput | MedicineOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MedicineWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Medicines from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Medicines.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Medicines
+    **/
+    _count?: true | MedicineCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MedicineAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MedicineSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MedicineMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MedicineMaxAggregateInputType
+  }
+
+  export type GetMedicineAggregateType<T extends MedicineAggregateArgs> = {
+        [P in keyof T & keyof AggregateMedicine]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMedicine[P]>
+      : GetScalarType<T[P], AggregateMedicine[P]>
+  }
+
+
+
+
+  export type MedicineGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MedicineWhereInput
+    orderBy?: MedicineOrderByWithAggregationInput | MedicineOrderByWithAggregationInput[]
+    by: MedicineScalarFieldEnum[] | MedicineScalarFieldEnum
+    having?: MedicineScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MedicineCountAggregateInputType | true
+    _avg?: MedicineAvgAggregateInputType
+    _sum?: MedicineSumAggregateInputType
+    _min?: MedicineMinAggregateInputType
+    _max?: MedicineMaxAggregateInputType
+  }
+
+  export type MedicineGroupByOutputType = {
+    id: string
+    medicineName: string
+    genericName: string | null
+    brandName: string | null
+    categoryId: string | null
+    manufacturer: string | null
+    medicineCode: string | null
+    hsnCode: string | null
+    description: string | null
+    purchasePrice: number
+    sellingPrice: number
+    gst: number
+    mrp: number
+    openingStock: number
+    stockIn: number
+    stockOut: number
+    minimumStockAlert: number
+    unit: string | null
+    batchNumber: string | null
+    manufacturingDate: Date | null
+    expiryDate: Date | null
+    prescriptionRequired: boolean
+    status: string
+    clinicId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: MedicineCountAggregateOutputType | null
+    _avg: MedicineAvgAggregateOutputType | null
+    _sum: MedicineSumAggregateOutputType | null
+    _min: MedicineMinAggregateOutputType | null
+    _max: MedicineMaxAggregateOutputType | null
+  }
+
+  type GetMedicineGroupByPayload<T extends MedicineGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MedicineGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MedicineGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MedicineGroupByOutputType[P]>
+            : GetScalarType<T[P], MedicineGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MedicineSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    medicineName?: boolean
+    genericName?: boolean
+    brandName?: boolean
+    categoryId?: boolean
+    manufacturer?: boolean
+    medicineCode?: boolean
+    hsnCode?: boolean
+    description?: boolean
+    purchasePrice?: boolean
+    sellingPrice?: boolean
+    gst?: boolean
+    mrp?: boolean
+    openingStock?: boolean
+    stockIn?: boolean
+    stockOut?: boolean
+    minimumStockAlert?: boolean
+    unit?: boolean
+    batchNumber?: boolean
+    manufacturingDate?: boolean
+    expiryDate?: boolean
+    prescriptionRequired?: boolean
+    status?: boolean
+    clinicId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    category?: boolean | Medicine$categoryArgs<ExtArgs>
+    clinic?: boolean | ClinicDefaultArgs<ExtArgs>
+    invoiceItems?: boolean | Medicine$invoiceItemsArgs<ExtArgs>
+    _count?: boolean | MedicineCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["medicine"]>
+
+  export type MedicineSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    medicineName?: boolean
+    genericName?: boolean
+    brandName?: boolean
+    categoryId?: boolean
+    manufacturer?: boolean
+    medicineCode?: boolean
+    hsnCode?: boolean
+    description?: boolean
+    purchasePrice?: boolean
+    sellingPrice?: boolean
+    gst?: boolean
+    mrp?: boolean
+    openingStock?: boolean
+    stockIn?: boolean
+    stockOut?: boolean
+    minimumStockAlert?: boolean
+    unit?: boolean
+    batchNumber?: boolean
+    manufacturingDate?: boolean
+    expiryDate?: boolean
+    prescriptionRequired?: boolean
+    status?: boolean
+    clinicId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    category?: boolean | Medicine$categoryArgs<ExtArgs>
+    clinic?: boolean | ClinicDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["medicine"]>
+
+  export type MedicineSelectScalar = {
+    id?: boolean
+    medicineName?: boolean
+    genericName?: boolean
+    brandName?: boolean
+    categoryId?: boolean
+    manufacturer?: boolean
+    medicineCode?: boolean
+    hsnCode?: boolean
+    description?: boolean
+    purchasePrice?: boolean
+    sellingPrice?: boolean
+    gst?: boolean
+    mrp?: boolean
+    openingStock?: boolean
+    stockIn?: boolean
+    stockOut?: boolean
+    minimumStockAlert?: boolean
+    unit?: boolean
+    batchNumber?: boolean
+    manufacturingDate?: boolean
+    expiryDate?: boolean
+    prescriptionRequired?: boolean
+    status?: boolean
+    clinicId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type MedicineInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    category?: boolean | Medicine$categoryArgs<ExtArgs>
+    clinic?: boolean | ClinicDefaultArgs<ExtArgs>
+    invoiceItems?: boolean | Medicine$invoiceItemsArgs<ExtArgs>
+    _count?: boolean | MedicineCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type MedicineIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    category?: boolean | Medicine$categoryArgs<ExtArgs>
+    clinic?: boolean | ClinicDefaultArgs<ExtArgs>
+  }
+
+  export type $MedicinePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Medicine"
+    objects: {
+      category: Prisma.$PharmacyCategoryPayload<ExtArgs> | null
+      clinic: Prisma.$ClinicPayload<ExtArgs>
+      invoiceItems: Prisma.$PharmacyInvoiceItemPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      medicineName: string
+      genericName: string | null
+      brandName: string | null
+      categoryId: string | null
+      manufacturer: string | null
+      medicineCode: string | null
+      hsnCode: string | null
+      description: string | null
+      purchasePrice: number
+      sellingPrice: number
+      gst: number
+      mrp: number
+      openingStock: number
+      stockIn: number
+      stockOut: number
+      minimumStockAlert: number
+      unit: string | null
+      batchNumber: string | null
+      manufacturingDate: Date | null
+      expiryDate: Date | null
+      prescriptionRequired: boolean
+      status: string
+      clinicId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["medicine"]>
+    composites: {}
+  }
+
+  type MedicineGetPayload<S extends boolean | null | undefined | MedicineDefaultArgs> = $Result.GetResult<Prisma.$MedicinePayload, S>
+
+  type MedicineCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<MedicineFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: MedicineCountAggregateInputType | true
+    }
+
+  export interface MedicineDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Medicine'], meta: { name: 'Medicine' } }
+    /**
+     * Find zero or one Medicine that matches the filter.
+     * @param {MedicineFindUniqueArgs} args - Arguments to find a Medicine
+     * @example
+     * // Get one Medicine
+     * const medicine = await prisma.medicine.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MedicineFindUniqueArgs>(args: SelectSubset<T, MedicineFindUniqueArgs<ExtArgs>>): Prisma__MedicineClient<$Result.GetResult<Prisma.$MedicinePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Medicine that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {MedicineFindUniqueOrThrowArgs} args - Arguments to find a Medicine
+     * @example
+     * // Get one Medicine
+     * const medicine = await prisma.medicine.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MedicineFindUniqueOrThrowArgs>(args: SelectSubset<T, MedicineFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MedicineClient<$Result.GetResult<Prisma.$MedicinePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Medicine that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MedicineFindFirstArgs} args - Arguments to find a Medicine
+     * @example
+     * // Get one Medicine
+     * const medicine = await prisma.medicine.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MedicineFindFirstArgs>(args?: SelectSubset<T, MedicineFindFirstArgs<ExtArgs>>): Prisma__MedicineClient<$Result.GetResult<Prisma.$MedicinePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Medicine that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MedicineFindFirstOrThrowArgs} args - Arguments to find a Medicine
+     * @example
+     * // Get one Medicine
+     * const medicine = await prisma.medicine.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MedicineFindFirstOrThrowArgs>(args?: SelectSubset<T, MedicineFindFirstOrThrowArgs<ExtArgs>>): Prisma__MedicineClient<$Result.GetResult<Prisma.$MedicinePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Medicines that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MedicineFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Medicines
+     * const medicines = await prisma.medicine.findMany()
+     * 
+     * // Get first 10 Medicines
+     * const medicines = await prisma.medicine.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const medicineWithIdOnly = await prisma.medicine.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MedicineFindManyArgs>(args?: SelectSubset<T, MedicineFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MedicinePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Medicine.
+     * @param {MedicineCreateArgs} args - Arguments to create a Medicine.
+     * @example
+     * // Create one Medicine
+     * const Medicine = await prisma.medicine.create({
+     *   data: {
+     *     // ... data to create a Medicine
+     *   }
+     * })
+     * 
+     */
+    create<T extends MedicineCreateArgs>(args: SelectSubset<T, MedicineCreateArgs<ExtArgs>>): Prisma__MedicineClient<$Result.GetResult<Prisma.$MedicinePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Medicines.
+     * @param {MedicineCreateManyArgs} args - Arguments to create many Medicines.
+     * @example
+     * // Create many Medicines
+     * const medicine = await prisma.medicine.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MedicineCreateManyArgs>(args?: SelectSubset<T, MedicineCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Medicines and returns the data saved in the database.
+     * @param {MedicineCreateManyAndReturnArgs} args - Arguments to create many Medicines.
+     * @example
+     * // Create many Medicines
+     * const medicine = await prisma.medicine.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Medicines and only return the `id`
+     * const medicineWithIdOnly = await prisma.medicine.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MedicineCreateManyAndReturnArgs>(args?: SelectSubset<T, MedicineCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MedicinePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Medicine.
+     * @param {MedicineDeleteArgs} args - Arguments to delete one Medicine.
+     * @example
+     * // Delete one Medicine
+     * const Medicine = await prisma.medicine.delete({
+     *   where: {
+     *     // ... filter to delete one Medicine
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MedicineDeleteArgs>(args: SelectSubset<T, MedicineDeleteArgs<ExtArgs>>): Prisma__MedicineClient<$Result.GetResult<Prisma.$MedicinePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Medicine.
+     * @param {MedicineUpdateArgs} args - Arguments to update one Medicine.
+     * @example
+     * // Update one Medicine
+     * const medicine = await prisma.medicine.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MedicineUpdateArgs>(args: SelectSubset<T, MedicineUpdateArgs<ExtArgs>>): Prisma__MedicineClient<$Result.GetResult<Prisma.$MedicinePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Medicines.
+     * @param {MedicineDeleteManyArgs} args - Arguments to filter Medicines to delete.
+     * @example
+     * // Delete a few Medicines
+     * const { count } = await prisma.medicine.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MedicineDeleteManyArgs>(args?: SelectSubset<T, MedicineDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Medicines.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MedicineUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Medicines
+     * const medicine = await prisma.medicine.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MedicineUpdateManyArgs>(args: SelectSubset<T, MedicineUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Medicine.
+     * @param {MedicineUpsertArgs} args - Arguments to update or create a Medicine.
+     * @example
+     * // Update or create a Medicine
+     * const medicine = await prisma.medicine.upsert({
+     *   create: {
+     *     // ... data to create a Medicine
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Medicine we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MedicineUpsertArgs>(args: SelectSubset<T, MedicineUpsertArgs<ExtArgs>>): Prisma__MedicineClient<$Result.GetResult<Prisma.$MedicinePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Medicines.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MedicineCountArgs} args - Arguments to filter Medicines to count.
+     * @example
+     * // Count the number of Medicines
+     * const count = await prisma.medicine.count({
+     *   where: {
+     *     // ... the filter for the Medicines we want to count
+     *   }
+     * })
+    **/
+    count<T extends MedicineCountArgs>(
+      args?: Subset<T, MedicineCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MedicineCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Medicine.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MedicineAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MedicineAggregateArgs>(args: Subset<T, MedicineAggregateArgs>): Prisma.PrismaPromise<GetMedicineAggregateType<T>>
+
+    /**
+     * Group by Medicine.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MedicineGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MedicineGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MedicineGroupByArgs['orderBy'] }
+        : { orderBy?: MedicineGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MedicineGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMedicineGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Medicine model
+   */
+  readonly fields: MedicineFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Medicine.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MedicineClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    category<T extends Medicine$categoryArgs<ExtArgs> = {}>(args?: Subset<T, Medicine$categoryArgs<ExtArgs>>): Prisma__PharmacyCategoryClient<$Result.GetResult<Prisma.$PharmacyCategoryPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    clinic<T extends ClinicDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClinicDefaultArgs<ExtArgs>>): Prisma__ClinicClient<$Result.GetResult<Prisma.$ClinicPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    invoiceItems<T extends Medicine$invoiceItemsArgs<ExtArgs> = {}>(args?: Subset<T, Medicine$invoiceItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PharmacyInvoiceItemPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Medicine model
+   */ 
+  interface MedicineFieldRefs {
+    readonly id: FieldRef<"Medicine", 'String'>
+    readonly medicineName: FieldRef<"Medicine", 'String'>
+    readonly genericName: FieldRef<"Medicine", 'String'>
+    readonly brandName: FieldRef<"Medicine", 'String'>
+    readonly categoryId: FieldRef<"Medicine", 'String'>
+    readonly manufacturer: FieldRef<"Medicine", 'String'>
+    readonly medicineCode: FieldRef<"Medicine", 'String'>
+    readonly hsnCode: FieldRef<"Medicine", 'String'>
+    readonly description: FieldRef<"Medicine", 'String'>
+    readonly purchasePrice: FieldRef<"Medicine", 'Float'>
+    readonly sellingPrice: FieldRef<"Medicine", 'Float'>
+    readonly gst: FieldRef<"Medicine", 'Float'>
+    readonly mrp: FieldRef<"Medicine", 'Float'>
+    readonly openingStock: FieldRef<"Medicine", 'Int'>
+    readonly stockIn: FieldRef<"Medicine", 'Int'>
+    readonly stockOut: FieldRef<"Medicine", 'Int'>
+    readonly minimumStockAlert: FieldRef<"Medicine", 'Int'>
+    readonly unit: FieldRef<"Medicine", 'String'>
+    readonly batchNumber: FieldRef<"Medicine", 'String'>
+    readonly manufacturingDate: FieldRef<"Medicine", 'DateTime'>
+    readonly expiryDate: FieldRef<"Medicine", 'DateTime'>
+    readonly prescriptionRequired: FieldRef<"Medicine", 'Boolean'>
+    readonly status: FieldRef<"Medicine", 'String'>
+    readonly clinicId: FieldRef<"Medicine", 'String'>
+    readonly createdAt: FieldRef<"Medicine", 'DateTime'>
+    readonly updatedAt: FieldRef<"Medicine", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Medicine findUnique
+   */
+  export type MedicineFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Medicine
+     */
+    select?: MedicineSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MedicineInclude<ExtArgs> | null
+    /**
+     * Filter, which Medicine to fetch.
+     */
+    where: MedicineWhereUniqueInput
+  }
+
+  /**
+   * Medicine findUniqueOrThrow
+   */
+  export type MedicineFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Medicine
+     */
+    select?: MedicineSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MedicineInclude<ExtArgs> | null
+    /**
+     * Filter, which Medicine to fetch.
+     */
+    where: MedicineWhereUniqueInput
+  }
+
+  /**
+   * Medicine findFirst
+   */
+  export type MedicineFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Medicine
+     */
+    select?: MedicineSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MedicineInclude<ExtArgs> | null
+    /**
+     * Filter, which Medicine to fetch.
+     */
+    where?: MedicineWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Medicines to fetch.
+     */
+    orderBy?: MedicineOrderByWithRelationInput | MedicineOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Medicines.
+     */
+    cursor?: MedicineWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Medicines from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Medicines.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Medicines.
+     */
+    distinct?: MedicineScalarFieldEnum | MedicineScalarFieldEnum[]
+  }
+
+  /**
+   * Medicine findFirstOrThrow
+   */
+  export type MedicineFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Medicine
+     */
+    select?: MedicineSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MedicineInclude<ExtArgs> | null
+    /**
+     * Filter, which Medicine to fetch.
+     */
+    where?: MedicineWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Medicines to fetch.
+     */
+    orderBy?: MedicineOrderByWithRelationInput | MedicineOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Medicines.
+     */
+    cursor?: MedicineWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Medicines from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Medicines.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Medicines.
+     */
+    distinct?: MedicineScalarFieldEnum | MedicineScalarFieldEnum[]
+  }
+
+  /**
+   * Medicine findMany
+   */
+  export type MedicineFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Medicine
+     */
+    select?: MedicineSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MedicineInclude<ExtArgs> | null
+    /**
+     * Filter, which Medicines to fetch.
+     */
+    where?: MedicineWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Medicines to fetch.
+     */
+    orderBy?: MedicineOrderByWithRelationInput | MedicineOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Medicines.
+     */
+    cursor?: MedicineWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Medicines from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Medicines.
+     */
+    skip?: number
+    distinct?: MedicineScalarFieldEnum | MedicineScalarFieldEnum[]
+  }
+
+  /**
+   * Medicine create
+   */
+  export type MedicineCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Medicine
+     */
+    select?: MedicineSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MedicineInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Medicine.
+     */
+    data: XOR<MedicineCreateInput, MedicineUncheckedCreateInput>
+  }
+
+  /**
+   * Medicine createMany
+   */
+  export type MedicineCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Medicines.
+     */
+    data: MedicineCreateManyInput | MedicineCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Medicine createManyAndReturn
+   */
+  export type MedicineCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Medicine
+     */
+    select?: MedicineSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Medicines.
+     */
+    data: MedicineCreateManyInput | MedicineCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MedicineIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Medicine update
+   */
+  export type MedicineUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Medicine
+     */
+    select?: MedicineSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MedicineInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Medicine.
+     */
+    data: XOR<MedicineUpdateInput, MedicineUncheckedUpdateInput>
+    /**
+     * Choose, which Medicine to update.
+     */
+    where: MedicineWhereUniqueInput
+  }
+
+  /**
+   * Medicine updateMany
+   */
+  export type MedicineUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Medicines.
+     */
+    data: XOR<MedicineUpdateManyMutationInput, MedicineUncheckedUpdateManyInput>
+    /**
+     * Filter which Medicines to update
+     */
+    where?: MedicineWhereInput
+  }
+
+  /**
+   * Medicine upsert
+   */
+  export type MedicineUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Medicine
+     */
+    select?: MedicineSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MedicineInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Medicine to update in case it exists.
+     */
+    where: MedicineWhereUniqueInput
+    /**
+     * In case the Medicine found by the `where` argument doesn't exist, create a new Medicine with this data.
+     */
+    create: XOR<MedicineCreateInput, MedicineUncheckedCreateInput>
+    /**
+     * In case the Medicine was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MedicineUpdateInput, MedicineUncheckedUpdateInput>
+  }
+
+  /**
+   * Medicine delete
+   */
+  export type MedicineDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Medicine
+     */
+    select?: MedicineSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MedicineInclude<ExtArgs> | null
+    /**
+     * Filter which Medicine to delete.
+     */
+    where: MedicineWhereUniqueInput
+  }
+
+  /**
+   * Medicine deleteMany
+   */
+  export type MedicineDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Medicines to delete
+     */
+    where?: MedicineWhereInput
+  }
+
+  /**
+   * Medicine.category
+   */
+  export type Medicine$categoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyCategory
+     */
+    select?: PharmacyCategorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyCategoryInclude<ExtArgs> | null
+    where?: PharmacyCategoryWhereInput
+  }
+
+  /**
+   * Medicine.invoiceItems
+   */
+  export type Medicine$invoiceItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyInvoiceItem
+     */
+    select?: PharmacyInvoiceItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyInvoiceItemInclude<ExtArgs> | null
+    where?: PharmacyInvoiceItemWhereInput
+    orderBy?: PharmacyInvoiceItemOrderByWithRelationInput | PharmacyInvoiceItemOrderByWithRelationInput[]
+    cursor?: PharmacyInvoiceItemWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PharmacyInvoiceItemScalarFieldEnum | PharmacyInvoiceItemScalarFieldEnum[]
+  }
+
+  /**
+   * Medicine without action
+   */
+  export type MedicineDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Medicine
+     */
+    select?: MedicineSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MedicineInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model PharmacyInvoice
+   */
+
+  export type AggregatePharmacyInvoice = {
+    _count: PharmacyInvoiceCountAggregateOutputType | null
+    _avg: PharmacyInvoiceAvgAggregateOutputType | null
+    _sum: PharmacyInvoiceSumAggregateOutputType | null
+    _min: PharmacyInvoiceMinAggregateOutputType | null
+    _max: PharmacyInvoiceMaxAggregateOutputType | null
+  }
+
+  export type PharmacyInvoiceAvgAggregateOutputType = {
+    tax: number | null
+    discount: number | null
+    subTotal: number | null
+    totalAmount: number | null
+  }
+
+  export type PharmacyInvoiceSumAggregateOutputType = {
+    tax: number | null
+    discount: number | null
+    subTotal: number | null
+    totalAmount: number | null
+  }
+
+  export type PharmacyInvoiceMinAggregateOutputType = {
+    id: string | null
+    invoiceNo: string | null
+    patientId: string | null
+    customerName: string | null
+    customerPhone: string | null
+    invoiceDate: Date | null
+    tax: number | null
+    discount: number | null
+    subTotal: number | null
+    totalAmount: number | null
+    paymentMethod: string | null
+    paymentStatus: string | null
+    clinicId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PharmacyInvoiceMaxAggregateOutputType = {
+    id: string | null
+    invoiceNo: string | null
+    patientId: string | null
+    customerName: string | null
+    customerPhone: string | null
+    invoiceDate: Date | null
+    tax: number | null
+    discount: number | null
+    subTotal: number | null
+    totalAmount: number | null
+    paymentMethod: string | null
+    paymentStatus: string | null
+    clinicId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PharmacyInvoiceCountAggregateOutputType = {
+    id: number
+    invoiceNo: number
+    patientId: number
+    customerName: number
+    customerPhone: number
+    invoiceDate: number
+    tax: number
+    discount: number
+    subTotal: number
+    totalAmount: number
+    paymentMethod: number
+    paymentStatus: number
+    clinicId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type PharmacyInvoiceAvgAggregateInputType = {
+    tax?: true
+    discount?: true
+    subTotal?: true
+    totalAmount?: true
+  }
+
+  export type PharmacyInvoiceSumAggregateInputType = {
+    tax?: true
+    discount?: true
+    subTotal?: true
+    totalAmount?: true
+  }
+
+  export type PharmacyInvoiceMinAggregateInputType = {
+    id?: true
+    invoiceNo?: true
+    patientId?: true
+    customerName?: true
+    customerPhone?: true
+    invoiceDate?: true
+    tax?: true
+    discount?: true
+    subTotal?: true
+    totalAmount?: true
+    paymentMethod?: true
+    paymentStatus?: true
+    clinicId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PharmacyInvoiceMaxAggregateInputType = {
+    id?: true
+    invoiceNo?: true
+    patientId?: true
+    customerName?: true
+    customerPhone?: true
+    invoiceDate?: true
+    tax?: true
+    discount?: true
+    subTotal?: true
+    totalAmount?: true
+    paymentMethod?: true
+    paymentStatus?: true
+    clinicId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PharmacyInvoiceCountAggregateInputType = {
+    id?: true
+    invoiceNo?: true
+    patientId?: true
+    customerName?: true
+    customerPhone?: true
+    invoiceDate?: true
+    tax?: true
+    discount?: true
+    subTotal?: true
+    totalAmount?: true
+    paymentMethod?: true
+    paymentStatus?: true
+    clinicId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type PharmacyInvoiceAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PharmacyInvoice to aggregate.
+     */
+    where?: PharmacyInvoiceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PharmacyInvoices to fetch.
+     */
+    orderBy?: PharmacyInvoiceOrderByWithRelationInput | PharmacyInvoiceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PharmacyInvoiceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PharmacyInvoices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PharmacyInvoices.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PharmacyInvoices
+    **/
+    _count?: true | PharmacyInvoiceCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PharmacyInvoiceAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PharmacyInvoiceSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PharmacyInvoiceMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PharmacyInvoiceMaxAggregateInputType
+  }
+
+  export type GetPharmacyInvoiceAggregateType<T extends PharmacyInvoiceAggregateArgs> = {
+        [P in keyof T & keyof AggregatePharmacyInvoice]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePharmacyInvoice[P]>
+      : GetScalarType<T[P], AggregatePharmacyInvoice[P]>
+  }
+
+
+
+
+  export type PharmacyInvoiceGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PharmacyInvoiceWhereInput
+    orderBy?: PharmacyInvoiceOrderByWithAggregationInput | PharmacyInvoiceOrderByWithAggregationInput[]
+    by: PharmacyInvoiceScalarFieldEnum[] | PharmacyInvoiceScalarFieldEnum
+    having?: PharmacyInvoiceScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PharmacyInvoiceCountAggregateInputType | true
+    _avg?: PharmacyInvoiceAvgAggregateInputType
+    _sum?: PharmacyInvoiceSumAggregateInputType
+    _min?: PharmacyInvoiceMinAggregateInputType
+    _max?: PharmacyInvoiceMaxAggregateInputType
+  }
+
+  export type PharmacyInvoiceGroupByOutputType = {
+    id: string
+    invoiceNo: string
+    patientId: string | null
+    customerName: string | null
+    customerPhone: string | null
+    invoiceDate: Date
+    tax: number
+    discount: number
+    subTotal: number
+    totalAmount: number
+    paymentMethod: string
+    paymentStatus: string
+    clinicId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: PharmacyInvoiceCountAggregateOutputType | null
+    _avg: PharmacyInvoiceAvgAggregateOutputType | null
+    _sum: PharmacyInvoiceSumAggregateOutputType | null
+    _min: PharmacyInvoiceMinAggregateOutputType | null
+    _max: PharmacyInvoiceMaxAggregateOutputType | null
+  }
+
+  type GetPharmacyInvoiceGroupByPayload<T extends PharmacyInvoiceGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PharmacyInvoiceGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PharmacyInvoiceGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PharmacyInvoiceGroupByOutputType[P]>
+            : GetScalarType<T[P], PharmacyInvoiceGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PharmacyInvoiceSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    invoiceNo?: boolean
+    patientId?: boolean
+    customerName?: boolean
+    customerPhone?: boolean
+    invoiceDate?: boolean
+    tax?: boolean
+    discount?: boolean
+    subTotal?: boolean
+    totalAmount?: boolean
+    paymentMethod?: boolean
+    paymentStatus?: boolean
+    clinicId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    patient?: boolean | PharmacyInvoice$patientArgs<ExtArgs>
+    clinic?: boolean | ClinicDefaultArgs<ExtArgs>
+    items?: boolean | PharmacyInvoice$itemsArgs<ExtArgs>
+    _count?: boolean | PharmacyInvoiceCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["pharmacyInvoice"]>
+
+  export type PharmacyInvoiceSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    invoiceNo?: boolean
+    patientId?: boolean
+    customerName?: boolean
+    customerPhone?: boolean
+    invoiceDate?: boolean
+    tax?: boolean
+    discount?: boolean
+    subTotal?: boolean
+    totalAmount?: boolean
+    paymentMethod?: boolean
+    paymentStatus?: boolean
+    clinicId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    patient?: boolean | PharmacyInvoice$patientArgs<ExtArgs>
+    clinic?: boolean | ClinicDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["pharmacyInvoice"]>
+
+  export type PharmacyInvoiceSelectScalar = {
+    id?: boolean
+    invoiceNo?: boolean
+    patientId?: boolean
+    customerName?: boolean
+    customerPhone?: boolean
+    invoiceDate?: boolean
+    tax?: boolean
+    discount?: boolean
+    subTotal?: boolean
+    totalAmount?: boolean
+    paymentMethod?: boolean
+    paymentStatus?: boolean
+    clinicId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type PharmacyInvoiceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    patient?: boolean | PharmacyInvoice$patientArgs<ExtArgs>
+    clinic?: boolean | ClinicDefaultArgs<ExtArgs>
+    items?: boolean | PharmacyInvoice$itemsArgs<ExtArgs>
+    _count?: boolean | PharmacyInvoiceCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type PharmacyInvoiceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    patient?: boolean | PharmacyInvoice$patientArgs<ExtArgs>
+    clinic?: boolean | ClinicDefaultArgs<ExtArgs>
+  }
+
+  export type $PharmacyInvoicePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PharmacyInvoice"
+    objects: {
+      patient: Prisma.$PatientPayload<ExtArgs> | null
+      clinic: Prisma.$ClinicPayload<ExtArgs>
+      items: Prisma.$PharmacyInvoiceItemPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      invoiceNo: string
+      patientId: string | null
+      customerName: string | null
+      customerPhone: string | null
+      invoiceDate: Date
+      tax: number
+      discount: number
+      subTotal: number
+      totalAmount: number
+      paymentMethod: string
+      paymentStatus: string
+      clinicId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["pharmacyInvoice"]>
+    composites: {}
+  }
+
+  type PharmacyInvoiceGetPayload<S extends boolean | null | undefined | PharmacyInvoiceDefaultArgs> = $Result.GetResult<Prisma.$PharmacyInvoicePayload, S>
+
+  type PharmacyInvoiceCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<PharmacyInvoiceFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: PharmacyInvoiceCountAggregateInputType | true
+    }
+
+  export interface PharmacyInvoiceDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PharmacyInvoice'], meta: { name: 'PharmacyInvoice' } }
+    /**
+     * Find zero or one PharmacyInvoice that matches the filter.
+     * @param {PharmacyInvoiceFindUniqueArgs} args - Arguments to find a PharmacyInvoice
+     * @example
+     * // Get one PharmacyInvoice
+     * const pharmacyInvoice = await prisma.pharmacyInvoice.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PharmacyInvoiceFindUniqueArgs>(args: SelectSubset<T, PharmacyInvoiceFindUniqueArgs<ExtArgs>>): Prisma__PharmacyInvoiceClient<$Result.GetResult<Prisma.$PharmacyInvoicePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one PharmacyInvoice that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {PharmacyInvoiceFindUniqueOrThrowArgs} args - Arguments to find a PharmacyInvoice
+     * @example
+     * // Get one PharmacyInvoice
+     * const pharmacyInvoice = await prisma.pharmacyInvoice.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PharmacyInvoiceFindUniqueOrThrowArgs>(args: SelectSubset<T, PharmacyInvoiceFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PharmacyInvoiceClient<$Result.GetResult<Prisma.$PharmacyInvoicePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first PharmacyInvoice that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PharmacyInvoiceFindFirstArgs} args - Arguments to find a PharmacyInvoice
+     * @example
+     * // Get one PharmacyInvoice
+     * const pharmacyInvoice = await prisma.pharmacyInvoice.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PharmacyInvoiceFindFirstArgs>(args?: SelectSubset<T, PharmacyInvoiceFindFirstArgs<ExtArgs>>): Prisma__PharmacyInvoiceClient<$Result.GetResult<Prisma.$PharmacyInvoicePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first PharmacyInvoice that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PharmacyInvoiceFindFirstOrThrowArgs} args - Arguments to find a PharmacyInvoice
+     * @example
+     * // Get one PharmacyInvoice
+     * const pharmacyInvoice = await prisma.pharmacyInvoice.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PharmacyInvoiceFindFirstOrThrowArgs>(args?: SelectSubset<T, PharmacyInvoiceFindFirstOrThrowArgs<ExtArgs>>): Prisma__PharmacyInvoiceClient<$Result.GetResult<Prisma.$PharmacyInvoicePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more PharmacyInvoices that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PharmacyInvoiceFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PharmacyInvoices
+     * const pharmacyInvoices = await prisma.pharmacyInvoice.findMany()
+     * 
+     * // Get first 10 PharmacyInvoices
+     * const pharmacyInvoices = await prisma.pharmacyInvoice.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const pharmacyInvoiceWithIdOnly = await prisma.pharmacyInvoice.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PharmacyInvoiceFindManyArgs>(args?: SelectSubset<T, PharmacyInvoiceFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PharmacyInvoicePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a PharmacyInvoice.
+     * @param {PharmacyInvoiceCreateArgs} args - Arguments to create a PharmacyInvoice.
+     * @example
+     * // Create one PharmacyInvoice
+     * const PharmacyInvoice = await prisma.pharmacyInvoice.create({
+     *   data: {
+     *     // ... data to create a PharmacyInvoice
+     *   }
+     * })
+     * 
+     */
+    create<T extends PharmacyInvoiceCreateArgs>(args: SelectSubset<T, PharmacyInvoiceCreateArgs<ExtArgs>>): Prisma__PharmacyInvoiceClient<$Result.GetResult<Prisma.$PharmacyInvoicePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many PharmacyInvoices.
+     * @param {PharmacyInvoiceCreateManyArgs} args - Arguments to create many PharmacyInvoices.
+     * @example
+     * // Create many PharmacyInvoices
+     * const pharmacyInvoice = await prisma.pharmacyInvoice.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PharmacyInvoiceCreateManyArgs>(args?: SelectSubset<T, PharmacyInvoiceCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PharmacyInvoices and returns the data saved in the database.
+     * @param {PharmacyInvoiceCreateManyAndReturnArgs} args - Arguments to create many PharmacyInvoices.
+     * @example
+     * // Create many PharmacyInvoices
+     * const pharmacyInvoice = await prisma.pharmacyInvoice.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PharmacyInvoices and only return the `id`
+     * const pharmacyInvoiceWithIdOnly = await prisma.pharmacyInvoice.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PharmacyInvoiceCreateManyAndReturnArgs>(args?: SelectSubset<T, PharmacyInvoiceCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PharmacyInvoicePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a PharmacyInvoice.
+     * @param {PharmacyInvoiceDeleteArgs} args - Arguments to delete one PharmacyInvoice.
+     * @example
+     * // Delete one PharmacyInvoice
+     * const PharmacyInvoice = await prisma.pharmacyInvoice.delete({
+     *   where: {
+     *     // ... filter to delete one PharmacyInvoice
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PharmacyInvoiceDeleteArgs>(args: SelectSubset<T, PharmacyInvoiceDeleteArgs<ExtArgs>>): Prisma__PharmacyInvoiceClient<$Result.GetResult<Prisma.$PharmacyInvoicePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one PharmacyInvoice.
+     * @param {PharmacyInvoiceUpdateArgs} args - Arguments to update one PharmacyInvoice.
+     * @example
+     * // Update one PharmacyInvoice
+     * const pharmacyInvoice = await prisma.pharmacyInvoice.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PharmacyInvoiceUpdateArgs>(args: SelectSubset<T, PharmacyInvoiceUpdateArgs<ExtArgs>>): Prisma__PharmacyInvoiceClient<$Result.GetResult<Prisma.$PharmacyInvoicePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more PharmacyInvoices.
+     * @param {PharmacyInvoiceDeleteManyArgs} args - Arguments to filter PharmacyInvoices to delete.
+     * @example
+     * // Delete a few PharmacyInvoices
+     * const { count } = await prisma.pharmacyInvoice.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PharmacyInvoiceDeleteManyArgs>(args?: SelectSubset<T, PharmacyInvoiceDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PharmacyInvoices.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PharmacyInvoiceUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PharmacyInvoices
+     * const pharmacyInvoice = await prisma.pharmacyInvoice.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PharmacyInvoiceUpdateManyArgs>(args: SelectSubset<T, PharmacyInvoiceUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one PharmacyInvoice.
+     * @param {PharmacyInvoiceUpsertArgs} args - Arguments to update or create a PharmacyInvoice.
+     * @example
+     * // Update or create a PharmacyInvoice
+     * const pharmacyInvoice = await prisma.pharmacyInvoice.upsert({
+     *   create: {
+     *     // ... data to create a PharmacyInvoice
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PharmacyInvoice we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PharmacyInvoiceUpsertArgs>(args: SelectSubset<T, PharmacyInvoiceUpsertArgs<ExtArgs>>): Prisma__PharmacyInvoiceClient<$Result.GetResult<Prisma.$PharmacyInvoicePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of PharmacyInvoices.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PharmacyInvoiceCountArgs} args - Arguments to filter PharmacyInvoices to count.
+     * @example
+     * // Count the number of PharmacyInvoices
+     * const count = await prisma.pharmacyInvoice.count({
+     *   where: {
+     *     // ... the filter for the PharmacyInvoices we want to count
+     *   }
+     * })
+    **/
+    count<T extends PharmacyInvoiceCountArgs>(
+      args?: Subset<T, PharmacyInvoiceCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PharmacyInvoiceCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PharmacyInvoice.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PharmacyInvoiceAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PharmacyInvoiceAggregateArgs>(args: Subset<T, PharmacyInvoiceAggregateArgs>): Prisma.PrismaPromise<GetPharmacyInvoiceAggregateType<T>>
+
+    /**
+     * Group by PharmacyInvoice.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PharmacyInvoiceGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PharmacyInvoiceGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PharmacyInvoiceGroupByArgs['orderBy'] }
+        : { orderBy?: PharmacyInvoiceGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PharmacyInvoiceGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPharmacyInvoiceGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PharmacyInvoice model
+   */
+  readonly fields: PharmacyInvoiceFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PharmacyInvoice.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PharmacyInvoiceClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    patient<T extends PharmacyInvoice$patientArgs<ExtArgs> = {}>(args?: Subset<T, PharmacyInvoice$patientArgs<ExtArgs>>): Prisma__PatientClient<$Result.GetResult<Prisma.$PatientPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    clinic<T extends ClinicDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClinicDefaultArgs<ExtArgs>>): Prisma__ClinicClient<$Result.GetResult<Prisma.$ClinicPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    items<T extends PharmacyInvoice$itemsArgs<ExtArgs> = {}>(args?: Subset<T, PharmacyInvoice$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PharmacyInvoiceItemPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PharmacyInvoice model
+   */ 
+  interface PharmacyInvoiceFieldRefs {
+    readonly id: FieldRef<"PharmacyInvoice", 'String'>
+    readonly invoiceNo: FieldRef<"PharmacyInvoice", 'String'>
+    readonly patientId: FieldRef<"PharmacyInvoice", 'String'>
+    readonly customerName: FieldRef<"PharmacyInvoice", 'String'>
+    readonly customerPhone: FieldRef<"PharmacyInvoice", 'String'>
+    readonly invoiceDate: FieldRef<"PharmacyInvoice", 'DateTime'>
+    readonly tax: FieldRef<"PharmacyInvoice", 'Float'>
+    readonly discount: FieldRef<"PharmacyInvoice", 'Float'>
+    readonly subTotal: FieldRef<"PharmacyInvoice", 'Float'>
+    readonly totalAmount: FieldRef<"PharmacyInvoice", 'Float'>
+    readonly paymentMethod: FieldRef<"PharmacyInvoice", 'String'>
+    readonly paymentStatus: FieldRef<"PharmacyInvoice", 'String'>
+    readonly clinicId: FieldRef<"PharmacyInvoice", 'String'>
+    readonly createdAt: FieldRef<"PharmacyInvoice", 'DateTime'>
+    readonly updatedAt: FieldRef<"PharmacyInvoice", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PharmacyInvoice findUnique
+   */
+  export type PharmacyInvoiceFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyInvoice
+     */
+    select?: PharmacyInvoiceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyInvoiceInclude<ExtArgs> | null
+    /**
+     * Filter, which PharmacyInvoice to fetch.
+     */
+    where: PharmacyInvoiceWhereUniqueInput
+  }
+
+  /**
+   * PharmacyInvoice findUniqueOrThrow
+   */
+  export type PharmacyInvoiceFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyInvoice
+     */
+    select?: PharmacyInvoiceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyInvoiceInclude<ExtArgs> | null
+    /**
+     * Filter, which PharmacyInvoice to fetch.
+     */
+    where: PharmacyInvoiceWhereUniqueInput
+  }
+
+  /**
+   * PharmacyInvoice findFirst
+   */
+  export type PharmacyInvoiceFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyInvoice
+     */
+    select?: PharmacyInvoiceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyInvoiceInclude<ExtArgs> | null
+    /**
+     * Filter, which PharmacyInvoice to fetch.
+     */
+    where?: PharmacyInvoiceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PharmacyInvoices to fetch.
+     */
+    orderBy?: PharmacyInvoiceOrderByWithRelationInput | PharmacyInvoiceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PharmacyInvoices.
+     */
+    cursor?: PharmacyInvoiceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PharmacyInvoices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PharmacyInvoices.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PharmacyInvoices.
+     */
+    distinct?: PharmacyInvoiceScalarFieldEnum | PharmacyInvoiceScalarFieldEnum[]
+  }
+
+  /**
+   * PharmacyInvoice findFirstOrThrow
+   */
+  export type PharmacyInvoiceFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyInvoice
+     */
+    select?: PharmacyInvoiceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyInvoiceInclude<ExtArgs> | null
+    /**
+     * Filter, which PharmacyInvoice to fetch.
+     */
+    where?: PharmacyInvoiceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PharmacyInvoices to fetch.
+     */
+    orderBy?: PharmacyInvoiceOrderByWithRelationInput | PharmacyInvoiceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PharmacyInvoices.
+     */
+    cursor?: PharmacyInvoiceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PharmacyInvoices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PharmacyInvoices.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PharmacyInvoices.
+     */
+    distinct?: PharmacyInvoiceScalarFieldEnum | PharmacyInvoiceScalarFieldEnum[]
+  }
+
+  /**
+   * PharmacyInvoice findMany
+   */
+  export type PharmacyInvoiceFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyInvoice
+     */
+    select?: PharmacyInvoiceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyInvoiceInclude<ExtArgs> | null
+    /**
+     * Filter, which PharmacyInvoices to fetch.
+     */
+    where?: PharmacyInvoiceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PharmacyInvoices to fetch.
+     */
+    orderBy?: PharmacyInvoiceOrderByWithRelationInput | PharmacyInvoiceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PharmacyInvoices.
+     */
+    cursor?: PharmacyInvoiceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PharmacyInvoices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PharmacyInvoices.
+     */
+    skip?: number
+    distinct?: PharmacyInvoiceScalarFieldEnum | PharmacyInvoiceScalarFieldEnum[]
+  }
+
+  /**
+   * PharmacyInvoice create
+   */
+  export type PharmacyInvoiceCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyInvoice
+     */
+    select?: PharmacyInvoiceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyInvoiceInclude<ExtArgs> | null
+    /**
+     * The data needed to create a PharmacyInvoice.
+     */
+    data: XOR<PharmacyInvoiceCreateInput, PharmacyInvoiceUncheckedCreateInput>
+  }
+
+  /**
+   * PharmacyInvoice createMany
+   */
+  export type PharmacyInvoiceCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PharmacyInvoices.
+     */
+    data: PharmacyInvoiceCreateManyInput | PharmacyInvoiceCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PharmacyInvoice createManyAndReturn
+   */
+  export type PharmacyInvoiceCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyInvoice
+     */
+    select?: PharmacyInvoiceSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many PharmacyInvoices.
+     */
+    data: PharmacyInvoiceCreateManyInput | PharmacyInvoiceCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyInvoiceIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PharmacyInvoice update
+   */
+  export type PharmacyInvoiceUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyInvoice
+     */
+    select?: PharmacyInvoiceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyInvoiceInclude<ExtArgs> | null
+    /**
+     * The data needed to update a PharmacyInvoice.
+     */
+    data: XOR<PharmacyInvoiceUpdateInput, PharmacyInvoiceUncheckedUpdateInput>
+    /**
+     * Choose, which PharmacyInvoice to update.
+     */
+    where: PharmacyInvoiceWhereUniqueInput
+  }
+
+  /**
+   * PharmacyInvoice updateMany
+   */
+  export type PharmacyInvoiceUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PharmacyInvoices.
+     */
+    data: XOR<PharmacyInvoiceUpdateManyMutationInput, PharmacyInvoiceUncheckedUpdateManyInput>
+    /**
+     * Filter which PharmacyInvoices to update
+     */
+    where?: PharmacyInvoiceWhereInput
+  }
+
+  /**
+   * PharmacyInvoice upsert
+   */
+  export type PharmacyInvoiceUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyInvoice
+     */
+    select?: PharmacyInvoiceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyInvoiceInclude<ExtArgs> | null
+    /**
+     * The filter to search for the PharmacyInvoice to update in case it exists.
+     */
+    where: PharmacyInvoiceWhereUniqueInput
+    /**
+     * In case the PharmacyInvoice found by the `where` argument doesn't exist, create a new PharmacyInvoice with this data.
+     */
+    create: XOR<PharmacyInvoiceCreateInput, PharmacyInvoiceUncheckedCreateInput>
+    /**
+     * In case the PharmacyInvoice was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PharmacyInvoiceUpdateInput, PharmacyInvoiceUncheckedUpdateInput>
+  }
+
+  /**
+   * PharmacyInvoice delete
+   */
+  export type PharmacyInvoiceDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyInvoice
+     */
+    select?: PharmacyInvoiceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyInvoiceInclude<ExtArgs> | null
+    /**
+     * Filter which PharmacyInvoice to delete.
+     */
+    where: PharmacyInvoiceWhereUniqueInput
+  }
+
+  /**
+   * PharmacyInvoice deleteMany
+   */
+  export type PharmacyInvoiceDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PharmacyInvoices to delete
+     */
+    where?: PharmacyInvoiceWhereInput
+  }
+
+  /**
+   * PharmacyInvoice.patient
+   */
+  export type PharmacyInvoice$patientArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Patient
+     */
+    select?: PatientSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PatientInclude<ExtArgs> | null
+    where?: PatientWhereInput
+  }
+
+  /**
+   * PharmacyInvoice.items
+   */
+  export type PharmacyInvoice$itemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyInvoiceItem
+     */
+    select?: PharmacyInvoiceItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyInvoiceItemInclude<ExtArgs> | null
+    where?: PharmacyInvoiceItemWhereInput
+    orderBy?: PharmacyInvoiceItemOrderByWithRelationInput | PharmacyInvoiceItemOrderByWithRelationInput[]
+    cursor?: PharmacyInvoiceItemWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PharmacyInvoiceItemScalarFieldEnum | PharmacyInvoiceItemScalarFieldEnum[]
+  }
+
+  /**
+   * PharmacyInvoice without action
+   */
+  export type PharmacyInvoiceDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyInvoice
+     */
+    select?: PharmacyInvoiceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyInvoiceInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model PharmacyInvoiceItem
+   */
+
+  export type AggregatePharmacyInvoiceItem = {
+    _count: PharmacyInvoiceItemCountAggregateOutputType | null
+    _avg: PharmacyInvoiceItemAvgAggregateOutputType | null
+    _sum: PharmacyInvoiceItemSumAggregateOutputType | null
+    _min: PharmacyInvoiceItemMinAggregateOutputType | null
+    _max: PharmacyInvoiceItemMaxAggregateOutputType | null
+  }
+
+  export type PharmacyInvoiceItemAvgAggregateOutputType = {
+    quantity: number | null
+    unitCost: number | null
+    gst: number | null
+    amount: number | null
+  }
+
+  export type PharmacyInvoiceItemSumAggregateOutputType = {
+    quantity: number | null
+    unitCost: number | null
+    gst: number | null
+    amount: number | null
+  }
+
+  export type PharmacyInvoiceItemMinAggregateOutputType = {
+    id: string | null
+    invoiceId: string | null
+    medicineId: string | null
+    medicineName: string | null
+    quantity: number | null
+    unitCost: number | null
+    gst: number | null
+    amount: number | null
+    clinicId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PharmacyInvoiceItemMaxAggregateOutputType = {
+    id: string | null
+    invoiceId: string | null
+    medicineId: string | null
+    medicineName: string | null
+    quantity: number | null
+    unitCost: number | null
+    gst: number | null
+    amount: number | null
+    clinicId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PharmacyInvoiceItemCountAggregateOutputType = {
+    id: number
+    invoiceId: number
+    medicineId: number
+    medicineName: number
+    quantity: number
+    unitCost: number
+    gst: number
+    amount: number
+    clinicId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type PharmacyInvoiceItemAvgAggregateInputType = {
+    quantity?: true
+    unitCost?: true
+    gst?: true
+    amount?: true
+  }
+
+  export type PharmacyInvoiceItemSumAggregateInputType = {
+    quantity?: true
+    unitCost?: true
+    gst?: true
+    amount?: true
+  }
+
+  export type PharmacyInvoiceItemMinAggregateInputType = {
+    id?: true
+    invoiceId?: true
+    medicineId?: true
+    medicineName?: true
+    quantity?: true
+    unitCost?: true
+    gst?: true
+    amount?: true
+    clinicId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PharmacyInvoiceItemMaxAggregateInputType = {
+    id?: true
+    invoiceId?: true
+    medicineId?: true
+    medicineName?: true
+    quantity?: true
+    unitCost?: true
+    gst?: true
+    amount?: true
+    clinicId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PharmacyInvoiceItemCountAggregateInputType = {
+    id?: true
+    invoiceId?: true
+    medicineId?: true
+    medicineName?: true
+    quantity?: true
+    unitCost?: true
+    gst?: true
+    amount?: true
+    clinicId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type PharmacyInvoiceItemAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PharmacyInvoiceItem to aggregate.
+     */
+    where?: PharmacyInvoiceItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PharmacyInvoiceItems to fetch.
+     */
+    orderBy?: PharmacyInvoiceItemOrderByWithRelationInput | PharmacyInvoiceItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PharmacyInvoiceItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PharmacyInvoiceItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PharmacyInvoiceItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PharmacyInvoiceItems
+    **/
+    _count?: true | PharmacyInvoiceItemCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PharmacyInvoiceItemAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PharmacyInvoiceItemSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PharmacyInvoiceItemMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PharmacyInvoiceItemMaxAggregateInputType
+  }
+
+  export type GetPharmacyInvoiceItemAggregateType<T extends PharmacyInvoiceItemAggregateArgs> = {
+        [P in keyof T & keyof AggregatePharmacyInvoiceItem]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePharmacyInvoiceItem[P]>
+      : GetScalarType<T[P], AggregatePharmacyInvoiceItem[P]>
+  }
+
+
+
+
+  export type PharmacyInvoiceItemGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PharmacyInvoiceItemWhereInput
+    orderBy?: PharmacyInvoiceItemOrderByWithAggregationInput | PharmacyInvoiceItemOrderByWithAggregationInput[]
+    by: PharmacyInvoiceItemScalarFieldEnum[] | PharmacyInvoiceItemScalarFieldEnum
+    having?: PharmacyInvoiceItemScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PharmacyInvoiceItemCountAggregateInputType | true
+    _avg?: PharmacyInvoiceItemAvgAggregateInputType
+    _sum?: PharmacyInvoiceItemSumAggregateInputType
+    _min?: PharmacyInvoiceItemMinAggregateInputType
+    _max?: PharmacyInvoiceItemMaxAggregateInputType
+  }
+
+  export type PharmacyInvoiceItemGroupByOutputType = {
+    id: string
+    invoiceId: string
+    medicineId: string | null
+    medicineName: string
+    quantity: number
+    unitCost: number
+    gst: number
+    amount: number
+    clinicId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: PharmacyInvoiceItemCountAggregateOutputType | null
+    _avg: PharmacyInvoiceItemAvgAggregateOutputType | null
+    _sum: PharmacyInvoiceItemSumAggregateOutputType | null
+    _min: PharmacyInvoiceItemMinAggregateOutputType | null
+    _max: PharmacyInvoiceItemMaxAggregateOutputType | null
+  }
+
+  type GetPharmacyInvoiceItemGroupByPayload<T extends PharmacyInvoiceItemGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PharmacyInvoiceItemGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PharmacyInvoiceItemGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PharmacyInvoiceItemGroupByOutputType[P]>
+            : GetScalarType<T[P], PharmacyInvoiceItemGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PharmacyInvoiceItemSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    invoiceId?: boolean
+    medicineId?: boolean
+    medicineName?: boolean
+    quantity?: boolean
+    unitCost?: boolean
+    gst?: boolean
+    amount?: boolean
+    clinicId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    invoice?: boolean | PharmacyInvoiceDefaultArgs<ExtArgs>
+    medicine?: boolean | PharmacyInvoiceItem$medicineArgs<ExtArgs>
+  }, ExtArgs["result"]["pharmacyInvoiceItem"]>
+
+  export type PharmacyInvoiceItemSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    invoiceId?: boolean
+    medicineId?: boolean
+    medicineName?: boolean
+    quantity?: boolean
+    unitCost?: boolean
+    gst?: boolean
+    amount?: boolean
+    clinicId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    invoice?: boolean | PharmacyInvoiceDefaultArgs<ExtArgs>
+    medicine?: boolean | PharmacyInvoiceItem$medicineArgs<ExtArgs>
+  }, ExtArgs["result"]["pharmacyInvoiceItem"]>
+
+  export type PharmacyInvoiceItemSelectScalar = {
+    id?: boolean
+    invoiceId?: boolean
+    medicineId?: boolean
+    medicineName?: boolean
+    quantity?: boolean
+    unitCost?: boolean
+    gst?: boolean
+    amount?: boolean
+    clinicId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type PharmacyInvoiceItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    invoice?: boolean | PharmacyInvoiceDefaultArgs<ExtArgs>
+    medicine?: boolean | PharmacyInvoiceItem$medicineArgs<ExtArgs>
+  }
+  export type PharmacyInvoiceItemIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    invoice?: boolean | PharmacyInvoiceDefaultArgs<ExtArgs>
+    medicine?: boolean | PharmacyInvoiceItem$medicineArgs<ExtArgs>
+  }
+
+  export type $PharmacyInvoiceItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PharmacyInvoiceItem"
+    objects: {
+      invoice: Prisma.$PharmacyInvoicePayload<ExtArgs>
+      medicine: Prisma.$MedicinePayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      invoiceId: string
+      medicineId: string | null
+      medicineName: string
+      quantity: number
+      unitCost: number
+      gst: number
+      amount: number
+      clinicId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["pharmacyInvoiceItem"]>
+    composites: {}
+  }
+
+  type PharmacyInvoiceItemGetPayload<S extends boolean | null | undefined | PharmacyInvoiceItemDefaultArgs> = $Result.GetResult<Prisma.$PharmacyInvoiceItemPayload, S>
+
+  type PharmacyInvoiceItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<PharmacyInvoiceItemFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: PharmacyInvoiceItemCountAggregateInputType | true
+    }
+
+  export interface PharmacyInvoiceItemDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PharmacyInvoiceItem'], meta: { name: 'PharmacyInvoiceItem' } }
+    /**
+     * Find zero or one PharmacyInvoiceItem that matches the filter.
+     * @param {PharmacyInvoiceItemFindUniqueArgs} args - Arguments to find a PharmacyInvoiceItem
+     * @example
+     * // Get one PharmacyInvoiceItem
+     * const pharmacyInvoiceItem = await prisma.pharmacyInvoiceItem.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PharmacyInvoiceItemFindUniqueArgs>(args: SelectSubset<T, PharmacyInvoiceItemFindUniqueArgs<ExtArgs>>): Prisma__PharmacyInvoiceItemClient<$Result.GetResult<Prisma.$PharmacyInvoiceItemPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one PharmacyInvoiceItem that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {PharmacyInvoiceItemFindUniqueOrThrowArgs} args - Arguments to find a PharmacyInvoiceItem
+     * @example
+     * // Get one PharmacyInvoiceItem
+     * const pharmacyInvoiceItem = await prisma.pharmacyInvoiceItem.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PharmacyInvoiceItemFindUniqueOrThrowArgs>(args: SelectSubset<T, PharmacyInvoiceItemFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PharmacyInvoiceItemClient<$Result.GetResult<Prisma.$PharmacyInvoiceItemPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first PharmacyInvoiceItem that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PharmacyInvoiceItemFindFirstArgs} args - Arguments to find a PharmacyInvoiceItem
+     * @example
+     * // Get one PharmacyInvoiceItem
+     * const pharmacyInvoiceItem = await prisma.pharmacyInvoiceItem.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PharmacyInvoiceItemFindFirstArgs>(args?: SelectSubset<T, PharmacyInvoiceItemFindFirstArgs<ExtArgs>>): Prisma__PharmacyInvoiceItemClient<$Result.GetResult<Prisma.$PharmacyInvoiceItemPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first PharmacyInvoiceItem that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PharmacyInvoiceItemFindFirstOrThrowArgs} args - Arguments to find a PharmacyInvoiceItem
+     * @example
+     * // Get one PharmacyInvoiceItem
+     * const pharmacyInvoiceItem = await prisma.pharmacyInvoiceItem.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PharmacyInvoiceItemFindFirstOrThrowArgs>(args?: SelectSubset<T, PharmacyInvoiceItemFindFirstOrThrowArgs<ExtArgs>>): Prisma__PharmacyInvoiceItemClient<$Result.GetResult<Prisma.$PharmacyInvoiceItemPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more PharmacyInvoiceItems that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PharmacyInvoiceItemFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PharmacyInvoiceItems
+     * const pharmacyInvoiceItems = await prisma.pharmacyInvoiceItem.findMany()
+     * 
+     * // Get first 10 PharmacyInvoiceItems
+     * const pharmacyInvoiceItems = await prisma.pharmacyInvoiceItem.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const pharmacyInvoiceItemWithIdOnly = await prisma.pharmacyInvoiceItem.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PharmacyInvoiceItemFindManyArgs>(args?: SelectSubset<T, PharmacyInvoiceItemFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PharmacyInvoiceItemPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a PharmacyInvoiceItem.
+     * @param {PharmacyInvoiceItemCreateArgs} args - Arguments to create a PharmacyInvoiceItem.
+     * @example
+     * // Create one PharmacyInvoiceItem
+     * const PharmacyInvoiceItem = await prisma.pharmacyInvoiceItem.create({
+     *   data: {
+     *     // ... data to create a PharmacyInvoiceItem
+     *   }
+     * })
+     * 
+     */
+    create<T extends PharmacyInvoiceItemCreateArgs>(args: SelectSubset<T, PharmacyInvoiceItemCreateArgs<ExtArgs>>): Prisma__PharmacyInvoiceItemClient<$Result.GetResult<Prisma.$PharmacyInvoiceItemPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many PharmacyInvoiceItems.
+     * @param {PharmacyInvoiceItemCreateManyArgs} args - Arguments to create many PharmacyInvoiceItems.
+     * @example
+     * // Create many PharmacyInvoiceItems
+     * const pharmacyInvoiceItem = await prisma.pharmacyInvoiceItem.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PharmacyInvoiceItemCreateManyArgs>(args?: SelectSubset<T, PharmacyInvoiceItemCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PharmacyInvoiceItems and returns the data saved in the database.
+     * @param {PharmacyInvoiceItemCreateManyAndReturnArgs} args - Arguments to create many PharmacyInvoiceItems.
+     * @example
+     * // Create many PharmacyInvoiceItems
+     * const pharmacyInvoiceItem = await prisma.pharmacyInvoiceItem.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PharmacyInvoiceItems and only return the `id`
+     * const pharmacyInvoiceItemWithIdOnly = await prisma.pharmacyInvoiceItem.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PharmacyInvoiceItemCreateManyAndReturnArgs>(args?: SelectSubset<T, PharmacyInvoiceItemCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PharmacyInvoiceItemPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a PharmacyInvoiceItem.
+     * @param {PharmacyInvoiceItemDeleteArgs} args - Arguments to delete one PharmacyInvoiceItem.
+     * @example
+     * // Delete one PharmacyInvoiceItem
+     * const PharmacyInvoiceItem = await prisma.pharmacyInvoiceItem.delete({
+     *   where: {
+     *     // ... filter to delete one PharmacyInvoiceItem
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PharmacyInvoiceItemDeleteArgs>(args: SelectSubset<T, PharmacyInvoiceItemDeleteArgs<ExtArgs>>): Prisma__PharmacyInvoiceItemClient<$Result.GetResult<Prisma.$PharmacyInvoiceItemPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one PharmacyInvoiceItem.
+     * @param {PharmacyInvoiceItemUpdateArgs} args - Arguments to update one PharmacyInvoiceItem.
+     * @example
+     * // Update one PharmacyInvoiceItem
+     * const pharmacyInvoiceItem = await prisma.pharmacyInvoiceItem.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PharmacyInvoiceItemUpdateArgs>(args: SelectSubset<T, PharmacyInvoiceItemUpdateArgs<ExtArgs>>): Prisma__PharmacyInvoiceItemClient<$Result.GetResult<Prisma.$PharmacyInvoiceItemPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more PharmacyInvoiceItems.
+     * @param {PharmacyInvoiceItemDeleteManyArgs} args - Arguments to filter PharmacyInvoiceItems to delete.
+     * @example
+     * // Delete a few PharmacyInvoiceItems
+     * const { count } = await prisma.pharmacyInvoiceItem.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PharmacyInvoiceItemDeleteManyArgs>(args?: SelectSubset<T, PharmacyInvoiceItemDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PharmacyInvoiceItems.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PharmacyInvoiceItemUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PharmacyInvoiceItems
+     * const pharmacyInvoiceItem = await prisma.pharmacyInvoiceItem.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PharmacyInvoiceItemUpdateManyArgs>(args: SelectSubset<T, PharmacyInvoiceItemUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one PharmacyInvoiceItem.
+     * @param {PharmacyInvoiceItemUpsertArgs} args - Arguments to update or create a PharmacyInvoiceItem.
+     * @example
+     * // Update or create a PharmacyInvoiceItem
+     * const pharmacyInvoiceItem = await prisma.pharmacyInvoiceItem.upsert({
+     *   create: {
+     *     // ... data to create a PharmacyInvoiceItem
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PharmacyInvoiceItem we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PharmacyInvoiceItemUpsertArgs>(args: SelectSubset<T, PharmacyInvoiceItemUpsertArgs<ExtArgs>>): Prisma__PharmacyInvoiceItemClient<$Result.GetResult<Prisma.$PharmacyInvoiceItemPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of PharmacyInvoiceItems.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PharmacyInvoiceItemCountArgs} args - Arguments to filter PharmacyInvoiceItems to count.
+     * @example
+     * // Count the number of PharmacyInvoiceItems
+     * const count = await prisma.pharmacyInvoiceItem.count({
+     *   where: {
+     *     // ... the filter for the PharmacyInvoiceItems we want to count
+     *   }
+     * })
+    **/
+    count<T extends PharmacyInvoiceItemCountArgs>(
+      args?: Subset<T, PharmacyInvoiceItemCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PharmacyInvoiceItemCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PharmacyInvoiceItem.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PharmacyInvoiceItemAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PharmacyInvoiceItemAggregateArgs>(args: Subset<T, PharmacyInvoiceItemAggregateArgs>): Prisma.PrismaPromise<GetPharmacyInvoiceItemAggregateType<T>>
+
+    /**
+     * Group by PharmacyInvoiceItem.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PharmacyInvoiceItemGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PharmacyInvoiceItemGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PharmacyInvoiceItemGroupByArgs['orderBy'] }
+        : { orderBy?: PharmacyInvoiceItemGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PharmacyInvoiceItemGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPharmacyInvoiceItemGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PharmacyInvoiceItem model
+   */
+  readonly fields: PharmacyInvoiceItemFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PharmacyInvoiceItem.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PharmacyInvoiceItemClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    invoice<T extends PharmacyInvoiceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PharmacyInvoiceDefaultArgs<ExtArgs>>): Prisma__PharmacyInvoiceClient<$Result.GetResult<Prisma.$PharmacyInvoicePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    medicine<T extends PharmacyInvoiceItem$medicineArgs<ExtArgs> = {}>(args?: Subset<T, PharmacyInvoiceItem$medicineArgs<ExtArgs>>): Prisma__MedicineClient<$Result.GetResult<Prisma.$MedicinePayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PharmacyInvoiceItem model
+   */ 
+  interface PharmacyInvoiceItemFieldRefs {
+    readonly id: FieldRef<"PharmacyInvoiceItem", 'String'>
+    readonly invoiceId: FieldRef<"PharmacyInvoiceItem", 'String'>
+    readonly medicineId: FieldRef<"PharmacyInvoiceItem", 'String'>
+    readonly medicineName: FieldRef<"PharmacyInvoiceItem", 'String'>
+    readonly quantity: FieldRef<"PharmacyInvoiceItem", 'Int'>
+    readonly unitCost: FieldRef<"PharmacyInvoiceItem", 'Float'>
+    readonly gst: FieldRef<"PharmacyInvoiceItem", 'Float'>
+    readonly amount: FieldRef<"PharmacyInvoiceItem", 'Float'>
+    readonly clinicId: FieldRef<"PharmacyInvoiceItem", 'String'>
+    readonly createdAt: FieldRef<"PharmacyInvoiceItem", 'DateTime'>
+    readonly updatedAt: FieldRef<"PharmacyInvoiceItem", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PharmacyInvoiceItem findUnique
+   */
+  export type PharmacyInvoiceItemFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyInvoiceItem
+     */
+    select?: PharmacyInvoiceItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyInvoiceItemInclude<ExtArgs> | null
+    /**
+     * Filter, which PharmacyInvoiceItem to fetch.
+     */
+    where: PharmacyInvoiceItemWhereUniqueInput
+  }
+
+  /**
+   * PharmacyInvoiceItem findUniqueOrThrow
+   */
+  export type PharmacyInvoiceItemFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyInvoiceItem
+     */
+    select?: PharmacyInvoiceItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyInvoiceItemInclude<ExtArgs> | null
+    /**
+     * Filter, which PharmacyInvoiceItem to fetch.
+     */
+    where: PharmacyInvoiceItemWhereUniqueInput
+  }
+
+  /**
+   * PharmacyInvoiceItem findFirst
+   */
+  export type PharmacyInvoiceItemFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyInvoiceItem
+     */
+    select?: PharmacyInvoiceItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyInvoiceItemInclude<ExtArgs> | null
+    /**
+     * Filter, which PharmacyInvoiceItem to fetch.
+     */
+    where?: PharmacyInvoiceItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PharmacyInvoiceItems to fetch.
+     */
+    orderBy?: PharmacyInvoiceItemOrderByWithRelationInput | PharmacyInvoiceItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PharmacyInvoiceItems.
+     */
+    cursor?: PharmacyInvoiceItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PharmacyInvoiceItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PharmacyInvoiceItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PharmacyInvoiceItems.
+     */
+    distinct?: PharmacyInvoiceItemScalarFieldEnum | PharmacyInvoiceItemScalarFieldEnum[]
+  }
+
+  /**
+   * PharmacyInvoiceItem findFirstOrThrow
+   */
+  export type PharmacyInvoiceItemFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyInvoiceItem
+     */
+    select?: PharmacyInvoiceItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyInvoiceItemInclude<ExtArgs> | null
+    /**
+     * Filter, which PharmacyInvoiceItem to fetch.
+     */
+    where?: PharmacyInvoiceItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PharmacyInvoiceItems to fetch.
+     */
+    orderBy?: PharmacyInvoiceItemOrderByWithRelationInput | PharmacyInvoiceItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PharmacyInvoiceItems.
+     */
+    cursor?: PharmacyInvoiceItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PharmacyInvoiceItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PharmacyInvoiceItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PharmacyInvoiceItems.
+     */
+    distinct?: PharmacyInvoiceItemScalarFieldEnum | PharmacyInvoiceItemScalarFieldEnum[]
+  }
+
+  /**
+   * PharmacyInvoiceItem findMany
+   */
+  export type PharmacyInvoiceItemFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyInvoiceItem
+     */
+    select?: PharmacyInvoiceItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyInvoiceItemInclude<ExtArgs> | null
+    /**
+     * Filter, which PharmacyInvoiceItems to fetch.
+     */
+    where?: PharmacyInvoiceItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PharmacyInvoiceItems to fetch.
+     */
+    orderBy?: PharmacyInvoiceItemOrderByWithRelationInput | PharmacyInvoiceItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PharmacyInvoiceItems.
+     */
+    cursor?: PharmacyInvoiceItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PharmacyInvoiceItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PharmacyInvoiceItems.
+     */
+    skip?: number
+    distinct?: PharmacyInvoiceItemScalarFieldEnum | PharmacyInvoiceItemScalarFieldEnum[]
+  }
+
+  /**
+   * PharmacyInvoiceItem create
+   */
+  export type PharmacyInvoiceItemCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyInvoiceItem
+     */
+    select?: PharmacyInvoiceItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyInvoiceItemInclude<ExtArgs> | null
+    /**
+     * The data needed to create a PharmacyInvoiceItem.
+     */
+    data: XOR<PharmacyInvoiceItemCreateInput, PharmacyInvoiceItemUncheckedCreateInput>
+  }
+
+  /**
+   * PharmacyInvoiceItem createMany
+   */
+  export type PharmacyInvoiceItemCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PharmacyInvoiceItems.
+     */
+    data: PharmacyInvoiceItemCreateManyInput | PharmacyInvoiceItemCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PharmacyInvoiceItem createManyAndReturn
+   */
+  export type PharmacyInvoiceItemCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyInvoiceItem
+     */
+    select?: PharmacyInvoiceItemSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many PharmacyInvoiceItems.
+     */
+    data: PharmacyInvoiceItemCreateManyInput | PharmacyInvoiceItemCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyInvoiceItemIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PharmacyInvoiceItem update
+   */
+  export type PharmacyInvoiceItemUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyInvoiceItem
+     */
+    select?: PharmacyInvoiceItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyInvoiceItemInclude<ExtArgs> | null
+    /**
+     * The data needed to update a PharmacyInvoiceItem.
+     */
+    data: XOR<PharmacyInvoiceItemUpdateInput, PharmacyInvoiceItemUncheckedUpdateInput>
+    /**
+     * Choose, which PharmacyInvoiceItem to update.
+     */
+    where: PharmacyInvoiceItemWhereUniqueInput
+  }
+
+  /**
+   * PharmacyInvoiceItem updateMany
+   */
+  export type PharmacyInvoiceItemUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PharmacyInvoiceItems.
+     */
+    data: XOR<PharmacyInvoiceItemUpdateManyMutationInput, PharmacyInvoiceItemUncheckedUpdateManyInput>
+    /**
+     * Filter which PharmacyInvoiceItems to update
+     */
+    where?: PharmacyInvoiceItemWhereInput
+  }
+
+  /**
+   * PharmacyInvoiceItem upsert
+   */
+  export type PharmacyInvoiceItemUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyInvoiceItem
+     */
+    select?: PharmacyInvoiceItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyInvoiceItemInclude<ExtArgs> | null
+    /**
+     * The filter to search for the PharmacyInvoiceItem to update in case it exists.
+     */
+    where: PharmacyInvoiceItemWhereUniqueInput
+    /**
+     * In case the PharmacyInvoiceItem found by the `where` argument doesn't exist, create a new PharmacyInvoiceItem with this data.
+     */
+    create: XOR<PharmacyInvoiceItemCreateInput, PharmacyInvoiceItemUncheckedCreateInput>
+    /**
+     * In case the PharmacyInvoiceItem was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PharmacyInvoiceItemUpdateInput, PharmacyInvoiceItemUncheckedUpdateInput>
+  }
+
+  /**
+   * PharmacyInvoiceItem delete
+   */
+  export type PharmacyInvoiceItemDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyInvoiceItem
+     */
+    select?: PharmacyInvoiceItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyInvoiceItemInclude<ExtArgs> | null
+    /**
+     * Filter which PharmacyInvoiceItem to delete.
+     */
+    where: PharmacyInvoiceItemWhereUniqueInput
+  }
+
+  /**
+   * PharmacyInvoiceItem deleteMany
+   */
+  export type PharmacyInvoiceItemDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PharmacyInvoiceItems to delete
+     */
+    where?: PharmacyInvoiceItemWhereInput
+  }
+
+  /**
+   * PharmacyInvoiceItem.medicine
+   */
+  export type PharmacyInvoiceItem$medicineArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Medicine
+     */
+    select?: MedicineSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MedicineInclude<ExtArgs> | null
+    where?: MedicineWhereInput
+  }
+
+  /**
+   * PharmacyInvoiceItem without action
+   */
+  export type PharmacyInvoiceItemDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PharmacyInvoiceItem
+     */
+    select?: PharmacyInvoiceItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PharmacyInvoiceItemInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -44303,6 +49367,89 @@ export namespace Prisma {
   export type LabBookingScalarFieldEnum = (typeof LabBookingScalarFieldEnum)[keyof typeof LabBookingScalarFieldEnum]
 
 
+  export const PharmacyCategoryScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    description: 'description',
+    status: 'status',
+    clinicId: 'clinicId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type PharmacyCategoryScalarFieldEnum = (typeof PharmacyCategoryScalarFieldEnum)[keyof typeof PharmacyCategoryScalarFieldEnum]
+
+
+  export const MedicineScalarFieldEnum: {
+    id: 'id',
+    medicineName: 'medicineName',
+    genericName: 'genericName',
+    brandName: 'brandName',
+    categoryId: 'categoryId',
+    manufacturer: 'manufacturer',
+    medicineCode: 'medicineCode',
+    hsnCode: 'hsnCode',
+    description: 'description',
+    purchasePrice: 'purchasePrice',
+    sellingPrice: 'sellingPrice',
+    gst: 'gst',
+    mrp: 'mrp',
+    openingStock: 'openingStock',
+    stockIn: 'stockIn',
+    stockOut: 'stockOut',
+    minimumStockAlert: 'minimumStockAlert',
+    unit: 'unit',
+    batchNumber: 'batchNumber',
+    manufacturingDate: 'manufacturingDate',
+    expiryDate: 'expiryDate',
+    prescriptionRequired: 'prescriptionRequired',
+    status: 'status',
+    clinicId: 'clinicId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type MedicineScalarFieldEnum = (typeof MedicineScalarFieldEnum)[keyof typeof MedicineScalarFieldEnum]
+
+
+  export const PharmacyInvoiceScalarFieldEnum: {
+    id: 'id',
+    invoiceNo: 'invoiceNo',
+    patientId: 'patientId',
+    customerName: 'customerName',
+    customerPhone: 'customerPhone',
+    invoiceDate: 'invoiceDate',
+    tax: 'tax',
+    discount: 'discount',
+    subTotal: 'subTotal',
+    totalAmount: 'totalAmount',
+    paymentMethod: 'paymentMethod',
+    paymentStatus: 'paymentStatus',
+    clinicId: 'clinicId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type PharmacyInvoiceScalarFieldEnum = (typeof PharmacyInvoiceScalarFieldEnum)[keyof typeof PharmacyInvoiceScalarFieldEnum]
+
+
+  export const PharmacyInvoiceItemScalarFieldEnum: {
+    id: 'id',
+    invoiceId: 'invoiceId',
+    medicineId: 'medicineId',
+    medicineName: 'medicineName',
+    quantity: 'quantity',
+    unitCost: 'unitCost',
+    gst: 'gst',
+    amount: 'amount',
+    clinicId: 'clinicId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type PharmacyInvoiceItemScalarFieldEnum = (typeof PharmacyInvoiceItemScalarFieldEnum)[keyof typeof PharmacyInvoiceItemScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -44518,6 +49665,9 @@ export namespace Prisma {
     labCategories?: LabCategoryListRelationFilter
     labTests?: LabTestListRelationFilter
     labBookings?: LabBookingListRelationFilter
+    pharmacyCategories?: PharmacyCategoryListRelationFilter
+    medicines?: MedicineListRelationFilter
+    pharmacyInvoices?: PharmacyInvoiceListRelationFilter
   }
 
   export type ClinicOrderByWithRelationInput = {
@@ -44578,6 +49728,9 @@ export namespace Prisma {
     labCategories?: LabCategoryOrderByRelationAggregateInput
     labTests?: LabTestOrderByRelationAggregateInput
     labBookings?: LabBookingOrderByRelationAggregateInput
+    pharmacyCategories?: PharmacyCategoryOrderByRelationAggregateInput
+    medicines?: MedicineOrderByRelationAggregateInput
+    pharmacyInvoices?: PharmacyInvoiceOrderByRelationAggregateInput
   }
 
   export type ClinicWhereUniqueInput = Prisma.AtLeast<{
@@ -44641,6 +49794,9 @@ export namespace Prisma {
     labCategories?: LabCategoryListRelationFilter
     labTests?: LabTestListRelationFilter
     labBookings?: LabBookingListRelationFilter
+    pharmacyCategories?: PharmacyCategoryListRelationFilter
+    medicines?: MedicineListRelationFilter
+    pharmacyInvoices?: PharmacyInvoiceListRelationFilter
   }, "id" | "username">
 
   export type ClinicOrderByWithAggregationInput = {
@@ -45710,6 +50866,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionListRelationFilter
     invoices?: InvoiceListRelationFilter
     labBookings?: LabBookingListRelationFilter
+    pharmacyInvoices?: PharmacyInvoiceListRelationFilter
   }
 
   export type PatientOrderByWithRelationInput = {
@@ -45750,6 +50907,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionOrderByRelationAggregateInput
     invoices?: InvoiceOrderByRelationAggregateInput
     labBookings?: LabBookingOrderByRelationAggregateInput
+    pharmacyInvoices?: PharmacyInvoiceOrderByRelationAggregateInput
   }
 
   export type PatientWhereUniqueInput = Prisma.AtLeast<{
@@ -45793,6 +50951,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionListRelationFilter
     invoices?: InvoiceListRelationFilter
     labBookings?: LabBookingListRelationFilter
+    pharmacyInvoices?: PharmacyInvoiceListRelationFilter
   }, "id">
 
   export type PatientOrderByWithAggregationInput = {
@@ -48254,6 +53413,445 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"LabBooking"> | Date | string
   }
 
+  export type PharmacyCategoryWhereInput = {
+    AND?: PharmacyCategoryWhereInput | PharmacyCategoryWhereInput[]
+    OR?: PharmacyCategoryWhereInput[]
+    NOT?: PharmacyCategoryWhereInput | PharmacyCategoryWhereInput[]
+    id?: StringFilter<"PharmacyCategory"> | string
+    name?: StringFilter<"PharmacyCategory"> | string
+    description?: StringNullableFilter<"PharmacyCategory"> | string | null
+    status?: StringFilter<"PharmacyCategory"> | string
+    clinicId?: StringFilter<"PharmacyCategory"> | string
+    createdAt?: DateTimeFilter<"PharmacyCategory"> | Date | string
+    updatedAt?: DateTimeFilter<"PharmacyCategory"> | Date | string
+    clinic?: XOR<ClinicRelationFilter, ClinicWhereInput>
+    medicines?: MedicineListRelationFilter
+  }
+
+  export type PharmacyCategoryOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    status?: SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    clinic?: ClinicOrderByWithRelationInput
+    medicines?: MedicineOrderByRelationAggregateInput
+  }
+
+  export type PharmacyCategoryWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: PharmacyCategoryWhereInput | PharmacyCategoryWhereInput[]
+    OR?: PharmacyCategoryWhereInput[]
+    NOT?: PharmacyCategoryWhereInput | PharmacyCategoryWhereInput[]
+    name?: StringFilter<"PharmacyCategory"> | string
+    description?: StringNullableFilter<"PharmacyCategory"> | string | null
+    status?: StringFilter<"PharmacyCategory"> | string
+    clinicId?: StringFilter<"PharmacyCategory"> | string
+    createdAt?: DateTimeFilter<"PharmacyCategory"> | Date | string
+    updatedAt?: DateTimeFilter<"PharmacyCategory"> | Date | string
+    clinic?: XOR<ClinicRelationFilter, ClinicWhereInput>
+    medicines?: MedicineListRelationFilter
+  }, "id">
+
+  export type PharmacyCategoryOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    status?: SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: PharmacyCategoryCountOrderByAggregateInput
+    _max?: PharmacyCategoryMaxOrderByAggregateInput
+    _min?: PharmacyCategoryMinOrderByAggregateInput
+  }
+
+  export type PharmacyCategoryScalarWhereWithAggregatesInput = {
+    AND?: PharmacyCategoryScalarWhereWithAggregatesInput | PharmacyCategoryScalarWhereWithAggregatesInput[]
+    OR?: PharmacyCategoryScalarWhereWithAggregatesInput[]
+    NOT?: PharmacyCategoryScalarWhereWithAggregatesInput | PharmacyCategoryScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"PharmacyCategory"> | string
+    name?: StringWithAggregatesFilter<"PharmacyCategory"> | string
+    description?: StringNullableWithAggregatesFilter<"PharmacyCategory"> | string | null
+    status?: StringWithAggregatesFilter<"PharmacyCategory"> | string
+    clinicId?: StringWithAggregatesFilter<"PharmacyCategory"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"PharmacyCategory"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"PharmacyCategory"> | Date | string
+  }
+
+  export type MedicineWhereInput = {
+    AND?: MedicineWhereInput | MedicineWhereInput[]
+    OR?: MedicineWhereInput[]
+    NOT?: MedicineWhereInput | MedicineWhereInput[]
+    id?: StringFilter<"Medicine"> | string
+    medicineName?: StringFilter<"Medicine"> | string
+    genericName?: StringNullableFilter<"Medicine"> | string | null
+    brandName?: StringNullableFilter<"Medicine"> | string | null
+    categoryId?: StringNullableFilter<"Medicine"> | string | null
+    manufacturer?: StringNullableFilter<"Medicine"> | string | null
+    medicineCode?: StringNullableFilter<"Medicine"> | string | null
+    hsnCode?: StringNullableFilter<"Medicine"> | string | null
+    description?: StringNullableFilter<"Medicine"> | string | null
+    purchasePrice?: FloatFilter<"Medicine"> | number
+    sellingPrice?: FloatFilter<"Medicine"> | number
+    gst?: FloatFilter<"Medicine"> | number
+    mrp?: FloatFilter<"Medicine"> | number
+    openingStock?: IntFilter<"Medicine"> | number
+    stockIn?: IntFilter<"Medicine"> | number
+    stockOut?: IntFilter<"Medicine"> | number
+    minimumStockAlert?: IntFilter<"Medicine"> | number
+    unit?: StringNullableFilter<"Medicine"> | string | null
+    batchNumber?: StringNullableFilter<"Medicine"> | string | null
+    manufacturingDate?: DateTimeNullableFilter<"Medicine"> | Date | string | null
+    expiryDate?: DateTimeNullableFilter<"Medicine"> | Date | string | null
+    prescriptionRequired?: BoolFilter<"Medicine"> | boolean
+    status?: StringFilter<"Medicine"> | string
+    clinicId?: StringFilter<"Medicine"> | string
+    createdAt?: DateTimeFilter<"Medicine"> | Date | string
+    updatedAt?: DateTimeFilter<"Medicine"> | Date | string
+    category?: XOR<PharmacyCategoryNullableRelationFilter, PharmacyCategoryWhereInput> | null
+    clinic?: XOR<ClinicRelationFilter, ClinicWhereInput>
+    invoiceItems?: PharmacyInvoiceItemListRelationFilter
+  }
+
+  export type MedicineOrderByWithRelationInput = {
+    id?: SortOrder
+    medicineName?: SortOrder
+    genericName?: SortOrderInput | SortOrder
+    brandName?: SortOrderInput | SortOrder
+    categoryId?: SortOrderInput | SortOrder
+    manufacturer?: SortOrderInput | SortOrder
+    medicineCode?: SortOrderInput | SortOrder
+    hsnCode?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    purchasePrice?: SortOrder
+    sellingPrice?: SortOrder
+    gst?: SortOrder
+    mrp?: SortOrder
+    openingStock?: SortOrder
+    stockIn?: SortOrder
+    stockOut?: SortOrder
+    minimumStockAlert?: SortOrder
+    unit?: SortOrderInput | SortOrder
+    batchNumber?: SortOrderInput | SortOrder
+    manufacturingDate?: SortOrderInput | SortOrder
+    expiryDate?: SortOrderInput | SortOrder
+    prescriptionRequired?: SortOrder
+    status?: SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    category?: PharmacyCategoryOrderByWithRelationInput
+    clinic?: ClinicOrderByWithRelationInput
+    invoiceItems?: PharmacyInvoiceItemOrderByRelationAggregateInput
+  }
+
+  export type MedicineWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: MedicineWhereInput | MedicineWhereInput[]
+    OR?: MedicineWhereInput[]
+    NOT?: MedicineWhereInput | MedicineWhereInput[]
+    medicineName?: StringFilter<"Medicine"> | string
+    genericName?: StringNullableFilter<"Medicine"> | string | null
+    brandName?: StringNullableFilter<"Medicine"> | string | null
+    categoryId?: StringNullableFilter<"Medicine"> | string | null
+    manufacturer?: StringNullableFilter<"Medicine"> | string | null
+    medicineCode?: StringNullableFilter<"Medicine"> | string | null
+    hsnCode?: StringNullableFilter<"Medicine"> | string | null
+    description?: StringNullableFilter<"Medicine"> | string | null
+    purchasePrice?: FloatFilter<"Medicine"> | number
+    sellingPrice?: FloatFilter<"Medicine"> | number
+    gst?: FloatFilter<"Medicine"> | number
+    mrp?: FloatFilter<"Medicine"> | number
+    openingStock?: IntFilter<"Medicine"> | number
+    stockIn?: IntFilter<"Medicine"> | number
+    stockOut?: IntFilter<"Medicine"> | number
+    minimumStockAlert?: IntFilter<"Medicine"> | number
+    unit?: StringNullableFilter<"Medicine"> | string | null
+    batchNumber?: StringNullableFilter<"Medicine"> | string | null
+    manufacturingDate?: DateTimeNullableFilter<"Medicine"> | Date | string | null
+    expiryDate?: DateTimeNullableFilter<"Medicine"> | Date | string | null
+    prescriptionRequired?: BoolFilter<"Medicine"> | boolean
+    status?: StringFilter<"Medicine"> | string
+    clinicId?: StringFilter<"Medicine"> | string
+    createdAt?: DateTimeFilter<"Medicine"> | Date | string
+    updatedAt?: DateTimeFilter<"Medicine"> | Date | string
+    category?: XOR<PharmacyCategoryNullableRelationFilter, PharmacyCategoryWhereInput> | null
+    clinic?: XOR<ClinicRelationFilter, ClinicWhereInput>
+    invoiceItems?: PharmacyInvoiceItemListRelationFilter
+  }, "id">
+
+  export type MedicineOrderByWithAggregationInput = {
+    id?: SortOrder
+    medicineName?: SortOrder
+    genericName?: SortOrderInput | SortOrder
+    brandName?: SortOrderInput | SortOrder
+    categoryId?: SortOrderInput | SortOrder
+    manufacturer?: SortOrderInput | SortOrder
+    medicineCode?: SortOrderInput | SortOrder
+    hsnCode?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    purchasePrice?: SortOrder
+    sellingPrice?: SortOrder
+    gst?: SortOrder
+    mrp?: SortOrder
+    openingStock?: SortOrder
+    stockIn?: SortOrder
+    stockOut?: SortOrder
+    minimumStockAlert?: SortOrder
+    unit?: SortOrderInput | SortOrder
+    batchNumber?: SortOrderInput | SortOrder
+    manufacturingDate?: SortOrderInput | SortOrder
+    expiryDate?: SortOrderInput | SortOrder
+    prescriptionRequired?: SortOrder
+    status?: SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: MedicineCountOrderByAggregateInput
+    _avg?: MedicineAvgOrderByAggregateInput
+    _max?: MedicineMaxOrderByAggregateInput
+    _min?: MedicineMinOrderByAggregateInput
+    _sum?: MedicineSumOrderByAggregateInput
+  }
+
+  export type MedicineScalarWhereWithAggregatesInput = {
+    AND?: MedicineScalarWhereWithAggregatesInput | MedicineScalarWhereWithAggregatesInput[]
+    OR?: MedicineScalarWhereWithAggregatesInput[]
+    NOT?: MedicineScalarWhereWithAggregatesInput | MedicineScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Medicine"> | string
+    medicineName?: StringWithAggregatesFilter<"Medicine"> | string
+    genericName?: StringNullableWithAggregatesFilter<"Medicine"> | string | null
+    brandName?: StringNullableWithAggregatesFilter<"Medicine"> | string | null
+    categoryId?: StringNullableWithAggregatesFilter<"Medicine"> | string | null
+    manufacturer?: StringNullableWithAggregatesFilter<"Medicine"> | string | null
+    medicineCode?: StringNullableWithAggregatesFilter<"Medicine"> | string | null
+    hsnCode?: StringNullableWithAggregatesFilter<"Medicine"> | string | null
+    description?: StringNullableWithAggregatesFilter<"Medicine"> | string | null
+    purchasePrice?: FloatWithAggregatesFilter<"Medicine"> | number
+    sellingPrice?: FloatWithAggregatesFilter<"Medicine"> | number
+    gst?: FloatWithAggregatesFilter<"Medicine"> | number
+    mrp?: FloatWithAggregatesFilter<"Medicine"> | number
+    openingStock?: IntWithAggregatesFilter<"Medicine"> | number
+    stockIn?: IntWithAggregatesFilter<"Medicine"> | number
+    stockOut?: IntWithAggregatesFilter<"Medicine"> | number
+    minimumStockAlert?: IntWithAggregatesFilter<"Medicine"> | number
+    unit?: StringNullableWithAggregatesFilter<"Medicine"> | string | null
+    batchNumber?: StringNullableWithAggregatesFilter<"Medicine"> | string | null
+    manufacturingDate?: DateTimeNullableWithAggregatesFilter<"Medicine"> | Date | string | null
+    expiryDate?: DateTimeNullableWithAggregatesFilter<"Medicine"> | Date | string | null
+    prescriptionRequired?: BoolWithAggregatesFilter<"Medicine"> | boolean
+    status?: StringWithAggregatesFilter<"Medicine"> | string
+    clinicId?: StringWithAggregatesFilter<"Medicine"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Medicine"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Medicine"> | Date | string
+  }
+
+  export type PharmacyInvoiceWhereInput = {
+    AND?: PharmacyInvoiceWhereInput | PharmacyInvoiceWhereInput[]
+    OR?: PharmacyInvoiceWhereInput[]
+    NOT?: PharmacyInvoiceWhereInput | PharmacyInvoiceWhereInput[]
+    id?: StringFilter<"PharmacyInvoice"> | string
+    invoiceNo?: StringFilter<"PharmacyInvoice"> | string
+    patientId?: StringNullableFilter<"PharmacyInvoice"> | string | null
+    customerName?: StringNullableFilter<"PharmacyInvoice"> | string | null
+    customerPhone?: StringNullableFilter<"PharmacyInvoice"> | string | null
+    invoiceDate?: DateTimeFilter<"PharmacyInvoice"> | Date | string
+    tax?: FloatFilter<"PharmacyInvoice"> | number
+    discount?: FloatFilter<"PharmacyInvoice"> | number
+    subTotal?: FloatFilter<"PharmacyInvoice"> | number
+    totalAmount?: FloatFilter<"PharmacyInvoice"> | number
+    paymentMethod?: StringFilter<"PharmacyInvoice"> | string
+    paymentStatus?: StringFilter<"PharmacyInvoice"> | string
+    clinicId?: StringFilter<"PharmacyInvoice"> | string
+    createdAt?: DateTimeFilter<"PharmacyInvoice"> | Date | string
+    updatedAt?: DateTimeFilter<"PharmacyInvoice"> | Date | string
+    patient?: XOR<PatientNullableRelationFilter, PatientWhereInput> | null
+    clinic?: XOR<ClinicRelationFilter, ClinicWhereInput>
+    items?: PharmacyInvoiceItemListRelationFilter
+  }
+
+  export type PharmacyInvoiceOrderByWithRelationInput = {
+    id?: SortOrder
+    invoiceNo?: SortOrder
+    patientId?: SortOrderInput | SortOrder
+    customerName?: SortOrderInput | SortOrder
+    customerPhone?: SortOrderInput | SortOrder
+    invoiceDate?: SortOrder
+    tax?: SortOrder
+    discount?: SortOrder
+    subTotal?: SortOrder
+    totalAmount?: SortOrder
+    paymentMethod?: SortOrder
+    paymentStatus?: SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    patient?: PatientOrderByWithRelationInput
+    clinic?: ClinicOrderByWithRelationInput
+    items?: PharmacyInvoiceItemOrderByRelationAggregateInput
+  }
+
+  export type PharmacyInvoiceWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    invoiceNo?: string
+    AND?: PharmacyInvoiceWhereInput | PharmacyInvoiceWhereInput[]
+    OR?: PharmacyInvoiceWhereInput[]
+    NOT?: PharmacyInvoiceWhereInput | PharmacyInvoiceWhereInput[]
+    patientId?: StringNullableFilter<"PharmacyInvoice"> | string | null
+    customerName?: StringNullableFilter<"PharmacyInvoice"> | string | null
+    customerPhone?: StringNullableFilter<"PharmacyInvoice"> | string | null
+    invoiceDate?: DateTimeFilter<"PharmacyInvoice"> | Date | string
+    tax?: FloatFilter<"PharmacyInvoice"> | number
+    discount?: FloatFilter<"PharmacyInvoice"> | number
+    subTotal?: FloatFilter<"PharmacyInvoice"> | number
+    totalAmount?: FloatFilter<"PharmacyInvoice"> | number
+    paymentMethod?: StringFilter<"PharmacyInvoice"> | string
+    paymentStatus?: StringFilter<"PharmacyInvoice"> | string
+    clinicId?: StringFilter<"PharmacyInvoice"> | string
+    createdAt?: DateTimeFilter<"PharmacyInvoice"> | Date | string
+    updatedAt?: DateTimeFilter<"PharmacyInvoice"> | Date | string
+    patient?: XOR<PatientNullableRelationFilter, PatientWhereInput> | null
+    clinic?: XOR<ClinicRelationFilter, ClinicWhereInput>
+    items?: PharmacyInvoiceItemListRelationFilter
+  }, "id" | "invoiceNo">
+
+  export type PharmacyInvoiceOrderByWithAggregationInput = {
+    id?: SortOrder
+    invoiceNo?: SortOrder
+    patientId?: SortOrderInput | SortOrder
+    customerName?: SortOrderInput | SortOrder
+    customerPhone?: SortOrderInput | SortOrder
+    invoiceDate?: SortOrder
+    tax?: SortOrder
+    discount?: SortOrder
+    subTotal?: SortOrder
+    totalAmount?: SortOrder
+    paymentMethod?: SortOrder
+    paymentStatus?: SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: PharmacyInvoiceCountOrderByAggregateInput
+    _avg?: PharmacyInvoiceAvgOrderByAggregateInput
+    _max?: PharmacyInvoiceMaxOrderByAggregateInput
+    _min?: PharmacyInvoiceMinOrderByAggregateInput
+    _sum?: PharmacyInvoiceSumOrderByAggregateInput
+  }
+
+  export type PharmacyInvoiceScalarWhereWithAggregatesInput = {
+    AND?: PharmacyInvoiceScalarWhereWithAggregatesInput | PharmacyInvoiceScalarWhereWithAggregatesInput[]
+    OR?: PharmacyInvoiceScalarWhereWithAggregatesInput[]
+    NOT?: PharmacyInvoiceScalarWhereWithAggregatesInput | PharmacyInvoiceScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"PharmacyInvoice"> | string
+    invoiceNo?: StringWithAggregatesFilter<"PharmacyInvoice"> | string
+    patientId?: StringNullableWithAggregatesFilter<"PharmacyInvoice"> | string | null
+    customerName?: StringNullableWithAggregatesFilter<"PharmacyInvoice"> | string | null
+    customerPhone?: StringNullableWithAggregatesFilter<"PharmacyInvoice"> | string | null
+    invoiceDate?: DateTimeWithAggregatesFilter<"PharmacyInvoice"> | Date | string
+    tax?: FloatWithAggregatesFilter<"PharmacyInvoice"> | number
+    discount?: FloatWithAggregatesFilter<"PharmacyInvoice"> | number
+    subTotal?: FloatWithAggregatesFilter<"PharmacyInvoice"> | number
+    totalAmount?: FloatWithAggregatesFilter<"PharmacyInvoice"> | number
+    paymentMethod?: StringWithAggregatesFilter<"PharmacyInvoice"> | string
+    paymentStatus?: StringWithAggregatesFilter<"PharmacyInvoice"> | string
+    clinicId?: StringWithAggregatesFilter<"PharmacyInvoice"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"PharmacyInvoice"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"PharmacyInvoice"> | Date | string
+  }
+
+  export type PharmacyInvoiceItemWhereInput = {
+    AND?: PharmacyInvoiceItemWhereInput | PharmacyInvoiceItemWhereInput[]
+    OR?: PharmacyInvoiceItemWhereInput[]
+    NOT?: PharmacyInvoiceItemWhereInput | PharmacyInvoiceItemWhereInput[]
+    id?: StringFilter<"PharmacyInvoiceItem"> | string
+    invoiceId?: StringFilter<"PharmacyInvoiceItem"> | string
+    medicineId?: StringNullableFilter<"PharmacyInvoiceItem"> | string | null
+    medicineName?: StringFilter<"PharmacyInvoiceItem"> | string
+    quantity?: IntFilter<"PharmacyInvoiceItem"> | number
+    unitCost?: FloatFilter<"PharmacyInvoiceItem"> | number
+    gst?: FloatFilter<"PharmacyInvoiceItem"> | number
+    amount?: FloatFilter<"PharmacyInvoiceItem"> | number
+    clinicId?: StringFilter<"PharmacyInvoiceItem"> | string
+    createdAt?: DateTimeFilter<"PharmacyInvoiceItem"> | Date | string
+    updatedAt?: DateTimeFilter<"PharmacyInvoiceItem"> | Date | string
+    invoice?: XOR<PharmacyInvoiceRelationFilter, PharmacyInvoiceWhereInput>
+    medicine?: XOR<MedicineNullableRelationFilter, MedicineWhereInput> | null
+  }
+
+  export type PharmacyInvoiceItemOrderByWithRelationInput = {
+    id?: SortOrder
+    invoiceId?: SortOrder
+    medicineId?: SortOrderInput | SortOrder
+    medicineName?: SortOrder
+    quantity?: SortOrder
+    unitCost?: SortOrder
+    gst?: SortOrder
+    amount?: SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    invoice?: PharmacyInvoiceOrderByWithRelationInput
+    medicine?: MedicineOrderByWithRelationInput
+  }
+
+  export type PharmacyInvoiceItemWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: PharmacyInvoiceItemWhereInput | PharmacyInvoiceItemWhereInput[]
+    OR?: PharmacyInvoiceItemWhereInput[]
+    NOT?: PharmacyInvoiceItemWhereInput | PharmacyInvoiceItemWhereInput[]
+    invoiceId?: StringFilter<"PharmacyInvoiceItem"> | string
+    medicineId?: StringNullableFilter<"PharmacyInvoiceItem"> | string | null
+    medicineName?: StringFilter<"PharmacyInvoiceItem"> | string
+    quantity?: IntFilter<"PharmacyInvoiceItem"> | number
+    unitCost?: FloatFilter<"PharmacyInvoiceItem"> | number
+    gst?: FloatFilter<"PharmacyInvoiceItem"> | number
+    amount?: FloatFilter<"PharmacyInvoiceItem"> | number
+    clinicId?: StringFilter<"PharmacyInvoiceItem"> | string
+    createdAt?: DateTimeFilter<"PharmacyInvoiceItem"> | Date | string
+    updatedAt?: DateTimeFilter<"PharmacyInvoiceItem"> | Date | string
+    invoice?: XOR<PharmacyInvoiceRelationFilter, PharmacyInvoiceWhereInput>
+    medicine?: XOR<MedicineNullableRelationFilter, MedicineWhereInput> | null
+  }, "id">
+
+  export type PharmacyInvoiceItemOrderByWithAggregationInput = {
+    id?: SortOrder
+    invoiceId?: SortOrder
+    medicineId?: SortOrderInput | SortOrder
+    medicineName?: SortOrder
+    quantity?: SortOrder
+    unitCost?: SortOrder
+    gst?: SortOrder
+    amount?: SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: PharmacyInvoiceItemCountOrderByAggregateInput
+    _avg?: PharmacyInvoiceItemAvgOrderByAggregateInput
+    _max?: PharmacyInvoiceItemMaxOrderByAggregateInput
+    _min?: PharmacyInvoiceItemMinOrderByAggregateInput
+    _sum?: PharmacyInvoiceItemSumOrderByAggregateInput
+  }
+
+  export type PharmacyInvoiceItemScalarWhereWithAggregatesInput = {
+    AND?: PharmacyInvoiceItemScalarWhereWithAggregatesInput | PharmacyInvoiceItemScalarWhereWithAggregatesInput[]
+    OR?: PharmacyInvoiceItemScalarWhereWithAggregatesInput[]
+    NOT?: PharmacyInvoiceItemScalarWhereWithAggregatesInput | PharmacyInvoiceItemScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"PharmacyInvoiceItem"> | string
+    invoiceId?: StringWithAggregatesFilter<"PharmacyInvoiceItem"> | string
+    medicineId?: StringNullableWithAggregatesFilter<"PharmacyInvoiceItem"> | string | null
+    medicineName?: StringWithAggregatesFilter<"PharmacyInvoiceItem"> | string
+    quantity?: IntWithAggregatesFilter<"PharmacyInvoiceItem"> | number
+    unitCost?: FloatWithAggregatesFilter<"PharmacyInvoiceItem"> | number
+    gst?: FloatWithAggregatesFilter<"PharmacyInvoiceItem"> | number
+    amount?: FloatWithAggregatesFilter<"PharmacyInvoiceItem"> | number
+    clinicId?: StringWithAggregatesFilter<"PharmacyInvoiceItem"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"PharmacyInvoiceItem"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"PharmacyInvoiceItem"> | Date | string
+  }
+
   export type ClinicCreateInput = {
     id?: string
     name: string
@@ -48311,6 +53909,9 @@ export namespace Prisma {
     labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
     labTests?: LabTestCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateInput = {
@@ -48370,6 +53971,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
     labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUpdateInput = {
@@ -48429,6 +54033,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateInput = {
@@ -48488,6 +54095,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateManyInput = {
@@ -49768,6 +55378,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionCreateNestedManyWithoutPatientInput
     invoices?: InvoiceCreateNestedManyWithoutPatientInput
     labBookings?: LabBookingCreateNestedManyWithoutPatientInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutPatientInput
   }
 
   export type PatientUncheckedCreateInput = {
@@ -49807,6 +55418,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutPatientInput
     invoices?: InvoiceUncheckedCreateNestedManyWithoutPatientInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutPatientInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutPatientInput
   }
 
   export type PatientUpdateInput = {
@@ -49846,6 +55458,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionUpdateManyWithoutPatientNestedInput
     invoices?: InvoiceUpdateManyWithoutPatientNestedInput
     labBookings?: LabBookingUpdateManyWithoutPatientNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutPatientNestedInput
   }
 
   export type PatientUncheckedUpdateInput = {
@@ -49885,6 +55498,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutPatientNestedInput
     invoices?: InvoiceUncheckedUpdateManyWithoutPatientNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutPatientNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutPatientNestedInput
   }
 
   export type PatientCreateManyInput = {
@@ -52622,6 +58236,508 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type PharmacyCategoryCreateInput = {
+    id?: string
+    name: string
+    description?: string | null
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    clinic: ClinicCreateNestedOneWithoutPharmacyCategoriesInput
+    medicines?: MedicineCreateNestedManyWithoutCategoryInput
+  }
+
+  export type PharmacyCategoryUncheckedCreateInput = {
+    id?: string
+    name: string
+    description?: string | null
+    status?: string
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    medicines?: MedicineUncheckedCreateNestedManyWithoutCategoryInput
+  }
+
+  export type PharmacyCategoryUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    clinic?: ClinicUpdateOneRequiredWithoutPharmacyCategoriesNestedInput
+    medicines?: MedicineUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type PharmacyCategoryUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    medicines?: MedicineUncheckedUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type PharmacyCategoryCreateManyInput = {
+    id?: string
+    name: string
+    description?: string | null
+    status?: string
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PharmacyCategoryUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PharmacyCategoryUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MedicineCreateInput = {
+    id?: string
+    medicineName: string
+    genericName?: string | null
+    brandName?: string | null
+    manufacturer?: string | null
+    medicineCode?: string | null
+    hsnCode?: string | null
+    description?: string | null
+    purchasePrice?: number
+    sellingPrice?: number
+    gst?: number
+    mrp?: number
+    openingStock?: number
+    stockIn?: number
+    stockOut?: number
+    minimumStockAlert?: number
+    unit?: string | null
+    batchNumber?: string | null
+    manufacturingDate?: Date | string | null
+    expiryDate?: Date | string | null
+    prescriptionRequired?: boolean
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    category?: PharmacyCategoryCreateNestedOneWithoutMedicinesInput
+    clinic: ClinicCreateNestedOneWithoutMedicinesInput
+    invoiceItems?: PharmacyInvoiceItemCreateNestedManyWithoutMedicineInput
+  }
+
+  export type MedicineUncheckedCreateInput = {
+    id?: string
+    medicineName: string
+    genericName?: string | null
+    brandName?: string | null
+    categoryId?: string | null
+    manufacturer?: string | null
+    medicineCode?: string | null
+    hsnCode?: string | null
+    description?: string | null
+    purchasePrice?: number
+    sellingPrice?: number
+    gst?: number
+    mrp?: number
+    openingStock?: number
+    stockIn?: number
+    stockOut?: number
+    minimumStockAlert?: number
+    unit?: string | null
+    batchNumber?: string | null
+    manufacturingDate?: Date | string | null
+    expiryDate?: Date | string | null
+    prescriptionRequired?: boolean
+    status?: string
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    invoiceItems?: PharmacyInvoiceItemUncheckedCreateNestedManyWithoutMedicineInput
+  }
+
+  export type MedicineUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    medicineName?: StringFieldUpdateOperationsInput | string
+    genericName?: NullableStringFieldUpdateOperationsInput | string | null
+    brandName?: NullableStringFieldUpdateOperationsInput | string | null
+    manufacturer?: NullableStringFieldUpdateOperationsInput | string | null
+    medicineCode?: NullableStringFieldUpdateOperationsInput | string | null
+    hsnCode?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    purchasePrice?: FloatFieldUpdateOperationsInput | number
+    sellingPrice?: FloatFieldUpdateOperationsInput | number
+    gst?: FloatFieldUpdateOperationsInput | number
+    mrp?: FloatFieldUpdateOperationsInput | number
+    openingStock?: IntFieldUpdateOperationsInput | number
+    stockIn?: IntFieldUpdateOperationsInput | number
+    stockOut?: IntFieldUpdateOperationsInput | number
+    minimumStockAlert?: IntFieldUpdateOperationsInput | number
+    unit?: NullableStringFieldUpdateOperationsInput | string | null
+    batchNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    manufacturingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prescriptionRequired?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: PharmacyCategoryUpdateOneWithoutMedicinesNestedInput
+    clinic?: ClinicUpdateOneRequiredWithoutMedicinesNestedInput
+    invoiceItems?: PharmacyInvoiceItemUpdateManyWithoutMedicineNestedInput
+  }
+
+  export type MedicineUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    medicineName?: StringFieldUpdateOperationsInput | string
+    genericName?: NullableStringFieldUpdateOperationsInput | string | null
+    brandName?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    manufacturer?: NullableStringFieldUpdateOperationsInput | string | null
+    medicineCode?: NullableStringFieldUpdateOperationsInput | string | null
+    hsnCode?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    purchasePrice?: FloatFieldUpdateOperationsInput | number
+    sellingPrice?: FloatFieldUpdateOperationsInput | number
+    gst?: FloatFieldUpdateOperationsInput | number
+    mrp?: FloatFieldUpdateOperationsInput | number
+    openingStock?: IntFieldUpdateOperationsInput | number
+    stockIn?: IntFieldUpdateOperationsInput | number
+    stockOut?: IntFieldUpdateOperationsInput | number
+    minimumStockAlert?: IntFieldUpdateOperationsInput | number
+    unit?: NullableStringFieldUpdateOperationsInput | string | null
+    batchNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    manufacturingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prescriptionRequired?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    invoiceItems?: PharmacyInvoiceItemUncheckedUpdateManyWithoutMedicineNestedInput
+  }
+
+  export type MedicineCreateManyInput = {
+    id?: string
+    medicineName: string
+    genericName?: string | null
+    brandName?: string | null
+    categoryId?: string | null
+    manufacturer?: string | null
+    medicineCode?: string | null
+    hsnCode?: string | null
+    description?: string | null
+    purchasePrice?: number
+    sellingPrice?: number
+    gst?: number
+    mrp?: number
+    openingStock?: number
+    stockIn?: number
+    stockOut?: number
+    minimumStockAlert?: number
+    unit?: string | null
+    batchNumber?: string | null
+    manufacturingDate?: Date | string | null
+    expiryDate?: Date | string | null
+    prescriptionRequired?: boolean
+    status?: string
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MedicineUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    medicineName?: StringFieldUpdateOperationsInput | string
+    genericName?: NullableStringFieldUpdateOperationsInput | string | null
+    brandName?: NullableStringFieldUpdateOperationsInput | string | null
+    manufacturer?: NullableStringFieldUpdateOperationsInput | string | null
+    medicineCode?: NullableStringFieldUpdateOperationsInput | string | null
+    hsnCode?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    purchasePrice?: FloatFieldUpdateOperationsInput | number
+    sellingPrice?: FloatFieldUpdateOperationsInput | number
+    gst?: FloatFieldUpdateOperationsInput | number
+    mrp?: FloatFieldUpdateOperationsInput | number
+    openingStock?: IntFieldUpdateOperationsInput | number
+    stockIn?: IntFieldUpdateOperationsInput | number
+    stockOut?: IntFieldUpdateOperationsInput | number
+    minimumStockAlert?: IntFieldUpdateOperationsInput | number
+    unit?: NullableStringFieldUpdateOperationsInput | string | null
+    batchNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    manufacturingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prescriptionRequired?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MedicineUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    medicineName?: StringFieldUpdateOperationsInput | string
+    genericName?: NullableStringFieldUpdateOperationsInput | string | null
+    brandName?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    manufacturer?: NullableStringFieldUpdateOperationsInput | string | null
+    medicineCode?: NullableStringFieldUpdateOperationsInput | string | null
+    hsnCode?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    purchasePrice?: FloatFieldUpdateOperationsInput | number
+    sellingPrice?: FloatFieldUpdateOperationsInput | number
+    gst?: FloatFieldUpdateOperationsInput | number
+    mrp?: FloatFieldUpdateOperationsInput | number
+    openingStock?: IntFieldUpdateOperationsInput | number
+    stockIn?: IntFieldUpdateOperationsInput | number
+    stockOut?: IntFieldUpdateOperationsInput | number
+    minimumStockAlert?: IntFieldUpdateOperationsInput | number
+    unit?: NullableStringFieldUpdateOperationsInput | string | null
+    batchNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    manufacturingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prescriptionRequired?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PharmacyInvoiceCreateInput = {
+    id?: string
+    invoiceNo: string
+    customerName?: string | null
+    customerPhone?: string | null
+    invoiceDate?: Date | string
+    tax?: number
+    discount?: number
+    subTotal?: number
+    totalAmount: number
+    paymentMethod?: string
+    paymentStatus?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    patient?: PatientCreateNestedOneWithoutPharmacyInvoicesInput
+    clinic: ClinicCreateNestedOneWithoutPharmacyInvoicesInput
+    items?: PharmacyInvoiceItemCreateNestedManyWithoutInvoiceInput
+  }
+
+  export type PharmacyInvoiceUncheckedCreateInput = {
+    id?: string
+    invoiceNo: string
+    patientId?: string | null
+    customerName?: string | null
+    customerPhone?: string | null
+    invoiceDate?: Date | string
+    tax?: number
+    discount?: number
+    subTotal?: number
+    totalAmount: number
+    paymentMethod?: string
+    paymentStatus?: string
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    items?: PharmacyInvoiceItemUncheckedCreateNestedManyWithoutInvoiceInput
+  }
+
+  export type PharmacyInvoiceUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    invoiceNo?: StringFieldUpdateOperationsInput | string
+    customerName?: NullableStringFieldUpdateOperationsInput | string | null
+    customerPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    invoiceDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tax?: FloatFieldUpdateOperationsInput | number
+    discount?: FloatFieldUpdateOperationsInput | number
+    subTotal?: FloatFieldUpdateOperationsInput | number
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    paymentMethod?: StringFieldUpdateOperationsInput | string
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    patient?: PatientUpdateOneWithoutPharmacyInvoicesNestedInput
+    clinic?: ClinicUpdateOneRequiredWithoutPharmacyInvoicesNestedInput
+    items?: PharmacyInvoiceItemUpdateManyWithoutInvoiceNestedInput
+  }
+
+  export type PharmacyInvoiceUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    invoiceNo?: StringFieldUpdateOperationsInput | string
+    patientId?: NullableStringFieldUpdateOperationsInput | string | null
+    customerName?: NullableStringFieldUpdateOperationsInput | string | null
+    customerPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    invoiceDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tax?: FloatFieldUpdateOperationsInput | number
+    discount?: FloatFieldUpdateOperationsInput | number
+    subTotal?: FloatFieldUpdateOperationsInput | number
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    paymentMethod?: StringFieldUpdateOperationsInput | string
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    items?: PharmacyInvoiceItemUncheckedUpdateManyWithoutInvoiceNestedInput
+  }
+
+  export type PharmacyInvoiceCreateManyInput = {
+    id?: string
+    invoiceNo: string
+    patientId?: string | null
+    customerName?: string | null
+    customerPhone?: string | null
+    invoiceDate?: Date | string
+    tax?: number
+    discount?: number
+    subTotal?: number
+    totalAmount: number
+    paymentMethod?: string
+    paymentStatus?: string
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PharmacyInvoiceUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    invoiceNo?: StringFieldUpdateOperationsInput | string
+    customerName?: NullableStringFieldUpdateOperationsInput | string | null
+    customerPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    invoiceDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tax?: FloatFieldUpdateOperationsInput | number
+    discount?: FloatFieldUpdateOperationsInput | number
+    subTotal?: FloatFieldUpdateOperationsInput | number
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    paymentMethod?: StringFieldUpdateOperationsInput | string
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PharmacyInvoiceUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    invoiceNo?: StringFieldUpdateOperationsInput | string
+    patientId?: NullableStringFieldUpdateOperationsInput | string | null
+    customerName?: NullableStringFieldUpdateOperationsInput | string | null
+    customerPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    invoiceDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tax?: FloatFieldUpdateOperationsInput | number
+    discount?: FloatFieldUpdateOperationsInput | number
+    subTotal?: FloatFieldUpdateOperationsInput | number
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    paymentMethod?: StringFieldUpdateOperationsInput | string
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PharmacyInvoiceItemCreateInput = {
+    id?: string
+    medicineName: string
+    quantity: number
+    unitCost: number
+    gst?: number
+    amount: number
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    invoice: PharmacyInvoiceCreateNestedOneWithoutItemsInput
+    medicine?: MedicineCreateNestedOneWithoutInvoiceItemsInput
+  }
+
+  export type PharmacyInvoiceItemUncheckedCreateInput = {
+    id?: string
+    invoiceId: string
+    medicineId?: string | null
+    medicineName: string
+    quantity: number
+    unitCost: number
+    gst?: number
+    amount: number
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PharmacyInvoiceItemUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    medicineName?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    unitCost?: FloatFieldUpdateOperationsInput | number
+    gst?: FloatFieldUpdateOperationsInput | number
+    amount?: FloatFieldUpdateOperationsInput | number
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    invoice?: PharmacyInvoiceUpdateOneRequiredWithoutItemsNestedInput
+    medicine?: MedicineUpdateOneWithoutInvoiceItemsNestedInput
+  }
+
+  export type PharmacyInvoiceItemUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    invoiceId?: StringFieldUpdateOperationsInput | string
+    medicineId?: NullableStringFieldUpdateOperationsInput | string | null
+    medicineName?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    unitCost?: FloatFieldUpdateOperationsInput | number
+    gst?: FloatFieldUpdateOperationsInput | number
+    amount?: FloatFieldUpdateOperationsInput | number
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PharmacyInvoiceItemCreateManyInput = {
+    id?: string
+    invoiceId: string
+    medicineId?: string | null
+    medicineName: string
+    quantity: number
+    unitCost: number
+    gst?: number
+    amount: number
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PharmacyInvoiceItemUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    medicineName?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    unitCost?: FloatFieldUpdateOperationsInput | number
+    gst?: FloatFieldUpdateOperationsInput | number
+    amount?: FloatFieldUpdateOperationsInput | number
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PharmacyInvoiceItemUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    invoiceId?: StringFieldUpdateOperationsInput | string
+    medicineId?: NullableStringFieldUpdateOperationsInput | string | null
+    medicineName?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    unitCost?: FloatFieldUpdateOperationsInput | number
+    gst?: FloatFieldUpdateOperationsInput | number
+    amount?: FloatFieldUpdateOperationsInput | number
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -52897,6 +59013,24 @@ export namespace Prisma {
     none?: LabBookingWhereInput
   }
 
+  export type PharmacyCategoryListRelationFilter = {
+    every?: PharmacyCategoryWhereInput
+    some?: PharmacyCategoryWhereInput
+    none?: PharmacyCategoryWhereInput
+  }
+
+  export type MedicineListRelationFilter = {
+    every?: MedicineWhereInput
+    some?: MedicineWhereInput
+    none?: MedicineWhereInput
+  }
+
+  export type PharmacyInvoiceListRelationFilter = {
+    every?: PharmacyInvoiceWhereInput
+    some?: PharmacyInvoiceWhereInput
+    none?: PharmacyInvoiceWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -53015,6 +59149,18 @@ export namespace Prisma {
   }
 
   export type LabBookingOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type PharmacyCategoryOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type MedicineOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type PharmacyInvoiceOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -55366,6 +61512,294 @@ export namespace Prisma {
     totalAmount?: SortOrder
   }
 
+  export type PharmacyCategoryCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PharmacyCategoryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PharmacyCategoryMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PharmacyCategoryNullableRelationFilter = {
+    is?: PharmacyCategoryWhereInput | null
+    isNot?: PharmacyCategoryWhereInput | null
+  }
+
+  export type PharmacyInvoiceItemListRelationFilter = {
+    every?: PharmacyInvoiceItemWhereInput
+    some?: PharmacyInvoiceItemWhereInput
+    none?: PharmacyInvoiceItemWhereInput
+  }
+
+  export type PharmacyInvoiceItemOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type MedicineCountOrderByAggregateInput = {
+    id?: SortOrder
+    medicineName?: SortOrder
+    genericName?: SortOrder
+    brandName?: SortOrder
+    categoryId?: SortOrder
+    manufacturer?: SortOrder
+    medicineCode?: SortOrder
+    hsnCode?: SortOrder
+    description?: SortOrder
+    purchasePrice?: SortOrder
+    sellingPrice?: SortOrder
+    gst?: SortOrder
+    mrp?: SortOrder
+    openingStock?: SortOrder
+    stockIn?: SortOrder
+    stockOut?: SortOrder
+    minimumStockAlert?: SortOrder
+    unit?: SortOrder
+    batchNumber?: SortOrder
+    manufacturingDate?: SortOrder
+    expiryDate?: SortOrder
+    prescriptionRequired?: SortOrder
+    status?: SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MedicineAvgOrderByAggregateInput = {
+    purchasePrice?: SortOrder
+    sellingPrice?: SortOrder
+    gst?: SortOrder
+    mrp?: SortOrder
+    openingStock?: SortOrder
+    stockIn?: SortOrder
+    stockOut?: SortOrder
+    minimumStockAlert?: SortOrder
+  }
+
+  export type MedicineMaxOrderByAggregateInput = {
+    id?: SortOrder
+    medicineName?: SortOrder
+    genericName?: SortOrder
+    brandName?: SortOrder
+    categoryId?: SortOrder
+    manufacturer?: SortOrder
+    medicineCode?: SortOrder
+    hsnCode?: SortOrder
+    description?: SortOrder
+    purchasePrice?: SortOrder
+    sellingPrice?: SortOrder
+    gst?: SortOrder
+    mrp?: SortOrder
+    openingStock?: SortOrder
+    stockIn?: SortOrder
+    stockOut?: SortOrder
+    minimumStockAlert?: SortOrder
+    unit?: SortOrder
+    batchNumber?: SortOrder
+    manufacturingDate?: SortOrder
+    expiryDate?: SortOrder
+    prescriptionRequired?: SortOrder
+    status?: SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MedicineMinOrderByAggregateInput = {
+    id?: SortOrder
+    medicineName?: SortOrder
+    genericName?: SortOrder
+    brandName?: SortOrder
+    categoryId?: SortOrder
+    manufacturer?: SortOrder
+    medicineCode?: SortOrder
+    hsnCode?: SortOrder
+    description?: SortOrder
+    purchasePrice?: SortOrder
+    sellingPrice?: SortOrder
+    gst?: SortOrder
+    mrp?: SortOrder
+    openingStock?: SortOrder
+    stockIn?: SortOrder
+    stockOut?: SortOrder
+    minimumStockAlert?: SortOrder
+    unit?: SortOrder
+    batchNumber?: SortOrder
+    manufacturingDate?: SortOrder
+    expiryDate?: SortOrder
+    prescriptionRequired?: SortOrder
+    status?: SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MedicineSumOrderByAggregateInput = {
+    purchasePrice?: SortOrder
+    sellingPrice?: SortOrder
+    gst?: SortOrder
+    mrp?: SortOrder
+    openingStock?: SortOrder
+    stockIn?: SortOrder
+    stockOut?: SortOrder
+    minimumStockAlert?: SortOrder
+  }
+
+  export type PharmacyInvoiceCountOrderByAggregateInput = {
+    id?: SortOrder
+    invoiceNo?: SortOrder
+    patientId?: SortOrder
+    customerName?: SortOrder
+    customerPhone?: SortOrder
+    invoiceDate?: SortOrder
+    tax?: SortOrder
+    discount?: SortOrder
+    subTotal?: SortOrder
+    totalAmount?: SortOrder
+    paymentMethod?: SortOrder
+    paymentStatus?: SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PharmacyInvoiceAvgOrderByAggregateInput = {
+    tax?: SortOrder
+    discount?: SortOrder
+    subTotal?: SortOrder
+    totalAmount?: SortOrder
+  }
+
+  export type PharmacyInvoiceMaxOrderByAggregateInput = {
+    id?: SortOrder
+    invoiceNo?: SortOrder
+    patientId?: SortOrder
+    customerName?: SortOrder
+    customerPhone?: SortOrder
+    invoiceDate?: SortOrder
+    tax?: SortOrder
+    discount?: SortOrder
+    subTotal?: SortOrder
+    totalAmount?: SortOrder
+    paymentMethod?: SortOrder
+    paymentStatus?: SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PharmacyInvoiceMinOrderByAggregateInput = {
+    id?: SortOrder
+    invoiceNo?: SortOrder
+    patientId?: SortOrder
+    customerName?: SortOrder
+    customerPhone?: SortOrder
+    invoiceDate?: SortOrder
+    tax?: SortOrder
+    discount?: SortOrder
+    subTotal?: SortOrder
+    totalAmount?: SortOrder
+    paymentMethod?: SortOrder
+    paymentStatus?: SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PharmacyInvoiceSumOrderByAggregateInput = {
+    tax?: SortOrder
+    discount?: SortOrder
+    subTotal?: SortOrder
+    totalAmount?: SortOrder
+  }
+
+  export type PharmacyInvoiceRelationFilter = {
+    is?: PharmacyInvoiceWhereInput
+    isNot?: PharmacyInvoiceWhereInput
+  }
+
+  export type MedicineNullableRelationFilter = {
+    is?: MedicineWhereInput | null
+    isNot?: MedicineWhereInput | null
+  }
+
+  export type PharmacyInvoiceItemCountOrderByAggregateInput = {
+    id?: SortOrder
+    invoiceId?: SortOrder
+    medicineId?: SortOrder
+    medicineName?: SortOrder
+    quantity?: SortOrder
+    unitCost?: SortOrder
+    gst?: SortOrder
+    amount?: SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PharmacyInvoiceItemAvgOrderByAggregateInput = {
+    quantity?: SortOrder
+    unitCost?: SortOrder
+    gst?: SortOrder
+    amount?: SortOrder
+  }
+
+  export type PharmacyInvoiceItemMaxOrderByAggregateInput = {
+    id?: SortOrder
+    invoiceId?: SortOrder
+    medicineId?: SortOrder
+    medicineName?: SortOrder
+    quantity?: SortOrder
+    unitCost?: SortOrder
+    gst?: SortOrder
+    amount?: SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PharmacyInvoiceItemMinOrderByAggregateInput = {
+    id?: SortOrder
+    invoiceId?: SortOrder
+    medicineId?: SortOrder
+    medicineName?: SortOrder
+    quantity?: SortOrder
+    unitCost?: SortOrder
+    gst?: SortOrder
+    amount?: SortOrder
+    clinicId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PharmacyInvoiceItemSumOrderByAggregateInput = {
+    quantity?: SortOrder
+    unitCost?: SortOrder
+    gst?: SortOrder
+    amount?: SortOrder
+  }
+
   export type SubscriptionPackageCreateNestedOneWithoutClinicsInput = {
     create?: XOR<SubscriptionPackageCreateWithoutClinicsInput, SubscriptionPackageUncheckedCreateWithoutClinicsInput>
     connectOrCreate?: SubscriptionPackageCreateOrConnectWithoutClinicsInput
@@ -55587,6 +62021,27 @@ export namespace Prisma {
     connect?: LabBookingWhereUniqueInput | LabBookingWhereUniqueInput[]
   }
 
+  export type PharmacyCategoryCreateNestedManyWithoutClinicInput = {
+    create?: XOR<PharmacyCategoryCreateWithoutClinicInput, PharmacyCategoryUncheckedCreateWithoutClinicInput> | PharmacyCategoryCreateWithoutClinicInput[] | PharmacyCategoryUncheckedCreateWithoutClinicInput[]
+    connectOrCreate?: PharmacyCategoryCreateOrConnectWithoutClinicInput | PharmacyCategoryCreateOrConnectWithoutClinicInput[]
+    createMany?: PharmacyCategoryCreateManyClinicInputEnvelope
+    connect?: PharmacyCategoryWhereUniqueInput | PharmacyCategoryWhereUniqueInput[]
+  }
+
+  export type MedicineCreateNestedManyWithoutClinicInput = {
+    create?: XOR<MedicineCreateWithoutClinicInput, MedicineUncheckedCreateWithoutClinicInput> | MedicineCreateWithoutClinicInput[] | MedicineUncheckedCreateWithoutClinicInput[]
+    connectOrCreate?: MedicineCreateOrConnectWithoutClinicInput | MedicineCreateOrConnectWithoutClinicInput[]
+    createMany?: MedicineCreateManyClinicInputEnvelope
+    connect?: MedicineWhereUniqueInput | MedicineWhereUniqueInput[]
+  }
+
+  export type PharmacyInvoiceCreateNestedManyWithoutClinicInput = {
+    create?: XOR<PharmacyInvoiceCreateWithoutClinicInput, PharmacyInvoiceUncheckedCreateWithoutClinicInput> | PharmacyInvoiceCreateWithoutClinicInput[] | PharmacyInvoiceUncheckedCreateWithoutClinicInput[]
+    connectOrCreate?: PharmacyInvoiceCreateOrConnectWithoutClinicInput | PharmacyInvoiceCreateOrConnectWithoutClinicInput[]
+    createMany?: PharmacyInvoiceCreateManyClinicInputEnvelope
+    connect?: PharmacyInvoiceWhereUniqueInput | PharmacyInvoiceWhereUniqueInput[]
+  }
+
   export type UserUncheckedCreateNestedManyWithoutClinicInput = {
     create?: XOR<UserCreateWithoutClinicInput, UserUncheckedCreateWithoutClinicInput> | UserCreateWithoutClinicInput[] | UserUncheckedCreateWithoutClinicInput[]
     connectOrCreate?: UserCreateOrConnectWithoutClinicInput | UserCreateOrConnectWithoutClinicInput[]
@@ -55800,6 +62255,27 @@ export namespace Prisma {
     connectOrCreate?: LabBookingCreateOrConnectWithoutClinicInput | LabBookingCreateOrConnectWithoutClinicInput[]
     createMany?: LabBookingCreateManyClinicInputEnvelope
     connect?: LabBookingWhereUniqueInput | LabBookingWhereUniqueInput[]
+  }
+
+  export type PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput = {
+    create?: XOR<PharmacyCategoryCreateWithoutClinicInput, PharmacyCategoryUncheckedCreateWithoutClinicInput> | PharmacyCategoryCreateWithoutClinicInput[] | PharmacyCategoryUncheckedCreateWithoutClinicInput[]
+    connectOrCreate?: PharmacyCategoryCreateOrConnectWithoutClinicInput | PharmacyCategoryCreateOrConnectWithoutClinicInput[]
+    createMany?: PharmacyCategoryCreateManyClinicInputEnvelope
+    connect?: PharmacyCategoryWhereUniqueInput | PharmacyCategoryWhereUniqueInput[]
+  }
+
+  export type MedicineUncheckedCreateNestedManyWithoutClinicInput = {
+    create?: XOR<MedicineCreateWithoutClinicInput, MedicineUncheckedCreateWithoutClinicInput> | MedicineCreateWithoutClinicInput[] | MedicineUncheckedCreateWithoutClinicInput[]
+    connectOrCreate?: MedicineCreateOrConnectWithoutClinicInput | MedicineCreateOrConnectWithoutClinicInput[]
+    createMany?: MedicineCreateManyClinicInputEnvelope
+    connect?: MedicineWhereUniqueInput | MedicineWhereUniqueInput[]
+  }
+
+  export type PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput = {
+    create?: XOR<PharmacyInvoiceCreateWithoutClinicInput, PharmacyInvoiceUncheckedCreateWithoutClinicInput> | PharmacyInvoiceCreateWithoutClinicInput[] | PharmacyInvoiceUncheckedCreateWithoutClinicInput[]
+    connectOrCreate?: PharmacyInvoiceCreateOrConnectWithoutClinicInput | PharmacyInvoiceCreateOrConnectWithoutClinicInput[]
+    createMany?: PharmacyInvoiceCreateManyClinicInputEnvelope
+    connect?: PharmacyInvoiceWhereUniqueInput | PharmacyInvoiceWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -56278,6 +62754,48 @@ export namespace Prisma {
     deleteMany?: LabBookingScalarWhereInput | LabBookingScalarWhereInput[]
   }
 
+  export type PharmacyCategoryUpdateManyWithoutClinicNestedInput = {
+    create?: XOR<PharmacyCategoryCreateWithoutClinicInput, PharmacyCategoryUncheckedCreateWithoutClinicInput> | PharmacyCategoryCreateWithoutClinicInput[] | PharmacyCategoryUncheckedCreateWithoutClinicInput[]
+    connectOrCreate?: PharmacyCategoryCreateOrConnectWithoutClinicInput | PharmacyCategoryCreateOrConnectWithoutClinicInput[]
+    upsert?: PharmacyCategoryUpsertWithWhereUniqueWithoutClinicInput | PharmacyCategoryUpsertWithWhereUniqueWithoutClinicInput[]
+    createMany?: PharmacyCategoryCreateManyClinicInputEnvelope
+    set?: PharmacyCategoryWhereUniqueInput | PharmacyCategoryWhereUniqueInput[]
+    disconnect?: PharmacyCategoryWhereUniqueInput | PharmacyCategoryWhereUniqueInput[]
+    delete?: PharmacyCategoryWhereUniqueInput | PharmacyCategoryWhereUniqueInput[]
+    connect?: PharmacyCategoryWhereUniqueInput | PharmacyCategoryWhereUniqueInput[]
+    update?: PharmacyCategoryUpdateWithWhereUniqueWithoutClinicInput | PharmacyCategoryUpdateWithWhereUniqueWithoutClinicInput[]
+    updateMany?: PharmacyCategoryUpdateManyWithWhereWithoutClinicInput | PharmacyCategoryUpdateManyWithWhereWithoutClinicInput[]
+    deleteMany?: PharmacyCategoryScalarWhereInput | PharmacyCategoryScalarWhereInput[]
+  }
+
+  export type MedicineUpdateManyWithoutClinicNestedInput = {
+    create?: XOR<MedicineCreateWithoutClinicInput, MedicineUncheckedCreateWithoutClinicInput> | MedicineCreateWithoutClinicInput[] | MedicineUncheckedCreateWithoutClinicInput[]
+    connectOrCreate?: MedicineCreateOrConnectWithoutClinicInput | MedicineCreateOrConnectWithoutClinicInput[]
+    upsert?: MedicineUpsertWithWhereUniqueWithoutClinicInput | MedicineUpsertWithWhereUniqueWithoutClinicInput[]
+    createMany?: MedicineCreateManyClinicInputEnvelope
+    set?: MedicineWhereUniqueInput | MedicineWhereUniqueInput[]
+    disconnect?: MedicineWhereUniqueInput | MedicineWhereUniqueInput[]
+    delete?: MedicineWhereUniqueInput | MedicineWhereUniqueInput[]
+    connect?: MedicineWhereUniqueInput | MedicineWhereUniqueInput[]
+    update?: MedicineUpdateWithWhereUniqueWithoutClinicInput | MedicineUpdateWithWhereUniqueWithoutClinicInput[]
+    updateMany?: MedicineUpdateManyWithWhereWithoutClinicInput | MedicineUpdateManyWithWhereWithoutClinicInput[]
+    deleteMany?: MedicineScalarWhereInput | MedicineScalarWhereInput[]
+  }
+
+  export type PharmacyInvoiceUpdateManyWithoutClinicNestedInput = {
+    create?: XOR<PharmacyInvoiceCreateWithoutClinicInput, PharmacyInvoiceUncheckedCreateWithoutClinicInput> | PharmacyInvoiceCreateWithoutClinicInput[] | PharmacyInvoiceUncheckedCreateWithoutClinicInput[]
+    connectOrCreate?: PharmacyInvoiceCreateOrConnectWithoutClinicInput | PharmacyInvoiceCreateOrConnectWithoutClinicInput[]
+    upsert?: PharmacyInvoiceUpsertWithWhereUniqueWithoutClinicInput | PharmacyInvoiceUpsertWithWhereUniqueWithoutClinicInput[]
+    createMany?: PharmacyInvoiceCreateManyClinicInputEnvelope
+    set?: PharmacyInvoiceWhereUniqueInput | PharmacyInvoiceWhereUniqueInput[]
+    disconnect?: PharmacyInvoiceWhereUniqueInput | PharmacyInvoiceWhereUniqueInput[]
+    delete?: PharmacyInvoiceWhereUniqueInput | PharmacyInvoiceWhereUniqueInput[]
+    connect?: PharmacyInvoiceWhereUniqueInput | PharmacyInvoiceWhereUniqueInput[]
+    update?: PharmacyInvoiceUpdateWithWhereUniqueWithoutClinicInput | PharmacyInvoiceUpdateWithWhereUniqueWithoutClinicInput[]
+    updateMany?: PharmacyInvoiceUpdateManyWithWhereWithoutClinicInput | PharmacyInvoiceUpdateManyWithWhereWithoutClinicInput[]
+    deleteMany?: PharmacyInvoiceScalarWhereInput | PharmacyInvoiceScalarWhereInput[]
+  }
+
   export type UserUncheckedUpdateManyWithoutClinicNestedInput = {
     create?: XOR<UserCreateWithoutClinicInput, UserUncheckedCreateWithoutClinicInput> | UserCreateWithoutClinicInput[] | UserUncheckedCreateWithoutClinicInput[]
     connectOrCreate?: UserCreateOrConnectWithoutClinicInput | UserCreateOrConnectWithoutClinicInput[]
@@ -56702,6 +63220,48 @@ export namespace Prisma {
     update?: LabBookingUpdateWithWhereUniqueWithoutClinicInput | LabBookingUpdateWithWhereUniqueWithoutClinicInput[]
     updateMany?: LabBookingUpdateManyWithWhereWithoutClinicInput | LabBookingUpdateManyWithWhereWithoutClinicInput[]
     deleteMany?: LabBookingScalarWhereInput | LabBookingScalarWhereInput[]
+  }
+
+  export type PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput = {
+    create?: XOR<PharmacyCategoryCreateWithoutClinicInput, PharmacyCategoryUncheckedCreateWithoutClinicInput> | PharmacyCategoryCreateWithoutClinicInput[] | PharmacyCategoryUncheckedCreateWithoutClinicInput[]
+    connectOrCreate?: PharmacyCategoryCreateOrConnectWithoutClinicInput | PharmacyCategoryCreateOrConnectWithoutClinicInput[]
+    upsert?: PharmacyCategoryUpsertWithWhereUniqueWithoutClinicInput | PharmacyCategoryUpsertWithWhereUniqueWithoutClinicInput[]
+    createMany?: PharmacyCategoryCreateManyClinicInputEnvelope
+    set?: PharmacyCategoryWhereUniqueInput | PharmacyCategoryWhereUniqueInput[]
+    disconnect?: PharmacyCategoryWhereUniqueInput | PharmacyCategoryWhereUniqueInput[]
+    delete?: PharmacyCategoryWhereUniqueInput | PharmacyCategoryWhereUniqueInput[]
+    connect?: PharmacyCategoryWhereUniqueInput | PharmacyCategoryWhereUniqueInput[]
+    update?: PharmacyCategoryUpdateWithWhereUniqueWithoutClinicInput | PharmacyCategoryUpdateWithWhereUniqueWithoutClinicInput[]
+    updateMany?: PharmacyCategoryUpdateManyWithWhereWithoutClinicInput | PharmacyCategoryUpdateManyWithWhereWithoutClinicInput[]
+    deleteMany?: PharmacyCategoryScalarWhereInput | PharmacyCategoryScalarWhereInput[]
+  }
+
+  export type MedicineUncheckedUpdateManyWithoutClinicNestedInput = {
+    create?: XOR<MedicineCreateWithoutClinicInput, MedicineUncheckedCreateWithoutClinicInput> | MedicineCreateWithoutClinicInput[] | MedicineUncheckedCreateWithoutClinicInput[]
+    connectOrCreate?: MedicineCreateOrConnectWithoutClinicInput | MedicineCreateOrConnectWithoutClinicInput[]
+    upsert?: MedicineUpsertWithWhereUniqueWithoutClinicInput | MedicineUpsertWithWhereUniqueWithoutClinicInput[]
+    createMany?: MedicineCreateManyClinicInputEnvelope
+    set?: MedicineWhereUniqueInput | MedicineWhereUniqueInput[]
+    disconnect?: MedicineWhereUniqueInput | MedicineWhereUniqueInput[]
+    delete?: MedicineWhereUniqueInput | MedicineWhereUniqueInput[]
+    connect?: MedicineWhereUniqueInput | MedicineWhereUniqueInput[]
+    update?: MedicineUpdateWithWhereUniqueWithoutClinicInput | MedicineUpdateWithWhereUniqueWithoutClinicInput[]
+    updateMany?: MedicineUpdateManyWithWhereWithoutClinicInput | MedicineUpdateManyWithWhereWithoutClinicInput[]
+    deleteMany?: MedicineScalarWhereInput | MedicineScalarWhereInput[]
+  }
+
+  export type PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput = {
+    create?: XOR<PharmacyInvoiceCreateWithoutClinicInput, PharmacyInvoiceUncheckedCreateWithoutClinicInput> | PharmacyInvoiceCreateWithoutClinicInput[] | PharmacyInvoiceUncheckedCreateWithoutClinicInput[]
+    connectOrCreate?: PharmacyInvoiceCreateOrConnectWithoutClinicInput | PharmacyInvoiceCreateOrConnectWithoutClinicInput[]
+    upsert?: PharmacyInvoiceUpsertWithWhereUniqueWithoutClinicInput | PharmacyInvoiceUpsertWithWhereUniqueWithoutClinicInput[]
+    createMany?: PharmacyInvoiceCreateManyClinicInputEnvelope
+    set?: PharmacyInvoiceWhereUniqueInput | PharmacyInvoiceWhereUniqueInput[]
+    disconnect?: PharmacyInvoiceWhereUniqueInput | PharmacyInvoiceWhereUniqueInput[]
+    delete?: PharmacyInvoiceWhereUniqueInput | PharmacyInvoiceWhereUniqueInput[]
+    connect?: PharmacyInvoiceWhereUniqueInput | PharmacyInvoiceWhereUniqueInput[]
+    update?: PharmacyInvoiceUpdateWithWhereUniqueWithoutClinicInput | PharmacyInvoiceUpdateWithWhereUniqueWithoutClinicInput[]
+    updateMany?: PharmacyInvoiceUpdateManyWithWhereWithoutClinicInput | PharmacyInvoiceUpdateManyWithWhereWithoutClinicInput[]
+    deleteMany?: PharmacyInvoiceScalarWhereInput | PharmacyInvoiceScalarWhereInput[]
   }
 
   export type ClinicCreateNestedOneWithoutLandingPageInput = {
@@ -57517,6 +64077,13 @@ export namespace Prisma {
     connect?: LabBookingWhereUniqueInput | LabBookingWhereUniqueInput[]
   }
 
+  export type PharmacyInvoiceCreateNestedManyWithoutPatientInput = {
+    create?: XOR<PharmacyInvoiceCreateWithoutPatientInput, PharmacyInvoiceUncheckedCreateWithoutPatientInput> | PharmacyInvoiceCreateWithoutPatientInput[] | PharmacyInvoiceUncheckedCreateWithoutPatientInput[]
+    connectOrCreate?: PharmacyInvoiceCreateOrConnectWithoutPatientInput | PharmacyInvoiceCreateOrConnectWithoutPatientInput[]
+    createMany?: PharmacyInvoiceCreateManyPatientInputEnvelope
+    connect?: PharmacyInvoiceWhereUniqueInput | PharmacyInvoiceWhereUniqueInput[]
+  }
+
   export type AppointmentUncheckedCreateNestedManyWithoutPatientInput = {
     create?: XOR<AppointmentCreateWithoutPatientInput, AppointmentUncheckedCreateWithoutPatientInput> | AppointmentCreateWithoutPatientInput[] | AppointmentUncheckedCreateWithoutPatientInput[]
     connectOrCreate?: AppointmentCreateOrConnectWithoutPatientInput | AppointmentCreateOrConnectWithoutPatientInput[]
@@ -57543,6 +64110,13 @@ export namespace Prisma {
     connectOrCreate?: LabBookingCreateOrConnectWithoutPatientInput | LabBookingCreateOrConnectWithoutPatientInput[]
     createMany?: LabBookingCreateManyPatientInputEnvelope
     connect?: LabBookingWhereUniqueInput | LabBookingWhereUniqueInput[]
+  }
+
+  export type PharmacyInvoiceUncheckedCreateNestedManyWithoutPatientInput = {
+    create?: XOR<PharmacyInvoiceCreateWithoutPatientInput, PharmacyInvoiceUncheckedCreateWithoutPatientInput> | PharmacyInvoiceCreateWithoutPatientInput[] | PharmacyInvoiceUncheckedCreateWithoutPatientInput[]
+    connectOrCreate?: PharmacyInvoiceCreateOrConnectWithoutPatientInput | PharmacyInvoiceCreateOrConnectWithoutPatientInput[]
+    createMany?: PharmacyInvoiceCreateManyPatientInputEnvelope
+    connect?: PharmacyInvoiceWhereUniqueInput | PharmacyInvoiceWhereUniqueInput[]
   }
 
   export type ClinicUpdateOneRequiredWithoutPatientsNestedInput = {
@@ -57609,6 +64183,20 @@ export namespace Prisma {
     deleteMany?: LabBookingScalarWhereInput | LabBookingScalarWhereInput[]
   }
 
+  export type PharmacyInvoiceUpdateManyWithoutPatientNestedInput = {
+    create?: XOR<PharmacyInvoiceCreateWithoutPatientInput, PharmacyInvoiceUncheckedCreateWithoutPatientInput> | PharmacyInvoiceCreateWithoutPatientInput[] | PharmacyInvoiceUncheckedCreateWithoutPatientInput[]
+    connectOrCreate?: PharmacyInvoiceCreateOrConnectWithoutPatientInput | PharmacyInvoiceCreateOrConnectWithoutPatientInput[]
+    upsert?: PharmacyInvoiceUpsertWithWhereUniqueWithoutPatientInput | PharmacyInvoiceUpsertWithWhereUniqueWithoutPatientInput[]
+    createMany?: PharmacyInvoiceCreateManyPatientInputEnvelope
+    set?: PharmacyInvoiceWhereUniqueInput | PharmacyInvoiceWhereUniqueInput[]
+    disconnect?: PharmacyInvoiceWhereUniqueInput | PharmacyInvoiceWhereUniqueInput[]
+    delete?: PharmacyInvoiceWhereUniqueInput | PharmacyInvoiceWhereUniqueInput[]
+    connect?: PharmacyInvoiceWhereUniqueInput | PharmacyInvoiceWhereUniqueInput[]
+    update?: PharmacyInvoiceUpdateWithWhereUniqueWithoutPatientInput | PharmacyInvoiceUpdateWithWhereUniqueWithoutPatientInput[]
+    updateMany?: PharmacyInvoiceUpdateManyWithWhereWithoutPatientInput | PharmacyInvoiceUpdateManyWithWhereWithoutPatientInput[]
+    deleteMany?: PharmacyInvoiceScalarWhereInput | PharmacyInvoiceScalarWhereInput[]
+  }
+
   export type AppointmentUncheckedUpdateManyWithoutPatientNestedInput = {
     create?: XOR<AppointmentCreateWithoutPatientInput, AppointmentUncheckedCreateWithoutPatientInput> | AppointmentCreateWithoutPatientInput[] | AppointmentUncheckedCreateWithoutPatientInput[]
     connectOrCreate?: AppointmentCreateOrConnectWithoutPatientInput | AppointmentCreateOrConnectWithoutPatientInput[]
@@ -57663,6 +64251,20 @@ export namespace Prisma {
     update?: LabBookingUpdateWithWhereUniqueWithoutPatientInput | LabBookingUpdateWithWhereUniqueWithoutPatientInput[]
     updateMany?: LabBookingUpdateManyWithWhereWithoutPatientInput | LabBookingUpdateManyWithWhereWithoutPatientInput[]
     deleteMany?: LabBookingScalarWhereInput | LabBookingScalarWhereInput[]
+  }
+
+  export type PharmacyInvoiceUncheckedUpdateManyWithoutPatientNestedInput = {
+    create?: XOR<PharmacyInvoiceCreateWithoutPatientInput, PharmacyInvoiceUncheckedCreateWithoutPatientInput> | PharmacyInvoiceCreateWithoutPatientInput[] | PharmacyInvoiceUncheckedCreateWithoutPatientInput[]
+    connectOrCreate?: PharmacyInvoiceCreateOrConnectWithoutPatientInput | PharmacyInvoiceCreateOrConnectWithoutPatientInput[]
+    upsert?: PharmacyInvoiceUpsertWithWhereUniqueWithoutPatientInput | PharmacyInvoiceUpsertWithWhereUniqueWithoutPatientInput[]
+    createMany?: PharmacyInvoiceCreateManyPatientInputEnvelope
+    set?: PharmacyInvoiceWhereUniqueInput | PharmacyInvoiceWhereUniqueInput[]
+    disconnect?: PharmacyInvoiceWhereUniqueInput | PharmacyInvoiceWhereUniqueInput[]
+    delete?: PharmacyInvoiceWhereUniqueInput | PharmacyInvoiceWhereUniqueInput[]
+    connect?: PharmacyInvoiceWhereUniqueInput | PharmacyInvoiceWhereUniqueInput[]
+    update?: PharmacyInvoiceUpdateWithWhereUniqueWithoutPatientInput | PharmacyInvoiceUpdateWithWhereUniqueWithoutPatientInput[]
+    updateMany?: PharmacyInvoiceUpdateManyWithWhereWithoutPatientInput | PharmacyInvoiceUpdateManyWithWhereWithoutPatientInput[]
+    deleteMany?: PharmacyInvoiceScalarWhereInput | PharmacyInvoiceScalarWhereInput[]
   }
 
   export type AppointmentCreateserviceIdsInput = {
@@ -58791,6 +65393,236 @@ export namespace Prisma {
     update?: XOR<XOR<InvoiceUpdateToOneWithWhereWithoutLabBookingInput, InvoiceUpdateWithoutLabBookingInput>, InvoiceUncheckedUpdateWithoutLabBookingInput>
   }
 
+  export type ClinicCreateNestedOneWithoutPharmacyCategoriesInput = {
+    create?: XOR<ClinicCreateWithoutPharmacyCategoriesInput, ClinicUncheckedCreateWithoutPharmacyCategoriesInput>
+    connectOrCreate?: ClinicCreateOrConnectWithoutPharmacyCategoriesInput
+    connect?: ClinicWhereUniqueInput
+  }
+
+  export type MedicineCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<MedicineCreateWithoutCategoryInput, MedicineUncheckedCreateWithoutCategoryInput> | MedicineCreateWithoutCategoryInput[] | MedicineUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: MedicineCreateOrConnectWithoutCategoryInput | MedicineCreateOrConnectWithoutCategoryInput[]
+    createMany?: MedicineCreateManyCategoryInputEnvelope
+    connect?: MedicineWhereUniqueInput | MedicineWhereUniqueInput[]
+  }
+
+  export type MedicineUncheckedCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<MedicineCreateWithoutCategoryInput, MedicineUncheckedCreateWithoutCategoryInput> | MedicineCreateWithoutCategoryInput[] | MedicineUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: MedicineCreateOrConnectWithoutCategoryInput | MedicineCreateOrConnectWithoutCategoryInput[]
+    createMany?: MedicineCreateManyCategoryInputEnvelope
+    connect?: MedicineWhereUniqueInput | MedicineWhereUniqueInput[]
+  }
+
+  export type ClinicUpdateOneRequiredWithoutPharmacyCategoriesNestedInput = {
+    create?: XOR<ClinicCreateWithoutPharmacyCategoriesInput, ClinicUncheckedCreateWithoutPharmacyCategoriesInput>
+    connectOrCreate?: ClinicCreateOrConnectWithoutPharmacyCategoriesInput
+    upsert?: ClinicUpsertWithoutPharmacyCategoriesInput
+    connect?: ClinicWhereUniqueInput
+    update?: XOR<XOR<ClinicUpdateToOneWithWhereWithoutPharmacyCategoriesInput, ClinicUpdateWithoutPharmacyCategoriesInput>, ClinicUncheckedUpdateWithoutPharmacyCategoriesInput>
+  }
+
+  export type MedicineUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<MedicineCreateWithoutCategoryInput, MedicineUncheckedCreateWithoutCategoryInput> | MedicineCreateWithoutCategoryInput[] | MedicineUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: MedicineCreateOrConnectWithoutCategoryInput | MedicineCreateOrConnectWithoutCategoryInput[]
+    upsert?: MedicineUpsertWithWhereUniqueWithoutCategoryInput | MedicineUpsertWithWhereUniqueWithoutCategoryInput[]
+    createMany?: MedicineCreateManyCategoryInputEnvelope
+    set?: MedicineWhereUniqueInput | MedicineWhereUniqueInput[]
+    disconnect?: MedicineWhereUniqueInput | MedicineWhereUniqueInput[]
+    delete?: MedicineWhereUniqueInput | MedicineWhereUniqueInput[]
+    connect?: MedicineWhereUniqueInput | MedicineWhereUniqueInput[]
+    update?: MedicineUpdateWithWhereUniqueWithoutCategoryInput | MedicineUpdateWithWhereUniqueWithoutCategoryInput[]
+    updateMany?: MedicineUpdateManyWithWhereWithoutCategoryInput | MedicineUpdateManyWithWhereWithoutCategoryInput[]
+    deleteMany?: MedicineScalarWhereInput | MedicineScalarWhereInput[]
+  }
+
+  export type MedicineUncheckedUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<MedicineCreateWithoutCategoryInput, MedicineUncheckedCreateWithoutCategoryInput> | MedicineCreateWithoutCategoryInput[] | MedicineUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: MedicineCreateOrConnectWithoutCategoryInput | MedicineCreateOrConnectWithoutCategoryInput[]
+    upsert?: MedicineUpsertWithWhereUniqueWithoutCategoryInput | MedicineUpsertWithWhereUniqueWithoutCategoryInput[]
+    createMany?: MedicineCreateManyCategoryInputEnvelope
+    set?: MedicineWhereUniqueInput | MedicineWhereUniqueInput[]
+    disconnect?: MedicineWhereUniqueInput | MedicineWhereUniqueInput[]
+    delete?: MedicineWhereUniqueInput | MedicineWhereUniqueInput[]
+    connect?: MedicineWhereUniqueInput | MedicineWhereUniqueInput[]
+    update?: MedicineUpdateWithWhereUniqueWithoutCategoryInput | MedicineUpdateWithWhereUniqueWithoutCategoryInput[]
+    updateMany?: MedicineUpdateManyWithWhereWithoutCategoryInput | MedicineUpdateManyWithWhereWithoutCategoryInput[]
+    deleteMany?: MedicineScalarWhereInput | MedicineScalarWhereInput[]
+  }
+
+  export type PharmacyCategoryCreateNestedOneWithoutMedicinesInput = {
+    create?: XOR<PharmacyCategoryCreateWithoutMedicinesInput, PharmacyCategoryUncheckedCreateWithoutMedicinesInput>
+    connectOrCreate?: PharmacyCategoryCreateOrConnectWithoutMedicinesInput
+    connect?: PharmacyCategoryWhereUniqueInput
+  }
+
+  export type ClinicCreateNestedOneWithoutMedicinesInput = {
+    create?: XOR<ClinicCreateWithoutMedicinesInput, ClinicUncheckedCreateWithoutMedicinesInput>
+    connectOrCreate?: ClinicCreateOrConnectWithoutMedicinesInput
+    connect?: ClinicWhereUniqueInput
+  }
+
+  export type PharmacyInvoiceItemCreateNestedManyWithoutMedicineInput = {
+    create?: XOR<PharmacyInvoiceItemCreateWithoutMedicineInput, PharmacyInvoiceItemUncheckedCreateWithoutMedicineInput> | PharmacyInvoiceItemCreateWithoutMedicineInput[] | PharmacyInvoiceItemUncheckedCreateWithoutMedicineInput[]
+    connectOrCreate?: PharmacyInvoiceItemCreateOrConnectWithoutMedicineInput | PharmacyInvoiceItemCreateOrConnectWithoutMedicineInput[]
+    createMany?: PharmacyInvoiceItemCreateManyMedicineInputEnvelope
+    connect?: PharmacyInvoiceItemWhereUniqueInput | PharmacyInvoiceItemWhereUniqueInput[]
+  }
+
+  export type PharmacyInvoiceItemUncheckedCreateNestedManyWithoutMedicineInput = {
+    create?: XOR<PharmacyInvoiceItemCreateWithoutMedicineInput, PharmacyInvoiceItemUncheckedCreateWithoutMedicineInput> | PharmacyInvoiceItemCreateWithoutMedicineInput[] | PharmacyInvoiceItemUncheckedCreateWithoutMedicineInput[]
+    connectOrCreate?: PharmacyInvoiceItemCreateOrConnectWithoutMedicineInput | PharmacyInvoiceItemCreateOrConnectWithoutMedicineInput[]
+    createMany?: PharmacyInvoiceItemCreateManyMedicineInputEnvelope
+    connect?: PharmacyInvoiceItemWhereUniqueInput | PharmacyInvoiceItemWhereUniqueInput[]
+  }
+
+  export type PharmacyCategoryUpdateOneWithoutMedicinesNestedInput = {
+    create?: XOR<PharmacyCategoryCreateWithoutMedicinesInput, PharmacyCategoryUncheckedCreateWithoutMedicinesInput>
+    connectOrCreate?: PharmacyCategoryCreateOrConnectWithoutMedicinesInput
+    upsert?: PharmacyCategoryUpsertWithoutMedicinesInput
+    disconnect?: PharmacyCategoryWhereInput | boolean
+    delete?: PharmacyCategoryWhereInput | boolean
+    connect?: PharmacyCategoryWhereUniqueInput
+    update?: XOR<XOR<PharmacyCategoryUpdateToOneWithWhereWithoutMedicinesInput, PharmacyCategoryUpdateWithoutMedicinesInput>, PharmacyCategoryUncheckedUpdateWithoutMedicinesInput>
+  }
+
+  export type ClinicUpdateOneRequiredWithoutMedicinesNestedInput = {
+    create?: XOR<ClinicCreateWithoutMedicinesInput, ClinicUncheckedCreateWithoutMedicinesInput>
+    connectOrCreate?: ClinicCreateOrConnectWithoutMedicinesInput
+    upsert?: ClinicUpsertWithoutMedicinesInput
+    connect?: ClinicWhereUniqueInput
+    update?: XOR<XOR<ClinicUpdateToOneWithWhereWithoutMedicinesInput, ClinicUpdateWithoutMedicinesInput>, ClinicUncheckedUpdateWithoutMedicinesInput>
+  }
+
+  export type PharmacyInvoiceItemUpdateManyWithoutMedicineNestedInput = {
+    create?: XOR<PharmacyInvoiceItemCreateWithoutMedicineInput, PharmacyInvoiceItemUncheckedCreateWithoutMedicineInput> | PharmacyInvoiceItemCreateWithoutMedicineInput[] | PharmacyInvoiceItemUncheckedCreateWithoutMedicineInput[]
+    connectOrCreate?: PharmacyInvoiceItemCreateOrConnectWithoutMedicineInput | PharmacyInvoiceItemCreateOrConnectWithoutMedicineInput[]
+    upsert?: PharmacyInvoiceItemUpsertWithWhereUniqueWithoutMedicineInput | PharmacyInvoiceItemUpsertWithWhereUniqueWithoutMedicineInput[]
+    createMany?: PharmacyInvoiceItemCreateManyMedicineInputEnvelope
+    set?: PharmacyInvoiceItemWhereUniqueInput | PharmacyInvoiceItemWhereUniqueInput[]
+    disconnect?: PharmacyInvoiceItemWhereUniqueInput | PharmacyInvoiceItemWhereUniqueInput[]
+    delete?: PharmacyInvoiceItemWhereUniqueInput | PharmacyInvoiceItemWhereUniqueInput[]
+    connect?: PharmacyInvoiceItemWhereUniqueInput | PharmacyInvoiceItemWhereUniqueInput[]
+    update?: PharmacyInvoiceItemUpdateWithWhereUniqueWithoutMedicineInput | PharmacyInvoiceItemUpdateWithWhereUniqueWithoutMedicineInput[]
+    updateMany?: PharmacyInvoiceItemUpdateManyWithWhereWithoutMedicineInput | PharmacyInvoiceItemUpdateManyWithWhereWithoutMedicineInput[]
+    deleteMany?: PharmacyInvoiceItemScalarWhereInput | PharmacyInvoiceItemScalarWhereInput[]
+  }
+
+  export type PharmacyInvoiceItemUncheckedUpdateManyWithoutMedicineNestedInput = {
+    create?: XOR<PharmacyInvoiceItemCreateWithoutMedicineInput, PharmacyInvoiceItemUncheckedCreateWithoutMedicineInput> | PharmacyInvoiceItemCreateWithoutMedicineInput[] | PharmacyInvoiceItemUncheckedCreateWithoutMedicineInput[]
+    connectOrCreate?: PharmacyInvoiceItemCreateOrConnectWithoutMedicineInput | PharmacyInvoiceItemCreateOrConnectWithoutMedicineInput[]
+    upsert?: PharmacyInvoiceItemUpsertWithWhereUniqueWithoutMedicineInput | PharmacyInvoiceItemUpsertWithWhereUniqueWithoutMedicineInput[]
+    createMany?: PharmacyInvoiceItemCreateManyMedicineInputEnvelope
+    set?: PharmacyInvoiceItemWhereUniqueInput | PharmacyInvoiceItemWhereUniqueInput[]
+    disconnect?: PharmacyInvoiceItemWhereUniqueInput | PharmacyInvoiceItemWhereUniqueInput[]
+    delete?: PharmacyInvoiceItemWhereUniqueInput | PharmacyInvoiceItemWhereUniqueInput[]
+    connect?: PharmacyInvoiceItemWhereUniqueInput | PharmacyInvoiceItemWhereUniqueInput[]
+    update?: PharmacyInvoiceItemUpdateWithWhereUniqueWithoutMedicineInput | PharmacyInvoiceItemUpdateWithWhereUniqueWithoutMedicineInput[]
+    updateMany?: PharmacyInvoiceItemUpdateManyWithWhereWithoutMedicineInput | PharmacyInvoiceItemUpdateManyWithWhereWithoutMedicineInput[]
+    deleteMany?: PharmacyInvoiceItemScalarWhereInput | PharmacyInvoiceItemScalarWhereInput[]
+  }
+
+  export type PatientCreateNestedOneWithoutPharmacyInvoicesInput = {
+    create?: XOR<PatientCreateWithoutPharmacyInvoicesInput, PatientUncheckedCreateWithoutPharmacyInvoicesInput>
+    connectOrCreate?: PatientCreateOrConnectWithoutPharmacyInvoicesInput
+    connect?: PatientWhereUniqueInput
+  }
+
+  export type ClinicCreateNestedOneWithoutPharmacyInvoicesInput = {
+    create?: XOR<ClinicCreateWithoutPharmacyInvoicesInput, ClinicUncheckedCreateWithoutPharmacyInvoicesInput>
+    connectOrCreate?: ClinicCreateOrConnectWithoutPharmacyInvoicesInput
+    connect?: ClinicWhereUniqueInput
+  }
+
+  export type PharmacyInvoiceItemCreateNestedManyWithoutInvoiceInput = {
+    create?: XOR<PharmacyInvoiceItemCreateWithoutInvoiceInput, PharmacyInvoiceItemUncheckedCreateWithoutInvoiceInput> | PharmacyInvoiceItemCreateWithoutInvoiceInput[] | PharmacyInvoiceItemUncheckedCreateWithoutInvoiceInput[]
+    connectOrCreate?: PharmacyInvoiceItemCreateOrConnectWithoutInvoiceInput | PharmacyInvoiceItemCreateOrConnectWithoutInvoiceInput[]
+    createMany?: PharmacyInvoiceItemCreateManyInvoiceInputEnvelope
+    connect?: PharmacyInvoiceItemWhereUniqueInput | PharmacyInvoiceItemWhereUniqueInput[]
+  }
+
+  export type PharmacyInvoiceItemUncheckedCreateNestedManyWithoutInvoiceInput = {
+    create?: XOR<PharmacyInvoiceItemCreateWithoutInvoiceInput, PharmacyInvoiceItemUncheckedCreateWithoutInvoiceInput> | PharmacyInvoiceItemCreateWithoutInvoiceInput[] | PharmacyInvoiceItemUncheckedCreateWithoutInvoiceInput[]
+    connectOrCreate?: PharmacyInvoiceItemCreateOrConnectWithoutInvoiceInput | PharmacyInvoiceItemCreateOrConnectWithoutInvoiceInput[]
+    createMany?: PharmacyInvoiceItemCreateManyInvoiceInputEnvelope
+    connect?: PharmacyInvoiceItemWhereUniqueInput | PharmacyInvoiceItemWhereUniqueInput[]
+  }
+
+  export type PatientUpdateOneWithoutPharmacyInvoicesNestedInput = {
+    create?: XOR<PatientCreateWithoutPharmacyInvoicesInput, PatientUncheckedCreateWithoutPharmacyInvoicesInput>
+    connectOrCreate?: PatientCreateOrConnectWithoutPharmacyInvoicesInput
+    upsert?: PatientUpsertWithoutPharmacyInvoicesInput
+    disconnect?: PatientWhereInput | boolean
+    delete?: PatientWhereInput | boolean
+    connect?: PatientWhereUniqueInput
+    update?: XOR<XOR<PatientUpdateToOneWithWhereWithoutPharmacyInvoicesInput, PatientUpdateWithoutPharmacyInvoicesInput>, PatientUncheckedUpdateWithoutPharmacyInvoicesInput>
+  }
+
+  export type ClinicUpdateOneRequiredWithoutPharmacyInvoicesNestedInput = {
+    create?: XOR<ClinicCreateWithoutPharmacyInvoicesInput, ClinicUncheckedCreateWithoutPharmacyInvoicesInput>
+    connectOrCreate?: ClinicCreateOrConnectWithoutPharmacyInvoicesInput
+    upsert?: ClinicUpsertWithoutPharmacyInvoicesInput
+    connect?: ClinicWhereUniqueInput
+    update?: XOR<XOR<ClinicUpdateToOneWithWhereWithoutPharmacyInvoicesInput, ClinicUpdateWithoutPharmacyInvoicesInput>, ClinicUncheckedUpdateWithoutPharmacyInvoicesInput>
+  }
+
+  export type PharmacyInvoiceItemUpdateManyWithoutInvoiceNestedInput = {
+    create?: XOR<PharmacyInvoiceItemCreateWithoutInvoiceInput, PharmacyInvoiceItemUncheckedCreateWithoutInvoiceInput> | PharmacyInvoiceItemCreateWithoutInvoiceInput[] | PharmacyInvoiceItemUncheckedCreateWithoutInvoiceInput[]
+    connectOrCreate?: PharmacyInvoiceItemCreateOrConnectWithoutInvoiceInput | PharmacyInvoiceItemCreateOrConnectWithoutInvoiceInput[]
+    upsert?: PharmacyInvoiceItemUpsertWithWhereUniqueWithoutInvoiceInput | PharmacyInvoiceItemUpsertWithWhereUniqueWithoutInvoiceInput[]
+    createMany?: PharmacyInvoiceItemCreateManyInvoiceInputEnvelope
+    set?: PharmacyInvoiceItemWhereUniqueInput | PharmacyInvoiceItemWhereUniqueInput[]
+    disconnect?: PharmacyInvoiceItemWhereUniqueInput | PharmacyInvoiceItemWhereUniqueInput[]
+    delete?: PharmacyInvoiceItemWhereUniqueInput | PharmacyInvoiceItemWhereUniqueInput[]
+    connect?: PharmacyInvoiceItemWhereUniqueInput | PharmacyInvoiceItemWhereUniqueInput[]
+    update?: PharmacyInvoiceItemUpdateWithWhereUniqueWithoutInvoiceInput | PharmacyInvoiceItemUpdateWithWhereUniqueWithoutInvoiceInput[]
+    updateMany?: PharmacyInvoiceItemUpdateManyWithWhereWithoutInvoiceInput | PharmacyInvoiceItemUpdateManyWithWhereWithoutInvoiceInput[]
+    deleteMany?: PharmacyInvoiceItemScalarWhereInput | PharmacyInvoiceItemScalarWhereInput[]
+  }
+
+  export type PharmacyInvoiceItemUncheckedUpdateManyWithoutInvoiceNestedInput = {
+    create?: XOR<PharmacyInvoiceItemCreateWithoutInvoiceInput, PharmacyInvoiceItemUncheckedCreateWithoutInvoiceInput> | PharmacyInvoiceItemCreateWithoutInvoiceInput[] | PharmacyInvoiceItemUncheckedCreateWithoutInvoiceInput[]
+    connectOrCreate?: PharmacyInvoiceItemCreateOrConnectWithoutInvoiceInput | PharmacyInvoiceItemCreateOrConnectWithoutInvoiceInput[]
+    upsert?: PharmacyInvoiceItemUpsertWithWhereUniqueWithoutInvoiceInput | PharmacyInvoiceItemUpsertWithWhereUniqueWithoutInvoiceInput[]
+    createMany?: PharmacyInvoiceItemCreateManyInvoiceInputEnvelope
+    set?: PharmacyInvoiceItemWhereUniqueInput | PharmacyInvoiceItemWhereUniqueInput[]
+    disconnect?: PharmacyInvoiceItemWhereUniqueInput | PharmacyInvoiceItemWhereUniqueInput[]
+    delete?: PharmacyInvoiceItemWhereUniqueInput | PharmacyInvoiceItemWhereUniqueInput[]
+    connect?: PharmacyInvoiceItemWhereUniqueInput | PharmacyInvoiceItemWhereUniqueInput[]
+    update?: PharmacyInvoiceItemUpdateWithWhereUniqueWithoutInvoiceInput | PharmacyInvoiceItemUpdateWithWhereUniqueWithoutInvoiceInput[]
+    updateMany?: PharmacyInvoiceItemUpdateManyWithWhereWithoutInvoiceInput | PharmacyInvoiceItemUpdateManyWithWhereWithoutInvoiceInput[]
+    deleteMany?: PharmacyInvoiceItemScalarWhereInput | PharmacyInvoiceItemScalarWhereInput[]
+  }
+
+  export type PharmacyInvoiceCreateNestedOneWithoutItemsInput = {
+    create?: XOR<PharmacyInvoiceCreateWithoutItemsInput, PharmacyInvoiceUncheckedCreateWithoutItemsInput>
+    connectOrCreate?: PharmacyInvoiceCreateOrConnectWithoutItemsInput
+    connect?: PharmacyInvoiceWhereUniqueInput
+  }
+
+  export type MedicineCreateNestedOneWithoutInvoiceItemsInput = {
+    create?: XOR<MedicineCreateWithoutInvoiceItemsInput, MedicineUncheckedCreateWithoutInvoiceItemsInput>
+    connectOrCreate?: MedicineCreateOrConnectWithoutInvoiceItemsInput
+    connect?: MedicineWhereUniqueInput
+  }
+
+  export type PharmacyInvoiceUpdateOneRequiredWithoutItemsNestedInput = {
+    create?: XOR<PharmacyInvoiceCreateWithoutItemsInput, PharmacyInvoiceUncheckedCreateWithoutItemsInput>
+    connectOrCreate?: PharmacyInvoiceCreateOrConnectWithoutItemsInput
+    upsert?: PharmacyInvoiceUpsertWithoutItemsInput
+    connect?: PharmacyInvoiceWhereUniqueInput
+    update?: XOR<XOR<PharmacyInvoiceUpdateToOneWithWhereWithoutItemsInput, PharmacyInvoiceUpdateWithoutItemsInput>, PharmacyInvoiceUncheckedUpdateWithoutItemsInput>
+  }
+
+  export type MedicineUpdateOneWithoutInvoiceItemsNestedInput = {
+    create?: XOR<MedicineCreateWithoutInvoiceItemsInput, MedicineUncheckedCreateWithoutInvoiceItemsInput>
+    connectOrCreate?: MedicineCreateOrConnectWithoutInvoiceItemsInput
+    upsert?: MedicineUpsertWithoutInvoiceItemsInput
+    disconnect?: MedicineWhereInput | boolean
+    delete?: MedicineWhereInput | boolean
+    connect?: MedicineWhereUniqueInput
+    update?: XOR<XOR<MedicineUpdateToOneWithWhereWithoutInvoiceItemsInput, MedicineUpdateWithoutInvoiceItemsInput>, MedicineUncheckedUpdateWithoutInvoiceItemsInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -59473,6 +66305,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionCreateNestedManyWithoutPatientInput
     invoices?: InvoiceCreateNestedManyWithoutPatientInput
     labBookings?: LabBookingCreateNestedManyWithoutPatientInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutPatientInput
   }
 
   export type PatientUncheckedCreateWithoutClinicInput = {
@@ -59511,6 +66344,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutPatientInput
     invoices?: InvoiceUncheckedCreateNestedManyWithoutPatientInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutPatientInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutPatientInput
   }
 
   export type PatientCreateOrConnectWithoutClinicInput = {
@@ -60498,6 +67332,150 @@ export namespace Prisma {
 
   export type LabBookingCreateManyClinicInputEnvelope = {
     data: LabBookingCreateManyClinicInput | LabBookingCreateManyClinicInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PharmacyCategoryCreateWithoutClinicInput = {
+    id?: string
+    name: string
+    description?: string | null
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    medicines?: MedicineCreateNestedManyWithoutCategoryInput
+  }
+
+  export type PharmacyCategoryUncheckedCreateWithoutClinicInput = {
+    id?: string
+    name: string
+    description?: string | null
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    medicines?: MedicineUncheckedCreateNestedManyWithoutCategoryInput
+  }
+
+  export type PharmacyCategoryCreateOrConnectWithoutClinicInput = {
+    where: PharmacyCategoryWhereUniqueInput
+    create: XOR<PharmacyCategoryCreateWithoutClinicInput, PharmacyCategoryUncheckedCreateWithoutClinicInput>
+  }
+
+  export type PharmacyCategoryCreateManyClinicInputEnvelope = {
+    data: PharmacyCategoryCreateManyClinicInput | PharmacyCategoryCreateManyClinicInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type MedicineCreateWithoutClinicInput = {
+    id?: string
+    medicineName: string
+    genericName?: string | null
+    brandName?: string | null
+    manufacturer?: string | null
+    medicineCode?: string | null
+    hsnCode?: string | null
+    description?: string | null
+    purchasePrice?: number
+    sellingPrice?: number
+    gst?: number
+    mrp?: number
+    openingStock?: number
+    stockIn?: number
+    stockOut?: number
+    minimumStockAlert?: number
+    unit?: string | null
+    batchNumber?: string | null
+    manufacturingDate?: Date | string | null
+    expiryDate?: Date | string | null
+    prescriptionRequired?: boolean
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    category?: PharmacyCategoryCreateNestedOneWithoutMedicinesInput
+    invoiceItems?: PharmacyInvoiceItemCreateNestedManyWithoutMedicineInput
+  }
+
+  export type MedicineUncheckedCreateWithoutClinicInput = {
+    id?: string
+    medicineName: string
+    genericName?: string | null
+    brandName?: string | null
+    categoryId?: string | null
+    manufacturer?: string | null
+    medicineCode?: string | null
+    hsnCode?: string | null
+    description?: string | null
+    purchasePrice?: number
+    sellingPrice?: number
+    gst?: number
+    mrp?: number
+    openingStock?: number
+    stockIn?: number
+    stockOut?: number
+    minimumStockAlert?: number
+    unit?: string | null
+    batchNumber?: string | null
+    manufacturingDate?: Date | string | null
+    expiryDate?: Date | string | null
+    prescriptionRequired?: boolean
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    invoiceItems?: PharmacyInvoiceItemUncheckedCreateNestedManyWithoutMedicineInput
+  }
+
+  export type MedicineCreateOrConnectWithoutClinicInput = {
+    where: MedicineWhereUniqueInput
+    create: XOR<MedicineCreateWithoutClinicInput, MedicineUncheckedCreateWithoutClinicInput>
+  }
+
+  export type MedicineCreateManyClinicInputEnvelope = {
+    data: MedicineCreateManyClinicInput | MedicineCreateManyClinicInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PharmacyInvoiceCreateWithoutClinicInput = {
+    id?: string
+    invoiceNo: string
+    customerName?: string | null
+    customerPhone?: string | null
+    invoiceDate?: Date | string
+    tax?: number
+    discount?: number
+    subTotal?: number
+    totalAmount: number
+    paymentMethod?: string
+    paymentStatus?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    patient?: PatientCreateNestedOneWithoutPharmacyInvoicesInput
+    items?: PharmacyInvoiceItemCreateNestedManyWithoutInvoiceInput
+  }
+
+  export type PharmacyInvoiceUncheckedCreateWithoutClinicInput = {
+    id?: string
+    invoiceNo: string
+    patientId?: string | null
+    customerName?: string | null
+    customerPhone?: string | null
+    invoiceDate?: Date | string
+    tax?: number
+    discount?: number
+    subTotal?: number
+    totalAmount: number
+    paymentMethod?: string
+    paymentStatus?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    items?: PharmacyInvoiceItemUncheckedCreateNestedManyWithoutInvoiceInput
+  }
+
+  export type PharmacyInvoiceCreateOrConnectWithoutClinicInput = {
+    where: PharmacyInvoiceWhereUniqueInput
+    create: XOR<PharmacyInvoiceCreateWithoutClinicInput, PharmacyInvoiceUncheckedCreateWithoutClinicInput>
+  }
+
+  export type PharmacyInvoiceCreateManyClinicInputEnvelope = {
+    data: PharmacyInvoiceCreateManyClinicInput | PharmacyInvoiceCreateManyClinicInput[]
     skipDuplicates?: boolean
   }
 
@@ -61680,6 +68658,120 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"LabBooking"> | Date | string
   }
 
+  export type PharmacyCategoryUpsertWithWhereUniqueWithoutClinicInput = {
+    where: PharmacyCategoryWhereUniqueInput
+    update: XOR<PharmacyCategoryUpdateWithoutClinicInput, PharmacyCategoryUncheckedUpdateWithoutClinicInput>
+    create: XOR<PharmacyCategoryCreateWithoutClinicInput, PharmacyCategoryUncheckedCreateWithoutClinicInput>
+  }
+
+  export type PharmacyCategoryUpdateWithWhereUniqueWithoutClinicInput = {
+    where: PharmacyCategoryWhereUniqueInput
+    data: XOR<PharmacyCategoryUpdateWithoutClinicInput, PharmacyCategoryUncheckedUpdateWithoutClinicInput>
+  }
+
+  export type PharmacyCategoryUpdateManyWithWhereWithoutClinicInput = {
+    where: PharmacyCategoryScalarWhereInput
+    data: XOR<PharmacyCategoryUpdateManyMutationInput, PharmacyCategoryUncheckedUpdateManyWithoutClinicInput>
+  }
+
+  export type PharmacyCategoryScalarWhereInput = {
+    AND?: PharmacyCategoryScalarWhereInput | PharmacyCategoryScalarWhereInput[]
+    OR?: PharmacyCategoryScalarWhereInput[]
+    NOT?: PharmacyCategoryScalarWhereInput | PharmacyCategoryScalarWhereInput[]
+    id?: StringFilter<"PharmacyCategory"> | string
+    name?: StringFilter<"PharmacyCategory"> | string
+    description?: StringNullableFilter<"PharmacyCategory"> | string | null
+    status?: StringFilter<"PharmacyCategory"> | string
+    clinicId?: StringFilter<"PharmacyCategory"> | string
+    createdAt?: DateTimeFilter<"PharmacyCategory"> | Date | string
+    updatedAt?: DateTimeFilter<"PharmacyCategory"> | Date | string
+  }
+
+  export type MedicineUpsertWithWhereUniqueWithoutClinicInput = {
+    where: MedicineWhereUniqueInput
+    update: XOR<MedicineUpdateWithoutClinicInput, MedicineUncheckedUpdateWithoutClinicInput>
+    create: XOR<MedicineCreateWithoutClinicInput, MedicineUncheckedCreateWithoutClinicInput>
+  }
+
+  export type MedicineUpdateWithWhereUniqueWithoutClinicInput = {
+    where: MedicineWhereUniqueInput
+    data: XOR<MedicineUpdateWithoutClinicInput, MedicineUncheckedUpdateWithoutClinicInput>
+  }
+
+  export type MedicineUpdateManyWithWhereWithoutClinicInput = {
+    where: MedicineScalarWhereInput
+    data: XOR<MedicineUpdateManyMutationInput, MedicineUncheckedUpdateManyWithoutClinicInput>
+  }
+
+  export type MedicineScalarWhereInput = {
+    AND?: MedicineScalarWhereInput | MedicineScalarWhereInput[]
+    OR?: MedicineScalarWhereInput[]
+    NOT?: MedicineScalarWhereInput | MedicineScalarWhereInput[]
+    id?: StringFilter<"Medicine"> | string
+    medicineName?: StringFilter<"Medicine"> | string
+    genericName?: StringNullableFilter<"Medicine"> | string | null
+    brandName?: StringNullableFilter<"Medicine"> | string | null
+    categoryId?: StringNullableFilter<"Medicine"> | string | null
+    manufacturer?: StringNullableFilter<"Medicine"> | string | null
+    medicineCode?: StringNullableFilter<"Medicine"> | string | null
+    hsnCode?: StringNullableFilter<"Medicine"> | string | null
+    description?: StringNullableFilter<"Medicine"> | string | null
+    purchasePrice?: FloatFilter<"Medicine"> | number
+    sellingPrice?: FloatFilter<"Medicine"> | number
+    gst?: FloatFilter<"Medicine"> | number
+    mrp?: FloatFilter<"Medicine"> | number
+    openingStock?: IntFilter<"Medicine"> | number
+    stockIn?: IntFilter<"Medicine"> | number
+    stockOut?: IntFilter<"Medicine"> | number
+    minimumStockAlert?: IntFilter<"Medicine"> | number
+    unit?: StringNullableFilter<"Medicine"> | string | null
+    batchNumber?: StringNullableFilter<"Medicine"> | string | null
+    manufacturingDate?: DateTimeNullableFilter<"Medicine"> | Date | string | null
+    expiryDate?: DateTimeNullableFilter<"Medicine"> | Date | string | null
+    prescriptionRequired?: BoolFilter<"Medicine"> | boolean
+    status?: StringFilter<"Medicine"> | string
+    clinicId?: StringFilter<"Medicine"> | string
+    createdAt?: DateTimeFilter<"Medicine"> | Date | string
+    updatedAt?: DateTimeFilter<"Medicine"> | Date | string
+  }
+
+  export type PharmacyInvoiceUpsertWithWhereUniqueWithoutClinicInput = {
+    where: PharmacyInvoiceWhereUniqueInput
+    update: XOR<PharmacyInvoiceUpdateWithoutClinicInput, PharmacyInvoiceUncheckedUpdateWithoutClinicInput>
+    create: XOR<PharmacyInvoiceCreateWithoutClinicInput, PharmacyInvoiceUncheckedCreateWithoutClinicInput>
+  }
+
+  export type PharmacyInvoiceUpdateWithWhereUniqueWithoutClinicInput = {
+    where: PharmacyInvoiceWhereUniqueInput
+    data: XOR<PharmacyInvoiceUpdateWithoutClinicInput, PharmacyInvoiceUncheckedUpdateWithoutClinicInput>
+  }
+
+  export type PharmacyInvoiceUpdateManyWithWhereWithoutClinicInput = {
+    where: PharmacyInvoiceScalarWhereInput
+    data: XOR<PharmacyInvoiceUpdateManyMutationInput, PharmacyInvoiceUncheckedUpdateManyWithoutClinicInput>
+  }
+
+  export type PharmacyInvoiceScalarWhereInput = {
+    AND?: PharmacyInvoiceScalarWhereInput | PharmacyInvoiceScalarWhereInput[]
+    OR?: PharmacyInvoiceScalarWhereInput[]
+    NOT?: PharmacyInvoiceScalarWhereInput | PharmacyInvoiceScalarWhereInput[]
+    id?: StringFilter<"PharmacyInvoice"> | string
+    invoiceNo?: StringFilter<"PharmacyInvoice"> | string
+    patientId?: StringNullableFilter<"PharmacyInvoice"> | string | null
+    customerName?: StringNullableFilter<"PharmacyInvoice"> | string | null
+    customerPhone?: StringNullableFilter<"PharmacyInvoice"> | string | null
+    invoiceDate?: DateTimeFilter<"PharmacyInvoice"> | Date | string
+    tax?: FloatFilter<"PharmacyInvoice"> | number
+    discount?: FloatFilter<"PharmacyInvoice"> | number
+    subTotal?: FloatFilter<"PharmacyInvoice"> | number
+    totalAmount?: FloatFilter<"PharmacyInvoice"> | number
+    paymentMethod?: StringFilter<"PharmacyInvoice"> | string
+    paymentStatus?: StringFilter<"PharmacyInvoice"> | string
+    clinicId?: StringFilter<"PharmacyInvoice"> | string
+    createdAt?: DateTimeFilter<"PharmacyInvoice"> | Date | string
+    updatedAt?: DateTimeFilter<"PharmacyInvoice"> | Date | string
+  }
+
   export type ClinicCreateWithoutLandingPageInput = {
     id?: string
     name: string
@@ -61736,6 +68828,9 @@ export namespace Prisma {
     labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
     labTests?: LabTestCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutLandingPageInput = {
@@ -61794,6 +68889,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
     labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutLandingPageInput = {
@@ -61868,6 +68966,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutLandingPageInput = {
@@ -61926,6 +69027,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutPackageInput = {
@@ -61984,6 +69088,9 @@ export namespace Prisma {
     labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
     labTests?: LabTestCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutPackageInput = {
@@ -62042,6 +69149,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
     labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutPackageInput = {
@@ -62157,6 +69267,9 @@ export namespace Prisma {
     labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
     labTests?: LabTestCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutUsersInput = {
@@ -62215,6 +69328,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
     labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutUsersInput = {
@@ -62289,6 +69405,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutUsersInput = {
@@ -62347,6 +69466,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutDepartmentsInput = {
@@ -62405,6 +69527,9 @@ export namespace Prisma {
     labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
     labTests?: LabTestCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutDepartmentsInput = {
@@ -62463,6 +69588,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
     labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutDepartmentsInput = {
@@ -62897,6 +70025,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutDepartmentsInput = {
@@ -62955,6 +70086,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type DesignationUpsertWithWhereUniqueWithoutDepartmentInput = {
@@ -63109,6 +70243,9 @@ export namespace Prisma {
     labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
     labTests?: LabTestCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutDesignationsInput = {
@@ -63167,6 +70304,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
     labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutDesignationsInput = {
@@ -63464,6 +70604,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutDesignationsInput = {
@@ -63522,6 +70665,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type DepartmentUpsertWithoutDesignationsInput = {
@@ -63727,6 +70873,9 @@ export namespace Prisma {
     labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
     labTests?: LabTestCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutStaffsInput = {
@@ -63785,6 +70934,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
     labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutStaffsInput = {
@@ -63997,6 +71149,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutStaffsInput = {
@@ -64055,6 +71210,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type PayrollUpsertWithWhereUniqueWithoutStaffInput = {
@@ -64226,6 +71384,9 @@ export namespace Prisma {
     labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
     labTests?: LabTestCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutDoctorsInput = {
@@ -64284,6 +71445,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
     labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutDoctorsInput = {
@@ -64618,6 +71782,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutDoctorsInput = {
@@ -64676,6 +71843,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type AppointmentUpsertWithWhereUniqueWithoutDoctorInput = {
@@ -64782,6 +71952,9 @@ export namespace Prisma {
     labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
     labTests?: LabTestCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutPatientsInput = {
@@ -64840,6 +72013,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
     labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutPatientsInput = {
@@ -65057,6 +72233,52 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type PharmacyInvoiceCreateWithoutPatientInput = {
+    id?: string
+    invoiceNo: string
+    customerName?: string | null
+    customerPhone?: string | null
+    invoiceDate?: Date | string
+    tax?: number
+    discount?: number
+    subTotal?: number
+    totalAmount: number
+    paymentMethod?: string
+    paymentStatus?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    clinic: ClinicCreateNestedOneWithoutPharmacyInvoicesInput
+    items?: PharmacyInvoiceItemCreateNestedManyWithoutInvoiceInput
+  }
+
+  export type PharmacyInvoiceUncheckedCreateWithoutPatientInput = {
+    id?: string
+    invoiceNo: string
+    customerName?: string | null
+    customerPhone?: string | null
+    invoiceDate?: Date | string
+    tax?: number
+    discount?: number
+    subTotal?: number
+    totalAmount: number
+    paymentMethod?: string
+    paymentStatus?: string
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    items?: PharmacyInvoiceItemUncheckedCreateNestedManyWithoutInvoiceInput
+  }
+
+  export type PharmacyInvoiceCreateOrConnectWithoutPatientInput = {
+    where: PharmacyInvoiceWhereUniqueInput
+    create: XOR<PharmacyInvoiceCreateWithoutPatientInput, PharmacyInvoiceUncheckedCreateWithoutPatientInput>
+  }
+
+  export type PharmacyInvoiceCreateManyPatientInputEnvelope = {
+    data: PharmacyInvoiceCreateManyPatientInput | PharmacyInvoiceCreateManyPatientInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ClinicUpsertWithoutPatientsInput = {
     update: XOR<ClinicUpdateWithoutPatientsInput, ClinicUncheckedUpdateWithoutPatientsInput>
     create: XOR<ClinicCreateWithoutPatientsInput, ClinicUncheckedCreateWithoutPatientsInput>
@@ -65124,6 +72346,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutPatientsInput = {
@@ -65182,6 +72407,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type AppointmentUpsertWithWhereUniqueWithoutPatientInput = {
@@ -65248,6 +72476,22 @@ export namespace Prisma {
     data: XOR<LabBookingUpdateManyMutationInput, LabBookingUncheckedUpdateManyWithoutPatientInput>
   }
 
+  export type PharmacyInvoiceUpsertWithWhereUniqueWithoutPatientInput = {
+    where: PharmacyInvoiceWhereUniqueInput
+    update: XOR<PharmacyInvoiceUpdateWithoutPatientInput, PharmacyInvoiceUncheckedUpdateWithoutPatientInput>
+    create: XOR<PharmacyInvoiceCreateWithoutPatientInput, PharmacyInvoiceUncheckedCreateWithoutPatientInput>
+  }
+
+  export type PharmacyInvoiceUpdateWithWhereUniqueWithoutPatientInput = {
+    where: PharmacyInvoiceWhereUniqueInput
+    data: XOR<PharmacyInvoiceUpdateWithoutPatientInput, PharmacyInvoiceUncheckedUpdateWithoutPatientInput>
+  }
+
+  export type PharmacyInvoiceUpdateManyWithWhereWithoutPatientInput = {
+    where: PharmacyInvoiceScalarWhereInput
+    data: XOR<PharmacyInvoiceUpdateManyMutationInput, PharmacyInvoiceUncheckedUpdateManyWithoutPatientInput>
+  }
+
   export type PatientCreateWithoutAppointmentsInput = {
     id?: string
     patientCode?: string | null
@@ -65284,6 +72528,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionCreateNestedManyWithoutPatientInput
     invoices?: InvoiceCreateNestedManyWithoutPatientInput
     labBookings?: LabBookingCreateNestedManyWithoutPatientInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutPatientInput
   }
 
   export type PatientUncheckedCreateWithoutAppointmentsInput = {
@@ -65322,6 +72567,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutPatientInput
     invoices?: InvoiceUncheckedCreateNestedManyWithoutPatientInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutPatientInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutPatientInput
   }
 
   export type PatientCreateOrConnectWithoutAppointmentsInput = {
@@ -65541,6 +72787,9 @@ export namespace Prisma {
     labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
     labTests?: LabTestCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutAppointmentsInput = {
@@ -65599,6 +72848,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
     labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutAppointmentsInput = {
@@ -65897,6 +73149,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionUpdateManyWithoutPatientNestedInput
     invoices?: InvoiceUpdateManyWithoutPatientNestedInput
     labBookings?: LabBookingUpdateManyWithoutPatientNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutPatientNestedInput
   }
 
   export type PatientUncheckedUpdateWithoutAppointmentsInput = {
@@ -65935,6 +73188,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutPatientNestedInput
     invoices?: InvoiceUncheckedUpdateManyWithoutPatientNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutPatientNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutPatientNestedInput
   }
 
   export type DoctorUpsertWithoutAppointmentsInput = {
@@ -66172,6 +73426,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutAppointmentsInput = {
@@ -66230,6 +73487,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type PrescriptionUpsertWithWhereUniqueWithoutAppointmentInput = {
@@ -66491,6 +73751,9 @@ export namespace Prisma {
     labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
     labTests?: LabTestCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutServicesInput = {
@@ -66549,6 +73812,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
     labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutServicesInput = {
@@ -66702,6 +73968,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutServicesInput = {
@@ -66760,6 +74029,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type InvoiceItemUpsertWithWhereUniqueWithoutServiceInput = {
@@ -66834,6 +74106,9 @@ export namespace Prisma {
     labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
     labTests?: LabTestCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutSpecializationsInput = {
@@ -66892,6 +74167,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
     labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutSpecializationsInput = {
@@ -67083,6 +74361,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutSpecializationsInput = {
@@ -67141,6 +74422,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type DoctorUpsertWithWhereUniqueWithoutSpecializationsInput = {
@@ -67215,6 +74499,9 @@ export namespace Prisma {
     labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
     labTests?: LabTestCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutHolidaysInput = {
@@ -67273,6 +74560,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
     labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutHolidaysInput = {
@@ -67347,6 +74637,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutHolidaysInput = {
@@ -67405,6 +74698,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type StaffCreateWithoutPayrollsInput = {
@@ -67637,6 +74933,9 @@ export namespace Prisma {
     labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
     labTests?: LabTestCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutPayrollsInput = {
@@ -67695,6 +74994,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
     labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutPayrollsInput = {
@@ -67955,6 +75257,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutPayrollsInput = {
@@ -68013,6 +75318,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutExpensesInput = {
@@ -68071,6 +75379,9 @@ export namespace Prisma {
     labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
     labTests?: LabTestCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutExpensesInput = {
@@ -68129,6 +75440,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
     labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutExpensesInput = {
@@ -68203,6 +75517,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutExpensesInput = {
@@ -68261,6 +75578,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutExpenseCategoriesInput = {
@@ -68319,6 +75639,9 @@ export namespace Prisma {
     labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
     labTests?: LabTestCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutExpenseCategoriesInput = {
@@ -68377,6 +75700,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
     labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutExpenseCategoriesInput = {
@@ -68451,6 +75777,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutExpenseCategoriesInput = {
@@ -68509,6 +75838,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutClinicRolesInput = {
@@ -68567,6 +75899,9 @@ export namespace Prisma {
     labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
     labTests?: LabTestCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutClinicRolesInput = {
@@ -68625,6 +75960,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
     labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutClinicRolesInput = {
@@ -68699,6 +76037,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutClinicRolesInput = {
@@ -68757,6 +76098,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutAttendancesInput = {
@@ -68815,6 +76159,9 @@ export namespace Prisma {
     labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
     labTests?: LabTestCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutAttendancesInput = {
@@ -68873,6 +76220,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
     labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutAttendancesInput = {
@@ -68947,6 +76297,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutAttendancesInput = {
@@ -69005,6 +76358,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutLeaveTypesInput = {
@@ -69063,6 +76419,9 @@ export namespace Prisma {
     labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
     labTests?: LabTestCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutLeaveTypesInput = {
@@ -69121,6 +76480,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
     labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutLeaveTypesInput = {
@@ -69195,6 +76557,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutLeaveTypesInput = {
@@ -69253,6 +76618,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutLeavesInput = {
@@ -69311,6 +76679,9 @@ export namespace Prisma {
     labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
     labTests?: LabTestCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutLeavesInput = {
@@ -69369,6 +76740,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
     labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutLeavesInput = {
@@ -69443,6 +76817,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutLeavesInput = {
@@ -69501,6 +76878,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutWorkingDaysConfigInput = {
@@ -69559,6 +76939,9 @@ export namespace Prisma {
     labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
     labTests?: LabTestCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutWorkingDaysConfigInput = {
@@ -69617,6 +77000,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
     labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutWorkingDaysConfigInput = {
@@ -69691,6 +77077,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutWorkingDaysConfigInput = {
@@ -69749,6 +77138,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type PatientCreateWithoutPrescriptionsInput = {
@@ -69787,6 +77179,7 @@ export namespace Prisma {
     appointments?: AppointmentCreateNestedManyWithoutPatientInput
     invoices?: InvoiceCreateNestedManyWithoutPatientInput
     labBookings?: LabBookingCreateNestedManyWithoutPatientInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutPatientInput
   }
 
   export type PatientUncheckedCreateWithoutPrescriptionsInput = {
@@ -69825,6 +77218,7 @@ export namespace Prisma {
     appointments?: AppointmentUncheckedCreateNestedManyWithoutPatientInput
     invoices?: InvoiceUncheckedCreateNestedManyWithoutPatientInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutPatientInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutPatientInput
   }
 
   export type PatientCreateOrConnectWithoutPrescriptionsInput = {
@@ -70103,6 +77497,9 @@ export namespace Prisma {
     labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
     labTests?: LabTestCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutPrescriptionsInput = {
@@ -70161,6 +77558,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
     labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutPrescriptionsInput = {
@@ -70249,6 +77649,7 @@ export namespace Prisma {
     appointments?: AppointmentUpdateManyWithoutPatientNestedInput
     invoices?: InvoiceUpdateManyWithoutPatientNestedInput
     labBookings?: LabBookingUpdateManyWithoutPatientNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutPatientNestedInput
   }
 
   export type PatientUncheckedUpdateWithoutPrescriptionsInput = {
@@ -70287,6 +77688,7 @@ export namespace Prisma {
     appointments?: AppointmentUncheckedUpdateManyWithoutPatientNestedInput
     invoices?: InvoiceUncheckedUpdateManyWithoutPatientNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutPatientNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutPatientNestedInput
   }
 
   export type DoctorUpsertWithoutPrescriptionsInput = {
@@ -70589,6 +77991,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutPrescriptionsInput = {
@@ -70647,6 +78052,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type PrescriptionMedicineUpsertWithWhereUniqueWithoutPrescriptionInput = {
@@ -70758,6 +78166,9 @@ export namespace Prisma {
     labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
     labTests?: LabTestCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutPrescriptionMedicinesInput = {
@@ -70816,6 +78227,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
     labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutPrescriptionMedicinesInput = {
@@ -70933,6 +78347,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutPrescriptionMedicinesInput = {
@@ -70991,6 +78408,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type PatientCreateWithoutInvoicesInput = {
@@ -71029,6 +78449,7 @@ export namespace Prisma {
     appointments?: AppointmentCreateNestedManyWithoutPatientInput
     prescriptions?: PrescriptionCreateNestedManyWithoutPatientInput
     labBookings?: LabBookingCreateNestedManyWithoutPatientInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutPatientInput
   }
 
   export type PatientUncheckedCreateWithoutInvoicesInput = {
@@ -71067,6 +78488,7 @@ export namespace Prisma {
     appointments?: AppointmentUncheckedCreateNestedManyWithoutPatientInput
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutPatientInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutPatientInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutPatientInput
   }
 
   export type PatientCreateOrConnectWithoutInvoicesInput = {
@@ -71130,6 +78552,9 @@ export namespace Prisma {
     labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
     labTests?: LabTestCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutInvoicesInput = {
@@ -71188,6 +78613,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
     labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutInvoicesInput = {
@@ -71384,6 +78812,7 @@ export namespace Prisma {
     appointments?: AppointmentUpdateManyWithoutPatientNestedInput
     prescriptions?: PrescriptionUpdateManyWithoutPatientNestedInput
     labBookings?: LabBookingUpdateManyWithoutPatientNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutPatientNestedInput
   }
 
   export type PatientUncheckedUpdateWithoutInvoicesInput = {
@@ -71422,6 +78851,7 @@ export namespace Prisma {
     appointments?: AppointmentUncheckedUpdateManyWithoutPatientNestedInput
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutPatientNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutPatientNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutPatientNestedInput
   }
 
   export type ClinicUpsertWithoutInvoicesInput = {
@@ -71491,6 +78921,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutInvoicesInput = {
@@ -71549,6 +78982,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type InvoiceItemUpsertWithWhereUniqueWithoutInvoiceInput = {
@@ -71817,6 +79253,9 @@ export namespace Prisma {
     labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
     labTests?: LabTestCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutInvoiceItemsInput = {
@@ -71875,6 +79314,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
     labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutInvoiceItemsInput = {
@@ -72035,6 +79477,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutInvoiceItemsInput = {
@@ -72093,6 +79538,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutProductsInput = {
@@ -72151,6 +79599,9 @@ export namespace Prisma {
     labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
     labTests?: LabTestCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutProductsInput = {
@@ -72209,6 +79660,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
     labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutProductsInput = {
@@ -72283,6 +79737,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutProductsInput = {
@@ -72341,6 +79798,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutNotificationsInput = {
@@ -72399,6 +79859,9 @@ export namespace Prisma {
     labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
     labTests?: LabTestCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutNotificationsInput = {
@@ -72457,6 +79920,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
     labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutNotificationsInput = {
@@ -72531,6 +79997,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutNotificationsInput = {
@@ -72589,6 +80058,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutTicketsInput = {
@@ -72647,6 +80119,9 @@ export namespace Prisma {
     labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
     labTests?: LabTestCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutTicketsInput = {
@@ -72705,6 +80180,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
     labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutTicketsInput = {
@@ -72779,6 +80257,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutTicketsInput = {
@@ -72837,6 +80318,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutTodosInput = {
@@ -72895,6 +80379,9 @@ export namespace Prisma {
     labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
     labTests?: LabTestCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutTodosInput = {
@@ -72953,6 +80440,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
     labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutTodosInput = {
@@ -73027,6 +80517,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutTodosInput = {
@@ -73085,6 +80578,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicCreateWithoutNotesInput = {
@@ -73143,6 +80639,9 @@ export namespace Prisma {
     labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
     labTests?: LabTestCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutNotesInput = {
@@ -73201,6 +80700,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
     labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutNotesInput = {
@@ -73334,6 +80836,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutNotesInput = {
@@ -73392,6 +80897,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type AppointmentUpsertWithoutNotesInput = {
@@ -73515,6 +81023,9 @@ export namespace Prisma {
     notes?: NoteCreateNestedManyWithoutClinicInput
     labTests?: LabTestCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutLabCategoriesInput = {
@@ -73573,6 +81084,9 @@ export namespace Prisma {
     notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
     labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutLabCategoriesInput = {
@@ -73705,6 +81219,9 @@ export namespace Prisma {
     notes?: NoteUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutLabCategoriesInput = {
@@ -73763,6 +81280,9 @@ export namespace Prisma {
     notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type LabTestUpsertWithWhereUniqueWithoutCategoryInput = {
@@ -73862,6 +81382,9 @@ export namespace Prisma {
     notes?: NoteCreateNestedManyWithoutClinicInput
     labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutLabTestsInput = {
@@ -73920,6 +81443,9 @@ export namespace Prisma {
     notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
     labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
     labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutLabTestsInput = {
@@ -74079,6 +81605,9 @@ export namespace Prisma {
     notes?: NoteUpdateManyWithoutClinicNestedInput
     labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutLabTestsInput = {
@@ -74137,6 +81666,9 @@ export namespace Prisma {
     notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
     labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type LabBookingUpsertWithWhereUniqueWithoutTestInput = {
@@ -74191,6 +81723,7 @@ export namespace Prisma {
     appointments?: AppointmentCreateNestedManyWithoutPatientInput
     prescriptions?: PrescriptionCreateNestedManyWithoutPatientInput
     invoices?: InvoiceCreateNestedManyWithoutPatientInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutPatientInput
   }
 
   export type PatientUncheckedCreateWithoutLabBookingsInput = {
@@ -74229,6 +81762,7 @@ export namespace Prisma {
     appointments?: AppointmentUncheckedCreateNestedManyWithoutPatientInput
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutPatientInput
     invoices?: InvoiceUncheckedCreateNestedManyWithoutPatientInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutPatientInput
   }
 
   export type PatientCreateOrConnectWithoutLabBookingsInput = {
@@ -74345,6 +81879,9 @@ export namespace Prisma {
     notes?: NoteCreateNestedManyWithoutClinicInput
     labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
     labTests?: LabTestCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicUncheckedCreateWithoutLabBookingsInput = {
@@ -74403,6 +81940,9 @@ export namespace Prisma {
     notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
     labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
     labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
   }
 
   export type ClinicCreateOrConnectWithoutLabBookingsInput = {
@@ -74502,6 +82042,7 @@ export namespace Prisma {
     appointments?: AppointmentUpdateManyWithoutPatientNestedInput
     prescriptions?: PrescriptionUpdateManyWithoutPatientNestedInput
     invoices?: InvoiceUpdateManyWithoutPatientNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutPatientNestedInput
   }
 
   export type PatientUncheckedUpdateWithoutLabBookingsInput = {
@@ -74540,6 +82081,7 @@ export namespace Prisma {
     appointments?: AppointmentUncheckedUpdateManyWithoutPatientNestedInput
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutPatientNestedInput
     invoices?: InvoiceUncheckedUpdateManyWithoutPatientNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutPatientNestedInput
   }
 
   export type LabTestUpsertWithoutBookingsInput = {
@@ -74668,6 +82210,9 @@ export namespace Prisma {
     notes?: NoteUpdateManyWithoutClinicNestedInput
     labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutLabBookingsInput = {
@@ -74726,6 +82271,9 @@ export namespace Prisma {
     notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
     labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type InvoiceUpsertWithoutLabBookingInput = {
@@ -74777,6 +82325,1439 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: InvoiceItemUncheckedUpdateManyWithoutInvoiceNestedInput
+  }
+
+  export type ClinicCreateWithoutPharmacyCategoriesInput = {
+    id?: string
+    name: string
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
+    phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
+    doctorCount?: number | null
+    status?: $Enums.ClinicStatus
+    onboardingStep?: number
+    packageStartsAt?: Date | string | null
+    packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    package?: SubscriptionPackageCreateNestedOneWithoutClinicsInput
+    users?: UserCreateNestedManyWithoutClinicInput
+    departments?: DepartmentCreateNestedManyWithoutClinicInput
+    designations?: DesignationCreateNestedManyWithoutClinicInput
+    doctors?: DoctorCreateNestedManyWithoutClinicInput
+    staffs?: StaffCreateNestedManyWithoutClinicInput
+    patients?: PatientCreateNestedManyWithoutClinicInput
+    appointments?: AppointmentCreateNestedManyWithoutClinicInput
+    services?: ServiceCreateNestedManyWithoutClinicInput
+    specializations?: SpecializationCreateNestedManyWithoutClinicInput
+    holidays?: HolidayCreateNestedManyWithoutClinicInput
+    payrolls?: PayrollCreateNestedManyWithoutClinicInput
+    expenses?: ExpenseCreateNestedManyWithoutClinicInput
+    expenseCategories?: ExpenseCategoryCreateNestedManyWithoutClinicInput
+    attendances?: AttendanceCreateNestedManyWithoutClinicInput
+    leaveTypes?: LeaveTypeCreateNestedManyWithoutClinicInput
+    leaves?: LeaveCreateNestedManyWithoutClinicInput
+    prescriptions?: PrescriptionCreateNestedManyWithoutClinicInput
+    prescriptionMedicines?: PrescriptionMedicineCreateNestedManyWithoutClinicInput
+    clinicRoles?: ClinicRoleCreateNestedManyWithoutClinicInput
+    invoices?: InvoiceCreateNestedManyWithoutClinicInput
+    invoiceItems?: InvoiceItemCreateNestedManyWithoutClinicInput
+    products?: ProductCreateNestedManyWithoutClinicInput
+    notifications?: NotificationCreateNestedManyWithoutClinicInput
+    landingPage?: LandingPageCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
+    tickets?: TicketCreateNestedManyWithoutClinicInput
+    todos?: TodoCreateNestedManyWithoutClinicInput
+    notes?: NoteCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
+  }
+
+  export type ClinicUncheckedCreateWithoutPharmacyCategoriesInput = {
+    id?: string
+    name: string
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
+    phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
+    doctorCount?: number | null
+    status?: $Enums.ClinicStatus
+    onboardingStep?: number
+    packageId?: string | null
+    packageStartsAt?: Date | string | null
+    packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: UserUncheckedCreateNestedManyWithoutClinicInput
+    departments?: DepartmentUncheckedCreateNestedManyWithoutClinicInput
+    designations?: DesignationUncheckedCreateNestedManyWithoutClinicInput
+    doctors?: DoctorUncheckedCreateNestedManyWithoutClinicInput
+    staffs?: StaffUncheckedCreateNestedManyWithoutClinicInput
+    patients?: PatientUncheckedCreateNestedManyWithoutClinicInput
+    appointments?: AppointmentUncheckedCreateNestedManyWithoutClinicInput
+    services?: ServiceUncheckedCreateNestedManyWithoutClinicInput
+    specializations?: SpecializationUncheckedCreateNestedManyWithoutClinicInput
+    holidays?: HolidayUncheckedCreateNestedManyWithoutClinicInput
+    payrolls?: PayrollUncheckedCreateNestedManyWithoutClinicInput
+    expenses?: ExpenseUncheckedCreateNestedManyWithoutClinicInput
+    expenseCategories?: ExpenseCategoryUncheckedCreateNestedManyWithoutClinicInput
+    attendances?: AttendanceUncheckedCreateNestedManyWithoutClinicInput
+    leaveTypes?: LeaveTypeUncheckedCreateNestedManyWithoutClinicInput
+    leaves?: LeaveUncheckedCreateNestedManyWithoutClinicInput
+    prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutClinicInput
+    prescriptionMedicines?: PrescriptionMedicineUncheckedCreateNestedManyWithoutClinicInput
+    clinicRoles?: ClinicRoleUncheckedCreateNestedManyWithoutClinicInput
+    invoices?: InvoiceUncheckedCreateNestedManyWithoutClinicInput
+    invoiceItems?: InvoiceItemUncheckedCreateNestedManyWithoutClinicInput
+    products?: ProductUncheckedCreateNestedManyWithoutClinicInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
+    landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
+    tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
+    todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
+    notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
+  }
+
+  export type ClinicCreateOrConnectWithoutPharmacyCategoriesInput = {
+    where: ClinicWhereUniqueInput
+    create: XOR<ClinicCreateWithoutPharmacyCategoriesInput, ClinicUncheckedCreateWithoutPharmacyCategoriesInput>
+  }
+
+  export type MedicineCreateWithoutCategoryInput = {
+    id?: string
+    medicineName: string
+    genericName?: string | null
+    brandName?: string | null
+    manufacturer?: string | null
+    medicineCode?: string | null
+    hsnCode?: string | null
+    description?: string | null
+    purchasePrice?: number
+    sellingPrice?: number
+    gst?: number
+    mrp?: number
+    openingStock?: number
+    stockIn?: number
+    stockOut?: number
+    minimumStockAlert?: number
+    unit?: string | null
+    batchNumber?: string | null
+    manufacturingDate?: Date | string | null
+    expiryDate?: Date | string | null
+    prescriptionRequired?: boolean
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    clinic: ClinicCreateNestedOneWithoutMedicinesInput
+    invoiceItems?: PharmacyInvoiceItemCreateNestedManyWithoutMedicineInput
+  }
+
+  export type MedicineUncheckedCreateWithoutCategoryInput = {
+    id?: string
+    medicineName: string
+    genericName?: string | null
+    brandName?: string | null
+    manufacturer?: string | null
+    medicineCode?: string | null
+    hsnCode?: string | null
+    description?: string | null
+    purchasePrice?: number
+    sellingPrice?: number
+    gst?: number
+    mrp?: number
+    openingStock?: number
+    stockIn?: number
+    stockOut?: number
+    minimumStockAlert?: number
+    unit?: string | null
+    batchNumber?: string | null
+    manufacturingDate?: Date | string | null
+    expiryDate?: Date | string | null
+    prescriptionRequired?: boolean
+    status?: string
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    invoiceItems?: PharmacyInvoiceItemUncheckedCreateNestedManyWithoutMedicineInput
+  }
+
+  export type MedicineCreateOrConnectWithoutCategoryInput = {
+    where: MedicineWhereUniqueInput
+    create: XOR<MedicineCreateWithoutCategoryInput, MedicineUncheckedCreateWithoutCategoryInput>
+  }
+
+  export type MedicineCreateManyCategoryInputEnvelope = {
+    data: MedicineCreateManyCategoryInput | MedicineCreateManyCategoryInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ClinicUpsertWithoutPharmacyCategoriesInput = {
+    update: XOR<ClinicUpdateWithoutPharmacyCategoriesInput, ClinicUncheckedUpdateWithoutPharmacyCategoriesInput>
+    create: XOR<ClinicCreateWithoutPharmacyCategoriesInput, ClinicUncheckedCreateWithoutPharmacyCategoriesInput>
+    where?: ClinicWhereInput
+  }
+
+  export type ClinicUpdateToOneWithWhereWithoutPharmacyCategoriesInput = {
+    where?: ClinicWhereInput
+    data: XOR<ClinicUpdateWithoutPharmacyCategoriesInput, ClinicUncheckedUpdateWithoutPharmacyCategoriesInput>
+  }
+
+  export type ClinicUpdateWithoutPharmacyCategoriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
+    packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    package?: SubscriptionPackageUpdateOneWithoutClinicsNestedInput
+    users?: UserUpdateManyWithoutClinicNestedInput
+    departments?: DepartmentUpdateManyWithoutClinicNestedInput
+    designations?: DesignationUpdateManyWithoutClinicNestedInput
+    doctors?: DoctorUpdateManyWithoutClinicNestedInput
+    staffs?: StaffUpdateManyWithoutClinicNestedInput
+    patients?: PatientUpdateManyWithoutClinicNestedInput
+    appointments?: AppointmentUpdateManyWithoutClinicNestedInput
+    services?: ServiceUpdateManyWithoutClinicNestedInput
+    specializations?: SpecializationUpdateManyWithoutClinicNestedInput
+    holidays?: HolidayUpdateManyWithoutClinicNestedInput
+    payrolls?: PayrollUpdateManyWithoutClinicNestedInput
+    expenses?: ExpenseUpdateManyWithoutClinicNestedInput
+    expenseCategories?: ExpenseCategoryUpdateManyWithoutClinicNestedInput
+    attendances?: AttendanceUpdateManyWithoutClinicNestedInput
+    leaveTypes?: LeaveTypeUpdateManyWithoutClinicNestedInput
+    leaves?: LeaveUpdateManyWithoutClinicNestedInput
+    prescriptions?: PrescriptionUpdateManyWithoutClinicNestedInput
+    prescriptionMedicines?: PrescriptionMedicineUpdateManyWithoutClinicNestedInput
+    clinicRoles?: ClinicRoleUpdateManyWithoutClinicNestedInput
+    invoices?: InvoiceUpdateManyWithoutClinicNestedInput
+    invoiceItems?: InvoiceItemUpdateManyWithoutClinicNestedInput
+    products?: ProductUpdateManyWithoutClinicNestedInput
+    notifications?: NotificationUpdateManyWithoutClinicNestedInput
+    landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
+    tickets?: TicketUpdateManyWithoutClinicNestedInput
+    todos?: TodoUpdateManyWithoutClinicNestedInput
+    notes?: NoteUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
+  }
+
+  export type ClinicUncheckedUpdateWithoutPharmacyCategoriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
+    packageId?: NullableStringFieldUpdateOperationsInput | string | null
+    packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: UserUncheckedUpdateManyWithoutClinicNestedInput
+    departments?: DepartmentUncheckedUpdateManyWithoutClinicNestedInput
+    designations?: DesignationUncheckedUpdateManyWithoutClinicNestedInput
+    doctors?: DoctorUncheckedUpdateManyWithoutClinicNestedInput
+    staffs?: StaffUncheckedUpdateManyWithoutClinicNestedInput
+    patients?: PatientUncheckedUpdateManyWithoutClinicNestedInput
+    appointments?: AppointmentUncheckedUpdateManyWithoutClinicNestedInput
+    services?: ServiceUncheckedUpdateManyWithoutClinicNestedInput
+    specializations?: SpecializationUncheckedUpdateManyWithoutClinicNestedInput
+    holidays?: HolidayUncheckedUpdateManyWithoutClinicNestedInput
+    payrolls?: PayrollUncheckedUpdateManyWithoutClinicNestedInput
+    expenses?: ExpenseUncheckedUpdateManyWithoutClinicNestedInput
+    expenseCategories?: ExpenseCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    attendances?: AttendanceUncheckedUpdateManyWithoutClinicNestedInput
+    leaveTypes?: LeaveTypeUncheckedUpdateManyWithoutClinicNestedInput
+    leaves?: LeaveUncheckedUpdateManyWithoutClinicNestedInput
+    prescriptions?: PrescriptionUncheckedUpdateManyWithoutClinicNestedInput
+    prescriptionMedicines?: PrescriptionMedicineUncheckedUpdateManyWithoutClinicNestedInput
+    clinicRoles?: ClinicRoleUncheckedUpdateManyWithoutClinicNestedInput
+    invoices?: InvoiceUncheckedUpdateManyWithoutClinicNestedInput
+    invoiceItems?: InvoiceItemUncheckedUpdateManyWithoutClinicNestedInput
+    products?: ProductUncheckedUpdateManyWithoutClinicNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
+    landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
+    tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
+    todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
+    notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
+  }
+
+  export type MedicineUpsertWithWhereUniqueWithoutCategoryInput = {
+    where: MedicineWhereUniqueInput
+    update: XOR<MedicineUpdateWithoutCategoryInput, MedicineUncheckedUpdateWithoutCategoryInput>
+    create: XOR<MedicineCreateWithoutCategoryInput, MedicineUncheckedCreateWithoutCategoryInput>
+  }
+
+  export type MedicineUpdateWithWhereUniqueWithoutCategoryInput = {
+    where: MedicineWhereUniqueInput
+    data: XOR<MedicineUpdateWithoutCategoryInput, MedicineUncheckedUpdateWithoutCategoryInput>
+  }
+
+  export type MedicineUpdateManyWithWhereWithoutCategoryInput = {
+    where: MedicineScalarWhereInput
+    data: XOR<MedicineUpdateManyMutationInput, MedicineUncheckedUpdateManyWithoutCategoryInput>
+  }
+
+  export type PharmacyCategoryCreateWithoutMedicinesInput = {
+    id?: string
+    name: string
+    description?: string | null
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    clinic: ClinicCreateNestedOneWithoutPharmacyCategoriesInput
+  }
+
+  export type PharmacyCategoryUncheckedCreateWithoutMedicinesInput = {
+    id?: string
+    name: string
+    description?: string | null
+    status?: string
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PharmacyCategoryCreateOrConnectWithoutMedicinesInput = {
+    where: PharmacyCategoryWhereUniqueInput
+    create: XOR<PharmacyCategoryCreateWithoutMedicinesInput, PharmacyCategoryUncheckedCreateWithoutMedicinesInput>
+  }
+
+  export type ClinicCreateWithoutMedicinesInput = {
+    id?: string
+    name: string
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
+    phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
+    doctorCount?: number | null
+    status?: $Enums.ClinicStatus
+    onboardingStep?: number
+    packageStartsAt?: Date | string | null
+    packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    package?: SubscriptionPackageCreateNestedOneWithoutClinicsInput
+    users?: UserCreateNestedManyWithoutClinicInput
+    departments?: DepartmentCreateNestedManyWithoutClinicInput
+    designations?: DesignationCreateNestedManyWithoutClinicInput
+    doctors?: DoctorCreateNestedManyWithoutClinicInput
+    staffs?: StaffCreateNestedManyWithoutClinicInput
+    patients?: PatientCreateNestedManyWithoutClinicInput
+    appointments?: AppointmentCreateNestedManyWithoutClinicInput
+    services?: ServiceCreateNestedManyWithoutClinicInput
+    specializations?: SpecializationCreateNestedManyWithoutClinicInput
+    holidays?: HolidayCreateNestedManyWithoutClinicInput
+    payrolls?: PayrollCreateNestedManyWithoutClinicInput
+    expenses?: ExpenseCreateNestedManyWithoutClinicInput
+    expenseCategories?: ExpenseCategoryCreateNestedManyWithoutClinicInput
+    attendances?: AttendanceCreateNestedManyWithoutClinicInput
+    leaveTypes?: LeaveTypeCreateNestedManyWithoutClinicInput
+    leaves?: LeaveCreateNestedManyWithoutClinicInput
+    prescriptions?: PrescriptionCreateNestedManyWithoutClinicInput
+    prescriptionMedicines?: PrescriptionMedicineCreateNestedManyWithoutClinicInput
+    clinicRoles?: ClinicRoleCreateNestedManyWithoutClinicInput
+    invoices?: InvoiceCreateNestedManyWithoutClinicInput
+    invoiceItems?: InvoiceItemCreateNestedManyWithoutClinicInput
+    products?: ProductCreateNestedManyWithoutClinicInput
+    notifications?: NotificationCreateNestedManyWithoutClinicInput
+    landingPage?: LandingPageCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
+    tickets?: TicketCreateNestedManyWithoutClinicInput
+    todos?: TodoCreateNestedManyWithoutClinicInput
+    notes?: NoteCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceCreateNestedManyWithoutClinicInput
+  }
+
+  export type ClinicUncheckedCreateWithoutMedicinesInput = {
+    id?: string
+    name: string
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
+    phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
+    doctorCount?: number | null
+    status?: $Enums.ClinicStatus
+    onboardingStep?: number
+    packageId?: string | null
+    packageStartsAt?: Date | string | null
+    packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: UserUncheckedCreateNestedManyWithoutClinicInput
+    departments?: DepartmentUncheckedCreateNestedManyWithoutClinicInput
+    designations?: DesignationUncheckedCreateNestedManyWithoutClinicInput
+    doctors?: DoctorUncheckedCreateNestedManyWithoutClinicInput
+    staffs?: StaffUncheckedCreateNestedManyWithoutClinicInput
+    patients?: PatientUncheckedCreateNestedManyWithoutClinicInput
+    appointments?: AppointmentUncheckedCreateNestedManyWithoutClinicInput
+    services?: ServiceUncheckedCreateNestedManyWithoutClinicInput
+    specializations?: SpecializationUncheckedCreateNestedManyWithoutClinicInput
+    holidays?: HolidayUncheckedCreateNestedManyWithoutClinicInput
+    payrolls?: PayrollUncheckedCreateNestedManyWithoutClinicInput
+    expenses?: ExpenseUncheckedCreateNestedManyWithoutClinicInput
+    expenseCategories?: ExpenseCategoryUncheckedCreateNestedManyWithoutClinicInput
+    attendances?: AttendanceUncheckedCreateNestedManyWithoutClinicInput
+    leaveTypes?: LeaveTypeUncheckedCreateNestedManyWithoutClinicInput
+    leaves?: LeaveUncheckedCreateNestedManyWithoutClinicInput
+    prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutClinicInput
+    prescriptionMedicines?: PrescriptionMedicineUncheckedCreateNestedManyWithoutClinicInput
+    clinicRoles?: ClinicRoleUncheckedCreateNestedManyWithoutClinicInput
+    invoices?: InvoiceUncheckedCreateNestedManyWithoutClinicInput
+    invoiceItems?: InvoiceItemUncheckedCreateNestedManyWithoutClinicInput
+    products?: ProductUncheckedCreateNestedManyWithoutClinicInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
+    landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
+    tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
+    todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
+    notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedCreateNestedManyWithoutClinicInput
+  }
+
+  export type ClinicCreateOrConnectWithoutMedicinesInput = {
+    where: ClinicWhereUniqueInput
+    create: XOR<ClinicCreateWithoutMedicinesInput, ClinicUncheckedCreateWithoutMedicinesInput>
+  }
+
+  export type PharmacyInvoiceItemCreateWithoutMedicineInput = {
+    id?: string
+    medicineName: string
+    quantity: number
+    unitCost: number
+    gst?: number
+    amount: number
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    invoice: PharmacyInvoiceCreateNestedOneWithoutItemsInput
+  }
+
+  export type PharmacyInvoiceItemUncheckedCreateWithoutMedicineInput = {
+    id?: string
+    invoiceId: string
+    medicineName: string
+    quantity: number
+    unitCost: number
+    gst?: number
+    amount: number
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PharmacyInvoiceItemCreateOrConnectWithoutMedicineInput = {
+    where: PharmacyInvoiceItemWhereUniqueInput
+    create: XOR<PharmacyInvoiceItemCreateWithoutMedicineInput, PharmacyInvoiceItemUncheckedCreateWithoutMedicineInput>
+  }
+
+  export type PharmacyInvoiceItemCreateManyMedicineInputEnvelope = {
+    data: PharmacyInvoiceItemCreateManyMedicineInput | PharmacyInvoiceItemCreateManyMedicineInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PharmacyCategoryUpsertWithoutMedicinesInput = {
+    update: XOR<PharmacyCategoryUpdateWithoutMedicinesInput, PharmacyCategoryUncheckedUpdateWithoutMedicinesInput>
+    create: XOR<PharmacyCategoryCreateWithoutMedicinesInput, PharmacyCategoryUncheckedCreateWithoutMedicinesInput>
+    where?: PharmacyCategoryWhereInput
+  }
+
+  export type PharmacyCategoryUpdateToOneWithWhereWithoutMedicinesInput = {
+    where?: PharmacyCategoryWhereInput
+    data: XOR<PharmacyCategoryUpdateWithoutMedicinesInput, PharmacyCategoryUncheckedUpdateWithoutMedicinesInput>
+  }
+
+  export type PharmacyCategoryUpdateWithoutMedicinesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    clinic?: ClinicUpdateOneRequiredWithoutPharmacyCategoriesNestedInput
+  }
+
+  export type PharmacyCategoryUncheckedUpdateWithoutMedicinesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClinicUpsertWithoutMedicinesInput = {
+    update: XOR<ClinicUpdateWithoutMedicinesInput, ClinicUncheckedUpdateWithoutMedicinesInput>
+    create: XOR<ClinicCreateWithoutMedicinesInput, ClinicUncheckedCreateWithoutMedicinesInput>
+    where?: ClinicWhereInput
+  }
+
+  export type ClinicUpdateToOneWithWhereWithoutMedicinesInput = {
+    where?: ClinicWhereInput
+    data: XOR<ClinicUpdateWithoutMedicinesInput, ClinicUncheckedUpdateWithoutMedicinesInput>
+  }
+
+  export type ClinicUpdateWithoutMedicinesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
+    packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    package?: SubscriptionPackageUpdateOneWithoutClinicsNestedInput
+    users?: UserUpdateManyWithoutClinicNestedInput
+    departments?: DepartmentUpdateManyWithoutClinicNestedInput
+    designations?: DesignationUpdateManyWithoutClinicNestedInput
+    doctors?: DoctorUpdateManyWithoutClinicNestedInput
+    staffs?: StaffUpdateManyWithoutClinicNestedInput
+    patients?: PatientUpdateManyWithoutClinicNestedInput
+    appointments?: AppointmentUpdateManyWithoutClinicNestedInput
+    services?: ServiceUpdateManyWithoutClinicNestedInput
+    specializations?: SpecializationUpdateManyWithoutClinicNestedInput
+    holidays?: HolidayUpdateManyWithoutClinicNestedInput
+    payrolls?: PayrollUpdateManyWithoutClinicNestedInput
+    expenses?: ExpenseUpdateManyWithoutClinicNestedInput
+    expenseCategories?: ExpenseCategoryUpdateManyWithoutClinicNestedInput
+    attendances?: AttendanceUpdateManyWithoutClinicNestedInput
+    leaveTypes?: LeaveTypeUpdateManyWithoutClinicNestedInput
+    leaves?: LeaveUpdateManyWithoutClinicNestedInput
+    prescriptions?: PrescriptionUpdateManyWithoutClinicNestedInput
+    prescriptionMedicines?: PrescriptionMedicineUpdateManyWithoutClinicNestedInput
+    clinicRoles?: ClinicRoleUpdateManyWithoutClinicNestedInput
+    invoices?: InvoiceUpdateManyWithoutClinicNestedInput
+    invoiceItems?: InvoiceItemUpdateManyWithoutClinicNestedInput
+    products?: ProductUpdateManyWithoutClinicNestedInput
+    notifications?: NotificationUpdateManyWithoutClinicNestedInput
+    landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
+    tickets?: TicketUpdateManyWithoutClinicNestedInput
+    todos?: TodoUpdateManyWithoutClinicNestedInput
+    notes?: NoteUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
+  }
+
+  export type ClinicUncheckedUpdateWithoutMedicinesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
+    packageId?: NullableStringFieldUpdateOperationsInput | string | null
+    packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: UserUncheckedUpdateManyWithoutClinicNestedInput
+    departments?: DepartmentUncheckedUpdateManyWithoutClinicNestedInput
+    designations?: DesignationUncheckedUpdateManyWithoutClinicNestedInput
+    doctors?: DoctorUncheckedUpdateManyWithoutClinicNestedInput
+    staffs?: StaffUncheckedUpdateManyWithoutClinicNestedInput
+    patients?: PatientUncheckedUpdateManyWithoutClinicNestedInput
+    appointments?: AppointmentUncheckedUpdateManyWithoutClinicNestedInput
+    services?: ServiceUncheckedUpdateManyWithoutClinicNestedInput
+    specializations?: SpecializationUncheckedUpdateManyWithoutClinicNestedInput
+    holidays?: HolidayUncheckedUpdateManyWithoutClinicNestedInput
+    payrolls?: PayrollUncheckedUpdateManyWithoutClinicNestedInput
+    expenses?: ExpenseUncheckedUpdateManyWithoutClinicNestedInput
+    expenseCategories?: ExpenseCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    attendances?: AttendanceUncheckedUpdateManyWithoutClinicNestedInput
+    leaveTypes?: LeaveTypeUncheckedUpdateManyWithoutClinicNestedInput
+    leaves?: LeaveUncheckedUpdateManyWithoutClinicNestedInput
+    prescriptions?: PrescriptionUncheckedUpdateManyWithoutClinicNestedInput
+    prescriptionMedicines?: PrescriptionMedicineUncheckedUpdateManyWithoutClinicNestedInput
+    clinicRoles?: ClinicRoleUncheckedUpdateManyWithoutClinicNestedInput
+    invoices?: InvoiceUncheckedUpdateManyWithoutClinicNestedInput
+    invoiceItems?: InvoiceItemUncheckedUpdateManyWithoutClinicNestedInput
+    products?: ProductUncheckedUpdateManyWithoutClinicNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
+    landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
+    tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
+    todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
+    notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
+  }
+
+  export type PharmacyInvoiceItemUpsertWithWhereUniqueWithoutMedicineInput = {
+    where: PharmacyInvoiceItemWhereUniqueInput
+    update: XOR<PharmacyInvoiceItemUpdateWithoutMedicineInput, PharmacyInvoiceItemUncheckedUpdateWithoutMedicineInput>
+    create: XOR<PharmacyInvoiceItemCreateWithoutMedicineInput, PharmacyInvoiceItemUncheckedCreateWithoutMedicineInput>
+  }
+
+  export type PharmacyInvoiceItemUpdateWithWhereUniqueWithoutMedicineInput = {
+    where: PharmacyInvoiceItemWhereUniqueInput
+    data: XOR<PharmacyInvoiceItemUpdateWithoutMedicineInput, PharmacyInvoiceItemUncheckedUpdateWithoutMedicineInput>
+  }
+
+  export type PharmacyInvoiceItemUpdateManyWithWhereWithoutMedicineInput = {
+    where: PharmacyInvoiceItemScalarWhereInput
+    data: XOR<PharmacyInvoiceItemUpdateManyMutationInput, PharmacyInvoiceItemUncheckedUpdateManyWithoutMedicineInput>
+  }
+
+  export type PharmacyInvoiceItemScalarWhereInput = {
+    AND?: PharmacyInvoiceItemScalarWhereInput | PharmacyInvoiceItemScalarWhereInput[]
+    OR?: PharmacyInvoiceItemScalarWhereInput[]
+    NOT?: PharmacyInvoiceItemScalarWhereInput | PharmacyInvoiceItemScalarWhereInput[]
+    id?: StringFilter<"PharmacyInvoiceItem"> | string
+    invoiceId?: StringFilter<"PharmacyInvoiceItem"> | string
+    medicineId?: StringNullableFilter<"PharmacyInvoiceItem"> | string | null
+    medicineName?: StringFilter<"PharmacyInvoiceItem"> | string
+    quantity?: IntFilter<"PharmacyInvoiceItem"> | number
+    unitCost?: FloatFilter<"PharmacyInvoiceItem"> | number
+    gst?: FloatFilter<"PharmacyInvoiceItem"> | number
+    amount?: FloatFilter<"PharmacyInvoiceItem"> | number
+    clinicId?: StringFilter<"PharmacyInvoiceItem"> | string
+    createdAt?: DateTimeFilter<"PharmacyInvoiceItem"> | Date | string
+    updatedAt?: DateTimeFilter<"PharmacyInvoiceItem"> | Date | string
+  }
+
+  export type PatientCreateWithoutPharmacyInvoicesInput = {
+    id?: string
+    patientCode?: string | null
+    firstName: string
+    middleName?: string | null
+    lastName: string
+    profileImage?: string | null
+    phone?: string | null
+    alternateMobile?: string | null
+    email?: string | null
+    dob?: Date | string | null
+    gender?: string | null
+    bloodGroup?: string | null
+    maritalStatus?: string | null
+    occupation?: string | null
+    aadhaarNumber?: string | null
+    passportNumber?: string | null
+    referredBy?: string | null
+    emergencyContactName?: string | null
+    emergencyContactRelation?: string | null
+    emergencyContactPhone?: string | null
+    status?: string
+    address1?: string | null
+    address2?: string | null
+    country?: string | null
+    state?: string | null
+    city?: string | null
+    pincode?: string | null
+    lastVisitedAt?: Date | string | null
+    vitals?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    clinic: ClinicCreateNestedOneWithoutPatientsInput
+    appointments?: AppointmentCreateNestedManyWithoutPatientInput
+    prescriptions?: PrescriptionCreateNestedManyWithoutPatientInput
+    invoices?: InvoiceCreateNestedManyWithoutPatientInput
+    labBookings?: LabBookingCreateNestedManyWithoutPatientInput
+  }
+
+  export type PatientUncheckedCreateWithoutPharmacyInvoicesInput = {
+    id?: string
+    patientCode?: string | null
+    firstName: string
+    middleName?: string | null
+    lastName: string
+    profileImage?: string | null
+    phone?: string | null
+    alternateMobile?: string | null
+    email?: string | null
+    dob?: Date | string | null
+    gender?: string | null
+    bloodGroup?: string | null
+    maritalStatus?: string | null
+    occupation?: string | null
+    aadhaarNumber?: string | null
+    passportNumber?: string | null
+    referredBy?: string | null
+    emergencyContactName?: string | null
+    emergencyContactRelation?: string | null
+    emergencyContactPhone?: string | null
+    status?: string
+    address1?: string | null
+    address2?: string | null
+    country?: string | null
+    state?: string | null
+    city?: string | null
+    pincode?: string | null
+    lastVisitedAt?: Date | string | null
+    vitals?: NullableJsonNullValueInput | InputJsonValue
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    appointments?: AppointmentUncheckedCreateNestedManyWithoutPatientInput
+    prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutPatientInput
+    invoices?: InvoiceUncheckedCreateNestedManyWithoutPatientInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutPatientInput
+  }
+
+  export type PatientCreateOrConnectWithoutPharmacyInvoicesInput = {
+    where: PatientWhereUniqueInput
+    create: XOR<PatientCreateWithoutPharmacyInvoicesInput, PatientUncheckedCreateWithoutPharmacyInvoicesInput>
+  }
+
+  export type ClinicCreateWithoutPharmacyInvoicesInput = {
+    id?: string
+    name: string
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
+    phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
+    doctorCount?: number | null
+    status?: $Enums.ClinicStatus
+    onboardingStep?: number
+    packageStartsAt?: Date | string | null
+    packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    package?: SubscriptionPackageCreateNestedOneWithoutClinicsInput
+    users?: UserCreateNestedManyWithoutClinicInput
+    departments?: DepartmentCreateNestedManyWithoutClinicInput
+    designations?: DesignationCreateNestedManyWithoutClinicInput
+    doctors?: DoctorCreateNestedManyWithoutClinicInput
+    staffs?: StaffCreateNestedManyWithoutClinicInput
+    patients?: PatientCreateNestedManyWithoutClinicInput
+    appointments?: AppointmentCreateNestedManyWithoutClinicInput
+    services?: ServiceCreateNestedManyWithoutClinicInput
+    specializations?: SpecializationCreateNestedManyWithoutClinicInput
+    holidays?: HolidayCreateNestedManyWithoutClinicInput
+    payrolls?: PayrollCreateNestedManyWithoutClinicInput
+    expenses?: ExpenseCreateNestedManyWithoutClinicInput
+    expenseCategories?: ExpenseCategoryCreateNestedManyWithoutClinicInput
+    attendances?: AttendanceCreateNestedManyWithoutClinicInput
+    leaveTypes?: LeaveTypeCreateNestedManyWithoutClinicInput
+    leaves?: LeaveCreateNestedManyWithoutClinicInput
+    prescriptions?: PrescriptionCreateNestedManyWithoutClinicInput
+    prescriptionMedicines?: PrescriptionMedicineCreateNestedManyWithoutClinicInput
+    clinicRoles?: ClinicRoleCreateNestedManyWithoutClinicInput
+    invoices?: InvoiceCreateNestedManyWithoutClinicInput
+    invoiceItems?: InvoiceItemCreateNestedManyWithoutClinicInput
+    products?: ProductCreateNestedManyWithoutClinicInput
+    notifications?: NotificationCreateNestedManyWithoutClinicInput
+    landingPage?: LandingPageCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigCreateNestedOneWithoutClinicInput
+    tickets?: TicketCreateNestedManyWithoutClinicInput
+    todos?: TodoCreateNestedManyWithoutClinicInput
+    notes?: NoteCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryCreateNestedManyWithoutClinicInput
+    labTests?: LabTestCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryCreateNestedManyWithoutClinicInput
+    medicines?: MedicineCreateNestedManyWithoutClinicInput
+  }
+
+  export type ClinicUncheckedCreateWithoutPharmacyInvoicesInput = {
+    id?: string
+    name: string
+    username?: string | null
+    ownerName?: string | null
+    ownerEmail?: string | null
+    whatsappNumber?: string | null
+    phone?: string | null
+    addressLine1?: string | null
+    addressLine2?: string | null
+    district?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    pincode?: string | null
+    gstNumber?: string | null
+    emergencyContact?: string | null
+    doctorCount?: number | null
+    status?: $Enums.ClinicStatus
+    onboardingStep?: number
+    packageId?: string | null
+    packageStartsAt?: Date | string | null
+    packageExpiresAt?: Date | string | null
+    isTrialUsed?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: UserUncheckedCreateNestedManyWithoutClinicInput
+    departments?: DepartmentUncheckedCreateNestedManyWithoutClinicInput
+    designations?: DesignationUncheckedCreateNestedManyWithoutClinicInput
+    doctors?: DoctorUncheckedCreateNestedManyWithoutClinicInput
+    staffs?: StaffUncheckedCreateNestedManyWithoutClinicInput
+    patients?: PatientUncheckedCreateNestedManyWithoutClinicInput
+    appointments?: AppointmentUncheckedCreateNestedManyWithoutClinicInput
+    services?: ServiceUncheckedCreateNestedManyWithoutClinicInput
+    specializations?: SpecializationUncheckedCreateNestedManyWithoutClinicInput
+    holidays?: HolidayUncheckedCreateNestedManyWithoutClinicInput
+    payrolls?: PayrollUncheckedCreateNestedManyWithoutClinicInput
+    expenses?: ExpenseUncheckedCreateNestedManyWithoutClinicInput
+    expenseCategories?: ExpenseCategoryUncheckedCreateNestedManyWithoutClinicInput
+    attendances?: AttendanceUncheckedCreateNestedManyWithoutClinicInput
+    leaveTypes?: LeaveTypeUncheckedCreateNestedManyWithoutClinicInput
+    leaves?: LeaveUncheckedCreateNestedManyWithoutClinicInput
+    prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutClinicInput
+    prescriptionMedicines?: PrescriptionMedicineUncheckedCreateNestedManyWithoutClinicInput
+    clinicRoles?: ClinicRoleUncheckedCreateNestedManyWithoutClinicInput
+    invoices?: InvoiceUncheckedCreateNestedManyWithoutClinicInput
+    invoiceItems?: InvoiceItemUncheckedCreateNestedManyWithoutClinicInput
+    products?: ProductUncheckedCreateNestedManyWithoutClinicInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutClinicInput
+    landingPage?: LandingPageUncheckedCreateNestedOneWithoutClinicInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedCreateNestedOneWithoutClinicInput
+    tickets?: TicketUncheckedCreateNestedManyWithoutClinicInput
+    todos?: TodoUncheckedCreateNestedManyWithoutClinicInput
+    notes?: NoteUncheckedCreateNestedManyWithoutClinicInput
+    labCategories?: LabCategoryUncheckedCreateNestedManyWithoutClinicInput
+    labTests?: LabTestUncheckedCreateNestedManyWithoutClinicInput
+    labBookings?: LabBookingUncheckedCreateNestedManyWithoutClinicInput
+    pharmacyCategories?: PharmacyCategoryUncheckedCreateNestedManyWithoutClinicInput
+    medicines?: MedicineUncheckedCreateNestedManyWithoutClinicInput
+  }
+
+  export type ClinicCreateOrConnectWithoutPharmacyInvoicesInput = {
+    where: ClinicWhereUniqueInput
+    create: XOR<ClinicCreateWithoutPharmacyInvoicesInput, ClinicUncheckedCreateWithoutPharmacyInvoicesInput>
+  }
+
+  export type PharmacyInvoiceItemCreateWithoutInvoiceInput = {
+    id?: string
+    medicineName: string
+    quantity: number
+    unitCost: number
+    gst?: number
+    amount: number
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    medicine?: MedicineCreateNestedOneWithoutInvoiceItemsInput
+  }
+
+  export type PharmacyInvoiceItemUncheckedCreateWithoutInvoiceInput = {
+    id?: string
+    medicineId?: string | null
+    medicineName: string
+    quantity: number
+    unitCost: number
+    gst?: number
+    amount: number
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PharmacyInvoiceItemCreateOrConnectWithoutInvoiceInput = {
+    where: PharmacyInvoiceItemWhereUniqueInput
+    create: XOR<PharmacyInvoiceItemCreateWithoutInvoiceInput, PharmacyInvoiceItemUncheckedCreateWithoutInvoiceInput>
+  }
+
+  export type PharmacyInvoiceItemCreateManyInvoiceInputEnvelope = {
+    data: PharmacyInvoiceItemCreateManyInvoiceInput | PharmacyInvoiceItemCreateManyInvoiceInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PatientUpsertWithoutPharmacyInvoicesInput = {
+    update: XOR<PatientUpdateWithoutPharmacyInvoicesInput, PatientUncheckedUpdateWithoutPharmacyInvoicesInput>
+    create: XOR<PatientCreateWithoutPharmacyInvoicesInput, PatientUncheckedCreateWithoutPharmacyInvoicesInput>
+    where?: PatientWhereInput
+  }
+
+  export type PatientUpdateToOneWithWhereWithoutPharmacyInvoicesInput = {
+    where?: PatientWhereInput
+    data: XOR<PatientUpdateWithoutPharmacyInvoicesInput, PatientUncheckedUpdateWithoutPharmacyInvoicesInput>
+  }
+
+  export type PatientUpdateWithoutPharmacyInvoicesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    patientCode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: StringFieldUpdateOperationsInput | string
+    middleName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: StringFieldUpdateOperationsInput | string
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    passportNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactRelation?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    address1?: NullableStringFieldUpdateOperationsInput | string | null
+    address2?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    lastVisitedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    vitals?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    clinic?: ClinicUpdateOneRequiredWithoutPatientsNestedInput
+    appointments?: AppointmentUpdateManyWithoutPatientNestedInput
+    prescriptions?: PrescriptionUpdateManyWithoutPatientNestedInput
+    invoices?: InvoiceUpdateManyWithoutPatientNestedInput
+    labBookings?: LabBookingUpdateManyWithoutPatientNestedInput
+  }
+
+  export type PatientUncheckedUpdateWithoutPharmacyInvoicesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    patientCode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: StringFieldUpdateOperationsInput | string
+    middleName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: StringFieldUpdateOperationsInput | string
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    aadhaarNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    passportNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactRelation?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    address1?: NullableStringFieldUpdateOperationsInput | string | null
+    address2?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    lastVisitedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    vitals?: NullableJsonNullValueInput | InputJsonValue
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    appointments?: AppointmentUncheckedUpdateManyWithoutPatientNestedInput
+    prescriptions?: PrescriptionUncheckedUpdateManyWithoutPatientNestedInput
+    invoices?: InvoiceUncheckedUpdateManyWithoutPatientNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutPatientNestedInput
+  }
+
+  export type ClinicUpsertWithoutPharmacyInvoicesInput = {
+    update: XOR<ClinicUpdateWithoutPharmacyInvoicesInput, ClinicUncheckedUpdateWithoutPharmacyInvoicesInput>
+    create: XOR<ClinicCreateWithoutPharmacyInvoicesInput, ClinicUncheckedCreateWithoutPharmacyInvoicesInput>
+    where?: ClinicWhereInput
+  }
+
+  export type ClinicUpdateToOneWithWhereWithoutPharmacyInvoicesInput = {
+    where?: ClinicWhereInput
+    data: XOR<ClinicUpdateWithoutPharmacyInvoicesInput, ClinicUncheckedUpdateWithoutPharmacyInvoicesInput>
+  }
+
+  export type ClinicUpdateWithoutPharmacyInvoicesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
+    packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    package?: SubscriptionPackageUpdateOneWithoutClinicsNestedInput
+    users?: UserUpdateManyWithoutClinicNestedInput
+    departments?: DepartmentUpdateManyWithoutClinicNestedInput
+    designations?: DesignationUpdateManyWithoutClinicNestedInput
+    doctors?: DoctorUpdateManyWithoutClinicNestedInput
+    staffs?: StaffUpdateManyWithoutClinicNestedInput
+    patients?: PatientUpdateManyWithoutClinicNestedInput
+    appointments?: AppointmentUpdateManyWithoutClinicNestedInput
+    services?: ServiceUpdateManyWithoutClinicNestedInput
+    specializations?: SpecializationUpdateManyWithoutClinicNestedInput
+    holidays?: HolidayUpdateManyWithoutClinicNestedInput
+    payrolls?: PayrollUpdateManyWithoutClinicNestedInput
+    expenses?: ExpenseUpdateManyWithoutClinicNestedInput
+    expenseCategories?: ExpenseCategoryUpdateManyWithoutClinicNestedInput
+    attendances?: AttendanceUpdateManyWithoutClinicNestedInput
+    leaveTypes?: LeaveTypeUpdateManyWithoutClinicNestedInput
+    leaves?: LeaveUpdateManyWithoutClinicNestedInput
+    prescriptions?: PrescriptionUpdateManyWithoutClinicNestedInput
+    prescriptionMedicines?: PrescriptionMedicineUpdateManyWithoutClinicNestedInput
+    clinicRoles?: ClinicRoleUpdateManyWithoutClinicNestedInput
+    invoices?: InvoiceUpdateManyWithoutClinicNestedInput
+    invoiceItems?: InvoiceItemUpdateManyWithoutClinicNestedInput
+    products?: ProductUpdateManyWithoutClinicNestedInput
+    notifications?: NotificationUpdateManyWithoutClinicNestedInput
+    landingPage?: LandingPageUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUpdateOneWithoutClinicNestedInput
+    tickets?: TicketUpdateManyWithoutClinicNestedInput
+    todos?: TodoUpdateManyWithoutClinicNestedInput
+    notes?: NoteUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+  }
+
+  export type ClinicUncheckedUpdateWithoutPharmacyInvoicesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsappNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: EnumClinicStatusFieldUpdateOperationsInput | $Enums.ClinicStatus
+    onboardingStep?: IntFieldUpdateOperationsInput | number
+    packageId?: NullableStringFieldUpdateOperationsInput | string | null
+    packageStartsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    packageExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isTrialUsed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: UserUncheckedUpdateManyWithoutClinicNestedInput
+    departments?: DepartmentUncheckedUpdateManyWithoutClinicNestedInput
+    designations?: DesignationUncheckedUpdateManyWithoutClinicNestedInput
+    doctors?: DoctorUncheckedUpdateManyWithoutClinicNestedInput
+    staffs?: StaffUncheckedUpdateManyWithoutClinicNestedInput
+    patients?: PatientUncheckedUpdateManyWithoutClinicNestedInput
+    appointments?: AppointmentUncheckedUpdateManyWithoutClinicNestedInput
+    services?: ServiceUncheckedUpdateManyWithoutClinicNestedInput
+    specializations?: SpecializationUncheckedUpdateManyWithoutClinicNestedInput
+    holidays?: HolidayUncheckedUpdateManyWithoutClinicNestedInput
+    payrolls?: PayrollUncheckedUpdateManyWithoutClinicNestedInput
+    expenses?: ExpenseUncheckedUpdateManyWithoutClinicNestedInput
+    expenseCategories?: ExpenseCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    attendances?: AttendanceUncheckedUpdateManyWithoutClinicNestedInput
+    leaveTypes?: LeaveTypeUncheckedUpdateManyWithoutClinicNestedInput
+    leaves?: LeaveUncheckedUpdateManyWithoutClinicNestedInput
+    prescriptions?: PrescriptionUncheckedUpdateManyWithoutClinicNestedInput
+    prescriptionMedicines?: PrescriptionMedicineUncheckedUpdateManyWithoutClinicNestedInput
+    clinicRoles?: ClinicRoleUncheckedUpdateManyWithoutClinicNestedInput
+    invoices?: InvoiceUncheckedUpdateManyWithoutClinicNestedInput
+    invoiceItems?: InvoiceItemUncheckedUpdateManyWithoutClinicNestedInput
+    products?: ProductUncheckedUpdateManyWithoutClinicNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutClinicNestedInput
+    landingPage?: LandingPageUncheckedUpdateOneWithoutClinicNestedInput
+    workingDaysConfig?: WorkingDaysConfigUncheckedUpdateOneWithoutClinicNestedInput
+    tickets?: TicketUncheckedUpdateManyWithoutClinicNestedInput
+    todos?: TodoUncheckedUpdateManyWithoutClinicNestedInput
+    notes?: NoteUncheckedUpdateManyWithoutClinicNestedInput
+    labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
+    labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+  }
+
+  export type PharmacyInvoiceItemUpsertWithWhereUniqueWithoutInvoiceInput = {
+    where: PharmacyInvoiceItemWhereUniqueInput
+    update: XOR<PharmacyInvoiceItemUpdateWithoutInvoiceInput, PharmacyInvoiceItemUncheckedUpdateWithoutInvoiceInput>
+    create: XOR<PharmacyInvoiceItemCreateWithoutInvoiceInput, PharmacyInvoiceItemUncheckedCreateWithoutInvoiceInput>
+  }
+
+  export type PharmacyInvoiceItemUpdateWithWhereUniqueWithoutInvoiceInput = {
+    where: PharmacyInvoiceItemWhereUniqueInput
+    data: XOR<PharmacyInvoiceItemUpdateWithoutInvoiceInput, PharmacyInvoiceItemUncheckedUpdateWithoutInvoiceInput>
+  }
+
+  export type PharmacyInvoiceItemUpdateManyWithWhereWithoutInvoiceInput = {
+    where: PharmacyInvoiceItemScalarWhereInput
+    data: XOR<PharmacyInvoiceItemUpdateManyMutationInput, PharmacyInvoiceItemUncheckedUpdateManyWithoutInvoiceInput>
+  }
+
+  export type PharmacyInvoiceCreateWithoutItemsInput = {
+    id?: string
+    invoiceNo: string
+    customerName?: string | null
+    customerPhone?: string | null
+    invoiceDate?: Date | string
+    tax?: number
+    discount?: number
+    subTotal?: number
+    totalAmount: number
+    paymentMethod?: string
+    paymentStatus?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    patient?: PatientCreateNestedOneWithoutPharmacyInvoicesInput
+    clinic: ClinicCreateNestedOneWithoutPharmacyInvoicesInput
+  }
+
+  export type PharmacyInvoiceUncheckedCreateWithoutItemsInput = {
+    id?: string
+    invoiceNo: string
+    patientId?: string | null
+    customerName?: string | null
+    customerPhone?: string | null
+    invoiceDate?: Date | string
+    tax?: number
+    discount?: number
+    subTotal?: number
+    totalAmount: number
+    paymentMethod?: string
+    paymentStatus?: string
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PharmacyInvoiceCreateOrConnectWithoutItemsInput = {
+    where: PharmacyInvoiceWhereUniqueInput
+    create: XOR<PharmacyInvoiceCreateWithoutItemsInput, PharmacyInvoiceUncheckedCreateWithoutItemsInput>
+  }
+
+  export type MedicineCreateWithoutInvoiceItemsInput = {
+    id?: string
+    medicineName: string
+    genericName?: string | null
+    brandName?: string | null
+    manufacturer?: string | null
+    medicineCode?: string | null
+    hsnCode?: string | null
+    description?: string | null
+    purchasePrice?: number
+    sellingPrice?: number
+    gst?: number
+    mrp?: number
+    openingStock?: number
+    stockIn?: number
+    stockOut?: number
+    minimumStockAlert?: number
+    unit?: string | null
+    batchNumber?: string | null
+    manufacturingDate?: Date | string | null
+    expiryDate?: Date | string | null
+    prescriptionRequired?: boolean
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    category?: PharmacyCategoryCreateNestedOneWithoutMedicinesInput
+    clinic: ClinicCreateNestedOneWithoutMedicinesInput
+  }
+
+  export type MedicineUncheckedCreateWithoutInvoiceItemsInput = {
+    id?: string
+    medicineName: string
+    genericName?: string | null
+    brandName?: string | null
+    categoryId?: string | null
+    manufacturer?: string | null
+    medicineCode?: string | null
+    hsnCode?: string | null
+    description?: string | null
+    purchasePrice?: number
+    sellingPrice?: number
+    gst?: number
+    mrp?: number
+    openingStock?: number
+    stockIn?: number
+    stockOut?: number
+    minimumStockAlert?: number
+    unit?: string | null
+    batchNumber?: string | null
+    manufacturingDate?: Date | string | null
+    expiryDate?: Date | string | null
+    prescriptionRequired?: boolean
+    status?: string
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MedicineCreateOrConnectWithoutInvoiceItemsInput = {
+    where: MedicineWhereUniqueInput
+    create: XOR<MedicineCreateWithoutInvoiceItemsInput, MedicineUncheckedCreateWithoutInvoiceItemsInput>
+  }
+
+  export type PharmacyInvoiceUpsertWithoutItemsInput = {
+    update: XOR<PharmacyInvoiceUpdateWithoutItemsInput, PharmacyInvoiceUncheckedUpdateWithoutItemsInput>
+    create: XOR<PharmacyInvoiceCreateWithoutItemsInput, PharmacyInvoiceUncheckedCreateWithoutItemsInput>
+    where?: PharmacyInvoiceWhereInput
+  }
+
+  export type PharmacyInvoiceUpdateToOneWithWhereWithoutItemsInput = {
+    where?: PharmacyInvoiceWhereInput
+    data: XOR<PharmacyInvoiceUpdateWithoutItemsInput, PharmacyInvoiceUncheckedUpdateWithoutItemsInput>
+  }
+
+  export type PharmacyInvoiceUpdateWithoutItemsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    invoiceNo?: StringFieldUpdateOperationsInput | string
+    customerName?: NullableStringFieldUpdateOperationsInput | string | null
+    customerPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    invoiceDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tax?: FloatFieldUpdateOperationsInput | number
+    discount?: FloatFieldUpdateOperationsInput | number
+    subTotal?: FloatFieldUpdateOperationsInput | number
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    paymentMethod?: StringFieldUpdateOperationsInput | string
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    patient?: PatientUpdateOneWithoutPharmacyInvoicesNestedInput
+    clinic?: ClinicUpdateOneRequiredWithoutPharmacyInvoicesNestedInput
+  }
+
+  export type PharmacyInvoiceUncheckedUpdateWithoutItemsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    invoiceNo?: StringFieldUpdateOperationsInput | string
+    patientId?: NullableStringFieldUpdateOperationsInput | string | null
+    customerName?: NullableStringFieldUpdateOperationsInput | string | null
+    customerPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    invoiceDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tax?: FloatFieldUpdateOperationsInput | number
+    discount?: FloatFieldUpdateOperationsInput | number
+    subTotal?: FloatFieldUpdateOperationsInput | number
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    paymentMethod?: StringFieldUpdateOperationsInput | string
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MedicineUpsertWithoutInvoiceItemsInput = {
+    update: XOR<MedicineUpdateWithoutInvoiceItemsInput, MedicineUncheckedUpdateWithoutInvoiceItemsInput>
+    create: XOR<MedicineCreateWithoutInvoiceItemsInput, MedicineUncheckedCreateWithoutInvoiceItemsInput>
+    where?: MedicineWhereInput
+  }
+
+  export type MedicineUpdateToOneWithWhereWithoutInvoiceItemsInput = {
+    where?: MedicineWhereInput
+    data: XOR<MedicineUpdateWithoutInvoiceItemsInput, MedicineUncheckedUpdateWithoutInvoiceItemsInput>
+  }
+
+  export type MedicineUpdateWithoutInvoiceItemsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    medicineName?: StringFieldUpdateOperationsInput | string
+    genericName?: NullableStringFieldUpdateOperationsInput | string | null
+    brandName?: NullableStringFieldUpdateOperationsInput | string | null
+    manufacturer?: NullableStringFieldUpdateOperationsInput | string | null
+    medicineCode?: NullableStringFieldUpdateOperationsInput | string | null
+    hsnCode?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    purchasePrice?: FloatFieldUpdateOperationsInput | number
+    sellingPrice?: FloatFieldUpdateOperationsInput | number
+    gst?: FloatFieldUpdateOperationsInput | number
+    mrp?: FloatFieldUpdateOperationsInput | number
+    openingStock?: IntFieldUpdateOperationsInput | number
+    stockIn?: IntFieldUpdateOperationsInput | number
+    stockOut?: IntFieldUpdateOperationsInput | number
+    minimumStockAlert?: IntFieldUpdateOperationsInput | number
+    unit?: NullableStringFieldUpdateOperationsInput | string | null
+    batchNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    manufacturingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prescriptionRequired?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: PharmacyCategoryUpdateOneWithoutMedicinesNestedInput
+    clinic?: ClinicUpdateOneRequiredWithoutMedicinesNestedInput
+  }
+
+  export type MedicineUncheckedUpdateWithoutInvoiceItemsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    medicineName?: StringFieldUpdateOperationsInput | string
+    genericName?: NullableStringFieldUpdateOperationsInput | string | null
+    brandName?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    manufacturer?: NullableStringFieldUpdateOperationsInput | string | null
+    medicineCode?: NullableStringFieldUpdateOperationsInput | string | null
+    hsnCode?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    purchasePrice?: FloatFieldUpdateOperationsInput | number
+    sellingPrice?: FloatFieldUpdateOperationsInput | number
+    gst?: FloatFieldUpdateOperationsInput | number
+    mrp?: FloatFieldUpdateOperationsInput | number
+    openingStock?: IntFieldUpdateOperationsInput | number
+    stockIn?: IntFieldUpdateOperationsInput | number
+    stockOut?: IntFieldUpdateOperationsInput | number
+    minimumStockAlert?: IntFieldUpdateOperationsInput | number
+    unit?: NullableStringFieldUpdateOperationsInput | string | null
+    batchNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    manufacturingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prescriptionRequired?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserCreateManyClinicInput = {
@@ -75251,6 +84232,60 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type PharmacyCategoryCreateManyClinicInput = {
+    id?: string
+    name: string
+    description?: string | null
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MedicineCreateManyClinicInput = {
+    id?: string
+    medicineName: string
+    genericName?: string | null
+    brandName?: string | null
+    categoryId?: string | null
+    manufacturer?: string | null
+    medicineCode?: string | null
+    hsnCode?: string | null
+    description?: string | null
+    purchasePrice?: number
+    sellingPrice?: number
+    gst?: number
+    mrp?: number
+    openingStock?: number
+    stockIn?: number
+    stockOut?: number
+    minimumStockAlert?: number
+    unit?: string | null
+    batchNumber?: string | null
+    manufacturingDate?: Date | string | null
+    expiryDate?: Date | string | null
+    prescriptionRequired?: boolean
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PharmacyInvoiceCreateManyClinicInput = {
+    id?: string
+    invoiceNo: string
+    patientId?: string | null
+    customerName?: string | null
+    customerPhone?: string | null
+    invoiceDate?: Date | string
+    tax?: number
+    discount?: number
+    subTotal?: number
+    totalAmount: number
+    paymentMethod?: string
+    paymentStatus?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type UserUpdateWithoutClinicInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
@@ -75655,6 +84690,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionUpdateManyWithoutPatientNestedInput
     invoices?: InvoiceUpdateManyWithoutPatientNestedInput
     labBookings?: LabBookingUpdateManyWithoutPatientNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutPatientNestedInput
   }
 
   export type PatientUncheckedUpdateWithoutClinicInput = {
@@ -75693,6 +84729,7 @@ export namespace Prisma {
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutPatientNestedInput
     invoices?: InvoiceUncheckedUpdateManyWithoutPatientNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutPatientNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutPatientNestedInput
   }
 
   export type PatientUncheckedUpdateManyWithoutClinicInput = {
@@ -76723,6 +85760,174 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type PharmacyCategoryUpdateWithoutClinicInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    medicines?: MedicineUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type PharmacyCategoryUncheckedUpdateWithoutClinicInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    medicines?: MedicineUncheckedUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type PharmacyCategoryUncheckedUpdateManyWithoutClinicInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MedicineUpdateWithoutClinicInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    medicineName?: StringFieldUpdateOperationsInput | string
+    genericName?: NullableStringFieldUpdateOperationsInput | string | null
+    brandName?: NullableStringFieldUpdateOperationsInput | string | null
+    manufacturer?: NullableStringFieldUpdateOperationsInput | string | null
+    medicineCode?: NullableStringFieldUpdateOperationsInput | string | null
+    hsnCode?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    purchasePrice?: FloatFieldUpdateOperationsInput | number
+    sellingPrice?: FloatFieldUpdateOperationsInput | number
+    gst?: FloatFieldUpdateOperationsInput | number
+    mrp?: FloatFieldUpdateOperationsInput | number
+    openingStock?: IntFieldUpdateOperationsInput | number
+    stockIn?: IntFieldUpdateOperationsInput | number
+    stockOut?: IntFieldUpdateOperationsInput | number
+    minimumStockAlert?: IntFieldUpdateOperationsInput | number
+    unit?: NullableStringFieldUpdateOperationsInput | string | null
+    batchNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    manufacturingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prescriptionRequired?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: PharmacyCategoryUpdateOneWithoutMedicinesNestedInput
+    invoiceItems?: PharmacyInvoiceItemUpdateManyWithoutMedicineNestedInput
+  }
+
+  export type MedicineUncheckedUpdateWithoutClinicInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    medicineName?: StringFieldUpdateOperationsInput | string
+    genericName?: NullableStringFieldUpdateOperationsInput | string | null
+    brandName?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    manufacturer?: NullableStringFieldUpdateOperationsInput | string | null
+    medicineCode?: NullableStringFieldUpdateOperationsInput | string | null
+    hsnCode?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    purchasePrice?: FloatFieldUpdateOperationsInput | number
+    sellingPrice?: FloatFieldUpdateOperationsInput | number
+    gst?: FloatFieldUpdateOperationsInput | number
+    mrp?: FloatFieldUpdateOperationsInput | number
+    openingStock?: IntFieldUpdateOperationsInput | number
+    stockIn?: IntFieldUpdateOperationsInput | number
+    stockOut?: IntFieldUpdateOperationsInput | number
+    minimumStockAlert?: IntFieldUpdateOperationsInput | number
+    unit?: NullableStringFieldUpdateOperationsInput | string | null
+    batchNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    manufacturingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prescriptionRequired?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    invoiceItems?: PharmacyInvoiceItemUncheckedUpdateManyWithoutMedicineNestedInput
+  }
+
+  export type MedicineUncheckedUpdateManyWithoutClinicInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    medicineName?: StringFieldUpdateOperationsInput | string
+    genericName?: NullableStringFieldUpdateOperationsInput | string | null
+    brandName?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    manufacturer?: NullableStringFieldUpdateOperationsInput | string | null
+    medicineCode?: NullableStringFieldUpdateOperationsInput | string | null
+    hsnCode?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    purchasePrice?: FloatFieldUpdateOperationsInput | number
+    sellingPrice?: FloatFieldUpdateOperationsInput | number
+    gst?: FloatFieldUpdateOperationsInput | number
+    mrp?: FloatFieldUpdateOperationsInput | number
+    openingStock?: IntFieldUpdateOperationsInput | number
+    stockIn?: IntFieldUpdateOperationsInput | number
+    stockOut?: IntFieldUpdateOperationsInput | number
+    minimumStockAlert?: IntFieldUpdateOperationsInput | number
+    unit?: NullableStringFieldUpdateOperationsInput | string | null
+    batchNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    manufacturingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prescriptionRequired?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PharmacyInvoiceUpdateWithoutClinicInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    invoiceNo?: StringFieldUpdateOperationsInput | string
+    customerName?: NullableStringFieldUpdateOperationsInput | string | null
+    customerPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    invoiceDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tax?: FloatFieldUpdateOperationsInput | number
+    discount?: FloatFieldUpdateOperationsInput | number
+    subTotal?: FloatFieldUpdateOperationsInput | number
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    paymentMethod?: StringFieldUpdateOperationsInput | string
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    patient?: PatientUpdateOneWithoutPharmacyInvoicesNestedInput
+    items?: PharmacyInvoiceItemUpdateManyWithoutInvoiceNestedInput
+  }
+
+  export type PharmacyInvoiceUncheckedUpdateWithoutClinicInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    invoiceNo?: StringFieldUpdateOperationsInput | string
+    patientId?: NullableStringFieldUpdateOperationsInput | string | null
+    customerName?: NullableStringFieldUpdateOperationsInput | string | null
+    customerPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    invoiceDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tax?: FloatFieldUpdateOperationsInput | number
+    discount?: FloatFieldUpdateOperationsInput | number
+    subTotal?: FloatFieldUpdateOperationsInput | number
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    paymentMethod?: StringFieldUpdateOperationsInput | string
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    items?: PharmacyInvoiceItemUncheckedUpdateManyWithoutInvoiceNestedInput
+  }
+
+  export type PharmacyInvoiceUncheckedUpdateManyWithoutClinicInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    invoiceNo?: StringFieldUpdateOperationsInput | string
+    patientId?: NullableStringFieldUpdateOperationsInput | string | null
+    customerName?: NullableStringFieldUpdateOperationsInput | string | null
+    customerPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    invoiceDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tax?: FloatFieldUpdateOperationsInput | number
+    discount?: FloatFieldUpdateOperationsInput | number
+    subTotal?: FloatFieldUpdateOperationsInput | number
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    paymentMethod?: StringFieldUpdateOperationsInput | string
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type ClinicCreateManyPackageInput = {
     id?: string
     name: string
@@ -76806,6 +86011,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateWithoutPackageInput = {
@@ -76864,6 +86072,9 @@ export namespace Prisma {
     labCategories?: LabCategoryUncheckedUpdateManyWithoutClinicNestedInput
     labTests?: LabTestUncheckedUpdateManyWithoutClinicNestedInput
     labBookings?: LabBookingUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyCategories?: PharmacyCategoryUncheckedUpdateManyWithoutClinicNestedInput
+    medicines?: MedicineUncheckedUpdateManyWithoutClinicNestedInput
+    pharmacyInvoices?: PharmacyInvoiceUncheckedUpdateManyWithoutClinicNestedInput
   }
 
   export type ClinicUncheckedUpdateManyWithoutPackageInput = {
@@ -78242,6 +87453,23 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type PharmacyInvoiceCreateManyPatientInput = {
+    id?: string
+    invoiceNo: string
+    customerName?: string | null
+    customerPhone?: string | null
+    invoiceDate?: Date | string
+    tax?: number
+    discount?: number
+    subTotal?: number
+    totalAmount: number
+    paymentMethod?: string
+    paymentStatus?: string
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type AppointmentUpdateWithoutPatientInput = {
     id?: StringFieldUpdateOperationsInput | string
     appointmentCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -78485,6 +87713,59 @@ export namespace Prisma {
     assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PharmacyInvoiceUpdateWithoutPatientInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    invoiceNo?: StringFieldUpdateOperationsInput | string
+    customerName?: NullableStringFieldUpdateOperationsInput | string | null
+    customerPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    invoiceDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tax?: FloatFieldUpdateOperationsInput | number
+    discount?: FloatFieldUpdateOperationsInput | number
+    subTotal?: FloatFieldUpdateOperationsInput | number
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    paymentMethod?: StringFieldUpdateOperationsInput | string
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    clinic?: ClinicUpdateOneRequiredWithoutPharmacyInvoicesNestedInput
+    items?: PharmacyInvoiceItemUpdateManyWithoutInvoiceNestedInput
+  }
+
+  export type PharmacyInvoiceUncheckedUpdateWithoutPatientInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    invoiceNo?: StringFieldUpdateOperationsInput | string
+    customerName?: NullableStringFieldUpdateOperationsInput | string | null
+    customerPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    invoiceDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tax?: FloatFieldUpdateOperationsInput | number
+    discount?: FloatFieldUpdateOperationsInput | number
+    subTotal?: FloatFieldUpdateOperationsInput | number
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    paymentMethod?: StringFieldUpdateOperationsInput | string
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    items?: PharmacyInvoiceItemUncheckedUpdateManyWithoutInvoiceNestedInput
+  }
+
+  export type PharmacyInvoiceUncheckedUpdateManyWithoutPatientInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    invoiceNo?: StringFieldUpdateOperationsInput | string
+    customerName?: NullableStringFieldUpdateOperationsInput | string | null
+    customerPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    invoiceDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tax?: FloatFieldUpdateOperationsInput | number
+    discount?: FloatFieldUpdateOperationsInput | number
+    subTotal?: FloatFieldUpdateOperationsInput | number
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    paymentMethod?: StringFieldUpdateOperationsInput | string
+    paymentStatus?: StringFieldUpdateOperationsInput | string
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -79189,6 +88470,224 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type MedicineCreateManyCategoryInput = {
+    id?: string
+    medicineName: string
+    genericName?: string | null
+    brandName?: string | null
+    manufacturer?: string | null
+    medicineCode?: string | null
+    hsnCode?: string | null
+    description?: string | null
+    purchasePrice?: number
+    sellingPrice?: number
+    gst?: number
+    mrp?: number
+    openingStock?: number
+    stockIn?: number
+    stockOut?: number
+    minimumStockAlert?: number
+    unit?: string | null
+    batchNumber?: string | null
+    manufacturingDate?: Date | string | null
+    expiryDate?: Date | string | null
+    prescriptionRequired?: boolean
+    status?: string
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MedicineUpdateWithoutCategoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    medicineName?: StringFieldUpdateOperationsInput | string
+    genericName?: NullableStringFieldUpdateOperationsInput | string | null
+    brandName?: NullableStringFieldUpdateOperationsInput | string | null
+    manufacturer?: NullableStringFieldUpdateOperationsInput | string | null
+    medicineCode?: NullableStringFieldUpdateOperationsInput | string | null
+    hsnCode?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    purchasePrice?: FloatFieldUpdateOperationsInput | number
+    sellingPrice?: FloatFieldUpdateOperationsInput | number
+    gst?: FloatFieldUpdateOperationsInput | number
+    mrp?: FloatFieldUpdateOperationsInput | number
+    openingStock?: IntFieldUpdateOperationsInput | number
+    stockIn?: IntFieldUpdateOperationsInput | number
+    stockOut?: IntFieldUpdateOperationsInput | number
+    minimumStockAlert?: IntFieldUpdateOperationsInput | number
+    unit?: NullableStringFieldUpdateOperationsInput | string | null
+    batchNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    manufacturingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prescriptionRequired?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    clinic?: ClinicUpdateOneRequiredWithoutMedicinesNestedInput
+    invoiceItems?: PharmacyInvoiceItemUpdateManyWithoutMedicineNestedInput
+  }
+
+  export type MedicineUncheckedUpdateWithoutCategoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    medicineName?: StringFieldUpdateOperationsInput | string
+    genericName?: NullableStringFieldUpdateOperationsInput | string | null
+    brandName?: NullableStringFieldUpdateOperationsInput | string | null
+    manufacturer?: NullableStringFieldUpdateOperationsInput | string | null
+    medicineCode?: NullableStringFieldUpdateOperationsInput | string | null
+    hsnCode?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    purchasePrice?: FloatFieldUpdateOperationsInput | number
+    sellingPrice?: FloatFieldUpdateOperationsInput | number
+    gst?: FloatFieldUpdateOperationsInput | number
+    mrp?: FloatFieldUpdateOperationsInput | number
+    openingStock?: IntFieldUpdateOperationsInput | number
+    stockIn?: IntFieldUpdateOperationsInput | number
+    stockOut?: IntFieldUpdateOperationsInput | number
+    minimumStockAlert?: IntFieldUpdateOperationsInput | number
+    unit?: NullableStringFieldUpdateOperationsInput | string | null
+    batchNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    manufacturingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prescriptionRequired?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    invoiceItems?: PharmacyInvoiceItemUncheckedUpdateManyWithoutMedicineNestedInput
+  }
+
+  export type MedicineUncheckedUpdateManyWithoutCategoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    medicineName?: StringFieldUpdateOperationsInput | string
+    genericName?: NullableStringFieldUpdateOperationsInput | string | null
+    brandName?: NullableStringFieldUpdateOperationsInput | string | null
+    manufacturer?: NullableStringFieldUpdateOperationsInput | string | null
+    medicineCode?: NullableStringFieldUpdateOperationsInput | string | null
+    hsnCode?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    purchasePrice?: FloatFieldUpdateOperationsInput | number
+    sellingPrice?: FloatFieldUpdateOperationsInput | number
+    gst?: FloatFieldUpdateOperationsInput | number
+    mrp?: FloatFieldUpdateOperationsInput | number
+    openingStock?: IntFieldUpdateOperationsInput | number
+    stockIn?: IntFieldUpdateOperationsInput | number
+    stockOut?: IntFieldUpdateOperationsInput | number
+    minimumStockAlert?: IntFieldUpdateOperationsInput | number
+    unit?: NullableStringFieldUpdateOperationsInput | string | null
+    batchNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    manufacturingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prescriptionRequired?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PharmacyInvoiceItemCreateManyMedicineInput = {
+    id?: string
+    invoiceId: string
+    medicineName: string
+    quantity: number
+    unitCost: number
+    gst?: number
+    amount: number
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PharmacyInvoiceItemUpdateWithoutMedicineInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    medicineName?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    unitCost?: FloatFieldUpdateOperationsInput | number
+    gst?: FloatFieldUpdateOperationsInput | number
+    amount?: FloatFieldUpdateOperationsInput | number
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    invoice?: PharmacyInvoiceUpdateOneRequiredWithoutItemsNestedInput
+  }
+
+  export type PharmacyInvoiceItemUncheckedUpdateWithoutMedicineInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    invoiceId?: StringFieldUpdateOperationsInput | string
+    medicineName?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    unitCost?: FloatFieldUpdateOperationsInput | number
+    gst?: FloatFieldUpdateOperationsInput | number
+    amount?: FloatFieldUpdateOperationsInput | number
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PharmacyInvoiceItemUncheckedUpdateManyWithoutMedicineInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    invoiceId?: StringFieldUpdateOperationsInput | string
+    medicineName?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    unitCost?: FloatFieldUpdateOperationsInput | number
+    gst?: FloatFieldUpdateOperationsInput | number
+    amount?: FloatFieldUpdateOperationsInput | number
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PharmacyInvoiceItemCreateManyInvoiceInput = {
+    id?: string
+    medicineId?: string | null
+    medicineName: string
+    quantity: number
+    unitCost: number
+    gst?: number
+    amount: number
+    clinicId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PharmacyInvoiceItemUpdateWithoutInvoiceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    medicineName?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    unitCost?: FloatFieldUpdateOperationsInput | number
+    gst?: FloatFieldUpdateOperationsInput | number
+    amount?: FloatFieldUpdateOperationsInput | number
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    medicine?: MedicineUpdateOneWithoutInvoiceItemsNestedInput
+  }
+
+  export type PharmacyInvoiceItemUncheckedUpdateWithoutInvoiceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    medicineId?: NullableStringFieldUpdateOperationsInput | string | null
+    medicineName?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    unitCost?: FloatFieldUpdateOperationsInput | number
+    gst?: FloatFieldUpdateOperationsInput | number
+    amount?: FloatFieldUpdateOperationsInput | number
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PharmacyInvoiceItemUncheckedUpdateManyWithoutInvoiceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    medicineId?: NullableStringFieldUpdateOperationsInput | string | null
+    medicineName?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    unitCost?: FloatFieldUpdateOperationsInput | number
+    gst?: FloatFieldUpdateOperationsInput | number
+    amount?: FloatFieldUpdateOperationsInput | number
+    clinicId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
 
 
   /**
@@ -79250,6 +88749,18 @@ export namespace Prisma {
      * @deprecated Use LabTestCountOutputTypeDefaultArgs instead
      */
     export type LabTestCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LabTestCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use PharmacyCategoryCountOutputTypeDefaultArgs instead
+     */
+    export type PharmacyCategoryCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PharmacyCategoryCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use MedicineCountOutputTypeDefaultArgs instead
+     */
+    export type MedicineCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = MedicineCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use PharmacyInvoiceCountOutputTypeDefaultArgs instead
+     */
+    export type PharmacyInvoiceCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PharmacyInvoiceCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use ClinicDefaultArgs instead
      */
@@ -79390,6 +88901,22 @@ export namespace Prisma {
      * @deprecated Use LabBookingDefaultArgs instead
      */
     export type LabBookingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LabBookingDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use PharmacyCategoryDefaultArgs instead
+     */
+    export type PharmacyCategoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PharmacyCategoryDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use MedicineDefaultArgs instead
+     */
+    export type MedicineArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = MedicineDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use PharmacyInvoiceDefaultArgs instead
+     */
+    export type PharmacyInvoiceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PharmacyInvoiceDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use PharmacyInvoiceItemDefaultArgs instead
+     */
+    export type PharmacyInvoiceItemArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PharmacyInvoiceItemDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

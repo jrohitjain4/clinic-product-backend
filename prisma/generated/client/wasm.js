@@ -720,6 +720,77 @@ exports.Prisma.LabBookingScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.PharmacyCategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  status: 'status',
+  clinicId: 'clinicId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.MedicineScalarFieldEnum = {
+  id: 'id',
+  medicineName: 'medicineName',
+  genericName: 'genericName',
+  brandName: 'brandName',
+  categoryId: 'categoryId',
+  manufacturer: 'manufacturer',
+  medicineCode: 'medicineCode',
+  hsnCode: 'hsnCode',
+  description: 'description',
+  purchasePrice: 'purchasePrice',
+  sellingPrice: 'sellingPrice',
+  gst: 'gst',
+  mrp: 'mrp',
+  openingStock: 'openingStock',
+  stockIn: 'stockIn',
+  stockOut: 'stockOut',
+  minimumStockAlert: 'minimumStockAlert',
+  unit: 'unit',
+  batchNumber: 'batchNumber',
+  manufacturingDate: 'manufacturingDate',
+  expiryDate: 'expiryDate',
+  prescriptionRequired: 'prescriptionRequired',
+  status: 'status',
+  clinicId: 'clinicId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PharmacyInvoiceScalarFieldEnum = {
+  id: 'id',
+  invoiceNo: 'invoiceNo',
+  patientId: 'patientId',
+  customerName: 'customerName',
+  customerPhone: 'customerPhone',
+  invoiceDate: 'invoiceDate',
+  tax: 'tax',
+  discount: 'discount',
+  subTotal: 'subTotal',
+  totalAmount: 'totalAmount',
+  paymentMethod: 'paymentMethod',
+  paymentStatus: 'paymentStatus',
+  clinicId: 'clinicId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PharmacyInvoiceItemScalarFieldEnum = {
+  id: 'id',
+  invoiceId: 'invoiceId',
+  medicineId: 'medicineId',
+  medicineName: 'medicineName',
+  quantity: 'quantity',
+  unitCost: 'unitCost',
+  gst: 'gst',
+  amount: 'amount',
+  clinicId: 'clinicId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -802,7 +873,11 @@ exports.Prisma.ModelName = {
   Note: 'Note',
   LabCategory: 'LabCategory',
   LabTest: 'LabTest',
-  LabBooking: 'LabBooking'
+  LabBooking: 'LabBooking',
+  PharmacyCategory: 'PharmacyCategory',
+  Medicine: 'Medicine',
+  PharmacyInvoice: 'PharmacyInvoice',
+  PharmacyInvoiceItem: 'PharmacyInvoiceItem'
 };
 
 /**
