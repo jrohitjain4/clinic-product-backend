@@ -180,3 +180,32 @@ export const bulkDeleteMedicines = async (req: AuthenticatedRequest, res: Respon
         res.status(500).json({ message: err.message });
     }
 };
+
+// POST /api/medicines/:id/add-stock
+export const addMedicineStock = async (req: AuthenticatedRequest, res: Response) => {
+    try {
+        const clinicId = req.user?.clinicId;
+        const { id } = req.params;
+        const { quantity } = req.body;
+
+        const parsedQuantity = parseInt(quantity);
+        if (isNaN(parsedQuantity) || parsedQuantity <= 0) {
+            return res.status(400).json({ message: "Invalid quantity" });
+        }
+
+        const existing = await prisma.medicine.findFirst({ where: { id, clinicId: clinicId! } });
+        if (!existing) return res.status(404).json({ message: "Medicine not found" });
+
+        const updated = await prisma.medicine.update({
+            where: { id },
+            data: {
+                stockIn: { increment: parsedQuantity }
+            }
+        });
+
+        res.json(updated);
+    } catch (err: any) {
+        res.status(500).json({ message: err.message });
+    }
+};
+

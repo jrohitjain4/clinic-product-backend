@@ -104,6 +104,9 @@ const appointmentIncludes = {
       addressLine1: true,
       addressLine2: true,
       city: true,
+      state: true,
+      country: true,
+      pincode: true,
       landingPage: {
         select: {
           logo: true,

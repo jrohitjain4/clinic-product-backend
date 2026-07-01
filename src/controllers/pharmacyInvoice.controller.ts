@@ -58,11 +58,11 @@ export const getPharmacyDashboardStats = async (req: AuthenticatedRequest, res: 
 
         const now = new Date();
         const lowStockMedicines = allMedicines.filter(m => {
-            const stock = m.openingStock + m.stockIn - m.stockOut;
+            const stock = m.stockIn - m.stockOut;
             return stock <= m.minimumStockAlert && stock > 0;
         });
         const outOfStockCount = allMedicines.filter(m => {
-            const stock = m.openingStock + m.stockIn - m.stockOut;
+            const stock = m.stockIn - m.stockOut;
             return stock <= 0;
         }).length;
         const expiredMedicines = allMedicines.filter(m => m.expiryDate && new Date(m.expiryDate) < now);
@@ -77,13 +77,13 @@ export const getPharmacyDashboardStats = async (req: AuthenticatedRequest, res: 
             totalRevenue: totalRevenue._sum.totalAmount || 0,
             lowStockMedicines: lowStockMedicines.map(m => ({
                 ...m,
-                currentStock: m.openingStock + m.stockIn - m.stockOut,
+                currentStock: m.stockIn - m.stockOut,
             })),
             outOfStockCount,
             expiredCount: expiredMedicines.length,
             expiredMedicines: expiredMedicines.map(m => ({
                 ...m,
-                currentStock: m.openingStock + m.stockIn - m.stockOut,
+                currentStock: m.stockIn - m.stockOut,
             })),
             totalMedicines,
             recentSales,
@@ -197,7 +197,7 @@ export const createPharmacyInvoice = async (req: AuthenticatedRequest, res: Resp
                     }
 
                     // ❌ Negative stock / insufficient stock check
-                    const currentStock = medicine.openingStock + medicine.stockIn - medicine.stockOut;
+                    const currentStock = medicine.stockIn - medicine.stockOut;
                     if (currentStock < qty) {
                         throw new Error(`Insufficient stock for "${medicine.medicineName}". Available: ${currentStock}, Requested: ${qty}`);
                     }
