@@ -8,6 +8,7 @@ router.use(auth_middleware_1.authenticateJWT);
 router.get("/", staff_controller_1.getStaffs);
 router.get("/:id", staff_controller_1.getStaffById);
 router.post("/", staff_controller_1.createStaff);
+router.post("/:id/reset-password", staff_controller_1.resetStaffPassword);
 router.put("/:id", staff_controller_1.updateStaff);
 router.delete("/:id", staff_controller_1.deleteStaff);
 exports.default = router;

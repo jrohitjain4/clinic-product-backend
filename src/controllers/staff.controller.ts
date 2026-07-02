@@ -3,6 +3,7 @@ import { AuthenticatedRequest } from "../middlewares/auth.middleware";
 import prisma from "../lib/prisma";
 import bcrypt from "bcryptjs";
 import { sendStaffWelcomeEmail } from "../utils/email";
+import { checkPhoneDuplicate } from "../utils/phoneValidation";
 
 const mapStatusLabel = (status: string) =>
   status === "Active" ? "Available" : "Unavailable";
@@ -114,6 +115,13 @@ export const createStaff = async (req: AuthenticatedRequest, res: Response) => {
     }
     if (!role?.trim()) {
       return res.status(400).json({ message: "Role is required" });
+    }
+
+    if (phone) {
+      const duplicate = await checkPhoneDuplicate(phone);
+      if (duplicate) {
+        return res.status(400).json({ message: "This phone number is already registered" });
+      }
     }
 
     const count = await prisma.staff.count({ where: { clinicId } });
@@ -268,6 +276,13 @@ export const updateStaff = async (req: AuthenticatedRequest, res: Response) => {
       dateOfJoining,
       status,
     } = req.body;
+
+    if (phone && phone !== existing.phone) {
+      const duplicate = await checkPhoneDuplicate(phone);
+      if (duplicate) {
+        return res.status(400).json({ message: "This phone number is already registered" });
+      }
+    }
 
     let resolvedDepartmentId =
       departmentId !== undefined ? departmentId || null : existing.departmentId;

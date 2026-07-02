@@ -14,6 +14,8 @@ router.post("/register-draft", (0, validate_middleware_1.validate)(auth_validati
 router.post("/register-full", auth_controller_1.registerFull);
 router.post("/complete-registration", auth_controller_1.completeRegistration);
 router.post("/login", (0, validate_middleware_1.validate)(auth_validation_1.authValidation.login), auth_controller_1.login);
+router.post("/send-otp", auth_controller_1.sendLoginOTP);
+router.post("/verify-otp-login", auth_controller_1.verifyOTPLogin);
 router.post("/request-password-reset", auth_controller_1.requestPasswordReset);
 router.post("/reset-password", auth_controller_1.resetPassword);
 router.get("/me", auth_middleware_1.authenticateJWT, auth_controller_1.getMe);

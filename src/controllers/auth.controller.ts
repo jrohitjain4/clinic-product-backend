@@ -6,6 +6,7 @@ import * as jwt from "jsonwebtoken";
 import { AuthenticatedRequest } from "../middlewares/auth.middleware";
 import prisma from "../lib/prisma";
 import { createSuperAdminNotification } from "./notification.controller";
+import { checkPhoneDuplicate } from "../utils/phoneValidation";
 
 const JWT_SECRET = process.env.JWT_SECRET!; // Validated at startup in auth.middleware.ts
 
@@ -37,6 +38,16 @@ export const updateProfile = async (req: AuthenticatedRequest, res: Response) =>
       country, state, city, pincode, clinicName, gstNo, clinicLogo,
       gender, dob, bloodGroup, maritalStatus, occupation
     } = req.body;
+
+    if (phone) {
+      const user = await prisma.user.findUnique({ where: { id: req.user.id } });
+      if (user && phone !== user.phone) {
+        const duplicate = await checkPhoneDuplicate(phone);
+        if (duplicate) {
+          return res.status(400).json({ message: "This phone number is already registered" });
+        }
+      }
+    }
 
     const fullName = `${firstName || ""} ${lastName || ""}`.trim() || undefined;
 
@@ -262,7 +273,7 @@ export const registerDraft = async (req: Request, res: Response) => {
     const emailExists = await prisma.user.findUnique({ where: { email } });
     if (emailExists) return res.status(400).json({ message: "This email address is already registered" });
 
-    const phoneExists = await prisma.user.findFirst({ where: { phone } });
+    const phoneExists = await checkPhoneDuplicate(phone);
     if (phoneExists) return res.status(400).json({ message: "This phone number is already registered" });
 
     const usernameExists = await prisma.user.findFirst({ where: { username } });
@@ -310,7 +321,7 @@ export const registerFull = async (req: Request, res: Response) => {
     const emailExists = await prisma.user.findUnique({ where: { email } });
     if (emailExists) return res.status(400).json({ message: "This email address is already registered" });
 
-    const phoneExists = await prisma.user.findFirst({ where: { phone } });
+    const phoneExists = await checkPhoneDuplicate(phone);
     if (phoneExists) return res.status(400).json({ message: "This phone number is already registered" });
 
     const usernameExists = await prisma.user.findFirst({ where: { username } });

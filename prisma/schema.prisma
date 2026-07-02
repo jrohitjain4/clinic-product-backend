@@ -286,6 +286,7 @@ model Patient {
   alternateMobile String?
   email           String?
   dob             DateTime?
+  age             Int?
   gender          String?
   bloodGroup      String?
   maritalStatus   String?

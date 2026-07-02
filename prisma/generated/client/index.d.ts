@@ -15494,8 +15494,18 @@ export namespace Prisma {
 
   export type AggregatePatient = {
     _count: PatientCountAggregateOutputType | null
+    _avg: PatientAvgAggregateOutputType | null
+    _sum: PatientSumAggregateOutputType | null
     _min: PatientMinAggregateOutputType | null
     _max: PatientMaxAggregateOutputType | null
+  }
+
+  export type PatientAvgAggregateOutputType = {
+    age: number | null
+  }
+
+  export type PatientSumAggregateOutputType = {
+    age: number | null
   }
 
   export type PatientMinAggregateOutputType = {
@@ -15509,6 +15519,7 @@ export namespace Prisma {
     alternateMobile: string | null
     email: string | null
     dob: Date | null
+    age: number | null
     gender: string | null
     bloodGroup: string | null
     maritalStatus: string | null
@@ -15543,6 +15554,7 @@ export namespace Prisma {
     alternateMobile: string | null
     email: string | null
     dob: Date | null
+    age: number | null
     gender: string | null
     bloodGroup: string | null
     maritalStatus: string | null
@@ -15577,6 +15589,7 @@ export namespace Prisma {
     alternateMobile: number
     email: number
     dob: number
+    age: number
     gender: number
     bloodGroup: number
     maritalStatus: number
@@ -15603,6 +15616,14 @@ export namespace Prisma {
   }
 
 
+  export type PatientAvgAggregateInputType = {
+    age?: true
+  }
+
+  export type PatientSumAggregateInputType = {
+    age?: true
+  }
+
   export type PatientMinAggregateInputType = {
     id?: true
     patientCode?: true
@@ -15614,6 +15635,7 @@ export namespace Prisma {
     alternateMobile?: true
     email?: true
     dob?: true
+    age?: true
     gender?: true
     bloodGroup?: true
     maritalStatus?: true
@@ -15648,6 +15670,7 @@ export namespace Prisma {
     alternateMobile?: true
     email?: true
     dob?: true
+    age?: true
     gender?: true
     bloodGroup?: true
     maritalStatus?: true
@@ -15682,6 +15705,7 @@ export namespace Prisma {
     alternateMobile?: true
     email?: true
     dob?: true
+    age?: true
     gender?: true
     bloodGroup?: true
     maritalStatus?: true
@@ -15745,6 +15769,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: PatientAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PatientSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: PatientMinAggregateInputType
@@ -15775,6 +15811,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: PatientCountAggregateInputType | true
+    _avg?: PatientAvgAggregateInputType
+    _sum?: PatientSumAggregateInputType
     _min?: PatientMinAggregateInputType
     _max?: PatientMaxAggregateInputType
   }
@@ -15790,6 +15828,7 @@ export namespace Prisma {
     alternateMobile: string | null
     email: string | null
     dob: Date | null
+    age: number | null
     gender: string | null
     bloodGroup: string | null
     maritalStatus: string | null
@@ -15813,6 +15852,8 @@ export namespace Prisma {
     createdAt: Date
     updatedAt: Date
     _count: PatientCountAggregateOutputType | null
+    _avg: PatientAvgAggregateOutputType | null
+    _sum: PatientSumAggregateOutputType | null
     _min: PatientMinAggregateOutputType | null
     _max: PatientMaxAggregateOutputType | null
   }
@@ -15842,6 +15883,7 @@ export namespace Prisma {
     alternateMobile?: boolean
     email?: boolean
     dob?: boolean
+    age?: boolean
     gender?: boolean
     bloodGroup?: boolean
     maritalStatus?: boolean
@@ -15884,6 +15926,7 @@ export namespace Prisma {
     alternateMobile?: boolean
     email?: boolean
     dob?: boolean
+    age?: boolean
     gender?: boolean
     bloodGroup?: boolean
     maritalStatus?: boolean
@@ -15920,6 +15963,7 @@ export namespace Prisma {
     alternateMobile?: boolean
     email?: boolean
     dob?: boolean
+    age?: boolean
     gender?: boolean
     bloodGroup?: boolean
     maritalStatus?: boolean
@@ -15978,6 +16022,7 @@ export namespace Prisma {
       alternateMobile: string | null
       email: string | null
       dob: Date | null
+      age: number | null
       gender: string | null
       bloodGroup: string | null
       maritalStatus: string | null
@@ -16409,6 +16454,7 @@ export namespace Prisma {
     readonly alternateMobile: FieldRef<"Patient", 'String'>
     readonly email: FieldRef<"Patient", 'String'>
     readonly dob: FieldRef<"Patient", 'DateTime'>
+    readonly age: FieldRef<"Patient", 'Int'>
     readonly gender: FieldRef<"Patient", 'String'>
     readonly bloodGroup: FieldRef<"Patient", 'String'>
     readonly maritalStatus: FieldRef<"Patient", 'String'>
@@ -48886,6 +48932,7 @@ export namespace Prisma {
     alternateMobile: 'alternateMobile',
     email: 'email',
     dob: 'dob',
+    age: 'age',
     gender: 'gender',
     bloodGroup: 'bloodGroup',
     maritalStatus: 'maritalStatus',
@@ -50839,6 +50886,7 @@ export namespace Prisma {
     alternateMobile?: StringNullableFilter<"Patient"> | string | null
     email?: StringNullableFilter<"Patient"> | string | null
     dob?: DateTimeNullableFilter<"Patient"> | Date | string | null
+    age?: IntNullableFilter<"Patient"> | number | null
     gender?: StringNullableFilter<"Patient"> | string | null
     bloodGroup?: StringNullableFilter<"Patient"> | string | null
     maritalStatus?: StringNullableFilter<"Patient"> | string | null
@@ -50880,6 +50928,7 @@ export namespace Prisma {
     alternateMobile?: SortOrderInput | SortOrder
     email?: SortOrderInput | SortOrder
     dob?: SortOrderInput | SortOrder
+    age?: SortOrderInput | SortOrder
     gender?: SortOrderInput | SortOrder
     bloodGroup?: SortOrderInput | SortOrder
     maritalStatus?: SortOrderInput | SortOrder
@@ -50924,6 +50973,7 @@ export namespace Prisma {
     alternateMobile?: StringNullableFilter<"Patient"> | string | null
     email?: StringNullableFilter<"Patient"> | string | null
     dob?: DateTimeNullableFilter<"Patient"> | Date | string | null
+    age?: IntNullableFilter<"Patient"> | number | null
     gender?: StringNullableFilter<"Patient"> | string | null
     bloodGroup?: StringNullableFilter<"Patient"> | string | null
     maritalStatus?: StringNullableFilter<"Patient"> | string | null
@@ -50965,6 +51015,7 @@ export namespace Prisma {
     alternateMobile?: SortOrderInput | SortOrder
     email?: SortOrderInput | SortOrder
     dob?: SortOrderInput | SortOrder
+    age?: SortOrderInput | SortOrder
     gender?: SortOrderInput | SortOrder
     bloodGroup?: SortOrderInput | SortOrder
     maritalStatus?: SortOrderInput | SortOrder
@@ -50988,8 +51039,10 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: PatientCountOrderByAggregateInput
+    _avg?: PatientAvgOrderByAggregateInput
     _max?: PatientMaxOrderByAggregateInput
     _min?: PatientMinOrderByAggregateInput
+    _sum?: PatientSumOrderByAggregateInput
   }
 
   export type PatientScalarWhereWithAggregatesInput = {
@@ -51006,6 +51059,7 @@ export namespace Prisma {
     alternateMobile?: StringNullableWithAggregatesFilter<"Patient"> | string | null
     email?: StringNullableWithAggregatesFilter<"Patient"> | string | null
     dob?: DateTimeNullableWithAggregatesFilter<"Patient"> | Date | string | null
+    age?: IntNullableWithAggregatesFilter<"Patient"> | number | null
     gender?: StringNullableWithAggregatesFilter<"Patient"> | string | null
     bloodGroup?: StringNullableWithAggregatesFilter<"Patient"> | string | null
     maritalStatus?: StringNullableWithAggregatesFilter<"Patient"> | string | null
@@ -55352,6 +55406,7 @@ export namespace Prisma {
     alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
+    age?: number | null
     gender?: string | null
     bloodGroup?: string | null
     maritalStatus?: string | null
@@ -55392,6 +55447,7 @@ export namespace Prisma {
     alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
+    age?: number | null
     gender?: string | null
     bloodGroup?: string | null
     maritalStatus?: string | null
@@ -55432,6 +55488,7 @@ export namespace Prisma {
     alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    age?: NullableIntFieldUpdateOperationsInput | number | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
     maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
@@ -55472,6 +55529,7 @@ export namespace Prisma {
     alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    age?: NullableIntFieldUpdateOperationsInput | number | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
     maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
@@ -55512,6 +55570,7 @@ export namespace Prisma {
     alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
+    age?: number | null
     gender?: string | null
     bloodGroup?: string | null
     maritalStatus?: string | null
@@ -55547,6 +55606,7 @@ export namespace Prisma {
     alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    age?: NullableIntFieldUpdateOperationsInput | number | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
     maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
@@ -55581,6 +55641,7 @@ export namespace Prisma {
     alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    age?: NullableIntFieldUpdateOperationsInput | number | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
     maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
@@ -60052,6 +60113,7 @@ export namespace Prisma {
     alternateMobile?: SortOrder
     email?: SortOrder
     dob?: SortOrder
+    age?: SortOrder
     gender?: SortOrder
     bloodGroup?: SortOrder
     maritalStatus?: SortOrder
@@ -60076,6 +60138,10 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type PatientAvgOrderByAggregateInput = {
+    age?: SortOrder
+  }
+
   export type PatientMaxOrderByAggregateInput = {
     id?: SortOrder
     patientCode?: SortOrder
@@ -60087,6 +60153,7 @@ export namespace Prisma {
     alternateMobile?: SortOrder
     email?: SortOrder
     dob?: SortOrder
+    age?: SortOrder
     gender?: SortOrder
     bloodGroup?: SortOrder
     maritalStatus?: SortOrder
@@ -60121,6 +60188,7 @@ export namespace Prisma {
     alternateMobile?: SortOrder
     email?: SortOrder
     dob?: SortOrder
+    age?: SortOrder
     gender?: SortOrder
     bloodGroup?: SortOrder
     maritalStatus?: SortOrder
@@ -60142,6 +60210,10 @@ export namespace Prisma {
     clinicId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type PatientSumOrderByAggregateInput = {
+    age?: SortOrder
   }
 
   export type PatientNullableRelationFilter = {
@@ -66280,6 +66352,7 @@ export namespace Prisma {
     alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
+    age?: number | null
     gender?: string | null
     bloodGroup?: string | null
     maritalStatus?: string | null
@@ -66319,6 +66392,7 @@ export namespace Prisma {
     alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
+    age?: number | null
     gender?: string | null
     bloodGroup?: string | null
     maritalStatus?: string | null
@@ -67760,6 +67834,7 @@ export namespace Prisma {
     alternateMobile?: StringNullableFilter<"Patient"> | string | null
     email?: StringNullableFilter<"Patient"> | string | null
     dob?: DateTimeNullableFilter<"Patient"> | Date | string | null
+    age?: IntNullableFilter<"Patient"> | number | null
     gender?: StringNullableFilter<"Patient"> | string | null
     bloodGroup?: StringNullableFilter<"Patient"> | string | null
     maritalStatus?: StringNullableFilter<"Patient"> | string | null
@@ -72503,6 +72578,7 @@ export namespace Prisma {
     alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
+    age?: number | null
     gender?: string | null
     bloodGroup?: string | null
     maritalStatus?: string | null
@@ -72542,6 +72618,7 @@ export namespace Prisma {
     alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
+    age?: number | null
     gender?: string | null
     bloodGroup?: string | null
     maritalStatus?: string | null
@@ -73124,6 +73201,7 @@ export namespace Prisma {
     alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    age?: NullableIntFieldUpdateOperationsInput | number | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
     maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
@@ -73163,6 +73241,7 @@ export namespace Prisma {
     alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    age?: NullableIntFieldUpdateOperationsInput | number | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
     maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
@@ -77154,6 +77233,7 @@ export namespace Prisma {
     alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
+    age?: number | null
     gender?: string | null
     bloodGroup?: string | null
     maritalStatus?: string | null
@@ -77193,6 +77273,7 @@ export namespace Prisma {
     alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
+    age?: number | null
     gender?: string | null
     bloodGroup?: string | null
     maritalStatus?: string | null
@@ -77624,6 +77705,7 @@ export namespace Prisma {
     alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    age?: NullableIntFieldUpdateOperationsInput | number | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
     maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
@@ -77663,6 +77745,7 @@ export namespace Prisma {
     alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    age?: NullableIntFieldUpdateOperationsInput | number | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
     maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
@@ -78424,6 +78507,7 @@ export namespace Prisma {
     alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
+    age?: number | null
     gender?: string | null
     bloodGroup?: string | null
     maritalStatus?: string | null
@@ -78463,6 +78547,7 @@ export namespace Prisma {
     alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
+    age?: number | null
     gender?: string | null
     bloodGroup?: string | null
     maritalStatus?: string | null
@@ -78787,6 +78872,7 @@ export namespace Prisma {
     alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    age?: NullableIntFieldUpdateOperationsInput | number | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
     maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
@@ -78826,6 +78912,7 @@ export namespace Prisma {
     alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    age?: NullableIntFieldUpdateOperationsInput | number | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
     maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
@@ -81698,6 +81785,7 @@ export namespace Prisma {
     alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
+    age?: number | null
     gender?: string | null
     bloodGroup?: string | null
     maritalStatus?: string | null
@@ -81737,6 +81825,7 @@ export namespace Prisma {
     alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
+    age?: number | null
     gender?: string | null
     bloodGroup?: string | null
     maritalStatus?: string | null
@@ -82017,6 +82106,7 @@ export namespace Prisma {
     alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    age?: NullableIntFieldUpdateOperationsInput | number | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
     maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
@@ -82056,6 +82146,7 @@ export namespace Prisma {
     alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    age?: NullableIntFieldUpdateOperationsInput | number | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
     maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
@@ -83067,6 +83158,7 @@ export namespace Prisma {
     alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
+    age?: number | null
     gender?: string | null
     bloodGroup?: string | null
     maritalStatus?: string | null
@@ -83106,6 +83198,7 @@ export namespace Prisma {
     alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
+    age?: number | null
     gender?: string | null
     bloodGroup?: string | null
     maritalStatus?: string | null
@@ -83324,6 +83417,7 @@ export namespace Prisma {
     alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    age?: NullableIntFieldUpdateOperationsInput | number | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
     maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
@@ -83363,6 +83457,7 @@ export namespace Prisma {
     alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    age?: NullableIntFieldUpdateOperationsInput | number | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
     maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
@@ -83885,6 +83980,7 @@ export namespace Prisma {
     alternateMobile?: string | null
     email?: string | null
     dob?: Date | string | null
+    age?: number | null
     gender?: string | null
     bloodGroup?: string | null
     maritalStatus?: string | null
@@ -84665,6 +84761,7 @@ export namespace Prisma {
     alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    age?: NullableIntFieldUpdateOperationsInput | number | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
     maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
@@ -84704,6 +84801,7 @@ export namespace Prisma {
     alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    age?: NullableIntFieldUpdateOperationsInput | number | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
     maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
@@ -84743,6 +84841,7 @@ export namespace Prisma {
     alternateMobile?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    age?: NullableIntFieldUpdateOperationsInput | number | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
     maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null

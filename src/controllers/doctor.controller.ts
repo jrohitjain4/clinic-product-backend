@@ -5,6 +5,7 @@ import { randomBytes } from "crypto";
 import prisma from "../lib/prisma";
 import { createNotificationInternal } from "./notification.controller";
 import { sendEmail, sendDoctorRegistrationEmail } from "../utils/email";
+import { checkPhoneDuplicate } from "../utils/phoneValidation";
 
 // GET /api/doctors
 export const getDoctors = async (req: AuthenticatedRequest, res: Response) => {
@@ -114,8 +115,8 @@ export const createDoctor = async (req: AuthenticatedRequest, res: Response) => 
             if (existingByEmail) return res.status(400).json({ message: "Email is already registered" });
         }
         if (phone) {
-            const existingByPhone = await prisma.doctor.findFirst({ where: { phone, clinicId } });
-            if (existingByPhone) return res.status(400).json({ message: "Phone number is already registered for another doctor" });
+            const duplicate = await checkPhoneDuplicate(phone);
+            if (duplicate) return res.status(400).json({ message: "This phone number is already registered" });
         }
 
         // Auto Doctor Code: DOC000001
@@ -296,6 +297,11 @@ export const updateDoctor = async (req: AuthenticatedRequest, res: Response) => 
 
         const existing = await prisma.doctor.findFirst({ where: { id, clinicId: clinicId! } });
         if (!existing) return res.status(404).json({ message: "Doctor not found" });
+
+        if (phone && phone !== existing.phone) {
+            const duplicate = await checkPhoneDuplicate(phone);
+            if (duplicate) return res.status(400).json({ message: "This phone number is already registered" });
+        }
 
         const updatedDoctor = await prisma.doctor.update({
             where: { id },

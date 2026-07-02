@@ -10,6 +10,7 @@ const mapStatusLabel = (status: string) =>
   status === "Active" ? "Available" : "Unavailable";
 
 import { sendEmail, sendPatientRegistrationEmail } from "../utils/email";
+import { checkPhoneDuplicate } from "../utils/phoneValidation";
 
 const normalizeStatus = (status?: string) => {
   if (!status) return "Active";
@@ -169,6 +170,7 @@ export const createPatient = async (req: AuthenticatedRequest, res: Response) =>
       alternateMobile,
       email,
       dob,
+      age,
       gender,
       bloodGroup,
       maritalStatus,
@@ -202,19 +204,21 @@ export const createPatient = async (req: AuthenticatedRequest, res: Response) =>
     }
 
     // 🔴 P0 Duplicate Patient Detection
-    if (phone || email) {
-      const duplicateWhere: any[] = [];
-      if (phone) duplicateWhere.push({ phone });
-      if (email) duplicateWhere.push({ email: email.toLowerCase() });
-
+    if (phone) {
+      const duplicate = await checkPhoneDuplicate(phone);
+      if (duplicate) {
+        return res.status(400).json({ message: "This phone number is already registered" });
+      }
+    }
+    if (email) {
       const existingDuplicate = await prisma.patient.findFirst({
         where: {
           clinicId,
-          OR: duplicateWhere
+          email: email.toLowerCase()
         }
       });
       if (existingDuplicate) {
-        return res.status(400).json({ message: "A patient with this phone number or email already exists." });
+        return res.status(400).json({ message: "A patient with this email already exists." });
       }
     }
 
@@ -256,6 +260,7 @@ export const createPatient = async (req: AuthenticatedRequest, res: Response) =>
         alternateMobile: alternateMobile || null,
         email: email ? email.toLowerCase() : null,
         dob: dob ? new Date(dob) : null,
+        age: age ? parseInt(age.toString(), 10) : null,
         gender: gender && gender !== "Select" ? gender : null,
         bloodGroup: bloodGroup && bloodGroup !== "Select" ? bloodGroup : null,
         maritalStatus: maritalStatus && maritalStatus !== "Select" ? maritalStatus : null,
@@ -363,6 +368,7 @@ export const updatePatient = async (req: AuthenticatedRequest, res: Response) =>
       alternateMobile,
       email,
       dob,
+      age,
       gender,
       bloodGroup,
       maritalStatus,
@@ -385,6 +391,13 @@ export const updatePatient = async (req: AuthenticatedRequest, res: Response) =>
       vitals,
     } = req.body;
 
+    if (phone && phone !== existing.phone) {
+      const duplicate = await checkPhoneDuplicate(phone);
+      if (duplicate) {
+        return res.status(400).json({ message: "This phone number is already registered" });
+      }
+    }
+
 
 
     const updated = await prisma.patient.update({
@@ -399,6 +412,7 @@ export const updatePatient = async (req: AuthenticatedRequest, res: Response) =>
         alternateMobile: alternateMobile !== undefined ? alternateMobile || null : existing.alternateMobile,
         email: email !== undefined ? email || null : existing.email,
         dob: dob !== undefined ? (dob ? new Date(dob) : null) : existing.dob,
+        age: age !== undefined ? (age ? parseInt(age.toString(), 10) : null) : existing.age,
         gender:
           gender !== undefined
             ? gender && gender !== "Select"

@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const pharmacyInvoice_controller_1 = require("../controllers/pharmacyInvoice.controller");
+const auth_middleware_1 = require("../middlewares/auth.middleware");
+const router = (0, express_1.Router)();
+router.use(auth_middleware_1.authenticateJWT);
+router.get("/dashboard", pharmacyInvoice_controller_1.getPharmacyDashboardStats);
+router.get("/", pharmacyInvoice_controller_1.getPharmacyInvoices);
+router.get("/:id", pharmacyInvoice_controller_1.getPharmacyInvoiceById);
+router.post("/", pharmacyInvoice_controller_1.createPharmacyInvoice);
+router.delete("/:id", pharmacyInvoice_controller_1.deletePharmacyInvoice);
+exports.default = router;

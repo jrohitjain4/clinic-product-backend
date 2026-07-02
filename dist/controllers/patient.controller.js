@@ -10,6 +10,7 @@ const prisma_1 = __importDefault(require("../lib/prisma"));
 const notification_controller_1 = require("./notification.controller");
 const mapStatusLabel = (status) => status === "Active" ? "Available" : "Unavailable";
 const email_1 = require("../utils/email");
+const phoneValidation_1 = require("../utils/phoneValidation");
 const normalizeStatus = (status) => {
     if (!status)
         return "Active";
@@ -122,7 +123,7 @@ const createPatient = async (req, res) => {
         const clinicId = req.user?.clinicId;
         if (!clinicId)
             return res.status(403).json({ message: "No clinic associated" });
-        const { firstName, middleName, lastName, profileImage, phone, alternateMobile, email, dob, gender, bloodGroup, maritalStatus, occupation, aadhaarNumber, passportNumber, referredBy, emergencyContactName, emergencyContactRelation, emergencyContactPhone, status, address1, address2, country, state, city, pincode, lastVisitedAt, vitals, } = req.body;
+        const { firstName, middleName, lastName, profileImage, phone, alternateMobile, email, dob, age, gender, bloodGroup, maritalStatus, occupation, aadhaarNumber, passportNumber, referredBy, emergencyContactName, emergencyContactRelation, emergencyContactPhone, status, address1, address2, country, state, city, pincode, lastVisitedAt, vitals, } = req.body;
         if (!firstName?.trim()) {
             return res.status(400).json({ message: "First name is required" });
         }
@@ -133,20 +134,21 @@ const createPatient = async (req, res) => {
             return res.status(400).json({ message: "Address Line 1 is required" });
         }
         // 🔴 P0 Duplicate Patient Detection
-        if (phone || email) {
-            const duplicateWhere = [];
-            if (phone)
-                duplicateWhere.push({ phone });
-            if (email)
-                duplicateWhere.push({ email: email.toLowerCase() });
+        if (phone) {
+            const duplicate = await (0, phoneValidation_1.checkPhoneDuplicate)(phone);
+            if (duplicate) {
+                return res.status(400).json({ message: "This phone number is already registered" });
+            }
+        }
+        if (email) {
             const existingDuplicate = await prisma_1.default.patient.findFirst({
                 where: {
                     clinicId,
-                    OR: duplicateWhere
+                    email: email.toLowerCase()
                 }
             });
             if (existingDuplicate) {
-                return res.status(400).json({ message: "A patient with this phone number or email already exists." });
+                return res.status(400).json({ message: "A patient with this email already exists." });
             }
         }
         const clinic = await prisma_1.default.clinic.findUnique({
@@ -185,6 +187,7 @@ const createPatient = async (req, res) => {
                 alternateMobile: alternateMobile || null,
                 email: email ? email.toLowerCase() : null,
                 dob: dob ? new Date(dob) : null,
+                age: age ? parseInt(age.toString(), 10) : null,
                 gender: gender && gender !== "Select" ? gender : null,
                 bloodGroup: bloodGroup && bloodGroup !== "Select" ? bloodGroup : null,
                 maritalStatus: maritalStatus && maritalStatus !== "Select" ? maritalStatus : null,
@@ -271,7 +274,13 @@ const updatePatient = async (req, res) => {
         });
         if (!existing)
             return res.status(404).json({ message: "Patient not found" });
-        const { firstName, middleName, lastName, profileImage, phone, alternateMobile, email, dob, gender, bloodGroup, maritalStatus, occupation, aadhaarNumber, passportNumber, referredBy, emergencyContactName, emergencyContactRelation, emergencyContactPhone, status, address1, address2, country, state, city, pincode, lastVisitedAt, vitals, } = req.body;
+        const { firstName, middleName, lastName, profileImage, phone, alternateMobile, email, dob, age, gender, bloodGroup, maritalStatus, occupation, aadhaarNumber, passportNumber, referredBy, emergencyContactName, emergencyContactRelation, emergencyContactPhone, status, address1, address2, country, state, city, pincode, lastVisitedAt, vitals, } = req.body;
+        if (phone && phone !== existing.phone) {
+            const duplicate = await (0, phoneValidation_1.checkPhoneDuplicate)(phone);
+            if (duplicate) {
+                return res.status(400).json({ message: "This phone number is already registered" });
+            }
+        }
         const updated = await prisma_1.default.patient.update({
             where: { id },
             data: {
@@ -283,6 +292,7 @@ const updatePatient = async (req, res) => {
                 alternateMobile: alternateMobile !== undefined ? alternateMobile || null : existing.alternateMobile,
                 email: email !== undefined ? email || null : existing.email,
                 dob: dob !== undefined ? (dob ? new Date(dob) : null) : existing.dob,
+                age: age !== undefined ? (age ? parseInt(age.toString(), 10) : null) : existing.age,
                 gender: gender !== undefined
                     ? gender && gender !== "Select"
                         ? gender

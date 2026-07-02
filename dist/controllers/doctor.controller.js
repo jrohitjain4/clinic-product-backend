@@ -32,6 +32,7 @@ const crypto_1 = require("crypto");
 const prisma_1 = __importDefault(require("../lib/prisma"));
 const notification_controller_1 = require("./notification.controller");
 const email_1 = require("../utils/email");
+const phoneValidation_1 = require("../utils/phoneValidation");
 // GET /api/doctors
 const getDoctors = async (req, res) => {
     try {
@@ -96,9 +97,9 @@ const createDoctor = async (req, res) => {
                 return res.status(400).json({ message: "Email is already registered" });
         }
         if (phone) {
-            const existingByPhone = await prisma_1.default.doctor.findFirst({ where: { phone, clinicId } });
-            if (existingByPhone)
-                return res.status(400).json({ message: "Phone number is already registered for another doctor" });
+            const duplicate = await (0, phoneValidation_1.checkPhoneDuplicate)(phone);
+            if (duplicate)
+                return res.status(400).json({ message: "This phone number is already registered" });
         }
         // Auto Doctor Code: DOC000001
         const doctorCount = await prisma_1.default.doctor.count({ where: { clinicId } });
@@ -220,6 +221,11 @@ const updateDoctor = async (req, res) => {
         const existing = await prisma_1.default.doctor.findFirst({ where: { id, clinicId: clinicId } });
         if (!existing)
             return res.status(404).json({ message: "Doctor not found" });
+        if (phone && phone !== existing.phone) {
+            const duplicate = await (0, phoneValidation_1.checkPhoneDuplicate)(phone);
+            if (duplicate)
+                return res.status(400).json({ message: "This phone number is already registered" });
+        }
         const updatedDoctor = await prisma_1.default.doctor.update({
             where: { id },
             data: {

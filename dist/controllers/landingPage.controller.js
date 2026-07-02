@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.bookPublicAppointment = exports.upsertLandingPage = exports.getClinicLandingPage = void 0;
+exports.bookPublicDiagnostic = exports.bookPublicAppointment = exports.upsertLandingPage = exports.getClinicLandingPage = void 0;
 const prisma_1 = __importDefault(require("../lib/prisma"));
 const notification_controller_1 = require("./notification.controller");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
@@ -30,6 +30,12 @@ const getClinicLandingPage = async (req, res) => {
                 workingDaysConfig: true,
             },
         });
+        // Fetch lab tests for this clinic (for diagnostic booking modal)
+        const labTests = clinic ? await prisma_1.default.labTest.findMany({
+            where: { clinicId: clinic.id },
+            include: { category: { select: { name: true } } },
+            orderBy: { name: "asc" },
+        }) : [];
         if (!clinic) {
             return res.status(404).json({ message: "Clinic not found" });
         }
@@ -88,6 +94,19 @@ const getClinicLandingPage = async (req, res) => {
             price: s.price,
             departmentId: s.departmentId
         }));
+        const labTestsList = labTests.map((t) => ({
+            id: t.id,
+            name: t.name,
+            price: t.price || 0,
+            testCode: t.testCode || "",
+            categoryName: t.category?.name || "",
+            assignment: t.assignment || "Staff",
+            assignedDoctors: t.assignedDoctors || [],
+            assignedStaff: t.assignedStaff || [],
+            schedules: t.schedules || null,
+            isSlotBookingEnabled: t.isSlotBookingEnabled || false,
+            slotDuration: t.slotDuration || 30,
+        }));
         const response = {
             id: clinic.id,
             name: clinic.name,
@@ -115,7 +134,8 @@ const getClinicLandingPage = async (req, res) => {
             gallery: lp?.gallery || [],
             workingDays: clinic.workingDaysConfig || null,
             onboardingStep: clinic.onboardingStep,
-            nextAppointmentCode
+            nextAppointmentCode,
+            labTests: labTestsList
         };
         return res.json(response);
     }
@@ -330,3 +350,138 @@ const bookPublicAppointment = async (req, res) => {
     }
 };
 exports.bookPublicAppointment = bookPublicAppointment;
+/* ─── POST /api/landing/id/:clinicId/book-diagnostic  (public, no auth) ─── */
+const bookPublicDiagnostic = async (req, res) => {
+    try {
+        const { clinicId } = req.params;
+        const { firstName, lastName, email, phone, gender, address, testId, date, time, reason, assignedUserId } = req.body;
+        if (!firstName || !lastName || !email || !phone || !gender || !testId || !date) {
+            return res.status(400).json({ message: "First name, last name, email, phone, gender, test and date are required." });
+        }
+        const clinic = await prisma_1.default.clinic.findUnique({ where: { id: clinicId } });
+        if (!clinic)
+            return res.status(404).json({ message: "Clinic not found" });
+        // Validate lab test exists
+        const labTest = await prisma_1.default.labTest.findFirst({ where: { id: testId, clinicId } });
+        if (!labTest)
+            return res.status(400).json({ message: "Invalid test selected." });
+        // Find or create patient
+        let patient = await prisma_1.default.patient.findFirst({
+            where: {
+                clinicId,
+                OR: [
+                    { phone },
+                    { email: email.toLowerCase() }
+                ]
+            }
+        });
+        if (!patient) {
+            const count = await prisma_1.default.patient.count({ where: { clinicId } });
+            const patientCode = `PAT${String(count + 1).padStart(6, "0")}`;
+            patient = await prisma_1.default.patient.create({
+                data: {
+                    patientCode,
+                    firstName: firstName.trim(),
+                    lastName: lastName.trim(),
+                    phone,
+                    email: email.toLowerCase(),
+                    gender,
+                    clinicId,
+                    status: "Active",
+                    dob: new Date("1990-01-01"),
+                },
+            });
+        }
+        // Find or create user account
+        let existingUser = await prisma_1.default.user.findFirst({
+            where: { email: email.toLowerCase() }
+        });
+        let generatedPassword = "";
+        let isNewUserCreated = false;
+        if (!existingUser) {
+            let phoneToUse = phone || null;
+            if (phone) {
+                const phoneTaken = await prisma_1.default.user.findFirst({ where: { phone } });
+                if (phoneTaken)
+                    phoneToUse = null;
+            }
+            generatedPassword = (0, crypto_1.randomBytes)(4).toString("hex");
+            const passwordHash = await bcryptjs_1.default.hash(generatedPassword, 10);
+            await prisma_1.default.user.create({
+                data: {
+                    email: email.toLowerCase(),
+                    phone: phoneToUse,
+                    username: email.toLowerCase(),
+                    passwordHash,
+                    fullName: `${firstName.trim()} ${lastName.trim()}`,
+                    role: "PATIENT",
+                    clinicId,
+                }
+            });
+            isNewUserCreated = true;
+        }
+        // Build scheduledAt datetime
+        let timeStr = time || "09:00";
+        if (timeStr.split(':').length === 2)
+            timeStr = `${timeStr}:00`;
+        const scheduledAt = new Date(`${date}T${timeStr}`);
+        if (isNaN(scheduledAt.getTime())) {
+            return res.status(400).json({ message: "Invalid date or time format." });
+        }
+        // Create lab booking
+        const count = await prisma_1.default.labBooking.count({ where: { clinicId } });
+        const bookingCode = `LB${String(count + 1).padStart(4, "0")}`;
+        const invoiceNo = `LINV-${new Date().getFullYear()}-${String(count + 1).padStart(4, "0")}`;
+        const booking = await prisma_1.default.labBooking.create({
+            data: {
+                bookingCode,
+                patientId: patient.id,
+                testId,
+                scheduledAt,
+                status: "Pending",
+                paymentStatus: "Unpaid",
+                totalAmount: labTest.price || 0,
+                invoiceNo,
+                sessionSlot: time || null,
+                remarks: reason || "Online diagnostic booking from clinic website",
+                clinicId,
+                assignedUserId: assignedUserId || null,
+            },
+        });
+        // Send email notification
+        try {
+            const credentialBlock = isNewUserCreated
+                ? `\n\nYour login credentials:\nEmail: ${email.toLowerCase()}\nPassword: ${generatedPassword}\n\nPlease change your password after first login.`
+                : "";
+            await (0, email_1.sendEmail)(email.toLowerCase(), `Diagnostic Test Scheduled — ${clinic.name}`, `Dear ${firstName.trim()} ${lastName.trim()},\n\nYour diagnostic test has been scheduled successfully!\n\nBooking Code: ${bookingCode}\nTest: ${labTest.name}\nDate: ${scheduledAt.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}\nTime: ${time || "TBD"}\nStatus: Scheduled\n\nPlease contact the clinic at ${clinic.phone || ""} to confirm your booking.${credentialBlock}\n\nThank you,\n${clinic.name}`);
+        }
+        catch (emailErr) {
+            console.error("Failed to send diagnostic booking email:", emailErr);
+        }
+        // Create notification for clinic
+        const patientName = `${patient.firstName} ${patient.lastName}`.trim();
+        await (0, notification_controller_1.createNotificationInternal)({
+            clinicId,
+            type: "LAB",
+            title: "New Online Diagnostic Booking!",
+            message: `${patientName} (${phone}) booked a diagnostic test (${labTest.name}) on ${scheduledAt.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}.`,
+            targetRole: "ALL",
+            link: `/pathlab-bookings`,
+        });
+        return res.status(201).json({
+            success: true,
+            bookingCode,
+            isNewUserCreated,
+            generatedPassword,
+            email,
+            patientCode: patient.patientCode,
+            testName: labTest.name,
+            message: "Diagnostic test scheduled successfully!",
+        });
+    }
+    catch (error) {
+        console.error("Public diagnostic booking error:", error);
+        return res.status(500).json({ message: "Error booking diagnostic test. Please try again." });
+    }
+};
+exports.bookPublicDiagnostic = bookPublicDiagnostic;
