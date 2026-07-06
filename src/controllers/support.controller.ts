@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
-import { PrismaClient } from '../../prisma/generated/client';
+import prisma from '../lib/prisma';
 
-const prisma = new PrismaClient();
 
 export const createTicket = async (req: Request, res: Response) => {
     const { subject, description, priority } = req.body;
