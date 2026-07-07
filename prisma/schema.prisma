@@ -146,6 +146,7 @@ model User {
   role         Role
   clinicId     String?
   clinic       Clinic?   @relation(fields: [clinicId], references: [id])
+  profileImage String?
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 }

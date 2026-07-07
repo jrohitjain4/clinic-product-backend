@@ -9391,6 +9391,7 @@ export namespace Prisma {
     gender: string | null
     role: $Enums.Role | null
     clinicId: string | null
+    profileImage: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -9407,6 +9408,7 @@ export namespace Prisma {
     gender: string | null
     role: $Enums.Role | null
     clinicId: string | null
+    profileImage: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -9423,6 +9425,7 @@ export namespace Prisma {
     gender: number
     role: number
     clinicId: number
+    profileImage: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -9449,6 +9452,7 @@ export namespace Prisma {
     gender?: true
     role?: true
     clinicId?: true
+    profileImage?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -9465,6 +9469,7 @@ export namespace Prisma {
     gender?: true
     role?: true
     clinicId?: true
+    profileImage?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -9481,6 +9486,7 @@ export namespace Prisma {
     gender?: true
     role?: true
     clinicId?: true
+    profileImage?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -9584,6 +9590,7 @@ export namespace Prisma {
     gender: string | null
     role: $Enums.Role
     clinicId: string | null
+    profileImage: string | null
     createdAt: Date
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
@@ -9619,6 +9626,7 @@ export namespace Prisma {
     gender?: boolean
     role?: boolean
     clinicId?: boolean
+    profileImage?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     clinic?: boolean | User$clinicArgs<ExtArgs>
@@ -9636,6 +9644,7 @@ export namespace Prisma {
     gender?: boolean
     role?: boolean
     clinicId?: boolean
+    profileImage?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     clinic?: boolean | User$clinicArgs<ExtArgs>
@@ -9653,6 +9662,7 @@ export namespace Prisma {
     gender?: boolean
     role?: boolean
     clinicId?: boolean
+    profileImage?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
@@ -9681,6 +9691,7 @@ export namespace Prisma {
       gender: string | null
       role: $Enums.Role
       clinicId: string | null
+      profileImage: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["user"]>
@@ -10088,6 +10099,7 @@ export namespace Prisma {
     readonly gender: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'Role'>
     readonly clinicId: FieldRef<"User", 'String'>
+    readonly profileImage: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
@@ -48799,6 +48811,7 @@ export namespace Prisma {
     gender: 'gender',
     role: 'role',
     clinicId: 'clinicId',
+    profileImage: 'profileImage',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -50159,6 +50172,7 @@ export namespace Prisma {
     gender?: StringNullableFilter<"User"> | string | null
     role?: EnumRoleFilter<"User"> | $Enums.Role
     clinicId?: StringNullableFilter<"User"> | string | null
+    profileImage?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     clinic?: XOR<ClinicNullableRelationFilter, ClinicWhereInput> | null
@@ -50176,6 +50190,7 @@ export namespace Prisma {
     gender?: SortOrderInput | SortOrder
     role?: SortOrder
     clinicId?: SortOrderInput | SortOrder
+    profileImage?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     clinic?: ClinicOrderByWithRelationInput
@@ -50196,6 +50211,7 @@ export namespace Prisma {
     gender?: StringNullableFilter<"User"> | string | null
     role?: EnumRoleFilter<"User"> | $Enums.Role
     clinicId?: StringNullableFilter<"User"> | string | null
+    profileImage?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     clinic?: XOR<ClinicNullableRelationFilter, ClinicWhereInput> | null
@@ -50213,6 +50229,7 @@ export namespace Prisma {
     gender?: SortOrderInput | SortOrder
     role?: SortOrder
     clinicId?: SortOrderInput | SortOrder
+    profileImage?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -50237,6 +50254,7 @@ export namespace Prisma {
     gender?: StringNullableWithAggregatesFilter<"User"> | string | null
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
     clinicId?: StringNullableWithAggregatesFilter<"User"> | string | null
+    profileImage?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
@@ -54531,6 +54549,7 @@ export namespace Prisma {
     age?: number | null
     gender?: string | null
     role: $Enums.Role
+    profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     clinic?: ClinicCreateNestedOneWithoutUsersInput
@@ -54548,6 +54567,7 @@ export namespace Prisma {
     gender?: string | null
     role: $Enums.Role
     clinicId?: string | null
+    profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -54563,6 +54583,7 @@ export namespace Prisma {
     age?: NullableIntFieldUpdateOperationsInput | number | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     clinic?: ClinicUpdateOneWithoutUsersNestedInput
@@ -54580,6 +54601,7 @@ export namespace Prisma {
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     clinicId?: NullableStringFieldUpdateOperationsInput | string | null
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -54596,6 +54618,7 @@ export namespace Prisma {
     gender?: string | null
     role: $Enums.Role
     clinicId?: string | null
+    profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -54611,6 +54634,7 @@ export namespace Prisma {
     age?: NullableIntFieldUpdateOperationsInput | number | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -54627,6 +54651,7 @@ export namespace Prisma {
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     clinicId?: NullableStringFieldUpdateOperationsInput | string | null
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -59682,6 +59707,7 @@ export namespace Prisma {
     gender?: SortOrder
     role?: SortOrder
     clinicId?: SortOrder
+    profileImage?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -59702,6 +59728,7 @@ export namespace Prisma {
     gender?: SortOrder
     role?: SortOrder
     clinicId?: SortOrder
+    profileImage?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -59718,6 +59745,7 @@ export namespace Prisma {
     gender?: SortOrder
     role?: SortOrder
     clinicId?: SortOrder
+    profileImage?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -66048,6 +66076,7 @@ export namespace Prisma {
     age?: number | null
     gender?: string | null
     role: $Enums.Role
+    profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -66063,6 +66092,7 @@ export namespace Prisma {
     age?: number | null
     gender?: string | null
     role: $Enums.Role
+    profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -67621,6 +67651,7 @@ export namespace Prisma {
     gender?: StringNullableFilter<"User"> | string | null
     role?: EnumRoleFilter<"User"> | $Enums.Role
     clinicId?: StringNullableFilter<"User"> | string | null
+    profileImage?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
   }
@@ -83866,6 +83897,7 @@ export namespace Prisma {
     age?: number | null
     gender?: string | null
     role: $Enums.Role
+    profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -84393,6 +84425,7 @@ export namespace Prisma {
     age?: NullableIntFieldUpdateOperationsInput | number | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -84408,6 +84441,7 @@ export namespace Prisma {
     age?: NullableIntFieldUpdateOperationsInput | number | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -84423,6 +84457,7 @@ export namespace Prisma {
     age?: NullableIntFieldUpdateOperationsInput | number | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

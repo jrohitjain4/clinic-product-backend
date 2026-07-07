@@ -36,7 +36,7 @@ export const updateProfile = async (req: AuthenticatedRequest, res: Response) =>
     const {
       firstName, lastName, email, phone, addressLine1, addressLine2,
       country, state, city, pincode, clinicName, gstNo, clinicLogo,
-      gender, dob, bloodGroup, maritalStatus, occupation
+      gender, dob, bloodGroup, maritalStatus, occupation, profileImage
     } = req.body;
 
     if (phone) {
@@ -57,7 +57,8 @@ export const updateProfile = async (req: AuthenticatedRequest, res: Response) =>
         fullName: fullName,
         email: email || undefined,
         gender: gender || undefined,
-        dob: dob ? new Date(dob) : undefined
+        dob: dob ? new Date(dob) : undefined,
+        profileImage: profileImage || undefined
       }
     });
 
@@ -732,6 +733,7 @@ export const login = async (req: Request, res: Response) => {
         role: user.role,
         clinicId: user.clinicId,
         clinic: user.clinic,
+        profileImage: user.profileImage,
         permissions,
         doctorId,
         patientId,
@@ -791,6 +793,7 @@ export const getMe = async (req: AuthenticatedRequest, res: Response) => {
       fullName: user.fullName,
       role: user.role,
       clinic: user.clinic,
+      profileImage: user.profileImage,
       permissions,
       details
     });
@@ -1185,6 +1188,7 @@ export const verifyOTPLogin = async (req: Request, res: Response) => {
         role: user.role,
         clinicId: user.clinicId,
         clinic: user.clinic,
+        profileImage: user.profileImage,
         permissions,
         doctorId,
         patientId,

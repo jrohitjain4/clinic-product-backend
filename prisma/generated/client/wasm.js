@@ -202,6 +202,7 @@ exports.Prisma.UserScalarFieldEnum = {
   gender: 'gender',
   role: 'role',
   clinicId: 'clinicId',
+  profileImage: 'profileImage',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
