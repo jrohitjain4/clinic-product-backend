@@ -30708,6 +30708,7 @@ export namespace Prisma {
     prescriptionId: string | null
     medicineName: string | null
     dosage: string | null
+    strength: string | null
     frequency: string | null
     duration: string | null
     timings: string | null
@@ -30721,6 +30722,7 @@ export namespace Prisma {
     prescriptionId: string | null
     medicineName: string | null
     dosage: string | null
+    strength: string | null
     frequency: string | null
     duration: string | null
     timings: string | null
@@ -30734,6 +30736,7 @@ export namespace Prisma {
     prescriptionId: number
     medicineName: number
     dosage: number
+    strength: number
     frequency: number
     duration: number
     timings: number
@@ -30749,6 +30752,7 @@ export namespace Prisma {
     prescriptionId?: true
     medicineName?: true
     dosage?: true
+    strength?: true
     frequency?: true
     duration?: true
     timings?: true
@@ -30762,6 +30766,7 @@ export namespace Prisma {
     prescriptionId?: true
     medicineName?: true
     dosage?: true
+    strength?: true
     frequency?: true
     duration?: true
     timings?: true
@@ -30775,6 +30780,7 @@ export namespace Prisma {
     prescriptionId?: true
     medicineName?: true
     dosage?: true
+    strength?: true
     frequency?: true
     duration?: true
     timings?: true
@@ -30861,6 +30867,7 @@ export namespace Prisma {
     prescriptionId: string
     medicineName: string
     dosage: string | null
+    strength: string | null
     frequency: string | null
     duration: string | null
     timings: string | null
@@ -30891,6 +30898,7 @@ export namespace Prisma {
     prescriptionId?: boolean
     medicineName?: boolean
     dosage?: boolean
+    strength?: boolean
     frequency?: boolean
     duration?: boolean
     timings?: boolean
@@ -30906,6 +30914,7 @@ export namespace Prisma {
     prescriptionId?: boolean
     medicineName?: boolean
     dosage?: boolean
+    strength?: boolean
     frequency?: boolean
     duration?: boolean
     timings?: boolean
@@ -30921,6 +30930,7 @@ export namespace Prisma {
     prescriptionId?: boolean
     medicineName?: boolean
     dosage?: boolean
+    strength?: boolean
     frequency?: boolean
     duration?: boolean
     timings?: boolean
@@ -30949,6 +30959,7 @@ export namespace Prisma {
       prescriptionId: string
       medicineName: string
       dosage: string | null
+      strength: string | null
       frequency: string | null
       duration: string | null
       timings: string | null
@@ -31354,6 +31365,7 @@ export namespace Prisma {
     readonly prescriptionId: FieldRef<"PrescriptionMedicine", 'String'>
     readonly medicineName: FieldRef<"PrescriptionMedicine", 'String'>
     readonly dosage: FieldRef<"PrescriptionMedicine", 'String'>
+    readonly strength: FieldRef<"PrescriptionMedicine", 'String'>
     readonly frequency: FieldRef<"PrescriptionMedicine", 'String'>
     readonly duration: FieldRef<"PrescriptionMedicine", 'String'>
     readonly timings: FieldRef<"PrescriptionMedicine", 'String'>
@@ -49206,6 +49218,7 @@ export namespace Prisma {
     prescriptionId: 'prescriptionId',
     medicineName: 'medicineName',
     dosage: 'dosage',
+    strength: 'strength',
     frequency: 'frequency',
     duration: 'duration',
     timings: 'timings',
@@ -52317,6 +52330,7 @@ export namespace Prisma {
     prescriptionId?: StringFilter<"PrescriptionMedicine"> | string
     medicineName?: StringFilter<"PrescriptionMedicine"> | string
     dosage?: StringNullableFilter<"PrescriptionMedicine"> | string | null
+    strength?: StringNullableFilter<"PrescriptionMedicine"> | string | null
     frequency?: StringNullableFilter<"PrescriptionMedicine"> | string | null
     duration?: StringNullableFilter<"PrescriptionMedicine"> | string | null
     timings?: StringNullableFilter<"PrescriptionMedicine"> | string | null
@@ -52332,6 +52346,7 @@ export namespace Prisma {
     prescriptionId?: SortOrder
     medicineName?: SortOrder
     dosage?: SortOrderInput | SortOrder
+    strength?: SortOrderInput | SortOrder
     frequency?: SortOrderInput | SortOrder
     duration?: SortOrderInput | SortOrder
     timings?: SortOrderInput | SortOrder
@@ -52350,6 +52365,7 @@ export namespace Prisma {
     prescriptionId?: StringFilter<"PrescriptionMedicine"> | string
     medicineName?: StringFilter<"PrescriptionMedicine"> | string
     dosage?: StringNullableFilter<"PrescriptionMedicine"> | string | null
+    strength?: StringNullableFilter<"PrescriptionMedicine"> | string | null
     frequency?: StringNullableFilter<"PrescriptionMedicine"> | string | null
     duration?: StringNullableFilter<"PrescriptionMedicine"> | string | null
     timings?: StringNullableFilter<"PrescriptionMedicine"> | string | null
@@ -52365,6 +52381,7 @@ export namespace Prisma {
     prescriptionId?: SortOrder
     medicineName?: SortOrder
     dosage?: SortOrderInput | SortOrder
+    strength?: SortOrderInput | SortOrder
     frequency?: SortOrderInput | SortOrder
     duration?: SortOrderInput | SortOrder
     timings?: SortOrderInput | SortOrder
@@ -52384,6 +52401,7 @@ export namespace Prisma {
     prescriptionId?: StringWithAggregatesFilter<"PrescriptionMedicine"> | string
     medicineName?: StringWithAggregatesFilter<"PrescriptionMedicine"> | string
     dosage?: StringNullableWithAggregatesFilter<"PrescriptionMedicine"> | string | null
+    strength?: StringNullableWithAggregatesFilter<"PrescriptionMedicine"> | string | null
     frequency?: StringNullableWithAggregatesFilter<"PrescriptionMedicine"> | string | null
     duration?: StringNullableWithAggregatesFilter<"PrescriptionMedicine"> | string | null
     timings?: StringNullableWithAggregatesFilter<"PrescriptionMedicine"> | string | null
@@ -57022,6 +57040,7 @@ export namespace Prisma {
     id?: string
     medicineName: string
     dosage?: string | null
+    strength?: string | null
     frequency?: string | null
     duration?: string | null
     timings?: string | null
@@ -57036,6 +57055,7 @@ export namespace Prisma {
     prescriptionId: string
     medicineName: string
     dosage?: string | null
+    strength?: string | null
     frequency?: string | null
     duration?: string | null
     timings?: string | null
@@ -57048,6 +57068,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     medicineName?: StringFieldUpdateOperationsInput | string
     dosage?: NullableStringFieldUpdateOperationsInput | string | null
+    strength?: NullableStringFieldUpdateOperationsInput | string | null
     frequency?: NullableStringFieldUpdateOperationsInput | string | null
     duration?: NullableStringFieldUpdateOperationsInput | string | null
     timings?: NullableStringFieldUpdateOperationsInput | string | null
@@ -57062,6 +57083,7 @@ export namespace Prisma {
     prescriptionId?: StringFieldUpdateOperationsInput | string
     medicineName?: StringFieldUpdateOperationsInput | string
     dosage?: NullableStringFieldUpdateOperationsInput | string | null
+    strength?: NullableStringFieldUpdateOperationsInput | string | null
     frequency?: NullableStringFieldUpdateOperationsInput | string | null
     duration?: NullableStringFieldUpdateOperationsInput | string | null
     timings?: NullableStringFieldUpdateOperationsInput | string | null
@@ -57075,6 +57097,7 @@ export namespace Prisma {
     prescriptionId: string
     medicineName: string
     dosage?: string | null
+    strength?: string | null
     frequency?: string | null
     duration?: string | null
     timings?: string | null
@@ -57087,6 +57110,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     medicineName?: StringFieldUpdateOperationsInput | string
     dosage?: NullableStringFieldUpdateOperationsInput | string | null
+    strength?: NullableStringFieldUpdateOperationsInput | string | null
     frequency?: NullableStringFieldUpdateOperationsInput | string | null
     duration?: NullableStringFieldUpdateOperationsInput | string | null
     timings?: NullableStringFieldUpdateOperationsInput | string | null
@@ -57099,6 +57123,7 @@ export namespace Prisma {
     prescriptionId?: StringFieldUpdateOperationsInput | string
     medicineName?: StringFieldUpdateOperationsInput | string
     dosage?: NullableStringFieldUpdateOperationsInput | string | null
+    strength?: NullableStringFieldUpdateOperationsInput | string | null
     frequency?: NullableStringFieldUpdateOperationsInput | string | null
     duration?: NullableStringFieldUpdateOperationsInput | string | null
     timings?: NullableStringFieldUpdateOperationsInput | string | null
@@ -60977,6 +61002,7 @@ export namespace Prisma {
     prescriptionId?: SortOrder
     medicineName?: SortOrder
     dosage?: SortOrder
+    strength?: SortOrder
     frequency?: SortOrder
     duration?: SortOrder
     timings?: SortOrder
@@ -60990,6 +61016,7 @@ export namespace Prisma {
     prescriptionId?: SortOrder
     medicineName?: SortOrder
     dosage?: SortOrder
+    strength?: SortOrder
     frequency?: SortOrder
     duration?: SortOrder
     timings?: SortOrder
@@ -61003,6 +61030,7 @@ export namespace Prisma {
     prescriptionId?: SortOrder
     medicineName?: SortOrder
     dosage?: SortOrder
+    strength?: SortOrder
     frequency?: SortOrder
     duration?: SortOrder
     timings?: SortOrder
@@ -66907,6 +66935,7 @@ export namespace Prisma {
     id?: string
     medicineName: string
     dosage?: string | null
+    strength?: string | null
     frequency?: string | null
     duration?: string | null
     timings?: string | null
@@ -66920,6 +66949,7 @@ export namespace Prisma {
     prescriptionId: string
     medicineName: string
     dosage?: string | null
+    strength?: string | null
     frequency?: string | null
     duration?: string | null
     timings?: string | null
@@ -68293,6 +68323,7 @@ export namespace Prisma {
     prescriptionId?: StringFilter<"PrescriptionMedicine"> | string
     medicineName?: StringFilter<"PrescriptionMedicine"> | string
     dosage?: StringNullableFilter<"PrescriptionMedicine"> | string | null
+    strength?: StringNullableFilter<"PrescriptionMedicine"> | string | null
     frequency?: StringNullableFilter<"PrescriptionMedicine"> | string | null
     duration?: StringNullableFilter<"PrescriptionMedicine"> | string | null
     timings?: StringNullableFilter<"PrescriptionMedicine"> | string | null
@@ -77684,6 +77715,7 @@ export namespace Prisma {
     id?: string
     medicineName: string
     dosage?: string | null
+    strength?: string | null
     frequency?: string | null
     duration?: string | null
     timings?: string | null
@@ -77696,6 +77728,7 @@ export namespace Prisma {
     id?: string
     medicineName: string
     dosage?: string | null
+    strength?: string | null
     frequency?: string | null
     duration?: string | null
     timings?: string | null
@@ -84200,6 +84233,7 @@ export namespace Prisma {
     prescriptionId: string
     medicineName: string
     dosage?: string | null
+    strength?: string | null
     frequency?: string | null
     duration?: string | null
     timings?: string | null
@@ -85395,6 +85429,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     medicineName?: StringFieldUpdateOperationsInput | string
     dosage?: NullableStringFieldUpdateOperationsInput | string | null
+    strength?: NullableStringFieldUpdateOperationsInput | string | null
     frequency?: NullableStringFieldUpdateOperationsInput | string | null
     duration?: NullableStringFieldUpdateOperationsInput | string | null
     timings?: NullableStringFieldUpdateOperationsInput | string | null
@@ -85408,6 +85443,7 @@ export namespace Prisma {
     prescriptionId?: StringFieldUpdateOperationsInput | string
     medicineName?: StringFieldUpdateOperationsInput | string
     dosage?: NullableStringFieldUpdateOperationsInput | string | null
+    strength?: NullableStringFieldUpdateOperationsInput | string | null
     frequency?: NullableStringFieldUpdateOperationsInput | string | null
     duration?: NullableStringFieldUpdateOperationsInput | string | null
     timings?: NullableStringFieldUpdateOperationsInput | string | null
@@ -85420,6 +85456,7 @@ export namespace Prisma {
     prescriptionId?: StringFieldUpdateOperationsInput | string
     medicineName?: StringFieldUpdateOperationsInput | string
     dosage?: NullableStringFieldUpdateOperationsInput | string | null
+    strength?: NullableStringFieldUpdateOperationsInput | string | null
     frequency?: NullableStringFieldUpdateOperationsInput | string | null
     duration?: NullableStringFieldUpdateOperationsInput | string | null
     timings?: NullableStringFieldUpdateOperationsInput | string | null
@@ -88332,6 +88369,7 @@ export namespace Prisma {
     id?: string
     medicineName: string
     dosage?: string | null
+    strength?: string | null
     frequency?: string | null
     duration?: string | null
     timings?: string | null
@@ -88344,6 +88382,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     medicineName?: StringFieldUpdateOperationsInput | string
     dosage?: NullableStringFieldUpdateOperationsInput | string | null
+    strength?: NullableStringFieldUpdateOperationsInput | string | null
     frequency?: NullableStringFieldUpdateOperationsInput | string | null
     duration?: NullableStringFieldUpdateOperationsInput | string | null
     timings?: NullableStringFieldUpdateOperationsInput | string | null
@@ -88356,6 +88395,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     medicineName?: StringFieldUpdateOperationsInput | string
     dosage?: NullableStringFieldUpdateOperationsInput | string | null
+    strength?: NullableStringFieldUpdateOperationsInput | string | null
     frequency?: NullableStringFieldUpdateOperationsInput | string | null
     duration?: NullableStringFieldUpdateOperationsInput | string | null
     timings?: NullableStringFieldUpdateOperationsInput | string | null
@@ -88368,6 +88408,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     medicineName?: StringFieldUpdateOperationsInput | string
     dosage?: NullableStringFieldUpdateOperationsInput | string | null
+    strength?: NullableStringFieldUpdateOperationsInput | string | null
     frequency?: NullableStringFieldUpdateOperationsInput | string | null
     duration?: NullableStringFieldUpdateOperationsInput | string | null
     timings?: NullableStringFieldUpdateOperationsInput | string | null

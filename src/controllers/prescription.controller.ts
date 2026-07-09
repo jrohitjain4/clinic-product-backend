@@ -89,6 +89,7 @@ export const createPrescription = async (req: Request, res: Response) => {
                     create: medicines?.map((med: any) => ({
                         medicineName: med.medicineName,
                         dosage: med.dosage,
+                        strength: med.strength || null,
                         frequency: med.frequency,
                         duration: med.duration,
                         timings: med.timings,
@@ -206,6 +207,7 @@ export const updatePrescription = async (req: Request, res: Response) => {
                     create: medicines?.map((med: any) => ({
                         medicineName: med.medicineName,
                         dosage: med.dosage,
+                        strength: med.strength || null,
                         frequency: med.frequency,
                         duration: med.duration,
                         timings: med.timings,

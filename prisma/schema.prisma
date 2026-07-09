@@ -586,6 +586,7 @@ model PrescriptionMedicine {
   prescription   Prescription @relation(fields: [prescriptionId], references: [id], onDelete: Cascade)
   medicineName   String
   dosage         String?
+  strength       String?
   frequency      String?
   duration       String?
   timings        String? // e.g., "After meal", "Before meal"

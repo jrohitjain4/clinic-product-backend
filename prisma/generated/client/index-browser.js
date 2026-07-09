@@ -540,6 +540,7 @@ exports.Prisma.PrescriptionMedicineScalarFieldEnum = {
   prescriptionId: 'prescriptionId',
   medicineName: 'medicineName',
   dosage: 'dosage',
+  strength: 'strength',
   frequency: 'frequency',
   duration: 'duration',
   timings: 'timings',
