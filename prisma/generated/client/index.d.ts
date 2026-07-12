@@ -43126,6 +43126,7 @@ export namespace Prisma {
     assignedUserId: number
     remarks: number
     referredBy: number
+    testsList: number
     clinicId: number
     createdAt: number
     updatedAt: number
@@ -43206,6 +43207,7 @@ export namespace Prisma {
     assignedUserId?: true
     remarks?: true
     referredBy?: true
+    testsList?: true
     clinicId?: true
     createdAt?: true
     updatedAt?: true
@@ -43315,6 +43317,7 @@ export namespace Prisma {
     assignedUserId: string | null
     remarks: string | null
     referredBy: string | null
+    testsList: JsonValue | null
     clinicId: string
     createdAt: Date
     updatedAt: Date
@@ -43356,6 +43359,7 @@ export namespace Prisma {
     assignedUserId?: boolean
     remarks?: boolean
     referredBy?: boolean
+    testsList?: boolean
     clinicId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -43382,6 +43386,7 @@ export namespace Prisma {
     assignedUserId?: boolean
     remarks?: boolean
     referredBy?: boolean
+    testsList?: boolean
     clinicId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -43407,6 +43412,7 @@ export namespace Prisma {
     assignedUserId?: boolean
     remarks?: boolean
     referredBy?: boolean
+    testsList?: boolean
     clinicId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -43449,6 +43455,7 @@ export namespace Prisma {
       assignedUserId: string | null
       remarks: string | null
       referredBy: string | null
+      testsList: Prisma.JsonValue | null
       clinicId: string
       createdAt: Date
       updatedAt: Date
@@ -43865,6 +43872,7 @@ export namespace Prisma {
     readonly assignedUserId: FieldRef<"LabBooking", 'String'>
     readonly remarks: FieldRef<"LabBooking", 'String'>
     readonly referredBy: FieldRef<"LabBooking", 'String'>
+    readonly testsList: FieldRef<"LabBooking", 'Json'>
     readonly clinicId: FieldRef<"LabBooking", 'String'>
     readonly createdAt: FieldRef<"LabBooking", 'DateTime'>
     readonly updatedAt: FieldRef<"LabBooking", 'DateTime'>
@@ -49454,6 +49462,7 @@ export namespace Prisma {
     assignedUserId: 'assignedUserId',
     remarks: 'remarks',
     referredBy: 'referredBy',
+    testsList: 'testsList',
     clinicId: 'clinicId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -53419,6 +53428,7 @@ export namespace Prisma {
     assignedUserId?: StringNullableFilter<"LabBooking"> | string | null
     remarks?: StringNullableFilter<"LabBooking"> | string | null
     referredBy?: StringNullableFilter<"LabBooking"> | string | null
+    testsList?: JsonNullableFilter<"LabBooking">
     clinicId?: StringFilter<"LabBooking"> | string
     createdAt?: DateTimeFilter<"LabBooking"> | Date | string
     updatedAt?: DateTimeFilter<"LabBooking"> | Date | string
@@ -53445,6 +53455,7 @@ export namespace Prisma {
     assignedUserId?: SortOrderInput | SortOrder
     remarks?: SortOrderInput | SortOrder
     referredBy?: SortOrderInput | SortOrder
+    testsList?: SortOrderInput | SortOrder
     clinicId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -53474,6 +53485,7 @@ export namespace Prisma {
     assignedUserId?: StringNullableFilter<"LabBooking"> | string | null
     remarks?: StringNullableFilter<"LabBooking"> | string | null
     referredBy?: StringNullableFilter<"LabBooking"> | string | null
+    testsList?: JsonNullableFilter<"LabBooking">
     clinicId?: StringFilter<"LabBooking"> | string
     createdAt?: DateTimeFilter<"LabBooking"> | Date | string
     updatedAt?: DateTimeFilter<"LabBooking"> | Date | string
@@ -53500,6 +53512,7 @@ export namespace Prisma {
     assignedUserId?: SortOrderInput | SortOrder
     remarks?: SortOrderInput | SortOrder
     referredBy?: SortOrderInput | SortOrder
+    testsList?: SortOrderInput | SortOrder
     clinicId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -53530,6 +53543,7 @@ export namespace Prisma {
     assignedUserId?: StringNullableWithAggregatesFilter<"LabBooking"> | string | null
     remarks?: StringNullableWithAggregatesFilter<"LabBooking"> | string | null
     referredBy?: StringNullableWithAggregatesFilter<"LabBooking"> | string | null
+    testsList?: JsonNullableWithAggregatesFilter<"LabBooking">
     clinicId?: StringWithAggregatesFilter<"LabBooking"> | string
     createdAt?: DateTimeWithAggregatesFilter<"LabBooking"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"LabBooking"> | Date | string
@@ -58253,6 +58267,7 @@ export namespace Prisma {
     assignedUserId?: string | null
     remarks?: string | null
     referredBy?: string | null
+    testsList?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     patient?: PatientCreateNestedOneWithoutLabBookingsInput
@@ -58278,6 +58293,7 @@ export namespace Prisma {
     assignedUserId?: string | null
     remarks?: string | null
     referredBy?: string | null
+    testsList?: NullableJsonNullValueInput | InputJsonValue
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -58299,6 +58315,7 @@ export namespace Prisma {
     assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    testsList?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     patient?: PatientUpdateOneWithoutLabBookingsNestedInput
@@ -58324,6 +58341,7 @@ export namespace Prisma {
     assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    testsList?: NullableJsonNullValueInput | InputJsonValue
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -58347,6 +58365,7 @@ export namespace Prisma {
     assignedUserId?: string | null
     remarks?: string | null
     referredBy?: string | null
+    testsList?: NullableJsonNullValueInput | InputJsonValue
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -58367,6 +58386,7 @@ export namespace Prisma {
     assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    testsList?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -58388,6 +58408,7 @@ export namespace Prisma {
     assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    testsList?: NullableJsonNullValueInput | InputJsonValue
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -61629,6 +61650,7 @@ export namespace Prisma {
     assignedUserId?: SortOrder
     remarks?: SortOrder
     referredBy?: SortOrder
+    testsList?: SortOrder
     clinicId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -67484,6 +67506,7 @@ export namespace Prisma {
     assignedUserId?: string | null
     remarks?: string | null
     referredBy?: string | null
+    testsList?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     patient?: PatientCreateNestedOneWithoutLabBookingsInput
@@ -67508,6 +67531,7 @@ export namespace Prisma {
     assignedUserId?: string | null
     remarks?: string | null
     referredBy?: string | null
+    testsList?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     invoice?: InvoiceUncheckedCreateNestedOneWithoutLabBookingInput
@@ -68846,6 +68870,7 @@ export namespace Prisma {
     assignedUserId?: StringNullableFilter<"LabBooking"> | string | null
     remarks?: StringNullableFilter<"LabBooking"> | string | null
     referredBy?: StringNullableFilter<"LabBooking"> | string | null
+    testsList?: JsonNullableFilter<"LabBooking">
     clinicId?: StringFilter<"LabBooking"> | string
     createdAt?: DateTimeFilter<"LabBooking"> | Date | string
     updatedAt?: DateTimeFilter<"LabBooking"> | Date | string
@@ -72393,6 +72418,7 @@ export namespace Prisma {
     assignedUserId?: string | null
     remarks?: string | null
     referredBy?: string | null
+    testsList?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     test?: LabTestCreateNestedOneWithoutBookingsInput
@@ -72416,6 +72442,7 @@ export namespace Prisma {
     assignedUserId?: string | null
     remarks?: string | null
     referredBy?: string | null
+    testsList?: NullableJsonNullValueInput | InputJsonValue
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -78958,6 +78985,7 @@ export namespace Prisma {
     assignedUserId?: string | null
     remarks?: string | null
     referredBy?: string | null
+    testsList?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     patient?: PatientCreateNestedOneWithoutLabBookingsInput
@@ -78982,6 +79010,7 @@ export namespace Prisma {
     assignedUserId?: string | null
     remarks?: string | null
     referredBy?: string | null
+    testsList?: NullableJsonNullValueInput | InputJsonValue
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -79325,6 +79354,7 @@ export namespace Prisma {
     assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    testsList?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     patient?: PatientUpdateOneWithoutLabBookingsNestedInput
@@ -79349,6 +79379,7 @@ export namespace Prisma {
     assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    testsList?: NullableJsonNullValueInput | InputJsonValue
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -81699,6 +81730,7 @@ export namespace Prisma {
     assignedUserId?: string | null
     remarks?: string | null
     referredBy?: string | null
+    testsList?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     patient?: PatientCreateNestedOneWithoutLabBookingsInput
@@ -81722,6 +81754,7 @@ export namespace Prisma {
     assignedUserId?: string | null
     remarks?: string | null
     referredBy?: string | null
+    testsList?: NullableJsonNullValueInput | InputJsonValue
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -84480,6 +84513,7 @@ export namespace Prisma {
     assignedUserId?: string | null
     remarks?: string | null
     referredBy?: string | null
+    testsList?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -85977,6 +86011,7 @@ export namespace Prisma {
     assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    testsList?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     patient?: PatientUpdateOneWithoutLabBookingsNestedInput
@@ -86001,6 +86036,7 @@ export namespace Prisma {
     assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    testsList?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     invoice?: InvoiceUncheckedUpdateOneWithoutLabBookingNestedInput
@@ -86023,6 +86059,7 @@ export namespace Prisma {
     assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    testsList?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -87724,6 +87761,7 @@ export namespace Prisma {
     assignedUserId?: string | null
     remarks?: string | null
     referredBy?: string | null
+    testsList?: NullableJsonNullValueInput | InputJsonValue
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -87947,6 +87985,7 @@ export namespace Prisma {
     assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    testsList?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     test?: LabTestUpdateOneWithoutBookingsNestedInput
@@ -87970,6 +88009,7 @@ export namespace Prisma {
     assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    testsList?: NullableJsonNullValueInput | InputJsonValue
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -87992,6 +88032,7 @@ export namespace Prisma {
     assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    testsList?: NullableJsonNullValueInput | InputJsonValue
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -88687,6 +88728,7 @@ export namespace Prisma {
     assignedUserId?: string | null
     remarks?: string | null
     referredBy?: string | null
+    testsList?: NullableJsonNullValueInput | InputJsonValue
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -88707,6 +88749,7 @@ export namespace Prisma {
     assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    testsList?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     patient?: PatientUpdateOneWithoutLabBookingsNestedInput
@@ -88730,6 +88773,7 @@ export namespace Prisma {
     assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    testsList?: NullableJsonNullValueInput | InputJsonValue
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -88752,6 +88796,7 @@ export namespace Prisma {
     assignedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    testsList?: NullableJsonNullValueInput | InputJsonValue
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

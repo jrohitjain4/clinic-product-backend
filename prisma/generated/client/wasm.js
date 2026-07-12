@@ -720,6 +720,7 @@ exports.Prisma.LabBookingScalarFieldEnum = {
   assignedUserId: 'assignedUserId',
   remarks: 'remarks',
   referredBy: 'referredBy',
+  testsList: 'testsList',
   clinicId: 'clinicId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

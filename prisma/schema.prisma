@@ -818,6 +818,7 @@ model LabBooking {
   assignedUserId  String?
   remarks         String?
   referredBy      String?
+  testsList       Json?
   clinicId        String
   clinic          Clinic    @relation(fields: [clinicId], references: [id])
   createdAt       DateTime  @default(now())
