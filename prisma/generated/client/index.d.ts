@@ -15551,6 +15551,7 @@ export namespace Prisma {
     pincode: string | null
     lastVisitedAt: Date | null
     clinicId: string | null
+    suggestIPD: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -15586,6 +15587,7 @@ export namespace Prisma {
     pincode: string | null
     lastVisitedAt: Date | null
     clinicId: string | null
+    suggestIPD: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -15622,6 +15624,7 @@ export namespace Prisma {
     lastVisitedAt: number
     vitals: number
     clinicId: number
+    suggestIPD: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -15667,6 +15670,7 @@ export namespace Prisma {
     pincode?: true
     lastVisitedAt?: true
     clinicId?: true
+    suggestIPD?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -15702,6 +15706,7 @@ export namespace Prisma {
     pincode?: true
     lastVisitedAt?: true
     clinicId?: true
+    suggestIPD?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -15738,6 +15743,7 @@ export namespace Prisma {
     lastVisitedAt?: true
     vitals?: true
     clinicId?: true
+    suggestIPD?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -15861,6 +15867,7 @@ export namespace Prisma {
     lastVisitedAt: Date | null
     vitals: JsonValue | null
     clinicId: string
+    suggestIPD: boolean
     createdAt: Date
     updatedAt: Date
     _count: PatientCountAggregateOutputType | null
@@ -15916,6 +15923,7 @@ export namespace Prisma {
     lastVisitedAt?: boolean
     vitals?: boolean
     clinicId?: boolean
+    suggestIPD?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     clinic?: boolean | ClinicDefaultArgs<ExtArgs>
@@ -15959,6 +15967,7 @@ export namespace Prisma {
     lastVisitedAt?: boolean
     vitals?: boolean
     clinicId?: boolean
+    suggestIPD?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     clinic?: boolean | ClinicDefaultArgs<ExtArgs>
@@ -15996,6 +16005,7 @@ export namespace Prisma {
     lastVisitedAt?: boolean
     vitals?: boolean
     clinicId?: boolean
+    suggestIPD?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
@@ -16055,6 +16065,7 @@ export namespace Prisma {
       lastVisitedAt: Date | null
       vitals: Prisma.JsonValue | null
       clinicId: string
+      suggestIPD: boolean
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["patient"]>
@@ -16487,6 +16498,7 @@ export namespace Prisma {
     readonly lastVisitedAt: FieldRef<"Patient", 'DateTime'>
     readonly vitals: FieldRef<"Patient", 'Json'>
     readonly clinicId: FieldRef<"Patient", 'String'>
+    readonly suggestIPD: FieldRef<"Patient", 'Boolean'>
     readonly createdAt: FieldRef<"Patient", 'DateTime'>
     readonly updatedAt: FieldRef<"Patient", 'DateTime'>
   }
@@ -29610,6 +29622,7 @@ export namespace Prisma {
     clinicId: number
     createdAt: number
     updatedAt: number
+    diagnosticTests: number
     _all: number
   }
 
@@ -29660,6 +29673,7 @@ export namespace Prisma {
     clinicId?: true
     createdAt?: true
     updatedAt?: true
+    diagnosticTests?: true
     _all?: true
   }
 
@@ -29749,6 +29763,7 @@ export namespace Prisma {
     clinicId: string
     createdAt: Date
     updatedAt: Date
+    diagnosticTests: JsonValue | null
     _count: PrescriptionCountAggregateOutputType | null
     _min: PrescriptionMinAggregateOutputType | null
     _max: PrescriptionMaxAggregateOutputType | null
@@ -29782,6 +29797,7 @@ export namespace Prisma {
     clinicId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    diagnosticTests?: boolean
     patient?: boolean | Prescription$patientArgs<ExtArgs>
     doctor?: boolean | Prescription$doctorArgs<ExtArgs>
     appointment?: boolean | Prescription$appointmentArgs<ExtArgs>
@@ -29805,6 +29821,7 @@ export namespace Prisma {
     clinicId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    diagnosticTests?: boolean
     patient?: boolean | Prescription$patientArgs<ExtArgs>
     doctor?: boolean | Prescription$doctorArgs<ExtArgs>
     appointment?: boolean | Prescription$appointmentArgs<ExtArgs>
@@ -29826,6 +29843,7 @@ export namespace Prisma {
     clinicId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    diagnosticTests?: boolean
   }
 
   export type PrescriptionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -29869,6 +29887,7 @@ export namespace Prisma {
       clinicId: string
       createdAt: Date
       updatedAt: Date
+      diagnosticTests: Prisma.JsonValue | null
     }, ExtArgs["result"]["prescription"]>
     composites: {}
   }
@@ -30281,6 +30300,7 @@ export namespace Prisma {
     readonly clinicId: FieldRef<"Prescription", 'String'>
     readonly createdAt: FieldRef<"Prescription", 'DateTime'>
     readonly updatedAt: FieldRef<"Prescription", 'DateTime'>
+    readonly diagnosticTests: FieldRef<"Prescription", 'Json'>
   }
     
 
@@ -48978,6 +48998,7 @@ export namespace Prisma {
     lastVisitedAt: 'lastVisitedAt',
     vitals: 'vitals',
     clinicId: 'clinicId',
+    suggestIPD: 'suggestIPD',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -49207,7 +49228,8 @@ export namespace Prisma {
     status: 'status',
     clinicId: 'clinicId',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    diagnosticTests: 'diagnosticTests'
   };
 
   export type PrescriptionScalarFieldEnum = (typeof PrescriptionScalarFieldEnum)[keyof typeof PrescriptionScalarFieldEnum]
@@ -50938,6 +50960,7 @@ export namespace Prisma {
     lastVisitedAt?: DateTimeNullableFilter<"Patient"> | Date | string | null
     vitals?: JsonNullableFilter<"Patient">
     clinicId?: StringFilter<"Patient"> | string
+    suggestIPD?: BoolFilter<"Patient"> | boolean
     createdAt?: DateTimeFilter<"Patient"> | Date | string
     updatedAt?: DateTimeFilter<"Patient"> | Date | string
     clinic?: XOR<ClinicRelationFilter, ClinicWhereInput>
@@ -50980,6 +51003,7 @@ export namespace Prisma {
     lastVisitedAt?: SortOrderInput | SortOrder
     vitals?: SortOrderInput | SortOrder
     clinicId?: SortOrder
+    suggestIPD?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     clinic?: ClinicOrderByWithRelationInput
@@ -51025,6 +51049,7 @@ export namespace Prisma {
     lastVisitedAt?: DateTimeNullableFilter<"Patient"> | Date | string | null
     vitals?: JsonNullableFilter<"Patient">
     clinicId?: StringFilter<"Patient"> | string
+    suggestIPD?: BoolFilter<"Patient"> | boolean
     createdAt?: DateTimeFilter<"Patient"> | Date | string
     updatedAt?: DateTimeFilter<"Patient"> | Date | string
     clinic?: XOR<ClinicRelationFilter, ClinicWhereInput>
@@ -51067,6 +51092,7 @@ export namespace Prisma {
     lastVisitedAt?: SortOrderInput | SortOrder
     vitals?: SortOrderInput | SortOrder
     clinicId?: SortOrder
+    suggestIPD?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: PatientCountOrderByAggregateInput
@@ -51111,6 +51137,7 @@ export namespace Prisma {
     lastVisitedAt?: DateTimeNullableWithAggregatesFilter<"Patient"> | Date | string | null
     vitals?: JsonNullableWithAggregatesFilter<"Patient">
     clinicId?: StringWithAggregatesFilter<"Patient"> | string
+    suggestIPD?: BoolWithAggregatesFilter<"Patient"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Patient"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Patient"> | Date | string
   }
@@ -52229,6 +52256,7 @@ export namespace Prisma {
     clinicId?: StringFilter<"Prescription"> | string
     createdAt?: DateTimeFilter<"Prescription"> | Date | string
     updatedAt?: DateTimeFilter<"Prescription"> | Date | string
+    diagnosticTests?: JsonNullableFilter<"Prescription">
     patient?: XOR<PatientNullableRelationFilter, PatientWhereInput> | null
     doctor?: XOR<DoctorNullableRelationFilter, DoctorWhereInput> | null
     appointment?: XOR<AppointmentNullableRelationFilter, AppointmentWhereInput> | null
@@ -52251,6 +52279,7 @@ export namespace Prisma {
     clinicId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    diagnosticTests?: SortOrderInput | SortOrder
     patient?: PatientOrderByWithRelationInput
     doctor?: DoctorOrderByWithRelationInput
     appointment?: AppointmentOrderByWithRelationInput
@@ -52276,6 +52305,7 @@ export namespace Prisma {
     clinicId?: StringFilter<"Prescription"> | string
     createdAt?: DateTimeFilter<"Prescription"> | Date | string
     updatedAt?: DateTimeFilter<"Prescription"> | Date | string
+    diagnosticTests?: JsonNullableFilter<"Prescription">
     patient?: XOR<PatientNullableRelationFilter, PatientWhereInput> | null
     doctor?: XOR<DoctorNullableRelationFilter, DoctorWhereInput> | null
     appointment?: XOR<AppointmentNullableRelationFilter, AppointmentWhereInput> | null
@@ -52298,6 +52328,7 @@ export namespace Prisma {
     clinicId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    diagnosticTests?: SortOrderInput | SortOrder
     _count?: PrescriptionCountOrderByAggregateInput
     _max?: PrescriptionMaxOrderByAggregateInput
     _min?: PrescriptionMinOrderByAggregateInput
@@ -52320,6 +52351,7 @@ export namespace Prisma {
     clinicId?: StringWithAggregatesFilter<"Prescription"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Prescription"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Prescription"> | Date | string
+    diagnosticTests?: JsonNullableWithAggregatesFilter<"Prescription">
   }
 
   export type PrescriptionMedicineWhereInput = {
@@ -55469,6 +55501,7 @@ export namespace Prisma {
     pincode?: string | null
     lastVisitedAt?: Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
+    suggestIPD?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     clinic: ClinicCreateNestedOneWithoutPatientsInput
@@ -55511,6 +55544,7 @@ export namespace Prisma {
     lastVisitedAt?: Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
     clinicId: string
+    suggestIPD?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     appointments?: AppointmentUncheckedCreateNestedManyWithoutPatientInput
@@ -55551,6 +55585,7 @@ export namespace Prisma {
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
     lastVisitedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
+    suggestIPD?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     clinic?: ClinicUpdateOneRequiredWithoutPatientsNestedInput
@@ -55593,6 +55628,7 @@ export namespace Prisma {
     lastVisitedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
     clinicId?: StringFieldUpdateOperationsInput | string
+    suggestIPD?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     appointments?: AppointmentUncheckedUpdateManyWithoutPatientNestedInput
@@ -55634,6 +55670,7 @@ export namespace Prisma {
     lastVisitedAt?: Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
     clinicId: string
+    suggestIPD?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -55669,6 +55706,7 @@ export namespace Prisma {
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
     lastVisitedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
+    suggestIPD?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -55705,6 +55743,7 @@ export namespace Prisma {
     lastVisitedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
     clinicId?: StringFieldUpdateOperationsInput | string
+    suggestIPD?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -56934,6 +56973,7 @@ export namespace Prisma {
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
     patient?: PatientCreateNestedOneWithoutPrescriptionsInput
     doctor?: DoctorCreateNestedOneWithoutPrescriptionsInput
     appointment?: AppointmentCreateNestedOneWithoutPrescriptionsInput
@@ -56956,6 +56996,7 @@ export namespace Prisma {
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
     medicines?: PrescriptionMedicineUncheckedCreateNestedManyWithoutPrescriptionInput
   }
 
@@ -56968,6 +57009,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
     patient?: PatientUpdateOneWithoutPrescriptionsNestedInput
     doctor?: DoctorUpdateOneWithoutPrescriptionsNestedInput
     appointment?: AppointmentUpdateOneWithoutPrescriptionsNestedInput
@@ -56990,6 +57032,7 @@ export namespace Prisma {
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
     medicines?: PrescriptionMedicineUncheckedUpdateManyWithoutPrescriptionNestedInput
   }
 
@@ -57007,6 +57050,7 @@ export namespace Prisma {
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type PrescriptionUpdateManyMutationInput = {
@@ -57018,6 +57062,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type PrescriptionUncheckedUpdateManyInput = {
@@ -57034,6 +57079,7 @@ export namespace Prisma {
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type PrescriptionMedicineCreateInput = {
@@ -60187,6 +60233,7 @@ export namespace Prisma {
     lastVisitedAt?: SortOrder
     vitals?: SortOrder
     clinicId?: SortOrder
+    suggestIPD?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -60226,6 +60273,7 @@ export namespace Prisma {
     pincode?: SortOrder
     lastVisitedAt?: SortOrder
     clinicId?: SortOrder
+    suggestIPD?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -60261,6 +60309,7 @@ export namespace Prisma {
     pincode?: SortOrder
     lastVisitedAt?: SortOrder
     clinicId?: SortOrder
+    suggestIPD?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -60958,6 +61007,7 @@ export namespace Prisma {
     clinicId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    diagnosticTests?: SortOrder
   }
 
   export type PrescriptionMaxOrderByAggregateInput = {
@@ -66430,6 +66480,7 @@ export namespace Prisma {
     pincode?: string | null
     lastVisitedAt?: Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
+    suggestIPD?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     appointments?: AppointmentCreateNestedManyWithoutPatientInput
@@ -66470,6 +66521,7 @@ export namespace Prisma {
     pincode?: string | null
     lastVisitedAt?: Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
+    suggestIPD?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     appointments?: AppointmentUncheckedCreateNestedManyWithoutPatientInput
@@ -66898,6 +66950,7 @@ export namespace Prisma {
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
     patient?: PatientCreateNestedOneWithoutPrescriptionsInput
     doctor?: DoctorCreateNestedOneWithoutPrescriptionsInput
     appointment?: AppointmentCreateNestedOneWithoutPrescriptionsInput
@@ -66918,6 +66971,7 @@ export namespace Prisma {
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
     medicines?: PrescriptionMedicineUncheckedCreateNestedManyWithoutPrescriptionInput
   }
 
@@ -67916,6 +67970,7 @@ export namespace Prisma {
     lastVisitedAt?: DateTimeNullableFilter<"Patient"> | Date | string | null
     vitals?: JsonNullableFilter<"Patient">
     clinicId?: StringFilter<"Patient"> | string
+    suggestIPD?: BoolFilter<"Patient"> | boolean
     createdAt?: DateTimeFilter<"Patient"> | Date | string
     updatedAt?: DateTimeFilter<"Patient"> | Date | string
   }
@@ -68297,6 +68352,7 @@ export namespace Prisma {
     clinicId?: StringFilter<"Prescription"> | string
     createdAt?: DateTimeFilter<"Prescription"> | Date | string
     updatedAt?: DateTimeFilter<"Prescription"> | Date | string
+    diagnosticTests?: JsonNullableFilter<"Prescription">
   }
 
   export type PrescriptionMedicineUpsertWithWhereUniqueWithoutClinicInput = {
@@ -70062,6 +70118,7 @@ export namespace Prisma {
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
     patient?: PatientCreateNestedOneWithoutPrescriptionsInput
     doctor?: DoctorCreateNestedOneWithoutPrescriptionsInput
     appointment?: AppointmentCreateNestedOneWithoutPrescriptionsInput
@@ -70082,6 +70139,7 @@ export namespace Prisma {
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
     medicines?: PrescriptionMedicineUncheckedCreateNestedManyWithoutPrescriptionInput
   }
 
@@ -71665,6 +71723,7 @@ export namespace Prisma {
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
     patient?: PatientCreateNestedOneWithoutPrescriptionsInput
     appointment?: AppointmentCreateNestedOneWithoutPrescriptionsInput
     department?: DepartmentCreateNestedOneWithoutPrescriptionsInput
@@ -71685,6 +71744,7 @@ export namespace Prisma {
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
     medicines?: PrescriptionMedicineUncheckedCreateNestedManyWithoutPrescriptionInput
   }
 
@@ -72233,6 +72293,7 @@ export namespace Prisma {
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
     doctor?: DoctorCreateNestedOneWithoutPrescriptionsInput
     appointment?: AppointmentCreateNestedOneWithoutPrescriptionsInput
     department?: DepartmentCreateNestedOneWithoutPrescriptionsInput
@@ -72253,6 +72314,7 @@ export namespace Prisma {
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
     medicines?: PrescriptionMedicineUncheckedCreateNestedManyWithoutPrescriptionInput
   }
 
@@ -72660,6 +72722,7 @@ export namespace Prisma {
     pincode?: string | null
     lastVisitedAt?: Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
+    suggestIPD?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     clinic: ClinicCreateNestedOneWithoutPatientsInput
@@ -72701,6 +72764,7 @@ export namespace Prisma {
     lastVisitedAt?: Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
     clinicId: string
+    suggestIPD?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     prescriptions?: PrescriptionUncheckedCreateNestedManyWithoutPatientInput
@@ -73006,6 +73070,7 @@ export namespace Prisma {
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
     patient?: PatientCreateNestedOneWithoutPrescriptionsInput
     doctor?: DoctorCreateNestedOneWithoutPrescriptionsInput
     department?: DepartmentCreateNestedOneWithoutPrescriptionsInput
@@ -73026,6 +73091,7 @@ export namespace Prisma {
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
     medicines?: PrescriptionMedicineUncheckedCreateNestedManyWithoutPrescriptionInput
   }
 
@@ -73283,6 +73349,7 @@ export namespace Prisma {
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
     lastVisitedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
+    suggestIPD?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     clinic?: ClinicUpdateOneRequiredWithoutPatientsNestedInput
@@ -73324,6 +73391,7 @@ export namespace Prisma {
     lastVisitedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
     clinicId?: StringFieldUpdateOperationsInput | string
+    suggestIPD?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     prescriptions?: PrescriptionUncheckedUpdateManyWithoutPatientNestedInput
@@ -77315,6 +77383,7 @@ export namespace Prisma {
     pincode?: string | null
     lastVisitedAt?: Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
+    suggestIPD?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     clinic: ClinicCreateNestedOneWithoutPatientsInput
@@ -77356,6 +77425,7 @@ export namespace Prisma {
     lastVisitedAt?: Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
     clinicId: string
+    suggestIPD?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     appointments?: AppointmentUncheckedCreateNestedManyWithoutPatientInput
@@ -77789,6 +77859,7 @@ export namespace Prisma {
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
     lastVisitedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
+    suggestIPD?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     clinic?: ClinicUpdateOneRequiredWithoutPatientsNestedInput
@@ -77830,6 +77901,7 @@ export namespace Prisma {
     lastVisitedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
     clinicId?: StringFieldUpdateOperationsInput | string
+    suggestIPD?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     appointments?: AppointmentUncheckedUpdateManyWithoutPatientNestedInput
@@ -78229,6 +78301,7 @@ export namespace Prisma {
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
     patient?: PatientCreateNestedOneWithoutPrescriptionsInput
     doctor?: DoctorCreateNestedOneWithoutPrescriptionsInput
     appointment?: AppointmentCreateNestedOneWithoutPrescriptionsInput
@@ -78250,6 +78323,7 @@ export namespace Prisma {
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type PrescriptionCreateOrConnectWithoutMedicinesInput = {
@@ -78404,6 +78478,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
     patient?: PatientUpdateOneWithoutPrescriptionsNestedInput
     doctor?: DoctorUpdateOneWithoutPrescriptionsNestedInput
     appointment?: AppointmentUpdateOneWithoutPrescriptionsNestedInput
@@ -78425,6 +78500,7 @@ export namespace Prisma {
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type ClinicUpsertWithoutPrescriptionMedicinesInput = {
@@ -78591,6 +78667,7 @@ export namespace Prisma {
     pincode?: string | null
     lastVisitedAt?: Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
+    suggestIPD?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     clinic: ClinicCreateNestedOneWithoutPatientsInput
@@ -78632,6 +78709,7 @@ export namespace Prisma {
     lastVisitedAt?: Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
     clinicId: string
+    suggestIPD?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     appointments?: AppointmentUncheckedCreateNestedManyWithoutPatientInput
@@ -78956,6 +79034,7 @@ export namespace Prisma {
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
     lastVisitedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
+    suggestIPD?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     clinic?: ClinicUpdateOneRequiredWithoutPatientsNestedInput
@@ -78997,6 +79076,7 @@ export namespace Prisma {
     lastVisitedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
     clinicId?: StringFieldUpdateOperationsInput | string
+    suggestIPD?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     appointments?: AppointmentUncheckedUpdateManyWithoutPatientNestedInput
@@ -81869,6 +81949,7 @@ export namespace Prisma {
     pincode?: string | null
     lastVisitedAt?: Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
+    suggestIPD?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     clinic: ClinicCreateNestedOneWithoutPatientsInput
@@ -81910,6 +81991,7 @@ export namespace Prisma {
     lastVisitedAt?: Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
     clinicId: string
+    suggestIPD?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     appointments?: AppointmentUncheckedCreateNestedManyWithoutPatientInput
@@ -82190,6 +82272,7 @@ export namespace Prisma {
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
     lastVisitedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
+    suggestIPD?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     clinic?: ClinicUpdateOneRequiredWithoutPatientsNestedInput
@@ -82231,6 +82314,7 @@ export namespace Prisma {
     lastVisitedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
     clinicId?: StringFieldUpdateOperationsInput | string
+    suggestIPD?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     appointments?: AppointmentUncheckedUpdateManyWithoutPatientNestedInput
@@ -83242,6 +83326,7 @@ export namespace Prisma {
     pincode?: string | null
     lastVisitedAt?: Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
+    suggestIPD?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     clinic: ClinicCreateNestedOneWithoutPatientsInput
@@ -83283,6 +83368,7 @@ export namespace Prisma {
     lastVisitedAt?: Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
     clinicId: string
+    suggestIPD?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     appointments?: AppointmentUncheckedCreateNestedManyWithoutPatientInput
@@ -83501,6 +83587,7 @@ export namespace Prisma {
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
     lastVisitedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
+    suggestIPD?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     clinic?: ClinicUpdateOneRequiredWithoutPatientsNestedInput
@@ -83542,6 +83629,7 @@ export namespace Prisma {
     lastVisitedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
     clinicId?: StringFieldUpdateOperationsInput | string
+    suggestIPD?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     appointments?: AppointmentUncheckedUpdateManyWithoutPatientNestedInput
@@ -84065,6 +84153,7 @@ export namespace Prisma {
     pincode?: string | null
     lastVisitedAt?: Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
+    suggestIPD?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -84226,6 +84315,7 @@ export namespace Prisma {
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type PrescriptionMedicineCreateManyClinicInput = {
@@ -84850,6 +84940,7 @@ export namespace Prisma {
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
     lastVisitedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
+    suggestIPD?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     appointments?: AppointmentUpdateManyWithoutPatientNestedInput
@@ -84890,6 +84981,7 @@ export namespace Prisma {
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
     lastVisitedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
+    suggestIPD?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     appointments?: AppointmentUncheckedUpdateManyWithoutPatientNestedInput
@@ -84930,6 +85022,7 @@ export namespace Prisma {
     pincode?: NullableStringFieldUpdateOperationsInput | string | null
     lastVisitedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     vitals?: NullableJsonNullValueInput | InputJsonValue
+    suggestIPD?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -85387,6 +85480,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
     patient?: PatientUpdateOneWithoutPrescriptionsNestedInput
     doctor?: DoctorUpdateOneWithoutPrescriptionsNestedInput
     appointment?: AppointmentUpdateOneWithoutPrescriptionsNestedInput
@@ -85407,6 +85501,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
     medicines?: PrescriptionMedicineUncheckedUpdateManyWithoutPrescriptionNestedInput
   }
 
@@ -85423,6 +85518,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type PrescriptionMedicineUpdateWithoutClinicInput = {
@@ -86410,6 +86506,7 @@ export namespace Prisma {
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type DesignationUpdateWithoutDepartmentInput = {
@@ -86811,6 +86908,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
     patient?: PatientUpdateOneWithoutPrescriptionsNestedInput
     doctor?: DoctorUpdateOneWithoutPrescriptionsNestedInput
     appointment?: AppointmentUpdateOneWithoutPrescriptionsNestedInput
@@ -86831,6 +86929,7 @@ export namespace Prisma {
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
     medicines?: PrescriptionMedicineUncheckedUpdateManyWithoutPrescriptionNestedInput
   }
 
@@ -86847,6 +86946,7 @@ export namespace Prisma {
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type DoctorCreateManyDesignationInput = {
@@ -87295,6 +87395,7 @@ export namespace Prisma {
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type PayrollCreateManyDoctorInput = {
@@ -87439,6 +87540,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
     patient?: PatientUpdateOneWithoutPrescriptionsNestedInput
     appointment?: AppointmentUpdateOneWithoutPrescriptionsNestedInput
     department?: DepartmentUpdateOneWithoutPrescriptionsNestedInput
@@ -87459,6 +87561,7 @@ export namespace Prisma {
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
     medicines?: PrescriptionMedicineUncheckedUpdateManyWithoutPrescriptionNestedInput
   }
 
@@ -87475,6 +87578,7 @@ export namespace Prisma {
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type PayrollUpdateWithoutDoctorInput = {
@@ -87582,6 +87686,7 @@ export namespace Prisma {
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type InvoiceCreateManyPatientInput = {
@@ -87727,6 +87832,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
     doctor?: DoctorUpdateOneWithoutPrescriptionsNestedInput
     appointment?: AppointmentUpdateOneWithoutPrescriptionsNestedInput
     department?: DepartmentUpdateOneWithoutPrescriptionsNestedInput
@@ -87747,6 +87853,7 @@ export namespace Prisma {
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
     medicines?: PrescriptionMedicineUncheckedUpdateManyWithoutPrescriptionNestedInput
   }
 
@@ -87763,6 +87870,7 @@ export namespace Prisma {
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type InvoiceUpdateWithoutPatientInput = {
@@ -87955,6 +88063,7 @@ export namespace Prisma {
     clinicId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type NoteCreateManyAppointmentInput = {
@@ -88001,6 +88110,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
     patient?: PatientUpdateOneWithoutPrescriptionsNestedInput
     doctor?: DoctorUpdateOneWithoutPrescriptionsNestedInput
     department?: DepartmentUpdateOneWithoutPrescriptionsNestedInput
@@ -88021,6 +88131,7 @@ export namespace Prisma {
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
     medicines?: PrescriptionMedicineUncheckedUpdateManyWithoutPrescriptionNestedInput
   }
 
@@ -88037,6 +88148,7 @@ export namespace Prisma {
     clinicId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    diagnosticTests?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type NoteUpdateWithoutAppointmentInput = {

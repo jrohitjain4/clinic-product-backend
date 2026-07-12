@@ -389,6 +389,7 @@ export const updatePatient = async (req: AuthenticatedRequest, res: Response) =>
 
       lastVisitedAt,
       vitals,
+      suggestIPD,
     } = req.body;
 
     if (phone && phone !== existing.phone) {
@@ -425,6 +426,7 @@ export const updatePatient = async (req: AuthenticatedRequest, res: Response) =>
               ? bloodGroup
               : null
             : existing.bloodGroup,
+        suggestIPD: suggestIPD !== undefined ? suggestIPD : existing.suggestIPD,
         maritalStatus:
           maritalStatus !== undefined
             ? maritalStatus && maritalStatus !== "Select"

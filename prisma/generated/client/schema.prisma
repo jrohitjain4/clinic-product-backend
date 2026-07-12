@@ -573,7 +573,8 @@ model Prescription {
   createdAt        DateTime     @default(now())
   updatedAt        DateTime     @updatedAt
 
-  medicines PrescriptionMedicine[]
+  medicines       PrescriptionMedicine[]
+  diagnosticTests Json?
 
   @@index([clinicId])
   @@index([patientId])

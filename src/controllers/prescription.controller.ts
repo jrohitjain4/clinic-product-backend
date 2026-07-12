@@ -37,6 +37,7 @@ export const getPrescriptions = async (req: Request, res: Response) => {
                 },
                 department: true,
                 medicines: true,
+                appointment: true,
                 clinic: {
                     include: { landingPage: true }
                 }
@@ -68,7 +69,21 @@ export const createPrescription = async (req: Request, res: Response) => {
             followUpDate,
             followUpNotes,
             medicines, // array of { medicineName, dosage, frequency, duration, timings }
+            diagnosticTests, // array of string names or test details
         } = req.body;
+
+        // Enforce one-prescription-per-appointment rule
+        if (appointmentId) {
+            const existing = await prisma.prescription.findFirst({
+                where: { appointmentId, clinicId },
+            });
+            if (existing) {
+                return res.status(409).json({
+                    message: "A prescription already exists for this appointment. Please edit the existing prescription.",
+                    existingId: existing.id,
+                });
+            }
+        }
 
         // Generate a unique prescription code
         const count = await prisma.prescription.count({ where: { clinicId } });
@@ -85,6 +100,7 @@ export const createPrescription = async (req: Request, res: Response) => {
                 followUpDate: followUpDate ? new Date(followUpDate) : null,
                 followUpNotes,
                 clinicId,
+                diagnosticTests: diagnosticTests || null,
                 medicines: {
                     create: medicines?.map((med: any) => ({
                         medicineName: med.medicineName,
@@ -181,6 +197,7 @@ export const updatePrescription = async (req: Request, res: Response) => {
             followUpDate,
             followUpNotes,
             medicines,
+            diagnosticTests,
         } = req.body;
 
         const existingPrescription = await prisma.prescription.findFirst({
@@ -203,6 +220,7 @@ export const updatePrescription = async (req: Request, res: Response) => {
                 advice,
                 followUpDate: followUpDate ? new Date(followUpDate) : null,
                 followUpNotes,
+                diagnosticTests: diagnosticTests || null,
                 medicines: {
                     create: medicines?.map((med: any) => ({
                         medicineName: med.medicineName,

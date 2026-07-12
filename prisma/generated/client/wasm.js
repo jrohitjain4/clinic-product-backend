@@ -342,6 +342,7 @@ exports.Prisma.PatientScalarFieldEnum = {
   lastVisitedAt: 'lastVisitedAt',
   vitals: 'vitals',
   clinicId: 'clinicId',
+  suggestIPD: 'suggestIPD',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -532,7 +533,8 @@ exports.Prisma.PrescriptionScalarFieldEnum = {
   status: 'status',
   clinicId: 'clinicId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  diagnosticTests: 'diagnosticTests'
 };
 
 exports.Prisma.PrescriptionMedicineScalarFieldEnum = {
