@@ -1,13 +1,15 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateTicketStatus = exports.getTickets = exports.createTicket = void 0;
-const client_1 = require("../../prisma/generated/client");
-const prisma = new client_1.PrismaClient();
+const prisma_1 = __importDefault(require("../lib/prisma"));
 const createTicket = async (req, res) => {
     const { subject, description, priority } = req.body;
     const user = req.user;
     try {
-        const ticket = await prisma.ticket.create({
+        const ticket = await prisma_1.default.ticket.create({
             data: {
                 subject,
                 description,
@@ -32,13 +34,13 @@ const getTickets = async (req, res) => {
     try {
         let tickets;
         if (user.role === 'SUPER_ADMIN') {
-            tickets = await prisma.ticket.findMany({
+            tickets = await prisma_1.default.ticket.findMany({
                 include: { clinic: true },
                 orderBy: { createdAt: 'desc' },
             });
         }
         else {
-            tickets = await prisma.ticket.findMany({
+            tickets = await prisma_1.default.ticket.findMany({
                 where: { clinicId: user.clinicId },
                 orderBy: { createdAt: 'desc' },
             });
@@ -59,7 +61,7 @@ const updateTicketStatus = async (req, res) => {
         return res.status(403).json({ message: 'Only super admin can update ticket status' });
     }
     try {
-        const ticket = await prisma.ticket.update({
+        const ticket = await prisma_1.default.ticket.update({
             where: { id },
             data: { status },
         });

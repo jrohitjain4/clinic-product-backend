@@ -60,7 +60,7 @@ const updateProfile = async (req, res) => {
     try {
         if (!req.user || !req.user.clinicId)
             return res.status(401).json({ message: "Unauthorized" });
-        const { firstName, lastName, email, phone, addressLine1, addressLine2, country, state, city, pincode, clinicName, gstNo, clinicLogo, gender, dob, bloodGroup, maritalStatus, occupation } = req.body;
+        const { firstName, lastName, email, phone, addressLine1, addressLine2, country, state, city, pincode, clinicName, gstNo, clinicLogo, gender, dob, bloodGroup, maritalStatus, occupation, profileImage } = req.body;
         if (phone) {
             const user = await prisma_1.default.user.findUnique({ where: { id: req.user.id } });
             if (user && phone !== user.phone) {
@@ -77,7 +77,8 @@ const updateProfile = async (req, res) => {
                 fullName: fullName,
                 email: email || undefined,
                 gender: gender || undefined,
-                dob: dob ? new Date(dob) : undefined
+                dob: dob ? new Date(dob) : undefined,
+                profileImage: profileImage || undefined
             }
         });
         let details = null;
@@ -637,6 +638,7 @@ const login = async (req, res) => {
                 role: user.role,
                 clinicId: user.clinicId,
                 clinic: user.clinic,
+                profileImage: user.profileImage,
                 permissions,
                 doctorId,
                 patientId,
@@ -693,6 +695,7 @@ const getMe = async (req, res) => {
             fullName: user.fullName,
             role: user.role,
             clinic: user.clinic,
+            profileImage: user.profileImage,
             permissions,
             details
         });
@@ -1043,6 +1046,7 @@ const verifyOTPLogin = async (req, res) => {
                 role: user.role,
                 clinicId: user.clinicId,
                 clinic: user.clinic,
+                profileImage: user.profileImage,
                 permissions,
                 doctorId,
                 patientId,

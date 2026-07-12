@@ -274,7 +274,7 @@ const updatePatient = async (req, res) => {
         });
         if (!existing)
             return res.status(404).json({ message: "Patient not found" });
-        const { firstName, middleName, lastName, profileImage, phone, alternateMobile, email, dob, age, gender, bloodGroup, maritalStatus, occupation, aadhaarNumber, passportNumber, referredBy, emergencyContactName, emergencyContactRelation, emergencyContactPhone, status, address1, address2, country, state, city, pincode, lastVisitedAt, vitals, } = req.body;
+        const { firstName, middleName, lastName, profileImage, phone, alternateMobile, email, dob, age, gender, bloodGroup, maritalStatus, occupation, aadhaarNumber, passportNumber, referredBy, emergencyContactName, emergencyContactRelation, emergencyContactPhone, status, address1, address2, country, state, city, pincode, lastVisitedAt, vitals, suggestIPD, } = req.body;
         if (phone && phone !== existing.phone) {
             const duplicate = await (0, phoneValidation_1.checkPhoneDuplicate)(phone);
             if (duplicate) {
@@ -303,6 +303,7 @@ const updatePatient = async (req, res) => {
                         ? bloodGroup
                         : null
                     : existing.bloodGroup,
+                suggestIPD: suggestIPD !== undefined ? suggestIPD : existing.suggestIPD,
                 maritalStatus: maritalStatus !== undefined
                     ? maritalStatus && maritalStatus !== "Select"
                         ? maritalStatus

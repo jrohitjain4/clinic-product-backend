@@ -1,13 +1,15 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.upsertSetting = exports.getSetting = void 0;
-const client_1 = require("@prisma/client");
-const prisma = new client_1.PrismaClient();
+const prisma_1 = __importDefault(require("../lib/prisma"));
 // Get a setting by key
 const getSetting = async (req, res) => {
     try {
         const { key } = req.params;
-        const setting = await prisma.systemSetting.findUnique({
+        const setting = await prisma_1.default.systemSetting.findUnique({
             where: { key },
         });
         if (!setting) {
@@ -27,7 +29,7 @@ const upsertSetting = async (req, res) => {
         if (!key || value === undefined) {
             return res.status(400).json({ message: "Key and value are required" });
         }
-        const setting = await prisma.systemSetting.upsert({
+        const setting = await prisma_1.default.systemSetting.upsert({
             where: { key },
             update: { value },
             create: { key, value },

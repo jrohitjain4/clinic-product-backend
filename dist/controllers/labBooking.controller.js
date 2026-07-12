@@ -101,11 +101,12 @@ const createLabBooking = async (req, res) => {
         const clinicId = req.user?.clinicId;
         if (!clinicId)
             return res.status(403).json({ message: "No clinic associated" });
-        const { patientId, testId, scheduledAt, status, paymentStatus, paymentMethod, discount, tax, totalAmount, sessionSlot, assignedUserId, remarks, referredBy } = req.body;
+        const { patientId, testId, testsList, scheduledAt, status, paymentStatus, paymentMethod, discount, tax, totalAmount, sessionSlot, assignedUserId, remarks, referredBy } = req.body;
         if (!patientId)
             return res.status(400).json({ message: "Patient is required" });
-        if (!testId)
-            return res.status(400).json({ message: "Test is required" });
+        const finalTestId = testId || (testsList && Array.isArray(testsList) && testsList.length > 0 ? testsList[0].testId : null);
+        if (!finalTestId)
+            return res.status(400).json({ message: "At least one test is required" });
         if (!scheduledAt)
             return res.status(400).json({ message: "Scheduled date is required" });
         // Auto-generate booking code
@@ -117,7 +118,8 @@ const createLabBooking = async (req, res) => {
             data: {
                 bookingCode,
                 patientId,
-                testId,
+                testId: finalTestId,
+                testsList: testsList || null,
                 scheduledAt: new Date(scheduledAt),
                 status: status || "Pending",
                 paymentStatus: paymentStatus || "Unpaid",
@@ -162,11 +164,12 @@ const updateLabBooking = async (req, res) => {
         const existing = await prisma_1.default.labBooking.findFirst({ where: { id, clinicId } });
         if (!existing)
             return res.status(404).json({ message: "Booking not found" });
-        const { status, paymentStatus, paymentMethod, discount, tax, totalAmount, scheduledAt, sessionSlot, assignedUserId, remarks, referredBy } = req.body;
+        const { status, testsList, paymentStatus, paymentMethod, discount, tax, totalAmount, scheduledAt, sessionSlot, assignedUserId, remarks, referredBy } = req.body;
         const updated = await prisma_1.default.labBooking.update({
             where: { id },
             data: {
                 ...(status !== undefined && { status }),
+                ...(testsList !== undefined && { testsList }),
                 ...(paymentStatus !== undefined && { paymentStatus }),
                 ...(paymentMethod !== undefined && { paymentMethod }),
                 ...(discount !== undefined && { discount: parseFloat(discount) }),

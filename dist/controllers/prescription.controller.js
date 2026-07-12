@@ -39,6 +39,7 @@ const getPrescriptions = async (req, res) => {
                 },
                 department: true,
                 medicines: true,
+                appointment: true,
                 clinic: {
                     include: { landingPage: true }
                 }
@@ -61,7 +62,20 @@ const createPrescription = async (req, res) => {
             return res.status(403).json({ message: "Clinic ID is required" });
         }
         const { patientId, doctorId, appointmentId, departmentId, advice, followUpDate, followUpNotes, medicines, // array of { medicineName, dosage, frequency, duration, timings }
+        diagnosticTests, // array of string names or test details
          } = req.body;
+        // Enforce one-prescription-per-appointment rule
+        if (appointmentId) {
+            const existing = await prisma_1.default.prescription.findFirst({
+                where: { appointmentId, clinicId },
+            });
+            if (existing) {
+                return res.status(409).json({
+                    message: "A prescription already exists for this appointment. Please edit the existing prescription.",
+                    existingId: existing.id,
+                });
+            }
+        }
         // Generate a unique prescription code
         const count = await prisma_1.default.prescription.count({ where: { clinicId } });
         const prescriptionCode = `#PRE${String(count + 1).padStart(3, "0")}`;
@@ -76,10 +90,12 @@ const createPrescription = async (req, res) => {
                 followUpDate: followUpDate ? new Date(followUpDate) : null,
                 followUpNotes,
                 clinicId,
+                diagnosticTests: diagnosticTests || null,
                 medicines: {
                     create: medicines?.map((med) => ({
                         medicineName: med.medicineName,
                         dosage: med.dosage,
+                        strength: med.strength || null,
                         frequency: med.frequency,
                         duration: med.duration,
                         timings: med.timings,
@@ -161,7 +177,7 @@ const updatePrescription = async (req, res) => {
         if (!clinicId) {
             return res.status(403).json({ message: "Clinic ID is required" });
         }
-        const { advice, followUpDate, followUpNotes, medicines, } = req.body;
+        const { advice, followUpDate, followUpNotes, medicines, diagnosticTests, } = req.body;
         const existingPrescription = await prisma_1.default.prescription.findFirst({
             where: { id, clinicId },
         });
@@ -179,10 +195,12 @@ const updatePrescription = async (req, res) => {
                 advice,
                 followUpDate: followUpDate ? new Date(followUpDate) : null,
                 followUpNotes,
+                diagnosticTests: diagnosticTests || null,
                 medicines: {
                     create: medicines?.map((med) => ({
                         medicineName: med.medicineName,
                         dosage: med.dosage,
+                        strength: med.strength || null,
                         frequency: med.frequency,
                         duration: med.duration,
                         timings: med.timings,
