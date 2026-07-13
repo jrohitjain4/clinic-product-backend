@@ -14,10 +14,43 @@ const ensureLabBookingInvoice = async (bookingId: string, clinicId: string) => {
         });
 
         if (!booking || booking.status !== "Confirmed" || booking.invoice) return;
-        if (!booking.patient || !booking.test) return;
+        if (!booking.patient) return;
 
-        const fee = booking.test.price || 0;
-        if (fee <= 0) return;
+        let subTotal = 0;
+        const itemsCreate: any[] = [];
+
+        if (booking.testsList && Array.isArray(booking.testsList) && booking.testsList.length > 0) {
+            booking.testsList.forEach((t: any) => {
+                const price = t.price || 0;
+                subTotal += price;
+                itemsCreate.push({
+                    clinicId,
+                    description: `Lab Test: ${t.name}`,
+                    quantity: 1,
+                    unitCost: price,
+                    amount: price,
+                });
+            });
+        } else if (booking.test) {
+            const fee = booking.test.price || 0;
+            subTotal = fee;
+            itemsCreate.push({
+                clinicId,
+                description: `Lab Test: ${booking.test.name}`,
+                quantity: 1,
+                unitCost: fee,
+                amount: fee,
+            });
+        } else {
+            return;
+        }
+
+        if (subTotal <= 0) return;
+
+        const discount = booking.discount || 0;
+        const tax = booking.tax || 0;
+        const taxAmount = (subTotal * tax) / 100;
+        const totalAmount = booking.totalAmount || Math.max(0, subTotal - discount + taxAmount);
 
         const invStatus = "Paid";
 
@@ -28,19 +61,15 @@ const ensureLabBookingInvoice = async (bookingId: string, clinicId: string) => {
                 labBookingId: booking.id,
                 invoiceDate: new Date(),
                 dueDate: new Date(),
-                subTotal: fee,
-                totalAmount: fee,
+                subTotal,
+                discount,
+                tax,
+                totalAmount,
                 paymentStatus: invStatus,
                 paymentMethod: booking.paymentMethod || "Cash",
                 invoiceCode: `INV-AUTO-${booking.bookingCode || Date.now()}`,
                 items: {
-                    create: [{
-                        clinicId,
-                        description: `Lab Test: ${booking.test.name}`,
-                        quantity: 1,
-                        unitCost: fee,
-                        amount: fee,
-                    }]
+                    create: itemsCreate
                 }
             }
         });

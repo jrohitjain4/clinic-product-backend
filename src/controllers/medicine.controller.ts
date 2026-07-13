@@ -209,3 +209,70 @@ export const addMedicineStock = async (req: AuthenticatedRequest, res: Response)
     }
 };
 
+// POST /api/medicines/bulk-create
+export const bulkCreateMedicines = async (req: AuthenticatedRequest, res: Response) => {
+    try {
+        const clinicId = req.user?.clinicId;
+        if (!clinicId) return res.status(403).json({ message: "No clinic associated" });
+
+        const { categoryId, items } = req.body;
+        if (!items || !Array.isArray(items) || items.length === 0) {
+            return res.status(400).json({ message: "items array is required" });
+        }
+
+        const createdMedicines = [];
+
+        for (const item of items) {
+            const {
+                medicineName, genericName, brandName, manufacturer,
+                medicineCode, hsnCode, description,
+                purchasePrice, sellingPrice, gst, mrp,
+                openingStock, minimumStockAlert, unit,
+                batchNumber, manufacturingDate, expiryDate,
+                prescriptionRequired, status,
+            } = item;
+
+            if (!medicineName) {
+                continue;
+            }
+
+            const autoCode = medicineCode || `MED-${Math.floor(100000 + Math.random() * 900000)}`;
+            const parsedOpeningStock = parseInt(openingStock) || 0;
+
+            const medicine = await prisma.medicine.create({
+                data: {
+                    medicineName,
+                    genericName: genericName || null,
+                    brandName: brandName || null,
+                    categoryId: item.categoryId || categoryId || null,
+                    manufacturer: manufacturer || null,
+                    medicineCode: autoCode,
+                    hsnCode: hsnCode || null,
+                    description: description || null,
+                    purchasePrice: parseFloat(purchasePrice) || 0,
+                    sellingPrice: parseFloat(sellingPrice) || 0,
+                    gst: parseFloat(gst) || 0,
+                    mrp: parseFloat(mrp) || 0,
+                    openingStock: parsedOpeningStock,
+                    stockIn: parsedOpeningStock,
+                    stockOut: 0,
+                    minimumStockAlert: parseInt(minimumStockAlert) || 0,
+                    unit: unit || null,
+                    batchNumber: batchNumber || null,
+                    manufacturingDate: manufacturingDate ? new Date(manufacturingDate) : null,
+                    expiryDate: expiryDate ? new Date(expiryDate) : null,
+                    prescriptionRequired: prescriptionRequired === true || prescriptionRequired === "true",
+                    status: status || "Active",
+                    clinicId,
+                },
+                include: { category: { select: { id: true, name: true } } },
+            });
+            createdMedicines.push(medicine);
+        }
+
+        res.status(201).json(createdMedicines);
+    } catch (err: any) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
