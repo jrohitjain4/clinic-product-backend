@@ -251,7 +251,7 @@ export const createConsultation = async (req: AuthenticatedRequest, res: Respons
               scheduledAt,
               mode: parentAppt.mode || "Offline",
               appointmentType: "therapy",
-              status: "Schedule",
+              status: (childPayStatus === "Paid" || childPayStatus === "Partial Paid") ? "Confirmed" : "Schedule",
               parentAppointmentId: appointmentId,
               consultationId: consultation.id,
               therapyPlanId: plan.id,
@@ -479,10 +479,32 @@ export const updateConsultationPayment = async (req: AuthenticatedRequest, res: 
       }
 
       // Update all child appointments
-      await tx.appointment.updateMany({
-        where: { consultationId: id, clinicId },
-        data: { paymentStatus: childPayStatus },
-      });
+      const isConfirmed = childPayStatus === "Paid" || childPayStatus === "Partial Paid";
+      if (isConfirmed) {
+        await tx.appointment.updateMany({
+          where: { consultationId: id, clinicId, status: "Schedule" },
+          data: { 
+            paymentStatus: childPayStatus,
+            status: "Confirmed"
+          },
+        });
+        await tx.appointment.updateMany({
+          where: { consultationId: id, clinicId, status: { not: "Schedule" } },
+          data: { paymentStatus: childPayStatus },
+        });
+      } else {
+        await tx.appointment.updateMany({
+          where: { consultationId: id, clinicId, status: "Confirmed" },
+          data: { 
+            paymentStatus: childPayStatus,
+            status: "Schedule"
+          },
+        });
+        await tx.appointment.updateMany({
+          where: { consultationId: id, clinicId, status: { notIn: ["Confirmed", "Schedule"] } },
+          data: { paymentStatus: childPayStatus },
+        });
+      }
     });
 
     const updated = await prisma.consultation.findUnique({ where: { id }, include: consultationInclude });

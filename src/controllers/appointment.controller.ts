@@ -191,7 +191,7 @@ const createSessionDailyAppointments = async (
         endAt,
         mode: baseAppointment.mode,
         appointmentType: baseAppointment.appointmentType || null,
-        status: "Confirmed",
+        status: (baseAppointment.paymentStatus === "Paid" || baseAppointment.paymentStatus === "Partial Paid") ? "Confirmed" : "Schedule",
         reason: baseAppointment.reason || null,
         location: baseAppointment.location || null,
         clinicId,
