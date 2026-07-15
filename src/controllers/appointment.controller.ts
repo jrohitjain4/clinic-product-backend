@@ -243,6 +243,7 @@ const ensureAppointmentInvoice = async (appointmentId: string, clinicId: string)
         dueDate: new Date(),
         subTotal: fee,
         totalAmount: fee,
+        amountPaid: fee,
         paymentStatus: invStatus,
         paymentMethod: appointment.mode === "Online" ? "Online" : "Cash",
         invoiceCode: `INV-AUTO-${appointment.appointmentCode || Date.now()}`,

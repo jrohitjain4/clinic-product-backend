@@ -65,6 +65,7 @@ const ensureLabBookingInvoice = async (bookingId: string, clinicId: string) => {
                 discount,
                 tax,
                 totalAmount,
+                amountPaid: totalAmount,
                 paymentStatus: invStatus,
                 paymentMethod: booking.paymentMethod || "Cash",
                 invoiceCode: `INV-AUTO-${booking.bookingCode || Date.now()}`,

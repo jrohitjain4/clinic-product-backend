@@ -310,6 +310,7 @@ export const createConsultation = async (req: AuthenticatedRequest, res: Respons
           subTotal: consultFee + therapyTotal,
           discount: discountAmt,
           totalAmount: finalTotal,
+          amountPaid: paidAmt || 0,
           paymentMethod: paymentMethod || null,
           paymentStatus: paidAmt >= finalTotal && finalTotal > 0 ? "Paid" : paidAmt > 0 ? "Partially Paid" : "Pending",
           consultationId: consultation.id,

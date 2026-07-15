@@ -647,6 +647,7 @@ model Invoice {
   discount      Float         @default(0)
   subTotal      Float         @default(0)
   totalAmount   Float
+  amountPaid    Float         @default(0)
   paymentMethod String?
   paymentStatus String        @default("Pending") // Pending, Paid, Partially Paid
   otherInfo     String?
