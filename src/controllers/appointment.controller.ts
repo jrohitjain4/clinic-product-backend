@@ -94,6 +94,9 @@ const appointmentIncludes = {
   parentAppointment: {
     select: { id: true, appointmentCode: true, scheduledAt: true, status: true },
   },
+  consultation: {
+    select: { id: true, status: true, paymentStatus: true },
+  },
   clinic: {
     select: {
       id: true,
@@ -217,7 +220,9 @@ const ensureAppointmentInvoice = async (appointmentId: string, clinicId: string)
 
     // Determine fee
     let fee = 0;
-    if (appointment.isFollowUp) {
+    if (appointment.appointmentType === "therapy" && appointment.finalFee !== null && appointment.finalFee !== undefined) {
+      fee = appointment.finalFee;
+    } else if (appointment.isFollowUp) {
       fee = appointment.doctor.followUpFee || 0;
     } else {
       fee = appointment.doctor.consultationCharge || 0;
@@ -244,7 +249,9 @@ const ensureAppointmentInvoice = async (appointmentId: string, clinicId: string)
         items: {
           create: [{
             clinicId,
-            description: `${appointment.isFollowUp ? "Follow-up" : "Consultation"} Fee - Dr. ${appointment.doctor.fullName}`,
+            description: appointment.appointmentType === "therapy"
+              ? `Therapy Consultation Fee - Dr. ${appointment.doctor.fullName}`
+              : `${appointment.isFollowUp ? "Follow-up" : "Consultation"} Fee - Dr. ${appointment.doctor.fullName}`,
             quantity: 1,
             unitCost: fee,
             amount: fee,
@@ -263,7 +270,7 @@ export const getAppointments = async (req: AuthenticatedRequest, res: Response) 
     const clinicId = req.user?.clinicId;
     if (!clinicId) return res.status(403).json({ message: "No clinic associated" });
 
-    const { status, doctorId, patientId, mode, search, sort, dateFrom, dateTo } =
+    const { status, doctorId, patientId, mode, search, sort, dateFrom, dateTo, appointmentType } =
       req.query;
 
     let finalDoctorId = doctorId && typeof doctorId === "string" ? doctorId : undefined;
@@ -306,6 +313,7 @@ export const getAppointments = async (req: AuthenticatedRequest, res: Response) 
       where: {
         clinicId,
         ...(status && typeof status === "string" ? { status } : {}),
+        ...(appointmentType && typeof appointmentType === "string" ? { appointmentType } : {}),
         ...(finalDoctorId ? { doctorId: finalDoctorId } : {}),
         ...(finalPatientId ? { patientId: finalPatientId } : {}),
         ...(mode && typeof mode === "string" ? { mode } : {}),
@@ -521,6 +529,16 @@ export const createAppointment = async (req: AuthenticatedRequest, res: Response
       paymentStatus,
       parentAppointmentId,
       serviceIds,
+      onlineLink,
+      homeAddress,
+      therapyCategoryId,
+      therapyId,
+      consultationFee,
+      discountType,
+      discountValue,
+      discountAmount,
+      finalFee,
+      whatsappNotification,
     } = req.body;
 
     const resolvedServiceIds: string[] = Array.isArray(serviceIds) ? serviceIds : [];
@@ -623,6 +641,16 @@ export const createAppointment = async (req: AuthenticatedRequest, res: Response
         paymentStatus: paymentStatus || null,
         parentAppointmentId: parentAppointmentId || null,
         serviceIds: resolvedServiceIds,
+        onlineLink: onlineLink || null,
+        homeAddress: homeAddress || null,
+        therapyCategoryId: therapyCategoryId || null,
+        therapyId: therapyId || null,
+        consultationFee: consultationFee !== undefined ? parseFloat(consultationFee) : null,
+        discountType: discountType || null,
+        discountValue: discountValue !== undefined ? parseFloat(discountValue) : null,
+        discountAmount: discountAmount !== undefined ? parseFloat(discountAmount) : null,
+        finalFee: finalFee !== undefined ? parseFloat(finalFee) : null,
+        whatsappNotification: whatsappNotification || false,
       },
       include: appointmentIncludes,
     });
@@ -744,6 +772,16 @@ export const updateAppointment = async (req: AuthenticatedRequest, res: Response
       paymentStatus,
       parentAppointmentId,
       serviceIds,
+      onlineLink,
+      homeAddress,
+      therapyCategoryId,
+      therapyId,
+      consultationFee,
+      discountType,
+      discountValue,
+      discountAmount,
+      finalFee,
+      whatsappNotification,
     } = req.body;
 
     let doctor = null;
@@ -817,6 +855,16 @@ export const updateAppointment = async (req: AuthenticatedRequest, res: Response
         paymentStatus: paymentStatus !== undefined ? paymentStatus : existing.paymentStatus,
         parentAppointmentId: parentAppointmentId !== undefined ? parentAppointmentId : existing.parentAppointmentId,
         serviceIds: resolvedServiceIds,
+        onlineLink: onlineLink !== undefined ? onlineLink : existing.onlineLink,
+        homeAddress: homeAddress !== undefined ? homeAddress : existing.homeAddress,
+        therapyCategoryId: therapyCategoryId !== undefined ? therapyCategoryId : existing.therapyCategoryId,
+        therapyId: therapyId !== undefined ? therapyId : existing.therapyId,
+        consultationFee: consultationFee !== undefined ? (consultationFee ? parseFloat(consultationFee) : null) : existing.consultationFee,
+        discountType: discountType !== undefined ? discountType : existing.discountType,
+        discountValue: discountValue !== undefined ? (discountValue ? parseFloat(discountValue) : null) : existing.discountValue,
+        discountAmount: discountAmount !== undefined ? (discountAmount ? parseFloat(discountAmount) : null) : existing.discountAmount,
+        finalFee: finalFee !== undefined ? (finalFee ? parseFloat(finalFee) : null) : existing.finalFee,
+        whatsappNotification: whatsappNotification !== undefined ? whatsappNotification : existing.whatsappNotification,
       },
       include: appointmentIncludes,
     });

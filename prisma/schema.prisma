@@ -87,6 +87,8 @@ model Clinic {
   pharmacyCategories    PharmacyCategory[]
   medicines             Medicine[]
   pharmacyInvoices      PharmacyInvoice[]
+  consultations         Consultation[]
+  therapyPlans          TherapyPlan[]
 }
 
 model LandingPage {
@@ -250,6 +252,7 @@ model Doctor {
   certifications          Json?
   schedules               Json?
   status                  String          @default("Active")
+  doctorType              String?         @default("regular")
   departmentId            String?
   department              Department?     @relation(fields: [departmentId], references: [id])
   maritalStatus           String?
@@ -272,6 +275,7 @@ model Doctor {
   appointments            Appointment[]
   prescriptions           Prescription[]
   payrolls                Payroll[]
+  consultations           Consultation[]
   createdAt               DateTime        @default(now())
   updatedAt               DateTime        @updatedAt
 }
@@ -314,6 +318,7 @@ model Patient {
   invoices        Invoice[]
   labBookings     LabBooking[]
   pharmacyInvoices PharmacyInvoice[]
+  consultations   Consultation[]
   suggestIPD      Boolean        @default(false)
   createdAt       DateTime       @default(now())
   updatedAt       DateTime       @updatedAt
@@ -333,8 +338,18 @@ model Appointment {
   department      Department?    @relation(fields: [departmentId], references: [id])
   scheduledAt     DateTime
   endAt           DateTime?
-  mode            String         @default("In-person")
-  appointmentType String?
+  mode            String         @default("In-person") // In-person (Offline), Online, Home Visit
+  appointmentType String?        // "regular" | "therapy"
+  onlineLink      String?
+  homeAddress     String?
+  therapyCategoryId String?
+  therapyId       String?
+  consultationFee Float?
+  discountType    String?        // "percentage" | "fixed" | "none"
+  discountValue   Float?
+  discountAmount  Float?
+  finalFee        Float?
+  whatsappNotification Boolean?  @default(false)
   status          String         @default("Schedule")
   reason          String?
   location        String?
@@ -351,6 +366,12 @@ model Appointment {
   followUpPaymentStatus String?   // Keep for compatibility or remove later
   serviceIds      String[]       @default([])
   invoice         Invoice?
+  // Therapy Consultation linkage
+  consultationId  String?
+  therapyPlanId   String?
+  therapyPlan     TherapyPlan?   @relation("TherapyPlanAppointments", fields: [therapyPlanId], references: [id], onDelete: SetNull)
+  sessionNumber   Int?           // e.g. session 2 of 10
+  consultation    Consultation?  @relation("ConsultationAppointment")
   createdAt       DateTime       @default(now())
   updatedAt       DateTime       @updatedAt
 
@@ -359,38 +380,53 @@ model Appointment {
   @@index([doctorId])
   @@index([scheduledAt])
   @@index([status])
+  @@index([therapyPlanId])
 }
 
 model Service {
-  id           String        @id @default(uuid())
-  serviceName  String
-  departmentId String
-  department   Department    @relation(fields: [departmentId], references: [id])
-  price        Float?
-  duration     String?
-  status       String        @default("Active")
-  clinicId     String
-  clinic       Clinic        @relation(fields: [clinicId], references: [id])
-  invoiceItems InvoiceItem[]
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  id               String          @id @default(uuid())
+  serviceName      String
+  serviceCode      String?
+  serviceType      String?         @default("regular") // "regular" | "therapy"
+  description      String?
+  gallery          String[]
+  minSessions      Int?
+  maxSessions      Int?
+  sessionGap       Int?
+  scheduleType     String? // "daily" | "alternate" | "weekly" | "custom"
+  customDates      Json?
+  departmentId     String?
+  department       Department?     @relation(fields: [departmentId], references: [id])
+  specializationId String?
+  specialization   Specialization? @relation(fields: [specializationId], references: [id])
+  price            Float?
+  duration         String?
+  status           String          @default("Active")
+  clinicId         String
+  clinic           Clinic          @relation(fields: [clinicId], references: [id])
+  invoiceItems     InvoiceItem[]
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
 
   @@index([clinicId])
   @@index([departmentId])
+  @@index([specializationId])
   @@index([status])
 }
 
 model Specialization {
-  id          String   @id @default(uuid())
-  name        String
-  description String?
-  image       String?
-  status      String   @default("Active")
-  clinicId    String
-  clinic      Clinic   @relation(fields: [clinicId], references: [id])
-  doctors     Doctor[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id                 String   @id @default(uuid())
+  name               String
+  description        String?
+  image              String?
+  status             String   @default("Active")
+  specializationType String?  @default("regular")
+  clinicId           String
+  clinic             Clinic   @relation(fields: [clinicId], references: [id])
+  doctors            Doctor[]
+  services           Service[]
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 
   @@index([clinicId])
   @@index([status])
@@ -621,6 +657,8 @@ model Invoice {
   appointment   Appointment?  @relation(fields: [appointmentId], references: [id])
   labBookingId  String?       @unique
   labBooking    LabBooking?   @relation(fields: [labBookingId], references: [id])
+  consultationId String?      @unique
+  consultation  Consultation? @relation(fields: [consultationId], references: [id])
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
 
@@ -929,4 +967,89 @@ model PharmacyInvoiceItem {
 
   @@index([invoiceId])
   @@index([medicineId])
+}
+
+// ============================================================
+// THERAPY CONSULTATION MODULE
+// ============================================================
+
+model Consultation {
+  id                   String        @id @default(uuid())
+  consultationCode     String?
+  appointmentId        String        @unique
+  appointment          Appointment   @relation("ConsultationAppointment", fields: [appointmentId], references: [id], onDelete: Cascade)
+  patientId            String?
+  patient              Patient?      @relation(fields: [patientId], references: [id], onDelete: SetNull)
+  doctorId             String?
+  doctor               Doctor?      @relation(fields: [doctorId], references: [id], onDelete: SetNull)
+  clinicId             String
+  clinic               Clinic        @relation(fields: [clinicId], references: [id])
+
+  // Step 1 – Examination
+  examinationNotes     String?
+  bodyPoints           Json?         // [{ part, label, remark, severity, daysSince }]
+
+  // Therapy Plans
+  therapyPlans         TherapyPlan[]
+
+  // Pricing
+  consultationFee      Float         @default(0)
+  discountType         String?       // "percentage" | "fixed" | "none"
+  discountValue        Float?
+  discountAmount       Float?        @default(0)
+  therapyTotalAmount   Float?        @default(0)
+  finalTotalAmount     Float?        @default(0)
+  amountPaid           Float?        @default(0)
+  paymentMethod        String?       // Cash, Card, UPI
+  paymentStatus        String        @default("Unpaid") // Unpaid, Partial Paid, Paid
+
+  // Notifications
+  whatsappNotification Boolean?      @default(false)
+
+  status               String        @default("Draft") // Draft, Confirmed
+
+  // Invoice (one master invoice for entire consultation)
+  invoice              Invoice?
+
+  // Prescription & Advice
+  medicines            Json?         // [{ name, dosage, duration, instructions }]
+  advice               String?
+  attachments          Json?         // [{ url, remark }]
+
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
+
+  @@index([clinicId])
+  @@index([patientId])
+  @@index([doctorId])
+  @@index([appointmentId])
+}
+
+model TherapyPlan {
+  id                 String        @id @default(uuid())
+  consultationId     String
+  consultation       Consultation  @relation(fields: [consultationId], references: [id], onDelete: Cascade)
+  clinicId           String
+  clinic             Clinic        @relation(fields: [clinicId], references: [id])
+
+  therapyId          String?
+  therapyName        String?
+  therapyCategoryId  String?
+  therapyCategoryName String?
+  totalSessions      Int           @default(1)
+  sessionFee         Float         @default(0)
+  startDate          DateTime?
+  sessionTime        String?       // HH:mm – optional preferred slot time
+  scheduleType       String        @default("daily") // daily | alternate | weekly | custom
+  customDates        Json?         // used when scheduleType=custom
+  notes              String?
+
+  // Auto-created child appointments
+  childAppointments  Appointment[] @relation("TherapyPlanAppointments")
+
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+
+  @@index([consultationId])
+  @@index([clinicId])
 }

@@ -9,10 +9,17 @@ export const getServices = async (req: AuthenticatedRequest, res: Response) => {
         const clinicId = req.user?.clinicId;
         if (!clinicId) return res.status(403).json({ message: "No clinic associated" });
 
+        const { type } = req.query;
+        const whereClause: any = { clinicId };
+        if (type) {
+            whereClause.serviceType = type as string;
+        }
+
         const services = await prisma.service.findMany({
-            where: { clinicId },
+            where: whereClause,
             include: {
                 department: { select: { id: true, name: true } },
+                specialization: { select: { id: true, name: true } },
             },
             orderBy: { createdAt: "desc" },
         });
@@ -29,23 +36,60 @@ export const createService = async (req: AuthenticatedRequest, res: Response) =>
         const clinicId = req.user?.clinicId;
         if (!clinicId) return res.status(403).json({ message: "No clinic associated" });
 
-        const { serviceName, departmentId, price, duration, status } = req.body;
+        const {
+            serviceName,
+            serviceCode,
+            serviceType,
+            description,
+            gallery,
+            minSessions,
+            maxSessions,
+            sessionGap,
+            scheduleType,
+            customDates,
+            departmentId,
+            specializationId,
+            price,
+            duration,
+            status
+        } = req.body;
 
-        if (!serviceName || !departmentId) {
-            return res.status(400).json({ message: "Service Name and Department are required" });
+        if (!serviceName) {
+            return res.status(400).json({ message: "Service Name is required" });
+        }
+
+        if (serviceType === "therapy") {
+            if (!specializationId) {
+                return res.status(400).json({ message: "Category is required for therapy" });
+            }
+        } else {
+            if (!departmentId) {
+                return res.status(400).json({ message: "Department is required" });
+            }
         }
 
         const newService = await prisma.service.create({
             data: {
                 serviceName,
-                departmentId,
-                price: price !== undefined && price !== null && price !== "" ? parseFloat(price) : undefined,
+                serviceCode: serviceCode || null,
+                serviceType: serviceType || "regular",
+                description: description || null,
+                gallery: Array.isArray(gallery) ? gallery : [],
+                minSessions: minSessions !== undefined && minSessions !== null && minSessions !== "" ? parseInt(minSessions) : null,
+                maxSessions: maxSessions !== undefined && maxSessions !== null && maxSessions !== "" ? parseInt(maxSessions) : null,
+                sessionGap: sessionGap !== undefined && sessionGap !== null && sessionGap !== "" ? parseInt(sessionGap) : null,
+                scheduleType: scheduleType || null,
+                customDates: customDates || null,
+                departmentId: departmentId || null,
+                specializationId: specializationId || null,
+                price: price !== undefined && price !== null && price !== "" ? parseFloat(price) : null,
                 duration: duration || null,
                 status: status || "Active",
                 clinicId,
             },
             include: {
                 department: true,
+                specialization: true,
             }
         });
 
@@ -60,7 +104,23 @@ export const updateService = async (req: AuthenticatedRequest, res: Response) =>
     try {
         const clinicId = req.user?.clinicId;
         const { id } = req.params;
-        const { serviceName, departmentId, price, duration, status } = req.body;
+        const {
+            serviceName,
+            serviceCode,
+            serviceType,
+            description,
+            gallery,
+            minSessions,
+            maxSessions,
+            sessionGap,
+            scheduleType,
+            customDates,
+            departmentId,
+            specializationId,
+            price,
+            duration,
+            status
+        } = req.body;
 
         const existing = await prisma.service.findFirst({ where: { id, clinicId: clinicId! } });
         if (!existing) return res.status(404).json({ message: "Service not found" });
@@ -69,13 +129,24 @@ export const updateService = async (req: AuthenticatedRequest, res: Response) =>
             where: { id },
             data: {
                 serviceName,
-                departmentId,
-                price: price !== undefined ? parseFloat(price) : undefined,
+                serviceCode,
+                serviceType,
+                description,
+                gallery: Array.isArray(gallery) ? gallery : undefined,
+                minSessions: minSessions !== undefined ? (minSessions !== null && minSessions !== "" ? parseInt(minSessions) : null) : undefined,
+                maxSessions: maxSessions !== undefined ? (maxSessions !== null && maxSessions !== "" ? parseInt(maxSessions) : null) : undefined,
+                sessionGap: sessionGap !== undefined ? (sessionGap !== null && sessionGap !== "" ? parseInt(sessionGap) : null) : undefined,
+                scheduleType,
+                customDates,
+                departmentId: departmentId !== undefined ? (departmentId || null) : undefined,
+                specializationId: specializationId !== undefined ? (specializationId || null) : undefined,
+                price: price !== undefined ? (price !== null && price !== "" ? parseFloat(price) : null) : undefined,
                 duration: duration !== undefined ? duration : undefined,
                 status,
             },
             include: {
                 department: true,
+                specialization: true,
             }
         });
 

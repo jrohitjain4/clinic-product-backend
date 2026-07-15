@@ -69,3 +69,20 @@ export const uploadLandingImage = async (
     res.status(500).json({ message });
   }
 };
+
+export const uploadTherapyImage = async (
+  req: AuthenticatedRequest,
+  res: Response
+) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: "No image file uploaded" });
+    }
+
+    const url = `/uploads/therapies/${req.file.filename}`;
+    res.json({ url, filename: req.file.filename });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Upload failed";
+    res.status(500).json({ message });
+  }
+};

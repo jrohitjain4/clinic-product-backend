@@ -5,12 +5,14 @@ import {
   patientProfileUpload,
   staffProfileUpload,
   landingImageUpload,
+  therapyImageUpload,
 } from "../middlewares/upload.middleware";
 import {
   uploadDoctorProfile,
   uploadPatientProfile,
   uploadStaffProfile,
   uploadLandingImage,
+  uploadTherapyImage,
 } from "../controllers/upload.controller";
 
 const router = Router();
@@ -58,6 +60,17 @@ router.post("/landing-image", (req, res) => {
       });
     }
     return uploadLandingImage(req, res);
+  });
+});
+
+router.post("/therapy-image", (req, res) => {
+  therapyImageUpload.single("image")(req, res, (err) => {
+    if (err) {
+      return res.status(400).json({
+        message: err instanceof Error ? err.message : "Upload failed",
+      });
+    }
+    return uploadTherapyImage(req, res);
   });
 });
 

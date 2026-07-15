@@ -10,12 +10,16 @@ import { checkPhoneDuplicate } from "../utils/phoneValidation";
 // GET /api/doctors
 export const getDoctors = async (req: AuthenticatedRequest, res: Response) => {
     try {
+        const type = req.query.type as string;
         const queryClinicId = req.query.clinicId as string;
         const clinicId = queryClinicId || req.user?.clinicId;
         if (!clinicId) return res.status(403).json({ message: "No clinic associated" });
 
         const doctors = await prisma.doctor.findMany({
-            where: { clinicId },
+            where: {
+                clinicId,
+                ...(type ? { doctorType: type } : {}),
+            },
             include: {
                 department: { select: { id: true, name: true } },
                 designation: { select: { id: true, name: true } },
@@ -104,6 +108,7 @@ export const createDoctor = async (req: AuthenticatedRequest, res: Response) => 
             awards,
             certifications,
             schedules,
+            doctorType,
         } = req.body;
 
         if (!fullName) return res.status(400).json({ message: "Doctor name is required" });
@@ -184,6 +189,7 @@ export const createDoctor = async (req: AuthenticatedRequest, res: Response) => 
                     schedules: schedules || null,
                     clinicId,
                     status: "Active",
+                    doctorType: doctorType || "regular",
                 },
                 include: {
                     department: { select: { id: true, name: true } },
@@ -293,6 +299,7 @@ export const updateDoctor = async (req: AuthenticatedRequest, res: Response) => 
             certifications,
             schedules,
             status,
+            doctorType,
         } = req.body;
 
         const existing = await prisma.doctor.findFirst({ where: { id, clinicId: clinicId! } });
@@ -355,6 +362,7 @@ export const updateDoctor = async (req: AuthenticatedRequest, res: Response) => 
                 certifications: certifications || undefined,
                 schedules: schedules || undefined,
                 status,
+                doctorType,
             }
         });
 

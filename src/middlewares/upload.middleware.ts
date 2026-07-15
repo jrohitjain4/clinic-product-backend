@@ -53,3 +53,10 @@ export const landingImageUpload = multer({
   fileFilter,
   limits: { fileSize: 150 * 1024 * 1024 }, // 150 MB — user crops before final upload
 });
+
+const therapyStorage = createImageStorage("therapies", "therapy");
+export const therapyImageUpload = multer({
+  storage: therapyStorage,
+  fileFilter,
+  limits: { fileSize: 150 * 1024 * 1024 },
+});
