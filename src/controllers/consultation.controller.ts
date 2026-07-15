@@ -359,6 +359,7 @@ export const getConsultations = async (req: AuthenticatedRequest, res: Response)
         doctor: { select: { id: true, fullName: true, profileImage: true } },
         invoice: { select: { id: true, invoiceCode: true, totalAmount: true, paymentStatus: true } },
         therapyPlans: { select: { id: true, therapyName: true, totalSessions: true, sessionFee: true } },
+        appointment: { select: { id: true, appointmentCode: true, scheduledAt: true, mode: true } },
       },
       orderBy: { createdAt: "desc" },
     });
