@@ -448,13 +448,10 @@ export const updateConsultation = async (req: AuthenticatedRequest, res: Respons
     if (paidAmt >= finalTotal && finalTotal > 0) paymentStatus = "Paid";
     else if (paidAmt > 0) paymentStatus = "Partial Paid";
 
-    // ── Transition to Confirmed: Draft -> Confirmed OR Confirmed with 0 plans -> Confirmed with plans ──
-    const isTransitioningToConfirmed = 
-      status === "Confirmed" && 
-      (existing.status === "Draft" || existing.therapyPlans.length === 0) && 
-      therapyPlans.length > 0;
+    // ── Transition or Edit Confirmed: Confirming Draft OR Saving Edits to Confirmed Therapy Plans ──
+    const shouldRecreatePlans = status === "Confirmed" && therapyPlans.length > 0;
 
-    if (isTransitioningToConfirmed) {
+    if (shouldRecreatePlans) {
       const parentAppt = existing.appointment;
       if (!parentAppt) return res.status(400).json({ message: "Parent appointment not found" });
 
