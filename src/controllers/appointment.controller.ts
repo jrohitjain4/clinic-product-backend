@@ -112,6 +112,12 @@ const appointmentIncludes = {
       }
     },
   },
+  therapy: {
+    select: { id: true, serviceName: true }
+  },
+  therapyPlan: {
+    select: { id: true, therapyName: true, totalSessions: true, sessionFee: true }
+  },
   clinic: {
     select: {
       id: true,
