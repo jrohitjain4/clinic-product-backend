@@ -405,7 +405,11 @@ export const updateConsultation = async (req: AuthenticatedRequest, res: Respons
     const { id } = req.params;
     const existing = await prisma.consultation.findFirst({
       where: { id, clinicId },
-      include: { invoice: true, appointment: { include: { patient: true, doctor: true } } },
+      include: { 
+        invoice: true, 
+        therapyPlans: { include: { childAppointments: true } },
+        appointment: { include: { patient: true, doctor: true } } 
+      },
     });
     if (!existing) return res.status(404).json({ message: "Consultation not found" });
 
@@ -417,36 +421,13 @@ export const updateConsultation = async (req: AuthenticatedRequest, res: Respons
       attachments,
       status,
       therapyPlans = [],
-      consultationFee,
-      discountType,
-      discountValue,
-      amountPaid,
+      consultationFee = 0,
+      discountType = "none",
+      discountValue = 0,
+      amountPaid = 0,
       paymentMethod,
       whatsappNotification,
     } = req.body;
-
-    // ── Simple edit (no status change to Confirmed, or already Confirmed) ──
-    const isConfirming = status === "Confirmed" && existing.status === "Draft" && therapyPlans.length > 0;
-
-    if (!isConfirming) {
-      const updated = await prisma.consultation.update({
-        where: { id },
-        data: {
-          examinationNotes: examinationNotes !== undefined ? examinationNotes : existing.examinationNotes,
-          bodyPoints: bodyPoints !== undefined ? bodyPoints : (existing.bodyPoints as any),
-          medicines: medicines !== undefined ? medicines : (existing.medicines as any),
-          advice: advice !== undefined ? advice : existing.advice,
-          attachments: attachments !== undefined ? attachments : (existing.attachments as any),
-          status: status || existing.status,
-        },
-        include: consultationInclude,
-      });
-      return res.json(updated);
-    }
-
-    // ── Draft → Confirmed: full therapy plan + child appointments + invoice ──
-    const parentAppt = existing.appointment;
-    if (!parentAppt) return res.status(400).json({ message: "Parent appointment not found" });
 
     const consultFee = parseFloat(String(consultationFee)) || 0;
     const therapyTotal = therapyPlans.reduce(
@@ -467,166 +448,259 @@ export const updateConsultation = async (req: AuthenticatedRequest, res: Respons
     if (paidAmt >= finalTotal && finalTotal > 0) paymentStatus = "Paid";
     else if (paidAmt > 0) paymentStatus = "Partial Paid";
 
-    const result = await prisma.$transaction(async (tx) => {
-      // 1. Update consultation with pricing + status
-      const consultation = await tx.consultation.update({
-        where: { id },
-        data: {
-          examinationNotes: examinationNotes ?? existing.examinationNotes,
-          bodyPoints: bodyPoints ?? (existing.bodyPoints as any),
-          medicines: medicines ?? (existing.medicines as any),
-          advice: advice ?? existing.advice,
-          attachments: attachments ?? (existing.attachments as any),
-          status: "Confirmed",
-          consultationFee: consultFee,
-          discountType: discountType || "none",
-          discountValue: discVal,
-          discountAmount: discountAmt,
-          therapyTotalAmount: therapyTotal,
-          finalTotalAmount: finalTotal,
-          amountPaid: paidAmt,
-          paymentMethod: paymentMethod || null,
-          paymentStatus,
-          whatsappNotification: whatsappNotification || false,
-        },
-      });
+    // ── Transition to Confirmed: Draft -> Confirmed OR Confirmed with 0 plans -> Confirmed with plans ──
+    const isTransitioningToConfirmed = 
+      status === "Confirmed" && 
+      (existing.status === "Draft" || existing.therapyPlans.length === 0) && 
+      therapyPlans.length > 0;
 
-      const childPayStatus = getChildPaymentStatus(paymentStatus);
+    if (isTransitioningToConfirmed) {
+      const parentAppt = existing.appointment;
+      if (!parentAppt) return res.status(400).json({ message: "Parent appointment not found" });
 
-      // 2. Create therapy plans + child appointments
-      for (const planData of therapyPlans) {
-        const sessions = parseInt(String(planData.totalSessions || 1));
-        const sessionFee = parseFloat(String(planData.sessionFee || 0));
-        const startDate = planData.startDate ? new Date(planData.startDate) : new Date();
+      const result = await prisma.$transaction(async (tx) => {
+        // Delete any existing plans if any (just in case)
+        await tx.therapyPlan.deleteMany({ where: { consultationId: id } });
 
-        const sessionDates = computeSessionDates(
-          startDate,
-          sessions,
-          planData.scheduleType || "daily",
-          planData.customDates
-        );
-
-        const plan = await tx.therapyPlan.create({
+        // 1. Update consultation status and details
+        const consultation = await tx.consultation.update({
+          where: { id },
           data: {
-            consultationId: consultation.id,
-            clinicId,
-            therapyId: planData.therapyId || null,
-            therapyName: planData.therapyName || null,
-            therapyCategoryId: planData.therapyCategoryId || null,
-            therapyCategoryName: planData.therapyCategoryName || null,
-            totalSessions: sessions,
-            sessionFee,
-            startDate,
-            sessionTime: planData.sessionTime || null,
-            scheduleType: planData.scheduleType || "daily",
-            customDates: planData.customDates || null,
-            notes: planData.notes || null,
+            examinationNotes: examinationNotes ?? existing.examinationNotes,
+            bodyPoints: bodyPoints ?? (existing.bodyPoints as any),
+            medicines: medicines ?? (existing.medicines as any),
+            advice: advice ?? existing.advice,
+            attachments: attachments ?? (existing.attachments as any),
+            status: "Confirmed",
+            consultationFee: consultFee,
+            discountType,
+            discountValue: discVal,
+            discountAmount: discountAmt,
+            therapyTotalAmount: therapyTotal,
+            finalTotalAmount: finalTotal,
+            amountPaid: paidAmt,
+            paymentMethod: paymentMethod || null,
+            paymentStatus,
+            whatsappNotification: whatsappNotification ?? existing.whatsappNotification,
           },
         });
 
-        let apptCount = await tx.appointment.count({ where: { clinicId } });
+        const childPayStatus = getChildPaymentStatus(paymentStatus);
 
-        for (let i = 0; i < sessionDates.length; i++) {
-          const sessionDate = sessionDates[i];
-          let scheduledAt = sessionDate;
-          if (planData.sessionTime) {
-            scheduledAt = combineDateAndTime(sessionDate, planData.sessionTime);
-          }
-          apptCount++;
-          const apptCode = `APT-TH-${String(apptCount).padStart(4, "0")}`;
+        // 2. Create therapy plans + child appointments
+        for (const planData of therapyPlans) {
+          const sessions = parseInt(String(planData.totalSessions || 1));
+          const sessionFee = parseFloat(String(planData.sessionFee || 0));
+          const startDate = planData.startDate ? new Date(planData.startDate) : new Date();
 
-          await tx.appointment.create({
+          const sessionDates = computeSessionDates(
+            startDate,
+            sessions,
+            planData.scheduleType || "daily",
+            planData.customDates
+          );
+
+          const plan = await tx.therapyPlan.create({
             data: {
-              appointmentCode: apptCode,
-              patientId: parentAppt.patientId,
-              doctorId: parentAppt.doctorId,
-              clinicId,
-              scheduledAt,
-              mode: parentAppt.mode || "Offline",
-              appointmentType: "therapy",
-              status: (childPayStatus === "Paid" || childPayStatus === "Partial Paid") ? "Confirmed" : "Schedule",
-              parentAppointmentId: existing.appointmentId,
               consultationId: consultation.id,
-              therapyPlanId: plan.id,
-              sessionNumber: i + 1,
+              clinicId,
               therapyId: planData.therapyId || null,
+              therapyName: planData.therapyName || null,
               therapyCategoryId: planData.therapyCategoryId || null,
-              consultationFee: sessionFee,
-              finalFee: sessionFee,
-              paymentStatus: childPayStatus,
-              isFollowUp: false,
+              therapyCategoryName: planData.therapyCategoryName || null,
+              totalSessions: sessions,
+              sessionFee,
+              startDate,
+              sessionTime: planData.sessionTime || null,
+              scheduleType: planData.scheduleType || "daily",
+              customDates: planData.customDates || null,
+              notes: planData.notes || null,
+            },
+          });
+
+          let apptCount = await tx.appointment.count({ where: { clinicId } });
+
+          for (let i = 0; i < sessionDates.length; i++) {
+            const sessionDate = sessionDates[i];
+            let scheduledAt = sessionDate;
+            if (planData.sessionTime) {
+              scheduledAt = combineDateAndTime(sessionDate, planData.sessionTime);
+            }
+            apptCount++;
+            const apptCode = `APT-TH-${String(apptCount).padStart(4, "0")}`;
+
+            await tx.appointment.create({
+              data: {
+                appointmentCode: apptCode,
+                patientId: parentAppt.patientId,
+                doctorId: parentAppt.doctorId,
+                clinicId,
+                scheduledAt,
+                mode: parentAppt.mode || "Offline",
+                appointmentType: "therapy",
+                status: (childPayStatus === "Paid" || childPayStatus === "Partial Paid") ? "Confirmed" : "Schedule",
+                parentAppointmentId: existing.appointmentId,
+                consultationId: consultation.id,
+                therapyPlanId: plan.id,
+                sessionNumber: i + 1,
+                therapyId: planData.therapyId || null,
+                therapyCategoryId: planData.therapyCategoryId || null,
+                consultationFee: sessionFee,
+                finalFee: sessionFee,
+                paymentStatus: childPayStatus,
+                isFollowUp: false,
+              },
+            });
+          }
+        }
+
+        // 3. Update/Create invoice
+        const invoiceItems: any[] = [];
+        if (consultFee > 0) {
+          invoiceItems.push({
+            description: "Consultation Fee",
+            quantity: 1,
+            unitCost: consultFee,
+            amount: consultFee,
+            clinicId,
+          });
+        }
+        for (const planData of therapyPlans) {
+          const sessions = parseInt(String(planData.totalSessions || 1));
+          const sessionFee = parseFloat(String(planData.sessionFee || 0));
+          invoiceItems.push({
+            description: `${planData.therapyName || "Therapy"} (${sessions} sessions × ₹${sessionFee})`,
+            quantity: sessions,
+            unitCost: sessionFee,
+            amount: sessions * sessionFee,
+            clinicId,
+          });
+        }
+
+        const invoicePayStatus =
+          paymentStatus === "Paid" ? "Paid" :
+          paymentStatus === "Partial Paid" ? "Partially Paid" : "Pending";
+
+        if (existing.invoice?.id) {
+          await tx.invoiceItem.deleteMany({ where: { invoiceId: existing.invoice.id } });
+          await tx.invoice.update({
+            where: { id: existing.invoice.id },
+            data: {
+              subTotal: consultFee + therapyTotal,
+              discount: discountAmt,
+              totalAmount: finalTotal,
+              amountPaid: paidAmt || 0,
+              paymentMethod: paymentMethod || null,
+              paymentStatus: invoicePayStatus,
+              items: { create: invoiceItems },
+            },
+          });
+        } else {
+          let invoiceCount = await tx.invoice.count({ where: { clinicId } });
+          invoiceCount++;
+          const invoiceCode = `INV-CON-${String(invoiceCount).padStart(4, "0")}`;
+          await tx.invoice.create({
+            data: {
+              invoiceCode,
+              patientId: parentAppt.patientId,
+              clinicId,
+              invoiceDate: new Date(),
+              dueDate: new Date(),
+              subTotal: consultFee + therapyTotal,
+              discount: discountAmt,
+              totalAmount: finalTotal,
+              amountPaid: paidAmt || 0,
+              paymentMethod: paymentMethod || null,
+              paymentStatus: invoicePayStatus,
+              consultationId: consultation.id,
+              items: { create: invoiceItems },
+            },
+          });
+        }
+
+        return consultation;
+      });
+
+      const full = await prisma.consultation.findUnique({ where: { id }, include: consultationInclude });
+      return res.json(full);
+    }
+
+    // ── Simple Edit (Draft update or editing general Confirmed fields) ──
+    const result = await prisma.$transaction(async (tx) => {
+      // 1. Update consultation general fields and pricing
+      const dataToUpdate: any = {
+        examinationNotes: examinationNotes !== undefined ? examinationNotes : existing.examinationNotes,
+        bodyPoints: bodyPoints !== undefined ? bodyPoints : (existing.bodyPoints as any),
+        medicines: medicines !== undefined ? medicines : (existing.medicines as any),
+        advice: advice !== undefined ? advice : existing.advice,
+        attachments: attachments !== undefined ? attachments : (existing.attachments as any),
+        status: status || existing.status,
+      };
+
+      // Only save pricing/therapyPlans if in Draft status to prevent modifying confirmed plans
+      if (existing.status === "Draft") {
+        dataToUpdate.consultationFee = consultFee;
+        dataToUpdate.discountType = discountType;
+        dataToUpdate.discountValue = discVal;
+        dataToUpdate.discountAmount = discountAmt;
+        dataToUpdate.therapyTotalAmount = therapyTotal;
+        dataToUpdate.finalTotalAmount = finalTotal;
+        dataToUpdate.amountPaid = paidAmt;
+        dataToUpdate.paymentMethod = paymentMethod || null;
+        dataToUpdate.paymentStatus = paymentStatus;
+        dataToUpdate.whatsappNotification = whatsappNotification ?? existing.whatsappNotification;
+
+        // Delete old therapy plans and save new draft therapy plans (without child appointments)
+        await tx.therapyPlan.deleteMany({ where: { consultationId: id } });
+
+        for (const planData of therapyPlans) {
+          const sessions = parseInt(String(planData.totalSessions || 1));
+          const sessionFee = parseFloat(String(planData.sessionFee || 0));
+          const startDate = planData.startDate ? new Date(planData.startDate) : null;
+
+          await tx.therapyPlan.create({
+            data: {
+              consultationId: id,
+              clinicId,
+              therapyId: planData.therapyId || null,
+              therapyName: planData.therapyName || null,
+              therapyCategoryId: planData.therapyCategoryId || null,
+              therapyCategoryName: planData.therapyCategoryName || null,
+              totalSessions: sessions,
+              sessionFee,
+              startDate,
+              sessionTime: planData.sessionTime || null,
+              scheduleType: planData.scheduleType || "daily",
+              customDates: planData.customDates || null,
+              notes: planData.notes || null,
+            },
+          });
+        }
+
+        // Also update draft invoice amounts
+        if (existing.invoice?.id) {
+          const invoicePayStatus =
+            paymentStatus === "Paid" ? "Paid" :
+            paymentStatus === "Partial Paid" ? "Partially Paid" : "Pending";
+
+          await tx.invoice.update({
+            where: { id: existing.invoice.id },
+            data: {
+              subTotal: consultFee + therapyTotal,
+              discount: discountAmt,
+              totalAmount: finalTotal,
+              amountPaid: paidAmt || 0,
+              paymentMethod: paymentMethod || null,
+              paymentStatus: invoicePayStatus,
             },
           });
         }
       }
 
-      // 3. Update or create invoice
-      const invoiceItems: any[] = [];
-      if (consultFee > 0) {
-        invoiceItems.push({
-          description: "Consultation Fee",
-          quantity: 1,
-          unitCost: consultFee,
-          amount: consultFee,
-          clinicId,
-        });
-      }
-      for (const planData of therapyPlans) {
-        const sessions = parseInt(String(planData.totalSessions || 1));
-        const sessionFee = parseFloat(String(planData.sessionFee || 0));
-        invoiceItems.push({
-          description: `${planData.therapyName || "Therapy"} (${sessions} sessions × ₹${sessionFee})`,
-          quantity: sessions,
-          unitCost: sessionFee,
-          amount: sessions * sessionFee,
-          clinicId,
-        });
-      }
-
-      const invoicePayStatus =
-        paymentStatus === "Paid" ? "Paid" :
-        paymentStatus === "Partial Paid" ? "Partially Paid" : "Pending";
-
-      if (existing.invoice?.id) {
-        // Delete old items and create new ones
-        await tx.invoiceItem.deleteMany({ where: { invoiceId: existing.invoice.id } });
-        await tx.invoice.update({
-          where: { id: existing.invoice.id },
-          data: {
-            subTotal: consultFee + therapyTotal,
-            discount: discountAmt,
-            totalAmount: finalTotal,
-            amountPaid: paidAmt || 0,
-            paymentMethod: paymentMethod || null,
-            paymentStatus: invoicePayStatus,
-            items: { create: invoiceItems },
-          },
-        });
-      } else {
-        // Create new invoice
-        let invoiceCount = await tx.invoice.count({ where: { clinicId } });
-        invoiceCount++;
-        const invoiceCode = `INV-CON-${String(invoiceCount).padStart(4, "0")}`;
-        await tx.invoice.create({
-          data: {
-            invoiceCode,
-            patientId: parentAppt.patientId,
-            clinicId,
-            invoiceDate: new Date(),
-            dueDate: new Date(),
-            subTotal: consultFee + therapyTotal,
-            discount: discountAmt,
-            totalAmount: finalTotal,
-            amountPaid: paidAmt || 0,
-            paymentMethod: paymentMethod || null,
-            paymentStatus: invoicePayStatus,
-            consultationId: consultation.id,
-            items: { create: invoiceItems },
-          },
-        });
-      }
-
-      return consultation;
+      return await tx.consultation.update({
+        where: { id },
+        data: dataToUpdate,
+      });
     });
 
     const full = await prisma.consultation.findUnique({ where: { id }, include: consultationInclude });
