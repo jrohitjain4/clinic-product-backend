@@ -239,6 +239,47 @@ export const updateInvoice = async (req: AuthenticatedRequest, res: Response): P
             include: { items: { include: { service: true } }, patient: true }
         });
 
+        // Sync consultation and child appointments if linked to a consultation
+        if (existing.consultationId) {
+            const finalTotal = updated.totalAmount;
+            const paidAmt = updated.amountPaid;
+            
+            let consultPayStatus = "Unpaid";
+            if (paidAmt >= finalTotal && finalTotal > 0) consultPayStatus = "Paid";
+            else if (paidAmt > 0) consultPayStatus = "Partial Paid";
+            
+            await prisma.consultation.update({
+                where: { id: existing.consultationId },
+                data: {
+                    amountPaid: paidAmt,
+                    paymentStatus: consultPayStatus,
+                    paymentMethod: updated.paymentMethod || null
+                }
+            });
+            
+            const childPayStatus = consultPayStatus === "Paid" ? "Paid" : (consultPayStatus === "Partial Paid" ? "Partial Paid" : "Unpaid");
+            const isConfirmed = childPayStatus === "Paid" || childPayStatus === "Partial Paid";
+            if (isConfirmed) {
+                await prisma.appointment.updateMany({
+                    where: { consultationId: existing.consultationId, clinicId, status: "Schedule" },
+                    data: { paymentStatus: childPayStatus, status: "Confirmed" }
+                });
+                await prisma.appointment.updateMany({
+                    where: { consultationId: existing.consultationId, clinicId, status: { not: "Schedule" } },
+                    data: { paymentStatus: childPayStatus }
+                });
+            } else {
+                await prisma.appointment.updateMany({
+                    where: { consultationId: existing.consultationId, clinicId, status: "Confirmed" },
+                    data: { paymentStatus: childPayStatus, status: "Schedule" }
+                });
+                await prisma.appointment.updateMany({
+                    where: { consultationId: existing.consultationId, clinicId, status: { notIn: ["Confirmed", "Schedule"] } },
+                    data: { paymentStatus: childPayStatus }
+                });
+            }
+        }
+
         // 🔔 Notify on payment status change
         if (paymentStatus && paymentStatus !== existing.paymentStatus) {
             try {

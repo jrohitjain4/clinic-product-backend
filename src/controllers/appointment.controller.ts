@@ -95,7 +95,22 @@ const appointmentIncludes = {
     select: { id: true, appointmentCode: true, scheduledAt: true, status: true },
   },
   consultation: {
-    select: { id: true, status: true, paymentStatus: true },
+    select: {
+      id: true,
+      status: true,
+      paymentStatus: true,
+      finalTotalAmount: true,
+      amountPaid: true,
+      invoice: {
+        select: {
+          id: true,
+          invoiceCode: true,
+          totalAmount: true,
+          paymentStatus: true,
+          amountPaid: true,
+        }
+      }
+    },
   },
   clinic: {
     select: {
