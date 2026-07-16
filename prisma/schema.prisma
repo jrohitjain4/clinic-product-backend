@@ -1015,6 +1015,7 @@ model Consultation {
   // Prescription & Advice
   medicines            Json?         // [{ name, dosage, duration, instructions }]
   advice               String?
+  painLevel            Int?          // 1–10 pain scale
   attachments          Json?         // [{ url, remark }]
 
   createdAt            DateTime      @default(now())
