@@ -99,14 +99,33 @@ export const getInvoices = async (req: AuthenticatedRequest, res: Response): Pro
             }
         }
 
+        const { type } = req.query;
+        const where: any = {
+            clinicId,
+            ...(patientIdFilter ? { patientId: patientIdFilter } : {})
+        };
+
+        if (type === "therapy") {
+            where.OR = [
+                { appointment: { appointmentType: "therapy" } },
+                { consultationId: { not: null } }
+            ];
+        } else if (type === "clinic") {
+            where.AND = [
+                { OR: [
+                    { appointment: { appointmentType: { not: "therapy" } } },
+                    { appointmentId: null }
+                ] },
+                { consultationId: null }
+            ];
+        }
+
         const invoices = await prisma.invoice.findMany({
-            where: {
-                clinicId,
-                ...(patientIdFilter ? { patientId: patientIdFilter } : {})
-            },
+            where,
             include: {
                 patient: true,
-                items: true
+                items: true,
+                appointment: true
             },
             orderBy: { createdAt: "desc" }
         });
