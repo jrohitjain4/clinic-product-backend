@@ -11,11 +11,112 @@ const generateConsultationCode = async (clinicId: string): Promise<string> => {
   return `CON-${String(count + 1).padStart(4, "0")}`;
 };
 
-/** Add days to a Date, returning a new Date */
-const addDays = (date: Date, days: number): Date => {
-  const d = new Date(date);
-  d.setDate(d.getDate() + days);
-  return d;
+/** Check if a date is available according to doctor and clinic schedules, holidays, and leaves */
+const isDateAvailable = (date: Date, availability: any): boolean => {
+  if (!availability) return true;
+
+  const dayOfWeek = date.getDay(); // 0 = Sunday, 1 = Monday, ...
+  const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const dayName = dayNames[dayOfWeek];
+
+  // 1. Clinic Off Day
+  const clinicOffDays = availability.clinicWorkingDays || [0];
+  if (clinicOffDays.includes(dayOfWeek)) {
+    return false;
+  }
+
+  // 2. Doctor Weekly Off (Active Schedule check)
+  const daySchedule = availability.schedules?.[dayName];
+  const isWorking = Array.isArray(daySchedule) && daySchedule.length > 0;
+  if (!isWorking) {
+    return false;
+  }
+
+  // 3. Holiday
+  const time = date.getTime();
+  const isHoliday = availability.holidays?.some((h: any) => {
+    const start = new Date(h.date);
+    start.setHours(0, 0, 0, 0);
+    const end = h.endDate ? new Date(h.endDate) : new Date(h.date);
+    end.setHours(23, 59, 59, 999);
+    return time >= start.getTime() && time <= end.getTime();
+  });
+  if (isHoliday) {
+    return false;
+  }
+
+  // 4. Leave
+  const isLeave = availability.leaves?.some((l: any) => {
+    const s = new Date(l.start);
+    s.setHours(0, 0, 0, 0);
+    const e = new Date(l.end);
+    e.setHours(23, 59, 59, 999);
+    return time >= s.getTime() && time <= e.getTime();
+  });
+  if (isLeave) {
+    return false;
+  }
+
+  return true;
+};
+
+/** Find next available date starting from a target date */
+const getNextAvailableDate = (startDate: Date, availability: any): Date => {
+  const date = new Date(startDate);
+  // Scan up to 365 days ahead to avoid infinite loops
+  for (let i = 0; i < 365; i++) {
+    if (isDateAvailable(date, availability)) {
+      return date;
+    }
+    date.setDate(date.getDate() + 1);
+  }
+  return date;
+};
+
+/** Fetch doctor and clinic availability logs for schedule generation */
+const getDoctorClinicAvailability = async (doctorId: string | null | undefined, clinicId: string) => {
+  if (!doctorId) return null;
+  try {
+    const doctor = await prisma.doctor.findUnique({
+      where: { id: doctorId },
+      select: { schedules: true }
+    });
+    const workingDaysConfig = await prisma.workingDaysConfig.findUnique({
+      where: { clinicId }
+    });
+
+    const startRange = new Date();
+    startRange.setMonth(startRange.getMonth() - 1); // include past 1 month in range
+    const endRange = new Date();
+    endRange.setDate(endRange.getDate() + 180); // scan up to 6 months in future
+
+    const holidays = await prisma.holiday.findMany({
+      where: {
+        clinicId,
+        date: { gte: startRange, lte: endRange }
+      }
+    });
+    const leaves = await prisma.leave.findMany({
+      where: {
+        employeeId: doctorId,
+        employeeType: "DOCTOR",
+        status: "APPROVED",
+        OR: [
+          { startDate: { lte: endRange }, endDate: { gte: startRange } }
+        ]
+      }
+    });
+
+    return {
+      schedules: doctor?.schedules || {},
+      clinicWorkingDays: workingDaysConfig?.offDays || [0],
+      holidays: holidays.map(h => ({ date: h.date, endDate: h.endDate })),
+      leaves: leaves.map(l => ({ start: l.startDate, end: l.endDate }))
+    };
+  } catch (err) {
+    console.error("Error fetching availability:", err);
+    return null;
+  }
 };
 
 /** Compute the list of scheduled dates for N sessions starting from startDate */
@@ -23,7 +124,8 @@ const computeSessionDates = (
   startDate: Date,
   totalSessions: number,
   scheduleType: string,
-  customDates?: any
+  customDates?: any,
+  availability?: any
 ): Date[] => {
   const dates: Date[] = [];
 
@@ -33,15 +135,23 @@ const computeSessionDates = (
 
   let current = new Date(startDate);
   for (let i = 0; i < totalSessions; i++) {
+    current = getNextAvailableDate(current, availability);
     dates.push(new Date(current));
+
     if (scheduleType === "daily") {
-      current = addDays(current, 1);
+      current.setDate(current.getDate() + 1);
     } else if (scheduleType === "alternate") {
-      current = addDays(current, 2);
+      // Shift past current day
+      current.setDate(current.getDate() + 1);
+      // Skip the next available day
+      const skipped = getNextAvailableDate(current, availability);
+      // Shift past the skipped day
+      current = new Date(skipped);
+      current.setDate(current.getDate() + 1);
     } else if (scheduleType === "weekly") {
-      current = addDays(current, 7);
+      current.setDate(current.getDate() + 7);
     } else {
-      current = addDays(current, 1);
+      current.setDate(current.getDate() + 1);
     }
   }
   return dates;
@@ -163,6 +273,9 @@ export const createConsultation = async (req: AuthenticatedRequest, res: Respons
 
     const consultCode = await generateConsultationCode(clinicId);
 
+    // Fetch doctor clinic availability config
+    const availability = await getDoctorClinicAvailability(parentAppt.doctorId, clinicId);
+
     // Create consultation with therapy plans in a transaction
     const result = await prisma.$transaction(async (tx) => {
       // 1. Create consultation
@@ -206,7 +319,8 @@ export const createConsultation = async (req: AuthenticatedRequest, res: Respons
           startDate,
           sessions,
           planData.scheduleType || "daily",
-          planData.customDates
+          planData.customDates,
+          availability
         );
 
         // Create therapy plan
@@ -458,6 +572,8 @@ export const updateConsultation = async (req: AuthenticatedRequest, res: Respons
       const parentAppt = existing.appointment;
       if (!parentAppt) return res.status(400).json({ message: "Parent appointment not found" });
 
+      const availability = await getDoctorClinicAvailability(parentAppt.doctorId, clinicId);
+
       const result = await prisma.$transaction(async (tx) => {
         // Delete any existing plans if any (just in case)
         await tx.therapyPlan.deleteMany({ where: { consultationId: id } });
@@ -498,7 +614,8 @@ export const updateConsultation = async (req: AuthenticatedRequest, res: Respons
             startDate,
             sessions,
             planData.scheduleType || "daily",
-            planData.customDates
+            planData.customDates,
+            availability
           );
 
           const plan = await tx.therapyPlan.create({
@@ -795,8 +912,50 @@ export const updateConsultationPayment = async (req: AuthenticatedRequest, res: 
 };
 
 // ─────────────────────────────────────────────────────────────
-// DELETE /api/consultations/:id
+// GET /api/consultations/doctor-therapy  – All therapy data for logged-in doctor
 // ─────────────────────────────────────────────────────────────
+export const getDoctorTherapy = async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const clinicId = req.user?.clinicId;
+    const doctorId = req.user?.doctorId;
+    if (!clinicId || !doctorId) return res.status(401).json({ message: "Unauthorized" });
+
+    const consultations = await prisma.consultation.findMany({
+      where: { clinicId, doctorId, status: "Confirmed" },
+      include: {
+        patient: { select: { id: true, firstName: true, lastName: true, phone: true, profileImage: true } },
+        appointment: {
+          select: {
+            id: true, appointmentCode: true, scheduledAt: true, status: true,
+            paymentStatus: true, consultationFee: true, finalFee: true,
+          },
+        },
+        therapyPlans: {
+          include: {
+            childAppointments: {
+              select: {
+                id: true, appointmentCode: true, scheduledAt: true, status: true,
+                paymentStatus: true, sessionNumber: true, finalFee: true,
+              },
+              orderBy: { sessionNumber: "asc" },
+            },
+          },
+          orderBy: { createdAt: "asc" },
+        },
+        invoice: {
+          select: { id: true, invoiceCode: true, totalAmount: true, paymentStatus: true, amountPaid: true },
+        },
+      },
+      orderBy: { createdAt: "desc" },
+    });
+
+    return res.json(consultations);
+  } catch (err: any) {
+    console.error("getDoctorTherapy error:", err);
+    return res.status(500).json({ message: err.message || "Server error" });
+  }
+};
+
 export const deleteConsultation = async (req: AuthenticatedRequest, res: Response) => {
   try {
     const clinicId = req.user?.clinicId;

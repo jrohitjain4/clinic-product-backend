@@ -234,7 +234,7 @@ const ensureAppointmentInvoice = async (appointmentId: string, clinicId: string)
     });
 
     if (!appointment || appointment.status !== "Confirmed" || appointment.invoice) return;
-    if (appointment.appointmentType === "therapy" && appointment.parentAppointmentId !== null) return;
+    if (appointment.appointmentType === "therapy" || appointment.parentAppointmentId !== null) return;
     if (!appointment.patient || !appointment.doctor) return; // patient or doctor was deleted
 
     // Determine fee
