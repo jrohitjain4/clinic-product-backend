@@ -50,6 +50,7 @@ import pharmacyCategoryRoutes from "./routes/pharmacyCategory.routes";
 import medicineRoutes from "./routes/medicine.routes";
 import pharmacyInvoiceRoutes from "./routes/pharmacyInvoice.routes";
 import consultationRoutes from "./routes/consultation.routes";
+import referRoutes from "./routes/refer.routes";
 
 
 const app = express();
@@ -126,6 +127,7 @@ app.use("/api/pharmacy-categories", pharmacyCategoryRoutes);
 app.use("/api/medicines", medicineRoutes);
 app.use("/api/pharmacy-invoices", pharmacyInvoiceRoutes);
 app.use("/api/consultations", consultationRoutes);
+app.use("/api/refers", referRoutes);
 // Root Check
 app.get("/", (req, res) => {
   res.json({ message: "Clinic Management SaaS API is running perfectly!" });

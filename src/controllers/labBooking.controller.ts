@@ -94,6 +94,7 @@ export const getLabBookings = async (req: AuthenticatedRequest, res: Response) =
         const bookings = await prisma.labBooking.findMany({
             where: { clinicId },
             include: {
+                clinic: true,
                 patient: { select: { id: true, firstName: true, lastName: true, patientCode: true, phone: true } },
                 test: {
                     select: {

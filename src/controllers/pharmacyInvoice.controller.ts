@@ -102,6 +102,7 @@ export const getPharmacyInvoices = async (req: AuthenticatedRequest, res: Respon
         const invoices = await prisma.pharmacyInvoice.findMany({
             where: { clinicId },
             include: { 
+                clinic: true,
                 patient: { select: { id: true, firstName: true, lastName: true, patientCode: true } },
                 items: {
                     include: {
@@ -127,6 +128,7 @@ export const getPharmacyInvoiceById = async (req: AuthenticatedRequest, res: Res
         const invoice = await prisma.pharmacyInvoice.findFirst({
             where: { id, clinicId: clinicId! },
             include: {
+                clinic: true,
                 patient: { select: { id: true, firstName: true, lastName: true, patientCode: true, phone: true, address1: true } },
                 items: {
                     include: {

@@ -89,6 +89,7 @@ model Clinic {
   pharmacyInvoices      PharmacyInvoice[]
   consultations         Consultation[]
   therapyPlans          TherapyPlan[]
+  refers                Refer[]
 }
 
 model LandingPage {
@@ -299,6 +300,8 @@ model Patient {
   aadhaarNumber   String?
   passportNumber  String?
   referredBy      String?
+  referId         String?
+  refer           Refer?         @relation(fields: [referId], references: [id], onDelete: SetNull)
   emergencyContactName String?
   emergencyContactRelation String?
   emergencyContactPhone String?
@@ -325,6 +328,20 @@ model Patient {
 
   @@index([clinicId])
   @@index([status])
+  @@index([referId])
+}
+
+model Refer {
+  id          String    @id @default(uuid())
+  name        String
+  description String?
+  clinicId    String
+  clinic      Clinic    @relation(fields: [clinicId], references: [id])
+  patients    Patient[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([clinicId])
 }
 
 model Appointment {

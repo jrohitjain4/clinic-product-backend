@@ -237,20 +237,29 @@ const ensureAppointmentInvoice = async (appointmentId: string, clinicId: string)
     if (appointment.appointmentType === "therapy" || appointment.parentAppointmentId !== null) return;
     if (!appointment.patient || !appointment.doctor) return; // patient or doctor was deleted
 
-    // Determine fee
-    let fee = 0;
-    if (appointment.appointmentType === "therapy" && appointment.finalFee !== null && appointment.finalFee !== undefined) {
-      fee = appointment.finalFee;
+    // Determine base fee and final fee
+    let baseFee = 0;
+    if (appointment.consultationFee !== null && appointment.consultationFee !== undefined && appointment.consultationFee > 0) {
+      baseFee = appointment.consultationFee;
     } else if (appointment.isFollowUp) {
-      fee = appointment.doctor.followUpFee || 0;
+      baseFee = appointment.doctor.followUpFee || 0;
     } else {
-      fee = appointment.doctor.consultationCharge || 0;
+      baseFee = appointment.doctor.consultationCharge || 0;
     }
 
-    // Skip if free or no fee defined
-    if (fee <= 0 || appointment.paymentStatus === "Free") return;
+    let finalFee = appointment.finalFee !== null && appointment.finalFee !== undefined
+      ? appointment.finalFee
+      : baseFee;
 
-    // Auto-invoices for confirmed appointments are treated as "Paid" by default as per user request
+    let discountVal = appointment.discountAmount !== null && appointment.discountAmount !== undefined
+      ? appointment.discountAmount
+      : Math.max(0, baseFee - finalFee);
+
+    // Skip if free or no fee defined
+    if (finalFee <= 0 && baseFee <= 0) return;
+    if (appointment.paymentStatus === "Free") return;
+
+    // Auto-invoices for confirmed appointments are treated as "Paid" by default
     const invStatus = "Paid";
 
     await prisma.invoice.create({
@@ -260,21 +269,20 @@ const ensureAppointmentInvoice = async (appointmentId: string, clinicId: string)
         appointmentId: appointment.id,
         invoiceDate: new Date(),
         dueDate: new Date(),
-        subTotal: fee,
-        totalAmount: fee,
-        amountPaid: fee,
+        subTotal: baseFee,
+        discount: discountVal,
+        totalAmount: finalFee,
+        amountPaid: finalFee,
         paymentStatus: invStatus,
         paymentMethod: appointment.mode === "Online" ? "Online" : "Cash",
         invoiceCode: `INV-AUTO-${appointment.appointmentCode || Date.now()}`,
         items: {
           create: [{
             clinicId,
-            description: appointment.appointmentType === "therapy"
-              ? `Therapy Consultation Fee - Dr. ${appointment.doctor.fullName}`
-              : `${appointment.isFollowUp ? "Follow-up" : "Consultation"} Fee - Dr. ${appointment.doctor.fullName}`,
+            description: `${appointment.isFollowUp ? "Follow-up" : "Consultation"} Fee - Dr. ${appointment.doctor.fullName}`,
             quantity: 1,
-            unitCost: fee,
-            amount: fee,
+            unitCost: baseFee,
+            amount: baseFee,
           }]
         }
       }
