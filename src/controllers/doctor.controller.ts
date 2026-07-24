@@ -18,7 +18,12 @@ export const getDoctors = async (req: AuthenticatedRequest, res: Response) => {
         const doctors = await prisma.doctor.findMany({
             where: {
                 clinicId,
-                ...(type ? { doctorType: type } : {}),
+                ...(type ? {
+                    OR: [
+                        { doctorType: type },
+                        { doctorTypes: { has: type } }
+                    ]
+                } : {}),
             },
             include: {
                 department: { select: { id: true, name: true } },
@@ -109,10 +114,22 @@ export const createDoctor = async (req: AuthenticatedRequest, res: Response) => 
             certifications,
             schedules,
             doctorType,
+            doctorTypes,
+            ipdVisitCharge,
         } = req.body;
 
         if (!fullName) return res.status(400).json({ message: "Doctor name is required" });
         if (!email && !phone) return res.status(400).json({ message: "Email or Phone is required to create a doctor account" });
+
+        // Normalize doctorTypes array
+        let parsedDoctorTypes: string[] = [];
+        if (Array.isArray(doctorTypes)) {
+            parsedDoctorTypes = doctorTypes;
+        } else if (typeof doctorTypes === "string" && doctorTypes.trim()) {
+            parsedDoctorTypes = doctorTypes.split(",").map((t: string) => t.trim()).filter(Boolean);
+        } else if (doctorType) {
+            parsedDoctorTypes = [doctorType];
+        }
 
         // Check duplicates
         if (email) {
@@ -189,7 +206,9 @@ export const createDoctor = async (req: AuthenticatedRequest, res: Response) => 
                     schedules: schedules || null,
                     clinicId,
                     status: "Active",
-                    doctorType: doctorType || "regular",
+                    doctorType: doctorType || (parsedDoctorTypes.length > 0 ? parsedDoctorTypes[0] : "regular"),
+                    ...(parsedDoctorTypes.length > 0 ? { doctorTypes: parsedDoctorTypes } : {}),
+                    ...(ipdVisitCharge !== undefined && ipdVisitCharge !== null && ipdVisitCharge !== "" ? { ipdVisitCharge: parseFloat(ipdVisitCharge) } : {}),
                 },
                 include: {
                     department: { select: { id: true, name: true } },
@@ -300,6 +319,8 @@ export const updateDoctor = async (req: AuthenticatedRequest, res: Response) => 
             schedules,
             status,
             doctorType,
+            doctorTypes,
+            ipdVisitCharge,
         } = req.body;
 
         const existing = await prisma.doctor.findFirst({ where: { id, clinicId: clinicId! } });
@@ -363,6 +384,8 @@ export const updateDoctor = async (req: AuthenticatedRequest, res: Response) => 
                 schedules: schedules || undefined,
                 status,
                 doctorType,
+                doctorTypes: doctorTypes ? (Array.isArray(doctorTypes) ? doctorTypes : doctorTypes.split(",").map((t: string) => t.trim()).filter(Boolean)) : undefined,
+                ipdVisitCharge: ipdVisitCharge !== undefined ? (ipdVisitCharge !== "" && ipdVisitCharge !== null ? parseFloat(ipdVisitCharge) : null) : undefined,
             }
         });
 

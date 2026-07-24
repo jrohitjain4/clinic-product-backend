@@ -93,6 +93,7 @@ const getPharmacyInvoices = async (req, res) => {
         const invoices = await prisma_1.default.pharmacyInvoice.findMany({
             where: { clinicId },
             include: {
+                clinic: true,
                 patient: { select: { id: true, firstName: true, lastName: true, patientCode: true } },
                 items: {
                     include: {
@@ -117,6 +118,7 @@ const getPharmacyInvoiceById = async (req, res) => {
         const invoice = await prisma_1.default.pharmacyInvoice.findFirst({
             where: { id, clinicId: clinicId },
             include: {
+                clinic: true,
                 patient: { select: { id: true, firstName: true, lastName: true, patientCode: true, phone: true, address1: true } },
                 items: {
                     include: {

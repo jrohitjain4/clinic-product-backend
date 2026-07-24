@@ -6,6 +6,7 @@ import {
   staffProfileUpload,
   landingImageUpload,
   therapyImageUpload,
+  ipdPrescriptionUpload,
 } from "../middlewares/upload.middleware";
 import {
   uploadDoctorProfile,
@@ -13,6 +14,7 @@ import {
   uploadStaffProfile,
   uploadLandingImage,
   uploadTherapyImage,
+  uploadIPDPrescriptionAttachment,
 } from "../controllers/upload.controller";
 
 const router = Router();
@@ -71,6 +73,17 @@ router.post("/therapy-image", (req, res) => {
       });
     }
     return uploadTherapyImage(req, res);
+  });
+});
+
+router.post("/ipd-prescription", (req, res) => {
+  ipdPrescriptionUpload.single("image")(req, res, (err) => {
+    if (err) {
+      return res.status(400).json({
+        message: err instanceof Error ? err.message : "Upload failed",
+      });
+    }
+    return uploadIPDPrescriptionAttachment(req, res);
   });
 });
 

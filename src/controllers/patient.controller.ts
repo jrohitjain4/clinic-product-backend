@@ -122,7 +122,21 @@ export const getPatients = async (req: AuthenticatedRequest, res: Response) => {
           }
           : {}),
       },
-
+      include: {
+        doctors: {
+          select: {
+            id: true,
+            fullName: true,
+            profileImage: true,
+            designation: {
+              select: {
+                id: true,
+                name: true
+              }
+            }
+          }
+        }
+      },
       orderBy:
         sort === "oldest"
           ? { createdAt: "asc" }
@@ -144,7 +158,21 @@ export const getPatientById = async (req: AuthenticatedRequest, res: Response) =
 
     const patient = await prisma.patient.findFirst({
       where: { id, clinicId: clinicId! },
-
+      include: {
+        doctors: {
+          select: {
+            id: true,
+            fullName: true,
+            profileImage: true,
+            designation: {
+              select: {
+                id: true,
+                name: true
+              }
+            }
+          }
+        }
+      }
     });
 
     if (!patient) return res.status(404).json({ message: "Patient not found" });
@@ -192,6 +220,7 @@ export const createPatient = async (req: AuthenticatedRequest, res: Response) =>
 
       lastVisitedAt,
       vitals,
+      doctorIds,
     } = req.body;
 
     if (!firstName?.trim()) {
@@ -283,9 +312,26 @@ export const createPatient = async (req: AuthenticatedRequest, res: Response) =>
 
         lastVisitedAt: lastVisitedAt ? new Date(lastVisitedAt) : null,
         vitals: vitals || {},
+        doctors: {
+          connect: doctorIds && Array.isArray(doctorIds) ? doctorIds.map((dId: string) => ({ id: dId })) : []
+        },
         clinicId,
       },
-
+      include: {
+        doctors: {
+          select: {
+            id: true,
+            fullName: true,
+            profileImage: true,
+            designation: {
+              select: {
+                id: true,
+                name: true
+              }
+            }
+          }
+        }
+      }
     });
 
     // Create User mapping using Phone and/or Email
@@ -393,6 +439,7 @@ export const updatePatient = async (req: AuthenticatedRequest, res: Response) =>
       lastVisitedAt,
       vitals,
       suggestIPD,
+      doctorIds,
     } = req.body;
 
     if (phone && phone !== existing.phone) {
@@ -468,6 +515,9 @@ export const updatePatient = async (req: AuthenticatedRequest, res: Response) =>
         pincode: pincode !== undefined ? pincode || null : existing.pincode,
 
         vitals: vitals !== undefined ? vitals : existing.vitals,
+        doctors: doctorIds !== undefined && Array.isArray(doctorIds) ? {
+          set: doctorIds.map((dId: string) => ({ id: dId }))
+        } : undefined,
         lastVisitedAt:
           lastVisitedAt !== undefined
             ? lastVisitedAt
@@ -475,7 +525,21 @@ export const updatePatient = async (req: AuthenticatedRequest, res: Response) =>
               : null
             : existing.lastVisitedAt,
       },
-
+      include: {
+        doctors: {
+          select: {
+            id: true,
+            fullName: true,
+            profileImage: true,
+            designation: {
+              select: {
+                id: true,
+                name: true
+              }
+            }
+          }
+        }
+      }
     });
 
     res.json(enrichPatient(updated));

@@ -95,6 +95,27 @@ const appointmentIncludes = {
     parentAppointment: {
         select: { id: true, appointmentCode: true, scheduledAt: true, status: true },
     },
+    consultation: {
+        select: {
+            id: true,
+            status: true,
+            paymentStatus: true,
+            finalTotalAmount: true,
+            amountPaid: true,
+            invoice: {
+                select: {
+                    id: true,
+                    invoiceCode: true,
+                    totalAmount: true,
+                    paymentStatus: true,
+                    amountPaid: true,
+                }
+            }
+        },
+    },
+    therapyPlan: {
+        select: { id: true, therapyId: true, therapyName: true, totalSessions: true, sessionFee: true }
+    },
     clinic: {
         select: {
             id: true,
@@ -175,7 +196,7 @@ const createSessionDailyAppointments = async (baseAppointment, totalDays, clinic
                 endAt,
                 mode: baseAppointment.mode,
                 appointmentType: baseAppointment.appointmentType || null,
-                status: "Confirmed",
+                status: (baseAppointment.paymentStatus === "Paid" || baseAppointment.paymentStatus === "Partial Paid") ? "Confirmed" : "Schedule",
                 reason: baseAppointment.reason || null,
                 location: baseAppointment.location || null,
                 clinicId,
@@ -199,20 +220,33 @@ const ensureAppointmentInvoice = async (appointmentId, clinicId) => {
         });
         if (!appointment || appointment.status !== "Confirmed" || appointment.invoice)
             return;
+        if (appointment.appointmentType === "therapy" || appointment.parentAppointmentId !== null)
+            return;
         if (!appointment.patient || !appointment.doctor)
             return; // patient or doctor was deleted
-        // Determine fee
-        let fee = 0;
-        if (appointment.isFollowUp) {
-            fee = appointment.doctor.followUpFee || 0;
+        // Determine base fee and final fee
+        let baseFee = 0;
+        if (appointment.consultationFee !== null && appointment.consultationFee !== undefined && appointment.consultationFee > 0) {
+            baseFee = appointment.consultationFee;
+        }
+        else if (appointment.isFollowUp) {
+            baseFee = appointment.doctor.followUpFee || 0;
         }
         else {
-            fee = appointment.doctor.consultationCharge || 0;
+            baseFee = appointment.doctor.consultationCharge || 0;
         }
+        let finalFee = appointment.finalFee !== null && appointment.finalFee !== undefined
+            ? appointment.finalFee
+            : baseFee;
+        let discountVal = appointment.discountAmount !== null && appointment.discountAmount !== undefined
+            ? appointment.discountAmount
+            : Math.max(0, baseFee - finalFee);
         // Skip if free or no fee defined
-        if (fee <= 0 || appointment.paymentStatus === "Free")
+        if (finalFee <= 0 && baseFee <= 0)
             return;
-        // Auto-invoices for confirmed appointments are treated as "Paid" by default as per user request
+        if (appointment.paymentStatus === "Free")
+            return;
+        // Auto-invoices for confirmed appointments are treated as "Paid" by default
         const invStatus = "Paid";
         await prisma_1.default.invoice.create({
             data: {
@@ -221,8 +255,10 @@ const ensureAppointmentInvoice = async (appointmentId, clinicId) => {
                 appointmentId: appointment.id,
                 invoiceDate: new Date(),
                 dueDate: new Date(),
-                subTotal: fee,
-                totalAmount: fee,
+                subTotal: baseFee,
+                discount: discountVal,
+                totalAmount: finalFee,
+                amountPaid: finalFee,
                 paymentStatus: invStatus,
                 paymentMethod: appointment.mode === "Online" ? "Online" : "Cash",
                 invoiceCode: `INV-AUTO-${appointment.appointmentCode || Date.now()}`,
@@ -231,8 +267,8 @@ const ensureAppointmentInvoice = async (appointmentId, clinicId) => {
                             clinicId,
                             description: `${appointment.isFollowUp ? "Follow-up" : "Consultation"} Fee - Dr. ${appointment.doctor.fullName}`,
                             quantity: 1,
-                            unitCost: fee,
-                            amount: fee,
+                            unitCost: baseFee,
+                            amount: baseFee,
                         }]
                 }
             }
@@ -248,7 +284,7 @@ const getAppointments = async (req, res) => {
         const clinicId = req.user?.clinicId;
         if (!clinicId)
             return res.status(403).json({ message: "No clinic associated" });
-        const { status, doctorId, patientId, mode, search, sort, dateFrom, dateTo } = req.query;
+        const { status, doctorId, patientId, mode, search, sort, dateFrom, dateTo, appointmentType } = req.query;
         let finalDoctorId = doctorId && typeof doctorId === "string" ? doctorId : undefined;
         let finalPatientId = patientId && typeof patientId === "string" ? patientId : undefined;
         // Doctor isolation
@@ -287,6 +323,7 @@ const getAppointments = async (req, res) => {
             where: {
                 clinicId,
                 ...(status && typeof status === "string" ? { status } : {}),
+                ...(appointmentType && typeof appointmentType === "string" ? { appointmentType } : {}),
                 ...(finalDoctorId ? { doctorId: finalDoctorId } : {}),
                 ...(finalPatientId ? { patientId: finalPatientId } : {}),
                 ...(mode && typeof mode === "string" ? { mode } : {}),
@@ -469,7 +506,7 @@ const createAppointment = async (req, res) => {
         const clinicId = req.user?.clinicId;
         if (!clinicId)
             return res.status(403).json({ message: "No clinic associated" });
-        const { patientId, doctorId, departmentId, scheduledAt, endAt, mode, appointmentType, status, reason, location, isFollowUp, followUpStatus, paymentStatus, parentAppointmentId, serviceIds, } = req.body;
+        const { patientId, doctorId, departmentId, scheduledAt, endAt, mode, appointmentType, status, reason, location, isFollowUp, followUpStatus, paymentStatus, parentAppointmentId, serviceIds, onlineLink, homeAddress, therapyCategoryId, therapyId, consultationFee, discountType, discountValue, discountAmount, finalFee, whatsappNotification, } = req.body;
         const resolvedServiceIds = Array.isArray(serviceIds) ? serviceIds : [];
         const isSessionAppointment = resolvedServiceIds.length > 0;
         if (!patientId)
@@ -561,6 +598,16 @@ const createAppointment = async (req, res) => {
                 paymentStatus: paymentStatus || null,
                 parentAppointmentId: parentAppointmentId || null,
                 serviceIds: resolvedServiceIds,
+                onlineLink: onlineLink || null,
+                homeAddress: homeAddress || null,
+                therapyCategoryId: therapyCategoryId || null,
+                therapyId: therapyId || null,
+                consultationFee: consultationFee !== undefined ? parseFloat(consultationFee) : null,
+                discountType: discountType || null,
+                discountValue: discountValue !== undefined ? parseFloat(discountValue) : null,
+                discountAmount: discountAmount !== undefined ? parseFloat(discountAmount) : null,
+                finalFee: finalFee !== undefined ? parseFloat(finalFee) : null,
+                whatsappNotification: whatsappNotification || false,
             },
             include: appointmentIncludes,
         });
@@ -639,7 +686,7 @@ const updateAppointment = async (req, res) => {
         });
         if (!existing)
             return res.status(404).json({ message: "Appointment not found" });
-        const { patientId, doctorId, departmentId, scheduledAt, endAt, mode, appointmentType, status, reason, location, isFollowUp, followUpStatus, paymentStatus, parentAppointmentId, serviceIds, } = req.body;
+        const { patientId, doctorId, departmentId, scheduledAt, endAt, mode, appointmentType, status, reason, location, isFollowUp, followUpStatus, paymentStatus, parentAppointmentId, serviceIds, onlineLink, homeAddress, therapyCategoryId, therapyId, consultationFee, discountType, discountValue, discountAmount, finalFee, whatsappNotification, } = req.body;
         let doctor = null;
         const targetDoctorId = doctorId ?? existing.doctorId;
         if (targetDoctorId) {
@@ -703,6 +750,16 @@ const updateAppointment = async (req, res) => {
                 paymentStatus: paymentStatus !== undefined ? paymentStatus : existing.paymentStatus,
                 parentAppointmentId: parentAppointmentId !== undefined ? parentAppointmentId : existing.parentAppointmentId,
                 serviceIds: resolvedServiceIds,
+                onlineLink: onlineLink !== undefined ? onlineLink : existing.onlineLink,
+                homeAddress: homeAddress !== undefined ? homeAddress : existing.homeAddress,
+                therapyCategoryId: therapyCategoryId !== undefined ? therapyCategoryId : existing.therapyCategoryId,
+                therapyId: therapyId !== undefined ? therapyId : existing.therapyId,
+                consultationFee: consultationFee !== undefined ? (consultationFee ? parseFloat(consultationFee) : null) : existing.consultationFee,
+                discountType: discountType !== undefined ? discountType : existing.discountType,
+                discountValue: discountValue !== undefined ? (discountValue ? parseFloat(discountValue) : null) : existing.discountValue,
+                discountAmount: discountAmount !== undefined ? (discountAmount ? parseFloat(discountAmount) : null) : existing.discountAmount,
+                finalFee: finalFee !== undefined ? (finalFee ? parseFloat(finalFee) : null) : existing.finalFee,
+                whatsappNotification: whatsappNotification !== undefined ? whatsappNotification : existing.whatsappNotification,
             },
             include: appointmentIncludes,
         });

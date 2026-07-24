@@ -9,6 +9,7 @@ router.get("/", medicine_controller_1.getMedicines);
 router.get("/:id", medicine_controller_1.getMedicineById);
 router.post("/", medicine_controller_1.createMedicine);
 router.post("/bulk-delete", medicine_controller_1.bulkDeleteMedicines);
+router.post("/bulk-create", medicine_controller_1.bulkCreateMedicines);
 router.post("/:id/add-stock", medicine_controller_1.addMedicineStock);
 router.put("/:id", medicine_controller_1.updateMedicine);
 router.delete("/:id", medicine_controller_1.deleteMedicine);

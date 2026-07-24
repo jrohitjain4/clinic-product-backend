@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.landingImageUpload = exports.patientProfileUpload = exports.staffProfileUpload = exports.doctorProfileUpload = void 0;
+exports.ipdPrescriptionUpload = exports.therapyImageUpload = exports.landingImageUpload = exports.patientProfileUpload = exports.staffProfileUpload = exports.doctorProfileUpload = void 0;
 const multer_1 = __importDefault(require("multer"));
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
@@ -52,4 +52,16 @@ exports.landingImageUpload = (0, multer_1.default)({
     storage: landingStorage,
     fileFilter,
     limits: { fileSize: 150 * 1024 * 1024 }, // 150 MB — user crops before final upload
+});
+const therapyStorage = createImageStorage("therapies", "therapy");
+exports.therapyImageUpload = (0, multer_1.default)({
+    storage: therapyStorage,
+    fileFilter,
+    limits: { fileSize: 150 * 1024 * 1024 },
+});
+const ipdPrescriptionStorage = createImageStorage("ipd-prescriptions", "ipd-pres");
+exports.ipdPrescriptionUpload = (0, multer_1.default)({
+    storage: ipdPrescriptionStorage,
+    fileFilter,
+    limits: { fileSize: 150 * 1024 * 1024 },
 });

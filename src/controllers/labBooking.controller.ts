@@ -112,7 +112,28 @@ export const getLabBookings = async (req: AuthenticatedRequest, res: Response) =
             const docId = req.user.doctorId;
             const userId = req.user.id;
             filteredBookings = bookings.filter(b => {
-                return b.assignedUserId === docId || b.assignedUserId === userId;
+                // 1. Top-level assignedUserId matches (doctor assigned to whole booking)
+                if (b.assignedUserId === docId || b.assignedUserId === userId) return true;
+
+                // 2. Per-test assignedUserId inside testsList JSON array
+                if (b.testsList && Array.isArray(b.testsList)) {
+                    const inTestsList = (b.testsList as any[]).some(
+                        t => t.assignedUserId === docId || t.assignedUserId === userId
+                    );
+                    if (inTestsList) return true;
+                }
+
+                // 3. Doctor is globally assigned to the lab test via test.assignedDoctors JSON
+                if (b.test && Array.isArray((b.test as any).assignedDoctors)) {
+                    const inTestDoctors = ((b.test as any).assignedDoctors as any[]).some((d: any) => {
+                        if (typeof d === "string") return d === docId || d === userId;
+                        if (d && typeof d === "object") return d.value === docId || d.value === userId;
+                        return false;
+                    });
+                    if (inTestDoctors) return true;
+                }
+
+                return false;
             });
         } else if (req.user?.role === "PATIENT" && req.user?.patientId) {
             const patientId = req.user.patientId;

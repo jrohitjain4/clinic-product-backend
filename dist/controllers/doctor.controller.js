@@ -36,12 +36,21 @@ const phoneValidation_1 = require("../utils/phoneValidation");
 // GET /api/doctors
 const getDoctors = async (req, res) => {
     try {
+        const type = req.query.type;
         const queryClinicId = req.query.clinicId;
         const clinicId = queryClinicId || req.user?.clinicId;
         if (!clinicId)
             return res.status(403).json({ message: "No clinic associated" });
         const doctors = await prisma_1.default.doctor.findMany({
-            where: { clinicId },
+            where: {
+                clinicId,
+                ...(type ? {
+                    OR: [
+                        { doctorType: type },
+                        { doctorTypes: { has: type } }
+                    ]
+                } : {}),
+            },
             include: {
                 department: { select: { id: true, name: true } },
                 designation: { select: { id: true, name: true } },
@@ -85,11 +94,22 @@ const createDoctor = async (req, res) => {
         if (!clinicId)
             return res.status(403).json({ message: "No clinic associated" });
         const { fullName, username, phone, alternateMobile, email, dob, yearOfExperience, departmentId, designationId, specializations, // Array of specialization IDs
-        medicalLicenseNumber, maritalStatus, qualification, languagesSpoken, bloodGroup, gender, bio, featureOnWebsite, profileImage, signatureImage, medicalRegCertificate, qualificationCertificate, aadhaarCard, aadhaarCardBack, panCard, address1, address2, country, city, state, pincode, appointmentType, acceptBookingsInAdvance, appointmentDuration, consultationCharge, maxBookingsPerSlot, displayOnBookingPage, followUpEnabled, followUpValidityDays, freeFollowUpLimit, followUpFee, educations, awards, certifications, schedules, } = req.body;
+        medicalLicenseNumber, maritalStatus, qualification, languagesSpoken, bloodGroup, gender, bio, featureOnWebsite, profileImage, signatureImage, medicalRegCertificate, qualificationCertificate, aadhaarCard, aadhaarCardBack, panCard, address1, address2, country, city, state, pincode, appointmentType, acceptBookingsInAdvance, appointmentDuration, consultationCharge, maxBookingsPerSlot, displayOnBookingPage, followUpEnabled, followUpValidityDays, freeFollowUpLimit, followUpFee, educations, awards, certifications, schedules, doctorType, doctorTypes, ipdVisitCharge, } = req.body;
         if (!fullName)
             return res.status(400).json({ message: "Doctor name is required" });
         if (!email && !phone)
             return res.status(400).json({ message: "Email or Phone is required to create a doctor account" });
+        // Normalize doctorTypes array
+        let parsedDoctorTypes = [];
+        if (Array.isArray(doctorTypes)) {
+            parsedDoctorTypes = doctorTypes;
+        }
+        else if (typeof doctorTypes === "string" && doctorTypes.trim()) {
+            parsedDoctorTypes = doctorTypes.split(",").map((t) => t.trim()).filter(Boolean);
+        }
+        else if (doctorType) {
+            parsedDoctorTypes = [doctorType];
+        }
         // Check duplicates
         if (email) {
             const existingByEmail = await prisma_1.default.user.findFirst({ where: { email } });
@@ -164,6 +184,9 @@ const createDoctor = async (req, res) => {
                     schedules: schedules || null,
                     clinicId,
                     status: "Active",
+                    doctorType: doctorType || (parsedDoctorTypes.length > 0 ? parsedDoctorTypes[0] : "regular"),
+                    ...(parsedDoctorTypes.length > 0 ? { doctorTypes: parsedDoctorTypes } : {}),
+                    ...(ipdVisitCharge !== undefined && ipdVisitCharge !== null && ipdVisitCharge !== "" ? { ipdVisitCharge: parseFloat(ipdVisitCharge) } : {}),
                 },
                 include: {
                     department: { select: { id: true, name: true } },
@@ -217,7 +240,7 @@ const updateDoctor = async (req, res) => {
     try {
         const clinicId = req.user?.clinicId;
         const { id } = req.params;
-        const { fullName, username, phone, alternateMobile, email, dob, yearOfExperience, departmentId, designationId, specializations, medicalLicenseNumber, maritalStatus, qualification, languagesSpoken, bloodGroup, gender, bio, featureOnWebsite, profileImage, signatureImage, medicalRegCertificate, qualificationCertificate, aadhaarCard, aadhaarCardBack, panCard, address1, address2, country, city, state, pincode, appointmentType, acceptBookingsInAdvance, appointmentDuration, consultationCharge, maxBookingsPerSlot, displayOnBookingPage, followUpEnabled, followUpValidityDays, freeFollowUpLimit, followUpFee, educations, awards, certifications, schedules, status, } = req.body;
+        const { fullName, username, phone, alternateMobile, email, dob, yearOfExperience, departmentId, designationId, specializations, medicalLicenseNumber, maritalStatus, qualification, languagesSpoken, bloodGroup, gender, bio, featureOnWebsite, profileImage, signatureImage, medicalRegCertificate, qualificationCertificate, aadhaarCard, aadhaarCardBack, panCard, address1, address2, country, city, state, pincode, appointmentType, acceptBookingsInAdvance, appointmentDuration, consultationCharge, maxBookingsPerSlot, displayOnBookingPage, followUpEnabled, followUpValidityDays, freeFollowUpLimit, followUpFee, educations, awards, certifications, schedules, status, doctorType, doctorTypes, ipdVisitCharge, } = req.body;
         const existing = await prisma_1.default.doctor.findFirst({ where: { id, clinicId: clinicId } });
         if (!existing)
             return res.status(404).json({ message: "Doctor not found" });
@@ -278,6 +301,9 @@ const updateDoctor = async (req, res) => {
                 certifications: certifications || undefined,
                 schedules: schedules || undefined,
                 status,
+                doctorType,
+                doctorTypes: doctorTypes ? (Array.isArray(doctorTypes) ? doctorTypes : doctorTypes.split(",").map((t) => t.trim()).filter(Boolean)) : undefined,
+                ipdVisitCharge: ipdVisitCharge !== undefined ? (ipdVisitCharge !== "" && ipdVisitCharge !== null ? parseFloat(ipdVisitCharge) : null) : undefined,
             }
         });
         res.json(updatedDoctor);

@@ -90,6 +90,16 @@ model Clinic {
   consultations         Consultation[]
   therapyPlans          TherapyPlan[]
   refers                Refer[]
+  ipdTreatments         IPDTreatment[]
+  ipdPackages           IPDPackage[]
+  ipdCategories         IPDCategory[]
+  ipdWards              IPDWard[]
+  ipdAdmissions         IPDAdmission[]
+  ipdInvoices           IPDInvoice[]
+  ipdChargeTypes        IPDChargeType[]
+  ipdChargeItems        IPDChargeItemMaster[]
+  ipdNurses             IPDNurse[]
+  ipdPrescriptions      IPDPrescription[]
 }
 
 model LandingPage {
@@ -169,6 +179,7 @@ model Department {
   appointments  Appointment[]
   services      Service[]
   prescriptions Prescription[]
+  ipdTreatments IPDTreatment[]
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
 }
@@ -254,6 +265,8 @@ model Doctor {
   schedules               Json?
   status                  String          @default("Active")
   doctorType              String?         @default("regular")
+  doctorTypes             String[]        @default([])
+  ipdVisitCharge          Float?
   departmentId            String?
   department              Department?     @relation(fields: [departmentId], references: [id])
   maritalStatus           String?
@@ -271,12 +284,15 @@ model Doctor {
   designationId           String?
   designation             Designation?    @relation(fields: [designationId], references: [id])
   specializations         Specialization[]
+  patients                Patient[]
   clinicId                String
   clinic                  Clinic          @relation(fields: [clinicId], references: [id])
   appointments            Appointment[]
   prescriptions           Prescription[]
   payrolls                Payroll[]
   consultations           Consultation[]
+  ipdAdmissions           IPDAdmission[]
+  ipdPrescriptions        IPDPrescription[]
   createdAt               DateTime        @default(now())
   updatedAt               DateTime        @updatedAt
 }
@@ -322,7 +338,11 @@ model Patient {
   labBookings     LabBooking[]
   pharmacyInvoices PharmacyInvoice[]
   consultations   Consultation[]
+  ipdAdmissions   IPDAdmission[]
+  ipdInvoices     IPDInvoice[]
+  ipdPrescriptions IPDPrescription[]
   suggestIPD      Boolean        @default(false)
+  doctors         Doctor[]
   createdAt       DateTime       @default(now())
   updatedAt       DateTime       @updatedAt
 
@@ -1070,5 +1090,255 @@ model TherapyPlan {
   updatedAt          DateTime      @updatedAt
 
   @@index([consultationId])
+  @@index([clinicId])
+}
+
+model IPDTreatment {
+  id                      String         @id @default(uuid())
+  procedureName           String
+  procedureCode           String?
+  departmentId            String?
+  department              Department?    @relation(fields: [departmentId], references: [id])
+  categoryId              String?
+  categoryRef             IPDCategory?   @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  category                String         @default("Minor Procedure") // Category Name / Fallback
+  procedureFee            Float          @default(0)
+  otCharges               Float          @default(0)
+  anaesthesiaCharges      Float          @default(0)
+  surgeonCharges          Float          @default(0)
+  assistantSurgeonCharges Float          @default(0)
+  totalPrice              Float          @default(0)
+  estimatedDuration       String?        // e.g. 30 Minutes, 1 Hour, 2 Hours
+  description             String?
+  status                  String         @default("Active")
+  clinicId                String
+  clinic                  Clinic         @relation(fields: [clinicId], references: [id])
+  ipdAdmissions           IPDAdmission[]
+  createdAt               DateTime       @default(now())
+  updatedAt               DateTime       @updatedAt
+
+  @@index([clinicId])
+  @@index([departmentId])
+  @@index([categoryId])
+}
+
+model IPDCategory {
+  id          String         @id @default(uuid())
+  name        String
+  description String?
+  status      String         @default("Active")
+  clinicId    String
+  clinic      Clinic         @relation(fields: [clinicId], references: [id])
+  treatments  IPDTreatment[]
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  @@index([clinicId])
+}
+
+model IPDPackage {
+  id                String    @id @default(uuid())
+  packageName       String
+  packageCode       String?
+  totalPrice        Float     @default(0)
+  durationDays      Int       @default(1)
+  description       String?
+  includedServices  Json?     @default("[]")
+  status            String    @default("Active")
+  clinicId          String
+  clinic            Clinic    @relation(fields: [clinicId], references: [id])
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@index([clinicId])
+}
+
+model IPDWard {
+  id                    String         @id @default(uuid())
+  wardName              String         // e.g. Deluxe AC Room, General Male Ward
+  wardCode              String?        // e.g. WARD-101, ICU-A
+  wardType              String         // General, Semi-Private, Private, ICU, Suite, Day Care, Isolation
+  totalBeds             Int            @default(1) // Max capacity / beds in room/ward
+  occupiedBeds          Int            @default(0) // Currently occupied count
+  chargePerNight        Float          @default(0) // Per Night Room Charge (₹)
+  nursingChargePerNight Float          @default(0) // Nursing Charge Per Night (₹)
+  amenities             Json?          @default("[]") // AC, TV, Oxygen, Attached Bath, Attendant Sofa, Ventilator
+  floorNumber           String?        // e.g. 1st Floor, 2nd Floor
+  description           String?
+  status                String         @default("Active") // Active, Maintenance
+  clinicId              String
+  clinic                Clinic         @relation(fields: [clinicId], references: [id])
+  ipdAdmissions         IPDAdmission[]
+  assignedNurses        IPDNurse[]
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
+
+  @@index([clinicId])
+  @@index([wardType])
+}
+
+model IPDNurse {
+  id              String   @id @default(uuid())
+  nurseCode       String   // e.g. NRS-001
+  fullName        String
+  phone           String?
+  email           String?
+  qualification   String?  // GNM, B.Sc Nursing, M.Sc Nursing, ANM
+  role            String   @default("Nurse") // Nurse, Head Nurse, Senior Nurse
+  department      String   @default("IPD") // IPD (Inpatient Department)
+  assignedWardId  String?
+  assignedWard    IPDWard? @relation(fields: [assignedWardId], references: [id])
+  shiftTiming     String   @default("Morning Shift (8 AM - 4 PM)") // Morning, Evening, Night, General
+  status          String   @default("Active") // Active, On Duty, On Leave
+  clinicId        String
+  clinic          Clinic   @relation(fields: [clinicId], references: [id])
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([clinicId])
+}
+
+model IPDAdmission {
+  id                   String        @id @default(uuid())
+  admissionCode        String        // e.g. IPD-2026-0001
+  admissionType        String        @default("Direct") // Direct, Refer to OPD, Emergency
+  patientId            String
+  patient              Patient       @relation(fields: [patientId], references: [id])
+  doctorId             String?
+  doctor               Doctor?       @relation(fields: [doctorId], references: [id])
+  wardId               String?
+  ward                 IPDWard?      @relation(fields: [wardId], references: [id])
+  treatmentId          String?
+  treatment            IPDTreatment? @relation(fields: [treatmentId], references: [id])
+
+  admissionDate        DateTime      @default(now())
+  dischargeDate        DateTime?
+  diagnosis            String?
+  status               String        @default("Admitted") // Admitted, Discharged, Cancelled
+
+  // Financial Breakdown at Admission
+  admissionFee         Float         @default(0)
+  treatmentFee         Float         @default(0)
+  wardCharge           Float         @default(0)
+  doctorVisitCharge    Float         @default(0)
+  nursingFee           Float         @default(0)
+  otherCharges         Float         @default(0)
+  totalEstimatedAmount Float         @default(0)
+
+  // Payments & Receipts
+  advancePaid          Float         @default(0)
+  totalPaid            Float         @default(0)
+  totalAmount          Float         @default(0)
+  dueAmount            Float         @default(0)
+  discountAmount       Float         @default(0)
+  discountType         String?       // Fixed or Percentage
+  dischargeNotes       String?
+  paymentStatus        String        @default("Unpaid") // Unpaid, Partial, Paid
+  paymentMethod        String?       @default("Cash") // Cash, Card, UPI, Net Banking
+
+  invoices             IPDInvoice[]
+  ipdPrescriptions     IPDPrescription[]
+  clinicId             String
+  clinic               Clinic        @relation(fields: [clinicId], references: [id])
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
+
+  @@index([clinicId])
+  @@index([patientId])
+  @@index([doctorId])
+  @@index([wardId])
+}
+
+model IPDInvoice {
+  id              String           @id @default(uuid())
+  invoiceNumber   String           // e.g. IPD-INV-0001
+  admissionId     String
+  admission       IPDAdmission     @relation(fields: [admissionId], references: [id], onDelete: Cascade)
+  patientId       String
+  patient         Patient          @relation(fields: [patientId], references: [id])
+
+  invoiceDate     DateTime         @default(now())
+  totalAmount     Float            @default(0)
+  paidAmount      Float            @default(0)
+  dueAmount       Float            @default(0)
+  paymentStatus   String           @default("Unpaid") // Paid, Partial, Unpaid
+  paymentMethod   String?          // Cash, Card, UPI, Bank Transfer
+  notes           String?
+
+  items           IPDInvoiceItem[]
+  clinicId        String
+  clinic          Clinic           @relation(fields: [clinicId], references: [id])
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  @@index([clinicId])
+  @@index([admissionId])
+  @@index([patientId])
+}
+
+model IPDInvoiceItem {
+  id           String     @id @default(uuid())
+  invoiceId    String
+  invoice      IPDInvoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  itemType     String     // Admission Fee, Ward Charge, Doctor Visit, Nurse Visit, Treatment, Medicine, Other
+  itemName     String     // e.g. Daily Ward Stay, Dr. Rohit Visit, Hand Fracture Surgery
+  unitPrice    Float      @default(0)
+  quantity     Int        @default(1)
+  totalPrice   Float      @default(0)
+  createdAt    DateTime   @default(now())
+
+  @@index([invoiceId])
+}
+
+model IPDChargeType {
+  id          String                @id @default(uuid())
+  name        String                // e.g. Doctor Visit, Nursing Charge, Oxygen/Equipment, Lab Test, Medicine, OT Charge, Consumables
+  description String?
+  status      String                @default("Active")
+  clinicId    String
+  clinic      Clinic                @relation(fields: [clinicId], references: [id])
+  items       IPDChargeItemMaster[]
+  createdAt   DateTime              @default(now())
+  updatedAt   DateTime              @updatedAt
+
+  @@index([clinicId])
+}
+
+model IPDChargeItemMaster {
+  id           String        @id @default(uuid())
+  chargeTypeId String
+  chargeType   IPDChargeType @relation(fields: [chargeTypeId], references: [id], onDelete: Cascade)
+  itemName     String        // e.g. Oxygen Cylinder Per Hour, Nebulization, ICU Nursing Care
+  standardFee  Float         @default(0)
+  description  String?
+  status       String        @default("Active")
+  clinicId     String
+  clinic       Clinic        @relation(fields: [clinicId], references: [id])
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@index([clinicId])
+  @@index([chargeTypeId])
+}
+
+model IPDPrescription {
+  id               String       @id @default(uuid())
+  prescriptionCode String?
+  admissionId      String
+  admission        IPDAdmission @relation(fields: [admissionId], references: [id], onDelete: Cascade)
+  patientId        String
+  patient          Patient      @relation(fields: [patientId], references: [id])
+  doctorId         String?
+  doctor           Doctor?      @relation(fields: [doctorId], references: [id])
+  dischargeSummary String?
+  medicineAdvice   Json?        // [{ name, dosage, strength, frequency, duration, instructions }]
+  images           Json?        // ["url1", "url2"]
+  clinicId         String
+  clinic           Clinic       @relation(fields: [clinicId], references: [id])
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  @@index([admissionId])
+  @@index([patientId])
   @@index([clinicId])
 }

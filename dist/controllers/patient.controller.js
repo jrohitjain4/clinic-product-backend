@@ -87,6 +87,21 @@ const getPatients = async (req, res) => {
                     }
                     : {}),
             },
+            include: {
+                doctors: {
+                    select: {
+                        id: true,
+                        fullName: true,
+                        profileImage: true,
+                        designation: {
+                            select: {
+                                id: true,
+                                name: true
+                            }
+                        }
+                    }
+                }
+            },
             orderBy: sort === "oldest"
                 ? { createdAt: "asc" }
                 : { createdAt: "desc" },
@@ -106,6 +121,21 @@ const getPatientById = async (req, res) => {
         const { id } = req.params;
         const patient = await prisma_1.default.patient.findFirst({
             where: { id, clinicId: clinicId },
+            include: {
+                doctors: {
+                    select: {
+                        id: true,
+                        fullName: true,
+                        profileImage: true,
+                        designation: {
+                            select: {
+                                id: true,
+                                name: true
+                            }
+                        }
+                    }
+                }
+            }
         });
         if (!patient)
             return res.status(404).json({ message: "Patient not found" });
@@ -123,7 +153,7 @@ const createPatient = async (req, res) => {
         const clinicId = req.user?.clinicId;
         if (!clinicId)
             return res.status(403).json({ message: "No clinic associated" });
-        const { firstName, middleName, lastName, profileImage, phone, alternateMobile, email, dob, age, gender, bloodGroup, maritalStatus, occupation, aadhaarNumber, passportNumber, referredBy, emergencyContactName, emergencyContactRelation, emergencyContactPhone, status, address1, address2, country, state, city, pincode, lastVisitedAt, vitals, } = req.body;
+        const { firstName, middleName, lastName, profileImage, phone, alternateMobile, email, dob, age, gender, bloodGroup, maritalStatus, occupation, aadhaarNumber, passportNumber, referredBy, referId, emergencyContactName, emergencyContactRelation, emergencyContactPhone, status, address1, address2, country, state, city, pincode, lastVisitedAt, vitals, doctorIds, } = req.body;
         if (!firstName?.trim()) {
             return res.status(400).json({ message: "First name is required" });
         }
@@ -195,6 +225,7 @@ const createPatient = async (req, res) => {
                 aadhaarNumber: aadhaarNumber || null,
                 passportNumber: passportNumber || null,
                 referredBy: referredBy || null,
+                referId: referId || null,
                 emergencyContactName: emergencyContactName || null,
                 emergencyContactRelation: emergencyContactRelation || null,
                 emergencyContactPhone: emergencyContactPhone || null,
@@ -207,8 +238,26 @@ const createPatient = async (req, res) => {
                 pincode: pincode || null,
                 lastVisitedAt: lastVisitedAt ? new Date(lastVisitedAt) : null,
                 vitals: vitals || {},
+                doctors: {
+                    connect: doctorIds && Array.isArray(doctorIds) ? doctorIds.map((dId) => ({ id: dId })) : []
+                },
                 clinicId,
             },
+            include: {
+                doctors: {
+                    select: {
+                        id: true,
+                        fullName: true,
+                        profileImage: true,
+                        designation: {
+                            select: {
+                                id: true,
+                                name: true
+                            }
+                        }
+                    }
+                }
+            }
         });
         // Create User mapping using Phone and/or Email
         const loginIdentifier = phone || email;
@@ -274,7 +323,7 @@ const updatePatient = async (req, res) => {
         });
         if (!existing)
             return res.status(404).json({ message: "Patient not found" });
-        const { firstName, middleName, lastName, profileImage, phone, alternateMobile, email, dob, age, gender, bloodGroup, maritalStatus, occupation, aadhaarNumber, passportNumber, referredBy, emergencyContactName, emergencyContactRelation, emergencyContactPhone, status, address1, address2, country, state, city, pincode, lastVisitedAt, vitals, suggestIPD, } = req.body;
+        const { firstName, middleName, lastName, profileImage, phone, alternateMobile, email, dob, age, gender, bloodGroup, maritalStatus, occupation, aadhaarNumber, passportNumber, referredBy, referId, emergencyContactName, emergencyContactRelation, emergencyContactPhone, status, address1, address2, country, state, city, pincode, lastVisitedAt, vitals, suggestIPD, doctorIds, } = req.body;
         if (phone && phone !== existing.phone) {
             const duplicate = await (0, phoneValidation_1.checkPhoneDuplicate)(phone);
             if (duplicate) {
@@ -313,6 +362,7 @@ const updatePatient = async (req, res) => {
                 aadhaarNumber: aadhaarNumber !== undefined ? aadhaarNumber || null : existing.aadhaarNumber,
                 passportNumber: passportNumber !== undefined ? passportNumber || null : existing.passportNumber,
                 referredBy: referredBy !== undefined ? referredBy || null : existing.referredBy,
+                referId: referId !== undefined ? referId || null : existing.referId,
                 emergencyContactName: emergencyContactName !== undefined ? emergencyContactName || null : existing.emergencyContactName,
                 emergencyContactRelation: emergencyContactRelation !== undefined ? emergencyContactRelation || null : existing.emergencyContactRelation,
                 emergencyContactPhone: emergencyContactPhone !== undefined ? emergencyContactPhone || null : existing.emergencyContactPhone,
@@ -336,12 +386,30 @@ const updatePatient = async (req, res) => {
                     : existing.city,
                 pincode: pincode !== undefined ? pincode || null : existing.pincode,
                 vitals: vitals !== undefined ? vitals : existing.vitals,
+                doctors: doctorIds !== undefined && Array.isArray(doctorIds) ? {
+                    set: doctorIds.map((dId) => ({ id: dId }))
+                } : undefined,
                 lastVisitedAt: lastVisitedAt !== undefined
                     ? lastVisitedAt
                         ? new Date(lastVisitedAt)
                         : null
                     : existing.lastVisitedAt,
             },
+            include: {
+                doctors: {
+                    select: {
+                        id: true,
+                        fullName: true,
+                        profileImage: true,
+                        designation: {
+                            select: {
+                                id: true,
+                                name: true
+                            }
+                        }
+                    }
+                }
+            }
         });
         res.json(enrichPatient(updated));
     }

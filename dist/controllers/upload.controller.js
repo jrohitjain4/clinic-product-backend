@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.uploadLandingImage = exports.uploadPatientProfile = exports.uploadStaffProfile = exports.uploadDoctorProfile = void 0;
+exports.uploadIPDPrescriptionAttachment = exports.uploadTherapyImage = exports.uploadLandingImage = exports.uploadPatientProfile = exports.uploadStaffProfile = exports.uploadDoctorProfile = void 0;
 const uploadDoctorProfile = async (req, res) => {
     try {
         if (!req.file) {
@@ -57,3 +57,31 @@ const uploadLandingImage = async (req, res) => {
     }
 };
 exports.uploadLandingImage = uploadLandingImage;
+const uploadTherapyImage = async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ message: "No image file uploaded" });
+        }
+        const url = `/uploads/therapies/${req.file.filename}`;
+        res.json({ url, filename: req.file.filename });
+    }
+    catch (err) {
+        const message = err instanceof Error ? err.message : "Upload failed";
+        res.status(500).json({ message });
+    }
+};
+exports.uploadTherapyImage = uploadTherapyImage;
+const uploadIPDPrescriptionAttachment = async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ message: "No attachment file uploaded" });
+        }
+        const url = `/uploads/ipd-prescriptions/${req.file.filename}`;
+        res.json({ url, filename: req.file.filename });
+    }
+    catch (err) {
+        const message = err instanceof Error ? err.message : "Upload failed";
+        res.status(500).json({ message });
+    }
+};
+exports.uploadIPDPrescriptionAttachment = uploadIPDPrescriptionAttachment;

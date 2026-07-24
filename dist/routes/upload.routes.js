@@ -46,4 +46,24 @@ router.post("/landing-image", (req, res) => {
         return (0, upload_controller_1.uploadLandingImage)(req, res);
     });
 });
+router.post("/therapy-image", (req, res) => {
+    upload_middleware_1.therapyImageUpload.single("image")(req, res, (err) => {
+        if (err) {
+            return res.status(400).json({
+                message: err instanceof Error ? err.message : "Upload failed",
+            });
+        }
+        return (0, upload_controller_1.uploadTherapyImage)(req, res);
+    });
+});
+router.post("/ipd-prescription", (req, res) => {
+    upload_middleware_1.ipdPrescriptionUpload.single("image")(req, res, (err) => {
+        if (err) {
+            return res.status(400).json({
+                message: err instanceof Error ? err.message : "Upload failed",
+            });
+        }
+        return (0, upload_controller_1.uploadIPDPrescriptionAttachment)(req, res);
+    });
+});
 exports.default = router;

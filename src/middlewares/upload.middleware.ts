@@ -60,3 +60,10 @@ export const therapyImageUpload = multer({
   fileFilter,
   limits: { fileSize: 150 * 1024 * 1024 },
 });
+
+const ipdPrescriptionStorage = createImageStorage("ipd-prescriptions", "ipd-pres");
+export const ipdPrescriptionUpload = multer({
+  storage: ipdPrescriptionStorage,
+  fileFilter,
+  limits: { fileSize: 150 * 1024 * 1024 },
+});

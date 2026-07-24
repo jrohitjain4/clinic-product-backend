@@ -51,6 +51,16 @@ const labBooking_routes_1 = __importDefault(require("./routes/labBooking.routes"
 const pharmacyCategory_routes_1 = __importDefault(require("./routes/pharmacyCategory.routes"));
 const medicine_routes_1 = __importDefault(require("./routes/medicine.routes"));
 const pharmacyInvoice_routes_1 = __importDefault(require("./routes/pharmacyInvoice.routes"));
+const consultation_routes_1 = __importDefault(require("./routes/consultation.routes"));
+const refer_routes_1 = __importDefault(require("./routes/refer.routes"));
+const ipdTreatment_routes_1 = __importDefault(require("./routes/ipdTreatment.routes"));
+const ipdCategory_routes_1 = __importDefault(require("./routes/ipdCategory.routes"));
+const ipdWard_routes_1 = __importDefault(require("./routes/ipdWard.routes"));
+const ipdAdmission_routes_1 = __importDefault(require("./routes/ipdAdmission.routes"));
+const ipdInvoice_routes_1 = __importDefault(require("./routes/ipdInvoice.routes"));
+const ipdChargeType_routes_1 = __importDefault(require("./routes/ipdChargeType.routes"));
+const ipdNurse_routes_1 = __importDefault(require("./routes/ipdNurse.routes"));
+const ipdPrescription_routes_1 = __importDefault(require("./routes/ipdPrescription.routes"));
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 5000;
 const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:5173,https://docyori.com,https://api.docyori.com")
@@ -118,6 +128,16 @@ app.use("/api/lab-bookings", labBooking_routes_1.default);
 app.use("/api/pharmacy-categories", pharmacyCategory_routes_1.default);
 app.use("/api/medicines", medicine_routes_1.default);
 app.use("/api/pharmacy-invoices", pharmacyInvoice_routes_1.default);
+app.use("/api/consultations", consultation_routes_1.default);
+app.use("/api/refers", refer_routes_1.default);
+app.use("/api/ipd/treatments", ipdTreatment_routes_1.default);
+app.use("/api/ipd/categories", ipdCategory_routes_1.default);
+app.use("/api/ipd/wards", ipdWard_routes_1.default);
+app.use("/api/ipd/admissions", ipdAdmission_routes_1.default);
+app.use("/api/ipd/invoices", ipdInvoice_routes_1.default);
+app.use("/api/ipd/charge-types", ipdChargeType_routes_1.default);
+app.use("/api/ipd/nurses", ipdNurse_routes_1.default);
+app.use("/api/ipd/prescriptions", ipdPrescription_routes_1.default);
 // Root Check
 app.get("/", (req, res) => {
     res.json({ message: "Clinic Management SaaS API is running perfectly!" });

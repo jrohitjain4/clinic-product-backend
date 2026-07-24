@@ -51,6 +51,14 @@ import medicineRoutes from "./routes/medicine.routes";
 import pharmacyInvoiceRoutes from "./routes/pharmacyInvoice.routes";
 import consultationRoutes from "./routes/consultation.routes";
 import referRoutes from "./routes/refer.routes";
+import ipdTreatmentRoutes from "./routes/ipdTreatment.routes";
+import ipdCategoryRoutes from "./routes/ipdCategory.routes";
+import ipdWardRoutes from "./routes/ipdWard.routes";
+import ipdAdmissionRoutes from "./routes/ipdAdmission.routes";
+import ipdInvoiceRoutes from "./routes/ipdInvoice.routes";
+import ipdChargeTypeRoutes from "./routes/ipdChargeType.routes";
+import ipdNurseRoutes from "./routes/ipdNurse.routes";
+import ipdPrescriptionRoutes from "./routes/ipdPrescription.routes";
 
 
 const app = express();
@@ -128,6 +136,14 @@ app.use("/api/medicines", medicineRoutes);
 app.use("/api/pharmacy-invoices", pharmacyInvoiceRoutes);
 app.use("/api/consultations", consultationRoutes);
 app.use("/api/refers", referRoutes);
+app.use("/api/ipd/treatments", ipdTreatmentRoutes);
+app.use("/api/ipd/categories", ipdCategoryRoutes);
+app.use("/api/ipd/wards", ipdWardRoutes);
+app.use("/api/ipd/admissions", ipdAdmissionRoutes);
+app.use("/api/ipd/invoices", ipdInvoiceRoutes);
+app.use("/api/ipd/charge-types", ipdChargeTypeRoutes);
+app.use("/api/ipd/nurses", ipdNurseRoutes);
+app.use("/api/ipd/prescriptions", ipdPrescriptionRoutes);
 // Root Check
 app.get("/", (req, res) => {
   res.json({ message: "Clinic Management SaaS API is running perfectly!" });

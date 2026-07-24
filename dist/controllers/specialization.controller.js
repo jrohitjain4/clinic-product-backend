@@ -11,8 +11,13 @@ const getSpecializations = async (req, res) => {
         const clinicId = req.user?.clinicId;
         if (!clinicId)
             return res.status(403).json({ message: "No clinic associated" });
+        const { type } = req.query;
+        const whereClause = { clinicId };
+        if (type) {
+            whereClause.specializationType = type;
+        }
         const specializations = await prisma_1.default.specialization.findMany({
-            where: { clinicId },
+            where: whereClause,
             include: {
                 _count: { select: { doctors: true } },
             },
@@ -24,6 +29,7 @@ const getSpecializations = async (req, res) => {
             description: s.description,
             image: s.image,
             status: s.status,
+            specializationType: s.specializationType,
             noOfDoctor: s._count.doctors,
             createdAt: s.createdAt,
             updatedAt: s.updatedAt,
@@ -41,7 +47,7 @@ const createSpecialization = async (req, res) => {
         const clinicId = req.user?.clinicId;
         if (!clinicId)
             return res.status(403).json({ message: "No clinic associated" });
-        const { name, description, image, status } = req.body;
+        const { name, description, image, status, specializationType } = req.body;
         if (!name)
             return res.status(400).json({ message: "Specialization name is required" });
         const spec = await prisma_1.default.specialization.create({
@@ -50,6 +56,7 @@ const createSpecialization = async (req, res) => {
                 description,
                 image,
                 status: status || "Active",
+                specializationType: specializationType || "regular",
                 clinicId
             },
         });
@@ -65,13 +72,13 @@ const updateSpecialization = async (req, res) => {
     try {
         const clinicId = req.user?.clinicId;
         const { id } = req.params;
-        const { name, description, image, status } = req.body;
+        const { name, description, image, status, specializationType } = req.body;
         const existing = await prisma_1.default.specialization.findFirst({ where: { id, clinicId: clinicId } });
         if (!existing)
             return res.status(404).json({ message: "Specialization not found" });
         const updated = await prisma_1.default.specialization.update({
             where: { id },
-            data: { name, description, image, status },
+            data: { name, description, image, status, specializationType },
         });
         res.json(updated);
     }

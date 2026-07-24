@@ -17,11 +17,43 @@ const ensureLabBookingInvoice = async (bookingId, clinicId) => {
         });
         if (!booking || booking.status !== "Confirmed" || booking.invoice)
             return;
-        if (!booking.patient || !booking.test)
+        if (!booking.patient)
             return;
-        const fee = booking.test.price || 0;
-        if (fee <= 0)
+        let subTotal = 0;
+        const itemsCreate = [];
+        if (booking.testsList && Array.isArray(booking.testsList) && booking.testsList.length > 0) {
+            booking.testsList.forEach((t) => {
+                const price = t.price || 0;
+                subTotal += price;
+                itemsCreate.push({
+                    clinicId,
+                    description: `Lab Test: ${t.name}`,
+                    quantity: 1,
+                    unitCost: price,
+                    amount: price,
+                });
+            });
+        }
+        else if (booking.test) {
+            const fee = booking.test.price || 0;
+            subTotal = fee;
+            itemsCreate.push({
+                clinicId,
+                description: `Lab Test: ${booking.test.name}`,
+                quantity: 1,
+                unitCost: fee,
+                amount: fee,
+            });
+        }
+        else {
             return;
+        }
+        if (subTotal <= 0)
+            return;
+        const discount = booking.discount || 0;
+        const tax = booking.tax || 0;
+        const taxAmount = (subTotal * tax) / 100;
+        const totalAmount = booking.totalAmount || Math.max(0, subTotal - discount + taxAmount);
         const invStatus = "Paid";
         await prisma_1.default.invoice.create({
             data: {
@@ -30,19 +62,16 @@ const ensureLabBookingInvoice = async (bookingId, clinicId) => {
                 labBookingId: booking.id,
                 invoiceDate: new Date(),
                 dueDate: new Date(),
-                subTotal: fee,
-                totalAmount: fee,
+                subTotal,
+                discount,
+                tax,
+                totalAmount,
+                amountPaid: totalAmount,
                 paymentStatus: invStatus,
                 paymentMethod: booking.paymentMethod || "Cash",
                 invoiceCode: `INV-AUTO-${booking.bookingCode || Date.now()}`,
                 items: {
-                    create: [{
-                            clinicId,
-                            description: `Lab Test: ${booking.test.name}`,
-                            quantity: 1,
-                            unitCost: fee,
-                            amount: fee,
-                        }]
+                    create: itemsCreate
                 }
             }
         });
@@ -65,6 +94,7 @@ const getLabBookings = async (req, res) => {
         const bookings = await prisma_1.default.labBooking.findMany({
             where: { clinicId },
             include: {
+                clinic: true,
                 patient: { select: { id: true, firstName: true, lastName: true, patientCode: true, phone: true } },
                 test: {
                     select: {
@@ -81,7 +111,28 @@ const getLabBookings = async (req, res) => {
             const docId = req.user.doctorId;
             const userId = req.user.id;
             filteredBookings = bookings.filter(b => {
-                return b.assignedUserId === docId || b.assignedUserId === userId;
+                // 1. Top-level assignedUserId matches (doctor assigned to whole booking)
+                if (b.assignedUserId === docId || b.assignedUserId === userId)
+                    return true;
+                // 2. Per-test assignedUserId inside testsList JSON array
+                if (b.testsList && Array.isArray(b.testsList)) {
+                    const inTestsList = b.testsList.some(t => t.assignedUserId === docId || t.assignedUserId === userId);
+                    if (inTestsList)
+                        return true;
+                }
+                // 3. Doctor is globally assigned to the lab test via test.assignedDoctors JSON
+                if (b.test && Array.isArray(b.test.assignedDoctors)) {
+                    const inTestDoctors = b.test.assignedDoctors.some((d) => {
+                        if (typeof d === "string")
+                            return d === docId || d === userId;
+                        if (d && typeof d === "object")
+                            return d.value === docId || d.value === userId;
+                        return false;
+                    });
+                    if (inTestDoctors)
+                        return true;
+                }
+                return false;
             });
         }
         else if (req.user?.role === "PATIENT" && req.user?.patientId) {
