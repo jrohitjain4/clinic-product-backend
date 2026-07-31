@@ -35,13 +35,59 @@ const modeFromAppointmentType = (appointmentType?: string | null) => {
 const normalizeStatus = (status?: string) => {
   if (!status || status === "Select") return "Schedule";
   if (status === "Scheduled") return "Schedule";
+  // Legacy alias — form never had "Completed"
+  if (status === "Completed") return "Checked Out";
+  // Follow-up is tracked via isFollowUp, not status
+  if (status === "Follow-up") return "Schedule";
   return VALID_STATUSES.includes(status) ? status : "Schedule";
+};
+
+/** Display/API status: only values used in Add Appointment */
+const displayStatus = (status?: string | null) => {
+  if (!status) return "Schedule";
+  if (status === "Completed") return "Checked Out";
+  if (status === "Follow-up" || status === "Scheduled") return "Schedule";
+  return VALID_STATUSES.includes(status) ? status : "Schedule";
+};
+
+/**
+ * Business rule (Add Appointment help text):
+ * - Schedule  → payment Unpaid (booking without payment)
+ * - Confirmed / Checked In / Checked Out → payment Paid
+ * - Free follow-ups stay Free
+ */
+const resolvePaymentStatus = (opts: {
+  status: string;
+  paymentStatus?: string | null;
+  existingPaymentStatus?: string | null;
+}): string => {
+  const explicit = opts.paymentStatus;
+  const existing = opts.existingPaymentStatus;
+  const isFree =
+    explicit === "Free" ||
+    (explicit == null && existing === "Free");
+
+  if (isFree) return "Free";
+
+  if (opts.status === "Schedule") return "Unpaid";
+  if (
+    opts.status === "Confirmed" ||
+    opts.status === "Checked In" ||
+    opts.status === "Checked Out"
+  ) {
+    return "Paid";
+  }
+
+  if (explicit != null && explicit !== "") return explicit;
+  if (existing != null && existing !== "") return existing;
+  return "Unpaid";
 };
 
 const patientInclude = {
   patient: {
     select: {
       id: true,
+      patientCode: true,
       firstName: true,
       lastName: true,
       phone: true,
@@ -49,11 +95,13 @@ const patientInclude = {
       profileImage: true,
       gender: true,
       dob: true,
+      age: true,
       bloodGroup: true,
       address1: true,
       address2: true,
       city: true,
       state: true,
+      country: true,
       pincode: true,
       maritalStatus: true,
     },
@@ -66,6 +114,7 @@ const doctorInclude = {
       id: true,
       fullName: true,
       profileImage: true,
+      signatureImage: true,
       phone: true,
       email: true,
       consultationCharge: true,
@@ -119,6 +168,7 @@ const appointmentIncludes = {
     select: {
       id: true,
       name: true,
+      username: true,
       phone: true,
       ownerEmail: true,
       ownerName: true,
@@ -132,7 +182,8 @@ const appointmentIncludes = {
         select: {
           logo: true,
           email: true,
-          whatsapp: true
+          whatsapp: true,
+          tagline: true,
         }
       }
     }
@@ -141,6 +192,7 @@ const appointmentIncludes = {
 
 const enrichAppointment = (a: any) => ({
   ...a,
+  status: displayStatus(a.status),
   dateTimeLabel: formatDateTimeLabel(a.scheduledAt),
   patientName: a.patient ? `${a.patient.firstName} ${a.patient.lastName}`.trim() : "(Patient Deleted)",
   doctorName: a.doctor?.fullName || "(Doctor Deleted)",
@@ -287,6 +339,13 @@ const ensureAppointmentInvoice = async (appointmentId: string, clinicId: string)
         }
       }
     });
+
+    if (appointment.paymentStatus !== "Paid" && appointment.paymentStatus !== "Free") {
+      await prisma.appointment.update({
+        where: { id: appointment.id },
+        data: { paymentStatus: "Paid" },
+      });
+    }
   } catch (err) {
     console.error("Auto-invoice creation failed:", err);
   }
@@ -623,32 +682,11 @@ export const createAppointment = async (req: AuthenticatedRequest, res: Response
     }
 
     const resolvedMode = mode || modeFromAppointmentType(appointmentType);
-    let resolvedStatus = normalizeStatus(status);
-
-    // ── Self-correct: Check for Follow-up status ──────────────────
-    if (resolvedStatus === "Schedule" || resolvedStatus === "Confirmed") {
-      if (doctor.followUpEnabled && doctor.followUpValidityDays) {
-        const lastAppt = await prisma.appointment.findFirst({
-          where: {
-            patientId,
-            doctorId,
-            clinicId,
-            status: "Checked Out",
-            scheduledAt: { lt: scheduled },
-          },
-          orderBy: { scheduledAt: "desc" },
-        });
-
-        if (lastAppt) {
-          const diffDays =
-            (scheduled.getTime() - lastAppt.scheduledAt.getTime()) /
-            (1000 * 60 * 60 * 24);
-          if (diffDays <= doctor.followUpValidityDays) {
-            resolvedStatus = "Follow-up";
-          }
-        }
-      }
-    }
+    const resolvedStatus = normalizeStatus(status);
+    const resolvedPaymentStatus = resolvePaymentStatus({
+      status: resolvedStatus,
+      paymentStatus,
+    });
 
     const appointment = await prisma.appointment.create({
       data: {
@@ -666,7 +704,7 @@ export const createAppointment = async (req: AuthenticatedRequest, res: Response
         clinicId,
         isFollowUp: isFollowUp || false,
         followUpStatus: followUpStatus || null,
-        paymentStatus: paymentStatus || null,
+        paymentStatus: resolvedPaymentStatus,
         parentAppointmentId: parentAppointmentId || null,
         serviceIds: resolvedServiceIds,
         onlineLink: onlineLink || null,
@@ -848,6 +886,12 @@ export const updateAppointment = async (req: AuthenticatedRequest, res: Response
     const resolvedStatus =
       status !== undefined ? normalizeStatus(status) : existing.status;
 
+    const resolvedPaymentStatus = resolvePaymentStatus({
+      status: resolvedStatus,
+      paymentStatus: paymentStatus !== undefined ? paymentStatus : null,
+      existingPaymentStatus: existing.paymentStatus,
+    });
+
     const resolvedServiceIds: string[] = Array.isArray(serviceIds)
       ? serviceIds
       : (existing as any).serviceIds || [];
@@ -880,7 +924,7 @@ export const updateAppointment = async (req: AuthenticatedRequest, res: Response
         location: location !== undefined ? location || null : existing.location,
         isFollowUp: isFollowUp !== undefined ? isFollowUp : existing.isFollowUp,
         followUpStatus: followUpStatus !== undefined ? followUpStatus : existing.followUpStatus,
-        paymentStatus: paymentStatus !== undefined ? paymentStatus : existing.paymentStatus,
+        paymentStatus: resolvedPaymentStatus,
         parentAppointmentId: parentAppointmentId !== undefined ? parentAppointmentId : existing.parentAppointmentId,
         serviceIds: resolvedServiceIds,
         onlineLink: onlineLink !== undefined ? onlineLink : existing.onlineLink,

@@ -594,7 +594,7 @@ async function main() {
   });
 
   // 13. APPOINTMENTS
-  // Appointment 1 - Completed Yesterday (Dr. Sarah Connor, Patient: John Doe)
+  // Appointment 1 - Checked Out Yesterday (Dr. Sarah Connor, Patient: John Doe)
   const appt1 = await prisma.appointment.create({
     data: {
       appointmentCode: "AP055",
@@ -604,7 +604,7 @@ async function main() {
       scheduledAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), // Yesterday
       mode: "In-person",
       appointmentType: "Standard Visit",
-      status: "Completed",
+      status: "Checked Out",
       reason: "Routine Heart Checkup",
       location: "Clinic Main Office",
       clinicId: clinic.id,
@@ -715,7 +715,7 @@ async function main() {
       scheduledAt: new Date(Date.now() - 5 * 60 * 60 * 1000), // Today 5 hours ago
       mode: "In-person",
       appointmentType: "Walk-in",
-      status: "Completed",
+      status: "Checked Out",
       reason: "Joint sprain emergency",
       location: "Room 102",
       clinicId: clinic.id,
