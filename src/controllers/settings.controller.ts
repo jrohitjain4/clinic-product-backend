@@ -72,3 +72,42 @@ export const updateWorkingDaysConfig = async (req: AuthenticatedRequest, res: Re
         res.status(500).json({ message: error.message });
     }
 };
+
+export const getIPDAdmissionFee = async (req: AuthenticatedRequest, res: Response) => {
+    try {
+        const clinicId = req.user?.clinicId;
+        if (!clinicId) return res.status(403).json({ message: "Clinic not found" });
+
+        const clinic = await prisma.clinic.findUnique({
+            where: { id: clinicId },
+            select: { ipdAdmissionFee: true }
+        });
+
+        if (!clinic) return res.status(404).json({ message: "Clinic not found" });
+        res.json({ ipdAdmissionFee: clinic.ipdAdmissionFee });
+    } catch (error: any) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+export const updateIPDAdmissionFee = async (req: AuthenticatedRequest, res: Response) => {
+    try {
+        const clinicId = req.user?.clinicId;
+        if (!clinicId) return res.status(403).json({ message: "Clinic not found" });
+
+        const { ipdAdmissionFee } = req.body;
+        if (ipdAdmissionFee === undefined || isNaN(parseFloat(ipdAdmissionFee))) {
+            return res.status(400).json({ message: "Valid admission fee is required" });
+        }
+
+        const clinic = await prisma.clinic.update({
+            where: { id: clinicId },
+            data: { ipdAdmissionFee: parseFloat(ipdAdmissionFee) },
+            select: { ipdAdmissionFee: true }
+        });
+
+        res.json({ message: "Admission fee saved successfully", ipdAdmissionFee: clinic.ipdAdmissionFee });
+    } catch (error: any) {
+        res.status(500).json({ message: error.message });
+    }
+};
