@@ -184,6 +184,10 @@ export const createIPDAdmission = async (req: AuthenticatedRequest, res: Respons
       otherCharges,
       advancePaid,
       paymentMethod,
+      status, // Admitted, Incomplete, etc.
+      referralAppointmentId,
+      referralAppointmentCode,
+      treatmentReason,
     } = req.body;
 
     if (!patientId) {
@@ -229,6 +233,7 @@ export const createIPDAdmission = async (req: AuthenticatedRequest, res: Respons
         wardId: wardId || null,
         treatmentId: treatmentId || null,
         diagnosis: diagnosis || null,
+        status: status || "Admitted",
         admissionFee: admFee,
         treatmentFee: trtFee,
         wardCharge: effectiveWardCharge,
@@ -242,6 +247,9 @@ export const createIPDAdmission = async (req: AuthenticatedRequest, res: Respons
         dueAmount: dueAmt,
         paymentStatus: pStatus,
         paymentMethod: paymentMethod || "Cash",
+        referralAppointmentId: referralAppointmentId || null,
+        referralAppointmentCode: referralAppointmentCode || null,
+        treatmentReason: treatmentReason || null,
         clinicId,
       },
       include: {
@@ -250,84 +258,87 @@ export const createIPDAdmission = async (req: AuthenticatedRequest, res: Respons
         ward: { select: { id: true, wardName: true, wardCode: true } },
         treatment: { select: { id: true, procedureName: true } },
       },
-      });
+    });
 
-    // Increment Ward Occupancy if assigned
-    if (wardId) {
-      await prisma.iPDWard.update({
-        where: { id: wardId },
-        data: { occupiedBeds: { increment: 1 } },
-      }).catch(() => {});
-    }
+    // Only update ward occupancy and create invoices if status is not Incomplete
+    if (status !== "Incomplete") {
+      // Increment Ward Occupancy if assigned
+      if (wardId) {
+        await prisma.iPDWard.update({
+          where: { id: wardId },
+          data: { occupiedBeds: { increment: 1 } },
+        }).catch(() => {});
+      }
 
-    // Auto-generate Invoices at Admission
-    let invCount = await prisma.iPDInvoice.count({ where: { clinicId } });
+      // Auto-generate Invoices at Admission
+      let invCount = await prisma.iPDInvoice.count({ where: { clinicId } });
 
-    const initialTotal = admFee + trtFee + docVisitFee + othFee;
-    const hasInitialCharges = initialTotal > 0 || (advPaid > 0 && effectiveWardCharge === 0 && nurseFee === 0);
+      const initialTotal = admFee + trtFee + docVisitFee + othFee;
+      const hasInitialCharges = initialTotal > 0 || (advPaid > 0 && effectiveWardCharge === 0 && nurseFee === 0);
 
-    if (hasInitialCharges) {
-      invCount++;
-      const invoiceNumber = `IPD-INV-${String(invCount).padStart(4, "0")}`;
-      const initialPaid = Math.min(initialTotal, advPaid);
-      const initialDue = Math.max(0, initialTotal - initialPaid);
-      const initialStatus = initialPaid >= initialTotal && initialTotal > 0 ? "Paid" : initialPaid > 0 ? "Partial" : "Unpaid";
+      if (hasInitialCharges) {
+        invCount++;
+        const invoiceNumber = `IPD-INV-${String(invCount).padStart(4, "0")}`;
+        const initialPaid = Math.min(initialTotal, advPaid);
+        const initialDue = Math.max(0, initialTotal - initialPaid);
+        const initialStatus = initialPaid >= initialTotal && initialTotal > 0 ? "Paid" : initialPaid > 0 ? "Partial" : "Unpaid";
 
-      await prisma.iPDInvoice.create({
-        data: {
-          invoiceNumber,
-          admissionId: admission.id,
-          patientId,
-          totalAmount: initialTotal,
-          paidAmount: initialPaid,
-          dueAmount: initialDue,
-          paymentStatus: initialStatus,
-          paymentMethod: paymentMethod || "Cash",
-          notes: `Admission Initial Deposit & Registration Invoice for ${admissionCode}`,
-          clinicId,
-          items: {
-            create: [
-              ...(admFee > 0 ? [{ itemType: "Admission Fee", itemName: "IPD Admission Registration Fee", unitPrice: admFee, quantity: 1, totalPrice: admFee }] : []),
-              ...(trtFee > 0 ? [{ itemType: "Treatment Fee", itemName: "Treatment / Surgery Charges", unitPrice: trtFee, quantity: 1, totalPrice: trtFee }] : []),
-              ...(docVisitFee > 0 ? [{ itemType: "Doctor Visit", itemName: "Doctor Visit / Consultation Fee", unitPrice: docVisitFee, quantity: 1, totalPrice: docVisitFee }] : []),
-              ...(othFee > 0 ? [{ itemType: "Other", itemName: "Additional / Miscellaneous Charges", unitPrice: othFee, quantity: 1, totalPrice: othFee }] : []),
-            ]
+        await prisma.iPDInvoice.create({
+          data: {
+            invoiceNumber,
+            admissionId: admission.id,
+            patientId,
+            totalAmount: initialTotal,
+            paidAmount: initialPaid,
+            dueAmount: initialDue,
+            paymentStatus: initialStatus,
+            paymentMethod: paymentMethod || "Cash",
+            notes: `Admission Initial Deposit & Registration Invoice for ${admissionCode}`,
+            clinicId,
+            items: {
+              create: [
+                ...(admFee > 0 ? [{ itemType: "Admission Fee", itemName: "IPD Admission Registration Fee", unitPrice: admFee, quantity: 1, totalPrice: admFee }] : []),
+                ...(trtFee > 0 ? [{ itemType: "Treatment Fee", itemName: "Treatment / Surgery Charges", unitPrice: trtFee, quantity: 1, totalPrice: trtFee }] : []),
+                ...(docVisitFee > 0 ? [{ itemType: "Doctor Visit", itemName: "Doctor Visit / Consultation Fee", unitPrice: docVisitFee, quantity: 1, totalPrice: docVisitFee }] : []),
+                ...(othFee > 0 ? [{ itemType: "Other", itemName: "Additional / Miscellaneous Charges", unitPrice: othFee, quantity: 1, totalPrice: othFee }] : []),
+              ]
+            }
           }
-        }
-      });
-    }
+        });
+      }
 
-    const wardTotal = effectiveWardCharge + nurseFee;
-    const hasWardCharges = wardTotal > 0;
+      const wardTotal = effectiveWardCharge + nurseFee;
+      const hasWardCharges = wardTotal > 0;
 
-    if (hasWardCharges) {
-      invCount++;
-      const invoiceNumber = `IPD-INV-${String(invCount).padStart(4, "0")}`;
-      const leftoverAdv = Math.max(0, advPaid - initialTotal);
-      const wardPaid = Math.min(wardTotal, leftoverAdv);
-      const wardDue = Math.max(0, wardTotal - wardPaid);
-      const wardStatus = wardPaid >= wardTotal && wardTotal > 0 ? "Paid" : wardPaid > 0 ? "Partial" : "Unpaid";
+      if (hasWardCharges) {
+        invCount++;
+        const invoiceNumber = `IPD-INV-${String(invCount).padStart(4, "0")}`;
+        const leftoverAdv = Math.max(0, advPaid - initialTotal);
+        const wardPaid = Math.min(wardTotal, leftoverAdv);
+        const wardDue = Math.max(0, wardTotal - wardPaid);
+        const wardStatus = wardPaid >= wardTotal && wardTotal > 0 ? "Paid" : wardPaid > 0 ? "Partial" : "Unpaid";
 
-      await prisma.iPDInvoice.create({
-        data: {
-          invoiceNumber,
-          admissionId: admission.id,
-          patientId,
-          totalAmount: wardTotal,
-          paidAmount: wardPaid,
-          dueAmount: wardDue,
-          paymentStatus: wardStatus,
-          paymentMethod: paymentMethod || "Cash",
-          notes: `Ward Stay & Nursing Charges Invoice for ${admissionCode}`,
-          clinicId,
-          items: {
-            create: [
-              ...(effectiveWardCharge > 0 ? [{ itemType: "Ward Charge", itemName: `Ward Stay Charge (Day 1 - ${wardName || "Assigned Ward"})`, unitPrice: effectiveWardCharge, quantity: 1, totalPrice: effectiveWardCharge }] : []),
-              ...(nurseFee > 0 ? [{ itemType: "Nurse Visit", itemName: "Nursing Care Fee", unitPrice: nurseFee, quantity: 1, totalPrice: nurseFee }] : []),
-            ]
+        await prisma.iPDInvoice.create({
+          data: {
+            invoiceNumber,
+            admissionId: admission.id,
+            patientId,
+            totalAmount: wardTotal,
+            paidAmount: wardPaid,
+            dueAmount: wardDue,
+            paymentStatus: wardStatus,
+            paymentMethod: paymentMethod || "Cash",
+            notes: `Ward Stay & Nursing Charges Invoice for ${admissionCode}`,
+            clinicId,
+            items: {
+              create: [
+                ...(effectiveWardCharge > 0 ? [{ itemType: "Ward Charge", itemName: `Ward Stay Charge (Day 1 - ${wardName || "Assigned Ward"})`, unitPrice: effectiveWardCharge, quantity: 1, totalPrice: effectiveWardCharge }] : []),
+                ...(nurseFee > 0 ? [{ itemType: "Nurse Visit", itemName: "Nursing Care Fee", unitPrice: nurseFee, quantity: 1, totalPrice: nurseFee }] : []),
+              ]
+            }
           }
-        }
-      });
+        });
+      }
     }
 
     res.status(201).json(admission);

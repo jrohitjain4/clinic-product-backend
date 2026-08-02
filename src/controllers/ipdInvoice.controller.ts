@@ -43,6 +43,7 @@ export const createIPDInvoice = async (req: AuthenticatedRequest, res: Response)
       paymentMethod,
       paidAmount,
       notes,
+      invoiceDate,
     } = req.body;
 
     if (!admissionId) {
@@ -99,6 +100,7 @@ export const createIPDInvoice = async (req: AuthenticatedRequest, res: Response)
         items: {
           create: formattedItems,
         },
+        ...(invoiceDate ? { createdAt: new Date(invoiceDate) } : {}),
       },
       include: {
         patient: { select: { id: true, firstName: true, lastName: true, patientCode: true } },

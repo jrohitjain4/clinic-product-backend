@@ -51,6 +51,7 @@ model Clinic {
   packageStartsAt       DateTime?
   packageExpiresAt      DateTime?
   isTrialUsed           Boolean                @default(false)
+  ipdAdmissionFee       Float                  @default(500)
   createdAt             DateTime               @default(now())
   updatedAt             DateTime               @updatedAt
   users                 User[]
@@ -1235,6 +1236,10 @@ model IPDAdmission {
   dischargeNotes       String?
   paymentStatus        String        @default("Unpaid") // Unpaid, Partial, Paid
   paymentMethod        String?       @default("Cash") // Cash, Card, UPI, Net Banking
+
+  referralAppointmentId String?
+  referralAppointmentCode String?
+  treatmentReason      String?
 
   invoices             IPDInvoice[]
   ipdPrescriptions     IPDPrescription[]
