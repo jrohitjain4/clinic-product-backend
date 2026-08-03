@@ -223,6 +223,9 @@ export const createIPDAdmission = async (req: AuthenticatedRequest, res: Respons
     const count = await prisma.iPDAdmission.count({ where: { clinicId } });
     const admissionCode = `IPD-${new Date().getFullYear()}-${String(count + 1).padStart(4, "0")}`;
 
+    // Enforce "Incomplete" status if referred from OPD, if explicitly requested, or if no ward is assigned yet
+    const finalStatus = (status === "Incomplete" || admissionType === "Refer to OPD" || !wardId) ? "Incomplete" : (status || "Admitted");
+
     // Create IPD Admission Record
     const admission = await prisma.iPDAdmission.create({
       data: {
@@ -233,7 +236,7 @@ export const createIPDAdmission = async (req: AuthenticatedRequest, res: Respons
         wardId: wardId || null,
         treatmentId: treatmentId || null,
         diagnosis: diagnosis || null,
-        status: status || "Admitted",
+        status: finalStatus,
         admissionFee: admFee,
         treatmentFee: trtFee,
         wardCharge: effectiveWardCharge,
