@@ -183,3 +183,21 @@ export const addIPDInvoicePayment = async (req: AuthenticatedRequest, res: Respo
     res.status(500).json({ message: err.message });
   }
 };
+
+// POST /api/ipd/invoices/trigger-daily-ward-charges (Manual trigger for daily 11 AM ward charges)
+export const triggerDailyWardCharges = async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const clinicId = req.user?.clinicId;
+    if (!clinicId) return res.status(403).json({ message: "No clinic associated" });
+
+    const { processDailyWardCharges } = await import("../services/wardChargeCron.service");
+    const result = await processDailyWardCharges(clinicId);
+
+    res.json({
+      message: `Successfully processed daily ward charges. ${result.generatedCount} invoice(s) generated totaling ₹${result.totalAmountGenerated}`,
+      result,
+    });
+  } catch (err: any) {
+    res.status(500).json({ message: err.message });
+  }
+};
