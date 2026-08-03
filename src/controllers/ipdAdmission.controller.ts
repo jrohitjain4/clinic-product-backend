@@ -363,22 +363,92 @@ export const updateIPDAdmission = async (req: AuthenticatedRequest, res: Respons
       status,
       dischargeDate,
       diagnosis,
+      patientId,
+      doctorId,
+      wardId,
+      treatmentId,
+      treatmentReason,
+      admissionFee,
+      treatmentFee,
+      wardCharge,
+      doctorVisitCharge,
+      nursingFee,
+      otherCharges,
+      advancePaid,
+      paymentMethod,
       totalAmount,
       totalPaid,
       dueAmount,
       paymentStatus,
     } = req.body;
 
+    const admFee = admissionFee !== undefined ? parseFloat(admissionFee) : existing.admissionFee;
+    const trtFee = treatmentFee !== undefined ? parseFloat(treatmentFee) : existing.treatmentFee;
+    const wCharge = wardCharge !== undefined ? parseFloat(wardCharge) : existing.wardCharge;
+    const docVisitFee = doctorVisitCharge !== undefined ? parseFloat(doctorVisitCharge) : existing.doctorVisitCharge;
+    const nurseFee = nursingFee !== undefined ? parseFloat(nursingFee) : existing.nursingFee;
+    const othFee = otherCharges !== undefined ? parseFloat(otherCharges) : existing.otherCharges;
+    const advPaid = advancePaid !== undefined ? parseFloat(advancePaid) : existing.advancePaid;
+
+    let effectiveWardCharge = wCharge;
+    let wardName = "";
+    const targetWardId = wardId !== undefined ? (wardId || null) : existing.wardId;
+
+    if (targetWardId) {
+      const assignedWardObj = await prisma.iPDWard.findUnique({ where: { id: targetWardId } });
+      if (assignedWardObj) {
+        wardName = assignedWardObj.wardName;
+        if (effectiveWardCharge === 0) {
+          effectiveWardCharge = assignedWardObj.chargePerNight || 0;
+        }
+      }
+    }
+
+    // Increment ward occupiedBeds if ward was just assigned
+    if (targetWardId && targetWardId !== existing.wardId) {
+      await prisma.iPDWard.update({
+        where: { id: targetWardId },
+        data: { occupiedBeds: { increment: 1 } },
+      }).catch(() => {});
+    }
+
+    const totalEstimated = admFee + trtFee + effectiveWardCharge + docVisitFee + nurseFee + othFee;
+    const dueAmt = Math.max(0, totalEstimated - advPaid);
+    const pStatus = advPaid >= totalEstimated && totalEstimated > 0 ? "Paid" : advPaid > 0 ? "Partial" : "Unpaid";
+
+    const targetStatus = status || (targetWardId ? "Admitted" : existing.status);
+
     const updated = await prisma.iPDAdmission.update({
       where: { id },
       data: {
-        status: status || existing.status,
+        status: targetStatus,
         dischargeDate: dischargeDate ? new Date(dischargeDate) : existing.dischargeDate,
-        diagnosis: diagnosis !== undefined ? diagnosis : existing.diagnosis,
-        totalAmount: totalAmount !== undefined ? parseFloat(totalAmount) : existing.totalAmount,
-        totalPaid: totalPaid !== undefined ? parseFloat(totalPaid) : existing.totalPaid,
-        dueAmount: dueAmount !== undefined ? parseFloat(dueAmount) : existing.dueAmount,
-        paymentStatus: paymentStatus || existing.paymentStatus,
+        patientId: patientId || existing.patientId,
+        doctorId: doctorId !== undefined ? (doctorId || null) : existing.doctorId,
+        wardId: targetWardId,
+        treatmentId: treatmentId !== undefined ? (treatmentId || null) : existing.treatmentId,
+        treatmentReason: treatmentReason !== undefined ? (treatmentReason || null) : existing.treatmentReason,
+        diagnosis: diagnosis !== undefined ? (diagnosis || null) : existing.diagnosis,
+        admissionFee: admFee,
+        treatmentFee: trtFee,
+        wardCharge: effectiveWardCharge,
+        doctorVisitCharge: docVisitFee,
+        nursingFee: nurseFee,
+        otherCharges: othFee,
+        totalEstimatedAmount: totalEstimated,
+        advancePaid: advPaid,
+        totalPaid: advPaid,
+        totalAmount: totalAmount !== undefined ? parseFloat(totalAmount) : totalEstimated,
+        dueAmount: dueAmount !== undefined ? parseFloat(dueAmount) : dueAmt,
+        paymentStatus: paymentStatus || pStatus,
+        paymentMethod: paymentMethod || existing.paymentMethod,
+      },
+      include: {
+        patient: true,
+        doctor: true,
+        ward: true,
+        treatment: true,
+        invoices: true,
       },
     });
 
