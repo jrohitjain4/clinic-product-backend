@@ -149,11 +149,14 @@ app.get("/", (req, res) => {
   res.json({ message: "Clinic Management SaaS API is running perfectly!" });
 });
 
+import { startDailyWardChargeScheduler } from "./services/wardChargeCron.service";
+
 // Start Server
 app.listen(PORT, () => {
   console.log(`===============================================`);
   console.log(`🚀 Server running on: http://localhost:${PORT}`);
   console.log(`===============================================`);
+  startDailyWardChargeScheduler();
 });
 
 // Global Error Handler — must be last middleware
