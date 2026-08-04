@@ -60,19 +60,46 @@ export const getIPDAdmissions = async (req: AuthenticatedRequest, res: Response)
           select: {
             id: true,
             firstName: true,
+            middleName: true,
             lastName: true,
             patientCode: true,
             phone: true,
+            alternateMobile: true,
+            email: true,
             gender: true,
             age: true,
+            dob: true,
+            bloodGroup: true,
+            maritalStatus: true,
+            address1: true,
+            address2: true,
+            city: true,
+            state: true,
+            country: true,
+            pincode: true,
+            status: true,
+            profileImage: true,
+            emergencyContactName: true,
+            emergencyContactPhone: true,
+            emergencyContactRelation: true,
           },
         },
         doctor: {
           select: {
             id: true,
             fullName: true,
+            doctorCode: true,
             doctorType: true,
+            phone: true,
+            email: true,
+            qualification: true,
+            yearOfExperience: true,
+            medicalLicenseNumber: true,
             ipdVisitCharge: true,
+            consultationCharge: true,
+            profileImage: true,
+            department: { select: { id: true, name: true } },
+            designation: { select: { id: true, name: true } },
           },
         },
         ward: {
@@ -85,13 +112,28 @@ export const getIPDAdmissions = async (req: AuthenticatedRequest, res: Response)
             nursingChargePerNight: true,
             totalBeds: true,
             occupiedBeds: true,
+            floorNumber: true,
+            amenities: true,
+            description: true,
+            status: true,
           },
         },
         treatment: {
           select: {
             id: true,
             procedureName: true,
+            procedureCode: true,
+            category: true,
+            procedureFee: true,
+            otCharges: true,
+            anaesthesiaCharges: true,
+            surgeonCharges: true,
+            assistantSurgeonCharges: true,
             totalPrice: true,
+            estimatedDuration: true,
+            description: true,
+            department: { select: { id: true, name: true } },
+            categoryRef: { select: { id: true, name: true } },
           },
         },
         invoices: {
@@ -140,24 +182,64 @@ export const getIPDAdmissionById = async (req: AuthenticatedRequest, res: Respon
       where: { id, clinicId: clinicId! },
       include: {
         patient: true,
-        doctor: true,
+        doctor: {
+          include: {
+            department: { select: { id: true, name: true } },
+            designation: { select: { id: true, name: true } },
+            specializations: { select: { id: true, name: true } },
+          },
+        },
         ward: true,
-        treatment: true,
+        treatment: {
+          include: {
+            department: { select: { id: true, name: true } },
+            categoryRef: { select: { id: true, name: true } },
+          },
+        },
         invoices: {
           include: { items: true },
           orderBy: { createdAt: "desc" },
         },
         ipdPrescriptions: {
           include: {
-            doctor: { select: { fullName: true } }
+            doctor: { select: { id: true, fullName: true, phone: true, email: true } },
           },
-          orderBy: { createdAt: "desc" }
+          orderBy: { createdAt: "desc" },
+        },
+        clinic: {
+          select: {
+            id: true,
+            name: true,
+            phone: true,
+            ownerEmail: true,
+            whatsappNumber: true,
+            addressLine1: true,
+            addressLine2: true,
+            city: true,
+            state: true,
+            country: true,
+            pincode: true,
+            gstNumber: true,
+            landingPage: true,
+          },
         },
       },
     });
 
     if (!admission) return res.status(404).json({ message: "IPD Admission record not found" });
-    res.json(admission);
+
+    const computed = computeRunningWardCharges(admission);
+    const runningDueAmount = Math.max(
+      0,
+      computed.runningTotalWithWard - (admission.totalPaid || 0) - (admission.discountAmount || 0)
+    );
+
+    res.json({
+      ...admission,
+      estimatedTotal: admission.totalEstimatedAmount,
+      totalBilled: admission.totalEstimatedAmount,
+      computed: { ...computed, runningDueAmount },
+    });
   } catch (err: any) {
     res.status(500).json({ message: err.message });
   }
