@@ -229,9 +229,6 @@ export const createPatient = async (req: AuthenticatedRequest, res: Response) =>
     if (!lastName?.trim()) {
       return res.status(400).json({ message: "Last name is required" });
     }
-    if (!address1?.trim()) {
-      return res.status(400).json({ message: "Address Line 1 is required" });
-    }
 
     // 🔴 P0 Duplicate Patient Detection
     if (phone) {

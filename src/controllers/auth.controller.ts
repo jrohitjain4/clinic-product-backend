@@ -686,7 +686,13 @@ export const login = async (req: Request, res: Response) => {
     let permissions: any = null;
     if ((user.role as any) === "STAFF") {
       const staff = await prisma.staff.findFirst({
-        where: { email: user.email, clinicId: user.clinicId || undefined }
+        where: {
+          clinicId: user.clinicId || undefined,
+          OR: [
+            ...(user.email ? [{ email: { equals: user.email, mode: "insensitive" as const } }] : []),
+            ...(user.phone ? [{ phone: user.phone }] : [])
+          ]
+        }
       });
       if (staff?.role) {
         const clinicRole = await prisma.clinicRole.findFirst({
