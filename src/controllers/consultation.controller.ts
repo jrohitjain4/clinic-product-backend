@@ -157,11 +157,21 @@ const computeSessionDates = (
   return dates;
 };
 
-/** Combine a date with an HH:mm time string */
+/** Combine a date with an HH:mm or hh:mm AM/PM time string */
 const combineDateAndTime = (date: Date, timeStr: string): Date => {
-  const parts = timeStr.split(":");
+  const upper = String(timeStr || "").trim().toUpperCase();
+  const isPM = /\bPM\b/.test(upper);
+  const isAM = /\bAM\b/.test(upper);
+  const cleaned = upper.replace(/\s*(AM|PM)\s*/g, "").trim();
+  const parts = cleaned.split(":");
+  let hours = parseInt(parts[0] || "0", 10) || 0;
+  const minutes = parseInt(parts[1] || "0", 10) || 0;
+  if (isPM || isAM) {
+    if (isPM && hours !== 12) hours += 12;
+    if (isAM && hours === 12) hours = 0;
+  }
   const d = new Date(date);
-  d.setHours(parseInt(parts[0] || "0"), parseInt(parts[1] || "0"), 0, 0);
+  d.setHours(hours, minutes, 0, 0);
   return d;
 };
 

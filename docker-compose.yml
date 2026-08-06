@@ -2,9 +2,10 @@
 # Usage:
 #   docker compose up -d
 #   Set DATABASE_URL in .env to:
-#   postgresql://clinic:clinic123@localhost:5432/clinic_saas_db?schema=public
+#   postgresql://clinic:clinic123@localhost:5434/clinic_saas_db?schema=public
 #   npx prisma migrate deploy
 #   npm run dev
+# Note: host port 5434 avoids conflict with local PostgreSQL on 5432/5433.
 
 services:
   postgres:
@@ -16,7 +17,7 @@ services:
       POSTGRES_PASSWORD: clinic123
       POSTGRES_DB: clinic_saas_db
     ports:
-      - "5432:5432"
+      - "5434:5432"
     volumes:
       - preclinic_pgdata:/var/lib/postgresql/data
     healthcheck:
