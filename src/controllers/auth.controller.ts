@@ -191,16 +191,27 @@ export const upgradePlan = async (req: AuthenticatedRequest, res: Response) => {
     if (!pkg) return res.status(404).json({ message: "Package not found" });
 
     const now = new Date();
-    const packageExpiresAt = new Date(now.getTime() + pkg.durationInDays * 24 * 60 * 60 * 1000);
+    let packageStartsAt = now;
+    let packageExpiresAt: Date;
+
+    if (user.clinic?.packageExpiresAt && new Date(user.clinic.packageExpiresAt) > now && user.clinic.packageId === packageId) {
+      packageStartsAt = user.clinic.packageStartsAt || now;
+      packageExpiresAt = new Date(new Date(user.clinic.packageExpiresAt).getTime() + pkg.durationInDays * 24 * 60 * 60 * 1000);
+    } else {
+      packageStartsAt = now;
+      packageExpiresAt = new Date(now.getTime() + pkg.durationInDays * 24 * 60 * 60 * 1000);
+    }
+
     const status = pkg.price === 0 ? "TRIAL" : "UPGRADED";
 
     const updatedClinic = await prisma.clinic.update({
       where: { id: user.clinicId },
       data: {
         packageId,
-        packageStartsAt: now,
+        packageStartsAt,
         packageExpiresAt,
         status: status as any,
+        isTrialUsed: true,
       },
     });
 
