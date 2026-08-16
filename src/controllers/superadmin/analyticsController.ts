@@ -19,9 +19,11 @@ export const getSuperAdminAnalytics = async (req: AuthenticatedRequest, res: Res
         let totalRevenue = 0;
         let packageSales = 0;
 
-        const transactions = clinics.filter(c => c.package).map(clinic => {
+        const transactions = clinics.filter(c => c.package && (c.status === 'UPGRADED' || c.package.price > 0)).map(clinic => {
             const price = clinic.package!.price;
-            totalRevenue += price;
+            if (clinic.status === 'UPGRADED') {
+                totalRevenue += price;
+            }
             packageSales += 1;
 
             return {
@@ -30,7 +32,7 @@ export const getSuperAdminAnalytics = async (req: AuthenticatedRequest, res: Res
                 amount: price,
                 date: clinic.packageStartsAt || clinic.createdAt,
                 packageInfo: clinic.package!.name,
-                paymentMethod: 'Stripe', // Mock payment method
+                paymentMethod: 'Razorpay',
                 status: 'Received'
             };
         });
