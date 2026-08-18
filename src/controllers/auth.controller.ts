@@ -6,7 +6,7 @@ import * as jwt from "jsonwebtoken";
 import { AuthenticatedRequest } from "../middlewares/auth.middleware";
 import prisma from "../lib/prisma";
 import { createSuperAdminNotification } from "./notification.controller";
-import { checkPhoneDuplicate } from "../utils/phoneValidation";
+import { checkPhoneDuplicate, getPhoneValidationError } from "../utils/phoneValidation";
 
 const JWT_SECRET = process.env.JWT_SECRET!; // Validated at startup in auth.middleware.ts
 
@@ -285,6 +285,9 @@ export const registerDraft = async (req: Request, res: Response) => {
     const emailExists = await prisma.user.findUnique({ where: { email } });
     if (emailExists) return res.status(400).json({ message: "This email address is already registered" });
 
+    const phoneErr = getPhoneValidationError(phone, "Mobile number", true);
+    if (phoneErr) return res.status(400).json({ message: phoneErr });
+
     const phoneExists = await checkPhoneDuplicate(phone);
     if (phoneExists) return res.status(400).json({ message: "This phone number is already registered" });
 
@@ -332,6 +335,14 @@ export const registerFull = async (req: Request, res: Response) => {
     // Check each field individually for specific error messages
     const emailExists = await prisma.user.findUnique({ where: { email } });
     if (emailExists) return res.status(400).json({ message: "This email address is already registered" });
+
+    const phoneErr = getPhoneValidationError(phone, "Mobile number", true);
+    if (phoneErr) return res.status(400).json({ message: phoneErr });
+
+    if (whatsappNumber) {
+      const waErr = getPhoneValidationError(whatsappNumber, "WhatsApp number", false);
+      if (waErr) return res.status(400).json({ message: waErr });
+    }
 
     const phoneExists = await checkPhoneDuplicate(phone);
     if (phoneExists) return res.status(400).json({ message: "This phone number is already registered" });

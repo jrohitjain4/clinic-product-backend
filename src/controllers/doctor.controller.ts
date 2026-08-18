@@ -5,7 +5,7 @@ import { randomBytes } from "crypto";
 import prisma from "../lib/prisma";
 import { createNotificationInternal } from "./notification.controller";
 import { sendEmail, sendDoctorRegistrationEmail } from "../utils/email";
-import { checkPhoneDuplicate } from "../utils/phoneValidation";
+import { checkPhoneDuplicate, getPhoneValidationError } from "../utils/phoneValidation";
 
 // GET /api/doctors
 export const getDoctors = async (req: AuthenticatedRequest, res: Response) => {
@@ -136,6 +136,13 @@ export const createDoctor = async (req: AuthenticatedRequest, res: Response) => 
             const existingByEmail = await prisma.user.findFirst({ where: { email } });
             if (existingByEmail) return res.status(400).json({ message: "Email is already registered" });
         }
+        const phoneErr = getPhoneValidationError(phone, "Doctor primary phone", true);
+        if (phoneErr) return res.status(400).json({ message: phoneErr });
+        if (alternateMobile) {
+            const altErr = getPhoneValidationError(alternateMobile, "Alternate mobile", false);
+            if (altErr) return res.status(400).json({ message: altErr });
+        }
+
         if (phone) {
             const duplicate = await checkPhoneDuplicate(phone);
             if (duplicate) return res.status(400).json({ message: "This phone number is already registered" });
@@ -325,6 +332,15 @@ export const updateDoctor = async (req: AuthenticatedRequest, res: Response) => 
 
         const existing = await prisma.doctor.findFirst({ where: { id, clinicId: clinicId! } });
         if (!existing) return res.status(404).json({ message: "Doctor not found" });
+
+        if (phone !== undefined) {
+            const phoneErr = getPhoneValidationError(phone, "Doctor primary phone", true);
+            if (phoneErr) return res.status(400).json({ message: phoneErr });
+        }
+        if (alternateMobile !== undefined && alternateMobile) {
+            const altErr = getPhoneValidationError(alternateMobile, "Alternate mobile", false);
+            if (altErr) return res.status(400).json({ message: altErr });
+        }
 
         if (phone && phone !== existing.phone) {
             const duplicate = await checkPhoneDuplicate(phone);

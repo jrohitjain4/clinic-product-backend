@@ -120,17 +120,78 @@ export const getInvoices = async (req: AuthenticatedRequest, res: Response): Pro
             ];
         }
 
-        const invoices = await prisma.invoice.findMany({
+        const standardInvoices = await prisma.invoice.findMany({
             where,
             include: {
                 patient: true,
                 items: true,
-                appointment: true
+                appointment: true,
+                clinic: {
+                    include: { landingPage: true }
+                }
             },
             orderBy: { createdAt: "desc" }
         });
 
-        res.json(invoices);
+        // Also fetch IPD Invoices if filter type is not explicitly therapy/clinic
+        let ipdInvoicesFormatted: any[] = [];
+        if (type !== "therapy" && type !== "clinic") {
+            const ipdWhere: any = {
+                clinicId,
+                ...(patientIdFilter ? { patientId: patientIdFilter } : {})
+            };
+
+            const ipdInvoices = await prisma.iPDInvoice.findMany({
+                where: ipdWhere,
+                include: {
+                    patient: true,
+                    items: true,
+                    clinic: {
+                        include: { landingPage: true }
+                    }
+                },
+                orderBy: { createdAt: "desc" }
+            });
+
+            ipdInvoicesFormatted = ipdInvoices.map((ipdInv) => {
+                const status = ipdInv.paymentStatus === "Partial" ? "Partially Paid" : ipdInv.paymentStatus;
+                return {
+                    id: ipdInv.id,
+                    invoiceCode: ipdInv.invoiceNumber,
+                    patientId: ipdInv.patientId,
+                    patient: ipdInv.patient,
+                    invoiceDate: ipdInv.invoiceDate,
+                    dueDate: ipdInv.invoiceDate,
+                    tax: 0,
+                    discount: 0,
+                    subTotal: ipdInv.totalAmount,
+                    totalAmount: ipdInv.totalAmount,
+                    amountPaid: ipdInv.paidAmount,
+                    paymentMethod: ipdInv.paymentMethod || "Cash",
+                    paymentStatus: status,
+                    otherInfo: "IPD Billing",
+                    isIPD: true,
+                    items: (ipdInv.items || []).map((item: any) => ({
+                        id: item.id,
+                        description: item.itemName,
+                        itemName: item.itemName,
+                        quantity: item.quantity,
+                        unitCost: item.unitPrice,
+                        unitPrice: item.unitPrice,
+                        amount: item.totalPrice,
+                        totalPrice: item.totalPrice,
+                    })),
+                    createdAt: ipdInv.createdAt,
+                    clinic: ipdInv.clinic,
+                };
+            });
+        }
+
+        const combined = [...standardInvoices, ...ipdInvoicesFormatted].sort((a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+
+        res.json(combined);
     } catch (error) {
         console.error("Get Invoices Error:", error);
         res.status(500).json({ message: "Failed to retrieve invoices" });
@@ -183,12 +244,63 @@ export const getInvoiceById = async (req: AuthenticatedRequest, res: Response): 
             }
         });
 
-        if (!invoice) {
-            res.status(404).json({ message: "Invoice not found" });
+        if (invoice) {
+            res.json(invoice);
             return;
         }
 
-        res.json(invoice);
+        const ipdInv = await prisma.iPDInvoice.findFirst({
+            where: {
+                id,
+                clinicId: clinicId ?? undefined,
+                ...(patientIdFilter ? { patientId: patientIdFilter } : {})
+            },
+            include: {
+                patient: true,
+                items: true,
+                clinic: {
+                    include: {
+                        landingPage: true
+                    }
+                }
+            }
+        });
+
+        if (ipdInv) {
+            const status = ipdInv.paymentStatus === "Partial" ? "Partially Paid" : ipdInv.paymentStatus;
+            res.json({
+                id: ipdInv.id,
+                invoiceCode: ipdInv.invoiceNumber,
+                patientId: ipdInv.patientId,
+                patient: ipdInv.patient,
+                invoiceDate: ipdInv.invoiceDate,
+                dueDate: ipdInv.invoiceDate,
+                tax: 0,
+                discount: 0,
+                subTotal: ipdInv.totalAmount,
+                totalAmount: ipdInv.totalAmount,
+                amountPaid: ipdInv.paidAmount,
+                paymentMethod: ipdInv.paymentMethod || "Cash",
+                paymentStatus: status,
+                otherInfo: "IPD Billing",
+                isIPD: true,
+                items: (ipdInv.items || []).map((item: any) => ({
+                    id: item.id,
+                    description: item.itemName,
+                    itemName: item.itemName,
+                    quantity: item.quantity,
+                    unitCost: item.unitPrice,
+                    unitPrice: item.unitPrice,
+                    amount: item.totalPrice,
+                    totalPrice: item.totalPrice,
+                })),
+                createdAt: ipdInv.createdAt,
+                clinic: ipdInv.clinic,
+            });
+            return;
+        }
+
+        res.status(404).json({ message: "Invoice not found" });
     } catch (error) {
         console.error("Get Invoice By ID Error:", error);
         res.status(500).json({ message: "Failed to retrieve invoice" });
@@ -202,7 +314,57 @@ export const updateInvoice = async (req: AuthenticatedRequest, res: Response): P
         if (!clinicId) { res.status(401).json({ message: "Unauthorized" }); return; }
 
         const existing = await prisma.invoice.findFirst({ where: { id, clinicId } });
-        if (!existing) { res.status(404).json({ message: "Invoice not found" }); return; }
+        if (!existing) {
+            const existingIPD = await prisma.iPDInvoice.findFirst({ where: { id, clinicId } });
+            if (existingIPD) {
+                const { paymentStatus, paymentMethod } = req.body;
+                let dbStatus = paymentStatus;
+                if (paymentStatus === "Partially Paid") dbStatus = "Partial";
+
+                const updatedIPD = await prisma.iPDInvoice.update({
+                    where: { id },
+                    data: {
+                        ...(paymentStatus ? { paymentStatus: dbStatus } : {}),
+                        ...(paymentMethod ? { paymentMethod } : {}),
+                        ...(dbStatus === "Paid" ? { paidAmount: existingIPD.totalAmount, dueAmount: 0 } : {}),
+                        ...(dbStatus === "Unpaid" ? { paidAmount: 0, dueAmount: existingIPD.totalAmount } : {})
+                    },
+                    include: { patient: true, items: true, clinic: true }
+                });
+                res.json({
+                    id: updatedIPD.id,
+                    invoiceCode: updatedIPD.invoiceNumber,
+                    patientId: updatedIPD.patientId,
+                    patient: updatedIPD.patient,
+                    invoiceDate: updatedIPD.invoiceDate,
+                    dueDate: updatedIPD.invoiceDate,
+                    tax: 0,
+                    discount: 0,
+                    subTotal: updatedIPD.totalAmount,
+                    totalAmount: updatedIPD.totalAmount,
+                    amountPaid: updatedIPD.paidAmount,
+                    paymentMethod: updatedIPD.paymentMethod || "Cash",
+                    paymentStatus: updatedIPD.paymentStatus === "Partial" ? "Partially Paid" : updatedIPD.paymentStatus,
+                    otherInfo: "IPD Billing",
+                    isIPD: true,
+                    items: (updatedIPD.items || []).map((item: any) => ({
+                        id: item.id,
+                        description: item.itemName,
+                        itemName: item.itemName,
+                        quantity: item.quantity,
+                        unitCost: item.unitPrice,
+                        unitPrice: item.unitPrice,
+                        amount: item.totalPrice,
+                        totalPrice: item.totalPrice,
+                    })),
+                    createdAt: updatedIPD.createdAt,
+                    clinic: updatedIPD.clinic,
+                });
+                return;
+            }
+            res.status(404).json({ message: "Invoice not found" });
+            return;
+        }
 
         const {
             invoiceDate, dueDate, tax, discount, subTotal,
@@ -308,6 +470,19 @@ export const deleteInvoice = async (req: AuthenticatedRequest, res: Response): P
         const { id } = req.params;
         const clinicId = req.user?.clinicId;
 
+        const existing = await prisma.invoice.findFirst({ where: { id, clinicId: clinicId ?? undefined } });
+        if (!existing) {
+            const existingIPD = await prisma.iPDInvoice.findFirst({ where: { id, clinicId: clinicId ?? undefined } });
+            if (existingIPD) {
+                await prisma.iPDInvoice.delete({ where: { id } });
+                res.json({ message: "IPD Invoice deleted successfully" });
+                return;
+            }
+            res.status(404).json({ message: "Invoice not found" });
+            return;
+        }
+
+        await prisma.invoiceItem.deleteMany({ where: { invoiceId: id } });
         await prisma.invoice.delete({
             where: { id, clinicId: clinicId ?? undefined }
         });

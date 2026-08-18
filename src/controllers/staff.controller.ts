@@ -3,7 +3,7 @@ import { AuthenticatedRequest } from "../middlewares/auth.middleware";
 import prisma from "../lib/prisma";
 import bcrypt from "bcryptjs";
 import { sendStaffWelcomeEmail } from "../utils/email";
-import { checkPhoneDuplicate } from "../utils/phoneValidation";
+import { checkPhoneDuplicate, getPhoneValidationError } from "../utils/phoneValidation";
 
 const mapStatusLabel = (status: string) =>
   status === "Active" ? "Available" : "Unavailable";
@@ -118,6 +118,10 @@ export const createStaff = async (req: AuthenticatedRequest, res: Response) => {
     }
 
     if (phone) {
+      const phoneErr = getPhoneValidationError(phone, "Staff phone number", false);
+      if (phoneErr) {
+        return res.status(400).json({ message: phoneErr });
+      }
       const duplicate = await checkPhoneDuplicate(phone);
       if (duplicate) {
         return res.status(400).json({ message: `This phone number is already registered for a ${duplicate}` });
@@ -277,6 +281,13 @@ export const updateStaff = async (req: AuthenticatedRequest, res: Response) => {
       dateOfJoining,
       status,
     } = req.body;
+
+    if (phone !== undefined && phone) {
+      const phoneErr = getPhoneValidationError(phone, "Staff phone number", false);
+      if (phoneErr) {
+        return res.status(400).json({ message: phoneErr });
+      }
+    }
 
     if (phone && phone !== existing.phone) {
       const duplicate = await checkPhoneDuplicate(phone);

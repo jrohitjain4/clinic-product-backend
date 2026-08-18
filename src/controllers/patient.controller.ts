@@ -10,7 +10,7 @@ const mapStatusLabel = (status: string) =>
   status === "Active" ? "Available" : "Unavailable";
 
 import { sendEmail, sendPatientRegistrationEmail } from "../utils/email";
-import { checkPhoneDuplicate } from "../utils/phoneValidation";
+import { checkPhoneDuplicate, getPhoneValidationError } from "../utils/phoneValidation";
 
 const normalizeStatus = (status?: string) => {
   if (!status) return "Active";
@@ -230,6 +230,19 @@ export const createPatient = async (req: AuthenticatedRequest, res: Response) =>
       return res.status(400).json({ message: "Last name is required" });
     }
 
+    const phoneErr = getPhoneValidationError(phone, "Patient primary phone", true);
+    if (phoneErr) {
+      return res.status(400).json({ message: phoneErr });
+    }
+    const altPhoneErr = getPhoneValidationError(alternateMobile, "Alternate mobile", false);
+    if (altPhoneErr) {
+      return res.status(400).json({ message: altPhoneErr });
+    }
+    const emergencyPhoneErr = getPhoneValidationError(emergencyContactPhone, "Emergency contact phone", false);
+    if (emergencyPhoneErr) {
+      return res.status(400).json({ message: emergencyPhoneErr });
+    }
+
     // 🔴 P0 Duplicate Patient Detection
     if (phone) {
       const duplicate = await checkPhoneDuplicate(phone);
@@ -438,6 +451,19 @@ export const updatePatient = async (req: AuthenticatedRequest, res: Response) =>
       suggestIPD,
       doctorIds,
     } = req.body;
+
+    if (phone !== undefined) {
+      const phoneErr = getPhoneValidationError(phone, "Patient primary phone", true);
+      if (phoneErr) return res.status(400).json({ message: phoneErr });
+    }
+    if (alternateMobile !== undefined && alternateMobile) {
+      const altPhoneErr = getPhoneValidationError(alternateMobile, "Alternate mobile", false);
+      if (altPhoneErr) return res.status(400).json({ message: altPhoneErr });
+    }
+    if (emergencyContactPhone !== undefined && emergencyContactPhone) {
+      const emergencyPhoneErr = getPhoneValidationError(emergencyContactPhone, "Emergency contact phone", false);
+      if (emergencyPhoneErr) return res.status(400).json({ message: emergencyPhoneErr });
+    }
 
     if (phone && phone !== existing.phone) {
       const duplicate = await checkPhoneDuplicate(phone);
