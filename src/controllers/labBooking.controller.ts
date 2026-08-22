@@ -13,7 +13,8 @@ const ensureLabBookingInvoice = async (bookingId: string, clinicId: string) => {
             }
         });
 
-        if (!booking || booking.status !== "Confirmed" || booking.invoice) return;
+        const isPaidStatus = booking && ["Confirmed", "Checked In", "Checked Out", "Completed"].includes(booking.status);
+        if (!booking || !isPaidStatus || booking.invoice) return;
         if (!booking.patient) return;
 
         let subTotal = 0;
@@ -166,6 +167,10 @@ export const createLabBooking = async (req: AuthenticatedRequest, res: Response)
         // Auto-generate invoice number
         const invoiceNo = `LINV-${new Date().getFullYear()}-${String(count + 1).padStart(4, "0")}`;
 
+        const bookingStatus = status || "Pending";
+        const isPaidStatus = ["Confirmed", "Checked In", "Checked Out", "Completed"].includes(bookingStatus);
+        const derivedPaymentStatus = paymentStatus || (isPaidStatus ? "Paid" : "Unpaid");
+
         const booking = await prisma.labBooking.create({
             data: {
                 bookingCode,
@@ -173,8 +178,8 @@ export const createLabBooking = async (req: AuthenticatedRequest, res: Response)
                 testId: finalTestId,
                 testsList: testsList || null,
                 scheduledAt: new Date(scheduledAt),
-                status: status || "Pending",
-                paymentStatus: paymentStatus || "Unpaid",
+                status: bookingStatus,
+                paymentStatus: derivedPaymentStatus,
                 paymentMethod: paymentMethod || null,
                 discount: parseFloat(discount) || 0,
                 tax: parseFloat(tax) || 0,
@@ -197,7 +202,7 @@ export const createLabBooking = async (req: AuthenticatedRequest, res: Response)
             },
         });
 
-        if (booking.status === "Confirmed") {
+        if (isPaidStatus || derivedPaymentStatus === "Paid") {
             await ensureLabBookingInvoice(booking.id, clinicId);
         }
 
@@ -219,12 +224,16 @@ export const updateLabBooking = async (req: AuthenticatedRequest, res: Response)
 
         const { status, testsList, paymentStatus, paymentMethod, discount, tax, totalAmount, scheduledAt, sessionSlot, assignedUserId, remarks, referredBy } = req.body;
 
+        const isPaidStatus = status !== undefined && ["Confirmed", "Checked In", "Checked Out", "Completed"].includes(status);
+        const isUnpaidStatus = status !== undefined && (status === "Schedule" || status === "Pending");
+        const derivedPaymentStatus = paymentStatus !== undefined ? paymentStatus : (isPaidStatus ? "Paid" : (isUnpaidStatus ? "Unpaid" : undefined));
+
         const updated = await prisma.labBooking.update({
             where: { id },
             data: {
                 ...(status !== undefined && { status }),
                 ...(testsList !== undefined && { testsList }),
-                ...(paymentStatus !== undefined && { paymentStatus }),
+                ...(derivedPaymentStatus !== undefined && { paymentStatus: derivedPaymentStatus }),
                 ...(paymentMethod !== undefined && { paymentMethod }),
                 ...(discount !== undefined && { discount: parseFloat(discount) }),
                 ...(tax !== undefined && { tax: parseFloat(tax) }),
@@ -246,7 +255,7 @@ export const updateLabBooking = async (req: AuthenticatedRequest, res: Response)
             },
         });
 
-        if (updated.status === "Confirmed") {
+        if (["Confirmed", "Checked In", "Checked Out", "Completed"].includes(updated.status) || updated.paymentStatus === "Paid") {
             await ensureLabBookingInvoice(updated.id, clinicId);
         }
 
@@ -255,6 +264,7 @@ export const updateLabBooking = async (req: AuthenticatedRequest, res: Response)
         res.status(500).json({ message: err.message });
     }
 };
+
 
 // DELETE /api/lab-bookings/:id
 export const deleteLabBooking = async (req: AuthenticatedRequest, res: Response) => {
