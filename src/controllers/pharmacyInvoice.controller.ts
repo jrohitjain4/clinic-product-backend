@@ -176,7 +176,7 @@ export const createPharmacyInvoice = async (req: AuthenticatedRequest, res: Resp
                     tax: parseFloat(tax) || 0,
                     subTotal: parseFloat(subTotal) || 0,
                     totalAmount: parseFloat(totalAmount) || 0,
-                    paymentMethod: paymentMethod || "Cash",
+                    paymentMethod: paymentStatus === "Unpaid" ? "" : (paymentMethod || "Cash"),
                     paymentStatus: paymentStatus || "Paid",
                     clinicId,
                 }

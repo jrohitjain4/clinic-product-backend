@@ -90,7 +90,7 @@ const createRazorpayOrder = async (req, res) => {
         const options = {
             amount: amountInPaise,
             currency: "INR",
-            receipt: `receipt_pkg_${packageId}_${Date.now()}`,
+            receipt: `rcpt_${packageId.slice(-8)}_${Date.now()}`,
         };
         const order = await razorpay.orders.create(options);
         res.json({
@@ -110,9 +110,12 @@ exports.createRazorpayOrder = createRazorpayOrder;
 // POST /api/payments/verify
 const verifyRazorpayPayment = async (req, res) => {
     try {
-        const { razorpay_order_id, razorpay_payment_id, razorpay_signature, packageId, clinicData, } = req.body;
-        if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature || !packageId || !clinicData) {
-            return res.status(400).json({ message: "Missing required payment or registration parameters" });
+        const { razorpay_order_id, razorpay_payment_id, razorpay_signature, packageId, clinicData, clinicId, userId, } = req.body;
+        if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature || !packageId) {
+            return res.status(400).json({ message: "Missing required payment parameters" });
+        }
+        if (!clinicData && !clinicId && !userId) {
+            return res.status(400).json({ message: "Clinic or user identification is required for payment verification" });
         }
         // 1. Verify Razorpay Signature
         const config = await getActiveRazorpayConfig();
@@ -125,7 +128,76 @@ const verifyRazorpayPayment = async (req, res) => {
         if (generatedSignature !== razorpay_signature) {
             return res.status(400).json({ message: "Payment verification failed. Invalid signature." });
         }
-        // 2. Perform Clinic + User Registration
+        const pkg = await prisma_1.default.subscriptionPackage.findUnique({ where: { id: packageId } });
+        if (!pkg) {
+            return res.status(404).json({ message: "Subscription package not found" });
+        }
+        const now = new Date();
+        // ── CASE A: Existing Clinic Upgrade / Renewal ──
+        if (clinicId || userId) {
+            let targetClinicId = clinicId;
+            let targetUser = null;
+            if (!targetClinicId && userId) {
+                targetUser = await prisma_1.default.user.findUnique({ where: { id: userId }, include: { clinic: true } });
+                targetClinicId = targetUser?.clinicId;
+            }
+            if (!targetClinicId) {
+                return res.status(404).json({ message: "Clinic not found" });
+            }
+            const existingClinic = await prisma_1.default.clinic.findUnique({ where: { id: targetClinicId } });
+            if (!existingClinic) {
+                return res.status(404).json({ message: "Clinic not found" });
+            }
+            // Calculate precise expiration date
+            let packageStartsAt = now;
+            let packageExpiresAt;
+            if (existingClinic.packageExpiresAt && new Date(existingClinic.packageExpiresAt) > now && existingClinic.packageId === packageId) {
+                // Extend from existing active expiry date
+                packageStartsAt = existingClinic.packageStartsAt || now;
+                packageExpiresAt = new Date(new Date(existingClinic.packageExpiresAt).getTime() + pkg.durationInDays * 24 * 60 * 60 * 1000);
+            }
+            else {
+                // Fresh start from today
+                packageStartsAt = now;
+                packageExpiresAt = new Date(now.getTime() + pkg.durationInDays * 24 * 60 * 60 * 1000);
+            }
+            const updatedClinic = await prisma_1.default.clinic.update({
+                where: { id: targetClinicId },
+                data: {
+                    packageId,
+                    packageStartsAt,
+                    packageExpiresAt,
+                    status: "UPGRADED",
+                    isTrialUsed: true,
+                },
+                include: { package: true, landingPage: true },
+            });
+            // Super admin notification
+            try {
+                await (0, notification_controller_1.createSuperAdminNotification)({
+                    type: "CLINIC_REGISTERED",
+                    title: "Clinic Plan Upgraded",
+                    message: `${existingClinic.name} has upgraded to the "${pkg.name}" plan (₹${pkg.price.toLocaleString("en-IN")}).`,
+                    link: "/super-admin/tenants",
+                });
+            }
+            catch (_) { /* non-blocking */ }
+            // Email confirmation to owner
+            const ownerEmail = existingClinic.ownerEmail || targetUser?.email;
+            const ownerName = existingClinic.ownerName || targetUser?.fullName || existingClinic.name;
+            if (ownerEmail) {
+                try {
+                    await (0, email_1.sendClinicSubscriptionActivatedEmail)(ownerEmail, ownerName, pkg.name, pkg.price, pkg.durationInDays, packageExpiresAt, true // renewal/upgrade
+                    );
+                }
+                catch (_) { /* non-blocking */ }
+            }
+            return res.json({
+                message: "Plan upgraded successfully!",
+                clinic: updatedClinic,
+            });
+        }
+        // ── CASE B: New Clinic + User Registration ──
         const { ownerName, email, phone, whatsappNumber, password, clinicName, addressLine1, addressLine2, district, city, state, country, pincode, doctorCount: doctorCountRaw, username, } = clinicData;
         const doctorCount = doctorCountRaw ? parseInt(doctorCountRaw.toString(), 10) : undefined;
         if (!email || !password || !ownerName || !phone || !clinicName || !username) {
@@ -143,14 +215,9 @@ const verifyRazorpayPayment = async (req, res) => {
         if (usernameExists || clinicExists) {
             return res.status(400).json({ message: "This clinic username is already taken" });
         }
-        const pkg = await prisma_1.default.subscriptionPackage.findUnique({ where: { id: packageId } });
-        if (!pkg) {
-            return res.status(404).json({ message: "Subscription package not found" });
-        }
         const hashedPassword = await bcrypt.hash(password, 10);
-        const now = new Date();
         const packageExpiresAt = new Date(now.getTime() + pkg.durationInDays * 24 * 60 * 60 * 1000);
-        const clinicStatus = "UPGRADED"; // Set to upgraded since payment was successful
+        const clinicStatus = "UPGRADED";
         const result = await prisma_1.default.$transaction(async (tx) => {
             const clinic = await tx.clinic.create({
                 data: {

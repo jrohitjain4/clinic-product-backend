@@ -204,16 +204,27 @@ const upgradePlan = async (req, res) => {
         if (!pkg)
             return res.status(404).json({ message: "Package not found" });
         const now = new Date();
-        const packageExpiresAt = new Date(now.getTime() + pkg.durationInDays * 24 * 60 * 60 * 1000);
+        let packageStartsAt = now;
+        let packageExpiresAt;
+        if (user.clinic?.packageExpiresAt && new Date(user.clinic.packageExpiresAt) > now && user.clinic.packageId === packageId) {
+            packageStartsAt = user.clinic.packageStartsAt || now;
+            packageExpiresAt = new Date(new Date(user.clinic.packageExpiresAt).getTime() + pkg.durationInDays * 24 * 60 * 60 * 1000);
+        }
+        else {
+            packageStartsAt = now;
+            packageExpiresAt = new Date(now.getTime() + pkg.durationInDays * 24 * 60 * 60 * 1000);
+        }
         const status = pkg.price === 0 ? "TRIAL" : "UPGRADED";
         const updatedClinic = await prisma_1.default.clinic.update({
             where: { id: user.clinicId },
             data: {
                 packageId,
-                packageStartsAt: now,
+                packageStartsAt,
                 packageExpiresAt,
                 status: status,
+                isTrialUsed: true,
             },
+            include: { package: true, landingPage: true },
         });
         // 🔔 Notify super admin
         try {
@@ -276,6 +287,9 @@ const registerDraft = async (req, res) => {
         const emailExists = await prisma_1.default.user.findUnique({ where: { email } });
         if (emailExists)
             return res.status(400).json({ message: "This email address is already registered" });
+        const phoneErr = (0, phoneValidation_1.getPhoneValidationError)(phone, "Mobile number", true);
+        if (phoneErr)
+            return res.status(400).json({ message: phoneErr });
         const phoneExists = await (0, phoneValidation_1.checkPhoneDuplicate)(phone);
         if (phoneExists)
             return res.status(400).json({ message: "This phone number is already registered" });
@@ -304,6 +318,14 @@ const registerFull = async (req, res) => {
         const emailExists = await prisma_1.default.user.findUnique({ where: { email } });
         if (emailExists)
             return res.status(400).json({ message: "This email address is already registered" });
+        const phoneErr = (0, phoneValidation_1.getPhoneValidationError)(phone, "Mobile number", true);
+        if (phoneErr)
+            return res.status(400).json({ message: phoneErr });
+        if (whatsappNumber) {
+            const waErr = (0, phoneValidation_1.getPhoneValidationError)(whatsappNumber, "WhatsApp number", false);
+            if (waErr)
+                return res.status(400).json({ message: waErr });
+        }
         const phoneExists = await (0, phoneValidation_1.checkPhoneDuplicate)(phone);
         if (phoneExists)
             return res.status(400).json({ message: "This phone number is already registered" });
@@ -581,7 +603,7 @@ const login = async (req, res) => {
                     { username: { equals: normalizedIdentifier, mode: "insensitive" } }
                 ]
             },
-            include: { clinic: { include: { landingPage: true } } },
+            include: { clinic: { include: { landingPage: true, package: true } } },
         });
         if (!user) {
             return res.status(401).json({ message: "Invalid credentials" });
@@ -598,7 +620,13 @@ const login = async (req, res) => {
         let permissions = null;
         if (user.role === "STAFF") {
             const staff = await prisma_1.default.staff.findFirst({
-                where: { email: user.email, clinicId: user.clinicId || undefined }
+                where: {
+                    clinicId: user.clinicId || undefined,
+                    OR: [
+                        ...(user.email ? [{ email: { equals: user.email, mode: "insensitive" } }] : []),
+                        ...(user.phone ? [{ phone: user.phone }] : [])
+                    ]
+                }
             });
             if (staff?.role) {
                 const clinicRole = await prisma_1.default.clinicRole.findFirst({
@@ -659,7 +687,7 @@ const getMe = async (req, res) => {
         }
         const user = await prisma_1.default.user.findUnique({
             where: { id: req.user.id },
-            include: { clinic: { include: { landingPage: true } } },
+            include: { clinic: { include: { landingPage: true, package: true } } },
         });
         if (!user) {
             return res.status(404).json({ message: "User not found" });

@@ -179,30 +179,64 @@ const getDashboardStats = async (req, res) => {
                 };
             }).sort((a, b) => b.income - a.income).slice(0, 5);
         }
-        // Revenue = Sum of all invoice totalAmount
-        const revenueAgg = await prisma_1.default.invoice.aggregate({
-            where: {
-                clinicId,
-                ...(mode === "therapy" ? { consultationId: { not: null } } : {})
-            },
-            _sum: { totalAmount: true }
-        });
-        const revenue = revenueAgg._sum.totalAmount || 0;
-        // Income = Sum of paid invoice totalAmount
-        const incomeAgg = await prisma_1.default.invoice.aggregate({
-            where: {
-                clinicId,
-                paymentStatus: 'Paid',
-                ...(mode === "therapy" ? { consultationId: { not: null } } : {})
-            },
-            _sum: { totalAmount: true }
-        });
+        // Monthly & Total Revenue Calculations
+        const currentMonthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+        const currentMonthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
+        const lastMonthStart = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+        const lastMonthEnd = new Date(now.getFullYear(), now.getMonth(), 0, 23, 59, 59, 999);
+        const [monthlyRevenueAgg, lastMonthRevenueAgg, totalRevenueAgg, incomeAgg, expenseAgg] = await Promise.all([
+            // Monthly revenue (current month)
+            prisma_1.default.invoice.aggregate({
+                where: {
+                    clinicId,
+                    createdAt: { gte: currentMonthStart, lte: currentMonthEnd },
+                    ...(mode === "therapy" ? { consultationId: { not: null } } : {})
+                },
+                _sum: { totalAmount: true }
+            }),
+            // Last month revenue (for growth comparison)
+            prisma_1.default.invoice.aggregate({
+                where: {
+                    clinicId,
+                    createdAt: { gte: lastMonthStart, lte: lastMonthEnd },
+                    ...(mode === "therapy" ? { consultationId: { not: null } } : {})
+                },
+                _sum: { totalAmount: true }
+            }),
+            // Total All-Time Revenue
+            prisma_1.default.invoice.aggregate({
+                where: {
+                    clinicId,
+                    ...(mode === "therapy" ? { consultationId: { not: null } } : {})
+                },
+                _sum: { totalAmount: true }
+            }),
+            // Total All-Time Paid Income
+            prisma_1.default.invoice.aggregate({
+                where: {
+                    clinicId,
+                    paymentStatus: 'Paid',
+                    ...(mode === "therapy" ? { consultationId: { not: null } } : {})
+                },
+                _sum: { totalAmount: true }
+            }),
+            // Total All-Time Expenses
+            prisma_1.default.expense.aggregate({
+                where: { clinicId },
+                _sum: { amount: true }
+            }),
+        ]);
+        const monthlyRevenue = monthlyRevenueAgg._sum.totalAmount || 0;
+        const lastMonthRevenue = lastMonthRevenueAgg._sum.totalAmount || 0;
+        let monthlyRevenueGrowth = 0;
+        if (lastMonthRevenue > 0) {
+            monthlyRevenueGrowth = parseFloat((((monthlyRevenue - lastMonthRevenue) / lastMonthRevenue) * 100).toFixed(1));
+        }
+        else if (monthlyRevenue > 0) {
+            monthlyRevenueGrowth = 100;
+        }
+        const totalRevenue = totalRevenueAgg._sum.totalAmount || 0;
         const totalIncome = incomeAgg._sum.totalAmount || 0;
-        // Expenses = Sum of all expense amounts
-        const expenseAgg = await prisma_1.default.expense.aggregate({
-            where: { clinicId },
-            _sum: { amount: true }
-        });
         const totalExpense = expenseAgg._sum.amount || 0;
         const netProfit = totalIncome - totalExpense;
         // Count appointment statuses using groupBy
@@ -596,7 +630,10 @@ const getDashboardStats = async (req, res) => {
             doctorsCount,
             patientsCount,
             appointmentsCount,
-            revenue,
+            revenue: monthlyRevenue,
+            monthlyRevenue,
+            monthlyRevenueGrowth,
+            totalRevenue,
             totalIncome,
             totalExpense,
             netProfit,

@@ -9,7 +9,6 @@ const dotenv_1 = __importDefault(require("dotenv"));
 // Load environment variables immediately
 dotenv_1.default.config();
 const path_1 = __importDefault(require("path"));
-const express_rate_limit_1 = __importDefault(require("express-rate-limit"));
 const auth_routes_1 = __importDefault(require("./routes/auth.routes"));
 const package_routes_1 = __importDefault(require("./routes/package.routes"));
 const todo_routes_1 = __importDefault(require("./routes/todo.routes"));
@@ -63,6 +62,8 @@ const ipdNurse_routes_1 = __importDefault(require("./routes/ipdNurse.routes"));
 const ipdPrescription_routes_1 = __importDefault(require("./routes/ipdPrescription.routes"));
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 5000;
+// Trust reverse proxy (Nginx / Hostinger / Cloudflare) to get real client IPs
+app.set("trust proxy", 1);
 const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:5173,https://docyori.com,https://api.docyori.com")
     .split(",")
     .map((o) => o.trim())
@@ -77,17 +78,9 @@ app.use((0, cors_1.default)({
 app.use(express_1.default.json({ limit: "1000mb" }));
 app.use(express_1.default.urlencoded({ limit: "1000mb", extended: true }));
 app.use("/uploads", express_1.default.static(path_1.default.join(process.cwd(), "uploads")));
-// Rate limiting on auth routes (200 requests per 15 minutes)
-const authRateLimiter = (0, express_rate_limit_1.default)({
-    windowMs: 15 * 60 * 1000,
-    max: 200,
-    standardHeaders: true,
-    legacyHeaders: false,
-    message: { message: "Too many requests, please try again later." },
-});
 // Routes
 app.use("/api/health", health_routes_1.default);
-app.use("/api/auth", authRateLimiter, auth_routes_1.default);
+app.use("/api/auth", auth_routes_1.default);
 app.use("/api/packages", package_routes_1.default);
 app.use("/api/payments", payment_routes_1.default);
 app.use("/api/support", support_routes_1.default);
@@ -142,11 +135,13 @@ app.use("/api/ipd/prescriptions", ipdPrescription_routes_1.default);
 app.get("/", (req, res) => {
     res.json({ message: "Clinic Management SaaS API is running perfectly!" });
 });
+const wardChargeCron_service_1 = require("./services/wardChargeCron.service");
 // Start Server
 app.listen(PORT, () => {
     console.log(`===============================================`);
     console.log(`🚀 Server running on: http://localhost:${PORT}`);
     console.log(`===============================================`);
+    (0, wardChargeCron_service_1.startDailyWardChargeScheduler)();
 });
 // Global Error Handler — must be last middleware
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

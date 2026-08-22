@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateWorkingDaysConfig = exports.getWorkingDaysConfig = void 0;
+exports.updateIPDAdmissionFee = exports.getIPDAdmissionFee = exports.updateWorkingDaysConfig = exports.getWorkingDaysConfig = void 0;
 const prisma_1 = __importDefault(require("../lib/prisma"));
 const getWorkingDaysConfig = async (req, res) => {
     try {
@@ -75,3 +75,42 @@ const updateWorkingDaysConfig = async (req, res) => {
     }
 };
 exports.updateWorkingDaysConfig = updateWorkingDaysConfig;
+const getIPDAdmissionFee = async (req, res) => {
+    try {
+        const clinicId = req.user?.clinicId;
+        if (!clinicId)
+            return res.status(403).json({ message: "Clinic not found" });
+        const clinic = await prisma_1.default.clinic.findUnique({
+            where: { id: clinicId },
+            select: { ipdAdmissionFee: true }
+        });
+        if (!clinic)
+            return res.status(404).json({ message: "Clinic not found" });
+        res.json({ ipdAdmissionFee: clinic.ipdAdmissionFee });
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+exports.getIPDAdmissionFee = getIPDAdmissionFee;
+const updateIPDAdmissionFee = async (req, res) => {
+    try {
+        const clinicId = req.user?.clinicId;
+        if (!clinicId)
+            return res.status(403).json({ message: "Clinic not found" });
+        const { ipdAdmissionFee } = req.body;
+        if (ipdAdmissionFee === undefined || isNaN(parseFloat(ipdAdmissionFee))) {
+            return res.status(400).json({ message: "Valid admission fee is required" });
+        }
+        const clinic = await prisma_1.default.clinic.update({
+            where: { id: clinicId },
+            data: { ipdAdmissionFee: parseFloat(ipdAdmissionFee) },
+            select: { ipdAdmissionFee: true }
+        });
+        res.json({ message: "Admission fee saved successfully", ipdAdmissionFee: clinic.ipdAdmissionFee });
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+exports.updateIPDAdmissionFee = updateIPDAdmissionFee;

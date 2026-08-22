@@ -93,9 +93,13 @@ const createStaff = async (req, res) => {
             return res.status(400).json({ message: "Role is required" });
         }
         if (phone) {
+            const phoneErr = (0, phoneValidation_1.getPhoneValidationError)(phone, "Staff phone number", false);
+            if (phoneErr) {
+                return res.status(400).json({ message: phoneErr });
+            }
             const duplicate = await (0, phoneValidation_1.checkPhoneDuplicate)(phone);
             if (duplicate) {
-                return res.status(400).json({ message: "This phone number is already registered" });
+                return res.status(400).json({ message: `This phone number is already registered for a ${duplicate}` });
             }
         }
         const count = await prisma_1.default.staff.count({ where: { clinicId } });
@@ -121,7 +125,7 @@ const createStaff = async (req, res) => {
             // Generate a secure random password
             const plainPassword = generateRandomPassword();
             const passwordHash = await bcryptjs_1.default.hash(plainPassword, 10);
-            console.log(`[Staff Created] Email: ${normalizedEmail} | Temp Password: ${plainPassword}`);
+            console.log(`[Staff Created] Email: ${normalizedEmail} | Phone: ${phone || 'N/A'} | Temp Password: ${plainPassword}`);
             const result = await prisma_1.default.$transaction(async (tx) => {
                 const createdStaff = await tx.staff.create({
                     data: {
@@ -154,6 +158,7 @@ const createStaff = async (req, res) => {
                 await tx.user.create({
                     data: {
                         email: normalizedEmail,
+                        phone: phone ? phone.trim() : null,
                         passwordHash,
                         fullName: fullName.trim(),
                         role: "STAFF",
@@ -215,10 +220,16 @@ const updateStaff = async (req, res) => {
         if (!existing)
             return res.status(404).json({ message: "Staff not found" });
         const { fullName, role, designationId, departmentId, profileImage, phone, email, dob, gender, bloodGroup, address1, address2, country, state, city, pincode, dateOfJoining, status, } = req.body;
+        if (phone !== undefined && phone) {
+            const phoneErr = (0, phoneValidation_1.getPhoneValidationError)(phone, "Staff phone number", false);
+            if (phoneErr) {
+                return res.status(400).json({ message: phoneErr });
+            }
+        }
         if (phone && phone !== existing.phone) {
             const duplicate = await (0, phoneValidation_1.checkPhoneDuplicate)(phone);
             if (duplicate) {
-                return res.status(400).json({ message: "This phone number is already registered" });
+                return res.status(400).json({ message: `This phone number is already registered for a ${duplicate}` });
             }
         }
         let resolvedDepartmentId = departmentId !== undefined ? departmentId || null : existing.departmentId;
@@ -257,6 +268,24 @@ const updateStaff = async (req, res) => {
                 department: { select: { id: true, name: true } },
             },
         });
+        // Sync User record if email or phone exists
+        if (existing.email || existing.phone) {
+            await prisma_1.default.user.updateMany({
+                where: {
+                    clinicId: clinicId,
+                    role: "STAFF",
+                    OR: [
+                        ...(existing.email ? [{ email: existing.email.toLowerCase() }] : []),
+                        ...(existing.phone ? [{ phone: existing.phone }] : [])
+                    ]
+                },
+                data: {
+                    fullName: fullName ? fullName.trim() : existing.fullName,
+                    phone: phone !== undefined ? (phone ? phone.trim() : null) : existing.phone,
+                    ...(email !== undefined && email ? { email: email.trim().toLowerCase() } : {})
+                }
+            }).catch(err => console.error("Failed to sync user on staff update:", err));
+        }
         res.json({ ...updated, statusLabel: mapStatusLabel(updated.status) });
     }
     catch (err) {
@@ -273,6 +302,18 @@ const deleteStaff = async (req, res) => {
         const existing = await prisma_1.default.staff.findFirst({ where: { id, clinicId: clinicId } });
         if (!existing)
             return res.status(404).json({ message: "Staff not found" });
+        if (existing.email || existing.phone) {
+            await prisma_1.default.user.deleteMany({
+                where: {
+                    clinicId: clinicId,
+                    role: "STAFF",
+                    OR: [
+                        ...(existing.email ? [{ email: existing.email.toLowerCase() }] : []),
+                        ...(existing.phone ? [{ phone: existing.phone }] : [])
+                    ]
+                }
+            }).catch(err => console.error("Failed to delete linked staff user:", err));
+        }
         await prisma_1.default.staff.delete({ where: { id } });
         res.json({ message: "Staff deleted successfully" });
     }

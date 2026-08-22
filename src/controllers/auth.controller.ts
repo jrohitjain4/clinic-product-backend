@@ -213,6 +213,7 @@ export const upgradePlan = async (req: AuthenticatedRequest, res: Response) => {
         status: status as any,
         isTrialUsed: true,
       },
+      include: { package: true, landingPage: true },
     });
 
     // 🔔 Notify super admin
@@ -688,7 +689,7 @@ export const login = async (req: Request, res: Response) => {
           { username: { equals: normalizedIdentifier, mode: "insensitive" } }
         ]
       },
-      include: { clinic: { include: { landingPage: true } } },
+      include: { clinic: { include: { landingPage: true, package: true } } },
     });
 
     if (!user) {
@@ -782,7 +783,7 @@ export const getMe = async (req: AuthenticatedRequest, res: Response) => {
 
     const user = await prisma.user.findUnique({
       where: { id: req.user.id },
-      include: { clinic: { include: { landingPage: true } } },
+      include: { clinic: { include: { landingPage: true, package: true } } },
     });
 
     if (!user) {

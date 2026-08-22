@@ -171,6 +171,7 @@ export const verifyRazorpayPayment = async (req: Request, res: Response) => {
                     status: "UPGRADED" as ClinicStatus,
                     isTrialUsed: true,
                 },
+                include: { package: true, landingPage: true },
             });
 
             // Super admin notification

@@ -160,7 +160,7 @@ const createPharmacyInvoice = async (req, res) => {
                     tax: parseFloat(tax) || 0,
                     subTotal: parseFloat(subTotal) || 0,
                     totalAmount: parseFloat(totalAmount) || 0,
-                    paymentMethod: paymentMethod || "Cash",
+                    paymentMethod: paymentStatus === "Unpaid" ? "" : (paymentMethod || "Cash"),
                     paymentStatus: paymentStatus || "Paid",
                     clinicId,
                 }

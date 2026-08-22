@@ -160,8 +160,17 @@ const createPatient = async (req, res) => {
         if (!lastName?.trim()) {
             return res.status(400).json({ message: "Last name is required" });
         }
-        if (!address1?.trim()) {
-            return res.status(400).json({ message: "Address Line 1 is required" });
+        const phoneErr = (0, phoneValidation_1.getPhoneValidationError)(phone, "Patient primary phone", true);
+        if (phoneErr) {
+            return res.status(400).json({ message: phoneErr });
+        }
+        const altPhoneErr = (0, phoneValidation_1.getPhoneValidationError)(alternateMobile, "Alternate mobile", false);
+        if (altPhoneErr) {
+            return res.status(400).json({ message: altPhoneErr });
+        }
+        const emergencyPhoneErr = (0, phoneValidation_1.getPhoneValidationError)(emergencyContactPhone, "Emergency contact phone", false);
+        if (emergencyPhoneErr) {
+            return res.status(400).json({ message: emergencyPhoneErr });
         }
         // 🔴 P0 Duplicate Patient Detection
         if (phone) {
@@ -324,6 +333,21 @@ const updatePatient = async (req, res) => {
         if (!existing)
             return res.status(404).json({ message: "Patient not found" });
         const { firstName, middleName, lastName, profileImage, phone, alternateMobile, email, dob, age, gender, bloodGroup, maritalStatus, occupation, aadhaarNumber, passportNumber, referredBy, referId, emergencyContactName, emergencyContactRelation, emergencyContactPhone, status, address1, address2, country, state, city, pincode, lastVisitedAt, vitals, suggestIPD, doctorIds, } = req.body;
+        if (phone !== undefined) {
+            const phoneErr = (0, phoneValidation_1.getPhoneValidationError)(phone, "Patient primary phone", true);
+            if (phoneErr)
+                return res.status(400).json({ message: phoneErr });
+        }
+        if (alternateMobile !== undefined && alternateMobile) {
+            const altPhoneErr = (0, phoneValidation_1.getPhoneValidationError)(alternateMobile, "Alternate mobile", false);
+            if (altPhoneErr)
+                return res.status(400).json({ message: altPhoneErr });
+        }
+        if (emergencyContactPhone !== undefined && emergencyContactPhone) {
+            const emergencyPhoneErr = (0, phoneValidation_1.getPhoneValidationError)(emergencyContactPhone, "Emergency contact phone", false);
+            if (emergencyPhoneErr)
+                return res.status(400).json({ message: emergencyPhoneErr });
+        }
         if (phone && phone !== existing.phone) {
             const duplicate = await (0, phoneValidation_1.checkPhoneDuplicate)(phone);
             if (duplicate) {

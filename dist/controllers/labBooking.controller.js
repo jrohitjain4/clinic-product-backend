@@ -15,7 +15,8 @@ const ensureLabBookingInvoice = async (bookingId, clinicId) => {
                 invoice: true,
             }
         });
-        if (!booking || booking.status !== "Confirmed" || booking.invoice)
+        const isPaidStatus = booking && ["Confirmed", "Checked In", "Checked Out", "Completed"].includes(booking.status);
+        if (!booking || !isPaidStatus || booking.invoice)
             return;
         if (!booking.patient)
             return;
@@ -165,6 +166,9 @@ const createLabBooking = async (req, res) => {
         const bookingCode = `LB${String(count + 1).padStart(4, "0")}`;
         // Auto-generate invoice number
         const invoiceNo = `LINV-${new Date().getFullYear()}-${String(count + 1).padStart(4, "0")}`;
+        const bookingStatus = status || "Pending";
+        const isPaidStatus = ["Confirmed", "Checked In", "Checked Out", "Completed"].includes(bookingStatus);
+        const derivedPaymentStatus = paymentStatus || (isPaidStatus ? "Paid" : "Unpaid");
         const booking = await prisma_1.default.labBooking.create({
             data: {
                 bookingCode,
@@ -172,8 +176,8 @@ const createLabBooking = async (req, res) => {
                 testId: finalTestId,
                 testsList: testsList || null,
                 scheduledAt: new Date(scheduledAt),
-                status: status || "Pending",
-                paymentStatus: paymentStatus || "Unpaid",
+                status: bookingStatus,
+                paymentStatus: derivedPaymentStatus,
                 paymentMethod: paymentMethod || null,
                 discount: parseFloat(discount) || 0,
                 tax: parseFloat(tax) || 0,
@@ -195,7 +199,7 @@ const createLabBooking = async (req, res) => {
                 },
             },
         });
-        if (booking.status === "Confirmed") {
+        if (isPaidStatus || derivedPaymentStatus === "Paid") {
             await ensureLabBookingInvoice(booking.id, clinicId);
         }
         res.status(201).json(booking);
@@ -216,12 +220,15 @@ const updateLabBooking = async (req, res) => {
         if (!existing)
             return res.status(404).json({ message: "Booking not found" });
         const { status, testsList, paymentStatus, paymentMethod, discount, tax, totalAmount, scheduledAt, sessionSlot, assignedUserId, remarks, referredBy } = req.body;
+        const isPaidStatus = status !== undefined && ["Confirmed", "Checked In", "Checked Out", "Completed"].includes(status);
+        const isUnpaidStatus = status !== undefined && (status === "Schedule" || status === "Pending");
+        const derivedPaymentStatus = paymentStatus !== undefined ? paymentStatus : (isPaidStatus ? "Paid" : (isUnpaidStatus ? "Unpaid" : undefined));
         const updated = await prisma_1.default.labBooking.update({
             where: { id },
             data: {
                 ...(status !== undefined && { status }),
                 ...(testsList !== undefined && { testsList }),
-                ...(paymentStatus !== undefined && { paymentStatus }),
+                ...(derivedPaymentStatus !== undefined && { paymentStatus: derivedPaymentStatus }),
                 ...(paymentMethod !== undefined && { paymentMethod }),
                 ...(discount !== undefined && { discount: parseFloat(discount) }),
                 ...(tax !== undefined && { tax: parseFloat(tax) }),
@@ -242,7 +249,7 @@ const updateLabBooking = async (req, res) => {
                 },
             },
         });
-        if (updated.status === "Confirmed") {
+        if (["Confirmed", "Checked In", "Checked Out", "Completed"].includes(updated.status) || updated.paymentStatus === "Paid") {
             await ensureLabBookingInvoice(updated.id, clinicId);
         }
         res.json(updated);

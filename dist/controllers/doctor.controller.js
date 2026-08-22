@@ -116,6 +116,14 @@ const createDoctor = async (req, res) => {
             if (existingByEmail)
                 return res.status(400).json({ message: "Email is already registered" });
         }
+        const phoneErr = (0, phoneValidation_1.getPhoneValidationError)(phone, "Doctor primary phone", true);
+        if (phoneErr)
+            return res.status(400).json({ message: phoneErr });
+        if (alternateMobile) {
+            const altErr = (0, phoneValidation_1.getPhoneValidationError)(alternateMobile, "Alternate mobile", false);
+            if (altErr)
+                return res.status(400).json({ message: altErr });
+        }
         if (phone) {
             const duplicate = await (0, phoneValidation_1.checkPhoneDuplicate)(phone);
             if (duplicate)
@@ -244,6 +252,16 @@ const updateDoctor = async (req, res) => {
         const existing = await prisma_1.default.doctor.findFirst({ where: { id, clinicId: clinicId } });
         if (!existing)
             return res.status(404).json({ message: "Doctor not found" });
+        if (phone !== undefined) {
+            const phoneErr = (0, phoneValidation_1.getPhoneValidationError)(phone, "Doctor primary phone", true);
+            if (phoneErr)
+                return res.status(400).json({ message: phoneErr });
+        }
+        if (alternateMobile !== undefined && alternateMobile) {
+            const altErr = (0, phoneValidation_1.getPhoneValidationError)(alternateMobile, "Alternate mobile", false);
+            if (altErr)
+                return res.status(400).json({ message: altErr });
+        }
         if (phone && phone !== existing.phone) {
             const duplicate = await (0, phoneValidation_1.checkPhoneDuplicate)(phone);
             if (duplicate)
