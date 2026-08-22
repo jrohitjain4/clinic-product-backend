@@ -64,6 +64,9 @@ import ipdPrescriptionRoutes from "./routes/ipdPrescription.routes";
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Trust reverse proxy (Nginx / Hostinger / Cloudflare) to get real client IPs
+app.set("trust proxy", 1);
+
 const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:5173,https://docyori.com,https://api.docyori.com")
   .split(",")
   .map((o) => o.trim())
@@ -82,18 +85,9 @@ app.use(express.json({ limit: "1000mb" }));
 app.use(express.urlencoded({ limit: "1000mb", extended: true }));
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
-// Rate limiting on auth routes (200 requests per 15 minutes)
-const authRateLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 200,
-  standardHeaders: true,
-  legacyHeaders: false,
-  message: { message: "Too many requests, please try again later." },
-});
-
 // Routes
 app.use("/api/health", healthRoutes);
-app.use("/api/auth", authRateLimiter, authRoutes);
+app.use("/api/auth", authRoutes);
 app.use("/api/packages", packageRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use("/api/support", supportRoutes);
