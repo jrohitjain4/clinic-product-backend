@@ -48,6 +48,19 @@ export const getRazorpayConfig = async (req: AuthenticatedRequest, res: Response
             keySecret: "********",
         }));
 
+        // If no active credentials in DB, but .env credentials exist, include environment configuration
+        const envKeyId = process.env.RAZORPAY_KEY_ID?.trim();
+        if (envKeyId) {
+            const hasActiveDbConfig = maskedList.some(c => c.isActive);
+            maskedList.push({
+                id: "env-default",
+                label: "Environment Config (.env)",
+                keyId: envKeyId,
+                keySecret: "********",
+                isActive: !hasActiveDbConfig,
+            });
+        }
+
         res.json(maskedList);
     } catch (error: any) {
         res.status(500).json({ message: error.message || "Failed to fetch Razorpay config" });
@@ -122,6 +135,10 @@ export const deleteRazorpayConfig = async (req: AuthenticatedRequest, res: Respo
         }
 
         const { id } = req.params;
+        if (id === "env-default") {
+            return res.status(400).json({ message: "Environment credentials cannot be deleted from the UI. Remove RAZORPAY_KEY_ID from your .env file instead." });
+        }
+
         const list = await getCredentialsList();
         const existing = list.find(c => c.id === id);
 
@@ -143,6 +160,18 @@ export const deleteRazorpayConfig = async (req: AuthenticatedRequest, res: Respo
             keySecret: "********",
         }));
 
+        const envKeyId = process.env.RAZORPAY_KEY_ID?.trim();
+        if (envKeyId) {
+            const hasActiveDbConfig = responseList.some(c => c.isActive);
+            responseList.push({
+                id: "env-default",
+                label: "Environment Config (.env)",
+                keyId: envKeyId,
+                keySecret: "********",
+                isActive: !hasActiveDbConfig,
+            });
+        }
+
         res.json({ message: "Razorpay credential deleted successfully", config: responseList });
     } catch (error: any) {
         res.status(500).json({ message: error.message || "Failed to delete Razorpay config" });
@@ -158,6 +187,29 @@ export const activateRazorpayConfig = async (req: AuthenticatedRequest, res: Res
 
         const { id } = req.params;
         const list = await getCredentialsList();
+
+        if (id === "env-default") {
+            const updatedList = list.map(c => ({
+                ...c,
+                isActive: false,
+            }));
+            await saveCredentialsList(updatedList);
+
+            const responseList = updatedList.map(c => ({
+                ...c,
+                keySecret: "********",
+            }));
+            responseList.push({
+                id: "env-default",
+                label: "Environment Config (.env)",
+                keyId: process.env.RAZORPAY_KEY_ID!.trim(),
+                keySecret: "********",
+                isActive: true,
+            });
+
+            return res.json({ message: "Environment (.env) credentials activated successfully", config: responseList });
+        }
+
         const existing = list.find(c => c.id === id);
 
         if (!existing) {
@@ -175,6 +227,17 @@ export const activateRazorpayConfig = async (req: AuthenticatedRequest, res: Res
             ...c,
             keySecret: "********",
         }));
+
+        const envKeyId = process.env.RAZORPAY_KEY_ID?.trim();
+        if (envKeyId) {
+            responseList.push({
+                id: "env-default",
+                label: "Environment Config (.env)",
+                keyId: envKeyId,
+                keySecret: "********",
+                isActive: false,
+            });
+        }
 
         res.json({ message: "Razorpay credential activated successfully", config: responseList });
     } catch (error: any) {

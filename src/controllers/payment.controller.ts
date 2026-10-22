@@ -13,21 +13,167 @@ const JWT_SECRET = process.env.JWT_SECRET!;
 
 // Helper to get active Razorpay credential
 const getActiveRazorpayConfig = async () => {
-    const setting = await prisma.systemSetting.findUnique({
-        where: { key: "RAZORPAY_CONFIG" },
-    });
-    if (!setting) return null;
     try {
-        const parsed = JSON.parse(setting.value);
-        if (!Array.isArray(parsed)) return null;
-        const active = parsed.find((c: any) => c.isActive);
-        if (!active) return null;
+        const setting = await prisma.systemSetting.findUnique({
+            where: { key: "RAZORPAY_CONFIG" },
+        });
+        if (setting) {
+            const parsed = JSON.parse(setting.value);
+            if (Array.isArray(parsed)) {
+                const active = parsed.find((c: any) => c.isActive);
+                if (active && active.keyId && active.keySecret) {
+                    return {
+                        keyId: active.keyId,
+                        keySecret: decrypt(active.keySecret),
+                    };
+                }
+            }
+        }
+    } catch (error) {
+        console.warn("Could not retrieve Razorpay config from database:", error);
+    }
+
+    // Fallback to environment variables (.env)
+    const envKeyId = process.env.RAZORPAY_KEY_ID?.trim();
+    const envKeySecret = process.env.RAZORPAY_KEY_SECRET?.trim();
+    if (envKeyId && envKeySecret) {
         return {
-            keyId: active.keyId,
-            keySecret: decrypt(active.keySecret),
+            keyId: envKeyId,
+            keySecret: envKeySecret,
         };
-    } catch {
-        return null;
+    }
+
+    return null;
+};
+
+// Helper to get or create a Razorpay Plan for a SubscriptionPackage
+const getOrCreateRazorpayPlan = async (razorpay: any, pkg: any) => {
+    // 1. Check if package already has a valid plan cached
+    if (pkg.razorpayPlanId) {
+        try {
+            const existingPlan = await razorpay.plans.fetch(pkg.razorpayPlanId);
+            if (existingPlan && existingPlan.id) {
+                return existingPlan.id;
+            }
+        } catch (_) {
+            // Plan might belong to a previous key, create a new one below
+        }
+    }
+
+    // 2. Map package duration to Razorpay period & interval
+    let period: "weekly" | "monthly" | "yearly" | "daily" = "monthly";
+    let interval = 1;
+
+    const days = pkg.durationInDays;
+    if (days <= 7) {
+        period = "weekly";
+        interval = 1;
+    } else if (days >= 28 && days <= 35) {
+        period = "monthly";
+        interval = 1;
+    } else if (days >= 80 && days <= 105) {
+        period = "monthly";
+        interval = 3; // Quarterly = 3 months
+    } else if (days >= 165 && days <= 200) {
+        period = "monthly";
+        interval = 6; // Half-Yearly = 6 months
+    } else if (days >= 350) {
+        period = "yearly";
+        interval = 1;
+    } else {
+        period = "daily";
+        interval = Math.max(1, days);
+    }
+
+    const amountInPaise = Math.round(Number(pkg.price) * 100);
+
+    const plan = await razorpay.plans.create({
+        period,
+        interval,
+        item: {
+            name: `${pkg.name} (${pkg.durationInDays} Days)`,
+            amount: amountInPaise,
+            currency: "INR",
+            description: `AutoPay recurring subscription plan for ${pkg.name}`,
+        },
+    });
+
+    try {
+        await prisma.subscriptionPackage.update({
+            where: { id: pkg.id },
+            data: { razorpayPlanId: plan.id } as any,
+        });
+    } catch (_) { /* non-blocking */ }
+
+    return plan.id;
+};
+
+// POST /api/payments/create-subscription (Razorpay AutoPay)
+export const createRazorpaySubscription = async (req: Request, res: Response) => {
+    try {
+        const { packageId, customerName, customerEmail, customerPhone } = req.body;
+
+        if (!packageId) {
+            return res.status(400).json({ message: "Package ID is required" });
+        }
+
+        const pkg = await prisma.subscriptionPackage.findUnique({
+            where: { id: packageId },
+        });
+
+        if (!pkg) {
+            return res.status(404).json({ message: "Subscription package not found" });
+        }
+
+        if (pkg.price === 0) {
+            return res.status(400).json({ message: "Free packages do not require payment" });
+        }
+
+        const config = await getActiveRazorpayConfig();
+        if (!config) {
+            return res.json({
+                bypass: true,
+                message: "No active payment gateway config found. Bypassing payment.",
+            });
+        }
+
+        const razorpay = new Razorpay({
+            key_id: config.keyId,
+            key_secret: config.keySecret,
+        });
+
+        // Get or dynamically create the recurring plan
+        const planId = await getOrCreateRazorpayPlan(razorpay, pkg);
+
+        // Create subscription (60 recurring cycles = 5 years, cancelable anytime)
+        const subscription = await razorpay.subscriptions.create({
+            plan_id: planId,
+            total_count: 60,
+            quantity: 1,
+            customer_notify: 1,
+            notes: {
+                packageId: pkg.id,
+                packageName: pkg.name,
+                customerName: customerName || "",
+                customerEmail: customerEmail || "",
+                customerPhone: customerPhone || "",
+            },
+        });
+
+        return res.json({
+            subscriptionId: subscription.id,
+            razorpayKeyId: config.keyId,
+            amount: Math.round(pkg.price * 100),
+            currency: "INR",
+            packageId: packageId,
+            planId: planId,
+            isAutoPay: true,
+        });
+    } catch (error: any) {
+        console.error("Create subscription error:", error);
+        return res.status(500).json({
+            message: error.error?.description || error.message || "Failed to create AutoPay subscription",
+        });
     }
 };
 
@@ -94,28 +240,40 @@ export const verifyRazorpayPayment = async (req: Request, res: Response) => {
             razorpay_order_id,
             razorpay_payment_id,
             razorpay_signature,
+            razorpay_subscription_id,
             packageId,
             clinicData,
             clinicId,
             userId,
+            isAutoPay,
         } = req.body;
 
-        if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature || !packageId) {
+        if (!razorpay_payment_id || !razorpay_signature || !packageId) {
             return res.status(400).json({ message: "Missing required payment parameters" });
+        }
+
+        if (!razorpay_order_id && !razorpay_subscription_id) {
+            return res.status(400).json({ message: "Either order_id or subscription_id is required" });
         }
 
         if (!clinicData && !clinicId && !userId) {
             return res.status(400).json({ message: "Clinic or user identification is required for payment verification" });
         }
 
-        // 1. Verify Razorpay Signature
+        // 1. Verify Razorpay Signature (Handles both AutoPay Subscriptions and One-time Orders)
         const config = await getActiveRazorpayConfig();
         if (!config) {
             return res.status(400).json({ message: "Payment verification failed. Configuration not found." });
         }
 
         const hmac = crypto.createHmac("sha256", config.keySecret);
-        hmac.update(`${razorpay_order_id}|${razorpay_payment_id}`);
+        if (razorpay_subscription_id) {
+            // Subscription signature: payment_id + '|' + subscription_id
+            hmac.update(`${razorpay_payment_id}|${razorpay_subscription_id}`);
+        } else {
+            // Standard order signature: order_id + '|' + payment_id
+            hmac.update(`${razorpay_order_id}|${razorpay_payment_id}`);
+        }
         const generatedSignature = hmac.digest("hex");
 
         if (generatedSignature !== razorpay_signature) {
@@ -128,6 +286,7 @@ export const verifyRazorpayPayment = async (req: Request, res: Response) => {
         }
 
         const now = new Date();
+        const autoPayEnabled = Boolean(razorpay_subscription_id || isAutoPay);
 
         // ── CASE A: Existing Clinic Upgrade / Renewal ──
         if (clinicId || userId) {
@@ -170,7 +329,9 @@ export const verifyRazorpayPayment = async (req: Request, res: Response) => {
                     packageExpiresAt,
                     status: "UPGRADED" as ClinicStatus,
                     isTrialUsed: true,
-                },
+                    isAutoPayEnabled: autoPayEnabled,
+                    razorpaySubscriptionId: razorpay_subscription_id || existingClinic.razorpaySubscriptionId,
+                } as any,
                 include: { package: true, landingPage: true },
             });
 
@@ -178,8 +339,8 @@ export const verifyRazorpayPayment = async (req: Request, res: Response) => {
             try {
                 await createSuperAdminNotification({
                     type: "CLINIC_REGISTERED",
-                    title: "Clinic Plan Upgraded",
-                    message: `${existingClinic.name} has upgraded to the "${pkg.name}" plan (₹${pkg.price.toLocaleString("en-IN")}).`,
+                    title: autoPayEnabled ? "Clinic AutoPay Activated" : "Clinic Plan Upgraded",
+                    message: `${existingClinic.name} has ${autoPayEnabled ? "enabled AutoPay for" : "upgraded to"} "${pkg.name}" (₹${pkg.price.toLocaleString("en-IN")}).`,
                     link: "/super-admin/tenants",
                 });
             } catch (_) { /* non-blocking */ }
@@ -202,8 +363,9 @@ export const verifyRazorpayPayment = async (req: Request, res: Response) => {
             }
 
             return res.json({
-                message: "Plan upgraded successfully!",
+                message: autoPayEnabled ? "AutoPay activated & plan upgraded successfully!" : "Plan upgraded successfully!",
                 clinic: updatedClinic,
+                isAutoPay: autoPayEnabled,
             });
         }
 
@@ -271,7 +433,9 @@ export const verifyRazorpayPayment = async (req: Request, res: Response) => {
                     packageStartsAt: now,
                     packageExpiresAt,
                     isTrialUsed: false,
-                },
+                    isAutoPayEnabled: autoPayEnabled,
+                    razorpaySubscriptionId: razorpay_subscription_id || null,
+                } as any,
             });
 
             const user = await tx.user.create({
@@ -300,8 +464,8 @@ export const verifyRazorpayPayment = async (req: Request, res: Response) => {
         try {
             await createSuperAdminNotification({
                 type: "CLINIC_REGISTERED",
-                title: "New Clinic Registered & Paid",
-                message: `${clinicName} has registered & completed payment for the "${pkg.name}" plan.`,
+                title: autoPayEnabled ? "New Clinic Registered with AutoPay" : "New Clinic Registered & Paid",
+                message: `${clinicName} has registered & completed ${autoPayEnabled ? "AutoPay setup" : "payment"} for the "${pkg.name}" plan.`,
                 link: "/super-admin/tenants",
             });
         } catch (_) { /* non-blocking */ }
@@ -327,8 +491,11 @@ export const verifyRazorpayPayment = async (req: Request, res: Response) => {
         } catch (_) { /* non-blocking */ }
 
         return res.status(201).json({
-            message: "Payment verified & registration completed successfully!",
+            message: autoPayEnabled
+                ? "AutoPay mandate verified & registration completed successfully!"
+                : "Payment verified & registration completed successfully!",
             token,
+            isAutoPay: autoPayEnabled,
             user: {
                 id: result.user.id,
                 email: result.user.email,
@@ -343,5 +510,123 @@ export const verifyRazorpayPayment = async (req: Request, res: Response) => {
         return res.status(500).json({
             message: error.message || "Failed to verify payment and complete registration",
         });
+    }
+};
+
+// POST /api/payments/webhook
+// Listens for recurring debit events (subscription.charged, etc.) from Razorpay
+export const handleRazorpayWebhook = async (req: Request, res: Response) => {
+    try {
+        const webhookSecret = process.env.RAZORPAY_WEBHOOK_SECRET;
+        const signature = req.headers["x-razorpay-signature"] as string;
+
+        if (webhookSecret && signature) {
+            const expectedSignature = crypto
+                .createHmac("sha256", webhookSecret)
+                .update(JSON.stringify(req.body))
+                .digest("hex");
+
+            if (signature !== expectedSignature) {
+                console.warn("[Razorpay Webhook] Invalid webhook signature received");
+                return res.status(400).json({ message: "Invalid signature" });
+            }
+        }
+
+        const event = req.body?.event;
+        const payload = req.body?.payload;
+
+        console.log(`[Razorpay Webhook] Event received: ${event}`);
+
+        if (event === "subscription.charged" || event === "payment.captured") {
+            const subscriptionId = payload?.subscription?.entity?.id;
+
+            if (subscriptionId) {
+                const clinic = await prisma.clinic.findFirst({
+                    where: { razorpaySubscriptionId: subscriptionId } as any,
+                    include: { package: true },
+                });
+
+                if (clinic && clinic.package) {
+                    const now = new Date();
+                    const currentExpiry = clinic.packageExpiresAt && new Date(clinic.packageExpiresAt) > now
+                        ? new Date(clinic.packageExpiresAt)
+                        : now;
+
+                    const newExpiry = new Date(currentExpiry.getTime() + clinic.package.durationInDays * 24 * 60 * 60 * 1000);
+
+                    await prisma.clinic.update({
+                        where: { id: clinic.id },
+                        data: {
+                            packageExpiresAt: newExpiry,
+                            isAutoPayEnabled: true,
+                            status: "UPGRADED" as ClinicStatus,
+                        } as any,
+                    });
+
+                    console.log(`[Razorpay Webhook] Extended subscription for ${clinic.name} until ${newExpiry.toISOString()}`);
+
+                    // Send email notification of recurring debit
+                    if (clinic.ownerEmail) {
+                        try {
+                            await sendClinicSubscriptionActivatedEmail(
+                                clinic.ownerEmail,
+                                clinic.ownerName || clinic.name,
+                                clinic.package.name,
+                                clinic.package.price,
+                                clinic.package.durationInDays,
+                                newExpiry,
+                                true
+                            );
+                        } catch (_) { /* non-blocking */ }
+                    }
+                }
+            }
+        } else if (event === "subscription.cancelled" || event === "subscription.halted") {
+            const subscriptionId = payload?.subscription?.entity?.id;
+            if (subscriptionId) {
+                await prisma.clinic.updateMany({
+                    where: { razorpaySubscriptionId: subscriptionId } as any,
+                    data: { isAutoPayEnabled: false } as any,
+                });
+                console.log(`[Razorpay Webhook] Subscription marked inactive: ${subscriptionId}`);
+            }
+        }
+
+        return res.json({ status: "ok" });
+    } catch (error: any) {
+        console.error("Razorpay webhook handler error:", error);
+        return res.status(500).json({ message: "Internal webhook error" });
+    }
+};
+
+// POST /api/payments/cancel-autopay
+export const cancelAutoPay = async (req: Request, res: Response) => {
+    try {
+        const { clinicId } = req.body;
+        if (!clinicId) return res.status(400).json({ message: "clinicId is required" });
+
+        const clinic = await prisma.clinic.findUnique({ where: { id: clinicId } });
+        if (!clinic) return res.status(404).json({ message: "Clinic not found" });
+
+        if ((clinic as any).razorpaySubscriptionId) {
+            const config = await getActiveRazorpayConfig();
+            if (config) {
+                const razorpay = new Razorpay({ key_id: config.keyId, key_secret: config.keySecret });
+                try {
+                    await (razorpay as any).subscriptions.cancel((clinic as any).razorpaySubscriptionId);
+                } catch (e: any) {
+                    console.warn("Could not cancel on Razorpay (might already be cancelled):", e.message);
+                }
+            }
+        }
+
+        await prisma.clinic.update({
+            where: { id: clinicId },
+            data: { isAutoPayEnabled: false } as any,
+        });
+
+        return res.json({ message: "AutoPay cancelled successfully. Your plan will remain active until its expiration date." });
+    } catch (error: any) {
+        return res.status(500).json({ message: error.message || "Failed to cancel AutoPay" });
     }
 };

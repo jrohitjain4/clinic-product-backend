@@ -157,13 +157,58 @@ export const updateProfile = async (req: AuthenticatedRequest, res: Response) =>
   }
 };
 
-// Get all active subscription packages
+// Helper to rank package by requested sequence: Free -> Weekly -> Monthly -> Quarterly -> Half Yearly -> Yearly
+export const getPackageSequenceRank = (pkg: { name?: string | null; durationInDays?: number | null; price?: any }) => {
+  const price = Number(pkg.price) || 0;
+  const days = Number(pkg.durationInDays) || 0;
+  const name = (pkg.name || "").toLowerCase();
+
+  // 1. Free / Trial Plans
+  if (price === 0 || days === 14 || name.includes("trial") || name.includes("free")) {
+    return 1;
+  }
+  // 2. Weekly Plans
+  if (days === 7 || name.includes("week") || (days >= 1 && days <= 13)) {
+    return 2;
+  }
+  // 3. Monthly Plans
+  if ((days >= 20 && days <= 45) || name.includes("month")) {
+    return 3;
+  }
+  // 4. Quarterly Plans
+  if ((days >= 75 && days <= 110) || name.includes("quarter") || name.includes("3 month")) {
+    return 4;
+  }
+  // 5. Half Yearly Plans
+  if ((days >= 150 && days <= 210) || name.includes("half") || name.includes("6 month")) {
+    return 5;
+  }
+  // 6. Yearly Plans
+  if ((days >= 300 && days <= 370) || name.includes("year") || name.includes("annual")) {
+    return 6;
+  }
+
+  return 1;
+};
+
+// Get all active subscription packages sorted by billing sequence
 export const getPackages = async (req: Request, res: Response) => {
   try {
     const packages = await prisma.subscriptionPackage.findMany({
       where: { isActive: true },
     });
-    return res.json(packages);
+
+    const sortedPackages = [...packages].sort((a, b) => {
+      const rankA = getPackageSequenceRank(a);
+      const rankB = getPackageSequenceRank(b);
+      if (rankA !== rankB) return rankA - rankB;
+      const priceA = Number(a.price) || 0;
+      const priceB = Number(b.price) || 0;
+      if (priceA !== priceB) return priceA - priceB;
+      return (Number(a.durationInDays) || 0) - (Number(b.durationInDays) || 0);
+    });
+
+    return res.json(sortedPackages);
   } catch (error) {
     console.error("Get packages error:", error);
     return res.status(500).json({ message: "Internal server error fetching packages" });

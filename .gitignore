@@ -11,3 +11,4 @@ test*.js
 test*.json
 dump*.json
 update-plan.js
+.env
