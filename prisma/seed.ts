@@ -72,9 +72,13 @@ async function main() {
     },
   });
 
-  // 3. SUPER ADMIN
-  await prisma.user.create({
-    data: {
+    // 3. SUPER ADMIN
+  await prisma.user.upsert({
+    where: {
+      email: "superadmin@docyori.com",
+    },
+    update: {},
+    create: {
       email: "superadmin@docyori.com",
       username: "globaladmin",
       fullName: "DocYori Administrator",
