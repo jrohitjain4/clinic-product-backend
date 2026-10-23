@@ -18,7 +18,10 @@ const normalizeStatus = (status?: string) => {
   return "Active";
 };
 
-const calcAge = (dob?: Date | null) => {
+const calcAge = (dob?: Date | null, explicitAge?: number | null) => {
+  if (explicitAge != null && explicitAge !== undefined && !Number.isNaN(Number(explicitAge))) {
+    return Number(explicitAge);
+  }
   if (!dob) return null;
   const today = new Date();
   let age = today.getFullYear() - dob.getFullYear();
@@ -27,8 +30,8 @@ const calcAge = (dob?: Date | null) => {
   return age;
 };
 
-const formatAgeGender = (dob?: Date | null, gender?: string | null) => {
-  const age = calcAge(dob);
+const formatAgeGender = (dob?: Date | null, gender?: string | null, explicitAge?: number | null) => {
+  const age = calcAge(dob, explicitAge);
   const g = gender && gender !== "Select" ? gender : null;
   if (age != null && g) return `${age}, ${g}`;
   if (age != null) return `${age}`;
@@ -62,40 +65,19 @@ const formatDateLabel = (iso?: Date | null) => {
   });
 };
 
-
-
-const enrichPatient = (p: {
-  id: string;
-  patientCode: string | null;
-  firstName: string;
-  lastName: string;
-  profileImage: string | null;
-  phone: string | null;
-  email: string | null;
-  dob: Date | null;
-  gender: string | null;
-  bloodGroup: string | null;
-  status: string;
-  address1: string | null;
-  address2: string | null;
-  country: string | null;
-  state: string | null;
-  city: string | null;
-  pincode: string | null;
-  lastVisitedAt: Date | null;
-
-  vitals: any | null;
-  createdAt: Date;
-  updatedAt: Date;
-}) => ({
-  ...p,
-  fullName: `${p.firstName} ${p.lastName}`.trim(),
-  statusLabel: mapStatusLabel(p.status),
-  ageGenderLabel: formatAgeGender(p.dob, p.gender),
-  addressShort: formatAddressShort(p.city, p.state),
-  fullAddress: formatFullAddress(p),
-  lastVisitLabel: formatDateLabel(p.lastVisitedAt),
-});
+const enrichPatient = (p: any) => {
+  const calculatedAge = calcAge(p.dob, p.age);
+  return {
+    ...p,
+    age: calculatedAge,
+    fullName: `${p.firstName} ${p.lastName}`.trim(),
+    statusLabel: mapStatusLabel(p.status),
+    ageGenderLabel: formatAgeGender(p.dob, p.gender, p.age),
+    addressShort: formatAddressShort(p.city, p.state),
+    fullAddress: formatFullAddress(p),
+    lastVisitLabel: formatDateLabel(p.lastVisitedAt),
+  };
+};
 
 // GET /api/patients
 export const getPatients = async (req: AuthenticatedRequest, res: Response) => {
@@ -243,25 +225,6 @@ export const createPatient = async (req: AuthenticatedRequest, res: Response) =>
       return res.status(400).json({ message: emergencyPhoneErr });
     }
 
-    // 🔴 P0 Duplicate Patient Detection
-    if (phone) {
-      const duplicate = await checkPhoneDuplicate(phone);
-      if (duplicate) {
-        return res.status(400).json({ message: "This phone number is already registered" });
-      }
-    }
-    if (email) {
-      const existingDuplicate = await prisma.patient.findFirst({
-        where: {
-          clinicId,
-          email: email.toLowerCase()
-        }
-      });
-      if (existingDuplicate) {
-        return res.status(400).json({ message: "A patient with this email already exists." });
-      }
-    }
-
     const clinic = await prisma.clinic.findUnique({
       where: { id: clinicId },
       include: { package: true },
@@ -300,7 +263,7 @@ export const createPatient = async (req: AuthenticatedRequest, res: Response) =>
         alternateMobile: alternateMobile || null,
         email: email ? email.toLowerCase() : null,
         dob: dob ? new Date(dob) : null,
-        age: age ? parseInt(age.toString(), 10) : null,
+        age: age !== undefined && age !== "" && age !== null ? parseInt(age.toString(), 10) : (dob ? calcAge(new Date(dob)) : null),
         gender: gender && gender !== "Select" ? gender : null,
         bloodGroup: bloodGroup && bloodGroup !== "Select" ? bloodGroup : null,
         maritalStatus: maritalStatus && maritalStatus !== "Select" ? maritalStatus : null,
@@ -349,31 +312,35 @@ export const createPatient = async (req: AuthenticatedRequest, res: Response) =>
     let generatedPassword = req.body.password || randomBytes(4).toString("hex");
 
     if (loginIdentifier) {
-      // Check if user account already exists (by email/phone)
-      const userCondition: any[] = [];
-      if (email) userCondition.push({ email: email.toLowerCase() });
-      if (phone) userCondition.push({ phone });
+      try {
+        // Check if user account already exists (by email/phone)
+        const userCondition: any[] = [];
+        if (email) userCondition.push({ email: email.toLowerCase() });
+        if (phone) userCondition.push({ phone });
 
-      const existingUser = await prisma.user.findFirst({
-        where: { OR: userCondition }
-      });
-
-      if (!existingUser) {
-        // Fallback email if only phone is provided
-        const userEmail = email ? email.toLowerCase() : `pt_${phone}@docyori.local`;
-        const passwordHash = await bcrypt.hash(generatedPassword, 10);
-
-        await prisma.user.create({
-          data: {
-            email: userEmail,
-            phone: phone || null,
-            username: phone || null,
-            passwordHash,
-            fullName: `${firstName.trim()} ${lastName.trim()}`,
-            role: "PATIENT",
-            clinicId,
-          }
+        const existingUser = await prisma.user.findFirst({
+          where: { OR: userCondition }
         });
+
+        if (!existingUser) {
+          // Fallback email if only phone is provided
+          const userEmail = email ? email.toLowerCase() : `pt_${phone}_${randomBytes(2).toString("hex")}@docyori.local`;
+          const passwordHash = await bcrypt.hash(generatedPassword, 10);
+
+          await prisma.user.create({
+            data: {
+              email: userEmail,
+              phone: phone || null,
+              username: phone || null,
+              passwordHash,
+              fullName: `${firstName.trim()} ${lastName.trim()}`,
+              role: "PATIENT",
+              clinicId,
+            }
+          });
+        }
+      } catch (userErr) {
+        console.warn("User account creation for patient skipped (shared identifier):", userErr);
       }
     }
 
@@ -465,15 +432,6 @@ export const updatePatient = async (req: AuthenticatedRequest, res: Response) =>
       if (emergencyPhoneErr) return res.status(400).json({ message: emergencyPhoneErr });
     }
 
-    if (phone && phone !== existing.phone) {
-      const duplicate = await checkPhoneDuplicate(phone);
-      if (duplicate) {
-        return res.status(400).json({ message: "This phone number is already registered" });
-      }
-    }
-
-
-
     const updated = await prisma.patient.update({
       where: { id },
       data: {
@@ -486,7 +444,14 @@ export const updatePatient = async (req: AuthenticatedRequest, res: Response) =>
         alternateMobile: alternateMobile !== undefined ? alternateMobile || null : existing.alternateMobile,
         email: email !== undefined ? email || null : existing.email,
         dob: dob !== undefined ? (dob ? new Date(dob) : null) : existing.dob,
-        age: age !== undefined ? (age ? parseInt(age.toString(), 10) : null) : existing.age,
+        age:
+          age !== undefined
+            ? age !== "" && age !== null
+              ? parseInt(age.toString(), 10)
+              : dob
+                ? calcAge(new Date(dob))
+                : null
+            : existing.age,
         gender:
           gender !== undefined
             ? gender && gender !== "Select"
