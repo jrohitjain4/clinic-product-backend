@@ -94,7 +94,7 @@ async function main() {
       name: "Apollo Multispeciality Clinic",
       username: "apollo",
       ownerName: "Dr. Mukesh Ambani",
-      ownerEmail: "owner@docyori.com",
+      ownerEmail: " ",
       whatsappNumber: "9876543210",
       phone: "9876543210",
       addressLine1: "Bandra Kurla Complex",
